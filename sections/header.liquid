@@ -22,7 +22,9 @@
 <yw-header
   class="yw-header{% if section.settings.enable_sticky %} yw-header--sticky{% endif %}"
   data-mobile-target="{{ mobile_id }}"
-  {% if section.settings.enable_sticky %}data-sticky{% endif %}
+  {% if section.settings.enable_sticky %}
+    data-sticky
+  {% endif %}
 >
   {%- comment -%} ---------------- Announcement topbar ---------------- {%- endcomment -%}
   {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
@@ -68,7 +70,9 @@
             <a
               class="yw-nav__cta"
               href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}"
-              {% if cta_mega != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}
+              {% if cta_mega != blank %}
+                aria-haspopup="true" aria-expanded="false"
+              {% endif %}
             >
               {{- section.settings.cta_text -}}
             </a>
@@ -94,7 +98,9 @@
               <a
                 class="yw-nav__link"
                 href="{{ link.url }}"
-                {% if link_mega != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}
+                {% if link_mega != blank %}
+                  aria-haspopup="true" aria-expanded="false"
+                {% endif %}
               >
                 {{- link.title -}}
               </a>
@@ -179,14 +185,22 @@
   {%- comment -%} ---------------- Mobile menu overlay ---------------- {%- endcomment -%}
   <div class="yw-mobile-menu" id="{{ mobile_id }}">
     <div class="yw-mobile-menu__bar">
-      <button type="button" class="yw-mobile-menu__close" aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">
+      <button
+        type="button"
+        class="yw-mobile-menu__close"
+        aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+      >
         <span class="svg-wrapper">{{ 'icon-close.svg' | inline_asset_content }}</span>
       </button>
 
       <a href="{{ routes.root_url }}" class="yw-nav__logo" aria-label="{{ shop.name | escape }}">
         {%- if settings.logo != blank -%}
           {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-          {{ settings.logo | image_url: width: 300 | image_tag: widths: '150, 220, 300', alt: logo_alt, loading: 'lazy' }}
+          {{
+            settings.logo
+            | image_url: width: 300
+            | image_tag: widths: '150, 220, 300', alt: logo_alt, loading: 'lazy'
+          }}
         {%- else -%}
           {{ 'yumwoof-logo.svg' | inline_asset_content }}
           <span class="visually-hidden">{{ shop.name }}</span>
@@ -213,7 +227,9 @@
           <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
           {%- if cart != empty -%}
             <div class="cart-count-bubble">
-              {%- if cart.item_count < 100 -%}<span aria-hidden="true">{{ cart.item_count }}</span>{%- endif -%}
+              {%- if cart.item_count < 100 -%}
+                <span aria-hidden="true">{{ cart.item_count }}</span>
+              {%- endif -%}
             </div>
           {%- endif -%}
         </a>
@@ -234,7 +250,10 @@
         {%- if cta_mega != blank -%}
           <div class="yw-mobile-mega">{% render 'header-mega-content', block: cta_mega %}</div>
         {%- else -%}
-          <a class="yw-nav__cta yw-mobile-menu__cta" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+          <a
+            class="yw-nav__cta yw-mobile-menu__cta"
+            href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}"
+          >
             {{- section.settings.cta_text -}}
           </a>
         {%- endif -%}
