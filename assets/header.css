@@ -305,7 +305,6 @@
   z-index: 20;
   padding-top: .4rem;
 
-  visibility: hidden;
   transform: translateY(-20px);
 
   transition: transform .35s cubic-bezier(.22,1,.36,1),
@@ -315,7 +314,6 @@
 .yw-nav__item--mega:hover .yw-mega,
 .yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
-  visibility: visible;
   transform: translateY(0);
 
   transition: transform .35s cubic-bezier(.22,1,.36,1);
