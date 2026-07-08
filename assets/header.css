@@ -303,11 +303,16 @@
   right: 0;
   top: calc(100% + 0.8rem);
   z-index: 20;
-  padding-top: 0.4rem;
+  padding-top: .4rem;
+
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  transform: translateY(-20px);
+
+  transition:
+    transform .35s cubic-bezier(.22, 1, .36, 1),
+    opacity .25s ease,
+    visibility 0s linear .35s;
 }
 
 .yw-nav__item--mega:hover .yw-mega,
@@ -316,6 +321,11 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+
+  transition:
+    transform .35s cubic-bezier(.22, 1, .36, 1),
+    opacity .25s ease,
+    visibility 0s;
 }
 
 .yw-mega__inner {
