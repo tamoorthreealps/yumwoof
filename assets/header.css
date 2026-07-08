@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Yumwoof header (announcement topbar + navbar)
+   Design: Figma "Yumwoof (Copy)" node 863-1533
+   Colors, radius and spacing are driven by CSS variables set inline from the
+   section settings in header.liquid.
+   ========================================================================== */
+
+.yw-header {
+  --yw-nav-bg: rgba(255, 249, 239, 0.8);
+  --yw-nav-text: #000000;
+  --yw-nav-border: #000000;
+  --yw-cta-bg: #ffc069;
+  --yw-cta-text: #000000;
+  --yw-topbar-bg: #661d1d;
+  --yw-topbar-text: #fff9ef;
+  --yw-radius: 12px;
+
+  position: relative;
+  z-index: 4;
+  font-size: 1.3rem;
+}
+
+.yw-header--sticky {
+  position: sticky;
+  top: 0;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.yw-header--sticky.yw-header--hidden {
+  transform: translateY(-100%);
+}
+
+/* --------------------------------------------------------------------------
+   Announcement topbar
+   -------------------------------------------------------------------------- */
+.yw-topbar {
+  background-color: var(--yw-topbar-bg);
+  color: var(--yw-topbar-text);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yw-topbar__inner {
+  padding: 1.2rem 2rem;
+  width: 100%;
+  max-width: 152rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.yw-topbar__text,
+.yw-topbar__link {
+  margin: 0;
+  color: inherit;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.yw-topbar__link {
+  text-decoration: none;
+}
+
+.yw-topbar__link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Navbar shell
+   -------------------------------------------------------------------------- */
+.yw-nav-outer {
+  max-width: 152rem;
+  margin: 0 auto;
+  padding: 1.2rem 6rem;
+  position: relative;
+}
+
+.yw-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2.4rem;
+  min-height: 64px;
+  padding: 0 2.4rem;
+  background-color: var(--yw-nav-bg);
+  border: 1.5px solid var(--yw-nav-border);
+  border-radius: var(--yw-radius);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* --------------------------------------------------------------------------
+   Left: primary navigation
+   -------------------------------------------------------------------------- */
+.yw-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-self: start;
+}
+
+.yw-nav__link {
+  color: var(--yw-nav-text);
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.yw-nav__link:hover {
+  opacity: 0.7;
+}
+
+/* Shop-all call-to-action pill */
+.yw-nav__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.4rem;
+  background-color: var(--yw-cta-bg);
+  color: var(--yw-cta-text);
+  border: 1.5px solid var(--yw-nav-border);
+  border-radius: 999px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.yw-nav__cta:hover {
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Center: logo
+   -------------------------------------------------------------------------- */
+.yw-nav__logo {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.yw-nav__logo img,
+.yw-nav__logo svg {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
+.yw-nav__logo-text {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--yw-topbar-bg);
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Right: membership + account + cart
+   -------------------------------------------------------------------------- */
+.yw-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+  justify-self: end;
+}
+
+.yw-nav__membership {
+  color: var(--yw-nav-text);
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.yw-nav__membership:hover {
+  opacity: 0.7;
+}
+
+.yw-nav__icons {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.yw-nav__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yw-nav-text);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.yw-nav__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.yw-icon--account svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Cart count bubble – markup shared with sections/cart-icon-bubble.liquid so
+   it survives AJAX cart updates. */
+.yw-nav__icon .cart-count-bubble {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--yw-topbar-bg);
+  color: var(--yw-topbar-text);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile toggle (hamburger)
+   -------------------------------------------------------------------------- */
+.yw-nav__toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--yw-nav-text);
+  justify-self: start;
+}
+
+.yw-nav__toggle svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 989px) {
+  .yw-nav-outer {
+    padding: 1rem 1.5rem;
+  }
+
+  .yw-nav {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 1.6rem;
+  }
+
+  .yw-nav__toggle {
+    display: inline-flex;
+  }
+
+  .yw-nav__membership {
+    display: none;
+  }
+
+  /* Collapsible links panel */
+  .yw-nav__links {
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    top: calc(100% + 0.6rem);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+    padding: 2rem;
+    background-color: var(--yw-nav-bg);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1.5px solid var(--yw-nav-border);
+    border-radius: var(--yw-radius);
+    display: none;
+  }
+
+  .yw-nav[data-menu-open='true'] .yw-nav__links {
+    display: flex;
+  }
+}
