@@ -55,9 +55,9 @@
 .yw-topbar__link {
   margin: 0;
   color: inherit;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 1.6rem;
 }
@@ -68,6 +68,15 @@
 
 .yw-topbar__link:hover {
   text-decoration: underline;
+}
+
+
+@media screen and (min-width: 767px) {
+  .yw-topbar__text,
+.yw-topbar__link {
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+}
 }
 
 /* --------------------------------------------------------------------------
