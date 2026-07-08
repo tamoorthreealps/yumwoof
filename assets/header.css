@@ -20,7 +20,7 @@
   font-size: 1.3rem;
 }
 
-.yw-header--sticky, .global--header {
+.yw-header--sticky {
   position: sticky;
   top: 0;
   transition: transform 0.3s ease;
@@ -34,6 +34,16 @@
 .yw-header .svg-wrapper {
   width:auto;
   height:auto;
+}
+
+
+@media screen and (min-width: 767px) {
+ .global--header {
+  position: sticky;
+  top: 0;
+  transition: transform 0.3s ease;
+  will-change: transform;
+} 
 }
 
 /* --------------------------------------------------------------------------
