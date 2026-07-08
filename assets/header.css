@@ -309,7 +309,8 @@
   gap: 4rem;
   align-items: center;
   padding: 4rem 4.8rem;
-  background-color: rgba(255, 249, 239, 0.8);
+  background-color: background: rgba(255, 249, 239, 0.9);
+;
   border: 1.5px solid var(--yw-nav-border);
   border-radius: 24px;
   -webkit-backdrop-filter: blur(8px);
