@@ -144,7 +144,7 @@
   align-items: center;
   justify-content: center;
   padding: 1rem 2.4rem;
-  background-color: var(--yw-cta-bg);
+  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/button--bg.svg?v=1783519312") center / 100% 100% no-repeat;
   color: var(--yw-cta-text);
   border: 1.5px solid var(--yw-nav-border);
   border-radius: 999px;
