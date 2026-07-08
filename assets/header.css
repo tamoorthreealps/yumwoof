@@ -158,8 +158,7 @@
 }
 
 .yw-nav__cta:hover {
-  transform: translateY(-1px);
-  opacity: 1;
+  transform: scale(1.03);
 }
 
 /* --------------------------------------------------------------------------
