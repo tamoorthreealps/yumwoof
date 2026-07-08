@@ -37,7 +37,6 @@
 .yw-topbar {
   background-color: var(--yw-topbar-bg);
   color: var(--yw-topbar-text);
-  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
