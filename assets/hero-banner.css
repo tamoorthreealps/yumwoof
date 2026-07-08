@@ -1,0 +1,166 @@
+/* ==========================================================================
+   Yumwoof hero banner
+   Design: Figma "Yumwoof" homepage hero (desktop 863:1536 / mobile 1260:107)
+   Full-bleed dark textured banner with lower-left content: heading, subheading,
+   an amber quiz pill, and an offer line. Colors are driven by CSS variables
+   set inline from the section settings.
+   ========================================================================== */
+
+.hero-banner {
+  --hb-bg: #1a1a1a;
+  --hb-text: #fff9ef;
+  --hb-btn-bg: #ffc069;
+  --hb-btn-text: #000000;
+  --hb-btn-border: #000000;
+  --hb-min-height: 620px;
+
+  position: relative;
+  overflow: hidden;
+  background-color: var(--hb-bg);
+  color: var(--hb-text);
+}
+
+/* Optional background image */
+.hero-banner__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Subtle film-grain / speckle texture over the dark background */
+.hero-banner--texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+.hero-banner__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--hb-min-height);
+  max-width: 152rem;
+  margin: 0 auto;
+  padding: 4rem 6rem;
+  box-sizing: border-box;
+}
+
+/* Vertical position of the content block */
+.hero-banner--top .hero-banner__inner {
+  justify-content: flex-start;
+}
+.hero-banner--middle .hero-banner__inner {
+  justify-content: center;
+}
+.hero-banner--bottom .hero-banner__inner {
+  justify-content: flex-end;
+}
+
+.hero-banner__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 56rem;
+}
+
+/* Horizontal alignment */
+.hero-banner--center .hero-banner__content {
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+}
+.hero-banner--center .hero-banner__inner {
+  align-items: center;
+}
+
+.hero-banner__heading {
+  margin: 0;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: var(--font-heading-weight, 700);
+  font-size: clamp(4.2rem, 5.6vw, 7.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  color: var(--hb-text);
+}
+
+.hero-banner--uppercase .hero-banner__heading {
+  text-transform: uppercase;
+}
+
+.hero-banner__subheading {
+  margin: 0;
+  font-size: 1.7rem;
+  line-height: 1.4;
+  color: var(--hb-text);
+}
+
+.hero-banner__cta-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: flex-start;
+  margin-top: 1.2rem;
+}
+
+.hero-banner--center .hero-banner__cta-wrap {
+  align-items: center;
+}
+
+.hero-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8rem 4.4rem;
+  background-color: var(--hb-btn-bg);
+  color: var(--hb-btn-text);
+  border: 1.5px solid var(--hb-btn-border);
+  border-radius: 999px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.15s ease;
+}
+
+.hero-banner__cta:hover {
+  transform: translateY(-2px);
+}
+
+.hero-banner__offer {
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: var(--hb-text);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 749px) {
+  .hero-banner__inner {
+    min-height: var(--hb-min-height-mobile, 480px);
+    padding: 3.2rem 2rem;
+  }
+
+  .hero-banner__heading {
+    font-size: clamp(3.4rem, 12vw, 4.8rem);
+  }
+
+  .hero-banner__subheading {
+    font-size: 1.6rem;
+  }
+
+  .hero-banner__cta {
+    padding: 1.6rem 3.6rem;
+  }
+}
