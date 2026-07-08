@@ -311,8 +311,6 @@
               visibility 0s linear .35s;
 }
 
-.yw-nav__item--mega:hover .yw-mega,
-.yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
   transform: translateY(0);
 
