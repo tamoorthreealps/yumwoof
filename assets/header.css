@@ -146,8 +146,6 @@
   padding: 1.6rem 2.8rem;
   background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/button--bg.svg?v=1783519312") center / 100% 100% no-repeat;
   color: var(--yw-cta-text);
-  border: 1.5px solid var(--yw-nav-border);
-  border-radius: 999px;
   font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 0.08em;
