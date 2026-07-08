@@ -305,27 +305,20 @@
   z-index: 20;
   padding-top: .4rem;
 
-  opacity: 0;
   visibility: hidden;
   transform: translateY(-20px);
 
-  transition:
-    transform .35s cubic-bezier(.22, 1, .36, 1),
-    opacity .25s ease,
-    visibility 0s linear .35s;
+  transition: transform .35s cubic-bezier(.22,1,.36,1),
+              visibility 0s linear .35s;
 }
 
 .yw-nav__item--mega:hover .yw-mega,
 .yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
-  opacity: 1;
   visibility: visible;
   transform: translateY(0);
 
-  transition:
-    transform .35s cubic-bezier(.22, 1, .36, 1),
-    opacity .25s ease,
-    visibility 0s;
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
 }
 
 .yw-mega__inner {
