@@ -1,1 +1,52 @@
-{"name":"t:sections.header.name","type":"header","sections":{"announcement-bar":{"type":"announcement-bar","blocks":{"announcement-bar-0":{"type":"announcement","settings":{"text":"Welcome to our store","link":""}}},"block_order":["announcement-bar-0"],"settings":{"auto_rotate":false,"change_slides_speed":5,"color_scheme":"scheme-1","show_line_separator":true,"show_social":false,"enable_country_selector":false,"enable_language_selector":false}},"header":{"type":"header","settings":{"logo_position":"middle-left","mobile_logo_position":"center","menu":"main-menu","menu_type_desktop":"dropdown","sticky_header_type":"on-scroll-up","show_line_separator":true,"color_scheme":"scheme-1","menu_color_scheme":"scheme-1","enable_country_selector":true,"enable_language_selector":true,"enable_customer_avatar":true,"margin_bottom":0,"padding_top":20,"padding_bottom":20}}},"order":["announcement-bar","header"]}
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "mega-shop-all": {
+          "type": "mega_menu",
+          "settings": {
+            "title": "Shop All",
+            "heading": "Built around your dog.",
+            "subheading": "Diam sit molestie orci imperdiet vitae. Nulla lorem ut laoreet.",
+            "button_label": "Shop All",
+            "button_link": "",
+            "card_1_title": "Air Dried Food",
+            "card_1_caption": "Fringilla tincidunt eu",
+            "card_1_link": "",
+            "card_2_title": "Nutritional Mix",
+            "card_2_caption": "Magna ut sodales turpis",
+            "card_2_link": "",
+            "card_3_title": "Supplements",
+            "card_3_caption": "Massa vitae cras leo at",
+            "card_3_link": ""
+          }
+        }
+      },
+      "block_order": ["mega-shop-all"],
+      "settings": {
+        "menu": "main-menu",
+        "enable_sticky": true,
+        "show_announcement": true,
+        "announcement_text": "Free shipping on continental USA orders $80+",
+        "announcement_link": "",
+        "announcement_bg": "#661D1D",
+        "announcement_text_color": "#FFF9EF",
+        "navbar_bg": "#FFF9EF",
+        "navbar_text_color": "#000000",
+        "navbar_border_color": "#000000",
+        "mobile_menu_bg": "#FFC069",
+        "color_scheme": "scheme-1",
+        "cta_text": "Shop All",
+        "cta_link": "",
+        "cta_bg_color": "#FFC069",
+        "cta_text_color": "#000000",
+        "membership_text": "Membership",
+        "membership_link": ""
+      }
+    }
+  },
+  "order": ["header"]
+}
