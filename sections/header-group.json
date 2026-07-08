@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
@@ -25,28 +34,32 @@
           }
         }
       },
-      "block_order": ["mega-shop-all"],
+      "block_order": [
+        "mega-shop-all"
+      ],
       "settings": {
-        "menu": "main-menu",
-        "enable_sticky": true,
         "show_announcement": true,
         "announcement_text": "Free shipping on continental USA orders $80+",
         "announcement_link": "",
         "announcement_bg": "#661D1D",
         "announcement_text_color": "#FFF9EF",
-        "navbar_bg": "#FFF9EF",
+        "menu": "main-menu",
+        "enable_sticky": true,
+        "navbar_bg": "#fff9ef",
         "navbar_text_color": "#000000",
         "navbar_border_color": "#000000",
-        "mobile_menu_bg": "#FFC069",
+        "mobile_menu_bg": "#ffc069",
         "color_scheme": "scheme-1",
         "cta_text": "Shop All",
         "cta_link": "",
-        "cta_bg_color": "#FFC069",
+        "cta_bg_color": "#ffc069",
         "cta_text_color": "#000000",
         "membership_text": "Membership",
         "membership_link": ""
       }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
