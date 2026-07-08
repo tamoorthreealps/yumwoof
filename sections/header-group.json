@@ -4,6 +4,28 @@
   "sections": {
     "header": {
       "type": "header",
+      "blocks": {
+        "mega-shop-all": {
+          "type": "mega_menu",
+          "settings": {
+            "title": "Shop All",
+            "heading": "Built around your dog.",
+            "subheading": "Diam sit molestie orci imperdiet vitae. Nulla lorem ut laoreet.",
+            "button_label": "Shop All",
+            "button_link": "",
+            "card_1_title": "Air Dried Food",
+            "card_1_caption": "Fringilla tincidunt eu",
+            "card_1_link": "",
+            "card_2_title": "Nutritional Mix",
+            "card_2_caption": "Magna ut sodales turpis",
+            "card_2_link": "",
+            "card_3_title": "Supplements",
+            "card_3_caption": "Massa vitae cras leo at",
+            "card_3_link": ""
+          }
+        }
+      },
+      "block_order": ["mega-shop-all"],
       "settings": {
         "menu": "main-menu",
         "enable_sticky": true,
@@ -15,6 +37,7 @@
         "navbar_bg": "#FFF9EF",
         "navbar_text_color": "#000000",
         "navbar_border_color": "#000000",
+        "mobile_menu_bg": "#FFC069",
         "color_scheme": "scheme-1",
         "cta_text": "Shop All",
         "cta_link": "",

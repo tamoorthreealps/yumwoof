@@ -11,16 +11,22 @@
     --yw-cta-text: {{ section.settings.cta_text_color }};
     --yw-topbar-bg: {{ section.settings.announcement_bg }};
     --yw-topbar-text: {{ section.settings.announcement_text_color }};
+    --yw-mobile-bg: {{ section.settings.mobile_menu_bg }};
   }
 {%- endstyle -%}
 
+{%- liquid
+  assign mobile_id = 'MobileMenu-' | append: section.id
+-%}
+
 <yw-header
   class="yw-header{% if section.settings.enable_sticky %} yw-header--sticky{% endif %}"
+  data-mobile-target="{{ mobile_id }}"
   {% if section.settings.enable_sticky %}data-sticky{% endif %}
 >
   {%- comment -%} ---------------- Announcement topbar ---------------- {%- endcomment -%}
   {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
-    <div class="yw-topbar" role="region" aria-label="{{ 'sections.header.announcement' | t | default: 'Announcement' }}">
+    <div class="yw-topbar" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
       <div class="yw-topbar__inner">
         {%- if section.settings.announcement_link != blank -%}
           <a class="yw-topbar__link" href="{{ section.settings.announcement_link }}">
@@ -35,33 +41,68 @@
 
   {%- comment -%} ---------------- Navbar ---------------- {%- endcomment -%}
   <div class="yw-nav-outer">
-    <nav class="yw-nav" data-menu-open="false" aria-label="{{ 'sections.header.menu' | t | default: 'Primary' }}">
-      {%- comment -%} Mobile hamburger toggle {%- endcomment -%}
+    <nav class="yw-nav" aria-label="{{ 'sections.header.menu' | t }}">
+      {%- comment -%} Mobile hamburger toggle (opens the overlay) {%- endcomment -%}
       <button
         type="button"
         class="yw-nav__toggle"
         aria-expanded="false"
-        aria-label="{{ 'sections.header.menu' | t | default: 'Menu' }}"
+        aria-controls="{{ mobile_id }}"
+        aria-label="{{ 'sections.header.menu' | t }}"
       >
         <span class="svg-wrapper">{{ 'icon-hamburger.svg' | inline_asset_content }}</span>
       </button>
 
-      {%- comment -%} Left: navigation links {%- endcomment -%}
+      {%- comment -%} Left: navigation links (with optional mega dropdowns) {%- endcomment -%}
       <ul class="yw-nav__links">
         {%- if section.settings.cta_text != blank -%}
-          <li>
+          {%- assign cta_mega = blank -%}
+          {%- assign cta_needle = section.settings.cta_text | downcase | strip -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'mega_menu' and block.settings.title != blank -%}
+              {%- assign hay = block.settings.title | downcase | strip -%}
+              {%- if hay == cta_needle -%}{%- assign cta_mega = block -%}{%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <li class="yw-nav__item{% if cta_mega != blank %} yw-nav__item--mega{% endif %}">
             <a
               class="yw-nav__cta"
               href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}"
+              {% if cta_mega != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}
             >
               {{- section.settings.cta_text -}}
             </a>
+            {%- if cta_mega != blank -%}
+              <div class="yw-mega" {{ cta_mega.shopify_attributes }}>
+                <div class="yw-mega__inner">{% render 'header-mega-content', block: cta_mega %}</div>
+              </div>
+            {%- endif -%}
           </li>
         {%- endif -%}
+
         {%- if section.settings.menu != blank -%}
           {%- for link in section.settings.menu.links -%}
-            <li>
-              <a class="yw-nav__link" href="{{ link.url }}">{{ link.title }}</a>
+            {%- assign link_mega = blank -%}
+            {%- assign link_needle = link.title | downcase | strip -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'mega_menu' and block.settings.title != blank -%}
+                {%- assign hay = block.settings.title | downcase | strip -%}
+                {%- if hay == link_needle -%}{%- assign link_mega = block -%}{%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <li class="yw-nav__item{% if link_mega != blank %} yw-nav__item--mega{% endif %}">
+              <a
+                class="yw-nav__link"
+                href="{{ link.url }}"
+                {% if link_mega != blank %}aria-haspopup="true" aria-expanded="false"{% endif %}
+              >
+                {{- link.title -}}
+              </a>
+              {%- if link_mega != blank -%}
+                <div class="yw-mega" {{ link_mega.shopify_attributes }}>
+                  <div class="yw-mega__inner">{% render 'header-mega-content', block: link_mega %}</div>
+                </div>
+              {%- endif -%}
             </li>
           {%- endfor -%}
         {%- endif -%}
@@ -134,6 +175,98 @@
       </div>
     </nav>
   </div>
+
+  {%- comment -%} ---------------- Mobile menu overlay ---------------- {%- endcomment -%}
+  <div class="yw-mobile-menu" id="{{ mobile_id }}">
+    <div class="yw-mobile-menu__bar">
+      <button type="button" class="yw-mobile-menu__close" aria-label="{{ 'accessibility.close' | t | default: 'Close' }}">
+        <span class="svg-wrapper">{{ 'icon-close.svg' | inline_asset_content }}</span>
+      </button>
+
+      <a href="{{ routes.root_url }}" class="yw-nav__logo" aria-label="{{ shop.name | escape }}">
+        {%- if settings.logo != blank -%}
+          {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+          {{ settings.logo | image_url: width: 300 | image_tag: widths: '150, 220, 300', alt: logo_alt, loading: 'lazy' }}
+        {%- else -%}
+          {{ 'yumwoof-logo.svg' | inline_asset_content }}
+          <span class="visually-hidden">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+
+      <div class="yw-nav__icons">
+        {%- if shop.customer_accounts_enabled -%}
+          <a
+            href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+            class="yw-nav__icon yw-icon--account"
+            rel="nofollow"
+          >
+            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+            <span class="visually-hidden">{{ 'customer.account_fallback' | t }}</span>
+          </a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="yw-nav__icon yw-icon--cart">
+          {% if cart == empty %}
+            <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+          {% else %}
+            <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+          {% endif %}
+          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+          {%- if cart != empty -%}
+            <div class="cart-count-bubble">
+              {%- if cart.item_count < 100 -%}<span aria-hidden="true">{{ cart.item_count }}</span>{%- endif -%}
+            </div>
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+
+    <div class="yw-mobile-menu__body">
+      {%- comment -%} Shop All / CTA (renders its mega content inline when attached) {%- endcomment -%}
+      {%- if section.settings.cta_text != blank -%}
+        {%- assign cta_needle = section.settings.cta_text | downcase | strip -%}
+        {%- assign cta_mega = blank -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'mega_menu' and block.settings.title != blank -%}
+            {%- assign hay = block.settings.title | downcase | strip -%}
+            {%- if hay == cta_needle -%}{%- assign cta_mega = block -%}{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if cta_mega != blank -%}
+          <div class="yw-mobile-mega">{% render 'header-mega-content', block: cta_mega %}</div>
+        {%- else -%}
+          <a class="yw-nav__cta yw-mobile-menu__cta" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+            {{- section.settings.cta_text -}}
+          </a>
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- comment -%} Secondary links {%- endcomment -%}
+      <div class="yw-mobile-menu__links">
+        {%- if section.settings.membership_text != blank -%}
+          <a class="yw-mobile-menu__link" href="{{ section.settings.membership_link | default: '#' }}">
+            {{- section.settings.membership_text -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            {%- assign link_needle = link.title | downcase | strip -%}
+            {%- assign link_mega = blank -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'mega_menu' and block.settings.title != blank -%}
+                {%- assign hay = block.settings.title | downcase | strip -%}
+                {%- if hay == link_needle -%}{%- assign link_mega = block -%}{%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if link_mega != blank -%}
+              <div class="yw-mobile-mega">{% render 'header-mega-content', block: link_mega %}</div>
+            {%- else -%}
+              <a class="yw-mobile-menu__link" href="{{ link.url }}">{{ link.title }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
 </yw-header>
 
 {%- if settings.cart_type == 'notification' -%}
@@ -185,7 +318,7 @@
 {
   "name": "t:sections.header.name",
   "class": "section-header",
-  "max_blocks": 3,
+  "max_blocks": 8,
   "settings": [
     {
       "type": "header",
@@ -255,6 +388,12 @@
       "label": "Navbar border color"
     },
     {
+      "type": "color",
+      "id": "mobile_menu_bg",
+      "default": "#FFC069",
+      "label": "Mobile menu background color"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
@@ -269,7 +408,7 @@
       "id": "cta_text",
       "default": "Shop All",
       "label": "Button label",
-      "info": "Leave blank to hide the button"
+      "info": "Leave blank to hide the button. Add a Mega menu block with this same title to show a dropdown."
     },
     {
       "type": "url",
@@ -306,6 +445,116 @@
     }
   ],
   "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Attaches a dropdown mega menu to the nav link (or Shop All button) whose title matches below."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Attach to nav link title",
+          "info": "Must match a menu link or the Shop All button label exactly (case-insensitive)."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Built around your dog."
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop All"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "header",
+          "content": "Card 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_1_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card_1_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "card_1_caption",
+          "label": "Caption"
+        },
+        {
+          "type": "url",
+          "id": "card_1_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_2_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card_2_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "card_2_caption",
+          "label": "Caption"
+        },
+        {
+          "type": "url",
+          "id": "card_2_link",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Card 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_3_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "card_3_title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "card_3_caption",
+          "label": "Caption"
+        },
+        {
+          "type": "url",
+          "id": "card_3_link",
+          "label": "Link"
+        }
+      ]
+    },
     {
       "type": "@app"
     }

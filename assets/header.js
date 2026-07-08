@@ -1,27 +1,36 @@
 /**
  * Yumwoof header behaviour.
- * <yw-header> is a custom element wrapping the announcement topbar + navbar.
+ * <yw-header> wraps the announcement topbar, the navbar and the mobile overlay.
  * Responsibilities:
- *   - Toggle the mobile navigation panel.
+ *   - Open / close the full-screen mobile menu overlay (with body scroll lock).
  *   - Optional sticky-on-scroll: hide on scroll down, reveal on scroll up.
+ * The desktop mega menu is CSS-only (hover / focus-within), so needs no JS.
  */
 class YwHeader extends HTMLElement {
   constructor() {
     super();
-    this.nav = this.querySelector('.yw-nav');
     this.toggle = this.querySelector('.yw-nav__toggle');
+    this.overlay = this.querySelector('.yw-mobile-menu');
+    this.closeBtn = this.querySelector('.yw-mobile-menu__close');
     this.sticky = this.hasAttribute('data-sticky');
     this.lastScroll = 0;
 
-    this.onToggle = this.onToggle.bind(this);
-    this.onDocClick = this.onDocClick.bind(this);
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.onKeydown = this.onKeydown.bind(this);
     this.onScroll = this.onScroll.bind(this);
   }
 
   connectedCallback() {
-    if (this.toggle && this.nav) {
-      this.toggle.addEventListener('click', this.onToggle);
-      document.addEventListener('click', this.onDocClick);
+    if (this.toggle && this.overlay) {
+      this.toggle.addEventListener('click', this.open);
+      if (this.closeBtn) this.closeBtn.addEventListener('click', this.close);
+      document.addEventListener('keydown', this.onKeydown);
+
+      // Close the overlay when a link inside it is followed.
+      this.overlay.addEventListener('click', (event) => {
+        if (event.target.closest('a')) this.close();
+      });
     }
 
     if (this.sticky) {
@@ -29,13 +38,17 @@ class YwHeader extends HTMLElement {
     }
 
     this.setHeaderHeight();
-    window.addEventListener('resize', this.setHeaderHeight.bind(this), { passive: true });
+    this._onResize = this.setHeaderHeight.bind(this);
+    window.addEventListener('resize', this._onResize, { passive: true });
   }
 
   disconnectedCallback() {
-    if (this.toggle) this.toggle.removeEventListener('click', this.onToggle);
-    document.removeEventListener('click', this.onDocClick);
+    if (this.toggle) this.toggle.removeEventListener('click', this.open);
+    if (this.closeBtn) this.closeBtn.removeEventListener('click', this.close);
+    document.removeEventListener('keydown', this.onKeydown);
     window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this._onResize);
+    document.body.classList.remove('yw-menu-open');
   }
 
   setHeaderHeight() {
@@ -43,29 +56,34 @@ class YwHeader extends HTMLElement {
   }
 
   isOpen() {
-    return this.nav.getAttribute('data-menu-open') === 'true';
+    return this.overlay.classList.contains('is-open');
   }
 
-  setOpen(open) {
-    this.nav.setAttribute('data-menu-open', open ? 'true' : 'false');
-    if (this.toggle) this.toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  open() {
+    this.overlay.classList.add('is-open');
+    document.body.classList.add('yw-menu-open');
+    this.toggle.setAttribute('aria-expanded', 'true');
+    if (this.closeBtn) this.closeBtn.focus();
   }
 
-  onToggle(event) {
-    event.stopPropagation();
-    this.setOpen(!this.isOpen());
+  close() {
+    this.overlay.classList.remove('is-open');
+    document.body.classList.remove('yw-menu-open');
+    this.toggle.setAttribute('aria-expanded', 'false');
   }
 
-  onDocClick(event) {
-    if (this.isOpen() && !this.nav.contains(event.target)) {
-      this.setOpen(false);
+  onKeydown(event) {
+    if (event.key === 'Escape' && this.isOpen()) {
+      this.close();
+      this.toggle.focus();
     }
   }
 
   onScroll() {
+    if (this.isOpen()) return;
+
     const current = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Reveal when near the very top.
     if (current <= 0) {
       this.classList.remove('yw-header--hidden');
       this.lastScroll = current;
@@ -73,10 +91,8 @@ class YwHeader extends HTMLElement {
     }
 
     if (current > this.lastScroll && current > this.offsetHeight) {
-      // Scrolling down – hide (unless the mobile menu is open).
-      if (!this.isOpen()) this.classList.add('yw-header--hidden');
+      this.classList.add('yw-header--hidden');
     } else {
-      // Scrolling up – reveal.
       this.classList.remove('yw-header--hidden');
     }
 
