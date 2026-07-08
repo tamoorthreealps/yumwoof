@@ -320,12 +320,11 @@
 
 .yw-mega__inner {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) 2.4fr;
+  grid-template-columns: 255px 1fr;
   gap: 9.5rem;
   align-items: center;
   padding: 4.8rem 9.6rem;
   background: rgba(255, 249, 239, 0.9);
-  border: 1.5px solid var(--yw-nav-border);
   border-radius: 24px;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -336,7 +335,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.6rem;
+  gap: .8rem;
 }
 
 .yw-mega__heading {
@@ -374,15 +373,15 @@
 .yw-mega__cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.4rem;
+  gap: 1.6rem;
 }
 
 .yw-mega-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.6rem;
-  padding: 2.4rem 1.6rem;
+  gap: 3.2rem;
+  padding: 4rem 1.6rem 3.2rem;
   background-color: #ffffff;
   border: 1.5px solid var(--yw-nav-border);
   border-radius: 19px;
@@ -400,7 +399,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 160px;
+  height: 176px;
 }
 
 .yw-mega-card__img {
