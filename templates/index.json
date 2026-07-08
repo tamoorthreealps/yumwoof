@@ -1,5 +1,26 @@
 {
   "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "How dogs were meant to eat.",
+        "uppercase_heading": true,
+        "subheading": "Next-level nutrition. Your dog deserves it.",
+        "button_label": "Take the quiz",
+        "button_link": "",
+        "offer_text": "Get 30% Off and Free Shipping.",
+        "content_position": "bottom",
+        "content_alignment": "left",
+        "min_height": 620,
+        "min_height_mobile": 480,
+        "background_color": "#1A1A1A",
+        "show_texture": true,
+        "text_color": "#FFF9EF",
+        "button_bg": "#FFC069",
+        "button_text_color": "#000000",
+        "button_border_color": "#000000"
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -69,6 +90,7 @@
     }
   },
   "order": [
+    "hero_banner",
     "image_banner",
     "featured_collection"
   ]
