@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Yumwoof membership / reviews banner
+   Design: Figma "Yumwoof (Copy)" nodes 863-1560 (desktop) & 1260-109 (mobile)
+   Colors and marquee speed are driven by CSS variables set inline from the
+   section settings in membership-banner.liquid.
+   ========================================================================== */
+
+.membership-banner {
+  --mb-bg: #661c1c;
+  --mb-text: #fff9ef;
+  --mb-star: #ffc069;
+  --mb-duration: 35s;
+
+  background-color: var(--mb-bg);
+  color: var(--mb-text);
+  overflow: hidden;
+}
+
+.membership-banner__inner {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  min-height: 64px;
+  padding: 0.8rem 6rem;
+}
+
+/* --------------------------------------------------------------------------
+   Star rating + label (pinned left on desktop)
+   -------------------------------------------------------------------------- */
+.membership-banner__rating {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  flex-shrink: 0;
+}
+
+.membership-banner__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--mb-star);
+}
+
+.membership-banner__star {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.membership-banner__rating-text {
+  color: var(--mb-text);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Review marquee
+   -------------------------------------------------------------------------- */
+.membership-banner__marquee {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  padding-left: 9.6rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.membership-banner__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+
+.membership-banner--marquee .membership-banner__track {
+  animation: mb-marquee var(--mb-duration) linear infinite;
+}
+
+.membership-banner--marquee .membership-banner__marquee:hover .membership-banner__track {
+  animation-play-state: paused;
+}
+
+.membership-banner__review {
+  margin: 0 9.6rem 0 0;
+  color: var(--mb-text);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+@keyframes mb-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Track holds two identical review sets (each item carries its own
+       right margin), so -50% lands exactly on the seam. */
+    transform: translateX(-50%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile: stacked + centered, single review, no scrolling
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 749px) {
+  .membership-banner__inner {
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.4rem;
+    min-height: 124px;
+    padding: 2.4rem 2rem;
+    text-align: center;
+  }
+
+  .membership-banner__rating {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .membership-banner__rating-text {
+    letter-spacing: 0.08em;
+  }
+
+  .membership-banner__marquee {
+    width: 100%;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .membership-banner__track {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    padding-left: 0;
+    animation: none;
+    transform: none;
+  }
+
+  .membership-banner__review {
+    white-space: normal;
+    max-width: 32rem;
+    margin: 0 auto;
+  }
+
+  .membership-banner__review:not(:first-child) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .membership-banner__track {
+    animation: none;
+  }
+}

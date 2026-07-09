@@ -87,10 +87,47 @@
         "padding_top": 44,
         "padding_bottom": 36
       }
+    },
+    "membership_banner": {
+      "type": "membership-banner",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "text": "“We love the fact that Yumwoof is clean with no additives.”"
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "text": "“It's real food that's actually healthy.”"
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "text": "“Not like other brands that ruin it with the seed oils.”"
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "rating_text": "Over 2,500 5-star reviews",
+        "enable_marquee": true,
+        "marquee_speed": 35,
+        "background_color": "#661C1C",
+        "text_color": "#FFF9EF",
+        "star_color": "#FFC069"
+      }
     }
   },
   "order": [
     "hero_banner",
+    "membership_banner",
     "image_banner",
     "featured_collection"
   ]

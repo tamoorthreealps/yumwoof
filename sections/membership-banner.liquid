@@ -1,0 +1,133 @@
+{{ 'css--membership-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .membership-banner {
+    --mb-bg: {{ section.settings.background_color }};
+    --mb-text: {{ section.settings.text_color }};
+    --mb-star: {{ section.settings.star_color }};
+    --mb-duration: {{ section.settings.marquee_speed }}s;
+  }
+{%- endstyle -%}
+
+{%- capture star_svg -%}
+  <svg class="membership-banner__star" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" focusable="false">
+    <path d="M10 1.5l2.47 5.005 5.53.803-4 3.9.944 5.507L10 15.02l-4.944 2.695.944-5.507-4-3.9 5.53-.803z"/>
+  </svg>
+{%- endcapture -%}
+
+{%- comment -%} Review quotes are re-used twice so the desktop marquee loops seamlessly. {%- endcomment -%}
+{%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+
+<section
+  class="membership-banner{% if section.settings.enable_marquee %} membership-banner--marquee{% endif %}"
+  role="region"
+  aria-label="{{ section.settings.rating_text | default: 'Customer reviews' | escape }}"
+>
+  <div class="membership-banner__inner">
+    {%- if section.settings.rating_text != blank -%}
+      <div class="membership-banner__rating">
+        <span class="membership-banner__stars">
+          {%- for i in (1..5) -%}{{ star_svg }}{%- endfor -%}
+        </span>
+        <span class="membership-banner__rating-text">{{ section.settings.rating_text }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if review_blocks.size > 0 -%}
+      <div class="membership-banner__marquee">
+        <div class="membership-banner__track">
+          {%- for block in review_blocks -%}
+            <p class="membership-banner__review" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+          {%- endfor -%}
+          {%- comment -%} Duplicate set (hidden from AT) to feed the infinite scroll. {%- endcomment -%}
+          {%- for block in review_blocks -%}
+            <p class="membership-banner__review" aria-hidden="true">{{ block.settings.text }}</p>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Membership banner",
+  "tag": "section",
+  "class": "section-membership-banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "Over 2,500 5-star reviews"
+    },
+    {
+      "type": "header",
+      "content": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_marquee",
+      "label": "Scroll reviews (marquee)",
+      "info": "When off, the first review shows statically.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "s",
+      "label": "Scroll duration",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#661C1C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars",
+      "default": "#FFC069"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Review quote",
+          "default": "“We love the fact that Yumwoof is clean with no additives.”"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Membership banner",
+      "blocks": [
+        { "type": "review", "settings": { "text": "“We love the fact that Yumwoof is clean with no additives.”" } },
+        { "type": "review", "settings": { "text": "“It's real food that's actually healthy.”" } },
+        { "type": "review", "settings": { "text": "“Not like other brands that ruin it with the seed oils.”" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
