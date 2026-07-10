@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_banner": {
@@ -13,79 +22,12 @@
         "content_alignment": "left",
         "min_height": 620,
         "min_height_mobile": 480,
-        "background_color": "#1A1A1A",
+        "background_color": "#1a1a1a",
         "show_texture": true,
-        "text_color": "#FFF9EF",
-        "button_bg": "#FFC069",
+        "text_color": "#fff9ef",
+        "button_bg": "#ffc069",
         "button_text_color": "#000000",
         "button_border_color": "#000000"
-      }
-    },
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
       }
     },
     "membership_banner": {
@@ -119,19 +61,28 @@
         "rating_text": "Over 2,500 5-star reviews",
         "enable_marquee": true,
         "marquee_speed": 35,
-        "background_color": "#661C1C",
-        "text_color": "#FFF9EF",
-        "star_color": "#FFC069"
+        "background_color": "#661c1c",
+        "text_color": "#fff9ef",
+        "star_color": "#ffc069"
       }
     },
-    "heritage_recipes": {
+    "heritage_recipes_76xVan": {
       "type": "heritage-recipes",
+      "name": "Heritage recipes",
       "settings": {
         "heading": "Heritage recipes guided by nature.",
         "uppercase_heading": true,
         "subheading": "Inspired by the original canine diet and backed by rigorous sourcing, nutrition, and testing standards.",
         "button_label": "See our standards →",
         "button_link": "",
+        "ingredient_1_title": "Premium protein",
+        "ingredient_1_text": "Wild-caught fish, locally sourced, non-GMO",
+        "ingredient_2_title": "Cocomega superfats",
+        "ingredient_2_text": "Healthy fats to support microbiome and gut health",
+        "ingredient_3_title": "Gently air-dried",
+        "ingredient_3_text": "Low-temp drying helps preserve nutrients + flavor",
+        "ingredient_4_title": "Ancestral nutrition",
+        "ingredient_4_text": "Packed with organs rich in bioavailable nutrients",
         "nono_heading": "The no-no list",
         "nono_subheading": "Every recipe. Every batch. Every bag.",
         "nono_items": "No GMO Ingredients, No Fillers, No Seed Oils, No Natural Flavors, No Synthetics, No Added Sugar, No Meat Meals, No Preservatives, No By-Products, No Carrageenan, No Glycerin, No Rosemary Extract, No Hot Extrusion, No Peas or Legumes",
@@ -141,12 +92,79 @@
         "card_background": "#FFFFFF",
         "card_border": "#000000"
       }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image_overlay_opacity": 40,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "Featured products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "hero_banner",
     "membership_banner",
-    "heritage_recipes",
+    "heritage_recipes_76xVan",
     "image_banner",
     "featured_collection"
   ]
