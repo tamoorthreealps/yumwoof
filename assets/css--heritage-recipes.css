@@ -1,0 +1,381 @@
+/* ==========================================================================
+   Yumwoof heritage recipes section
+   Design: Figma "Yumwoof (Copy)" nodes 1260-113 (heritage) & 1260-115 (no-no list)
+   Colors driven by CSS variables set inline from section settings.
+   ========================================================================== */
+
+.heritage {
+  --hr-bg: #7ba6dd;
+  --hr-text: #000000;
+  --hr-card-bg: #ffffff;
+  --hr-card-border: #000000;
+
+  position: relative;
+  overflow: hidden;
+  background-color: var(--hr-bg);
+  color: var(--hr-text);
+  padding: 5.6rem 0 4rem;
+}
+
+.heritage__container {
+  max-width: 151.2rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Intro (heading, subheading, button, bowl)
+   -------------------------------------------------------------------------- */
+.heritage__heading {
+  margin: 0 0 1.6rem;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 3.4rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--hr-text);
+}
+
+.heritage--uppercase .heritage__heading,
+.heritage--uppercase .heritage__nono-heading {
+  text-transform: uppercase;
+}
+
+.heritage__subheading {
+  margin: 0 0 2.4rem;
+  max-width: 42rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: var(--hr-text);
+}
+
+.heritage__button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  border: 1.5px solid var(--hr-text);
+  border-radius: 100px;
+  color: var(--hr-text);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.heritage__button:hover {
+  background-color: var(--hr-text);
+  color: var(--hr-bg);
+}
+
+.heritage__bowl {
+  margin-top: 2.4rem;
+  line-height: 0;
+}
+
+.heritage__bowl img {
+  display: block;
+  width: 100%;
+  max-width: 30rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Ingredient card
+   -------------------------------------------------------------------------- */
+.heritage__card-wrap {
+  position: relative;
+  margin-top: -2.4rem;
+  z-index: 1;
+}
+
+.heritage__card {
+  background-color: var(--hr-card-bg);
+  border: 2px solid var(--hr-card-border);
+  border-radius: 32px;
+  padding: 3.2rem 2.4rem;
+}
+
+.heritage__ingredients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+}
+
+.heritage__ingredient {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1.6rem;
+}
+
+.heritage__ingredient-media {
+  flex: none;
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heritage__ingredient-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.heritage__ingredient-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.heritage__ingredient-title {
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.heritage__ingredient-desc {
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+/* Floating decorative kibble */
+.heritage__kibble {
+  position: absolute;
+  z-index: 2;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.heritage__kibble img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.heritage__kibble--1 {
+  width: 64px;
+  top: -1.6rem;
+  right: -0.8rem;
+}
+
+.heritage__kibble--2 {
+  width: 56px;
+  bottom: -1.6rem;
+  left: -1.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   No-no list header
+   -------------------------------------------------------------------------- */
+.heritage__nono {
+  max-width: 151.2rem;
+  margin: 4rem auto 0;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.heritage__divider {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--hr-text);
+  margin-bottom: 2.4rem;
+}
+
+.heritage__nono-heading {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-heading-family, inherit);
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.heritage__nono-subheading {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   No-no marquee
+   -------------------------------------------------------------------------- */
+.heritage-marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 2.4rem;
+  overflow: hidden;
+}
+
+.heritage-marquee__row {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.heritage-marquee__row[data-marquee-ready] {
+  animation: heritage-scroll var(--marquee-duration, 40s) linear infinite;
+}
+
+.heritage-marquee__row--reverse {
+  animation-direction: reverse;
+}
+
+.heritage-marquee:hover .heritage-marquee__row[data-marquee-ready] {
+  animation-play-state: paused;
+}
+
+.heritage-marquee__track {
+  display: flex;
+  flex: none;
+}
+
+.heritage-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+  padding: 0.8rem 1.4rem;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 100px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.heritage-chip__x {
+  flex: none;
+  width: 9px;
+  height: 9px;
+}
+
+.heritage-chip__label {
+  font-size: 1.4rem;
+  line-height: 1.3;
+}
+
+@keyframes heritage-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heritage-marquee__row {
+    animation: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .heritage {
+    padding: 8rem 0 5rem;
+  }
+
+  .heritage__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    padding: 0 6rem;
+  }
+
+  .heritage__intro {
+    position: relative;
+  }
+
+  .heritage__heading {
+    font-size: 5.2rem;
+  }
+
+  .heritage__subheading {
+    font-size: 1.7rem;
+    margin-bottom: 3.2rem;
+  }
+
+  .heritage__bowl {
+    margin-top: 4rem;
+  }
+
+  .heritage__bowl img {
+    max-width: 44rem;
+    margin: 0;
+  }
+
+  .heritage__card-wrap {
+    margin-top: 0;
+  }
+
+  .heritage__card {
+    padding: 4.8rem 4rem;
+    border-radius: 40px;
+  }
+
+  .heritage__ingredients {
+    grid-template-columns: 1fr 1fr;
+    gap: 3.2rem 2.4rem;
+  }
+
+  /* Desktop cells stack the image above the text */
+  .heritage__ingredient {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .heritage__ingredient-title {
+    font-size: 1.7rem;
+  }
+
+  .heritage__ingredient-desc {
+    font-size: 1.4rem;
+  }
+
+  .heritage__kibble--1 {
+    width: 88px;
+    top: -2.4rem;
+    right: -3.2rem;
+  }
+
+  .heritage__kibble--2 {
+    width: 80px;
+    bottom: -2.4rem;
+    left: -2.4rem;
+  }
+
+  .heritage__nono {
+    margin-top: 5.6rem;
+    padding: 0 6rem;
+  }
+
+  .heritage__nono-heading {
+    font-size: 2.8rem;
+  }
+
+  .heritage-marquee {
+    gap: 1.6rem;
+    margin-top: 3.2rem;
+  }
+
+  .heritage-chip__label {
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}

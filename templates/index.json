@@ -123,11 +123,30 @@
         "text_color": "#FFF9EF",
         "star_color": "#FFC069"
       }
+    },
+    "heritage_recipes": {
+      "type": "heritage-recipes",
+      "settings": {
+        "heading": "Heritage recipes guided by nature.",
+        "uppercase_heading": true,
+        "subheading": "Inspired by the original canine diet and backed by rigorous sourcing, nutrition, and testing standards.",
+        "button_label": "See our standards →",
+        "button_link": "",
+        "nono_heading": "The no-no list",
+        "nono_subheading": "Every recipe. Every batch. Every bag.",
+        "nono_items": "No GMO Ingredients, No Fillers, No Seed Oils, No Natural Flavors, No Synthetics, No Added Sugar, No Meat Meals, No Preservatives, No By-Products, No Carrageenan, No Glycerin, No Rosemary Extract, No Hot Extrusion, No Peas or Legumes",
+        "marquee_speed": 45,
+        "background_color": "#7BA6DD",
+        "text_color": "#000000",
+        "card_background": "#FFFFFF",
+        "card_border": "#000000"
+      }
     }
   },
   "order": [
     "hero_banner",
     "membership_banner",
+    "heritage_recipes",
     "image_banner",
     "featured_collection"
   ]
