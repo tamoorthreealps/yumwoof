@@ -58,9 +58,12 @@
       <div class="heritage__card">
         <ul class="heritage__ingredients">
           {%- for i in (1..4) -%}
-            {%- assign title = section.settings['ingredient_' | append: i | append: '_title'] -%}
-            {%- assign text = section.settings['ingredient_' | append: i | append: '_text'] -%}
-            {%- assign image = section.settings['ingredient_' | append: i | append: '_image'] -%}
+            {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
+            {%- assign text_key = 'ingredient_' | append: i | append: '_text' -%}
+            {%- assign image_key = 'ingredient_' | append: i | append: '_image' -%}
+            {%- assign title = section.settings[title_key] -%}
+            {%- assign text = section.settings[text_key] -%}
+            {%- assign image = section.settings[image_key] -%}
             {%- if title != blank or image != blank -%}
               <li class="heritage__ingredient">
                 <span class="heritage__ingredient-media">
