@@ -95,7 +95,9 @@
         "background_color": "#7BA6DD",
         "text_color": "#000000",
         "card_background": "#FFFFFF",
-        "card_border": "#000000"
+        "card_border": "#000000",
+        "kibble_image_1": "shopify://shop_images/g1.png",
+        "kibble_image_2": "shopify://shop_images/g2.png"
       }
     },
     "image_banner": {
