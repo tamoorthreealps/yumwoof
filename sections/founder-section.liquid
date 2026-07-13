@@ -1,0 +1,162 @@
+{{ 'css--founder-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .founder {
+    --fs-bg: {{ section.settings.background_color }};
+    --fs-text: {{ section.settings.text_color }};
+    --fs-radius: {{ section.settings.image_radius }}px;
+  }
+{%- endstyle -%}
+
+<section class="founder founder--image-{{ section.settings.image_position }}{% if section.settings.uppercase_heading %} founder--uppercase{% endif %}">
+  <div class="founder__inner">
+    <div class="founder__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1200
+          | image_tag: class: 'founder__image', widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading
+        }}
+      {%- else -%}
+        <div class="founder__image founder__image--placeholder">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.badge_image != blank -%}
+        <span class="founder__badge">
+          {{ section.settings.badge_image | image_url: width: 320 | image_tag: alt: '', widths: '160, 240, 320', loading: 'lazy' }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <div class="founder__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="founder__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="founder__body rte">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.signature_image != blank or section.settings.signature_name != blank -%}
+        <div class="founder__signature">
+          {%- if section.settings.signature_image != blank -%}
+            {{ section.settings.signature_image | image_url: width: 600 | image_tag: class: 'founder__signature-img', alt: section.settings.signature_name | default: '', widths: '288, 440, 600', loading: 'lazy' }}
+          {%- endif -%}
+          {%- if section.settings.signature_name != blank or section.settings.signature_title != blank -%}
+            <p class="founder__signature-name">
+              {%- if section.settings.signature_name != blank -%}{{ section.settings.signature_name }}<br>{%- endif -%}
+              {%- if section.settings.signature_title != blank -%}<span class="founder__signature-title">{{ section.settings.signature_title }}</span>{%- endif -%}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founder section",
+  "tag": "section",
+  "class": "section-founder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clean ingredients from farms we trust."
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_heading",
+      "label": "Uppercase heading",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Your dog's food is our life's work. Yumwoof was built by people who care deeply about what goes into the bowl and what it does next. That's why we use carefully sourced meats, wild-caught fish, and non-GMO whole food ingredients selected to meet our Butcher Quality™ standards.</p><p>Every recipe is air-dried for optimal nutrition and lab tested beyond industry standards for safety and quality — so you can feed your dog with confidence.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Signature"
+    },
+    {
+      "type": "image_picker",
+      "id": "signature_image",
+      "label": "Signature image"
+    },
+    {
+      "type": "text",
+      "id": "signature_name",
+      "label": "Name",
+      "default": "Jaron & Ana"
+    },
+    {
+      "type": "text",
+      "id": "signature_title",
+      "label": "Title",
+      "default": "Founders"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge image",
+      "info": "Optional. Overlaps the top of the image (e.g. the Butcher Quality seal)."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Image corner radius",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Founder section"
+    }
+  ]
+}
+{% endschema %}

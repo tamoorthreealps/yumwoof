@@ -1,0 +1,318 @@
+/* ==========================================================================
+   Yumwoof comparison table ("How we stack up")
+   Design: Figma "Yumwoof (Copy)" node 863-1748 / mobile 1260-119
+   Desktop: brand + all competitors. Mobile: brand + one competitor via tabs.
+   ========================================================================== */
+
+.cmp {
+  --cmp-bg: #fff9ef;
+  --cmp-text: #000000;
+  --cmp-highlight: #c8912a;
+  --cmp-accent: #661d1d;
+  --cmp-line: rgba(0, 0, 0, 0.14);
+
+  background-color: var(--cmp-bg);
+  color: var(--cmp-text);
+  padding: 4.8rem 0;
+}
+
+.cmp__inner {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Intro
+   -------------------------------------------------------------------------- */
+.cmp__intro {
+  text-align: center;
+  margin-bottom: 2.8rem;
+}
+
+.cmp__eyebrow {
+  margin: 0 0 1.2rem;
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.cmp__heading {
+  margin: 0 auto 1.2rem;
+  max-width: 22ch;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.cmp--uppercase .cmp__eyebrow,
+.cmp--uppercase .cmp__heading {
+  text-transform: uppercase;
+}
+
+.cmp__subheading {
+  margin: 0 auto;
+  max-width: 44rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile competitor tabs
+   -------------------------------------------------------------------------- */
+.cmp__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.cmp__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.4rem;
+  border: 1.5px solid var(--cmp-text);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--cmp-text);
+  cursor: pointer;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.cmp__tab[aria-selected='true'] {
+  background: var(--cmp-highlight);
+  border-color: var(--cmp-highlight);
+}
+
+.cmp__tab-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   Table
+   -------------------------------------------------------------------------- */
+.cmp__scroll {
+  padding: 2rem 0;
+}
+
+.cmp__table {
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid var(--cmp-text);
+  border-radius: 16px;
+}
+
+.cmp__col {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.cmp__col--labels {
+  flex: 1.3 1 0;
+}
+
+.cmp__col--comp {
+  border-left: 1px solid var(--cmp-line);
+}
+
+.cmp__col--brand + .cmp__col--comp {
+  border-left: 0;
+}
+
+/* Column header */
+.cmp__head {
+  min-height: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 1.6rem 1rem 1.2rem;
+}
+
+.cmp__brand-logo {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+}
+
+.cmp__col-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.cmp__col-label {
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.cmp__col-label--brand {
+  color: var(--cmp-accent);
+}
+
+/* Cells */
+.cmp__cell {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--cmp-line);
+  font-size: 1.5rem;
+}
+
+.cmp__cell--label {
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 1rem 0 1.8rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.cmp__head--empty {
+  min-height: 118px;
+}
+
+/* Brand column raised amber card (behind the aligned cells) */
+.cmp__col--brand {
+  position: relative;
+}
+
+.cmp__col--brand::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2rem;
+  bottom: -2rem;
+  background: var(--cmp-highlight);
+  border: 1.5px solid var(--cmp-text);
+  border-radius: 16px;
+  z-index: 0;
+}
+
+.cmp__col--brand > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cmp__col--brand .cmp__cell {
+  border-top-color: rgba(0, 0, 0, 0.22);
+}
+
+/* Marks */
+.cmp__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmp__mark svg {
+  width: 22px;
+  height: 18px;
+}
+
+.cmp__mark--yes {
+  color: #1a1a1a;
+}
+
+.cmp__mark--no {
+  color: rgba(0, 0, 0, 0.28);
+}
+
+.cmp__cost {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.cmp__col--brand .cmp__cost {
+  color: var(--cmp-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile: only the active competitor column shows
+   -------------------------------------------------------------------------- */
+.cmp__col--comp {
+  display: none;
+}
+
+.cmp__col--comp.is-active {
+  display: flex;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .cmp {
+    padding: 8rem 0;
+  }
+
+  .cmp__intro {
+    margin-bottom: 4rem;
+  }
+
+  .cmp__heading {
+    font-size: 4.8rem;
+    max-width: 24ch;
+  }
+
+  .cmp__subheading {
+    font-size: 1.8rem;
+  }
+
+  .cmp__tabs {
+    display: none;
+  }
+
+  .cmp__col--comp {
+    display: flex;
+    border-left: 1px solid var(--cmp-line);
+  }
+
+  .cmp__col--brand + .cmp__col--comp {
+    border-left: 0;
+  }
+
+  .cmp__head,
+  .cmp__head--empty {
+    min-height: 160px;
+  }
+
+  .cmp__col-icon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .cmp__col-label {
+    font-size: 1.6rem;
+  }
+
+  .cmp__brand-logo {
+    height: 24px;
+  }
+
+  .cmp__cell {
+    font-size: 1.6rem;
+  }
+
+  .cmp__cell--label {
+    padding-left: 2.4rem;
+  }
+}

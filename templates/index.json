@@ -188,6 +188,96 @@
         "padding_top": 44,
         "padding_bottom": 36
       }
+    },
+    "founder_section": {
+      "type": "founder-section",
+      "settings": {
+        "heading": "Clean ingredients from farms we trust.",
+        "uppercase_heading": true,
+        "body": "<p>Your dog's food is our life's work. Yumwoof was built by people who care deeply about what goes into the bowl and what it does next. That's why we use carefully sourced meats, wild-caught fish, and non-GMO whole food ingredients selected to meet our Butcher Quality™ standards.</p><p>Every recipe is air-dried for optimal nutrition and lab tested beyond industry standards for safety and quality — so you can feed your dog with confidence.</p>",
+        "signature_name": "Jaron & Ana",
+        "signature_title": "Founders",
+        "image_position": "left",
+        "image_radius": 32,
+        "background_color": "#FFF9EF",
+        "text_color": "#000000"
+      }
+    },
+    "comparison_section": {
+      "type": "comparison-section",
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "label": "Seed Oil Free",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "check",
+            "comp3_value": "check"
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "label": "Minimally Processed",
+            "brand_value": "check",
+            "comp1_value": "check",
+            "comp2_value": "cross",
+            "comp3_value": "cross"
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "label": "Non-GMO",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "cross",
+            "comp3_value": "cross"
+          }
+        },
+        "row-4": {
+          "type": "row",
+          "settings": {
+            "label": "Fridge Free",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "cross",
+            "comp3_value": "check"
+          }
+        },
+        "row-5": {
+          "type": "row",
+          "settings": {
+            "label": "Daily Cost",
+            "brand_value": "$$",
+            "comp1_value": "$",
+            "comp2_value": "$$$",
+            "comp3_value": "$$$"
+          }
+        }
+      },
+      "block_order": [
+        "row-1",
+        "row-2",
+        "row-3",
+        "row-4",
+        "row-5"
+      ],
+      "settings": {
+        "eyebrow": "How we stack up",
+        "heading": "Air-dried because your dog nose the difference",
+        "uppercase_heading": true,
+        "subheading": "Cooked at low temperatures to preserve whole food nutrition and flavor.",
+        "brand_label": "Air-Dried",
+        "comp1_label": "Dry Kibble",
+        "comp2_label": "Raw",
+        "comp3_label": "Fresh",
+        "background_color": "#FFF9EF",
+        "text_color": "#000000",
+        "highlight_color": "#C8912A",
+        "accent_color": "#661D1D"
+      }
     }
   },
   "order": [
@@ -195,6 +285,8 @@
     "membership_banner",
     "featured_products",
     "heritage_recipes_76xVan",
+    "founder_section",
+    "comparison_section",
     "image_banner",
     "featured_collection"
   ]

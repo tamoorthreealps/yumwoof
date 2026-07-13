@@ -1,0 +1,340 @@
+{{ 'css--comparison-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .cmp {
+    --cmp-bg: {{ section.settings.background_color }};
+    --cmp-text: {{ section.settings.text_color }};
+    --cmp-highlight: {{ section.settings.highlight_color }};
+    --cmp-accent: {{ section.settings.accent_color }};
+  }
+{%- endstyle -%}
+
+{%- capture check_mark -%}
+  <span class="cmp__mark cmp__mark--yes">
+    <svg viewBox="0 0 24 20" fill="none" aria-hidden="true"><path d="M2 11l6.5 6.5L22 3" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="visually-hidden">Yes</span>
+  </span>
+{%- endcapture -%}
+{%- capture cross_mark -%}
+  <span class="cmp__mark cmp__mark--no">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <span class="visually-hidden">No</span>
+  </span>
+{%- endcapture -%}
+
+{%- assign row_blocks = section.blocks | where: 'type', 'row' -%}
+
+<section class="cmp{% if section.settings.uppercase_heading %} cmp--uppercase{% endif %}">
+  <div class="cmp__inner">
+    <div class="cmp__intro">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="cmp__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cmp__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="cmp__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Mobile competitor tabs {%- endcomment -%}
+    <div class="cmp__tabs" role="tablist" data-cmp-tabs>
+      {%- for i in (1..3) -%}
+        {%- assign label_key = 'comp' | append: i | append: '_label' -%}
+        {%- assign icon_key = 'comp' | append: i | append: '_icon' -%}
+        {%- assign clabel = section.settings[label_key] -%}
+        {%- if clabel != blank -%}
+          {%- assign cicon = section.settings[icon_key] -%}
+          <button type="button" class="cmp__tab" role="tab" data-comp-index="{{ i }}">
+            {%- if cicon != blank -%}
+              {{ cicon | image_url: width: 80 | image_tag: class: 'cmp__tab-icon', alt: '', widths: '40, 60, 80', loading: 'lazy' }}
+            {%- endif -%}
+            <span>{{ clabel }}</span>
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="cmp__scroll">
+      <div class="cmp__table">
+        {%- comment -%} Row-label column {%- endcomment -%}
+        <div class="cmp__col cmp__col--labels">
+          <div class="cmp__head cmp__head--empty" aria-hidden="true"></div>
+          {%- for block in row_blocks -%}
+            <div class="cmp__cell cmp__cell--label" {{ block.shopify_attributes }}>{{ block.settings.label }}</div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Brand column (highlighted) {%- endcomment -%}
+        <div class="cmp__col cmp__col--brand">
+          <div class="cmp__head">
+            {%- if section.settings.brand_logo != blank -%}
+              {{ section.settings.brand_logo | image_url: width: 260 | image_tag: class: 'cmp__brand-logo', alt: section.settings.brand_label, widths: '130, 200, 260', loading: 'lazy' }}
+            {%- endif -%}
+            {%- if section.settings.brand_icon != blank -%}
+              {{ section.settings.brand_icon | image_url: width: 160 | image_tag: class: 'cmp__col-icon', alt: '', widths: '80, 120, 160', loading: 'lazy' }}
+            {%- endif -%}
+            <span class="cmp__col-label cmp__col-label--brand">{{ section.settings.brand_label }}</span>
+          </div>
+          {%- for block in row_blocks -%}
+            <div class="cmp__cell">
+              {%- assign v = block.settings.brand_value | strip | downcase -%}
+              {%- if v == 'check' -%}{{ check_mark }}
+              {%- elsif v == 'cross' -%}{{ cross_mark }}
+              {%- elsif block.settings.brand_value != blank -%}<span class="cmp__cost">{{ block.settings.brand_value }}</span>{%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Competitor columns {%- endcomment -%}
+        {%- for i in (1..3) -%}
+          {%- assign label_key = 'comp' | append: i | append: '_label' -%}
+          {%- assign icon_key = 'comp' | append: i | append: '_icon' -%}
+          {%- assign value_key = 'comp' | append: i | append: '_value' -%}
+          {%- assign clabel = section.settings[label_key] -%}
+          {%- if clabel != blank -%}
+            {%- assign cicon = section.settings[icon_key] -%}
+            <div class="cmp__col cmp__col--comp" data-comp-index="{{ i }}">
+              <div class="cmp__head">
+                {%- if cicon != blank -%}
+                  {{ cicon | image_url: width: 160 | image_tag: class: 'cmp__col-icon', alt: '', widths: '80, 120, 160', loading: 'lazy' }}
+                {%- endif -%}
+                <span class="cmp__col-label">{{ clabel }}</span>
+              </div>
+              {%- for block in row_blocks -%}
+                {%- assign cv = block.settings[value_key] -%}
+                <div class="cmp__cell">
+                  {%- assign v = cv | strip | downcase -%}
+                  {%- if v == 'check' -%}{{ check_mark }}
+                  {%- elsif v == 'cross' -%}{{ cross_mark }}
+                  {%- elsif cv != blank -%}<span class="cmp__cost">{{ cv }}</span>{%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function initComparison(section) {
+      var table = section.querySelector('.cmp__table');
+      if (!table || table.dataset.cmpReady) return;
+      var tabs = Array.prototype.slice.call(section.querySelectorAll('.cmp__tab'));
+      var cols = Array.prototype.slice.call(section.querySelectorAll('.cmp__col--comp'));
+      if (tabs.length === 0) return;
+
+      function activate(index) {
+        tabs.forEach(function (t) {
+          t.setAttribute('aria-selected', t.dataset.compIndex === index ? 'true' : 'false');
+        });
+        cols.forEach(function (c) {
+          c.classList.toggle('is-active', c.dataset.compIndex === index);
+        });
+      }
+
+      tabs.forEach(function (t) {
+        t.addEventListener('click', function () { activate(t.dataset.compIndex); });
+      });
+      activate(tabs[0].dataset.compIndex);
+      table.dataset.cmpReady = 'true';
+    }
+
+    function init(root) {
+      root.querySelectorAll('.cmp').forEach(initComparison);
+    }
+
+    if (document.readyState !== 'loading') {
+      init(document);
+    } else {
+      document.addEventListener('DOMContentLoaded', function () { init(document); });
+    }
+    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Comparison table",
+  "tag": "section",
+  "class": "section-comparison",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "How we stack up"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Air-dried because your dog nose the difference"
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_heading",
+      "label": "Uppercase eyebrow and heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Cooked at low temperatures to preserve whole food nutrition and flavor."
+    },
+    {
+      "type": "header",
+      "content": "Your brand column (highlighted)"
+    },
+    {
+      "type": "text",
+      "id": "brand_label",
+      "label": "Label",
+      "default": "Air-Dried"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_logo",
+      "label": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Competitor 1"
+    },
+    {
+      "type": "text",
+      "id": "comp1_label",
+      "label": "Label",
+      "default": "Dry Kibble"
+    },
+    {
+      "type": "image_picker",
+      "id": "comp1_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Competitor 2"
+    },
+    {
+      "type": "text",
+      "id": "comp2_label",
+      "label": "Label",
+      "default": "Raw"
+    },
+    {
+      "type": "image_picker",
+      "id": "comp2_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Competitor 3"
+    },
+    {
+      "type": "text",
+      "id": "comp3_label",
+      "label": "Label",
+      "default": "Fresh"
+    },
+    {
+      "type": "image_picker",
+      "id": "comp3_icon",
+      "label": "Icon"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Brand column highlight",
+      "default": "#C8912A"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Brand accent (logo, label, cost)",
+      "default": "#661D1D"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Feature",
+          "default": "Seed Oil Free"
+        },
+        {
+          "type": "paragraph",
+          "content": "For each column enter \"check\", \"cross\", or custom text like \"$$\"."
+        },
+        {
+          "type": "text",
+          "id": "brand_value",
+          "label": "Your brand",
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "comp1_value",
+          "label": "Competitor 1",
+          "default": "cross"
+        },
+        {
+          "type": "text",
+          "id": "comp2_value",
+          "label": "Competitor 2",
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "comp3_value",
+          "label": "Competitor 3",
+          "default": "check"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Comparison table",
+      "blocks": [
+        { "type": "row", "settings": { "label": "Seed Oil Free", "brand_value": "check", "comp1_value": "cross", "comp2_value": "check", "comp3_value": "check" } },
+        { "type": "row", "settings": { "label": "Minimally Processed", "brand_value": "check", "comp1_value": "check", "comp2_value": "cross", "comp3_value": "cross" } },
+        { "type": "row", "settings": { "label": "Non-GMO", "brand_value": "check", "comp1_value": "cross", "comp2_value": "cross", "comp3_value": "cross" } },
+        { "type": "row", "settings": { "label": "Fridge Free", "brand_value": "check", "comp1_value": "cross", "comp2_value": "cross", "comp3_value": "check" } },
+        { "type": "row", "settings": { "label": "Daily Cost", "brand_value": "$$", "comp1_value": "$", "comp2_value": "$$$", "comp3_value": "$$$" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
