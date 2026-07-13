@@ -297,24 +297,24 @@
         "text_color": "#000000"
       }
     },
-    "explore_membership": {
+    "explore_membership_3tTpcM": {
       "type": "explore-membership",
       "blocks": {
-        "perk-1": {
+        "perk_EBxbWR": {
           "type": "perk",
           "settings": {
             "title": "25% off every order",
             "subtitle": "Member rate on food"
           }
         },
-        "perk-2": {
+        "perk_W4je7p": {
           "type": "perk",
           "settings": {
             "title": "Free shipping",
             "subtitle": "On every membership order"
           }
         },
-        "perk-3": {
+        "perk_q3zz67": {
           "type": "perk",
           "settings": {
             "title": "Exclusive perks",
@@ -323,15 +323,17 @@
         }
       },
       "block_order": [
-        "perk-1",
-        "perk-2",
-        "perk-3"
+        "perk_EBxbWR",
+        "perk_W4je7p",
+        "perk_q3zz67"
       ],
+      "name": "Explore membership",
       "settings": {
         "eyebrow": "Membership has its perks",
-        "description": "<p>Become a member to save <strong>25% on every order</strong>, avoid a year of inflation, and enjoy exclusive benefits.</p>",
+        "description": "<p>Become a member to save 25% on every order, avoid a year of inflation, and enjoy exclusive benefits.</p>",
         "button_label": "Explore Membership →",
         "button_link": "",
+        "image": "shopify://shop_images/image_52.png",
         "image_position": "left",
         "uppercase_perk_title": true,
         "autoplay": true,
@@ -342,8 +344,9 @@
         "accent_color": "#661D1D"
       }
     },
-    "quiz_section": {
+    "quiz_section_XQVHjY": {
       "type": "quiz-section",
+      "name": "Quiz call to action",
       "settings": {
         "heading": "Your dog's food is our life's work.",
         "uppercase_heading": true,
@@ -351,55 +354,10 @@
         "button_label": "Take the quiz",
         "button_link": "",
         "offer_text": "Get 30% Off and Free Shipping.",
+        "decor_left": "shopify://shop_images/m-left.png",
+        "decor_right": "shopify://shop_images/m-right.png",
         "background_color": "#1A1A1A",
         "text_color": "#FFF9EF"
-      }
-    },
-    "faqs_section": {
-      "type": "faqs-section",
-      "blocks": {
-        "faq-1": {
-          "type": "faq",
-          "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
-          }
-        },
-        "faq-2": {
-          "type": "faq",
-          "settings": {
-            "question": "Why choose air-dried over fresh food?",
-            "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>"
-          }
-        },
-        "faq-3": {
-          "type": "faq",
-          "settings": {
-            "question": "Do you offer a money-back guarantee?",
-            "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>"
-          }
-        },
-        "faq-4": {
-          "type": "faq",
-          "settings": {
-            "question": "Why are organ meats important for dogs?",
-            "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq-1",
-        "faq-2",
-        "faq-3",
-        "faq-4"
-      ],
-      "settings": {
-        "heading": "Any Questions?",
-        "subheading": "Every dog is different. Find the recipe that's right for yours.",
-        "open_first": true,
-        "background_color": "#FFF9EF",
-        "text_color": "#000000",
-        "line_color": "#000000"
       }
     }
   },
@@ -411,6 +369,8 @@
     "founder_section",
     "comparison_section",
     "research_section",
-    "cocomega_section"
+    "cocomega_section",
+    "explore_membership_3tTpcM",
+    "quiz_section_XQVHjY"
   ]
 }
