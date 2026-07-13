@@ -122,84 +122,19 @@
         "kibble_image_2": "shopify://shop_images/g2.png"
       }
     },
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
-    },
     "founder_section": {
       "type": "founder-section",
       "settings": {
         "heading": "Clean ingredients from farms we trust.",
         "uppercase_heading": true,
         "body": "<p>Your dog's food is our life's work. Yumwoof was built by people who care deeply about what goes into the bowl and what it does next. That's why we use carefully sourced meats, wild-caught fish, and non-GMO whole food ingredients selected to meet our Butcher Quality™ standards.</p><p>Every recipe is air-dried for optimal nutrition and lab tested beyond industry standards for safety and quality — so you can feed your dog with confidence.</p>",
+        "signature_image": "shopify://shop_images/signature.svg",
         "signature_name": "Jaron & Ana",
         "signature_title": "Founders",
+        "badge_image": "shopify://shop_images/yumwoof-badge.svg",
         "image_position": "left",
         "image_radius": 32,
-        "background_color": "#FFF9EF",
+        "background_color": "#fff9ef",
         "text_color": "#000000"
       }
     },
@@ -270,13 +205,85 @@
         "uppercase_heading": true,
         "subheading": "Cooked at low temperatures to preserve whole food nutrition and flavor.",
         "brand_label": "Air-Dried",
+        "brand_logo": "shopify://shop_images/yumwoof.svg",
+        "brand_icon": "shopify://shop_images/yumwoof.png",
         "comp1_label": "Dry Kibble",
+        "comp1_icon": "shopify://shop_images/dry-kibble.png",
         "comp2_label": "Raw",
+        "comp2_icon": "shopify://shop_images/raw.png",
         "comp3_label": "Fresh",
-        "background_color": "#FFF9EF",
+        "comp3_icon": "shopify://shop_images/fresh.png",
+        "background_color": "#fff9ef",
         "text_color": "#000000",
-        "highlight_color": "#C8912A",
-        "accent_color": "#661D1D"
+        "highlight_color": "#c8912a",
+        "accent_color": "#661d1d"
+      }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image_overlay_opacity": 40,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "Featured products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
       }
     }
   },
