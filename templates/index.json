@@ -66,6 +66,28 @@
         "star_color": "#ffc069"
       }
     },
+    "featured_products": {
+      "type": "featured-products-section",
+      "settings": {
+        "heading": "Explore our air dried food",
+        "uppercase_heading": true,
+        "products": [
+          "ancestral-blend",
+          "elevated-harvest",
+          "big-breed"
+        ],
+        "metafield_labels": "custom.labels",
+        "metafield_description": "custom.product_card_short_description",
+        "metafield_recipes_link": "custom.recipes_link",
+        "recipes_label": "+ View all recipes",
+        "shop_label": "Shop now",
+        "background_color": "#fff9ef",
+        "text_color": "#000000",
+        "card_background": "#ffffff",
+        "card_border": "#000000",
+        "label_color": "#661d1d"
+      }
+    },
     "heritage_recipes_76xVan": {
       "type": "heritage-recipes",
       "name": "Heritage recipes",
@@ -92,9 +114,9 @@
         "nono_subheading": "Every recipe. Every batch. Every bag.",
         "nono_items": "No GMO Ingredients, No Fillers, No Seed Oils, No Natural Flavors, No Synthetics, No Added Sugar, No Meat Meals, No Preservatives, No By-Products, No Carrageenan, No Glycerin, No Rosemary Extract, No Hot Extrusion, No Peas or Legumes",
         "marquee_speed": 45,
-        "background_color": "#7BA6DD",
+        "background_color": "#7ba6dd",
         "text_color": "#000000",
-        "card_background": "#FFFFFF",
+        "card_background": "#ffffff",
         "card_border": "#000000",
         "kibble_image_1": "shopify://shop_images/g1.png",
         "kibble_image_2": "shopify://shop_images/g2.png"
@@ -165,24 +187,6 @@
         "swipe_on_mobile": false,
         "padding_top": 44,
         "padding_bottom": 36
-      }
-    },
-    "featured_products": {
-      "type": "featured-products-section",
-      "settings": {
-        "heading": "Explore our air dried food",
-        "uppercase_heading": true,
-        "products": [],
-        "metafield_labels": "custom.labels",
-        "metafield_description": "custom.product_card_short_description",
-        "metafield_recipes_link": "custom.recipes_link",
-        "recipes_label": "+ View all recipes",
-        "shop_label": "Shop now",
-        "background_color": "#FFF9EF",
-        "text_color": "#000000",
-        "card_background": "#FFFFFF",
-        "card_border": "#000000",
-        "label_color": "#661D1D"
       }
     }
   },
