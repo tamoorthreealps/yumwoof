@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Yumwoof Cocomega feature ("No seed oils. Just Cocomega superfats.")
+   Design: Figma "Yumwoof (Copy)" node 1260-123 / desktop 905-1152
+   ========================================================================== */
+
+.cocomega {
+  --co-bg: #fff9ef;
+  --co-text: #000000;
+  --co-radius: 24px;
+
+  background-color: var(--co-bg);
+  color: var(--co-text);
+  padding: 4.8rem 0;
+}
+
+.cocomega__inner {
+  max-width: 128rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Media
+   -------------------------------------------------------------------------- */
+.cocomega__media {
+  position: relative;
+}
+
+.cocomega__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 352 / 300;
+  object-fit: cover;
+  border-radius: var(--co-radius);
+  background-color: #000000;
+}
+
+.cocomega__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cocomega__image--placeholder .placeholder-svg {
+  width: 50%;
+  opacity: 0.4;
+}
+
+.cocomega__badge {
+  position: absolute;
+  top: -2rem;
+  left: -1.2rem;
+  width: 88px;
+  line-height: 0;
+}
+
+.cocomega__badge img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Content
+   -------------------------------------------------------------------------- */
+.cocomega__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cocomega__heading {
+  margin: 0 0 1.2rem;
+  max-width: 20ch;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--co-text);
+}
+
+.cocomega--uppercase .cocomega__heading {
+  text-transform: uppercase;
+}
+
+.cocomega__body {
+  max-width: 34rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  color: var(--co-text);
+}
+
+.cocomega__body > p {
+  margin: 0 0 1.2rem;
+}
+
+.cocomega__body > p:last-child {
+  margin-bottom: 0;
+}
+
+.cocomega__button {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 2.4rem;
+  padding: 0.8rem 2rem;
+  border: 1.5px solid var(--co-text);
+  border-radius: 100px;
+  color: var(--co-text);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.cocomega__button:hover {
+  background-color: var(--co-text);
+  color: var(--co-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .cocomega {
+    padding: 8rem 0;
+  }
+
+  .cocomega__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 6.4rem;
+  }
+
+  .cocomega__media {
+    flex: 1 1 55%;
+    min-width: 0;
+  }
+
+  .cocomega__content {
+    flex: 1 1 45%;
+    min-width: 0;
+  }
+
+  .cocomega--image-right .cocomega__media {
+    order: 2;
+  }
+
+  .cocomega__image {
+    aspect-ratio: 726 / 588;
+  }
+
+  .cocomega__badge {
+    top: -3rem;
+    left: -3rem;
+    width: 120px;
+  }
+
+  .cocomega__heading {
+    font-size: 4.4rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .cocomega__body {
+    font-size: 1.7rem;
+  }
+}
