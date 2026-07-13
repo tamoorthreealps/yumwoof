@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Yumwoof founder section ("Clean ingredients from farms we trust")
+   Design: Figma "Yumwoof (Copy)" node 863-1631 / mobile 1260-117
+   ========================================================================== */
+
+.founder {
+  --fs-bg: #fff9ef;
+  --fs-text: #000000;
+  --fs-radius: 32px;
+
+  background-color: var(--fs-bg);
+  color: var(--fs-text);
+  padding: 4.8rem 0;
+}
+
+.founder__inner {
+  max-width: 128rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Media
+   -------------------------------------------------------------------------- */
+.founder__media {
+  position: relative;
+}
+
+.founder__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--fs-radius);
+  background-color: #000000;
+}
+
+.founder__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.founder__image--placeholder .placeholder-svg {
+  width: 60%;
+  height: auto;
+  opacity: 0.4;
+}
+
+.founder__badge {
+  position: absolute;
+  top: -1.6rem;
+  right: -0.8rem;
+  width: 32%;
+  max-width: 160px;
+  line-height: 0;
+}
+
+.founder__badge img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Content
+   -------------------------------------------------------------------------- */
+.founder__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder__heading {
+  margin: 0 0 1.6rem;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fs-text);
+}
+
+.founder--uppercase .founder__heading {
+  text-transform: uppercase;
+}
+
+.founder__body {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--fs-text);
+}
+
+.founder__body > p {
+  margin: 0 0 1.6rem;
+}
+
+.founder__body > p:last-child {
+  margin-bottom: 0;
+}
+
+.founder__signature {
+  margin-top: 2.4rem;
+}
+
+.founder__signature-img {
+  display: block;
+  width: auto;
+  max-width: 24rem;
+  height: auto;
+  margin-bottom: 1.2rem;
+}
+
+.founder__signature-name {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.founder__signature-title {
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .founder {
+    padding: 8rem 0;
+  }
+
+  .founder__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 8rem;
+  }
+
+  .founder__media,
+  .founder__content {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .founder__image {
+    aspect-ratio: 588 / 680;
+  }
+
+  .founder--image-right .founder__media {
+    order: 2;
+  }
+
+  .founder__badge {
+    top: -2rem;
+    right: -2rem;
+    width: 22rem;
+  }
+
+  .founder__heading {
+    font-size: 4.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .founder__body {
+    font-size: 1.8rem;
+    line-height: 1.55;
+  }
+
+  .founder__signature {
+    margin-top: 3.2rem;
+  }
+
+  .founder__signature-name {
+    font-size: 2rem;
+  }
+}
