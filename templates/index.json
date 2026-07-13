@@ -284,7 +284,6 @@
     },
     "cocomega_section": {
       "type": "cocomega-section",
-      "disabled": true,
       "settings": {
         "heading": "No seed oils. Just Cocomega superfats.",
         "uppercase_heading": true,
@@ -328,7 +327,6 @@
         "perk_W4je7p",
         "perk_q3zz67"
       ],
-      "disabled": true,
       "name": "Explore membership",
       "settings": {
         "eyebrow": "Membership has its perks",
@@ -348,7 +346,6 @@
     },
     "quiz_section_XQVHjY": {
       "type": "quiz-section",
-      "disabled": true,
       "name": "Quiz call to action",
       "settings": {
         "heading": "Your dog's food is our life's work.",
