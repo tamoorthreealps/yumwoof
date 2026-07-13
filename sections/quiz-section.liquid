@@ -1,0 +1,119 @@
+{{ 'css--quiz-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .quiz {
+    --quiz-bg: {{ section.settings.background_color }};
+    --quiz-text: {{ section.settings.text_color }};
+  }
+{%- endstyle -%}
+
+<section class="quiz{% if section.settings.uppercase_heading %} quiz--uppercase{% endif %}">
+  {%- if section.settings.decor_left != blank -%}
+    <span class="quiz__decor quiz__decor--left">
+      {{ section.settings.decor_left | image_url: width: 220 | image_tag: alt: '', widths: '72, 120, 220', loading: 'lazy' }}
+    </span>
+  {%- endif -%}
+  {%- if section.settings.decor_right != blank -%}
+    <span class="quiz__decor quiz__decor--right">
+      {{ section.settings.decor_right | image_url: width: 220 | image_tag: alt: '', widths: '84, 140, 220', loading: 'lazy' }}
+    </span>
+  {%- endif -%}
+
+  <div class="quiz__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="quiz__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a class="quiz__button" href="{{ section.settings.button_link | default: '#' }}">
+        <span class="quiz__button-label">{{ section.settings.button_label }}</span>
+      </a>
+    {%- endif -%}
+    {%- if section.settings.offer_text != blank -%}
+      <p class="quiz__offer">{{ section.settings.offer_text }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quiz call to action",
+  "tag": "section",
+  "class": "section-quiz",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your dog's food is our life's work."
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_heading",
+      "label": "Uppercase heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Take our quiz to find the recipe that's right for your dog."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Take the quiz"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "offer_text",
+      "label": "Offer text",
+      "default": "Get 30% Off and Free Shipping."
+    },
+    {
+      "type": "header",
+      "content": "Decoration"
+    },
+    {
+      "type": "image_picker",
+      "id": "decor_left",
+      "label": "Decorative image (left)",
+      "info": "Optional. Overhangs the left edge."
+    },
+    {
+      "type": "image_picker",
+      "id": "decor_right",
+      "label": "Decorative image (right)"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFF9EF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quiz call to action"
+    }
+  ]
+}
+{% endschema %}

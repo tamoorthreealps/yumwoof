@@ -1,0 +1,126 @@
+{{ 'css--faqs-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .faqs {
+    --faq-bg: {{ section.settings.background_color }};
+    --faq-text: {{ section.settings.text_color }};
+    --faq-line: {{ section.settings.line_color }};
+  }
+{%- endstyle -%}
+
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+
+<section class="faqs">
+  <div class="faqs__inner">
+    <div class="faqs__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="faqs__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="faqs__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if faq_blocks.size > 0 -%}
+      <div class="faqs__list">
+        {%- for block in faq_blocks -%}
+          <details
+            class="faqs__item"
+            {% if forloop.first and section.settings.open_first %}open{% endif %}
+            {{ block.shopify_attributes }}
+          >
+            <summary class="faqs__question">
+              <span class="faqs__question-text">{{ block.settings.question }}</span>
+              <span class="faqs__icon" aria-hidden="true"></span>
+            </summary>
+            {%- if block.settings.answer != blank -%}
+              <div class="faqs__answer rte">{{ block.settings.answer }}</div>
+            {%- endif -%}
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQs",
+  "tag": "section",
+  "class": "section-faqs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Any Questions?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every dog is different. Find the recipe that's right for yours."
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question by default",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Divider",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Why doesn't Yumwoof use seed oils?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 16,
+  "presets": [
+    {
+      "name": "FAQs",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Why doesn't Yumwoof use seed oils?", "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>" } },
+        { "type": "faq", "settings": { "question": "Why choose air-dried over fresh food?", "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>" } },
+        { "type": "faq", "settings": { "question": "Do you offer a money-back guarantee?", "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>" } },
+        { "type": "faq", "settings": { "question": "Why are organ meats important for dogs?", "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
