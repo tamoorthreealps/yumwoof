@@ -1,0 +1,293 @@
+/* ==========================================================================
+   Yumwoof featured products ("Explore our air dried food")
+   Design: Figma "Yumwoof (Copy)" nodes 863-1596 (desktop card) & 1260-111 (mobile)
+   Colors driven by CSS variables set inline from section settings.
+   ========================================================================== */
+
+.fp {
+  --fp-bg: #fff9ef;
+  --fp-text: #000000;
+  --fp-card-bg: #ffffff;
+  --fp-card-border: #000000;
+  --fp-label: #661d1d;
+
+  background-color: var(--fp-bg);
+  color: var(--fp-text);
+  padding: 4.8rem 0;
+  overflow: hidden;
+}
+
+.fp__inner {
+  max-width: 128rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.fp__heading {
+  margin: 0 0 3.2rem;
+  text-align: center;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fp-text);
+}
+
+.fp--uppercase .fp__heading,
+.fp--uppercase .fp__title {
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Viewport / track (carousel on mobile, centered row on desktop)
+   -------------------------------------------------------------------------- */
+.fp__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4.4rem;
+}
+
+.fp__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.fp__track {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  gap: 1.6rem;
+  padding: 0 11%;
+  margin: 0;
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   Card
+   -------------------------------------------------------------------------- */
+.fp__card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 78%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--fp-card-bg);
+  border: 1.5px solid var(--fp-card-border);
+  border-radius: 24px;
+  padding: 3.2rem 2rem 4rem;
+}
+
+.fp__title {
+  margin: 0 0 1.2rem;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.1;
+}
+
+.fp__labels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 1.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fp__label {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--fp-label);
+  border-radius: 100px;
+  color: var(--fp-label);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.fp__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1.6rem;
+}
+
+.fp__img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.fp__desc {
+  margin: 0 0 1.2rem;
+  max-width: 28rem;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.fp__recipes {
+  margin-top: auto;
+  color: var(--fp-text);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Amber hexagon SHOP button overlapping the card's bottom edge */
+.fp__shop {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  width: 150px;
+  height: 66px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/button--bg.svg?v=1783519312") center / 100% 100% no-repeat;
+  color: #000000;
+  text-decoration: none;
+}
+
+.fp__shop-label {
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile nav (arrows + dots)
+   -------------------------------------------------------------------------- */
+.fp__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 2.4rem;
+}
+
+.fp__arrow {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--fp-text);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fp-text);
+  cursor: pointer;
+  padding: 0;
+}
+
+.fp__arrow svg {
+  width: 12px;
+  height: 12px;
+}
+
+.fp__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fp__dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.fp__dot[aria-current='true'] {
+  background: var(--fp-text);
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .fp {
+    padding: 8rem 0;
+  }
+
+  .fp__heading {
+    font-size: 4.4rem;
+    margin-bottom: 5.6rem;
+  }
+
+  .fp__viewport {
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-bottom: 5rem;
+  }
+
+  .fp__track {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3.2rem;
+    padding: 0;
+  }
+
+  .fp__card {
+    width: 38.6rem;
+    max-width: 100%;
+    scroll-snap-align: none;
+    padding: 4rem 3.2rem 5rem;
+  }
+
+  .fp__title {
+    font-size: 3.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .fp__label {
+    font-size: 1.4rem;
+    padding: 0.5rem 1.2rem;
+  }
+
+  .fp__media {
+    height: 260px;
+    margin-bottom: 2rem;
+  }
+
+  .fp__desc {
+    font-size: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .fp__recipes {
+    font-size: 1.4rem;
+  }
+
+  .fp__shop {
+    width: 164px;
+    height: 72px;
+  }
+
+  .fp__shop-label {
+    font-size: 1.4rem;
+  }
+
+  .fp__nav {
+    display: none;
+  }
+}
