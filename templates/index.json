@@ -290,6 +290,7 @@
         "body": "<p>We use omega-3 rich Cocomega™ superfats instead of heavily processed seed oils.</p>",
         "button_label": "Explore Cocomega →",
         "button_link": "",
+        "badge_image": "shopify://shop_images/cocomega-badge.svg",
         "image_position": "right",
         "image_radius": 24,
         "background_color": "#fff9ef",
