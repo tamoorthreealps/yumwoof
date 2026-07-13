@@ -1,0 +1,168 @@
+/* ==========================================================================
+   Yumwoof research + results section (dark band with count-up stats)
+   Design: Figma "Yumwoof (Copy)" node 1260-121 / desktop 863-1880
+   ========================================================================== */
+
+.research {
+  --rs-bg: #1a1a1a;
+  --rs-text: #fff9ef;
+
+  background-color: var(--rs-bg);
+  color: var(--rs-text);
+  padding: 5.6rem 0;
+}
+
+.research__inner {
+  max-width: 128rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Intro
+   -------------------------------------------------------------------------- */
+.research__intro {
+  text-align: center;
+  margin-bottom: 4.8rem;
+}
+
+.research__eyebrow {
+  margin: 0 0 1rem;
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--rs-text);
+}
+
+.research__eyebrow--mid {
+  margin-top: 3.2rem;
+}
+
+.research__heading {
+  margin: 0 auto;
+  max-width: 22ch;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--rs-text);
+}
+
+.research--uppercase .research__eyebrow,
+.research--uppercase .research__heading {
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Results
+   -------------------------------------------------------------------------- */
+.research__divider {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 249, 239, 0.5);
+  margin-bottom: 2rem;
+}
+
+.research__results-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 2.8rem;
+}
+
+.research__results-title {
+  margin: 0;
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.research__results-note {
+  margin: 0;
+  font-size: 1.2rem;
+  opacity: 0.85;
+}
+
+.research__stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3.2rem 2.4rem;
+}
+
+.research__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.research__stat-value {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-heading-family, inherit);
+  font-weight: 700;
+  font-size: 4.8rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.research__stat-suffix {
+  font-size: inherit;
+}
+
+.research__stat-label {
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .research {
+    padding: 9.6rem 0;
+  }
+
+  .research__intro {
+    margin-bottom: 8rem;
+  }
+
+  .research__eyebrow--mid {
+    margin-top: 6rem;
+  }
+
+  .research__heading {
+    font-size: 5.2rem;
+    max-width: 24ch;
+  }
+
+  .research__results-head {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .research__results-title {
+    font-size: 1.6rem;
+  }
+
+  .research__stats {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+  }
+
+  .research__stat-value {
+    font-size: 5.6rem;
+  }
+}

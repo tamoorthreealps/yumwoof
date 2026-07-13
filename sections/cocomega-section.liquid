@@ -1,0 +1,140 @@
+{{ 'css--cocomega-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .cocomega {
+    --co-bg: {{ section.settings.background_color }};
+    --co-text: {{ section.settings.text_color }};
+    --co-radius: {{ section.settings.image_radius }}px;
+  }
+{%- endstyle -%}
+
+<section class="cocomega cocomega--image-{{ section.settings.image_position }}{% if section.settings.uppercase_heading %} cocomega--uppercase{% endif %}">
+  <div class="cocomega__inner">
+    <div class="cocomega__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1400
+          | image_tag: class: 'cocomega__image', widths: '400, 700, 1000, 1400', sizes: '(min-width: 990px) 55vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading
+        }}
+      {%- else -%}
+        <div class="cocomega__image cocomega__image--placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.badge_image != blank -%}
+        <span class="cocomega__badge">
+          {{ section.settings.badge_image | image_url: width: 220 | image_tag: alt: '', widths: '88, 132, 220', loading: 'lazy' }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <div class="cocomega__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cocomega__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="cocomega__body rte">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="cocomega__button" href="{{ section.settings.button_link | default: '#' }}">
+          {{- section.settings.button_label -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cocomega feature",
+  "tag": "section",
+  "class": "section-cocomega",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "No seed oils. Just Cocomega superfats."
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_heading",
+      "label": "Uppercase heading",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>We use omega-3 rich Cocomega™ superfats instead of heavily processed seed oils.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore Cocomega →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge image",
+      "info": "Optional. Overlaps the top-left of the image (e.g. the Cocomega seal)."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Image corner radius",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cocomega feature"
+    }
+  ]
+}
+{% endschema %}

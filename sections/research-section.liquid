@@ -1,0 +1,236 @@
+{{ 'css--research-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .research {
+    --rs-bg: {{ section.settings.background_color }};
+    --rs-text: {{ section.settings.text_color }};
+  }
+{%- endstyle -%}
+
+{%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+
+<section class="research{% if section.settings.uppercase_headings %} research--uppercase{% endif %}">
+  <div class="research__inner">
+    <div class="research__intro">
+      {%- if section.settings.eyebrow_1 != blank -%}
+        <p class="research__eyebrow">{{ section.settings.eyebrow_1 }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading_1 != blank -%}
+        <h2 class="research__heading">{{ section.settings.heading_1 }}</h2>
+      {%- endif -%}
+      {%- if section.settings.eyebrow_2 != blank -%}
+        <p class="research__eyebrow research__eyebrow--mid">{{ section.settings.eyebrow_2 }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading_2 != blank -%}
+        <h3 class="research__heading">{{ section.settings.heading_2 }}</h3>
+      {%- endif -%}
+    </div>
+
+    {%- if stat_blocks.size > 0 -%}
+      <div class="research__results">
+        <span class="research__divider" aria-hidden="true"></span>
+        <div class="research__results-head">
+          {%- if section.settings.stats_title != blank -%}
+            <p class="research__results-title">{{ section.settings.stats_title }}</p>
+          {%- endif -%}
+          {%- if section.settings.stats_note != blank -%}
+            <p class="research__results-note">{{ section.settings.stats_note }}</p>
+          {%- endif -%}
+        </div>
+
+        <ul class="research__stats" role="list">
+          {%- for block in stat_blocks -%}
+            {%- assign raw_value = block.settings.value | strip -%}
+            <li class="research__stat" {{ block.shopify_attributes }}>
+              <span class="research__stat-value">
+                <span class="research__stat-num" data-countup="{{ raw_value | escape }}" aria-hidden="true">0</span>
+                {%- if block.settings.suffix != blank -%}<span class="research__stat-suffix">{{ block.settings.suffix }}</span>{%- endif -%}
+                <span class="visually-hidden">{{ raw_value }}{{ block.settings.suffix }}</span>
+              </span>
+              {%- if block.settings.label != blank -%}
+                <span class="research__stat-label">{{ block.settings.label }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function formatValue(value, decimals) {
+      return decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
+    }
+
+    function animate(el) {
+      var raw = el.getAttribute('data-countup');
+      var target = parseFloat(raw);
+      if (isNaN(target)) { el.textContent = raw; return; }
+      var dot = raw.indexOf('.');
+      var decimals = dot === -1 ? 0 : raw.length - dot - 1;
+
+      if (reduceMotion) {
+        el.textContent = formatValue(target, decimals);
+        return;
+      }
+
+      var duration = 1400;
+      var start = null;
+      function step(now) {
+        if (start === null) start = now;
+        var progress = Math.min((now - start) / duration, 1);
+        // easeOutCubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = formatValue(target * eased, decimals);
+        if (progress < 1) window.requestAnimationFrame(step);
+        else el.textContent = formatValue(target, decimals);
+      }
+      window.requestAnimationFrame(step);
+    }
+
+    function init(root) {
+      root.querySelectorAll('.research').forEach(function (section) {
+        var nums = Array.prototype.slice.call(section.querySelectorAll('[data-countup]'));
+        if (nums.length === 0 || section.dataset.countReady) return;
+        section.dataset.countReady = 'true';
+
+        if (!('IntersectionObserver' in window)) {
+          nums.forEach(animate);
+          return;
+        }
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              animate(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.6 });
+        nums.forEach(function (n) { observer.observe(n); });
+      });
+    }
+
+    if (document.readyState !== 'loading') {
+      init(document);
+    } else {
+      document.addEventListener('DOMContentLoaded', function () { init(document); });
+    }
+    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Research + results",
+  "tag": "section",
+  "class": "section-research",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "uppercase_headings",
+      "label": "Uppercase headings",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_1",
+      "label": "Eyebrow 1",
+      "default": "Butcher Quality food with"
+    },
+    {
+      "type": "text",
+      "id": "heading_1",
+      "label": "Heading 1",
+      "default": "Superior nutrition research and vet made recipes"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_2",
+      "label": "Eyebrow 2",
+      "default": "that makes"
+    },
+    {
+      "type": "text",
+      "id": "heading_2",
+      "label": "Heading 2",
+      "default": "Your happy stick-loving dog love you more!"
+    },
+    {
+      "type": "header",
+      "content": "Results"
+    },
+    {
+      "type": "text",
+      "id": "stats_title",
+      "label": "Results title",
+      "default": "What Yumwoof pet parents noticed"
+    },
+    {
+      "type": "text",
+      "id": "stats_note",
+      "label": "Results note",
+      "default": "*Based on Yumwoof Customer Survey"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFF9EF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "info": "Numbers count up on scroll (e.g. 89 or 4.9).",
+          "default": "89"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix",
+          "default": "%"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Fewer allergy issues"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Research + results",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "89", "suffix": "%", "label": "Fewer allergy issues" } },
+        { "type": "stat", "settings": { "value": "93", "suffix": "%", "label": "Better digestion" } },
+        { "type": "stat", "settings": { "value": "87", "suffix": "%", "label": "Healthier skin" } },
+        { "type": "stat", "settings": { "value": "91", "suffix": "%", "label": "Longer walks" } },
+        { "type": "stat", "settings": { "value": "96", "suffix": "%", "label": "More mealtime excitement" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
