@@ -29,7 +29,12 @@
             {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
             {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
             {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
-            {%- assign labels_list = labels_mf.value | split: ',' -%}
+            {%- comment -%} A "list" metafield already returns an array; a plain text one is comma separated. {%- endcomment -%}
+            {%- if labels_mf.type contains 'list' -%}
+              {%- assign labels_list = labels_mf.value -%}
+            {%- else -%}
+              {%- assign labels_list = labels_mf.value | split: ',' -%}
+            {%- endif -%}
             {%- assign recipes_url = recipes_mf.value | default: product.url -%}
 
             <li class="fp__card" data-fp-slide>
