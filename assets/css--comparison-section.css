@@ -130,10 +130,12 @@
   border-left: 0;
 }
 
-/* Column header — fixed height so every column's rows line up */
+/* Column header — fixed height so every column's rows line up.
+   flex-shrink:0 stops the empty label header from collapsing. */
 .cmp__head {
   position: relative;
   height: 132px;
+  flex: 0 0 132px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,6 +177,7 @@
 /* Cells */
 .cmp__cell {
   height: 56px;
+  flex: 0 0 56px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,6 +196,7 @@
 
 .cmp__head--empty {
   height: 132px;
+  flex: 0 0 132px;
 }
 
 /* Brand column raised amber card (behind the aligned cells) */
@@ -299,6 +303,7 @@
   .cmp__head,
   .cmp__head--empty {
     height: 176px;
+    flex-basis: 176px;
   }
 
   .cmp__brand-logo {
