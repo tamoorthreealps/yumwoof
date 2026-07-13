@@ -1,0 +1,270 @@
+{{ 'css--explore-membership.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .mem {
+    --mem-bg: {{ section.settings.card_background }};
+    --mem-text: {{ section.settings.text_color }};
+    --mem-accent: {{ section.settings.accent_color }};
+    --mem-page-bg: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+{%- assign perks = section.blocks | where: 'type', 'perk' -%}
+
+<section class="mem{% if section.settings.uppercase_perk_title %} mem--uppercase{% endif %}">
+  <div class="mem__inner">
+    <div class="mem__card mem--image-{{ section.settings.image_position }}">
+      <div class="mem__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1000
+            | image_tag: class: 'mem__image', widths: '336, 500, 700, 1000', sizes: '(min-width: 990px) 45vw, 100vw', alt: section.settings.image.alt | default: ''
+          }}
+        {%- else -%}
+          <div class="mem__image mem__image--placeholder">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="mem__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="mem__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="mem__description rte">{{ section.settings.description }}</div>
+        {%- endif -%}
+
+        {%- if perks.size > 0 -%}
+          <div
+            class="mem__slides"
+            data-mem-slider
+            data-autoplay="{{ section.settings.autoplay }}"
+            data-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+          >
+            <div class="mem__slide-track">
+              {%- for block in perks -%}
+                <div class="mem__slide{% if forloop.first %} is-active{% endif %}" data-mem-slide {{ block.shopify_attributes }}>
+                  {%- if block.settings.icon != blank -%}
+                    <span class="mem__slide-icon">
+                      {{ block.settings.icon | image_url: width: 160 | image_tag: alt: '', widths: '72, 120, 160', loading: 'lazy' }}
+                    </span>
+                  {%- endif -%}
+                  <span class="mem__slide-text">
+                    {%- if block.settings.title != blank -%}<span class="mem__slide-title">{{ block.settings.title }}</span>{%- endif -%}
+                    {%- if block.settings.subtitle != blank -%}<span class="mem__slide-subtitle">{{ block.settings.subtitle }}</span>{%- endif -%}
+                  </span>
+                </div>
+              {%- endfor -%}
+            </div>
+            {%- if perks.size > 1 -%}
+              <div class="mem__dots" data-mem-dots></div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a class="mem__button" href="{{ section.settings.button_link | default: '#' }}">
+            {{- section.settings.button_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function initSlider(section) {
+      var slider = section.querySelector('[data-mem-slider]');
+      if (!slider || slider.dataset.memReady) return;
+      var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-mem-slide]'));
+      if (slides.length === 0) return;
+
+      var dotsWrap = slider.querySelector('[data-mem-dots]');
+      var dots = [];
+      var index = 0;
+      var timer = null;
+      var autoplay = slider.dataset.autoplay === 'true';
+      var delay = parseInt(slider.dataset.speed, 10) || 5000;
+
+      if (dotsWrap) {
+        slides.forEach(function (_, i) {
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'mem__dot';
+          dot.setAttribute('aria-label', 'Show perk ' + (i + 1));
+          dot.addEventListener('click', function () { go(i); restart(); });
+          dotsWrap.appendChild(dot);
+          dots.push(dot);
+        });
+      }
+
+      function go(i) {
+        index = (i + slides.length) % slides.length;
+        slides.forEach(function (s, j) { s.classList.toggle('is-active', j === index); });
+        dots.forEach(function (d, j) { d.setAttribute('aria-current', j === index ? 'true' : 'false'); });
+      }
+
+      function start() {
+        if (autoplay && slides.length > 1) timer = window.setInterval(function () { go(index + 1); }, delay);
+      }
+      function restart() {
+        window.clearInterval(timer);
+        start();
+      }
+
+      go(0);
+      start();
+      slider.dataset.memReady = 'true';
+    }
+
+    function init(root) {
+      root.querySelectorAll('.mem').forEach(initSlider);
+    }
+
+    if (document.readyState !== 'loading') {
+      init(document);
+    } else {
+      document.addEventListener('DOMContentLoaded', function () { init(document); });
+    }
+    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Explore membership",
+  "tag": "section",
+  "class": "section-explore-membership",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Membership has its perks"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Become a member to save 25% on every order, avoid a year of inflation, and enjoy exclusive benefits.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Explore Membership →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Perks slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase_perk_title",
+      "label": "Uppercase perk titles",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate perks",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Rotate every",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#C8912A"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#661D1D"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "25% off every order"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Member rate on food"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Explore membership",
+      "blocks": [
+        { "type": "perk", "settings": { "title": "25% off every order", "subtitle": "Member rate on food" } },
+        { "type": "perk", "settings": { "title": "Free shipping", "subtitle": "On every membership order" } },
+        { "type": "perk", "settings": { "title": "Exclusive perks", "subtitle": "Members-only benefits" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
