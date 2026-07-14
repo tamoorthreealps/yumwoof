@@ -1,0 +1,69 @@
+{%- comment -%}
+  Reusable product card for the cart drawer.
+
+  Accepts:
+  - product {product} - the product to render
+  - style {string} - 'recommend' (compact, ADD button) or 'empty' (tall, SHOP NOW)
+{%- endcomment -%}
+
+{%- liquid
+  assign card_variant = product.selected_or_first_available_variant
+  assign compare = card_variant.compare_at_price
+  assign price = card_variant.price
+-%}
+
+{%- if style == 'empty' -%}
+  <div class="cd-shop-card">
+    <a href="{{ product.url }}" class="cd-shop-card__media" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 400 | image_tag: class: 'cd-shop-card__img', widths: '160, 260, 400', alt: product.title | escape, loading: 'lazy' }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'cd-shop-card__img' }}
+      {%- endif -%}
+    </a>
+    <div class="cd-shop-card__body">
+      {%- if product.type != blank -%}<p class="cd-shop-card__type">{{ product.type }}</p>{%- endif -%}
+      <a href="{{ product.url }}" class="cd-shop-card__title">{{ product.title | escape }}</a>
+      {%- if product.metafields.custom.product_card_short_description != blank -%}
+        <p class="cd-shop-card__desc">{{ product.metafields.custom.product_card_short_description.value }}</p>
+      {%- endif -%}
+    </div>
+    <a href="{{ product.url }}" class="cd-hex-btn cd-shop-card__btn">SHOP NOW</a>
+  </div>
+
+{%- else -%}
+  <div class="cd-rec-card">
+    <a href="{{ product.url }}" class="cd-rec-card__media" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 240 | image_tag: class: 'cd-rec-card__img', widths: '120, 180, 240', alt: product.title | escape, loading: 'lazy' }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'cd-rec-card__img' }}
+      {%- endif -%}
+    </a>
+    <div class="cd-rec-card__body">
+      <p class="cd-rec-card__title">{{ product.title | escape }}</p>
+      {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
+      {%- if recipe != blank -%}<p class="cd-rec-card__subtitle">{{ recipe }}</p>{%- endif -%}
+      {%- if product.metafields.custom.pack_size != blank -%}
+        <p class="cd-rec-card__meta">{{ product.metafields.custom.pack_size.value }}</p>
+      {%- endif -%}
+    </div>
+    <div class="cd-rec-card__price">
+      <span class="cd-rec-card__final">{{ price | money }}</span>
+      {%- if compare > price -%}<s class="cd-rec-card__compare">{{ compare | money }}</s>{%- endif -%}
+    </div>
+    {%- if card_variant.available -%}
+      <button
+        type="button"
+        class="cd-hex-btn cd-rec-card__add"
+        data-cd-add
+        data-variant-id="{{ card_variant.id }}"
+        aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}"
+      >
+        ADD
+      </button>
+    {%- else -%}
+      <span class="cd-hex-btn cd-rec-card__add cd-rec-card__add--disabled">SOLD OUT</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

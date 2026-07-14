@@ -1,0 +1,17 @@
+{%- comment -%}
+  Rendered on demand by custom-cart-subscription.js via:
+  {{ routes.product_recommendations_url }}?section_id=cart-recommendations&product_id=<id>&intent=complementary&limit=<n>
+  Returns the recommendation cards for the cart drawer "Add more, save more" row.
+{%- endcomment -%}
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  {%- for product in recommendations.products -%}
+    {% render 'cart-drawer-product-card', product: product, style: 'recommend' %}
+  {%- endfor -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cart recommendations",
+  "settings": []
+}
+{% endschema %}

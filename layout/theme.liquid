@@ -327,7 +327,7 @@
     </a>
 
     {%- if settings.cart_type == 'drawer' -%}
-      {%- render 'cart-drawer' -%}
+      {%- sections 'cart-drawer-group' -%}
     {%- endif -%}
 
     {% sections 'header-group' %}
