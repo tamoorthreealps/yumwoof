@@ -13,54 +13,34 @@
   "sections": {
     "cart-drawer": {
       "type": "cart-drawer",
-      "blocks": {
-        "threshold-1": {
-          "type": "threshold",
-          "settings": {
-            "amount": 80,
-            "reward_label": "Free Shipping",
-            "reward_message": "You're {remaining} away from Free Shipping",
-            "reward_percent": 0
-          }
-        },
-        "threshold-2": {
-          "type": "threshold",
-          "settings": {
-            "amount": 160,
-            "reward_label": "5% Off",
-            "reward_message": "You're {remaining} away from 5% off",
-            "reward_percent": 5
-          }
-        },
-        "threshold-3": {
-          "type": "threshold",
-          "settings": {
-            "amount": 240,
-            "reward_label": "10% Off",
-            "reward_message": "You're {remaining} away from 10% off",
-            "reward_percent": 10
-          }
-        },
-        "banner-1": {
-          "type": "banner",
-          "settings": {
-            "enable": false,
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "threshold-1",
-        "threshold-2",
-        "threshold-3",
-        "banner-1"
-      ],
       "settings": {
         "title": "IN YOUR BAG",
         "checkout_label": "PROCEED TO CHECKOUT",
         "guarantee_text": "21-day money-back guarantee",
         "recommend_title": "Add more, save more",
-        "unlocked_message": "You've unlocked all rewards!",
+        "recommend_intent": "related",
+        "threshold_1_enable": true,
+        "threshold_1_amount": 80,
+        "threshold_1_label": "Free Shipping",
+        "threshold_1_message": "You're {remaining} away from Free Shipping",
+        "threshold_1_percent": 0,
+        "threshold_2_enable": true,
+        "threshold_2_amount": 160,
+        "threshold_2_label": "5% Off",
+        "threshold_2_message": "You're {remaining} away from 5% off",
+        "threshold_2_percent": 5,
+        "threshold_3_enable": true,
+        "threshold_3_amount": 240,
+        "threshold_3_label": "10% Off",
+        "threshold_3_message": "You're {remaining} away from 10% off",
+        "threshold_3_percent": 10,
+        "threshold_4_enable": false,
+        "threshold_4_amount": 0,
+        "threshold_4_label": "",
+        "threshold_4_message": "",
+        "threshold_4_percent": 0,
+        "banner_enable": false,
+        "banner_link": "",
         "empty_heading": "An empty bag won't feed itself",
         "empty_text": "Fill it with real, gently air-dried food dogs actually finish.",
         "empty_collection_title": "Shop best sellers",
@@ -75,7 +55,5 @@
       }
     }
   },
-  "order": [
-    "cart-drawer"
-  ]
+  "order": ["cart-drawer"]
 }
