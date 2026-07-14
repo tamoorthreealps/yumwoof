@@ -1,1 +1,443 @@
-{%- render 'cart-drawer' -%}
+{{ 'css--cart-drawer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-cart-subscription.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .cd {
+    --cd-drawer-bg: {{ section.settings.drawer_bg }};
+    --cd-header-bg: {{ section.settings.header_bg }};
+    --cd-header-text: {{ section.settings.header_text }};
+    --cd-accent: {{ section.settings.accent_color }};
+    --cd-cta-bg: {{ section.settings.cta_bg }};
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign cart_cents = cart.total_price
+  assign threshold_blocks = section.blocks | where: 'type', 'threshold'
+
+  assign max_threshold_cents = 0
+  assign next_threshold_block = null
+  assign all_unlocked = true
+  for block in threshold_blocks
+    assign b_cents = block.settings.amount | times: 100
+    if b_cents > max_threshold_cents
+      assign max_threshold_cents = b_cents
+    endif
+    if cart_cents < b_cents
+      assign all_unlocked = false
+      if next_threshold_block == null
+        assign next_threshold_block = block
+      endif
+    endif
+  endfor
+
+  assign extra_percent = 0
+  if next_threshold_block != null
+    assign extra_percent = next_threshold_block.settings.reward_percent
+  endif
+
+  # Total savings against the best available compare-at price
+  assign total_savings = 0
+  for item in cart.items
+    assign compare_unit = item.variant.compare_at_price
+    if item.selling_plan_allocation != null and item.selling_plan_allocation.compare_at_price > item.final_price
+      assign compare_unit = item.selling_plan_allocation.compare_at_price
+    endif
+    if compare_unit > item.final_price
+      assign item_saving = compare_unit | minus: item.final_price | times: item.quantity
+      assign total_savings = total_savings | plus: item_saving
+    endif
+  endfor
+
+  assign banner_block = section.blocks | where: 'type', 'banner' | first
+-%}
+
+<cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
+  <div id="CartDrawer" class="cart-drawer cd">
+    <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
+
+    <div
+      class="drawer__inner cd__inner{% if cart == empty %} is-empty{% endif %}"
+      role="dialog"
+      aria-modal="true"
+      aria-label="{{ 'sections.cart.title' | t }}"
+      tabindex="-1"
+    >
+      <span id="CartDrawer-SectionId" data-section-id="{{ section.id }}" hidden></span>
+
+      {%- comment -%} ===== HEADER ===== {%- endcomment -%}
+      <div class="cd__header">
+        <h2 class="cd__title">
+          {{ section.settings.title }}
+          {%- if cart != empty -%}
+            <span class="cd__count">[{{ cart.item_count }} {{ cart.item_count | pluralize: 'ITEM', 'ITEMS' }}]</span>
+          {%- endif -%}
+        </h2>
+        <button
+          class="drawer__close cd__close"
+          type="button"
+          onclick="this.closest('cart-drawer').close()"
+          aria-label="{{ 'accessibility.close' | t }}"
+        >
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      {%- if cart == empty -%}
+        {%- comment -%} ===== EMPTY STATE ===== {%- endcomment -%}
+        <div class="drawer__inner-empty cd-empty">
+          <span class="cd-empty__icon" aria-hidden="true">
+            <svg width="44" height="52" viewBox="0 0 44 52" fill="none"><path d="M8 16h28l-2 32a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z" stroke="currentColor" stroke-width="2"/><path d="M8 16l4-14h20l4 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span class="cd-empty__count">0</span>
+          </span>
+          <h3 class="cd-empty__title">{{ section.settings.empty_heading }}</h3>
+          {%- if section.settings.empty_text != blank -%}
+            <p class="cd-empty__text">{{ section.settings.empty_text }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.empty_collection != blank -%}
+            {%- assign empty_coll = section.settings.empty_collection -%}
+            <div class="cd-shop" data-cd-carousel>
+              <div class="cd-shop__head">
+                <p class="cd-shop__label">{{ section.settings.empty_collection_title }}</p>
+                <div class="cd-carousel__nav">
+                  <button type="button" class="cd-carousel__arrow" data-cd-prev aria-label="Previous">&larr;</button>
+                  <button type="button" class="cd-carousel__arrow" data-cd-next aria-label="Next">&rarr;</button>
+                </div>
+              </div>
+              <div class="cd-shop__track" data-cd-track>
+                {%- for product in empty_coll.products limit: 8 -%}
+                  {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <a href="{{ section.settings.empty_button_link | default: routes.all_products_collection_url }}" class="cd-empty__shop-all">
+            {{ section.settings.empty_button_label }}
+          </a>
+        </div>
+      {%- else -%}
+
+        {%- comment -%} ===== THRESHOLD PROGRESS + PILLS ===== {%- endcomment -%}
+        {%- if threshold_blocks.size > 0 -%}
+          <div class="cd-rewards">
+            <p class="cd-rewards__msg">
+              {%- if all_unlocked -%}
+                You&rsquo;ve unlocked all rewards!
+              {%- elsif next_threshold_block != null -%}
+                {%- assign next_cents = next_threshold_block.settings.amount | times: 100 -%}
+                {%- assign remaining = next_cents | minus: cart_cents | money -%}
+                {%- assign remaining_html = '<span class="cd-rewards__amount">' | append: remaining | append: '</span>' -%}
+                {{ next_threshold_block.settings.reward_message | replace: '{remaining}', remaining_html }}
+              {%- endif -%}
+            </p>
+
+            <div class="cd-rewards__track">
+              {%- assign prev_cents = 0 -%}
+              {%- for block in threshold_blocks -%}
+                {%- assign b_cents = block.settings.amount | times: 100 -%}
+                {%- assign reached = false -%}
+                {%- if cart_cents >= b_cents -%}{%- assign reached = true -%}{%- endif -%}
+                {%- assign seg_pct = 0 -%}
+                {%- if reached -%}
+                  {%- assign seg_pct = 100 -%}
+                {%- elsif cart_cents > prev_cents -%}
+                  {%- assign span = b_cents | minus: prev_cents -%}
+                  {%- assign done = cart_cents | minus: prev_cents -%}
+                  {%- if span > 0 -%}{%- assign seg_pct = done | times: 100 | divided_by: span -%}{%- endif -%}
+                {%- endif -%}
+                <div class="cd-reward{% if reached %} is-reached{% endif %}" {{ block.shopify_attributes }}>
+                  <span class="cd-reward__bar"><span class="cd-reward__fill" style="width: {{ seg_pct }}%"></span></span>
+                  <span class="cd-reward__label">
+                    {%- if reached -%}<span class="cd-reward__check" aria-hidden="true">&#10003;</span> {% endif -%}
+                    {{ block.settings.reward_label }}
+                  </span>
+                  <span class="cd-reward__amount">${{ block.settings.amount }}</span>
+                </div>
+                {%- assign prev_cents = b_cents -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} ===== BANNER OFFER ===== {%- endcomment -%}
+        {%- if banner_block and banner_block.settings.enable -%}
+          {%- capture banner_inner -%}
+            {%- if banner_block.settings.image_desktop != blank -%}
+              {{ banner_block.settings.image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: '', loading: 'lazy' }}
+            {%- endif -%}
+            {%- if banner_block.settings.image_mobile != blank -%}
+              {{ banner_block.settings.image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: '', loading: 'lazy' }}
+            {%- endif -%}
+          {%- endcapture -%}
+          <div class="cd-banner" {{ banner_block.shopify_attributes }}>
+            {%- if banner_block.settings.link != blank -%}
+              <a href="{{ banner_block.settings.link }}" class="cd-banner__link">{{ banner_inner }}</a>
+            {%- else -%}
+              {{ banner_inner }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} ===== CART ITEMS ===== {%- endcomment -%}
+        <cart-drawer-items class="cd-items-wrap">
+          <form action="{{ routes.cart_url }}" id="CartDrawer-Form" class="cart__contents cart-drawer__form" method="post">
+            <div id="CartDrawer-CartItems" class="js-contents cd-items">
+              {%- for item in cart.items -%}
+                {%- liquid
+                  assign is_sub = false
+                  if item.selling_plan_allocation != null
+                    assign is_sub = true
+                  endif
+
+                  assign has_plans = false
+                  assign default_plan_id = null
+                  assign default_plan_percent = 0
+                  assign plan_count = 0
+                  for group in item.product.selling_plan_groups
+                    for plan in group.selling_plans
+                      assign has_plans = true
+                      assign plan_count = plan_count | plus: 1
+                      if default_plan_id == null
+                        assign default_plan_id = plan.id
+                        assign first_adj = plan.price_adjustments.first
+                        if first_adj.value_type == 'percentage'
+                          assign default_plan_percent = first_adj.value
+                        endif
+                      endif
+                    endfor
+                  endfor
+
+                  assign sub_percent = default_plan_percent
+                  if is_sub
+                    assign cur_adj = item.selling_plan_allocation.selling_plan.price_adjustments.first
+                    if cur_adj.value_type == 'percentage'
+                      assign sub_percent = cur_adj.value
+                    endif
+                  endif
+
+                  assign item_compare_unit = item.variant.compare_at_price
+                  if item.selling_plan_allocation != null and item.selling_plan_allocation.compare_at_price > item.final_price
+                    assign item_compare_unit = item.selling_plan_allocation.compare_at_price
+                  endif
+                  assign item_compare_line = item_compare_unit | times: item.quantity
+                  assign discount_pct = 0
+                  if item_compare_unit > item.final_price
+                    assign saved_unit = item_compare_unit | minus: item.final_price
+                    assign discount_pct = saved_unit | times: 100 | divided_by: item_compare_unit
+                  endif
+                -%}
+
+                <div id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cd-item" role="row">
+                  <div class="cd-item__media">
+                    {%- if item.image -%}
+                      <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                        {{ item.image | image_url: width: 240 | image_tag: class: 'cd-item__img', widths: '120, 180, 240', alt: item.image.alt | escape, loading: 'lazy' }}
+                      </a>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="cd-item__main">
+                    <div class="cd-item__top">
+                      <div class="cd-item__titles">
+                        <a href="{{ item.url }}" class="cd-item__name">{{ item.product.title | escape }}</a>
+                        {%- unless item.product.has_only_default_variant -%}
+                          <p class="cd-item__recipe">{{ item.variant.title | escape }}</p>
+                        {%- endunless -%}
+                        <p class="cd-item__note">
+                          {%- if is_sub -%}{{ item.selling_plan_allocation.selling_plan.name }}{%- else -%}One-Time{%- endif -%}
+                        </p>
+                      </div>
+                      <div class="cd-item__price">
+                        {%- if item_compare_unit > item.final_price -%}
+                          <span class="cd-item__price-row">
+                            <s class="cd-item__compare">{{ item_compare_line | money }}</s>
+                            <span class="cd-item__final">{{ item.final_line_price | money }}</span>
+                          </span>
+                          <span class="cd-item__off">({{ discount_pct }}% Off)</span>
+                        {%- else -%}
+                          <span class="cd-item__final">{{ item.final_line_price | money }}</span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+
+                    <div class="cd-item__bottom">
+                      <quantity-popover>
+                        <quantity-input class="cd-qty">
+                          <button class="cd-qty__btn" name="minus" type="button" aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}">&minus;</button>
+                          <input
+                            class="cd-qty__input"
+                            type="number"
+                            name="updates[]"
+                            value="{{ item.quantity }}"
+                            min="0"
+                            data-index="{{ item.index | plus: 1 }}"
+                            data-quantity-variant-id="{{ item.variant.id }}"
+                            id="Drawer-quantity-{{ item.index | plus: 1 }}"
+                            aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                          >
+                          <button class="cd-qty__btn" name="plus" type="button" aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}">+</button>
+                        </quantity-input>
+                        <div id="CartDrawer-LineItemError-{{ item.index | plus: 1 }}" class="cart-item__error" role="alert"><small class="cart-item__error-text"></small></div>
+                      </quantity-popover>
+
+                      <cart-remove-button id="CartDrawer-Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
+                        <button type="button" class="cd-item__remove" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 4.5h11M6 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5M12.5 4.5l-.6 8.5a1.5 1.5 0 0 1-1.5 1.4H5.6a1.5 1.5 0 0 1-1.5-1.4L3.5 4.5" stroke="currentColor" stroke-width="1.1"/></svg>
+                        </button>
+                      </cart-remove-button>
+                    </div>
+
+                    {%- if has_plans -%}
+                      <div class="cd-item__sub">
+                        <span class="cd-item__divider" aria-hidden="true"></span>
+                        <div class="cd-item__sub-row">
+                          <cart-subscription-toggle
+                            class="cd-toggle{% if is_sub %} is-on{% endif %}"
+                            data-line-index="{{ item.index | plus: 1 }}"
+                            data-variant-id="{{ item.variant.id }}"
+                            data-quantity="{{ item.quantity }}"
+                            data-plan-id="{{ default_plan_id }}"
+                          >
+                            <button type="button" class="cd-toggle__switch" role="switch" aria-checked="{% if is_sub %}true{% else %}false{% endif %}">
+                              <span class="cd-toggle__knob"></span>
+                            </button>
+                            <span class="cd-toggle__label">
+                              {%- if is_sub -%}Auto-ship &middot; saving {{ sub_percent }}%{%- else -%}Subscribe &amp; save {{ default_plan_percent }}%{%- endif -%}
+                            </span>
+                          </cart-subscription-toggle>
+
+                          {%- if is_sub and plan_count > 1 -%}
+                            <cart-subscription-selector
+                              class="cd-freq"
+                              data-line-index="{{ item.index | plus: 1 }}"
+                              data-variant-id="{{ item.variant.id }}"
+                              data-quantity="{{ item.quantity }}"
+                            >
+                              <select class="cd-freq__select" aria-label="Delivery frequency">
+                                {%- for group in item.product.selling_plan_groups -%}
+                                  {%- for plan in group.selling_plans -%}
+                                    <option value="{{ plan.id }}" {% if plan.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}>{{ plan.name }}</option>
+                                  {%- endfor -%}
+                                {%- endfor -%}
+                              </select>
+                            </cart-subscription-selector>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+
+              <p id="CartDrawer-LiveRegionText" class="visually-hidden" role="status"></p>
+              <p id="CartDrawer-LineItemStatus" class="visually-hidden" aria-hidden="true" role="status">{{ 'accessibility.loading' | t }}</p>
+            </div>
+            <div id="CartDrawer-CartErrors" role="alert"></div>
+          </form>
+        </cart-drawer-items>
+
+        {%- comment -%} ===== ADD MORE, SAVE MORE ===== {%- endcomment -%}
+        {%- assign last_item = cart.items.last -%}
+        <cart-recommendations
+          class="cd-recommend"
+          data-url="{{ routes.product_recommendations_url }}?section_id=cart-recommendations&intent=complementary&limit=6"
+          data-product-id="{{ last_item.product.id }}"
+        >
+          <div class="cd-recommend__head">
+            <p class="cd-recommend__title">
+              {{ section.settings.recommend_title }}
+              {%- if extra_percent > 0 -%} <span class="cd-recommend__extra">(EXTRA {{ extra_percent }}%)</span>{%- endif -%}
+            </p>
+            <div class="cd-carousel__nav">
+              <button type="button" class="cd-carousel__arrow" data-cd-prev aria-label="Previous">&larr;</button>
+              <button type="button" class="cd-carousel__arrow" data-cd-next aria-label="Next">&rarr;</button>
+            </div>
+          </div>
+          <div class="cd-recommend__track" data-cd-track></div>
+        </cart-recommendations>
+
+        {%- comment -%} ===== FOOTER ===== {%- endcomment -%}
+        <div class="drawer__footer cd-footer">
+          <div class="cart-drawer__footer">
+            <div class="cd-totals">
+              <div class="cd-totals__row cd-totals__row--total">
+                <span class="cd-totals__label">Subtotal</span>
+                <span class="cd-totals__value">
+                  {%- if total_savings > 0 -%}<s class="cd-totals__was">{{ cart.original_total_price | money }}</s> {% endif -%}
+                  {{ cart.total_price | money }}
+                </span>
+              </div>
+              {%- if total_savings > 0 -%}
+                <div class="cd-totals__row cd-totals__row--savings">
+                  <span>Total Savings!</span>
+                  <span>{{ total_savings | money }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+
+            <button type="submit" id="CartDrawer-Checkout" class="cd-checkout" name="checkout" form="CartDrawer-Form">
+              {{ section.settings.checkout_label }}
+            </button>
+
+            {%- if section.settings.guarantee_text != blank -%}
+              <p class="cd-guarantee">{{ section.settings.guarantee_text }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "IN YOUR BAG" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button label", "default": "PROCEED TO CHECKOUT" },
+    { "type": "text", "id": "guarantee_text", "label": "Guarantee note", "default": "21-day money-back guarantee" },
+    { "type": "text", "id": "recommend_title", "label": "Recommendations title", "default": "Add more, save more" },
+    { "type": "header", "content": "Empty state" },
+    { "type": "text", "id": "empty_heading", "label": "Heading", "default": "An empty bag won't feed itself" },
+    { "type": "text", "id": "empty_text", "label": "Text", "default": "Fill it with real, gently air-dried food dogs actually finish." },
+    { "type": "text", "id": "empty_collection_title", "label": "Collection title", "default": "Shop best sellers" },
+    { "type": "collection", "id": "empty_collection", "label": "Collection" },
+    { "type": "text", "id": "empty_button_label", "label": "Button label", "default": "Shop all products" },
+    { "type": "url", "id": "empty_button_link", "label": "Button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "drawer_bg", "label": "Drawer background", "default": "#FFF9EF" },
+    { "type": "color", "id": "header_bg", "label": "Header background", "default": "#661D1D" },
+    { "type": "color", "id": "header_text", "label": "Header text", "default": "#FFF9EF" },
+    { "type": "color", "id": "accent_color", "label": "Accent (savings)", "default": "#296900" },
+    { "type": "color", "id": "cta_bg", "label": "Checkout button", "default": "#FFC069" }
+  ],
+  "blocks": [
+    {
+      "type": "threshold",
+      "name": "Reward threshold",
+      "limit": 4,
+      "settings": [
+        { "type": "number", "id": "amount", "label": "Threshold amount (USD)", "default": 80, "info": "Cart subtotal needed to unlock this reward." },
+        { "type": "text", "id": "reward_label", "label": "Milestone label", "default": "Free Shipping" },
+        { "type": "text", "id": "reward_message", "label": "Progress message", "default": "You're {remaining} away from Free Shipping", "info": "Use {remaining} for the remaining amount." },
+        { "type": "number", "id": "reward_percent", "label": "Reward discount %", "default": 0, "info": "Used for the \"Add more, save more (EXTRA n%)\" label. Leave 0 for free shipping." }
+      ]
+    },
+    {
+      "type": "banner",
+      "name": "Offer banner",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enable", "label": "Show banner", "default": true },
+        { "type": "image_picker", "id": "image_desktop", "label": "Banner image (desktop)" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Banner image (mobile)" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ]
+}
+{% endschema %}
