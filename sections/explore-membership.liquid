@@ -16,10 +16,11 @@
     <div class="mem__card mem--image-{{ section.settings.image_position }}">
       <div class="mem__media">
         {%- if section.settings.image != blank -%}
+          {%- assign mem_alt = section.settings.image.alt | default: '' -%}
           {{
             section.settings.image
             | image_url: width: 1000
-            | image_tag: class: 'mem__image', widths: '336, 500, 700, 1000', sizes: '(min-width: 990px) 45vw, 100vw', alt: section.settings.image.alt | default: ''
+            | image_tag: class: 'mem__image', widths: '336, 500, 700, 1000', sizes: '(min-width: 990px) 45vw, 100vw', alt: mem_alt
           }}
         {%- else -%}
           <div class="mem__image mem__image--placeholder">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>

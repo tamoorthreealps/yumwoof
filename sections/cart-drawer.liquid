@@ -236,8 +236,9 @@
                 <div id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cd-item" role="row">
                   <div class="cd-item__media">
                     {%- if item.image -%}
+                      {%- assign cd_img_alt = item.image.alt | escape -%}
                       <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
-                        {{ item.image | image_url: width: 240 | image_tag: class: 'cd-item__img', widths: '120, 180, 240', alt: item.image.alt | escape, loading: 'lazy' }}
+                        {{ item.image | image_url: width: 240 | image_tag: class: 'cd-item__img', widths: '120, 180, 240', alt: cd_img_alt, loading: 'lazy' }}
                       </a>
                     {%- endif -%}
                   </div>

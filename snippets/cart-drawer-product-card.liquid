@@ -10,13 +10,14 @@
   assign card_variant = product.selected_or_first_available_variant
   assign compare = card_variant.compare_at_price
   assign price = card_variant.price
+  assign card_alt = product.title | escape
 -%}
 
 {%- if style == 'empty' -%}
   <div class="cd-shop-card">
     <a href="{{ product.url }}" class="cd-shop-card__media" tabindex="-1" aria-hidden="true">
       {%- if product.featured_image -%}
-        {{ product.featured_image | image_url: width: 400 | image_tag: class: 'cd-shop-card__img', widths: '160, 260, 400', alt: product.title | escape, loading: 'lazy' }}
+        {{ product.featured_image | image_url: width: 400 | image_tag: class: 'cd-shop-card__img', widths: '160, 260, 400', alt: card_alt, loading: 'lazy' }}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'cd-shop-card__img' }}
       {%- endif -%}
@@ -35,7 +36,7 @@
   <div class="cd-rec-card">
     <a href="{{ product.url }}" class="cd-rec-card__media" tabindex="-1" aria-hidden="true">
       {%- if product.featured_image -%}
-        {{ product.featured_image | image_url: width: 240 | image_tag: class: 'cd-rec-card__img', widths: '120, 180, 240', alt: product.title | escape, loading: 'lazy' }}
+        {{ product.featured_image | image_url: width: 240 | image_tag: class: 'cd-rec-card__img', widths: '120, 180, 240', alt: card_alt, loading: 'lazy' }}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'cd-rec-card__img' }}
       {%- endif -%}

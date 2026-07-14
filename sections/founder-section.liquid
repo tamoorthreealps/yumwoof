@@ -12,10 +12,11 @@
   <div class="founder__inner">
     <div class="founder__media">
       {%- if section.settings.image != blank -%}
+        {%- assign founder_alt = section.settings.image.alt | default: section.settings.heading -%}
         {{
           section.settings.image
           | image_url: width: 1200
-          | image_tag: class: 'founder__image', widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw', alt: section.settings.image.alt | default: section.settings.heading
+          | image_tag: class: 'founder__image', widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw', alt: founder_alt
         }}
       {%- else -%}
         <div class="founder__image founder__image--placeholder">
@@ -42,7 +43,8 @@
       {%- if section.settings.signature_image != blank or section.settings.signature_name != blank -%}
         <div class="founder__signature">
           {%- if section.settings.signature_image != blank -%}
-            {{ section.settings.signature_image | image_url: width: 600 | image_tag: class: 'founder__signature-img', alt: section.settings.signature_name | default: '', widths: '288, 440, 600', loading: 'lazy' }}
+            {%- assign sig_alt = section.settings.signature_name | default: '' -%}
+            {{ section.settings.signature_image | image_url: width: 600 | image_tag: class: 'founder__signature-img', alt: sig_alt, widths: '288, 440, 600', loading: 'lazy' }}
           {%- endif -%}
           {%- if section.settings.signature_name != blank or section.settings.signature_title != blank -%}
             <p class="founder__signature-name">
