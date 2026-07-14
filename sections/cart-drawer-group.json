@@ -49,7 +49,12 @@
           }
         }
       },
-      "block_order": ["threshold-1", "threshold-2", "threshold-3", "banner-1"],
+      "block_order": [
+        "threshold-1",
+        "threshold-2",
+        "threshold-3",
+        "banner-1"
+      ],
       "settings": {
         "title": "IN YOUR BAG",
         "checkout_label": "PROCEED TO CHECKOUT",
@@ -59,14 +64,18 @@
         "empty_heading": "An empty bag won't feed itself",
         "empty_text": "Fill it with real, gently air-dried food dogs actually finish.",
         "empty_collection_title": "Shop best sellers",
+        "empty_collection": "best-seller",
         "empty_button_label": "Shop all products",
-        "drawer_bg": "#FFF9EF",
-        "header_bg": "#661D1D",
-        "header_text": "#FFF9EF",
+        "empty_button_link": "",
+        "drawer_bg": "#fff9ef",
+        "header_bg": "#661d1d",
+        "header_text": "#fff9ef",
         "accent_color": "#296900",
-        "cta_bg": "#FFC069"
+        "cta_bg": "#ffc069"
       }
     }
   },
-  "order": ["cart-drawer"]
+  "order": [
+    "cart-drawer"
+  ]
 }
