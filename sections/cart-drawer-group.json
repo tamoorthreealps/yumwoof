@@ -1,0 +1,63 @@
+{
+  "name": "Cart drawer",
+  "type": "aside",
+  "sections": {
+    "cart-drawer": {
+      "type": "cart-drawer",
+      "blocks": {
+        "threshold-1": {
+          "type": "threshold",
+          "settings": {
+            "amount": 80,
+            "reward_label": "Free Shipping",
+            "reward_message": "You're {remaining} away from Free Shipping",
+            "reward_percent": 0
+          }
+        },
+        "threshold-2": {
+          "type": "threshold",
+          "settings": {
+            "amount": 160,
+            "reward_label": "5% Off",
+            "reward_message": "You're {remaining} away from 5% off",
+            "reward_percent": 5
+          }
+        },
+        "threshold-3": {
+          "type": "threshold",
+          "settings": {
+            "amount": 240,
+            "reward_label": "10% Off",
+            "reward_message": "You're {remaining} away from 10% off",
+            "reward_percent": 10
+          }
+        },
+        "banner-1": {
+          "type": "banner",
+          "settings": {
+            "enable": false,
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["threshold-1", "threshold-2", "threshold-3", "banner-1"],
+      "settings": {
+        "title": "IN YOUR BAG",
+        "checkout_label": "PROCEED TO CHECKOUT",
+        "guarantee_text": "21-day money-back guarantee",
+        "recommend_title": "Add more, save more",
+        "unlocked_message": "You've unlocked all rewards!",
+        "empty_heading": "An empty bag won't feed itself",
+        "empty_text": "Fill it with real, gently air-dried food dogs actually finish.",
+        "empty_collection_title": "Shop best sellers",
+        "empty_button_label": "Shop all products",
+        "drawer_bg": "#FFF9EF",
+        "header_bg": "#661D1D",
+        "header_text": "#FFF9EF",
+        "accent_color": "#296900",
+        "cta_bg": "#FFC069"
+      }
+    }
+  },
+  "order": ["cart-drawer"]
+}
