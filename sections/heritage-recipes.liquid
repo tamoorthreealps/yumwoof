@@ -32,11 +32,12 @@
       {%- endif -%}
 
       {%- if section.settings.bowl_image != blank -%}
+        {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
         <div class="heritage__bowl">
           {{
             section.settings.bowl_image
             | image_url: width: 900
-            | image_tag: widths: '300, 500, 700, 900', alt: section.settings.bowl_image.alt | default: '', loading: 'lazy'
+            | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
           }}
         </div>
       {%- endif -%}

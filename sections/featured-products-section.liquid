@@ -53,10 +53,11 @@
 
               <a class="fp__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
                 {%- if product.featured_image -%}
+                  {%- assign fp_alt = product.featured_image.alt | default: product.title -%}
                   {{
                     product.featured_image
                     | image_url: width: 600
-                    | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: product.featured_image.alt | default: product.title, loading: 'lazy'
+                    | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: fp_alt, loading: 'lazy'
                   }}
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}
