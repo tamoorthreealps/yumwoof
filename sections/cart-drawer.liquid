@@ -3,38 +3,51 @@
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
+{%- style -%}
+  #shopify-section-{{ section.id }} .cd {
+    --cd-drawer-bg: {{ section.settings.drawer_bg }};
+    --cd-header-bg: {{ section.settings.header_bg }};
+    --cd-header-text: {{ section.settings.header_text }};
+    --cd-accent: {{ section.settings.accent_color }};
+    --cd-cta-bg: {{ section.settings.cta_bg }};
+  }
+{%- endstyle -%}
+
 {%- liquid
   assign cart_cents = cart.total_price
+  assign threshold_blocks = section.blocks | where: 'type', 'threshold'
 
-  # Reward thresholds (up to 4) come from theme settings.
-  assign threshold_count = 0
   assign max_threshold_cents = 0
-  assign next_index = 0
+  assign next_threshold_block = null
   assign all_unlocked = true
-  for i in (1..4)
-    assign ek = 'cart_threshold_' | append: i | append: '_enable'
-    assign ak = 'cart_threshold_' | append: i | append: '_amount'
-    assign enabled = settings[ek]
-    assign amt = settings[ak]
-    if enabled and amt > 0
-      assign threshold_count = threshold_count | plus: 1
-      assign b_cents = amt | times: 100
-      if b_cents > max_threshold_cents
-        assign max_threshold_cents = b_cents
-      endif
-      if cart_cents < b_cents
-        assign all_unlocked = false
-        if next_index == 0
-          assign next_index = i
-        endif
+  for block in threshold_blocks
+    assign b_cents = block.settings.amount | times: 100
+    if b_cents > max_threshold_cents
+      assign max_threshold_cents = b_cents
+    endif
+    if cart_cents < b_cents
+      assign all_unlocked = false
+      if next_threshold_block == null
+        assign next_threshold_block = block
       endif
     endif
   endfor
 
   assign extra_percent = 0
-  if next_index > 0
-    assign pk = 'cart_threshold_' | append: next_index | append: '_percent'
-    assign extra_percent = settings[pk]
+  if next_threshold_block != null
+    assign extra_percent = next_threshold_block.settings.reward_percent
+  endif
+
+  # Build the rewards message here (never do the {remaining} replace inside a {{ }} output tag)
+  assign reward_message = ''
+  if all_unlocked
+    assign reward_message = section.settings.unlocked_message
+  elsif next_threshold_block != null
+    assign next_cents = next_threshold_block.settings.amount | times: 100
+    assign remaining_money = next_cents | minus: cart_cents | money
+    assign remaining_html = '<span class="cd-rewards__amount">' | append: remaining_money | append: '</span>'
+    assign placeholder = '{remaining}'
+    assign reward_message = next_threshold_block.settings.reward_message | replace: placeholder, remaining_html
   endif
 
   # Total savings against the best available compare-at price
@@ -49,14 +62,12 @@
       assign total_savings = total_savings | plus: item_saving
     endif
   endfor
+
+  assign banner_block = section.blocks | where: 'type', 'banner' | first
 -%}
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
-  <div
-    id="CartDrawer"
-    class="cart-drawer cd"
-    style="--cd-drawer-bg: {{ settings.cart_drawer_bg }}; --cd-header-bg: {{ settings.cart_header_bg }}; --cd-header-text: {{ settings.cart_header_text }}; --cd-accent: {{ settings.cart_accent_color }}; --cd-cta-bg: {{ settings.cart_cta_bg }};"
-  >
+  <div id="CartDrawer" class="cart-drawer cd">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
 
     <div
@@ -66,12 +77,12 @@
       aria-label="{{ 'sections.cart.title' | t }}"
       tabindex="-1"
     >
-      <span id="CartDrawer-SectionId" data-section-id="cart-drawer" hidden></span>
+      <span id="CartDrawer-SectionId" data-section-id="{{ section.id }}" hidden></span>
 
       {%- comment -%} ===== HEADER ===== {%- endcomment -%}
       <div class="cd__header">
         <h2 class="cd__title">
-          {{ settings.cart_drawer_title | default: 'IN YOUR BAG' }}
+          {{ section.settings.title }}
           {%- if cart != empty -%}
             <span class="cd__count">[{{ cart.item_count }} {{ cart.item_count | pluralize: 'ITEM', 'ITEMS' }}]</span>
           {%- endif -%}
@@ -93,16 +104,16 @@
             <svg width="44" height="52" viewBox="0 0 44 52" fill="none"><path d="M8 16h28l-2 32a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4z" stroke="currentColor" stroke-width="2"/><path d="M8 16l4-14h20l4 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             <span class="cd-empty__count">0</span>
           </span>
-          <h3 class="cd-empty__title">{{ settings.cart_empty_heading | default: "An empty bag won't feed itself" }}</h3>
-          {%- if settings.cart_empty_text != blank -%}
-            <p class="cd-empty__text">{{ settings.cart_empty_text }}</p>
+          <h3 class="cd-empty__title">{{ section.settings.empty_heading }}</h3>
+          {%- if section.settings.empty_text != blank -%}
+            <p class="cd-empty__text">{{ section.settings.empty_text }}</p>
           {%- endif -%}
 
-          {%- if settings.cart_drawer_collection != blank -%}
-            {%- assign empty_coll = settings.cart_drawer_collection -%}
+          {%- if section.settings.empty_collection != blank -%}
+            {%- assign empty_coll = section.settings.empty_collection -%}
             <div class="cd-shop" data-cd-carousel>
               <div class="cd-shop__head">
-                <p class="cd-shop__label">{{ settings.cart_empty_collection_title | default: 'Shop best sellers' }}</p>
+                <p class="cd-shop__label">{{ section.settings.empty_collection_title }}</p>
                 <div class="cd-carousel__nav">
                   <button type="button" class="cd-carousel__arrow" data-cd-prev aria-label="Previous">&larr;</button>
                   <button type="button" class="cd-carousel__arrow" data-cd-next aria-label="Next">&rarr;</button>
@@ -116,74 +127,56 @@
             </div>
           {%- endif -%}
 
-          <a href="{{ settings.cart_empty_button_link | default: routes.all_products_collection_url }}" class="cd-empty__shop-all">
-            {{ settings.cart_empty_button_label | default: 'Shop all products' }}
+          <a href="{{ section.settings.empty_button_link | default: routes.all_products_collection_url }}" class="cd-empty__shop-all">
+            {{ section.settings.empty_button_label }}
           </a>
         </div>
       {%- else -%}
 
         {%- comment -%} ===== THRESHOLD PROGRESS ===== {%- endcomment -%}
-        {%- if threshold_count > 0 -%}
+        {%- if threshold_blocks.size > 0 -%}
           <div class="cd-rewards">
-            <p class="cd-rewards__msg">
-              {%- if all_unlocked -%}
-                You&rsquo;ve unlocked all rewards!
-              {%- elsif next_index > 0 -%}
-                {%- assign mk = 'cart_threshold_' | append: next_index | append: '_message' -%}
-                {%- assign nak = 'cart_threshold_' | append: next_index | append: '_amount' -%}
-                {%- assign next_cents = settings[nak] | times: 100 -%}
-                {%- assign remaining = next_cents | minus: cart_cents | money -%}
-                {%- assign remaining_html = '<span class="cd-rewards__amount">' | append: remaining | append: '</span>' -%}
-                {{ settings[mk] | replace: '{remaining}', remaining_html }}
-              {%- endif -%}
-            </p>
+            <p class="cd-rewards__msg">{{ reward_message }}</p>
 
             <div class="cd-rewards__track">
               {%- assign prev_cents = 0 -%}
-              {%- for i in (1..4) -%}
-                {%- assign ek = 'cart_threshold_' | append: i | append: '_enable' -%}
-                {%- assign ak = 'cart_threshold_' | append: i | append: '_amount' -%}
-                {%- assign lk = 'cart_threshold_' | append: i | append: '_label' -%}
-                {%- assign enabled = settings[ek] -%}
-                {%- assign amt = settings[ak] -%}
-                {%- if enabled and amt > 0 -%}
-                  {%- assign b_cents = amt | times: 100 -%}
-                  {%- assign reached = false -%}
-                  {%- if cart_cents >= b_cents -%}{%- assign reached = true -%}{%- endif -%}
-                  {%- assign seg_pct = 0 -%}
-                  {%- if reached -%}
-                    {%- assign seg_pct = 100 -%}
-                  {%- elsif cart_cents > prev_cents -%}
-                    {%- assign span = b_cents | minus: prev_cents -%}
-                    {%- assign done = cart_cents | minus: prev_cents -%}
-                    {%- if span > 0 -%}{%- assign seg_pct = done | times: 100 | divided_by: span -%}{%- endif -%}
-                  {%- endif -%}
-                  <div class="cd-reward{% if reached %} is-reached{% endif %}">
-                    <span class="cd-reward__bar"><span class="cd-reward__fill" style="width: {{ seg_pct }}%"></span></span>
-                    <span class="cd-reward__label">{% if reached %}<span class="cd-reward__check" aria-hidden="true">&#10003;</span> {% endif %}{{ settings[lk] }}</span>
-                    <span class="cd-reward__amount">${{ amt }}</span>
-                  </div>
-                  {%- assign prev_cents = b_cents -%}
+              {%- for block in threshold_blocks -%}
+                {%- assign b_cents = block.settings.amount | times: 100 -%}
+                {%- assign reached = false -%}
+                {%- if cart_cents >= b_cents -%}{%- assign reached = true -%}{%- endif -%}
+                {%- assign seg_pct = 0 -%}
+                {%- if reached -%}
+                  {%- assign seg_pct = 100 -%}
+                {%- elsif cart_cents > prev_cents -%}
+                  {%- assign span = b_cents | minus: prev_cents -%}
+                  {%- assign done = cart_cents | minus: prev_cents -%}
+                  {%- if span > 0 -%}{%- assign seg_pct = done | times: 100 | divided_by: span -%}{%- endif -%}
                 {%- endif -%}
+                <div class="cd-reward{% if reached %} is-reached{% endif %}" {{ block.shopify_attributes }}>
+                  <span class="cd-reward__bar"><span class="cd-reward__fill" style="width: {{ seg_pct }}%"></span></span>
+                  <span class="cd-reward__label">{% if reached %}<span class="cd-reward__check" aria-hidden="true">&#10003;</span> {% endif %}{{ block.settings.reward_label }}</span>
+                  <span class="cd-reward__amount">${{ block.settings.amount }}</span>
+                </div>
+                {%- assign prev_cents = b_cents -%}
               {%- endfor -%}
             </div>
           </div>
         {%- endif -%}
 
         {%- comment -%} ===== BANNER OFFER ===== {%- endcomment -%}
-        {%- if settings.cart_banner_enable -%}
+        {%- if banner_block and banner_block.settings.enable -%}
           {%- capture banner_inner -%}
-            {%- if settings.cart_banner_image_desktop != blank -%}
-              {{ settings.cart_banner_image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: '', loading: 'lazy' }}
+            {%- if banner_block.settings.image_desktop != blank -%}
+              {{ banner_block.settings.image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: '', loading: 'lazy' }}
             {%- endif -%}
-            {%- if settings.cart_banner_image_mobile != blank -%}
-              {{ settings.cart_banner_image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: '', loading: 'lazy' }}
+            {%- if banner_block.settings.image_mobile != blank -%}
+              {{ banner_block.settings.image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: '', loading: 'lazy' }}
             {%- endif -%}
           {%- endcapture -%}
           {%- if banner_inner != blank -%}
-            <div class="cd-banner">
-              {%- if settings.cart_banner_link != blank -%}
-                <a href="{{ settings.cart_banner_link }}" class="cd-banner__link">{{ banner_inner }}</a>
+            <div class="cd-banner" {{ banner_block.shopify_attributes }}>
+              {%- if banner_block.settings.link != blank -%}
+                <a href="{{ banner_block.settings.link }}" class="cd-banner__link">{{ banner_inner }}</a>
               {%- else -%}
                 {{ banner_inner }}
               {%- endif -%}
@@ -319,7 +312,7 @@
                             </span>
                           </cart-subscription-toggle>
 
-                          {%- if is_sub and plan_count > 1 -%}
+                          {%- if is_sub -%}
                             <cart-subscription-selector
                               class="cd-freq"
                               data-line-index="{{ item.index | plus: 1 }}"
@@ -358,7 +351,7 @@
         >
           <div class="cd-recommend__head">
             <p class="cd-recommend__title">
-              {{ settings.cart_recommend_title | default: 'Add more, save more' }}
+              {{ section.settings.recommend_title }}
               {%- if extra_percent > 0 -%} <span class="cd-recommend__extra">(EXTRA {{ extra_percent }}%)</span>{%- endif -%}
             </p>
             <div class="cd-carousel__nav">
@@ -389,11 +382,11 @@
             </div>
 
             <button type="submit" id="CartDrawer-Checkout" class="cd-checkout" name="checkout" form="CartDrawer-Form">
-              {{ settings.cart_checkout_label | default: 'PROCEED TO CHECKOUT' }}
+              {{ section.settings.checkout_label }}
             </button>
 
-            {%- if settings.cart_guarantee_text != blank -%}
-              <p class="cd-guarantee">{{ settings.cart_guarantee_text }}</p>
+            {%- if section.settings.guarantee_text != blank -%}
+              <p class="cd-guarantee">{{ section.settings.guarantee_text }}</p>
             {%- endif -%}
           </div>
         </div>
@@ -405,6 +398,49 @@
 {% schema %}
 {
   "name": "Cart drawer",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "IN YOUR BAG" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button label", "default": "PROCEED TO CHECKOUT" },
+    { "type": "text", "id": "guarantee_text", "label": "Guarantee note", "default": "21-day money-back guarantee" },
+    { "type": "text", "id": "recommend_title", "label": "\"Add more\" title", "default": "Add more, save more" },
+    { "type": "text", "id": "unlocked_message", "label": "All-rewards-unlocked message", "default": "You've unlocked all rewards!" },
+    { "type": "header", "content": "Empty state" },
+    { "type": "text", "id": "empty_heading", "label": "Heading", "default": "An empty bag won't feed itself" },
+    { "type": "text", "id": "empty_text", "label": "Text", "default": "Fill it with real, gently air-dried food dogs actually finish." },
+    { "type": "text", "id": "empty_collection_title", "label": "Collection title", "default": "Shop best sellers" },
+    { "type": "collection", "id": "empty_collection", "label": "Collection" },
+    { "type": "text", "id": "empty_button_label", "label": "Button label", "default": "Shop all products" },
+    { "type": "url", "id": "empty_button_link", "label": "Button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "drawer_bg", "label": "Drawer background", "default": "#FFF9EF" },
+    { "type": "color", "id": "header_bg", "label": "Header background", "default": "#661D1D" },
+    { "type": "color", "id": "header_text", "label": "Header text", "default": "#FFF9EF" },
+    { "type": "color", "id": "accent_color", "label": "Accent (savings)", "default": "#296900" },
+    { "type": "color", "id": "cta_bg", "label": "Checkout button", "default": "#FFC069" }
+  ],
+  "blocks": [
+    {
+      "type": "threshold",
+      "name": "Reward threshold",
+      "limit": 4,
+      "settings": [
+        { "type": "number", "id": "amount", "label": "Threshold amount (USD)", "default": 80, "info": "Cart subtotal needed to unlock this reward." },
+        { "type": "text", "id": "reward_label", "label": "Milestone label", "default": "Free Shipping" },
+        { "type": "text", "id": "reward_message", "label": "Progress message", "default": "You're {remaining} away from Free Shipping", "info": "Use {remaining} for the remaining amount." },
+        { "type": "number", "id": "reward_percent", "label": "Reward discount %", "default": 0, "info": "Used for the \"Add more, save more (EXTRA n%)\" label. Leave 0 for free shipping." }
+      ]
+    },
+    {
+      "type": "banner",
+      "name": "Offer banner",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "enable", "label": "Show banner", "default": true },
+        { "type": "image_picker", "id": "image_desktop", "label": "Banner image (desktop)" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Banner image (mobile)" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ]
 }
 {% endschema %}
