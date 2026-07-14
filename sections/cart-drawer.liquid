@@ -1,4 +1,3 @@
-{%- if settings.cart_type == 'drawer' -%}
 {{ 'css--cart-drawer.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'custom-cart-subscription.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
@@ -402,7 +401,6 @@
     </div>
   </div>
 </cart-drawer>
-{%- endif -%}
 
 {% schema %}
 {
