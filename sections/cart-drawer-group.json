@@ -39,7 +39,7 @@
         "threshold_4_label": "",
         "threshold_4_message": "",
         "threshold_4_percent": 0,
-        "banner_enable": false,
+        "banner_enable": true,
         "banner_image_desktop": "shopify://shop_images/YumClub_Upsell.png",
         "banner_image_mobile": "shopify://shop_images/YumClub_Upsell.png",
         "banner_link": "",
