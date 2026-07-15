@@ -289,7 +289,7 @@
 
                     <div class="cd-item__bottom">
                       <quantity-input class="cd-qty">
-                        <button class="cd-qty__btn" name="minus" type="button" aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}">&minus;</button>
+                        <button class="cd-qty__btn quantity__button" name="minus" type="button" aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | escape }}">&minus;</button>
                         <input
                           class="cd-qty__input"
                           type="number"
@@ -305,7 +305,7 @@
                           id="Drawer-quantity-{{ item.index | plus: 1 }}"
                           aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
                         >
-                        <button class="cd-qty__btn" name="plus" type="button" aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}">+</button>
+                        <button class="cd-qty__btn quantity__button" name="plus" type="button" aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | escape }}">+</button>
                       </quantity-input>
 
                       <cart-remove-button id="CartDrawer-Remove-{{ item.index | plus: 1 }}" data-index="{{ item.index | plus: 1 }}">
