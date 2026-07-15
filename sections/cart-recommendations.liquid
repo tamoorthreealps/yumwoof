@@ -5,7 +5,7 @@
 {%- endcomment -%}
 {%- if recommendations.performed and recommendations.products_count > 0 -%}
   {%- for product in recommendations.products -%}
-    {% render 'cart-drawer-product-card', product: product, style: 'recommend' %}
+    {% comment %} {% render 'cart-drawer-product-card', product: product, style: 'recommend' %} {% endcomment %}
   {%- endfor -%}
 {%- endif -%}
 
