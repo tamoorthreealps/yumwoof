@@ -40,12 +40,22 @@
             "reward_message": "You're {remaining} away from 10% Off",
             "reward_percent": 10
           }
+        },
+        "banner_MVYYdw": {
+          "type": "banner",
+          "settings": {
+            "enable": true,
+            "image_desktop": "shopify://shop_images/YumClub_Upsell.png",
+            "image_mobile": "shopify://shop_images/YumClub_Upsell.png",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "threshold_Kg8hde",
         "threshold_PG4ddB",
-        "threshold_bLn8Qe"
+        "threshold_bLn8Qe",
+        "banner_MVYYdw"
       ],
       "settings": {
         "title": "IN YOUR BAG",
