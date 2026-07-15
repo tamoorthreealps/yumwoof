@@ -298,9 +298,9 @@
                           data-quantity-variant-id="{{ item.variant.id }}"
                           data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
                           min="0"
-                          data-min="{{ item.variant.quantity_rule.min }}"
+                          data-min="{{ item.variant.quantity_rule.min | default: 1 }}"
                           {% if item.variant.quantity_rule.max != null %}max="{{ item.variant.quantity_rule.max }}"{% endif %}
-                          step="{{ item.variant.quantity_rule.increment }}"
+                          step="{{ item.variant.quantity_rule.increment | default: 1 }}"
                           data-index="{{ item.index | plus: 1 }}"
                           id="Drawer-quantity-{{ item.index | plus: 1 }}"
                           aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
@@ -458,8 +458,8 @@
     { "type": "number", "id": "threshold_3_percent", "label": "Reward discount %", "default": 10 },
     { "type": "checkbox", "id": "threshold_4_enable", "label": "Threshold 4", "default": false },
     { "type": "number", "id": "threshold_4_amount", "label": "Amount (USD)", "default": 0 },
-    { "type": "text", "id": "threshold_4_label", "label": "Milestone label", "default": "" },
-    { "type": "text", "id": "threshold_4_message", "label": "Progress message", "default": "" },
+    { "type": "text", "id": "threshold_4_label", "label": "Milestone label" },
+    { "type": "text", "id": "threshold_4_message", "label": "Progress message" },
     { "type": "number", "id": "threshold_4_percent", "label": "Reward discount %", "default": 0 },
     { "type": "header", "content": "Offer banner" },
     { "type": "checkbox", "id": "banner_enable", "label": "Show banner", "default": false },
