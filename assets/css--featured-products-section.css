@@ -31,6 +31,7 @@
     letter-spacing: -0.34px;
     color: var(--fp-text);
     font-family: 'TAYRosemary';
+    padding:0 20px;
 }
 
 .fp--uppercase .fp__heading,
