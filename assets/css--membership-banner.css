@@ -91,6 +91,7 @@
     line-height: 24px;
     white-space: nowrap;
     font-family: 'Matter';
+    letter-spacing: 0;
 }
 
 @keyframes mb-marquee {
