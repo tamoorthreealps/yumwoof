@@ -92,6 +92,17 @@ collection-component {
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Matter';
+    src: url('Matter-Medium.eot');
+    src: url('Matter-Medium.eot?#iefix') format('embedded-opentype'),
+        url('Matter-Medium.woff2') format('woff2'),
+        url('Matter-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* base */
 
 .page-width {
