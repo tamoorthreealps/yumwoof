@@ -116,7 +116,7 @@ collection-component {
 
 @font-face {
   font-family: "FFBlurProMedium";
-  src: url('webFonts/FFBlurProMedium/font.woff2') format('woff2'), url('webFonts/FFBlurProMedium/font.woff') format('woff');
+  src: url('font.woff2') format('woff2'), url('font.woff') format('woff');
 }
 
 body {
