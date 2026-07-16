@@ -107,12 +107,17 @@ if (!customElements.get('yw-header')) {
 
 const megaItems = document.querySelectorAll('.yw-nav__item--mega');
 
+let removeTimer;
+
 megaItems.forEach((item) => {
   item.addEventListener('mouseenter', () => {
+    clearTimeout(removeTimer);
     document.body.classList.add('is-open');
   });
 
   item.addEventListener('mouseleave', () => {
-    document.body.classList.remove('is-open');
+    removeTimer = setTimeout(() => {
+      document.body.classList.remove('is-open');
+    }, 1000);
   });
 });
