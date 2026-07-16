@@ -21,7 +21,7 @@
         "content_position": "bottom",
         "content_alignment": "left",
         "min_height": 840,
-        "min_height_mobile": 620,
+        "min_height_mobile": 630,
         "background_color": "#1a1a1a",
         "show_texture": true,
         "text_color": "#fff9ef",
