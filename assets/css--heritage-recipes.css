@@ -27,13 +27,13 @@
    Intro (heading, subheading, button, bowl)
    -------------------------------------------------------------------------- */
 .heritage__heading {
-  margin: 0 0 1.6rem;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 3.4rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  color: var(--hr-text);
+    margin: 0 0 1.6rem;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 42px;
+    letter-spacing: -0.38px;
+    color: var(--hr-text);
+    font-family: 'TAYRosemary';
 }
 
 .heritage--uppercase .heritage__heading,
@@ -42,27 +42,30 @@
 }
 
 .heritage__subheading {
-  margin: 0 0 2.4rem;
-  max-width: 42rem;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  color: var(--hr-text);
+    margin: 0 0 2.4rem;
+    max-width: 42rem;
+    font-size: 1.6rem;
+    line-height: 24px;
+    color: var(--hr-text);
+    letter-spacing: 0;
 }
 
 .heritage__button {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.8rem 2rem;
-  border: 1.5px solid var(--hr-text);
-  border-radius: 100px;
-  color: var(--hr-text);
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease;
+display: inline-flex;
+    align-items: center;
+    padding: .72rem 2.4rem;
+    border: 1px solid var(--hr-text);
+    border-radius: 100px;
+    color: var(--hr-text);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: .64px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color .15s ease, color .15s ease;
+    font-family: "FFBlurProMedium";
 }
 
 .heritage__button:hover {
@@ -286,7 +289,7 @@
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .heritage {
-    padding: 8rem 0 5rem;
+    padding: 76px 0 93px;
   }
 
   .heritage__container {
@@ -302,12 +305,15 @@
   }
 
   .heritage__heading {
-    font-size: 5.2rem;
+    font-size: 56px;
+        line-height: 56px;
+        letter-spacing: -0.56px;
+        margin: 0 0 8px;
   }
 
   .heritage__subheading {
-    font-size: 1.7rem;
-    margin-bottom: 3.2rem;
+    font-size: 18px;
+        margin-bottom: 28px;
   }
 
   .heritage__bowl {
