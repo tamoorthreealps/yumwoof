@@ -103,6 +103,17 @@ collection-component {
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'TAYRosemary';
+    src: url('TAYRosemaryRegular.eot');
+    src: url('TAYRosemaryRegular.eot?#iefix') format('embedded-opentype'),
+        url('TAYRosemaryRegular.woff2') format('woff2'),
+        url('TAYRosemaryRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* base */
 
 .page-width {
