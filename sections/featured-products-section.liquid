@@ -139,16 +139,16 @@
       }
 
       function scrollToSlide(i) {
-  var slide = slides[i];
-  if (!slide) return;
+        var slide = slides[i];
+        if (!slide) return;
 
-  var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+        var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
 
-  viewport.scrollTo({
-    left: left,
-    behavior: 'smooth'
-  });
-}
+        viewport.scrollTo({
+          left: left,
+          behavior: 'smooth'
+        });
+      }
 
       function currentIndex() {
         var center = viewport.scrollLeft + viewport.clientWidth / 2;
@@ -164,6 +164,11 @@
 
       function update() {
         var idx = currentIndex();
+
+        slides.forEach(function (slide, i) {
+          slide.classList.toggle('is-active', i === idx);
+        });
+
         dots.forEach(function (dot, i) {
           dot.setAttribute('aria-current', i === idx ? 'true' : 'false');
         });
