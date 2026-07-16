@@ -139,7 +139,7 @@
 
 .membership-banner__track {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: max-content;
   animation: mb-marquee 35s linear infinite;
 }
