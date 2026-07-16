@@ -19,7 +19,7 @@
 .membership-banner__inner {
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: 73px;
   min-height: 64px;
   padding: 0.8rem 6rem;
 }
