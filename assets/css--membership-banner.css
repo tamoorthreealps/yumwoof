@@ -17,11 +17,13 @@
 }
 
 .membership-banner__inner {
-  display: flex;
-  align-items: center;
-  gap: 73px;
-  min-height: 64px;
-  padding: 0.8rem 6rem;
+    display: flex;
+    align-items: center;
+    gap: 73px;
+    min-height: 64px;
+    padding: .8rem 0rem .8rem 6rem;
+    max-width: 1512px;
+    margin: 0 auto;
 }
 
 /* --------------------------------------------------------------------------
