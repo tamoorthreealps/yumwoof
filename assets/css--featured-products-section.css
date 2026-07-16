@@ -248,10 +248,10 @@ margin-top: auto;
   }
 
   .fp__track {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 3.2rem;
-    padding: 0;
+justify-content: center;
+        gap: 2rem;
+        padding: 0;
+        flex-wrap: wrap;
   }
 
   .fp__card {
