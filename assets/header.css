@@ -308,13 +308,18 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% + 0.8rem);
+  top: calc(100% + .8rem);
   z-index: 20;
-  padding-top: 0.4rem;
+
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  pointer-events: none;
+
+  transform: translateY(-20px);
+  transition:
+    transform .35s cubic-bezier(.22,.61,.36,1),
+    opacity .35s ease,
+    visibility 0s linear .35s;
 }
 
 .yw-nav__item--mega:hover .yw-mega,
@@ -322,7 +327,10 @@
 .yw-nav__item--mega.is-open .yw-mega {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+
   transform: translateY(0);
+  transition-delay: 0s;
 }
 
 .yw-mega__inner {
