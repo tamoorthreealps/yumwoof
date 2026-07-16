@@ -13,7 +13,7 @@
 
   background-color: var(--fp-bg);
   color: var(--fp-text);
-  padding: 4.8rem 0;
+  padding: 4.8rem 0 5.6rem;
   overflow: hidden;
 }
 
@@ -85,11 +85,12 @@
 }
 
 .fp__title {
-  margin: 0 0 1.2rem;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 2.4rem;
-  line-height: 1.1;
+    margin: 0 0 1.2rem;
+    font-weight: 400;
+    font-size: 23.8px;
+    line-height: 27.2px;
+    font-family: 'TAYRosemary';
+    letter-spacing: 0;
 }
 
 .fp__labels {
@@ -97,21 +98,22 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
-  margin: 0 0 1.6rem;
+  margin: 0 0 4rem;
   padding: 0;
   list-style: none;
 }
 
 .fp__label {
-  padding: 0.4rem 1rem;
-  border: 1px solid var(--fp-label);
-  border-radius: 100px;
-  color: var(--fp-label);
-  font-size: 1.3rem;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  white-space: nowrap;
+padding: 5.1px 10.2px;
+    border: 1px solid var(--fp-label);
+    border-radius: 100px;
+    color: var(--fp-label);
+    font-size: 10.2px;
+    line-height: 11.9px;
+    letter-spacing: -20.4px;
+    text-transform: uppercase;
+    font-family: 'TAY Birdie';
+    font-weight: 400;
 }
 
 .fp__media {
@@ -132,20 +134,25 @@
 }
 
 .fp__desc {
-  margin: 0 0 1.2rem;
-  max-width: 28rem;
-  font-size: 1.5rem;
-  line-height: 1.4;
+margin: 0 0 1.2rem;
+    max-width: 22rem;
+    font-size: 12.75px;
+    line-height: 18.7px;
+    letter-spacing: 0;
+    color: #000000;
+    font-family: 'Matter';
 }
 
 .fp__recipes {
-  margin-top: auto;
-  color: var(--fp-text);
-  font-size: 1.3rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+margin-top: auto;
+    color: var(--fp-text);
+    font-size: 11.05px;
+    line-height: 17px;
+    letter-spacing: 44px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: "FFBlurProMedium";
+    text-decoration: underline;
 }
 
 /* Amber hexagon SHOP button overlapping the card's bottom edge */
@@ -226,7 +233,7 @@
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .fp {
-    padding: 8rem 0;
+    padding: 9.6rem 0 13rem;
   }
 
   .fp__heading {
@@ -248,34 +255,44 @@
   }
 
   .fp__card {
-    width: 38.6rem;
-    max-width: 100%;
-    scroll-snap-align: none;
-    padding: 4rem 3.2rem 5rem;
+width: 38.6rem;
+        max-width: 100%;
+        scroll-snap-align: none;
+        padding: 4rem 3.2rem 6.4rem;
   }
 
   .fp__title {
-    font-size: 3.6rem;
-    margin-bottom: 1.6rem;
+            font-size: 3.6rem;
+        line-height: 4rem;
+        margin-bottom: .8rem;
   }
 
   .fp__label {
-    font-size: 1.4rem;
-    padding: 0.5rem 1.2rem;
+  font-size: 1.4rem;
+        line-height: 16px;
+        letter-spacing: -0.28px;
+        padding: 6.5px 10px 5.5px;
   }
 
   .fp__media {
-    height: 260px;
-    margin-bottom: 2rem;
+height: 240px;
+        margin-bottom: 23px;
   }
 
   .fp__desc {
-    font-size: 1.6rem;
-    margin-bottom: 1.6rem;
+font-size: 1.6rem;
+        line-height: 24px;
+        margin-bottom: 1.7rem;
+        max-width: 200px;
   }
 
   .fp__recipes {
-    font-size: 1.4rem;
+            font-size: 1.4rem;
+        line-height: 24px;
+        letter-spacing: 0.56px;
+        border-bottom: 1px solid #000000;
+        padding-bottom: 3.2px;
+        text-decoration: none;
   }
 
   .fp__shop {
