@@ -200,7 +200,7 @@ margin-top: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.2rem;
+  gap: 1.6rem;
 }
 
 .fp__arrow {
@@ -229,13 +229,14 @@ margin-top: auto;
 }
 
 .fp__dot {
-  width: 10px;
-  height: 10px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.25);
-  cursor: pointer;
+width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    border: 1px solid #000000;
 }
 
 .fp__dot[aria-current='true'] {
