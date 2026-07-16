@@ -156,7 +156,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.6rem 2.8rem;
+  padding: 1.7rem 2.8rem 1.5rem;
   background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/button--bg.svg?v=1783519312") center / 100% 100% no-repeat;
   color: var(--yw-cta-text);
   font-family: "FFBlurProMedium";
@@ -354,10 +354,11 @@ margin: 0;
 }
 
 .yw-mega__subheading {
-  margin: 0;
-  font-size: 1.5rem;
-  line-height: 1.4;
-  color: var(--yw-nav-text);
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: var(--yw-nav-text);
 }
 
 .yw-mega__button {
