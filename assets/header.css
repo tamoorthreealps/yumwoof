@@ -312,6 +312,7 @@
   right: 0;
   top: 100%;
   z-index: 20;
+  padding-top:16px;
   pointer-events: none;
   transform: translateY(-150%);
   transition: transform .6s cubic-bezier(.22,.61,.36,1),
