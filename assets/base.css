@@ -114,6 +114,11 @@ collection-component {
     font-display: swap;
 }
 
+@font-face {
+  font-family: "FFBlurProMedium";
+  src: url('webFonts/FFBlurProMedium/font.woff2') format('woff2'), url('webFonts/FFBlurProMedium/font.woff') format('woff');
+}
+
 body {
   font-family: 'Matter', sans-serif;
   font-weight: 500;
