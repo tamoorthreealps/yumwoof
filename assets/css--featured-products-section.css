@@ -18,9 +18,9 @@
 }
 
 .fp__inner {
-  max-width: 128rem;
-  margin: 0 auto;
-  padding: 0 2rem;
+    max-width: 1198px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .fp__heading {
@@ -237,7 +237,7 @@
   .fp__viewport {
     overflow: visible;
     scroll-snap-type: none;
-    padding-bottom: 5rem;
+    padding-bottom: 0;
   }
 
   .fp__track {
