@@ -189,14 +189,6 @@ display: inline-flex;
   text-align: center;
 }
 
-.heritage__divider {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background-color: var(--hr-text);
-  margin-bottom: 2.4rem;
-}
-
 .heritage__nono-heading {
   margin: 0 0 0.4rem;
   font-family: var(--font-heading-family, inherit);

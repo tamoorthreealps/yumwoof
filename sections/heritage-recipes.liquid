@@ -111,7 +111,6 @@
   {%- assign nono_items = section.settings.nono_items | split: ',' -%}
   {%- if section.settings.nono_heading != blank or nono_items.size > 0 -%}
     <div class="heritage__nono">
-      <span class="heritage__divider" aria-hidden="true"></span>
       {%- if section.settings.nono_heading != blank -%}
         <h3 class="heritage__nono-heading">{{ section.settings.nono_heading }}</h3>
       {%- endif -%}
