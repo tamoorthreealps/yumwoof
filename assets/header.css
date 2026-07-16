@@ -308,24 +308,20 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% + .8rem);
+  top: 100%;
   z-index: 20;
 
-  opacity: 0;
   visibility: hidden;
   pointer-events: none;
 
-  transform: translateY(-20px);
-  transition:
-    transform .35s cubic-bezier(.22,.61,.36,1),
-    opacity .35s ease,
-    visibility 0s linear .35s;
+  transform: translateY(-40px);
+  transition: transform .35s cubic-bezier(.22,.61,.36,1),
+              visibility 0s linear .35s;
 }
 
 .yw-nav__item--mega:hover .yw-mega,
 .yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
-  opacity: 1;
   visibility: visible;
   pointer-events: auto;
 
