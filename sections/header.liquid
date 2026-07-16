@@ -1,19 +1,6 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
-<script>
-  // top--bar--height--calculate
-setHeaderHeight() {
-  const topbar = this.querySelector('.yw-topbar');
-
-  if (topbar) {
-    document.documentElement.style.setProperty(
-      '--yw-topbar-height',
-      `${topbar.offsetHeight}px`
-    );
-  }
-}
-</script>
 {%- style -%}
   #shopify-section-{{ section.id }} .yw-header {
     --yw-nav-bg: {{ section.settings.navbar_bg }};
@@ -24,10 +11,6 @@ setHeaderHeight() {
     --yw-topbar-bg: {{ section.settings.announcement_bg }};
     --yw-topbar-text: {{ section.settings.announcement_text_color }};
     --yw-mobile-bg: {{ section.settings.mobile_menu_bg }};
-  }
-
-  .hero-banner {
-    margin-top: var(--yw-topbar-height);
   }
 {%- endstyle -%}
 
