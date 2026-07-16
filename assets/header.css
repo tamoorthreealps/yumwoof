@@ -107,7 +107,7 @@
 .yw-nav-outer {
   max-width: 151.2rem;
   margin: 0 auto;
-  padding: 1.2rem 6rem;
+  padding: 1.2rem 6rem 0;
   position: relative;
 }
 
