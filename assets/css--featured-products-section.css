@@ -68,6 +68,11 @@
   list-style: none;
 }
 
+.fp__track::after {
+    content: "";
+    flex: 0 0 46.4px;
+}
+
 /* --------------------------------------------------------------------------
    Card
    -------------------------------------------------------------------------- */
@@ -264,6 +269,10 @@ justify-content: center;
         gap: 2rem;
         padding: 0;
         flex-wrap: wrap;
+  }
+
+  .fp__track::after {
+    display:none;
   }
 
   .fp__card {
