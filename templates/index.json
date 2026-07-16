@@ -61,9 +61,9 @@
         "rating_text": "Over 2,500 5-star reviews",
         "enable_marquee": true,
         "marquee_speed": 35,
-        "background_color": "#661c1c",
-        "text_color": "#fff9ef",
-        "star_color": "#ffc069"
+        "background_color": "#661C1C",
+        "text_color": "#FFF9EF",
+        "star_color": "#FFC069"
       }
     },
     "featured_products": {
