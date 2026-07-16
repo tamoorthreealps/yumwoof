@@ -61,7 +61,7 @@
   align-items: stretch;
   flex-wrap: nowrap;
   gap: 22.4px;
-  padding-inline: calc((100% - 72%) / 2);
+  padding: 0 46.4px;
   margin: 0;
   list-style: none;
 }
