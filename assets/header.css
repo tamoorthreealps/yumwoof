@@ -21,10 +21,13 @@
 }
 
 .yw-header--sticky {
-  position: sticky;
+  position: fixed;
+  left: 0;
+  right: 0;
   top: 0;
-  transition: transform 0.3s ease;
+  transition: transform .3s ease;
   will-change: transform;
+  transform: none !important;
 }
 
 .yw-header--sticky.yw-header--hidden {
