@@ -26,7 +26,7 @@
       background-color: transparent;
     {% else %}
       background-image: none;
-      background-color: var(--hr-bg);
+      background-color: {{ section.settings.mobile_background_color }};
     {% endif %}
   }
 }
@@ -346,7 +346,13 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background Color",
+      "label": "Background Color (Desktop)",
+      "default": "#7BA6DD"
+    },
+    {
+      "type": "color",
+      "id": "mobile_background_color",
+      "label": "Background Color (Mobile)",
       "default": "#7BA6DD"
     },
     {
