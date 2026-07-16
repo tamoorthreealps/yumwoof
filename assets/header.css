@@ -617,7 +617,7 @@ font-size: 16px;
 
   .yw-nav {
     grid-template-columns: auto 1fr auto;
-    padding: 0 1.6rem;
+    padding: 1.2rem 1.6rem;
   }
 
   .yw-nav__toggle {
