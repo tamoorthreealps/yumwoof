@@ -184,7 +184,7 @@ display: inline-flex;
    -------------------------------------------------------------------------- */
 .heritage__nono {
   max-width: 151.2rem;
-  margin: 4rem auto 0;
+  margin: 0 auto 0;
   padding: 0 2rem;
   text-align: center;
 }
@@ -366,7 +366,6 @@ display: inline-flex;
   }
 
   .heritage__nono {
-    margin-top: 5.6rem;
     padding: 0 6rem;
   }
 
