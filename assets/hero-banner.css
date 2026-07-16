@@ -18,7 +18,7 @@
   overflow: hidden;
   background-color: var(--hb-bg);
   color: var(--hb-text);
-  margin-top: var(--yw-topbar-height);
+  margin-top: 40px;
 }
 
 /* Optional background image */
@@ -150,6 +150,9 @@ margin: 0;
    Mobile
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 749px) {
+  .hero-banner {
+  margin-top: 32px;
+}
   .hero-banner__inner {
     min-height: var(--hb-min-height-mobile, 480px);
     padding: 3.6rem 2rem;
