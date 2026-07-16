@@ -142,7 +142,7 @@
         var slide = slides[i];
         if (!slide) return;
         var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
-        viewport.scrollTo({ left: left, behavior: 'smooth' });
+        viewport.scrollTo({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
 
       function currentIndex() {

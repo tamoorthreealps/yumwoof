@@ -50,6 +50,8 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 5.86rem;
+  padding-inline: 14%;
+    box-sizing: border-box;
 }
 
 .fp__viewport::-webkit-scrollbar {
@@ -61,7 +63,7 @@
   align-items: stretch;
   flex-wrap: nowrap;
   gap: 22.4px;
-  padding: 0 46.4px;
+  padding: 0;
   margin: 0;
   list-style: none;
 }
@@ -71,8 +73,8 @@
    -------------------------------------------------------------------------- */
 .fp__card {
   position: relative;
-  flex: 0 0 auto;
-  width: 78%;
+  flex: 0 0 72%;
+    width: 72%;
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
@@ -249,6 +251,7 @@ margin-top: auto;
     overflow: visible;
     scroll-snap-type: none;
     padding-bottom: 0;
+    padding-inline: 0;
   }
 
   .fp__track {
@@ -260,6 +263,7 @@ justify-content: center;
 
   .fp__card {
 width: 38.6rem;
+flex: 0 0 auto;
         max-width: 100%;
         scroll-snap-align: none;
         padding: 3.9rem 3.2rem 6.3rem;
