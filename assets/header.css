@@ -378,6 +378,10 @@ margin: 0;
   font-family: "FFBlurProMedium";
 }
 
+.yw-mega__button:hover {
+  transform: scale(1.03);
+}
+
 .yw-mega__cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
