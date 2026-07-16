@@ -138,10 +138,12 @@ display: inline-flex;
 }
 
 .hero-banner__offer {
-  margin: 0;
-  font-size: 1.4rem;
-  line-height: 1.4;
-  color: var(--hb-text);
+margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: var(--hb-text);
+    font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
