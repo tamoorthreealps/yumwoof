@@ -67,7 +67,6 @@
 .hero-banner__content {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
   max-width: 56rem;
 }
 
