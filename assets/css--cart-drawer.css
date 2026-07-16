@@ -114,6 +114,17 @@ cart-drawer.active .cd__inner {
   font-size: 1.5rem;
 }
 
+/* Yum Club member scheme: flat member discount, no progress track */
+.cd-rewards--member {
+  background: var(--cd-accent, #296900);
+  color: #fff;
+}
+
+.cd-rewards--member .cd-rewards__msg {
+  margin: 0;
+  font-weight: 600;
+}
+
 .cd-rewards__amount {
   font-weight: 500;
 }

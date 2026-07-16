@@ -16,6 +16,31 @@
 {%- liquid
   assign cart_cents = cart.total_price
 
+  # --- Active market currency: thresholds are entered per market (US/EU/UK/CH). ---
+  # Pick the field suffix from the cart's currency, falling back to USD.
+  assign cart_currency = cart.currency.iso_code | default: shop.currency
+  assign cur_suffix = 'usd'
+  if cart_currency == 'EUR'
+    assign cur_suffix = 'eur'
+  elsif cart_currency == 'GBP'
+    assign cur_suffix = 'gbp'
+  elsif cart_currency == 'CHF'
+    assign cur_suffix = 'chf'
+  endif
+
+  # --- Yum Club membership: logged-in customers with the member tag get a flat
+  #     member discount scheme instead of the spend-based tiered thresholds. ---
+  assign member_tag = section.settings.member_tag | default: 'Yum Club Membership!'
+  assign is_member = false
+  if customer and customer.tags contains member_tag
+    assign is_member = true
+  endif
+  assign member_percent = section.settings.member_percent | default: 25
+  assign show_member_scheme = false
+  if section.settings.member_enable and is_member
+    assign show_member_scheme = true
+  endif
+
   # Reward thresholds (up to 4) live in section settings so they survive AJAX re-renders.
   assign threshold_count = 0
   assign max_threshold_cents = 0
@@ -23,9 +48,13 @@
   assign all_unlocked = true
   for i in (1..4)
     assign ek = 'threshold_' | append: i | append: '_enable'
-    assign ak = 'threshold_' | append: i | append: '_amount'
+    assign ak = 'threshold_' | append: i | append: '_amount_' | append: cur_suffix
     assign enabled = section.settings[ek]
     assign amt = section.settings[ak]
+    if amt == blank
+      assign ak_usd = 'threshold_' | append: i | append: '_amount_usd'
+      assign amt = section.settings[ak_usd]
+    endif
     if enabled and amt > 0
       assign threshold_count = threshold_count | plus: 1
       assign b_cents = amt | times: 100
@@ -42,7 +71,9 @@
   endfor
 
   assign extra_percent = 0
-  if next_index > 0
+  if show_member_scheme
+    assign extra_percent = member_percent
+  elsif next_index > 0
     assign pk = 'threshold_' | append: next_index | append: '_percent'
     assign extra_percent = section.settings[pk]
   endif
@@ -53,12 +84,24 @@
     assign reward_message = section.settings.unlocked_message
   elsif next_index > 0
     assign mk = 'threshold_' | append: next_index | append: '_message'
-    assign nak = 'threshold_' | append: next_index | append: '_amount'
-    assign next_cents = section.settings[nak] | times: 100
+    assign nak = 'threshold_' | append: next_index | append: '_amount_' | append: cur_suffix
+    assign next_amt = section.settings[nak]
+    if next_amt == blank
+      assign nak_usd = 'threshold_' | append: next_index | append: '_amount_usd'
+      assign next_amt = section.settings[nak_usd]
+    endif
+    assign next_cents = next_amt | times: 100
     assign remaining_money = next_cents | minus: cart_cents | money
     assign remaining_html = '<span class="cd-rewards__amount">' | append: remaining_money | append: '</span>'
     assign placeholder = '{remaining}'
     assign reward_message = section.settings[mk] | replace: placeholder, remaining_html
+  endif
+
+  # Member scheme message ({percent} is replaced here, never inside a {{ }} tag)
+  assign member_message = ''
+  if show_member_scheme
+    assign member_message = section.settings.member_message | default: 'Yum Club member — {percent}% off applied'
+    assign member_message = member_message | replace: '{percent}', member_percent
   endif
 
   # Total savings against the best available compare-at price
@@ -144,8 +187,12 @@
         </div>
       {%- else -%}
 
-        {%- comment -%} ===== THRESHOLD PROGRESS ===== {%- endcomment -%}
-        {%- if threshold_count > 0 -%}
+        {%- comment -%} ===== REWARDS: member scheme OR spend-based tiers ===== {%- endcomment -%}
+        {%- if show_member_scheme -%}
+          <div class="cd-rewards cd-rewards--member">
+            <p class="cd-rewards__msg">{{ member_message }}</p>
+          </div>
+        {%- elsif threshold_count > 0 -%}
           <div class="cd-rewards">
             <p class="cd-rewards__msg">{{ reward_message }}</p>
 
@@ -153,10 +200,11 @@
               {%- assign prev_cents = 0 -%}
               {%- for i in (1..4) -%}
                 {%- assign ek = 'threshold_' | append: i | append: '_enable' -%}
-                {%- assign ak = 'threshold_' | append: i | append: '_amount' -%}
+                {%- assign ak = 'threshold_' | append: i | append: '_amount_' | append: cur_suffix -%}
                 {%- assign lk = 'threshold_' | append: i | append: '_label' -%}
                 {%- assign enabled = section.settings[ek] -%}
                 {%- assign amt = section.settings[ak] -%}
+                {%- if amt == blank -%}{%- assign ak_usd = 'threshold_' | append: i | append: '_amount_usd' -%}{%- assign amt = section.settings[ak_usd] -%}{%- endif -%}
                 {%- if enabled and amt > 0 -%}
                   {%- assign b_cents = amt | times: 100 -%}
                   {%- assign reached = false -%}
@@ -172,7 +220,7 @@
                   <div class="cd-reward{% if reached %} is-reached{% endif %}">
                     <span class="cd-reward__bar"><span class="cd-reward__fill" style="width: {{ seg_pct }}%"></span></span>
                     <span class="cd-reward__label">{% if reached %}<span class="cd-reward__check" aria-hidden="true">&#10003;</span> {% endif %}{{ section.settings[lk] }}</span>
-                    <span class="cd-reward__amount">${{ amt }}</span>
+                    <span class="cd-reward__amount">{{ amt | times: 100 | money_without_trailing_zeros }}</span>
                   </div>
                   {%- assign prev_cents = b_cents -%}
                 {%- endif -%}
@@ -439,28 +487,51 @@
       "default": "related",
       "info": "Set the products in the Shopify Search & Discovery app."
     },
-    { "type": "header", "content": "Reward thresholds" },
-    { "type": "paragraph", "content": "Enable up to 4 thresholds. Use {remaining} in a message for the amount left." },
-    { "type": "checkbox", "id": "threshold_1_enable", "label": "Threshold 1", "default": true },
-    { "type": "number", "id": "threshold_1_amount", "label": "Amount (USD)", "default": 80 },
+    { "type": "header", "content": "Yum Club membership (members)" },
+    { "type": "paragraph", "content": "Logged-in customers with the member tag see a flat member discount instead of the spend-based tiers." },
+    { "type": "checkbox", "id": "member_enable", "label": "Enable member scheme", "default": true },
+    { "type": "text", "id": "member_tag", "label": "Member customer tag", "default": "Yum Club Membership!" },
+    { "type": "number", "id": "member_percent", "label": "Member discount %", "default": 25 },
+    { "type": "text", "id": "member_message", "label": "Member message", "info": "Use {percent} for the discount value.", "default": "Yum Club member — {percent}% off applied" },
+    { "type": "header", "content": "Reward thresholds (non-members)" },
+    { "type": "paragraph", "content": "Enable up to 4 spend tiers. Amounts are entered per market (US/EU/UK/CH) and the cart uses the active currency, falling back to US. Use {remaining} in a message for the amount left." },
+    { "type": "text", "id": "unlocked_message", "label": "All-tiers-unlocked message", "default": "You've unlocked every reward! 🎉" },
+    { "type": "header", "content": "Threshold 1" },
+    { "type": "checkbox", "id": "threshold_1_enable", "label": "Enable", "default": true },
     { "type": "text", "id": "threshold_1_label", "label": "Milestone label", "default": "Free Shipping" },
     { "type": "text", "id": "threshold_1_message", "label": "Progress message", "default": "You're {remaining} away from Free Shipping" },
     { "type": "number", "id": "threshold_1_percent", "label": "Reward discount %", "default": 0 },
-    { "type": "checkbox", "id": "threshold_2_enable", "label": "Threshold 2", "default": true },
-    { "type": "number", "id": "threshold_2_amount", "label": "Amount (USD)", "default": 160 },
+    { "type": "number", "id": "threshold_1_amount_usd", "label": "Amount — US ($)", "default": 80 },
+    { "type": "number", "id": "threshold_1_amount_eur", "label": "Amount — EU (€)", "default": 90 },
+    { "type": "number", "id": "threshold_1_amount_gbp", "label": "Amount — UK (£)", "default": 90 },
+    { "type": "number", "id": "threshold_1_amount_chf", "label": "Amount — CH (CHF)", "default": 110 },
+    { "type": "header", "content": "Threshold 2" },
+    { "type": "checkbox", "id": "threshold_2_enable", "label": "Enable", "default": true },
     { "type": "text", "id": "threshold_2_label", "label": "Milestone label", "default": "5% Off" },
     { "type": "text", "id": "threshold_2_message", "label": "Progress message", "default": "You're {remaining} away from 5% off" },
     { "type": "number", "id": "threshold_2_percent", "label": "Reward discount %", "default": 5 },
-    { "type": "checkbox", "id": "threshold_3_enable", "label": "Threshold 3", "default": true },
-    { "type": "number", "id": "threshold_3_amount", "label": "Amount (USD)", "default": 240 },
+    { "type": "number", "id": "threshold_2_amount_usd", "label": "Amount — US ($)", "default": 160 },
+    { "type": "number", "id": "threshold_2_amount_eur", "label": "Amount — EU (€)", "default": 180 },
+    { "type": "number", "id": "threshold_2_amount_gbp", "label": "Amount — UK (£)", "default": 180 },
+    { "type": "number", "id": "threshold_2_amount_chf", "label": "Amount — CH (CHF)", "default": 220 },
+    { "type": "header", "content": "Threshold 3" },
+    { "type": "checkbox", "id": "threshold_3_enable", "label": "Enable", "default": true },
     { "type": "text", "id": "threshold_3_label", "label": "Milestone label", "default": "10% Off" },
     { "type": "text", "id": "threshold_3_message", "label": "Progress message", "default": "You're {remaining} away from 10% off" },
     { "type": "number", "id": "threshold_3_percent", "label": "Reward discount %", "default": 10 },
-    { "type": "checkbox", "id": "threshold_4_enable", "label": "Threshold 4", "default": false },
-    { "type": "number", "id": "threshold_4_amount", "label": "Amount (USD)", "default": 0 },
-    { "type": "text", "id": "threshold_4_label", "label": "Milestone label" },
-    { "type": "text", "id": "threshold_4_message", "label": "Progress message" },
-    { "type": "number", "id": "threshold_4_percent", "label": "Reward discount %", "default": 0 },
+    { "type": "number", "id": "threshold_3_amount_usd", "label": "Amount — US ($)", "default": 240 },
+    { "type": "number", "id": "threshold_3_amount_eur", "label": "Amount — EU (€)", "default": 270 },
+    { "type": "number", "id": "threshold_3_amount_gbp", "label": "Amount — UK (£)", "default": 270 },
+    { "type": "number", "id": "threshold_3_amount_chf", "label": "Amount — CH (CHF)", "default": 330 },
+    { "type": "header", "content": "Threshold 4" },
+    { "type": "checkbox", "id": "threshold_4_enable", "label": "Enable", "default": true },
+    { "type": "text", "id": "threshold_4_label", "label": "Milestone label", "default": "15% Off" },
+    { "type": "text", "id": "threshold_4_message", "label": "Progress message", "default": "You're {remaining} away from 15% off" },
+    { "type": "number", "id": "threshold_4_percent", "label": "Reward discount %", "default": 15 },
+    { "type": "number", "id": "threshold_4_amount_usd", "label": "Amount — US ($)", "default": 320 },
+    { "type": "number", "id": "threshold_4_amount_eur", "label": "Amount — EU (€)", "default": 360 },
+    { "type": "number", "id": "threshold_4_amount_gbp", "label": "Amount — UK (£)", "default": 360 },
+    { "type": "number", "id": "threshold_4_amount_chf", "label": "Amount — CH (CHF)", "default": 440 },
     { "type": "header", "content": "Offer banner" },
     { "type": "checkbox", "id": "banner_enable", "label": "Show banner", "default": false },
     { "type": "image_picker", "id": "banner_image_desktop", "label": "Banner image (desktop)" },
