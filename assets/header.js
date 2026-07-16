@@ -103,3 +103,16 @@ class YwHeader extends HTMLElement {
 if (!customElements.get('yw-header')) {
   customElements.define('yw-header', YwHeader);
 }
+
+
+const megaItems = document.querySelectorAll('.yw-nav__item--mega');
+
+megaItems.forEach((item) => {
+  item.addEventListener('mouseenter', () => {
+    document.body.classList.add('is-open');
+  });
+
+  item.addEventListener('mouseleave', () => {
+    document.body.classList.remove('is-open');
+  });
+});
