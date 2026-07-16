@@ -176,7 +176,21 @@
 
       if (prev) prev.addEventListener('click', function () { scrollToSlide(Math.max(0, currentIndex() - 1)); });
       if (next) next.addEventListener('click', function () { scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1)); });
-      viewport.addEventListener('scroll', function () { window.requestAnimationFrame(update); }, { passive: true });
+      let ticking = false;
+
+viewport.addEventListener(
+  'scroll',
+  function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        update();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  },
+  { passive: true }
+);
 
       update();
       track.dataset.fpReady = 'true';
