@@ -263,23 +263,34 @@
                     assign is_sub = true
                   endif
 
+                  # Identify the BASE subscription group — the plain "Subscribe & Save"
+                  # group, NOT the bundle/member combined groups Appstle also attaches
+                  # (those carry the pre-stacked tier/member rates and are switched by
+                  # the discount engine, not chosen by the shopper). Picking the first
+                  # group blindly would attach the 28.75% member plan to everyone.
+                  assign base_prefix = section.settings.sub_base_group_prefix | default: 'Subscribe & Save'
+                  assign base_group = null
+                  for group in item.product.selling_plan_groups
+                    if base_group == null and group.name contains base_prefix
+                      assign base_group = group
+                    endif
+                  endfor
+                  if base_group == null and item.product.selling_plan_groups.size > 0
+                    assign base_group = item.product.selling_plan_groups.first
+                  endif
+
                   assign has_plans = false
                   assign default_plan_id = null
                   assign default_plan_percent = 0
-                  assign plan_count = 0
-                  for group in item.product.selling_plan_groups
-                    for plan in group.selling_plans
-                      assign has_plans = true
-                      assign plan_count = plan_count | plus: 1
-                      if default_plan_id == null
-                        assign default_plan_id = plan.id
-                        assign first_adj = plan.price_adjustments.first
-                        if first_adj.value_type == 'percentage'
-                          assign default_plan_percent = first_adj.value
-                        endif
-                      endif
-                    endfor
-                  endfor
+                  if base_group != null
+                    assign has_plans = true
+                    assign base_default_plan = base_group.selling_plans.first
+                    assign default_plan_id = base_default_plan.id
+                    assign base_adj = base_default_plan.price_adjustments.first
+                    if base_adj.value_type == 'percentage'
+                      assign default_plan_percent = base_adj.value
+                    endif
+                  endif
 
                   assign sub_percent = default_plan_percent
                   if is_sub
@@ -392,10 +403,17 @@
                               data-quantity="{{ item.quantity }}"
                             >
                               <select class="cd-freq__select" aria-label="Delivery frequency">
+                                {%- comment -%} Only the frequencies of the group the item is in (Appstle groups hold 4/8/12-week plans). {%- endcomment -%}
+                                {%- assign active_plan_id = item.selling_plan_allocation.selling_plan.id -%}
+                                {%- assign freq_group = null -%}
                                 {%- for group in item.product.selling_plan_groups -%}
                                   {%- for plan in group.selling_plans -%}
-                                    <option value="{{ plan.id }}" {% if plan.id == item.selling_plan_allocation.selling_plan.id %}selected{% endif %}>{{ plan.name }}</option>
+                                    {%- if plan.id == active_plan_id -%}{%- assign freq_group = group -%}{%- endif -%}
                                   {%- endfor -%}
+                                {%- endfor -%}
+                                {%- if freq_group == null -%}{%- assign freq_group = base_group -%}{%- endif -%}
+                                {%- for plan in freq_group.selling_plans -%}
+                                  <option value="{{ plan.id }}" {% if plan.id == active_plan_id %}selected{% endif %}>{{ plan.name }}</option>
                                 {%- endfor -%}
                               </select>
                             </cart-subscription-selector>
@@ -474,6 +492,8 @@
     { "type": "text", "id": "title", "label": "Title", "default": "IN YOUR BAG" },
     { "type": "text", "id": "checkout_label", "label": "Checkout button label", "default": "PROCEED TO CHECKOUT" },
     { "type": "text", "id": "guarantee_text", "label": "Guarantee note", "default": "21-day money-back guarantee" },
+    { "type": "header", "content": "Subscription (Appstle)" },
+    { "type": "text", "id": "sub_base_group_prefix", "label": "Base selling-plan group name", "info": "The Subscribe toggle attaches the selling-plan group whose name contains this text (e.g. 'Subscribe & Save' → 5% food / 20% toppers). Bundle and member groups are skipped.", "default": "Subscribe & Save" },
     { "type": "header", "content": "Add more, save more" },
     { "type": "text", "id": "recommend_title", "label": "Title", "default": "Add more, save more" },
     {
