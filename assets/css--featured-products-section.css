@@ -176,6 +176,11 @@ margin-top: auto;
   background: url("https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684") center / 100% 100% no-repeat;
   color: #000000;
   text-decoration: none;
+  transition:transform .15s ease;
+}
+
+.fp__shop:hover {
+  transform:translateY(-2px);
 }
 
 .fp__shop-label {
