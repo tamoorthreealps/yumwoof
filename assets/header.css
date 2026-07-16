@@ -531,11 +531,11 @@
 }
 
 .yw-mobile-mega .yw-mega__heading {
-  margin: 0;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 3rem;
-  line-height: 1.1;
-  color: var(--yw-nav-text);
+margin: 0 0 8px;
+    font-size: 48px;
+    line-height: 48px;
+    color: var(--yw-nav-text);
+    font-family: 'TAYRosemary';
 }
 
 .yw-mobile-mega .yw-mega__subheading {
