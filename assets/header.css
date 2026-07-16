@@ -315,7 +315,7 @@
   left: 0;
   right: 0;
   top: 100%;
-  z-index: 20;
+  z-index: -1;
   padding-top:16px;
   pointer-events: none;
   transform: translateY(-150%);
