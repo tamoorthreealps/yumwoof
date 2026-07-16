@@ -77,8 +77,10 @@
               {{- section.settings.cta_text -}}
             </a>
             {%- if cta_mega != blank -%}
-              <div class="yw-mega" {{ cta_mega.shopify_attributes }}>
-                <div class="yw-mega__inner">{% render 'header-mega-content', block: cta_mega %}</div>
+              <div class="yw-mega-main">
+                <div class="yw-mega" {{ cta_mega.shopify_attributes }}>
+                  <div class="yw-mega__inner">{% render 'header-mega-content', block: cta_mega %}</div>
+                </div>
               </div>
             {%- endif -%}
           </li>
