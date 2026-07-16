@@ -85,6 +85,8 @@
   border-radius: 24px;
   padding: 3.2rem 2rem 4rem;
   transform: scale(.82);
+  transition:transform .35s ease;
+    will-change:transform;
 }
 .fp__card.is-active {
   transform: scale(1);
