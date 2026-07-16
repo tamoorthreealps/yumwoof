@@ -79,6 +79,19 @@ collection-component {
   --shadow-visible: var(--media-shadow-visible);
 }
 
+
+/*----- custom--font-families----- */
+@font-face {
+    font-family: 'TAY Birdie';
+    src: url('TAYBirdieRegular.eot');
+    src: url('TAYBirdieRegular.eot?#iefix') format('embedded-opentype'),
+        url('TAYBirdieRegular.woff2') format('woff2'),
+        url('TAYBirdieRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* base */
 
 .page-width {
