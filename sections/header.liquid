@@ -1,7 +1,19 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'header.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+<script>
+  // top--bar--height--calculate
+setHeaderHeight() {
+  const topbar = this.querySelector('.yw-topbar');
 
+  if (topbar) {
+    document.documentElement.style.setProperty(
+      '--yw-topbar-height',
+      `${topbar.offsetHeight}px`
+    );
+  }
+}
+</script>
 {%- style -%}
   #shopify-section-{{ section.id }} .yw-header {
     --yw-nav-bg: {{ section.settings.navbar_bg }};
