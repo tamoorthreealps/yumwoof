@@ -82,13 +82,12 @@
 }
 
 .hero-banner__heading {
-  margin: 0;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: var(--font-heading-weight, 700);
-  font-size: clamp(4.2rem, 5.6vw, 7.2rem);
-  line-height: 0.98;
-  letter-spacing: -0.01em;
-  color: var(--hb-text);
+margin: 0 0 4px;
+    color: var(--hb-text);
+    font-family: 'TAYRosemary';
+    font-size: 88px;
+    line-height: 88px;
+    letter-spacing: -0.176px;
 }
 
 .hero-banner--uppercase .hero-banner__heading {
@@ -96,18 +95,19 @@
 }
 
 .hero-banner__subheading {
-  margin: 0;
-  font-size: 1.7rem;
-  line-height: 1.4;
-  color: var(--hb-text);
+margin: 0 0 4px;
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0;
+    color: var(--hb-text);
 }
 
 .hero-banner__cta-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  align-items: flex-start;
-  margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: flex-start;
+    margin-top: 16px;
 }
 
 .hero-banner--center .hero-banner__cta-wrap {
@@ -115,21 +115,22 @@
 }
 
 .hero-banner__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.8rem 4.4rem;
-  background-color: var(--hb-btn-bg);
+display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 40px;
+    border-radius: 999px;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: .72px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform .15s ease;
+    background: url(/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
+    font-family: "FFBlurProMedium";
   color: var(--hb-btn-text);
-  border: 1.5px solid var(--hb-btn-border);
-  border-radius: 999px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: transform 0.15s ease;
 }
 
 .hero-banner__cta:hover {
