@@ -144,10 +144,12 @@
   animation: mb-marquee 35s linear infinite;
 }
 
-.membership-banner__review {
-  white-space: nowrap;
-  margin-right: 6rem;
-}
+  .membership-banner__review {
+    width: 320px;
+    flex: 0 0 320px;
+    white-space: normal;
+    margin-right: 4rem;
+  }
 
 .membership-banner__review:not(:first-child) {
   display: block;
