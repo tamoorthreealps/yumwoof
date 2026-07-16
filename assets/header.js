@@ -118,6 +118,6 @@ megaItems.forEach((item) => {
   item.addEventListener('mouseleave', () => {
     removeTimer = setTimeout(() => {
       document.body.classList.remove('is-open');
-    }, 1000);
+    }, 500);
   });
 });
