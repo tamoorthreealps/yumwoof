@@ -114,6 +114,11 @@ collection-component {
     font-display: swap;
 }
 
+body {
+  font-family: 'Matter';
+  font-weight: 500;
+}
+
 /* base */
 
 .page-width {
