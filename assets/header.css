@@ -124,7 +124,7 @@
   backdrop-filter: blur(6px);
 }
 
-.yw-nav {
+body.is-open .yw-nav {
   background-color: rgba(255, 249, 239, 1);
   backdrop-filter: none;
 }
