@@ -314,7 +314,7 @@
   pointer-events: none;
 
   transform: translateY(-150%);
-  transition: transform .35s cubic-bezier(.22,.61,.36,1),
+  transition: transform .6s cubic-bezier(.22,.61,.36,1),
               visibility 0s linear .35s;
 }
 
@@ -322,7 +322,6 @@
 .yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
   pointer-events: auto;
-
   transform: translateY(0);
   transition-delay: 0s;
 }
