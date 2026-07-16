@@ -18,9 +18,9 @@
 }
 
 .heritage__container {
-  max-width: 151.2rem;
-  margin: 0 auto;
-  padding: 0 2rem;
+max-width: 1236px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -294,10 +294,8 @@ display: inline-flex;
 
   .heritage__container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-    padding: 0 6rem;
+        grid-template-columns: 470px 1fr;
+        gap: 15.6rem;
   }
 
   .heritage__intro {
