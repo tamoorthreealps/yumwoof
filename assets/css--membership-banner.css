@@ -112,21 +112,22 @@
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 749px) {
   .membership-banner__inner {
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.4rem;
-    min-height: 124px;
-    padding: 2.4rem 2rem;
-    text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        gap: .8rem;
+        min-height: 124px;
+        padding: 20px 36px 12px;
+        text-align: center;
   }
 
   .membership-banner__rating {
     flex-direction: column;
-    gap: 1rem;
+    gap: .8rem;
   }
 
   .membership-banner__rating-text {
-    letter-spacing: 0.08em;
+            font-size: 14px;
+        line-height: 20px;
   }
 
   .membership-banner__marquee {
@@ -146,9 +147,11 @@
   }
 
   .membership-banner__review {
-    white-space: normal;
-    max-width: 32rem;
-    margin: 0 auto;
+            white-space: normal;
+        max-width: 32rem;
+        margin: 0 auto;
+        font-size: 14px;
+        line-height: 20px;
   }
 
   .membership-banner__review:not(:first-child) {
