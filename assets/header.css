@@ -166,7 +166,7 @@
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  line-height: 1;
+  line-height: 16px;
   transition: transform 0.15s ease;
   border:0;
 }
