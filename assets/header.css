@@ -116,7 +116,7 @@
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 2.4rem;
-  padding: .8rem 2.4rem;
+  padding: 0 2.4rem;
   background-color: rgba(255, 249, 239, 0.8);
   border: 1.5px solid var(--yw-nav-border);
   border-radius: var(--yw-radius);
@@ -309,6 +309,7 @@
   position: static;
   display: flex;
   align-items: center;
+  padding: 8px 0;
 }
 
 .yw-mega {
