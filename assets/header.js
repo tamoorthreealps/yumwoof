@@ -121,3 +121,16 @@ megaItems.forEach((item) => {
     }, 500);
   });
 });
+
+
+// top--bar--height--calculate
+setHeaderHeight() {
+  const topbar = this.querySelector('.yw-topbar');
+
+  if (topbar) {
+    document.documentElement.style.setProperty(
+      '--yw-topbar-height',
+      `${topbar.offsetHeight}px`
+    );
+  }
+}
