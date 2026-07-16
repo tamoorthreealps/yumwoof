@@ -171,10 +171,12 @@ margin-top: auto;
 }
 
 .fp__shop-label {
-  font-size: 1.3rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+    font-size: 12.75px;
+    line-height: 20.4px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-family: "FFBlurProMedium";
 }
 
 /* --------------------------------------------------------------------------
@@ -302,7 +304,9 @@ font-size: 1.6rem;
   }
 
   .fp__shop-label {
-    font-size: 1.4rem;
+    font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 1.28px;
   }
 
   .fp__nav {
