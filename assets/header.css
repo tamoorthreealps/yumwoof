@@ -313,7 +313,7 @@
 
   pointer-events: none;
 
-  transform: translateY(-40px);
+  transform: translateY(-150%);
   transition: transform .35s cubic-bezier(.22,.61,.36,1),
               visibility 0s linear .35s;
 }
