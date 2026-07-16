@@ -376,6 +376,7 @@ margin: 0;
   text-transform: uppercase;
   text-decoration: none;
   font-family: "FFBlurProMedium";
+  transition:transform .15s ease;
 }
 
 .yw-mega__button:hover {
