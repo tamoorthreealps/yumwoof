@@ -137,26 +137,21 @@
     mask-image: none;
   }
 
-  .membership-banner__track {
-    flex-direction: column;
-    width: 100%;
-    gap: 0;
-    padding-left: 0;
-    animation: none;
-    transform: none;
-  }
+.membership-banner__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: mb-marquee 35s linear infinite;
+}
 
-  .membership-banner__review {
-            white-space: normal;
-        max-width: 32rem;
-        margin: 0 auto;
-        font-size: 14px;
-        line-height: 20px;
-  }
+.membership-banner__review {
+  white-space: nowrap;
+  margin-right: 6rem;
+}
 
-  .membership-banner__review:not(:first-child) {
-    display: none;
-  }
+.membership-banner__review:not(:first-child) {
+  display: block;
+}
 }
 
 @media (prefers-reduced-motion: reduce) {
