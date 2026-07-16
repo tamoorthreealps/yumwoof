@@ -61,9 +61,9 @@
         "rating_text": "Over 2,500 5-star reviews",
         "enable_marquee": true,
         "marquee_speed": 35,
-        "background_color": "#661C1C",
-        "text_color": "#FFF9EF",
-        "star_color": "#FFC069"
+        "background_color": "#661c1c",
+        "text_color": "#fff9ef",
+        "star_color": "#ffc069"
       }
     },
     "featured_products": {
@@ -115,6 +115,7 @@
         "nono_items": "No GMO Ingredients, No Fillers, No Seed Oils, No Natural Flavors, No Synthetics, No Added Sugar, No Meat Meals, No Preservatives, No By-Products, No Carrageenan, No Glycerin, No Rosemary Extract, No Hot Extrusion, No Peas or Legumes",
         "marquee_speed": 45,
         "background_color": "#7ba6dd",
+        "background_image": "shopify://shop_images/blue--bg.svg",
         "text_color": "#000000",
         "card_background": "#ffffff",
         "card_border": "#000000",
