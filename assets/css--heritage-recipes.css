@@ -300,6 +300,7 @@ display: inline-flex;
 
   .heritage__intro {
     position: relative;
+    padding-right: 20px;
   }
 
   .heritage__heading {
