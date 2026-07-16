@@ -311,7 +311,8 @@ display: inline-flex;
 
   .heritage__subheading {
     font-size: 18px;
-        margin-bottom: 28px;
+            line-height: 28px;
+        margin-bottom: 24px;
   }
 
   .heritage__bowl {
