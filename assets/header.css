@@ -311,7 +311,6 @@
   top: 100%;
   z-index: 20;
 
-  visibility: hidden;
   pointer-events: none;
 
   transform: translateY(-40px);
@@ -322,7 +321,6 @@
 .yw-nav__item--mega:hover .yw-mega,
 .yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
-  visibility: visible;
   pointer-events: auto;
 
   transform: translateY(0);
