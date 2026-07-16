@@ -24,12 +24,6 @@
       background-position: center;
       background-repeat: no-repeat;
       background-color: transparent;
-    {% elsif section.settings.background_image != blank %}
-      background-image: url('{{ section.settings.background_image | image_url: width: 1200 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-color: transparent;
     {% else %}
       background-image: none;
       background-color: var(--hr-bg);
