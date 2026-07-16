@@ -73,8 +73,8 @@
    -------------------------------------------------------------------------- */
 .fp__card {
   position: relative;
-  flex: 0 0 72%;
-    width: 72%;
+  flex: 0 0 100%;
+    width: 100%;
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
