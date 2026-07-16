@@ -87,6 +87,7 @@
   transform: scale(.8803);
     scroll-snap-stop:always;
 }
+
 .fp__card.is-active {
   transform: scale(1);
 }
