@@ -115,7 +115,7 @@ collection-component {
 }
 
 body {
-  font-family: 'Matter';
+  font-family: 'Matter', sans-serif;
   font-weight: 500;
 }
 
