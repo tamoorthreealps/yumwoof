@@ -144,6 +144,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   line-height: 1;
+  font-family: "FFBlurProMedium";
 }
 
 .yw-nav__link:hover {
@@ -215,6 +216,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
+  font-family: "FFBlurProMedium";
 }
 
 .yw-nav__membership:hover {
