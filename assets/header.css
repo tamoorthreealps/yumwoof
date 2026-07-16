@@ -58,6 +58,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+    z-index: 100;
 }
 
 .yw-topbar__inner {
@@ -310,9 +312,7 @@
   right: 0;
   top: 100%;
   z-index: 20;
-
   pointer-events: none;
-
   transform: translateY(-150%);
   transition: transform .6s cubic-bezier(.22,.61,.36,1),
               visibility 0s linear .35s;
