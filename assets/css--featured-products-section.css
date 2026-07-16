@@ -87,6 +87,9 @@
   transform: scale(.82);
     scroll-snap-stop:always;
 }
+.fp__card:last-child {
+    margin-right: 46.4px;
+}
 .fp__card.is-active {
   transform: scale(1);
 }
