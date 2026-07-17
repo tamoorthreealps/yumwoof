@@ -8,7 +8,6 @@
   --quiz-text: #fff9ef;
 
   position: relative;
-  overflow: hidden;
   background-color: var(--quiz-bg);
   color: var(--quiz-text);
   padding: 120px 0 80px;
