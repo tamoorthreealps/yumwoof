@@ -63,21 +63,23 @@ display: flex;
 }
 
 .mem__eyebrow {
-  order: -1;
-  margin: 0 0 0.8rem;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--mem-accent);
+order: -1;
+    margin: 0 0 1.2rem;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    text-transform: uppercase;
+    color: var(--mem-accent);
+    font-family: 'TAY Birdie';
 }
 
 .mem__description {
-  margin-bottom: 2.4rem;
-  font-size: 1.5rem;
-  line-height: 1.45;
-  color: var(--mem-text);
+margin-bottom: 2.4rem;
+    font-size: 1.5rem;
+    line-height: 1.45;
+    color: var(--mem-text);
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 .mem__description > p {
@@ -123,14 +125,14 @@ display: flex;
 .mem__slide-text {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
 }
 
 .mem__slide-title {
-  font-family: var(--font-heading-family, inherit);
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 1.1;
+font-size: 26px;
+    line-height: 30px;
+    font-family: 'TAYRosemary';
+    letter-spacing: 0;
+    margin: 0 0 4px;
 }
 
 .mem--uppercase .mem__slide-title {
@@ -138,8 +140,9 @@ display: flex;
 }
 
 .mem__slide-subtitle {
-  font-size: 1.4rem;
-  line-height: 1.3;
+      font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
 .mem__dots {
@@ -219,10 +222,14 @@ display: flex;
   }
 
   .mem__description {
-    font-size: 1.7rem;
+    font-size: 18px;
+        line-height: 28px;
+        margin-bottom: 2.4rem;
   }
 
   .mem__slide-title {
-    font-size: 2.8rem;
+            font-size: 32px;
+        line-height: 40px;
+        margin: 0;
   }
 }
