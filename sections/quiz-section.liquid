@@ -8,32 +8,42 @@
 {%- endstyle -%}
 
 <section class="quiz{% if section.settings.uppercase_heading %} quiz--uppercase{% endif %}">
-  {%- if section.settings.decor_left != blank -%}
-    <span class="quiz__decor quiz__decor--left">
-      {{ section.settings.decor_left | image_url: width: 220 | image_tag: alt: '', widths: '72, 120, 220', loading: 'lazy' }}
-    </span>
-  {%- endif -%}
-  {%- if section.settings.decor_right != blank -%}
-    <span class="quiz__decor quiz__decor--right">
-      {{ section.settings.decor_right | image_url: width: 220 | image_tag: alt: '', widths: '84, 140, 220', loading: 'lazy' }}
-    </span>
-  {%- endif -%}
+  <div class="quiz__inner__container">
+    {%- if section.settings.decor_left != blank -%}
+      <span class="quiz__decor quiz__decor--left">
+        {{
+          section.settings.decor_left
+          | image_url: width: 220
+          | image_tag: alt: '', widths: '72, 120, 220', loading: 'lazy'
+        }}
+      </span>
+    {%- endif -%}
+    {%- if section.settings.decor_right != blank -%}
+      <span class="quiz__decor quiz__decor--right">
+        {{
+          section.settings.decor_right
+          | image_url: width: 220
+          | image_tag: alt: '', widths: '84, 140, 220', loading: 'lazy'
+        }}
+      </span>
+    {%- endif -%}
 
-  <div class="quiz__inner">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-    {%- if section.settings.subheading != blank -%}
-      <p class="quiz__subheading">{{ section.settings.subheading }}</p>
-    {%- endif -%}
-    {%- if section.settings.button_label != blank -%}
-      <a class="quiz__button" href="{{ section.settings.button_link | default: '#' }}">
-        <span class="quiz__button-label">{{ section.settings.button_label }}</span>
-      </a>
-    {%- endif -%}
-    {%- if section.settings.offer_text != blank -%}
-      <p class="quiz__offer">{{ section.settings.offer_text }}</p>
-    {%- endif -%}
+    <div class="quiz__inner">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="quiz__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="quiz__button" href="{{ section.settings.button_link | default: '#' }}">
+          <span class="quiz__button-label">{{ section.settings.button_label }}</span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.offer_text != blank -%}
+        <p class="quiz__offer">{{ section.settings.offer_text }}</p>
+      {%- endif -%}
+    </div>
   </div>
 </section>
 
