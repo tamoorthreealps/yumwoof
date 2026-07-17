@@ -75,14 +75,12 @@
 }
 
 .cocomega__heading {
-  margin: 0 0 1.2rem;
-  max-width: 20ch;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 3.2rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  color: var(--co-text);
+    margin: 0 0 1.4rem;
+    font-size: 36px;
+    line-height: 40px;
+    letter-spacing: -0.36px;
+    color: var(--co-text);
+    font-family: 'TAYRosemary';
 }
 
 .cocomega--uppercase .cocomega__heading {
@@ -90,10 +88,10 @@
 }
 
 .cocomega__body {
-  max-width: 34rem;
-  font-size: 1.5rem;
-  line-height: 1.5;
-  color: var(--co-text);
+font-size: 15px;
+    line-height: 22px;
+    color: var(--co-text);
+    letter-spacing: 0;
 }
 
 .cocomega__body > p {
@@ -105,20 +103,22 @@
 }
 
 .cocomega__button {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 2.4rem;
-  padding: 0.8rem 2rem;
-  border: 1.5px solid var(--co-text);
-  border-radius: 100px;
-  color: var(--co-text);
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease;
+display: inline-flex;
+    align-items: center;
+    margin-top: 3.2rem;
+    padding: .8rem 2.4rem;
+    border: 1.5px solid var(--co-text);
+    border-radius: 100px;
+    color: var(--co-text);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: 0.64px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color .15s ease, color .15s ease;
+    font-family: "FFBlurProMedium";
 }
 
 .cocomega__button:hover {
@@ -137,17 +137,17 @@
   .cocomega__inner {
     flex-direction: row;
     align-items: center;
-    gap: 6.4rem;
+    gap: 9.7rem;
   }
 
   .cocomega__media {
-    flex: 1 1 55%;
-    min-width: 0;
+    flex: 1 1 726px;
+        max-width: 726px;
   }
 
   .cocomega__content {
-    flex: 1 1 45%;
-    min-width: 0;
+    flex: 1;
+        min-width: 0;
   }
 
   .cocomega--image-right .cocomega__media {
@@ -159,17 +159,21 @@
   }
 
   .cocomega__badge {
-    top: -3rem;
-    left: -3rem;
-    width: 120px;
+            top: 56px;
+        left: -6rem;
+        width: 120px;
   }
 
   .cocomega__heading {
-    font-size: 4.4rem;
-    margin-bottom: 1.6rem;
+    font-size: 56px;
+        line-height: 64px;
+        letter-spacing: -0.56px;
+        margin-bottom: 8px;
+        padding-right: 40px;
   }
 
   .cocomega__body {
-    font-size: 1.7rem;
+            font-size: 18px;
+        line-height: 28px;
   }
 }
