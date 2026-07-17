@@ -229,6 +229,7 @@ font-size: 26px;
     justify-content: center;
         flex: 1;
         min-width: 0;
+        padding:7rem 117px 7rem 0;
   }
 
   .mem__eyebrow {
