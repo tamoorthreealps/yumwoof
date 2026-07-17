@@ -197,6 +197,7 @@
 .cmp__head--empty {
   height: 132px;
   flex: 0 0 132px;
+  display: flex !important;
 }
 
 /* Brand column raised amber card (behind the aligned cells) */
