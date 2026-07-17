@@ -346,7 +346,7 @@
         "autoplay_speed": 5,
         "background_color": "#fff9ef",
         "background_image": "shopify://shop_images/Additional_Image.png",
-        "card_background": "#FFF9EF",
+        "card_background": "#fff9ef",
         "text_color": "#000000",
         "accent_color": "#661d1d"
       }
@@ -366,6 +366,54 @@
         "background_color": "#1a1a1a",
         "text_color": "#fff9ef"
       }
+    },
+    "faqs_section_RMq6DN": {
+      "type": "faqs-section",
+      "blocks": {
+        "faq_j6K7wk": {
+          "type": "faq",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
+          }
+        },
+        "faq_V3kVMX": {
+          "type": "faq",
+          "settings": {
+            "question": "Why choose air-dried over fresh food?",
+            "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>"
+          }
+        },
+        "faq_R6KgQU": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer a money-back guarantee?",
+            "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>"
+          }
+        },
+        "faq_xFKKgM": {
+          "type": "faq",
+          "settings": {
+            "question": "Why are organ meats important for dogs?",
+            "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_j6K7wk",
+        "faq_V3kVMX",
+        "faq_R6KgQU",
+        "faq_xFKKgM"
+      ],
+      "name": "FAQs",
+      "settings": {
+        "heading": "Any Questions?",
+        "subheading": "Every dog is different. Find the recipe that's right for yours.",
+        "open_first": true,
+        "background_color": "#FFF9EF",
+        "text_color": "#000000",
+        "line_color": "#000000"
+      }
     }
   },
   "order": [
@@ -378,6 +426,7 @@
     "research_section",
     "cocomega_section",
     "explore_membership_3tTpcM",
-    "quiz_section_XQVHjY"
+    "quiz_section_XQVHjY",
+    "faqs_section_RMq6DN"
   ]
 }
