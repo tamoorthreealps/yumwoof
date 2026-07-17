@@ -148,14 +148,14 @@ font-size: 26px;
 .mem__dots {
   display: flex;
   gap: 8px;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .mem__dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   padding: 0;
-  border: 1.5px solid var(--mem-text);
+  border: 1px solid var(--mem-text);
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
