@@ -81,6 +81,14 @@ font-size: 18px;
   height: 16px;
 }
 
+.faqs__item .faqs__icon__minus, .faqs__item.is-open .faqs__icon__plus {
+  display:none;
+}
+
+.faqs__item.is-open .faqs__icon__minus {
+  display:block;
+}
+
 .faqs__answer {
     max-height: 0;
     overflow: hidden;
