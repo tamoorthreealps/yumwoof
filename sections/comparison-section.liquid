@@ -16,8 +16,10 @@
   </span>
 {%- endcapture -%}
 {%- capture cross_mark -%}
-  <span class="cmp__mark cmp__mark--no">
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  <span class="cmp__mark cmp__mark--no">    
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.30748 9.78104C3.55589 7.42642 0.574904 3.65157 0.148273 0.706683C0.0163384 -0.204093 1.59074 -0.2261 2.32106 0.592004C4.16355 2.656 5.6704 5.0203 7.34066 7.24668C8.68342 5.48214 10.1611 3.82724 11.7597 2.29746C12.1458 1.92127 12.604 1.54594 13.0163 1.19299C13.5672 0.750123 14.5352 0.00439346 15.2089 0.6695C15.4554 1.20333 15.1696 1.66574 14.85 2.10282C14.2288 2.89901 13.5935 3.68382 12.945 4.45697C11.6154 6.08824 10.297 7.72843 8.98889 9.37745C10.3185 10.934 11.666 12.4745 13.0313 13.9988C13.6178 14.6611 17.8457 18.7951 15.0571 18.926C14.4855 18.9527 13.1568 18.0145 12.7098 17.6285C10.7711 15.9265 8.79399 14.0003 7.13263 12.0263C6.00669 13.3999 5.15765 15.0189 4.17142 16.4891C3.45206 17.5615 2.31872 19.8643 0.928445 19.9958C0.698216 20.0189 0.468642 19.9457 0.293043 19.7934C-0.3983 19.1952 0.314035 17.773 0.591584 17.0871C0.847394 16.5329 1.23073 15.8757 1.52927 15.3315C2.63609 13.4345 3.98449 11.5246 5.30748 9.78104Z" fill="black" fill-opacity="0.25"/>
+    </svg>
     <span class="visually-hidden">No</span>
   </span>
 {%- endcapture -%}
@@ -48,7 +50,11 @@
           {%- assign cicon = section.settings[icon_key] -%}
           <button type="button" class="cmp__tab" role="tab" data-comp-index="{{ i }}">
             {%- if cicon != blank -%}
-              {{ cicon | image_url: width: 80 | image_tag: class: 'cmp__tab-icon', alt: '', widths: '40, 60, 80', loading: 'lazy' }}
+              {{
+                cicon
+                | image_url: width: 80
+                | image_tag: class: 'cmp__tab-icon', alt: '', widths: '40, 60, 80', loading: 'lazy'
+              }}
             {%- endif -%}
             <span>{{ clabel }}</span>
           </button>
@@ -70,19 +76,35 @@
         <div class="cmp__col cmp__col--brand">
           <div class="cmp__head">
             {%- if section.settings.brand_logo != blank -%}
-              {{ section.settings.brand_logo | image_url: width: 260 | image_tag: class: 'cmp__brand-logo', alt: section.settings.brand_label, widths: '130, 200, 260', loading: 'lazy' }}
+              {{
+                section.settings.brand_logo
+                | image_url: width: 260
+                | image_tag:
+                  class: 'cmp__brand-logo',
+                  alt: section.settings.brand_label,
+                  widths: '130, 200, 260',
+                  loading: 'lazy'
+              }}
             {%- endif -%}
             {%- if section.settings.brand_icon != blank -%}
-              {{ section.settings.brand_icon | image_url: width: 160 | image_tag: class: 'cmp__col-icon', alt: '', widths: '80, 120, 160', loading: 'lazy' }}
+              {{
+                section.settings.brand_icon
+                | image_url: width: 160
+                | image_tag: class: 'cmp__col-icon', alt: '', widths: '80, 120, 160', loading: 'lazy'
+              }}
             {%- endif -%}
             <span class="cmp__col-label cmp__col-label--brand">{{ section.settings.brand_label }}</span>
           </div>
           {%- for block in row_blocks -%}
             <div class="cmp__cell">
               {%- assign v = block.settings.brand_value | strip | downcase -%}
-              {%- if v == 'check' -%}{{ check_mark }}
-              {%- elsif v == 'cross' -%}{{ cross_mark }}
-              {%- elsif block.settings.brand_value != blank -%}<span class="cmp__cost">{{ block.settings.brand_value }}</span>{%- endif -%}
+              {%- if v == 'check' -%}
+                {{ check_mark }}
+              {%- elsif v == 'cross' -%}
+                {{ cross_mark }}
+              {%- elsif block.settings.brand_value != blank -%}
+                <span class="cmp__cost">{{ block.settings.brand_value }}</span>
+              {%- endif -%}
             </div>
           {%- endfor -%}
         </div>
@@ -98,7 +120,11 @@
             <div class="cmp__col cmp__col--comp" data-comp-index="{{ i }}">
               <div class="cmp__head">
                 {%- if cicon != blank -%}
-                  {{ cicon | image_url: width: 160 | image_tag: class: 'cmp__col-icon', alt: '', widths: '80, 120, 160', loading: 'lazy' }}
+                  {{
+                    cicon
+                    | image_url: width: 160
+                    | image_tag: class: 'cmp__col-icon', alt: '', widths: '80, 120, 160', loading: 'lazy'
+                  }}
                 {%- endif -%}
                 <span class="cmp__col-label">{{ clabel }}</span>
               </div>
@@ -106,9 +132,13 @@
                 {%- assign cv = block.settings[value_key] -%}
                 <div class="cmp__cell">
                   {%- assign v = cv | strip | downcase -%}
-                  {%- if v == 'check' -%}{{ check_mark }}
-                  {%- elsif v == 'cross' -%}{{ cross_mark }}
-                  {%- elsif cv != blank -%}<span class="cmp__cost">{{ cv }}</span>{%- endif -%}
+                  {%- if v == 'check' -%}
+                    {{ check_mark }}
+                  {%- elsif v == 'cross' -%}
+                    {{ cross_mark }}
+                  {%- elsif cv != blank -%}
+                    <span class="cmp__cost">{{ cv }}</span>
+                  {%- endif -%}
                 </div>
               {%- endfor -%}
             </div>
@@ -138,7 +168,9 @@
       }
 
       tabs.forEach(function (t) {
-        t.addEventListener('click', function () { activate(t.dataset.compIndex); });
+        t.addEventListener('click', function () {
+          activate(t.dataset.compIndex);
+        });
       });
       activate(tabs[0].dataset.compIndex);
       table.dataset.cmpReady = 'true';
@@ -151,9 +183,13 @@
     if (document.readyState !== 'loading') {
       init(document);
     } else {
-      document.addEventListener('DOMContentLoaded', function () { init(document); });
+      document.addEventListener('DOMContentLoaded', function () {
+        init(document);
+      });
     }
-    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+    document.addEventListener('shopify:section:load', function (event) {
+      init(event.target);
+    });
   })();
 </script>
 
@@ -328,11 +364,56 @@
     {
       "name": "Comparison table",
       "blocks": [
-        { "type": "row", "settings": { "label": "Seed Oil Free", "brand_value": "check", "comp1_value": "cross", "comp2_value": "check", "comp3_value": "check" } },
-        { "type": "row", "settings": { "label": "Minimally Processed", "brand_value": "check", "comp1_value": "check", "comp2_value": "cross", "comp3_value": "cross" } },
-        { "type": "row", "settings": { "label": "Non-GMO", "brand_value": "check", "comp1_value": "cross", "comp2_value": "cross", "comp3_value": "cross" } },
-        { "type": "row", "settings": { "label": "Fridge Free", "brand_value": "check", "comp1_value": "cross", "comp2_value": "cross", "comp3_value": "check" } },
-        { "type": "row", "settings": { "label": "Daily Cost", "brand_value": "$$", "comp1_value": "$", "comp2_value": "$$$", "comp3_value": "$$$" } }
+        {
+          "type": "row",
+          "settings": {
+            "label": "Seed Oil Free",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "check",
+            "comp3_value": "check"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Minimally Processed",
+            "brand_value": "check",
+            "comp1_value": "check",
+            "comp2_value": "cross",
+            "comp3_value": "cross"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Non-GMO",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "cross",
+            "comp3_value": "cross"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Fridge Free",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "cross",
+            "comp3_value": "check"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Daily Cost",
+            "brand_value": "$$",
+            "comp1_value": "$",
+            "comp2_value": "$$$",
+            "comp3_value": "$$$"
+          }
+        }
       ]
     }
   ]
