@@ -311,6 +311,7 @@ margin: 0 0 .6rem;
     display: grid;
         grid-template-columns: 470px 1fr;
         gap: 15.6rem;
+                margin: 0 auto 8.8rem;
   }
 
   .heritage__intro {
