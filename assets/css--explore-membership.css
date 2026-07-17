@@ -10,7 +10,7 @@
   --mem-page-bg: #fff9ef;
 
   background-color: var(--mem-page-bg);
-  padding: 2.4rem 0;
+  padding: 32px 0 48px;
 }
 
 .mem__inner {
@@ -20,14 +20,13 @@
 }
 
 .mem__card {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: var(--mem-bg);
-  color: var(--mem-text);
-  border-radius: 16px;
-  overflow: hidden;
-  padding: 1.6rem;
+display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: var(--mem-bg);
+    color: var(--mem-text);
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------
@@ -40,11 +39,8 @@
 .mem__image {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 336 / 260;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .mem__image--placeholder {
@@ -199,36 +195,29 @@
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .mem {
-    padding: 4rem 0;
+    padding: 4rem 0 182px;
   }
 
   .mem__card {
-    flex-direction: row;
-    align-items: stretch;
-    gap: 4.8rem;
-    border-radius: 24px;
-    padding: 2rem;
+            flex-direction: row;
+        align-items: stretch;
+        gap: 14px;
   }
 
   .mem__card.mem--image-right {
     flex-direction: row-reverse;
   }
 
-  .mem__media,
-  .mem__content {
-    flex: 1 1 50%;
-    min-width: 0;
+  .mem__media {
+    flex: 1 1 692px;
+    max-width: 692px;
   }
 
   .mem__content {
     justify-content: center;
-    padding: 2.4rem 3.2rem 2.4rem 1.6rem;
-  }
-
-  .mem__image {
-    height: 100%;
-    aspect-ratio: auto;
-    min-height: 40rem;
+        padding: 2.4rem 3.2rem 2.4rem 1.6rem;
+        flex: 1;
+        min-width: 0;
   }
 
   .mem__description {
