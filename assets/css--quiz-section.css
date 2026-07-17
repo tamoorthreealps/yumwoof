@@ -10,7 +10,13 @@
   position: relative;
   background-color: var(--quiz-bg);
   color: var(--quiz-text);
-  padding: 120px 0 80px;
+  
+}
+
+.quiz__inner__container{
+  padding: 120px 2rem 80px;
+  max-width: 1236px;
+    margin: 0 auto;
 }
 
 .quiz__inner {
@@ -109,9 +115,9 @@ margin: 1.2rem 0 0;
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
-  .quiz {
-    padding: 146px 0 122px;
-  }
+  .quiz__inner__container {
+    padding: 146px 2rem 122px;
+}
 
   .quiz__heading {
     font-size: 6.4rem;
