@@ -44,6 +44,41 @@
   </div>
 </section>
 
+
+<script>
+  document.querySelectorAll('.faqs__question').forEach((question) => {
+
+    question.addEventListener('click', function () {
+
+        const item = this.parentElement;
+        const answer = item.querySelector('.faqs__answer');
+
+        document.querySelectorAll('.faqs__item').forEach((other) => {
+
+            if (other !== item) {
+                other.classList.remove('is-open');
+                other.querySelector('.faqs__answer').style.maxHeight = null;
+            }
+
+        });
+
+        if (item.classList.contains('is-open')) {
+
+            item.classList.remove('is-open');
+            answer.style.maxHeight = null;
+
+        } else {
+
+            item.classList.add('is-open');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+
+        }
+
+    });
+
+});
+</script>
+
 {% schema %}
 {
   "name": "FAQs",
