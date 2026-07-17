@@ -306,7 +306,7 @@
         "perk_EBxbWR": {
           "type": "perk",
           "settings": {
-            "icon": "shopify://shop_images/Membership_Image.svg",
+            "icon": "shopify://shop_images/Membership_Image.png",
             "title": "25% off every order",
             "subtitle": "Member rate on food"
           }
@@ -314,7 +314,7 @@
         "perk_W4je7p": {
           "type": "perk",
           "settings": {
-            "icon": "shopify://shop_images/Membership_Image.svg",
+            "icon": "shopify://shop_images/Membership_Image.png",
             "title": "Free shipping",
             "subtitle": "On every membership order"
           }
@@ -322,7 +322,7 @@
         "perk_q3zz67": {
           "type": "perk",
           "settings": {
-            "icon": "shopify://shop_images/Membership_Image.svg",
+            "icon": "shopify://shop_images/Membership_Image.png",
             "title": "Exclusive perks",
             "subtitle": "Members-only benefits"
           }
