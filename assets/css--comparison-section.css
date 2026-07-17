@@ -314,8 +314,8 @@ font-family: 'TAY Birdie';
   }
 
   .cmp__brand-logo {
-    top: -1.8rem;
-    height: 24px;
+    top: -2.4rem;
+    height: 44px;
   }
 
   .cmp__col-icon {
@@ -327,10 +327,6 @@ font-family: 'TAY Birdie';
     font-size: 20px;
         line-height: 28px;
         letter-spacing: -0.40px;
-  }
-
-  .cmp__brand-logo {
-    height: 24px;
   }
 
   .cmp__cell {
