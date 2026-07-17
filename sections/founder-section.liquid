@@ -16,7 +16,11 @@
         {{
           section.settings.image
           | image_url: width: 1200
-          | image_tag: class: 'founder__image', widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw', alt: founder_alt
+          | image_tag:
+            class: 'founder__image',
+            widths: '400, 600, 800, 1200',
+            sizes: '(min-width: 990px) 50vw, 100vw',
+            alt: founder_alt
         }}
       {%- else -%}
         <div class="founder__image founder__image--placeholder">
@@ -26,7 +30,11 @@
 
       {%- if section.settings.badge_image != blank -%}
         <span class="founder__badge">
-          {{ section.settings.badge_image | image_url: width: 320 | image_tag: alt: '', widths: '160, 240, 320', loading: 'lazy' }}
+          {{
+            section.settings.badge_image
+            | image_url: width: 320
+            | image_tag: alt: '', widths: '160, 240, 320', loading: 'lazy'
+          }}
         </span>
       {%- endif -%}
     </div>
@@ -44,12 +52,21 @@
         <div class="founder__signature">
           {%- if section.settings.signature_image != blank -%}
             {%- assign sig_alt = section.settings.signature_name | default: '' -%}
-            {{ section.settings.signature_image | image_url: width: 600 | image_tag: class: 'founder__signature-img', alt: sig_alt, widths: '288, 440, 600', loading: 'lazy' }}
+            {{
+              section.settings.signature_image
+              | image_url: width: 600
+              | image_tag: class: 'founder__signature-img', alt: sig_alt, widths: '288, 440, 600', loading: 'lazy'
+            }}
           {%- endif -%}
           {%- if section.settings.signature_name != blank or section.settings.signature_title != blank -%}
             <p class="founder__signature-name">
-              {%- if section.settings.signature_name != blank -%}{{ section.settings.signature_name }}<br>{%- endif -%}
-              {%- if section.settings.signature_title != blank -%}<span class="founder__signature-title">{{ section.settings.signature_title }}</span>{%- endif -%}
+              {%- if section.settings.signature_name != blank -%}
+                {{ section.settings.signature_name -}}
+                <br>
+              {%- endif -%}
+              {%- if section.settings.signature_title != blank -%}
+                <span class="founder__signature-title">{{ section.settings.signature_title }}</span>
+              {%- endif -%}
             </p>
           {%- endif -%}
         </div>
