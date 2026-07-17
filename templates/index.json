@@ -332,8 +332,8 @@
       ],
       "name": "Explore membership",
       "settings": {
-        "eyebrow": "Membership has its perks",
-        "description": "<p>Become a member to save 25% on every order, avoid a year of inflation, and enjoy exclusive benefits.</p>",
+        "eyebrow": "",
+        "description": "<p>Become a member to save 25% on every order, avoid a year of inflation, and enjoy exclusive benefits.</p><p>Membership has its perks</p>",
         "button_label": "Explore Membership →",
         "button_link": "",
         "image": "shopify://shop_images/image_52.png",
@@ -344,7 +344,7 @@
         "background_color": "#fff9ef",
         "card_background": "#c8912a",
         "text_color": "#000000",
-        "accent_color": "#661d1d"
+        "accent_color": "#661D1D"
       }
     },
     "quiz_section_XQVHjY": {
