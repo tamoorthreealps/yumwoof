@@ -172,18 +172,20 @@ font-size: 26px;
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  margin-top: 2.4rem;
-  padding: 0.8rem 2rem;
-  border: 1.5px solid var(--mem-text);
-  border-radius: 100px;
-  color: var(--mem-text);
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease;
+    margin-top: 3.2rem;
+    padding: .8rem 2.4rem;
+    border: 1.5px solid var(--co-text);
+    border-radius: 100px;
+    color: var(--co-text);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: .64px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color .15s ease, color .15s ease;
+    font-family: FFBlurProMedium;
 }
 
 .mem__button:hover {
