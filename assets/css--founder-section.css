@@ -76,13 +76,12 @@
 }
 
 .founder__heading {
-  margin: 0 0 1.6rem;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 3.2rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  color: var(--fs-text);
+margin: 0 0 1.6rem;
+    font-size: 36px;
+    line-height: 40px;
+    letter-spacing: -0.36px;
+    color: var(--fs-text);
+    font-family: 'TAYRosemary';
 }
 
 .founder--uppercase .founder__heading {
@@ -90,9 +89,11 @@
 }
 
 .founder__body {
-  font-size: 1.6rem;
-  line-height: 1.6;
-  color: var(--fs-text);
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--fs-text);
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 .founder__body > p {
@@ -108,22 +109,18 @@
 }
 
 .founder__signature-img {
-  display: block;
-  width: auto;
-  max-width: 24rem;
-  height: auto;
-  margin-bottom: 1.2rem;
+display: block;
+    width: auto;
+    max-width: 288px;
+    height: auto;
 }
 
 .founder__signature-name {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.founder__signature-title {
-  font-weight: 500;
+margin: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -161,13 +158,15 @@
   }
 
   .founder__heading {
-    font-size: 4.8rem;
-    margin-bottom: 2rem;
+    font-size: 56px;
+        line-height: 64px;
+        letter-spacing: -0.56px;
+        margin: 0 0 8px;
   }
 
   .founder__body {
-    font-size: 1.8rem;
-    line-height: 1.55;
+    font-size: 18px;
+        line-height: 28px;
   }
 
   .founder__signature {
@@ -175,6 +174,8 @@
   }
 
   .founder__signature-name {
-    font-size: 2rem;
+            font-size: 2rem;
+        line-height: 24px;
+        margin: 16px 0 0;
   }
 }
