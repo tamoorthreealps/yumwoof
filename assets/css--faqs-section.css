@@ -110,7 +110,7 @@ font-size: 18px;
 }
 
 .faqs__answer {
-padding: 0 0 2.4rem;
+padding: 0 0 2rem;
     font-size: 14px;
     line-height: 21px;
     color: var(--faq-text);
@@ -156,5 +156,6 @@ padding: 0 0 2.4rem;
   .faqs__answer {
     font-size: 18px;
         line-height: 28px;
+        padding: 0 0 3.2rem;
   }
 }
