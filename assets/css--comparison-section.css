@@ -225,6 +225,11 @@ font-family: 'TAY Birdie';
   z-index: 1;
 }
 
+
+.cmp__col--brand svg path {
+  fill:var(--cmp-accent);
+}
+
 /* .cmp__col--brand .cmp__cell {
   border-top-color: rgba(0, 0, 0, 0.22);
 } */
