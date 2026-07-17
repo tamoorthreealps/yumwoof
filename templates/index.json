@@ -295,7 +295,7 @@
         "button_link": "",
         "badge_image": "shopify://shop_images/cocomega-badge.svg",
         "image_position": "right",
-        "image_radius": 24,
+        "image_radius": 32,
         "background_color": "#fff9ef",
         "text_color": "#000000"
       }
