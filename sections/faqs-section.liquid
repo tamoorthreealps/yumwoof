@@ -8,7 +8,6 @@
   }
 {%- endstyle -%}
 
-
 {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
 
 <section class="faqs">
@@ -27,7 +26,9 @@
         {%- for block in faq_blocks -%}
           <div
             class="faqs__item"
-            {% if forloop.first and section.settings.open_first %}open{% endif %}
+            {% if forloop.first and section.settings.open_first %}
+              open
+            {% endif %}
             {{ block.shopify_attributes }}
           >
             <div class="faqs__question">
@@ -35,7 +36,11 @@
               <span class="faqs__icon" aria-hidden="true"></span>
             </div>
             {%- if block.settings.answer != blank -%}
-              <div class="faqs__answer rte">{{ block.settings.answer }}</div>
+              <div class="faqs__answer rte">
+                <div class="faqs__answer-inner">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -44,39 +49,28 @@
   </div>
 </section>
 
-
 <script>
   document.querySelectorAll('.faqs__question').forEach((question) => {
-
     question.addEventListener('click', function () {
+      const item = this.parentElement;
+      const answer = item.querySelector('.faqs__answer');
 
-        const item = this.parentElement;
-        const answer = item.querySelector('.faqs__answer');
-
-        document.querySelectorAll('.faqs__item').forEach((other) => {
-
-            if (other !== item) {
-                other.classList.remove('is-open');
-                other.querySelector('.faqs__answer').style.maxHeight = null;
-            }
-
-        });
-
-        if (item.classList.contains('is-open')) {
-
-            item.classList.remove('is-open');
-            answer.style.maxHeight = null;
-
-        } else {
-
-            item.classList.add('is-open');
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-
+      document.querySelectorAll('.faqs__item').forEach((other) => {
+        if (other !== item) {
+          other.classList.remove('is-open');
+          other.querySelector('.faqs__answer').style.maxHeight = null;
         }
+      });
 
+      if (item.classList.contains('is-open')) {
+        item.classList.remove('is-open');
+        answer.style.maxHeight = null;
+      } else {
+        item.classList.add('is-open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
     });
-
-});
+  });
 </script>
 
 {% schema %}
@@ -151,10 +145,34 @@
     {
       "name": "FAQs",
       "blocks": [
-        { "type": "faq", "settings": { "question": "Why doesn't Yumwoof use seed oils?", "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>" } },
-        { "type": "faq", "settings": { "question": "Why choose air-dried over fresh food?", "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>" } },
-        { "type": "faq", "settings": { "question": "Do you offer a money-back guarantee?", "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>" } },
-        { "type": "faq", "settings": { "question": "Why are organ meats important for dogs?", "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>" } }
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Why choose air-dried over fresh food?",
+            "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer a money-back guarantee?",
+            "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Why are organ meats important for dogs?",
+            "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>"
+          }
+        }
       ]
     }
   ]
