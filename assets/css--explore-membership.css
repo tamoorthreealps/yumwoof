@@ -209,7 +209,7 @@ display: flex;
   .mem__media {
     flex: 1 1 692px;
     max-width: 692px;
-            margin: -120px 0 0;
+            margin: -120px 0 4px;
   }
 
   .mem__content {
