@@ -110,18 +110,14 @@ font-size: 18px;
 }
 
 .faqs__answer {
-padding: 0 0 2rem;
-    font-size: 14px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+        font-size: 14px;
     line-height: 21px;
     color: var(--faq-text);
     letter-spacing: 0;
     max-width: 1132px;
-}
-
-.faqs__answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .35s ease;
 }
 
 .faqs__item.is-open .faqs__answer {
@@ -170,6 +166,5 @@ padding: 0 0 2rem;
   .faqs__answer {
     font-size: 18px;
         line-height: 28px;
-        padding: 0 0 3.2rem;
   }
 }
