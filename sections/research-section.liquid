@@ -50,8 +50,13 @@
             <li class="research__stat" {{ block.shopify_attributes }}>
               <span class="research__stat-value">
                 <span class="research__stat-num" data-countup="{{ raw_value | escape }}" aria-hidden="true">0</span>
-                {%- if block.settings.suffix != blank -%}<span class="research__stat-suffix">{{ block.settings.suffix }}</span>{%- endif -%}
-                <span class="visually-hidden">{{ raw_value }}{{ block.settings.suffix }}</span>
+                {%- if block.settings.suffix != blank -%}
+                  <span class="research__stat-suffix">{{ block.settings.suffix }}</span>
+                {%- endif -%}
+                <span class="visually-hidden">
+                  {{- raw_value -}}
+                  {{- block.settings.suffix -}}
+                </span>
               </span>
               {%- if block.settings.label != blank -%}
                 <span class="research__stat-label">{{ block.settings.label }}</span>
@@ -75,7 +80,10 @@
     function animate(el) {
       var raw = el.getAttribute('data-countup');
       var target = parseFloat(raw);
-      if (isNaN(target)) { el.textContent = raw; return; }
+      if (isNaN(target)) {
+        el.textContent = raw;
+        return;
+      }
       var dot = raw.indexOf('.');
       var decimals = dot === -1 ? 0 : raw.length - dot - 1;
 
@@ -108,24 +116,33 @@
           nums.forEach(animate);
           return;
         }
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              animate(entry.target);
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.6 });
-        nums.forEach(function (n) { observer.observe(n); });
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                animate(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.6 }
+        );
+        nums.forEach(function (n) {
+          observer.observe(n);
+        });
       });
     }
 
     if (document.readyState !== 'loading') {
       init(document);
     } else {
-      document.addEventListener('DOMContentLoaded', function () { init(document); });
+      document.addEventListener('DOMContentLoaded', function () {
+        init(document);
+      });
     }
-    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+    document.addEventListener('shopify:section:load', function (event) {
+      init(event.target);
+    });
   })();
 </script>
 
