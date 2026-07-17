@@ -9,7 +9,7 @@
 
   background-color: var(--rs-bg);
   color: var(--rs-text);
-  padding: 5.6rem 0;
+  padding: 7.2rem 0;
 }
 
 .research__inner {
@@ -23,31 +23,26 @@
    -------------------------------------------------------------------------- */
 .research__intro {
   text-align: center;
-  margin-bottom: 4.8rem;
+  margin-bottom: 56px;
 }
 
 .research__eyebrow {
-  margin: 0 0 1rem;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--rs-text);
-}
-
-.research__eyebrow--mid {
-  margin-top: 3.2rem;
+    margin: 0 0 2rem;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.40px;
+    color: var(--rs-text);
+    font-family: 'TAY Birdie';
 }
 
 .research__heading {
-  margin: 0 auto;
-  max-width: 22ch;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 3rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  color: var(--rs-text);
+margin: 0 auto;
+    max-width: 565px;
+    font-size: 34px;
+    line-height: 38px;
+    letter-spacing: -0.34px;
+    color: var(--rs-text);
+    font-family: 'TAYRosemary';
 }
 
 .research--uppercase .research__eyebrow,
@@ -129,20 +124,17 @@
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .research {
-    padding: 9.6rem 0;
+    padding: 120px 0 148px;
   }
 
   .research__intro {
-    margin-bottom: 8rem;
-  }
-
-  .research__eyebrow--mid {
-    margin-top: 6rem;
+    margin-bottom: 136px;
   }
 
   .research__heading {
-    font-size: 5.2rem;
-    max-width: 24ch;
+font-size: 56px;
+        line-height: 64px;
+        letter-spacing: -0.56px;
   }
 
   .research__results-head {
