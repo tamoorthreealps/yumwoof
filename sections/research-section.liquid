@@ -4,6 +4,12 @@
   #shopify-section-{{ section.id }} .research {
     --rs-bg: {{ section.settings.background_color }};
     --rs-text: {{ section.settings.text_color }};
+      {% if section.settings.background_image != blank %}
+    background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  {% endif %}
   }
 {%- endstyle -%}
 
@@ -184,6 +190,11 @@
       "id": "background_color",
       "label": "Background",
       "default": "#1A1A1A"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image (Optional)"
     },
     {
       "type": "color",
