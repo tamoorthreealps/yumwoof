@@ -31,21 +31,20 @@
 }
 
 .cmp__eyebrow {
-  margin: 0 0 1.2rem;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+margin: 0 0 20px;
+    font-family: 'TAY Birdie';
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.40px;
 }
 
 .cmp__heading {
-  margin: 0 auto 1.2rem;
-  max-width: 22ch;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 3.2rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+    margin: 0 auto 1rem;
+    max-width: 935px;
+    font-family: 'TAYRosemary';
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -0.32px;
 }
 
 .cmp--uppercase .cmp__eyebrow,
@@ -54,10 +53,11 @@
 }
 
 .cmp__subheading {
-  margin: 0 auto;
-  max-width: 44rem;
-  font-size: 1.5rem;
-  line-height: 1.5;
+    margin: 0 auto;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------
@@ -280,12 +280,15 @@
   }
 
   .cmp__heading {
-    font-size: 4.8rem;
-    max-width: 24ch;
+        font-size: 56px;
+        line-height: 64px;
+        letter-spacing: -0.56px;
+        margin: 0 auto 4px;
   }
 
   .cmp__subheading {
-    font-size: 1.8rem;
+            font-size: 18px;
+        line-height: 28px;
   }
 
   .cmp__tabs {
