@@ -41,6 +41,16 @@
 <section class="heritage{% if section.settings.uppercase_heading %} heritage--uppercase{% endif %}" data-marquee>
   <div class="heritage__container">
     {%- comment -%} -------- Left: intro + bowl -------- {%- endcomment -%}
+    {%- if section.settings.bowl_image != blank -%}
+      {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
+      <div class="heritage__bowl">
+        {{
+          section.settings.bowl_image
+          | image_url: width: 900
+          | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
+        }}
+      </div>
+    {%- endif -%}
     <div class="heritage__intro">
       {%- if section.settings.heading != blank -%}
         <h2 class="heritage__heading">{{ section.settings.heading }}</h2>
@@ -53,19 +63,6 @@
           {{- section.settings.button_label -}}
         </a>
       {%- endif -%}
-
-      {% comment %}
-        {%- if section.settings.bowl_image != blank -%}
-          {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
-          <div class="heritage__bowl">
-            {{
-              section.settings.bowl_image
-              | image_url: width: 900
-              | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
-            }}
-          </div>
-        {%- endif -%}
-      {% endcomment %}
     </div>
 
     {%- comment -%} -------- Right: ingredient card -------- {%- endcomment -%}
