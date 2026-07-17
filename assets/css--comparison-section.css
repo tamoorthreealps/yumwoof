@@ -254,10 +254,10 @@ font-family: 'TAY Birdie';
   color: rgba(0, 0, 0, 0.28);
 }
 
-.cmp__cost {
+/* .cmp__cost {
   font-weight: 600;
   letter-spacing: 0.06em;
-}
+} */
 
 .cmp__col--brand .cmp__cost {
   color: var(--cmp-accent);
