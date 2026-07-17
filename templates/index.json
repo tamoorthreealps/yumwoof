@@ -374,7 +374,7 @@
           "type": "faq",
           "settings": {
             "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in our founder’s book.</p>"
           }
         },
         "faq_V3kVMX": {
@@ -410,7 +410,7 @@
         "heading": "Any Questions?",
         "subheading": "Every dog is different. Find the recipe that's right for yours.",
         "open_first": true,
-        "background_color": "#FFF9EF",
+        "background_color": "#fff9ef",
         "text_color": "#000000",
         "line_color": "#000000"
       }
