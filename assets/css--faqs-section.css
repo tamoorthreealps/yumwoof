@@ -77,8 +77,6 @@ font-size: 18px;
 .faqs__icon {
   position: relative;
   flex: none;
-  width: 16px;
-  height: 16px;
 }
 
 .faqs__item .faqs__icon__minus, .faqs__item.is-open .faqs__icon__plus {
