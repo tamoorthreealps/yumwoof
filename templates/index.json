@@ -237,7 +237,7 @@
           "settings": {
             "value": "93",
             "suffix": "%",
-            "label": "Better \ndigestion"
+            "label": "Better<br>  digestion"
           }
         },
         "stat-3": {
@@ -245,7 +245,7 @@
           "settings": {
             "value": "87",
             "suffix": "%",
-            "label": "Healthier skin"
+            "label": "Healthier<br>  skin"
           }
         },
         "stat-4": {
@@ -253,7 +253,7 @@
           "settings": {
             "value": "91",
             "suffix": "%",
-            "label": "Longer walks"
+            "label": "Longer<br>  walks"
           }
         },
         "stat-5": {
