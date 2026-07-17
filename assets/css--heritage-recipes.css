@@ -236,8 +236,8 @@ margin: 0 0 .6rem;
   animation: heritage-scroll var(--marquee-duration, 40s) linear infinite;
 }
 
-.heritage-marquee__row--reverse {
-  animation-direction: reverse;
+.heritage-marquee__row--reverse[data-marquee-ready] {
+  animation: heritage-scroll-reverse var(--marquee-duration, 40s) linear infinite;
 }
 
 .heritage-marquee:hover .heritage-marquee__row[data-marquee-ready] {
