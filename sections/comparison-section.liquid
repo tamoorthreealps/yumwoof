@@ -7,6 +7,12 @@
     --cmp-highlight: {{ section.settings.highlight_color }};
     --cmp-accent: {{ section.settings.accent_color }};
   }
+  {% if section.settings.background_image != blank %}
+    background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  {% endif %}
 {%- endstyle -%}
 
 {%- capture check_mark -%}
@@ -320,6 +326,11 @@
       "id": "background_color",
       "label": "Background",
       "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image (Optional)"
     },
     {
       "type": "color",
