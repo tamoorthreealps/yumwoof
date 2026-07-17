@@ -343,7 +343,7 @@
         "autoplay_speed": 5,
         "background_color": "#fff9ef",
         "background_image": "shopify://shop_images/Additional_Image.png",
-        "card_background": "#c8912a",
+        "card_background": "#FFF9EF",
         "text_color": "#000000",
         "accent_color": "#661d1d"
       }
