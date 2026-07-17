@@ -1,40 +1,40 @@
 {{ 'css--heritage-recipes.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-#shopify-section-{{ section.id }} .heritage {
-  --hr-bg: {{ section.settings.background_color }};
-  --hr-text: {{ section.settings.text_color }};
-  --hr-card-bg: {{ section.settings.card_background }};
-  --hr-card-border: {{ section.settings.card_border }};
-
-  {% if section.settings.background_image != blank %}
-    background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: var(--hr-bg);
-  {% endif %}
-}
-
-@media (max-width: 989px) {
   #shopify-section-{{ section.id }} .heritage {
-    {% if section.settings.background_image_mobile != blank %}
-      background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1200 }}');
-      background-size: cover;
+    --hr-bg: {{ section.settings.background_color }};
+    --hr-text: {{ section.settings.text_color }};
+    --hr-card-bg: {{ section.settings.card_background }};
+    --hr-card-border: {{ section.settings.card_border }};
+
+    {% if section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
+      background-size: 100% 100%;
       background-position: center;
       background-repeat: no-repeat;
-      background-color: transparent;
-    {% else %}
-      background-image: none;
-      background-color: {{ section.settings.mobile_background_color }};
+      background-color: var(--hr-bg);
     {% endif %}
   }
-}
+
+  @media (max-width: 989px) {
+    #shopify-section-{{ section.id }} .heritage {
+      {% if section.settings.background_image_mobile != blank %}
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: transparent;
+      {% else %}
+        background-image: none;
+        background-color: {{ section.settings.mobile_background_color }};
+      {% endif %}
+    }
+  }
 {%- endstyle -%}
 
 {%- capture x_icon -%}
-  <svg class="heritage-chip__x" viewBox="0 0 10 10" fill="none" aria-hidden="true" focusable="false">
-    <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  <svg class="heritage-chip__x" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9.60156 0.125C9.75209 0.120631 9.90054 0.161924 10.0273 0.243164C10.1544 0.324684 10.2547 0.443027 10.3135 0.582031C10.3722 0.720963 10.3873 0.874596 10.3574 1.02246C10.3276 1.16989 10.2531 1.30412 10.1455 1.40918L10.1465 1.41016L6.30859 5.24805L10.1465 9.08691H10.1455C10.2169 9.15573 10.2741 9.23808 10.3135 9.3291C10.3529 9.42045 10.374 9.51867 10.375 9.61816C10.376 9.71781 10.357 9.81692 10.3193 9.90918C10.2817 10.0014 10.2257 10.0848 10.1553 10.1553C10.0848 10.2257 10.0014 10.2817 9.90918 10.3193C9.81694 10.357 9.7178 10.376 9.61816 10.375C9.51868 10.3739 9.42044 10.3529 9.3291 10.3135C9.23848 10.2743 9.15651 10.2175 9.08789 10.1465L5.25 6.30859L1.41211 10.1465C1.34349 10.2175 1.26152 10.2743 1.1709 10.3135C1.07956 10.3529 0.981324 10.3739 0.881836 10.375C0.782203 10.376 0.683065 10.357 0.59082 10.3193C0.49861 10.2817 0.415156 10.2257 0.344727 10.1553C0.274319 10.0848 0.21832 10.0014 0.180664 9.90918C0.143007 9.81692 0.123986 9.71781 0.125 9.61816C0.126027 9.51867 0.147097 9.42046 0.186523 9.3291C0.225761 9.23829 0.282381 9.15563 0.353516 9.08691L4.19043 5.24805L0.353516 1.41016V1.40918C0.24766 1.30552 0.173985 1.17336 0.143555 1.02832C0.11303 0.882629 0.1267 0.730717 0.182617 0.592773C0.23867 0.454723 0.335415 0.336161 0.458984 0.25293C0.582496 0.169816 0.728082 0.125039 0.876953 0.125C0.976966 0.125023 1.07583 0.145659 1.16797 0.18457C1.26016 0.223516 1.34428 0.279818 1.41406 0.351562H1.41309L5.25 4.18848L9.08789 0.350586C9.22338 0.211905 9.40772 0.130777 9.60156 0.125Z" fill="black" stroke="black" stroke-width="0.25"/>
   </svg>
 {%- endcapture -%}
 
@@ -54,16 +54,18 @@
         </a>
       {%- endif -%}
 
-      {% comment %} {%- if section.settings.bowl_image != blank -%}
-        {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
-        <div class="heritage__bowl">
-          {{
-            section.settings.bowl_image
-            | image_url: width: 900
-            | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
-          }}
-        </div>
-      {%- endif -%} {% endcomment %}
+      {% comment %}
+        {%- if section.settings.bowl_image != blank -%}
+          {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
+          <div class="heritage__bowl">
+            {{
+              section.settings.bowl_image
+              | image_url: width: 900
+              | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
+            }}
+          </div>
+        {%- endif -%}
+      {% endcomment %}
     </div>
 
     {%- comment -%} -------- Right: ingredient card -------- {%- endcomment -%}
@@ -92,12 +94,24 @@
               <li class="heritage__ingredient">
                 <span class="heritage__ingredient-media">
                   {%- if image != blank -%}
-                    {{ image | image_url: width: 160 | image_tag: class: 'heritage__ingredient-img', alt: title, widths: '80, 120, 160', loading: 'lazy' }}
+                    {{
+                      image
+                      | image_url: width: 160
+                      | image_tag:
+                        class: 'heritage__ingredient-img',
+                        alt: title,
+                        widths: '80, 120, 160',
+                        loading: 'lazy'
+                    }}
                   {%- endif -%}
                 </span>
                 <span class="heritage__ingredient-text">
-                  {%- if title != blank -%}<span class="heritage__ingredient-title">{{ title }}</span>{%- endif -%}
-                  {%- if text != blank -%}<span class="heritage__ingredient-desc">{{ text }}</span>{%- endif -%}
+                  {%- if title != blank -%}
+                    <span class="heritage__ingredient-title">{{ title }}</span>
+                  {%- endif -%}
+                  {%- if text != blank -%}
+                    <span class="heritage__ingredient-desc">{{ text }}</span>
+                  {%- endif -%}
                 </span>
               </li>
             {%- endif -%}
@@ -124,7 +138,10 @@
       {%- comment -%} Split items into two rows (alternating) for the two marquee lines. {%- endcomment -%}
       <div class="heritage-marquee">
         {%- for row in (1..2) -%}
-          <div class="heritage-marquee__row{% if row == 2 %} heritage-marquee__row--reverse{% endif %}" data-speed="{{ section.settings.marquee_speed }}">
+          <div
+            class="heritage-marquee__row{% if row == 2 %} heritage-marquee__row--reverse{% endif %}"
+            data-speed="{{ section.settings.marquee_speed }}"
+          >
             <div class="heritage-marquee__track">
               {%- for item in nono_items -%}
                 {%- assign label = item | strip -%}
@@ -133,7 +150,10 @@
                   {%- comment -%} Row 1 = even items, row 2 = odd items. {%- endcomment -%}
                   {%- assign target_row = remainder | plus: 1 -%}
                   {%- if target_row == row -%}
-                    <span class="heritage-chip">{{ x_icon }}<span class="heritage-chip__label">{{ label }}</span></span>
+                    <span class="heritage-chip">
+                      {{- x_icon -}}
+                      <span class="heritage-chip__label">{{ label }}</span></span
+                    >
                   {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
