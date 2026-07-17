@@ -62,25 +62,26 @@ margin: 0 auto;
 }
 
 .research__results-head {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 2.8rem;
+display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    margin-bottom: 3.2rem;
 }
 
 .research__results-title {
-  margin: 0;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+    margin: 0;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-family: 'TAY Birdie';
 }
 
 .research__results-note {
-  margin: 0;
-  font-size: 1.2rem;
-  opacity: 0.85;
+    margin: 0;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0;
 }
 
 .research__stats {
@@ -93,19 +94,20 @@ margin: 0 auto;
 }
 
 .research__stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    text-align: center;
 }
 
 .research__stat-value {
-  display: flex;
-  align-items: baseline;
-  font-family: var(--font-heading-family, inherit);
-  font-weight: 700;
-  font-size: 4.8rem;
-  line-height: 1;
-  letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    font-size: 56px;
+    line-height: 60px;
+    letter-spacing: 0;
+    font-family: 'TAYRosemary';
 }
 
 .research__stat-suffix {
@@ -113,10 +115,11 @@ margin: 0 auto;
 }
 
 .research__stat-label {
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.5rem;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.40px;
+    text-transform: uppercase;
+    font-family: 'TAY Birdie';
 }
 
 /* --------------------------------------------------------------------------
@@ -138,23 +141,27 @@ font-size: 56px;
   }
 
   .research__results-head {
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-bottom: 4rem;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: 6.8rem;
   }
 
   .research__results-title {
-    font-size: 1.6rem;
+    font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.40px;
   }
 
   .research__stats {
     grid-template-columns: repeat(5, 1fr);
-    gap: 2rem;
+    gap: 5rem;
   }
 
   .research__stat-value {
-    font-size: 5.6rem;
+            font-size: 80px;
+        line-height: 80px;
+        letter-spacing: -1.16px;
   }
 }
