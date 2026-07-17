@@ -17,6 +17,7 @@
   padding: 120px 2rem 80px;
   max-width: 1236px;
     margin: 0 auto;
+    position:relative;
 }
 
 .quiz__inner {
