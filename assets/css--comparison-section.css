@@ -116,6 +116,7 @@ margin: 0 0 20px;
   flex-direction: column;
   flex: 1 1 0;
   min-width: 0;
+      border-left: 0 !important;
 }
 
 .cmp__col--labels {
