@@ -216,7 +216,7 @@ font-family: 'TAY Birdie';
   bottom: -1.6rem;
   background: var(--cmp-highlight);
   border: 1px solid var(--cmp-text);
-  border-radius: 16px;
+  border-radius: 24px;
   z-index: 0;
 }
 
