@@ -63,7 +63,6 @@ display: flex;
 }
 
 .mem__eyebrow {
-order: -1;
     margin: 0 0 1.2rem;
     font-size: 16px;
     line-height: 24px;
@@ -167,7 +166,7 @@ font-size: 26px;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 4px;
+  width: 6px;
   height: 6px;
   background: var(--mem-text);
   border-radius: 50%;
@@ -232,10 +231,15 @@ font-size: 26px;
         min-width: 0;
   }
 
+  .mem__eyebrow {
+    order:2;
+  }
+
   .mem__description {
     font-size: 18px;
         line-height: 28px;
         margin-bottom: 2.4rem;
+        order: 1;
   }
 
   .mem__slide-title {
