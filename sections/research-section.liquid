@@ -6,7 +6,7 @@
     --rs-text: {{ section.settings.text_color }};
       {% if section.settings.background_image != blank %}
     background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
   {% endif %}
