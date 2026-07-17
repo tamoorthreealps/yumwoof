@@ -156,9 +156,9 @@ margin: 0;
   }
 
   .founder__badge {
-    top: -2rem;
-    right: -2rem;
-    width: 22rem;
+    top: 20px;
+        right: -70px;
+        max-width: 224px;
   }
 
   .founder__heading {
