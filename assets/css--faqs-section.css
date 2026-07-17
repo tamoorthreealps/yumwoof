@@ -118,6 +118,20 @@ padding: 0 0 2rem;
     max-width: 1132px;
 }
 
+.faqs__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+}
+
+.faqs__item.is-open .faqs__answer {
+    max-height: 500px; /* JS overwrite karega */
+}
+
+.faqs__item.is-open .faqs__icon::after {
+    opacity: 0;
+}
+
 .faqs__answer > p {
   margin: 0 0 1.2rem;
 }
