@@ -225,9 +225,9 @@ font-family: 'TAY Birdie';
   z-index: 1;
 }
 
-.cmp__col--brand .cmp__cell {
+/* .cmp__col--brand .cmp__cell {
   border-top-color: rgba(0, 0, 0, 0.22);
-}
+} */
 
 /* Marks */
 .cmp__mark {
