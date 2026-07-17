@@ -332,8 +332,8 @@
       ],
       "name": "Explore membership",
       "settings": {
-        "eyebrow": "",
-        "description": "<p>Become a member to save 25% on every order, avoid a year of inflation, and enjoy exclusive benefits.</p><p>Membership has its perks</p>",
+        "eyebrow": "Membership has its perks",
+        "description": "<p>Become a member to save 25% on every order, avoid a year of inflation, and enjoy exclusive benefits.</p>",
         "button_label": "Explore Membership →",
         "button_link": "",
         "image": "shopify://shop_images/image_52.png",
