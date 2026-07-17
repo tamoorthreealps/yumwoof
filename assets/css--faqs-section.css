@@ -121,11 +121,7 @@ font-size: 18px;
 }
 
 .faqs__item.is-open .faqs__answer {
-    max-height: 500px; /* JS overwrite karega */
-}
-
-.faqs__item.is-open .faqs__icon::after {
-    opacity: 0;
+    max-height: 500px;
 }
 
 .faqs__answer > p {
