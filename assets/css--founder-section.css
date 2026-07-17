@@ -137,7 +137,11 @@ margin: 0;
     gap: 118px;
   }
 
-  .founder__media,
+  .founder__media {
+    flex: 1 1 588px;
+    min-width: 0;
+  }
+
   .founder__content {
     flex: 1 1 0;
     min-width: 0;
