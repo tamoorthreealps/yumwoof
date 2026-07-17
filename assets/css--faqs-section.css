@@ -120,6 +120,10 @@ font-size: 18px;
     max-width: 1132px;
 }
 
+.faqs__answer-inner {
+    padding: 0 0 32px;
+}
+
 .faqs__item.is-open .faqs__answer {
     max-height: 500px;
 }
