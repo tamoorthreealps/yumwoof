@@ -18,18 +18,22 @@
 <section class="research{% if section.settings.uppercase_headings %} research--uppercase{% endif %}">
   <div class="research__inner">
     <div class="research__intro">
-      {%- if section.settings.eyebrow_1 != blank -%}
-        <p class="research__eyebrow">{{ section.settings.eyebrow_1 }}</p>
-      {%- endif -%}
-      {%- if section.settings.heading_1 != blank -%}
-        <h2 class="research__heading">{{ section.settings.heading_1 }}</h2>
-      {%- endif -%}
-      {%- if section.settings.eyebrow_2 != blank -%}
-        <p class="research__eyebrow research__eyebrow--mid">{{ section.settings.eyebrow_2 }}</p>
-      {%- endif -%}
-      {%- if section.settings.heading_2 != blank -%}
-        <h3 class="research__heading">{{ section.settings.heading_2 }}</h3>
-      {%- endif -%}
+      <div class="research__intro__top">
+        {%- if section.settings.eyebrow_1 != blank -%}
+          <p class="research__eyebrow">{{ section.settings.eyebrow_1 }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading_1 != blank -%}
+          <h2 class="research__heading">{{ section.settings.heading_1 }}</h2>
+        {%- endif -%}
+      </div>
+      <div class="research__intro__bottom">
+        {%- if section.settings.eyebrow_2 != blank -%}
+          <p class="research__eyebrow research__eyebrow--mid">{{ section.settings.eyebrow_2 }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading_2 != blank -%}
+          <h3 class="research__heading">{{ section.settings.heading_2 }}</h3>
+        {%- endif -%}
+      </div>
     </div>
 
     {%- if stat_blocks.size > 0 -%}
