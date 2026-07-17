@@ -122,14 +122,13 @@ font-size: 18px;
 
 .faqs__item.is-open .faqs__answer {
     max-height: 500px;
-    padding: 16px 0 32px;
 }
 
-.faqs__answer > p {
+.faqs__answer .faqs__answer-inner > p {
   margin: 0 0 1.2rem;
 }
 
-.faqs__answer > p:last-child {
+.faqs__answer .faqs__answer-inner > p:last-child {
   margin-bottom: 0;
 }
 
