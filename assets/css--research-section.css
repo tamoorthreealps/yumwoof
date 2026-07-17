@@ -99,7 +99,6 @@ display: flex;
 .research__stat {
 display: flex;
     flex-direction: column;
-    gap: .4rem;
     text-align: center;
 }
 
