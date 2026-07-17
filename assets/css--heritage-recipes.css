@@ -284,6 +284,15 @@ margin: 0 0 .6rem;
   }
 }
 
+@keyframes heritage-scroll-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .heritage-marquee__row {
     animation: none !important;
