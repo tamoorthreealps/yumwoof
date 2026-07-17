@@ -22,8 +22,11 @@
    Intro
    -------------------------------------------------------------------------- */
 .research__intro {
-  text-align: center;
-  margin-bottom: 56px;
+      text-align: center;
+    margin-bottom: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 .research__eyebrow {
@@ -132,6 +135,7 @@ font-size: 20px;
 
   .research__intro {
     margin-bottom: 136px;
+        gap: 520px;
   }
 
   .research__heading {
