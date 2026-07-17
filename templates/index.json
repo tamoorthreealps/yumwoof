@@ -280,8 +280,9 @@
         "heading_2": "Your happy stick-loving dog love you more!",
         "stats_title": "What Yumwoof pet parents noticed",
         "stats_note": "*Based on Yumwoof Customer Survey",
-        "background_color": "#000000",
-        "text_color": "#FFF9EF"
+        "background_color": "#FFF9EF",
+        "background_image": "shopify://shop_images/Rectangle_24.png",
+        "text_color": "#fff9ef"
       }
     },
     "cocomega_section": {
