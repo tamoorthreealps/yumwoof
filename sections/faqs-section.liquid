@@ -25,19 +25,19 @@
     {%- if faq_blocks.size > 0 -%}
       <div class="faqs__list">
         {%- for block in faq_blocks -%}
-          <details
+          <div
             class="faqs__item"
             {% if forloop.first and section.settings.open_first %}open{% endif %}
             {{ block.shopify_attributes }}
           >
-            <summary class="faqs__question">
+            <div class="faqs__question">
               <span class="faqs__question-text">{{ block.settings.question }}</span>
               <span class="faqs__icon" aria-hidden="true"></span>
-            </summary>
+            </div>
             {%- if block.settings.answer != blank -%}
               <div class="faqs__answer rte">{{ block.settings.answer }}</div>
             {%- endif -%}
-          </details>
+          </div>
         {%- endfor -%}
       </div>
     {%- endif -%}
