@@ -122,6 +122,7 @@ font-size: 18px;
 
 .faqs__item.is-open .faqs__answer {
     max-height: 500px;
+    padding: 16px 0 32px;
 }
 
 .faqs__answer > p {
