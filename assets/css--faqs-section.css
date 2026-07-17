@@ -130,12 +130,10 @@ font-size: 18px;
 
 .faqs__answer > p {
   margin: 0 0 1.2rem;
-  padding-bottom:32px;
 }
 
 .faqs__answer > p:last-child {
   margin-bottom: 0;
-  padding-bottom:0;
 }
 
 /* --------------------------------------------------------------------------
