@@ -141,8 +141,9 @@ margin: 1.2rem 0 0;
   }
 
   .quiz__decor--right {
-    width: 112px;
-    right: 14%;
-    top: 14%;
+            width: 122px;
+        right: 0;
+        top: auto;
+        bottom: -40px;
   }
 }
