@@ -131,7 +131,7 @@ display: inline-flex;
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .cocomega {
-    padding: 8rem 0;
+    padding: 9.6rem 0 8rem;
   }
 
   .cocomega__inner {
