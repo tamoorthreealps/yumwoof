@@ -74,16 +74,16 @@ display: inline-flex;
 }
 
 .heritage__bowl {
-  margin-top: 2.4rem;
-  line-height: 0;
+    position: absolute;
+    top: 0;
 }
 
 .heritage__bowl img {
-  display: block;
-  width: 100%;
-  max-width: 30rem;
-  height: auto;
-  margin: 0 auto;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
 }
 
 /* --------------------------------------------------------------------------
@@ -333,12 +333,10 @@ margin: 0 0 .6rem;
   }
 
   .heritage__bowl {
-    margin-top: 4rem;
-  }
-
-  .heritage__bowl img {
-    max-width: 44rem;
-    margin: 0;
+    bottom: -4px;
+        top: auto;
+        margin: 0;
+        width: 590px;
   }
 
   .heritage__card-wrap {
