@@ -162,12 +162,12 @@ margin: 0 0 20px;
 }
 
 .cmp__col-label {
-font-family: 'TAY Birdie';
-    font-size: 10px;
-    line-height: 12px;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    text-align: center;
+  font-family: var(--font-heading-family, inherit);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 .cmp__col-label--brand {
@@ -186,13 +186,12 @@ font-family: 'TAY Birdie';
 }
 
 .cmp__cell--label {
-    justify-content: flex-start;
-    text-align: left;
-    padding: 0 1rem 0 1.8rem;
-    font-weight: 500;
-    letter-spacing: -.02em;
-    text-transform: uppercase;
-    font-family: 'TAY Birdie';
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 1rem 0 1.8rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 .cmp__head--empty {
@@ -323,9 +322,7 @@ font-family: 'TAY Birdie';
   }
 
   .cmp__col-label {
-    font-size: 20px;
-        line-height: 28px;
-        letter-spacing: -0.40px;
+    font-size: 1.6rem;
   }
 
   .cmp__brand-logo {
