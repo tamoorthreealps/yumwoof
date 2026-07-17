@@ -55,10 +55,10 @@ margin: 0 auto;
    -------------------------------------------------------------------------- */
 .research__divider {
   display: block;
-  height: 1px;
+  height: 2px;
   width: 100%;
-  background: rgba(255, 249, 239, 0.5);
-  margin-bottom: 2rem;
+  background: #FFF9EF;
+  margin-bottom: 16px;
 }
 
 .research__results-head {
