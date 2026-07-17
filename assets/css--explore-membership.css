@@ -101,7 +101,7 @@ margin-bottom: 2.4rem;
 .mem__slide {
   display: none;
   align-items: center;
-  gap: 1.6rem;
+  gap: 1.2rem;
 }
 
 .mem__slide.is-active {
