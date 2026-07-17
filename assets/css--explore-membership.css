@@ -246,6 +246,10 @@ font-size: 26px;
     order:3;
   }
 
+  .mem__button {
+    order:4;
+  }
+
   .mem__slide-title {
             font-size: 32px;
         line-height: 40px;
