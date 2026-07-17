@@ -10,7 +10,7 @@
 
   background-color: var(--faq-bg);
   color: var(--faq-text);
-  padding: 5.6rem 0;
+  padding: 6.4rem 0 7rem;
 }
 
 .faqs__inner {
@@ -128,7 +128,7 @@
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .faqs {
-    padding: 8rem 0;
+    padding: 12rem 0;
   }
 
   .faqs__head {
