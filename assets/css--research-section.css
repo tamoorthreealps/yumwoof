@@ -124,6 +124,10 @@ font-size: 20px;
     font-family: 'TAY Birdie';
 }
 
+.research__stat-label br {
+    display:none;
+  }
+
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
@@ -166,5 +170,8 @@ font-size: 56px;
             font-size: 80px;
         line-height: 80px;
         letter-spacing: -1.16px;
+  }
+  .research__stat-label br {
+    display:block;
   }
 }
