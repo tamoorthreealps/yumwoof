@@ -61,7 +61,6 @@ display: flex;
 .mem__content {
   display: flex;
   flex-direction: column;
-  padding: 0.8rem;
 }
 
 .mem__eyebrow {
@@ -215,7 +214,6 @@ display: flex;
 
   .mem__content {
     justify-content: center;
-        padding: 2.4rem 3.2rem 2.4rem 1.6rem;
         flex: 1;
         min-width: 0;
   }
