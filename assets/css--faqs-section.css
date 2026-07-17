@@ -81,34 +81,6 @@ font-size: 18px;
   height: 16px;
 }
 
-.faqs__icon::before,
-.faqs__icon::after {
-  content: '';
-  position: absolute;
-  background-color: var(--faq-text);
-}
-
-.faqs__icon::before {
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  transform: translateY(-50%);
-}
-
-.faqs__icon::after {
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  transform: translateX(-50%);
-  transition: opacity 0.15s ease;
-}
-
-.faqs__item[open] .faqs__icon::after {
-  opacity: 0;
-}
-
 .faqs__answer {
     max-height: 0;
     overflow: hidden;

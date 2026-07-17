@@ -33,7 +33,29 @@
           >
             <div class="faqs__question">
               <span class="faqs__question-text">{{ block.settings.question }}</span>
-              <span class="faqs__icon" aria-hidden="true"></span>
+              <span class="faqs__icon" aria-hidden="true">
+                <svg
+                  class="faqs__icon__plus"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M15.1111 7.11111H8.88889V0.888889C8.88889 0.398222 8.49067 0 8 0C7.50933 0 7.11111 0.398222 7.11111 0.888889V7.11111H0.888889C0.398222 7.11111 0 7.50933 0 8C0 8.49067 0.398222 8.88889 0.888889 8.88889H7.11111V15.1111C7.11111 15.6018 7.50933 16 8 16C8.49067 16 8.88889 15.6018 8.88889 15.1111V8.88889H15.1111C15.6018 8.88889 16 8.49067 16 8C16 7.50933 15.6018 7.11111 15.1111 7.11111Z" fill="black"/>
+                </svg>
+
+                <svg
+                  class="faqs__icon__minus"
+                  width="16"
+                  height="3"
+                  viewBox="0 0 16 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M15.1111 0H8.88889H7.11111H0.888889C0.398222 0 0 0.486194 0 1.08525C0 1.68431 0.398222 2.17051 0.888889 2.17051C0.888889 2.17051 4.68118 2.17051 7.11111 2.17051C7.80538 2.17051 8.88889 2.17051 8.88889 2.17051H15.1111C15.6018 2.17051 16 1.68431 16 1.08525C16 0.486194 15.6018 0 15.1111 0Z" fill="black"/>
+                </svg>
+              </span>
             </div>
             {%- if block.settings.answer != blank -%}
               <div class="faqs__answer rte">
