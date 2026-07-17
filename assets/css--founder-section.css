@@ -14,7 +14,7 @@
 }
 
 .founder__inner {
-  max-width: 128rem;
+  max-width: 1236px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -134,7 +134,7 @@ margin: 0;
   .founder__inner {
     flex-direction: row;
     align-items: center;
-    gap: 8rem;
+    gap: 118px;
   }
 
   .founder__media,
