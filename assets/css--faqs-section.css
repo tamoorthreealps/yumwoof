@@ -121,7 +121,7 @@ font-size: 18px;
 }
 
 .faqs__answer-inner {
-    padding: 0 0 32px;
+    padding: 0 0 20px;
 }
 
 .faqs__item.is-open .faqs__answer {
@@ -157,6 +157,10 @@ font-size: 18px;
   .faqs__question {
     padding: 22px 0 28px;
   }
+
+  .faqs__answer-inner {
+    padding: 0 0 32px;
+}
 
   .faqs__question-text {
     font-size: 24px;
