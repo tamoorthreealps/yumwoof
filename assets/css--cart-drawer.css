@@ -703,7 +703,6 @@ cart-drawer.active .cd__inner {
   align-items: center;
   text-align: center;
   padding:64px 48px 44px;
-  height: 100%;
 }
 
 .cd-empty__icon {
