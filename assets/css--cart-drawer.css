@@ -486,11 +486,12 @@ cart-drawer.active .cd__inner {
 
 .cd-recommend__title,
 .cd-shop__label {
-  margin: 0;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.6rem;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+    margin: 0;
+    font-family: 'TAY Birdie';
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.80px;
+    text-transform: uppercase;
 }
 
 .cd-recommend__extra {
@@ -699,30 +700,38 @@ cart-drawer.active .cd__inner {
   position: relative;
   display: inline-flex;
   color: #000;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
 }
 
 .cd-empty__count {
-  position: absolute;
-  top: 58%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.6rem;
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "FFBlurProMedium";
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -0.28px;
 }
 
 .cd-empty__title {
-  margin: 0 0 1.2rem;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 3.2rem;
-  line-height: 1.05;
-  text-transform: uppercase;
+margin: 0 0 .8rem;
+    font-family: 'TAYRosemary';
+    font-size: 48px;
+    line-height: 48px;
+    text-transform: uppercase;
+    letter-spacing: -0.48px;
+    font-weight: 400;
+    color: #000000;
+    max-width: 32rem;
 }
 
 .cd-empty__text {
-  margin: 0 0 2.8rem;
-  font-size: 1.5rem;
-  max-width: 32rem;
+    margin: 0 0 6.4rem;
+    font-size: 18px;
+    line-height: 28px;
+    max-width: 28rem;
+    letter-spacing: 0;
 }
 
 .cd-shop {
