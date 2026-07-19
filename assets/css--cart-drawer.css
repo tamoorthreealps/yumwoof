@@ -518,7 +518,6 @@ cart-drawer.active .cd__inner {
 .cd-shop__track {
   display: flex;
   gap: 1.2rem;
-  overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
