@@ -812,6 +812,10 @@ margin: 0 0 .8rem;
   transform: translate(-50%, 50%);
 }
 
+.cd-shop .splide__track {
+    overflow: visible;
+}
+
 .cd-empty__shop-all {
     display: inline-flex;
     align-items: center;
