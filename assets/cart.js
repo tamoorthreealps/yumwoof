@@ -438,14 +438,29 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
+  const prevBtn = document.querySelector(".empty-prev");
+  const nextBtn = document.querySelector(".empty-next");
+
+  function updateArrows() {
+    if (!prevBtn || !nextBtn) return;
+
+    prevBtn.disabled = splide.index === 0;
+    nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
+
+    prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
+    nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
+  }
+
+  splide.on("mounted moved resized updated", updateArrows);
+
   splide.mount();
 
-  document.querySelector(".empty-prev")?.addEventListener("click", (e) => {
+  prevBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     splide.go("<");
   });
 
-  document.querySelector(".empty-next")?.addEventListener("click", (e) => {
+  nextBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     splide.go(">");
   });
