@@ -173,7 +173,7 @@
 
             {%- if section.settings.empty_collection != blank -%}
               {%- assign empty_coll = section.settings.empty_collection -%}
-              <div class="cd-shop splide" data-cd-carousel>
+              <div class="cd-shop" data-cd-carousel>
                 <div class="cd-shop__head">
                   <p class="cd-shop__label">{{ section.settings.empty_collection_title }}</p>
                   <div class="cd-carousel__nav">
@@ -189,14 +189,10 @@
                     </button>
                   </div>
                 </div>
-                <div class="cd-shop__track splide__track" data-cd-track>
-                  <div class="splide__list">
-                    {%- for product in empty_coll.products limit: 8 -%}
-                      <div class="splide__slide">
-                        {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
-                      </div>
-                    {%- endfor -%}
-                  </div>
+                <div class="cd-shop__track" data-cd-track>
+                  {%- for product in empty_coll.products limit: 8 -%}
+                    {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
+                  {%- endfor -%}
                 </div>
               </div>
             {%- endif -%}
