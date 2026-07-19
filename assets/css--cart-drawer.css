@@ -40,7 +40,8 @@ cart-drawer.active .cart-drawer__overlay {
 
 .cd__inner {
   position: fixed;
-  inset: 12px;
+  top: 0;
+  right: 0;
   height: 100%;
   width: min(53.2rem, 100vw);
   display: flex;
@@ -52,6 +53,11 @@ cart-drawer.active .cart-drawer__overlay {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: 20px;
+}
+
+.cart-drawer .drawer__inner {
+  inset: 12px;
+  height: calc(100vh - 24px);
 }
 
 cart-drawer.active .cd__inner {
