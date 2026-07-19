@@ -791,11 +791,15 @@ margin: 0 0 .8rem;
 }
 
 .cd-shop-card__title {
-  font-family: var(--font-heading-family, inherit);
-  font-size: 1.8rem;
-  text-transform: uppercase;
-  color: #000;
-  text-decoration: none;
+    font-family: 'TAYRosemary';
+    font-size: 24px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 0;
+    display: block;
+    margin: 0 0 4px;
 }
 
 .cd-shop-card__desc {
@@ -804,6 +808,7 @@ margin: 0 0 .8rem;
     line-height: 20px;
     letter-spacing: 0;
     font-weight: 500;
+    padding: 0;
 }
 
 .cd-shop-card__btn {
