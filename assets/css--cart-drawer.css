@@ -753,17 +753,16 @@ margin: 0 0 .8rem;
 
 .cd-shop-card {
   position: relative;
-  flex: 0 0 62%;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1rem;
-  padding: 1.6rem 1.2rem 3.2rem;
+  gap: 2.4rem;
+  padding: 24px 24px 44px;
   background: #fff;
-  border: 1px solid #000;
-  border-radius: 16px;
+  border: 1.25px solid #000000;
+  border-radius: 12px;
 }
 
 .cd-shop-card__media {
@@ -856,10 +855,6 @@ margin: 0 0 .8rem;
 
   .cd-rec-card {
     flex-basis: calc(100% - 3.2rem);
-  }
-
-  .cd-shop-card {
-    flex-basis: 46%;
   }
 }
 
