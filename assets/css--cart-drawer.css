@@ -816,6 +816,10 @@ margin: 0 0 .8rem;
     overflow: visible;
 }
 
+.cd-shop--main {
+    margin-bottom: 68px;
+}
+
 .cd-empty__shop-all {
     display: inline-flex;
     align-items: center;
