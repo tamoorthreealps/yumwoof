@@ -60,6 +60,7 @@ cart-drawer.active .cart-drawer__overlay {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 
