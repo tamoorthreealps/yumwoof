@@ -521,7 +521,7 @@ cart-drawer.active .cd__inner {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding-bottom: 0.4rem;
+  padding-bottom: 6.8rem;
   overflow-x: auto;
 }
 
@@ -738,7 +738,6 @@ margin: 0 0 .8rem;
 .cd-shop {
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
 }
 
 .cd-shop__track {
