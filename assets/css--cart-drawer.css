@@ -522,6 +522,7 @@ cart-drawer.active .cd__inner {
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 0.4rem;
+  overflow-x: auto;
 }
 
 .cd-recommend__track::-webkit-scrollbar,
