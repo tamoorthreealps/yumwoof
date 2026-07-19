@@ -699,7 +699,7 @@ cart-drawer.active .cd__inner {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding:64px 48px 44px;
+  padding:64px 0 44px;
 }
 
 .cd-empty__icon {
