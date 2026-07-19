@@ -414,3 +414,49 @@ if (!customElements.get('cart-note')) {
     }
   );
 }
+
+
+function initEmptyCartSlider() {
+  document.querySelectorAll('.cd-shop.splide').forEach((slider) => {
+    if (slider.classList.contains('is-initialized')) return;
+
+    const splide = new Splide(slider, {
+      perPage: 1.5,
+      perMove: 1,
+      gap: '12px',
+      pagination: false,
+      arrows: false,
+      drag: true,
+      trimSpace: false,
+      breakpoints: {
+        750: {
+          perPage: 1.5,
+        },
+        990: {
+          perPage: 2,
+        }
+      }
+    });
+
+    splide.mount();
+
+    slider.classList.add('is-initialized');
+
+    const prev = slider.querySelector('[data-cd-prev]');
+    const next = slider.querySelector('[data-cd-next]');
+
+    if (prev) {
+      prev.addEventListener('click', () => splide.go('<'));
+    }
+
+    if (next) {
+      next.addEventListener('click', () => splide.go('>'));
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initEmptyCartSlider);
+
+document.addEventListener('cart:updated', () => {
+  initEmptyCartSlider();
+});
