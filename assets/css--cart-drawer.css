@@ -825,7 +825,7 @@ margin: 0 0 .8rem;
 /* Desktop ------------------------------------------------------------------*/
 @media screen and (min-width: 750px) {
   .cd__inner {
-    width: 53.2rem;
+    width: 524px;
   }
 
   .cd-banner__img--desktop {
