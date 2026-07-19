@@ -58,6 +58,7 @@ cart-drawer.active .cart-drawer__overlay {
 .drawer__inner_container {
   background: var(--cd-drawer-bg);
   border-radius: 20px;
+  flex:1;
   display: flex;
   flex-direction: column;
   height: 100%;
