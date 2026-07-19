@@ -53,6 +53,12 @@ cart-drawer.active .cart-drawer__overlay {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: 20px;
+  padding: 12px;
+}
+
+.drawer__inner_container {
+  background: var(--cd-drawer-bg);
+  border-radius: 20px;
 }
 
 
