@@ -62,6 +62,7 @@ cart-drawer.active .cart-drawer__overlay {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 100%;
 }
 
 
