@@ -433,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
           perPage: 2,
         },
         1024: {
-          perPage: 3,
+          perPage: 2,
         },
       },
     }).mount();
