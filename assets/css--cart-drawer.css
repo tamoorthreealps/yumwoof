@@ -44,6 +44,7 @@ cart-drawer.active .cart-drawer__overlay {
   right: 0;
   height: 100%;
   max-width: 564px;
+  width:100%;
   display: flex;
   flex-direction: column;
   color: #000;
@@ -855,6 +856,7 @@ margin: 0 0 .8rem;
 @media screen and (min-width: 750px) {
   .cd__inner {
     max-width: 564px;
+    min-width: 564px;
   }
 
   .cd-banner__img--desktop {
