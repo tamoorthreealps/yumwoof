@@ -520,6 +520,10 @@ cart-drawer.active .cd__inner {
   padding: 0;
 }
 
+.cd-carousel__arrow.is-disabled {
+  opacity:0.25;
+}
+
 .cd-recommend__track,
 .cd-shop__track {
   display: flex;
