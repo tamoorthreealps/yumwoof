@@ -23,6 +23,7 @@
       {%- endif -%}
     </a>
     <div class="cd-shop-card__body">
+      <p class="cd-shop-card__type">AIR-DRIED FOOD</p>
       {%- if product.type != blank -%}<p class="cd-shop-card__type">{{ product.type }}</p>{%- endif -%}
       <a href="{{ product.url }}" class="cd-shop-card__title">{{ product.title | escape }}</a>
       {%- if product.metafields.custom.product_card_short_description != blank -%}
