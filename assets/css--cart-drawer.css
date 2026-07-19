@@ -43,7 +43,7 @@ cart-drawer.active .cart-drawer__overlay {
   top: 0;
   right: 0;
   height: 100%;
-  width: min(53.2rem, 100vw);
+  max-width: 564px;
   display: flex;
   flex-direction: column;
   color: #000;
@@ -744,11 +744,6 @@ margin: 0 0 .8rem;
     letter-spacing: 0;
 }
 
-.cd-shop {
-  width: 100%;
-  text-align: left;
-}
-
 .cd-shop__track {
   scroll-snap-type: x mandatory;
 }
@@ -859,7 +854,7 @@ margin: 0 0 .8rem;
 /* Desktop ------------------------------------------------------------------*/
 @media screen and (min-width: 750px) {
   .cd__inner {
-    width: 564px;
+    max-width: 564px;
   }
 
   .cd-banner__img--desktop {
