@@ -424,9 +424,9 @@ document.addEventListener("DOMContentLoaded", () => {
     type: "slide",
     perPage: 1.3,
     perMove: 1,
-    gap: "16px",
+    gap: "12px",
     pagination: false,
-    arrows: false, // <-- default arrows off
+    arrows: false,
     drag: true,
     breakpoints: {
       768: {
