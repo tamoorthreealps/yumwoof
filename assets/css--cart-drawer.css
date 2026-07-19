@@ -822,7 +822,7 @@ margin: 0 0 .8rem;
     text-decoration: none;
     margin-top: auto;
     font-family: "FFBlurProMedium";
-    background-color .25s ease,color .25s ease
+    transition:background-color .15s ease,color .15s ease;
 }
 
 
