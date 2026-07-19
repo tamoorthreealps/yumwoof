@@ -416,30 +416,26 @@ if (!customElements.get('cart-note')) {
 }
 
 
-const slider = document.querySelector(".js-empty-cart-slider");
+document.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector(".js-empty-cart-slider");
 
-if (slider) {
-  const emptySlider = new Splide(slider, {
-    type: "slide",
-    perPage: 1.3,
-    gap: "16px",
-    pagination: false,
-    arrows: false,
-    drag: true,
-    breakpoints: {
-      768: {
-        perPage: 2,
+  if (slider) {
+    new Splide(slider, {
+      type: "slide",
+      perPage: 1.3,
+      perMove: 1,
+      gap: "16px",
+      pagination: false,
+      arrows: true,
+      drag: true,
+      breakpoints: {
+        768: {
+          perPage: 2,
+        },
+        1024: {
+          perPage: 2,
+        },
       },
-    },
-  });
-
-  emptySlider.mount();
-
-  document.querySelector(".empty-prev")?.addEventListener("click", () => {
-    emptySlider.go("<");
-  });
-
-  document.querySelector(".empty-next")?.addEventListener("click", () => {
-    emptySlider.go(">");
-  });
-}
+    }).mount();
+  }
+});
