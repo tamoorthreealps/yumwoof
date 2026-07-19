@@ -722,7 +722,7 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-empty__title {
-margin: 0 0 .8rem;
+margin: 0 auto .8rem;
     font-family: 'TAYRosemary';
     font-size: 48px;
     line-height: 48px;
@@ -734,7 +734,7 @@ margin: 0 0 .8rem;
 }
 
 .cd-empty__text {
-    margin: 0 0 6.4rem;
+    margin: 0 auto 6.4rem;
     font-size: 18px;
     line-height: 28px;
     max-width: 28rem;
