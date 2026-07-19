@@ -521,7 +521,8 @@ cart-drawer.active .cd__inner {
   padding: 0;
 }
 
-.cd-recommend__track {
+.cd-recommend__track,
+.cd-shop__track {
   display: flex;
   gap: 1.2rem;
   scroll-snap-type: x mandatory;
@@ -529,24 +530,6 @@ cart-drawer.active .cd__inner {
   -ms-overflow-style: none;
   padding-bottom: 6.8rem;
   overflow-x: auto;
-}
-
-.cd-shop.splide .cd-shop__track{
-    display:block;
-    overflow:hidden;
-    padding-bottom:6.8rem;
-}
-
-.cd-shop.splide .splide__list{
-    gap:1.2rem;
-}
-
-.cd-shop.splide .splide__slide{
-    flex:none;
-}
-
-.cd-shop.splide .cd-shop-card{
-    width:100%;
 }
 
 .cd-recommend__track::-webkit-scrollbar,
