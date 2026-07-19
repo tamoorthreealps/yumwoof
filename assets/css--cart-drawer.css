@@ -28,9 +28,10 @@ cart-drawer.active {
 .cart-drawer__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.40);
   opacity: 0;
   transition: opacity 0.3s ease;
+  display: block !important;
 }
 
 cart-drawer.active .cart-drawer__overlay {
