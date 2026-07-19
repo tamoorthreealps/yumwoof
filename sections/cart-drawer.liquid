@@ -176,6 +176,17 @@
               <div class="cd-shop" data-cd-carousel>
                 <div class="cd-shop__head">
                   <p class="cd-shop__label">{{ section.settings.empty_collection_title }}</p>
+                </div>
+                <div class="cd-shop splide js-empty-cart-slider">
+                  <div class="splide__track">
+                    <ul class="splide__list">
+                      {%- for product in empty_coll.products limit: 8 -%}
+                        <li class="splide__slide">
+                          {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
                   <div class="cd-carousel__nav">
                     <button type="button" class="cd-carousel__arrow empty-prev" aria-label="Previous">
                       <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -187,17 +198,6 @@
                         <path d="M10.0346 8C10.3218 7.33884 10.6201 6.75482 10.9294 6.24793C11.2387 5.71901 11.548 5.26722 11.8573 4.89256H0V3.10744H11.8573C11.548 2.71074 11.2387 2.25895 10.9294 1.75207C10.6201 1.22314 10.3218 0.639119 10.0346 0H11.5922C12.9841 1.60882 14.4534 2.7989 16 3.57025V4.42975C14.4534 5.17906 12.9841 6.36915 11.5922 8H10.0346Z" fill="black"/>
                       </svg>
                     </button>
-                  </div>
-                </div>
-                <div class="cd-shop splide js-empty-cart-slider">
-                  <div class="splide__track">
-                    <ul class="splide__list">
-                      {%- for product in empty_coll.products limit: 8 -%}
-                        <li class="splide__slide">
-                          {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
                   </div>
                 </div>
               </div>
