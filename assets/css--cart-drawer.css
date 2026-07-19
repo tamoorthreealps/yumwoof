@@ -824,6 +824,12 @@ margin: 0 0 .8rem;
     font-family: "FFBlurProMedium";
 }
 
+
+.cd-empty__shop-all:hover {
+    background:#000;
+    color:#FFF9EFE5;
+}
+
 /* Desktop ------------------------------------------------------------------*/
 @media screen and (min-width: 750px) {
   .cd__inner {
