@@ -189,10 +189,16 @@
                     </button>
                   </div>
                 </div>
-                <div class="cd-shop__track" data-cd-track>
-                  {%- for product in empty_coll.products limit: 8 -%}
-                    {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
-                  {%- endfor -%}
+                <div class="cd-shop splide js-empty-cart-slider">
+                  <div class="splide__track">
+                    <ul class="splide__list">
+                      {%- for product in empty_coll.products limit: 8 -%}
+                        <li class="splide__slide">
+                          {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
                 </div>
               </div>
             {%- endif -%}

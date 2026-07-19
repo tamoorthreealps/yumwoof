@@ -414,3 +414,28 @@ if (!customElements.get('cart-note')) {
     }
   );
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector(".js-empty-cart-slider");
+
+  if (slider) {
+    new Splide(slider, {
+      type: "slide",
+      perPage: 1.3,
+      perMove: 1,
+      gap: "16px",
+      pagination: false,
+      arrows: false,
+      drag: true,
+      breakpoints: {
+        768: {
+          perPage: 2,
+        },
+        1024: {
+          perPage: 3,
+        },
+      },
+    }).mount();
+  }
+});
