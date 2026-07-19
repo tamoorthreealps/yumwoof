@@ -502,7 +502,7 @@ cart-drawer.active .cd__inner {
 
 .cd-carousel__nav {
   display: flex;
-  gap: 0.8rem;
+  gap: 1.6rem;
 }
 
 .cd-carousel__arrow {
@@ -511,7 +511,7 @@ cart-drawer.active .cd__inner {
   cursor: pointer;
   font-size: 1.8rem;
   line-height: 1;
-  padding: 0 0.2rem;
+  padding: 0;
 }
 
 .cd-recommend__track,
