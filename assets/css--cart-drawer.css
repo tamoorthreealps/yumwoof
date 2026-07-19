@@ -799,8 +799,11 @@ margin: 0 0 .8rem;
 }
 
 .cd-shop-card__desc {
-  margin: 0;
-  font-size: 1.3rem;
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 .cd-shop-card__btn {
