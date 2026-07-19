@@ -601,22 +601,24 @@ cart-drawer.active .cd__inner {
 
 /* Hexagon button (ADD / SHOP NOW) */
 .cd-hex-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 120px;
-  height: 48px;
-  padding: 0 1.2rem;
-  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Vector_3.svg?v=1784494303") center / 100% 100% no-repeat;
-  color: #000;
-  font-size: 1.3rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 0;
-  cursor: pointer;
-  white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    height: 48px;
+    padding: 0;
+    background: url(/cdn/shop/files/Vector_3.svg?v=1784494303) center / 100% 100% no-repeat;
+    color: #000;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 500;
+    letter-spacing: .52px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: "FFBlurProMedium";
 }
 
 .cd-rec-card__add {
