@@ -46,7 +46,6 @@ cart-drawer.active .cart-drawer__overlay {
   width: min(53.2rem, 100vw);
   display: flex;
   flex-direction: column;
-  background: var(--cd-drawer-bg);
   color: #000;
   transform: translateX(100%);
   transition: transform 0.3s ease;
