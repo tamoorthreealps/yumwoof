@@ -14,7 +14,10 @@
 {%- endstyle -%}
 
 {%- liquid
-  assign cart_cents = cart.total_price
+  # Threshold progress is measured on the pre-discount subtotal, NOT cart.total_price.
+  # items_subtotal_price excludes cart-level automatic discounts and manual codes, so
+  # e.g. a 5%-off automatic discount at $160 can't drop the cart back under the tier.
+  assign cart_cents = cart.items_subtotal_price
 
   # --- Active market currency: thresholds are entered per market (US/EU/UK/CH). ---
   # Pick the field suffix from the cart's currency, falling back to USD.
@@ -413,6 +416,18 @@
                             {%- endif -%}
                           </div>
                         </div>
+
+                        {%- comment -%} Automatic / code discounts allocated to this line (not subscription or compare-at). {%- endcomment -%}
+                        {%- if item.line_level_discount_allocations.size > 0 -%}
+                          <ul class="cd-item__discounts" role="list">
+                            {%- for alloc in item.line_level_discount_allocations -%}
+                              <li class="cd-item__discount">
+                                <span class="cd-item__discount-title">{{ alloc.discount_application.title }}</span>
+                                <span class="cd-item__discount-amount">&minus;{{ alloc.amount | money }}</span>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
 
                         <div class="cd-item__bottom">
                           <quantity-input class="cd-qty">

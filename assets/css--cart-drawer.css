@@ -350,6 +350,33 @@ cart-drawer.active .cd__inner {
 	font-family: 'TAY Birdie';
 }
 
+/* Automatic / code discount applied to a line item */
+.cd-item__discounts {
+	list-style: none;
+	margin: 0.4rem 0 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 0.8rem;
+}
+
+.cd-item__discount {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	color: var(--cd-accent, #296900);
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.cd-item__discount-title {
+	font-weight: 600;
+}
+
+.cd-item__discount-amount {
+	font-weight: 600;
+}
+
 .cd-item__bottom {
 	display: flex;
 	align-items: flex-end;
