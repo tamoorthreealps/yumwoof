@@ -402,6 +402,9 @@
                               </span>
                               <span class="cd-item__off">({{ discount_pct }}% Off)</span>
                             {%- else -%}
+                              {% if item.original_line_price > item.final_line_price %}
+                                <s class="cd-item__compare">{{ original_line_price | money }}</s>
+                              {% endif %}
                               <span class="cd-item__final">{{ item.final_line_price | money }}</span>
                             {%- endif -%}
                           </div>
