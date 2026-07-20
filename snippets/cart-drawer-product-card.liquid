@@ -52,35 +52,37 @@
       {%- endif -%}
     </a>
     <div class="cd-rec-card__body__main">
-      <div class="cd-rec-card__body">
-        <p class="cd-rec-card__title">{{ product.title | escape }}</p>
-        {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
-        {%- if recipe != blank -%}
-          <p class="cd-rec-card__subtitle">{{ recipe }}</p>
-        {%- endif -%}
-        {%- if product.metafields.custom.pack_size != blank -%}
-          <p class="cd-rec-card__meta">{{ product.metafields.custom.pack_size.value }}</p>
-        {%- endif -%}
+      <div class="cd-rec-card__body__content">
+        <div class="cd-rec-card__body">
+          <p class="cd-rec-card__title">{{ product.title | escape }}</p>
+          {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
+          {%- if recipe != blank -%}
+            <p class="cd-rec-card__subtitle">{{ recipe }}</p>
+          {%- endif -%}
+          {%- if product.metafields.custom.pack_size != blank -%}
+            <p class="cd-rec-card__meta">{{ product.metafields.custom.pack_size.value }}</p>
+          {%- endif -%}
+        </div>
+        <div class="cd-rec-card__price">
+          <span class="cd-rec-card__final">{{ price | money }}</span>
+          {%- if compare > price -%}
+            <s class="cd-rec-card__compare">{{ compare | money }}</s>
+          {%- endif -%}
+        </div>
       </div>
-      <div class="cd-rec-card__price">
-        <span class="cd-rec-card__final">{{ price | money }}</span>
-        {%- if compare > price -%}
-          <s class="cd-rec-card__compare">{{ compare | money }}</s>
-        {%- endif -%}
-      </div>
+      {%- if card_variant.available -%}
+        <button
+          type="button"
+          class="cd-hex-btn cd-rec-card__add"
+          data-cd-add
+          data-variant-id="{{ card_variant.id }}"
+          aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}"
+        >
+          ADD
+        </button>
+      {%- else -%}
+        <span class="cd-hex-btn cd-rec-card__add cd-rec-card__add--disabled">SOLD OUT</span>
+      {%- endif -%}
     </div>
-    {%- if card_variant.available -%}
-      <button
-        type="button"
-        class="cd-hex-btn cd-rec-card__add"
-        data-cd-add
-        data-variant-id="{{ card_variant.id }}"
-        aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}"
-      >
-        ADD
-      </button>
-    {%- else -%}
-      <span class="cd-hex-btn cd-rec-card__add cd-rec-card__add--disabled">SOLD OUT</span>
-    {%- endif -%}
   </div>
 {%- endif -%}
