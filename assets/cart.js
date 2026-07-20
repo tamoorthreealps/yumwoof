@@ -415,12 +415,10 @@ if (!customElements.get('cart-note')) {
   );
 }
 
-function initEmptyCartSlider() {
+document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector(".js-empty-cart-slider");
 
-  if (!slider || slider.classList.contains("is-initialized")) return;
-
-  slider.classList.add("is-initialized");
+  if (!slider) return;
 
   const splide = new Splide(slider, {
     type: "slide",
@@ -447,8 +445,7 @@ function initEmptyCartSlider() {
     if (!prevBtn || !nextBtn) return;
 
     prevBtn.disabled = splide.index === 0;
-    nextBtn.disabled =
-      splide.index >= splide.length - splide.options.perPage;
+    nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
 
     prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
     nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
@@ -467,7 +464,7 @@ function initEmptyCartSlider() {
     e.preventDefault();
     splide.go(">");
   });
-}
+});
 
 
 
