@@ -522,20 +522,27 @@ appearance: none;
 /* Recommendations ----------------------------------------------------------*/
 .cd-recommend {
   display: block;
-  padding: 2rem 2.4rem 0.8rem;
+  padding: 2rem 2rem 0.8rem;
 }
 
 .cd-recommend[hidden] {
   display: none;
 }
 
-.cd-recommend__head,
 .cd-shop__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.2rem;
   margin-bottom: 2.4rem;
+}
+
+.cd-recommend__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 1.6rem;
 }
 
 .cd-recommend__title {
