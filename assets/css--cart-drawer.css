@@ -527,6 +527,7 @@ appearance: none;
 .cd-recommend {
   display: block;
   padding: 4rem 2rem 0.8rem;
+  overflow: hidden;
 }
 
 .cd-recommend[hidden] {
@@ -535,6 +536,10 @@ appearance: none;
 
 .cd-recommend .splide__slide {
   width:calc(86.64% + 0px) !important;
+}
+
+.cd-recommend .splide__track {
+  overflow: visible;
 }
 
 .cd-shop__head {
