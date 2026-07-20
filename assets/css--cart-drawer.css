@@ -340,7 +340,7 @@ display: block;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 1.6rem;
+    gap: 1.2rem;
     margin-top: 1.6rem;
 }
 
@@ -397,7 +397,8 @@ width: 20px;
 }
 
 .cart-item__error {
-  width: 100%;
+     width: 100%;
+    margin: 0;
 }
 
 .cart-item__error-text {
