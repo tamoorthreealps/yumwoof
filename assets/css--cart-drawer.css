@@ -191,8 +191,17 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-reward__check {
-	color: var(--cd-accent);
-	font-weight: 700;
+    color: var(--cd-accent);
+    font-weight: 700;
+    width: 12px;
+    height: 11px;
+    display: block;
+}
+
+.cd-reward__check svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 .cd-reward__amount {
