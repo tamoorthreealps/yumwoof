@@ -465,3 +465,40 @@ document.addEventListener("DOMContentLoaded", () => {
     splide.go(">");
   });
 });
+
+
+function initRecommendSlider() {
+  const slider = document.querySelector("[data-cd-slider]");
+
+  if (!slider || slider.classList.contains("is-initialized")) return;
+
+  slider.classList.add("is-initialized");
+
+  const splide = new Splide(slider, {
+    type: "slide",
+    perPage: 2,
+    perMove: 1,
+    gap: "12px",
+    pagination: false,
+    arrows: false,
+    drag: true,
+    breakpoints: {
+      768: {
+        perPage: 2,
+      },
+      1024: {
+        perPage: 2,
+      },
+    },
+  });
+
+  splide.mount();
+
+  document.querySelector("[data-cd-prev]")?.addEventListener("click", () => {
+    splide.go("<");
+  });
+
+  document.querySelector("[data-cd-next]")?.addEventListener("click", () => {
+    splide.go(">");
+  });
+}
