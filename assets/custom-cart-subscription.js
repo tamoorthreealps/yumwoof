@@ -133,8 +133,12 @@
             return;
           }
           track.innerHTML = '';
+
           cards.forEach(function (card) {
-            track.appendChild(card);
+            const slide = document.createElement('li');
+            slide.className = 'splide__slide';
+            slide.appendChild(card);
+            track.appendChild(slide);
           });
         }.bind(this))
         .catch(
