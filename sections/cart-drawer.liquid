@@ -352,6 +352,7 @@
                   -%}
 
                   <div id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cd-item" role="row">
+                    <div class="cd-item_hold">
                     <div class="cd-item__media">
                       {%- if item.image -%}
                         {%- assign cd_img_alt = item.image.alt | escape -%}
@@ -368,7 +369,6 @@
                         </a>
                       {%- endif -%}
                     </div>
-
                     <div class="cd-item__main">
                       <div class="cd-item__top">
                         <div class="cd-item__titles">
@@ -466,6 +466,7 @@
 
                       
                     </div>
+                  </div>
                     {%- if has_plans -%}
                         <div class="cd-item__sub">
                           <div class="cd-item__divider" aria-hidden="true">
