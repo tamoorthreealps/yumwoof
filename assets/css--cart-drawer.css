@@ -247,8 +247,10 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-item_hold {
-    display: flex;
+        display: flex;
     gap: 16px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .cd-item__media {
