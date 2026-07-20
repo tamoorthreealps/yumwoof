@@ -506,7 +506,7 @@ function initRecommendSlider() {
     };
 
     options.breakpoints[1024].padding = {
-      right: "40px",
+      right: "64px",
     };
 
     options.breakpoints[768].padding = {
