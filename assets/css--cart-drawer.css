@@ -120,6 +120,7 @@ cart-drawer.active .cd__inner {
 .cd-rewards {
   padding: 2rem 2rem 3.6rem;
   text-align: center;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .cd-rewards__msg {
