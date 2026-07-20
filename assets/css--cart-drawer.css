@@ -533,6 +533,10 @@ appearance: none;
   display: none;
 }
 
+.cd-recommend .splide__slide {
+  width:calc(86.64% + 0px);
+}
+
 .cd-shop__head {
   display: flex;
   align-items: center;
