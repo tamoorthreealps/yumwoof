@@ -495,8 +495,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const prevBtn = document.querySelector(".empty-prev");
-  const nextBtn = document.querySelector(".empty-next");
+const prevBtn = document.querySelector(".recommend-prev");
+const nextBtn = document.querySelector(".recommend-next");
 
   function updateArrows() {
     if (!prevBtn || !nextBtn) return;
