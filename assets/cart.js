@@ -488,11 +488,11 @@ function initRecommendSlider() {
     arrows: false,
     drag: true,
     breakpoints: {
-      1024: {
-        perPage: 1,
-      },
       768: {
         perPage: 1,
+      },
+      1024: {
+        perPage: 1.3,
       },
     },
   });
