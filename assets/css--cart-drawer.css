@@ -476,14 +476,19 @@ width: 20px;
 }
 
 .cd-freq__select {
-  appearance: none;
-  -webkit-appearance: none;
-  border: 0;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 0.6rem 3rem 0.6rem 1.2rem;
-  font-size: 1.4rem;
-  cursor: pointer;
+appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 4px 44px 4px 12px;
+    font-size: 14px;
+    line-height: 24px;
+    cursor: pointer;
+    max-width: 156px;
+    letter-spacing: 0;
+        font-family: 'Matter';
+    font-weight: 500;
 }
 
 .cd-freq::after {
