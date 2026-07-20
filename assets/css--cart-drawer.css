@@ -118,7 +118,7 @@ cart-drawer.active .cd__inner {
 
 /* Rewards / progress -------------------------------------------------------*/
 .cd-rewards {
-  padding: 2rem 2rem 3.6rem;
+  padding: 2rem 2rem 1.6rem;
   text-align: center;
   background: rgba(255, 255, 255, 0.5);
 }
