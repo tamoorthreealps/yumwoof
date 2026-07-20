@@ -19,7 +19,7 @@ cart-drawer {
 	inset: 0;
 	z-index: 1000;
 	visibility: hidden;
-  transition: visibility 0s linear .65s;
+  transition: visibility 0s linear .45s;
 }
 
 cart-drawer.active {
@@ -51,7 +51,7 @@ cart-drawer.active .cart-drawer__overlay {
 	flex-direction: column;
 	color: #000;
 	transform: translateX(100%);
-	transition: transform 0.65s ease;
+	transition: transform 0.45s ease;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	border-radius: 20px;
