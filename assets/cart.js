@@ -481,7 +481,7 @@ function initRecommendSlider() {
 
   const splide = new Splide(slider, {
     type: "slide",
-    perPage: 2,
+    perPage: 1,
     perMove: 1,
     gap: "12px",
     pagination: false,
@@ -489,10 +489,10 @@ function initRecommendSlider() {
     drag: true,
     breakpoints: {
       1024: {
-        perPage: 2,
+        perPage: 1,
       },
       768: {
-        perPage: 2,
+        perPage: 1,
       },
     },
   });
