@@ -330,7 +330,7 @@ display: block;
 
 .cd-item__bottom {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 1.6rem;
     margin-top: 1.6rem;
@@ -378,12 +378,14 @@ width: 20px;
 }
 
 .cd-item__remove {
-  display: inline-flex;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.5);
-  padding: 0.4rem;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: #00000080;
+    padding: 0;
+    height: 16px;
+    width: 16px;
+    display: block;
 }
 
 .cart-item__error {
