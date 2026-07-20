@@ -472,13 +472,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!slider) return;
 
+
   const splide = new Splide(slider, {
     type: "slide",
     perPage: 1,
     perMove: 1,
     gap: "12px",
-    arrows: false,
     pagination: false,
+    arrows: false,
     drag: true,
     breakpoints: {
       768: {
