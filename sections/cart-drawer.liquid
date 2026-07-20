@@ -577,14 +577,16 @@
             </div>
             <div class="splide cd-recommend__slider" data-cd-slider>
               <div class="splide__track">
-                    <ul class="splide__list">
-                      {%- for product in empty_coll.products limit: 8 -%}
-                        <li class="splide__slide">
-                          {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </div>
+                <ul class="splide__list">
+
+{% for product in recommendations.products %}
+  <li class="splide__slide">
+      {% render 'cart-drawer-product-card', product: product %}
+  </li>
+{% endfor %}
+
+</ul>
+              </div>
             </div>
           </cart-recommendations>
 
