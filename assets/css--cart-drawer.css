@@ -943,10 +943,6 @@ margin: 0 auto .8rem;
   .cd-banner__img--desktop {
     display: block;
   }
-
-  .cd-rec-card {
-    flex-basis: calc(100% - 3.2rem);
-  }
 }
 
 @media screen and (max-width: 749px) {
