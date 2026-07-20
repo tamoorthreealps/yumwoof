@@ -629,10 +629,10 @@
                     {{ cart.total_price | money }}
                   </span>
                 </div>
-                {%- if total_savings > 0 -%}
+                {%- if savings > 0 -%}
                   <div class="cd-totals__row cd-totals__row--savings">
                     <span>Total Savings!</span>
-                    <span>{{ total_savings | money }}</span>
+                    <span>{{ savings | money }}</span>
                   </div>
                 {%- endif -%}
               </div>
