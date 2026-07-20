@@ -472,10 +472,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
+function initRecommendSlider() {
   const slider = document.querySelector(".cd-recommend__slider");
 
-  if (!slider) return;
+  if (!slider || slider.classList.contains("is-initialized")) return;
+
+  slider.classList.add("is-initialized");
 
   const splide = new Splide(slider, {
     type: "slide",
@@ -486,17 +488,17 @@ document.addEventListener("DOMContentLoaded", () => {
     arrows: false,
     drag: true,
     breakpoints: {
-      768: {
+      1024: {
         perPage: 2,
       },
-      1024: {
+      768: {
         perPage: 2,
       },
     },
   });
 
-const prevBtn = document.querySelector(".recommend-prev");
-const nextBtn = document.querySelector(".recommend-next");
+  const prevBtn = document.querySelector("[data-cd-prev]");
+  const nextBtn = document.querySelector("[data-cd-next]");
 
   function updateArrows() {
     if (!prevBtn || !nextBtn) return;
@@ -508,7 +510,7 @@ const nextBtn = document.querySelector(".recommend-next");
     nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
   }
 
-  splide.on("mounted moved resized updated", updateArrows);
+  splide.on("mounted move resized updated", updateArrows);
 
   splide.mount();
 
@@ -521,4 +523,8 @@ const nextBtn = document.querySelector(".recommend-next");
     e.preventDefault();
     splide.go(">");
   });
-});
+
+  updateArrows();
+}
+
+document.addEventListener("DOMContentLoaded", initRecommendSlider);
