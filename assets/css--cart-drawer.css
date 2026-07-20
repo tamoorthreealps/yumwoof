@@ -538,7 +538,16 @@ appearance: none;
   margin-bottom: 2.4rem;
 }
 
-.cd-recommend__title,
+.cd-recommend__title {
+    margin: 0;
+    font-family: 'TAY Birdie';
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.80px;
+    text-transform: uppercase;
+}
+
+
 .cd-shop__label {
     margin: 0;
     font-family: 'TAY Birdie';
