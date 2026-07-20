@@ -474,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const splide = new Splide(slider, {
     type: "slide",
-    perPage: 2,
+    perPage: 1,
     perMove: 1,
     gap: "12px",
     arrows: false,
@@ -482,10 +482,10 @@ document.addEventListener("DOMContentLoaded", () => {
     drag: true,
     breakpoints: {
       768: {
-        perPage: 2,
+        perPage: 1,
       },
       1024: {
-        perPage: 2,
+        perPage: 1,
       },
     },
   });
