@@ -522,7 +522,7 @@ appearance: none;
 /* Recommendations ----------------------------------------------------------*/
 .cd-recommend {
   display: block;
-  padding: 2rem 2rem 0.8rem;
+  padding: 4rem 2rem 0.8rem;
 }
 
 .cd-recommend[hidden] {
