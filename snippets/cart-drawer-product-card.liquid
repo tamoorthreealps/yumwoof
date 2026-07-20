@@ -51,21 +51,23 @@
         {{ 'product-1' | placeholder_svg_tag: 'cd-rec-card__img' }}
       {%- endif -%}
     </a>
-    <div class="cd-rec-card__body">
-      <p class="cd-rec-card__title">{{ product.title | escape }}</p>
-      {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
-      {%- if recipe != blank -%}
-        <p class="cd-rec-card__subtitle">{{ recipe }}</p>
-      {%- endif -%}
-      {%- if product.metafields.custom.pack_size != blank -%}
-        <p class="cd-rec-card__meta">{{ product.metafields.custom.pack_size.value }}</p>
-      {%- endif -%}
-    </div>
-    <div class="cd-rec-card__price">
-      <span class="cd-rec-card__final">{{ price | money }}</span>
-      {%- if compare > price -%}
-        <s class="cd-rec-card__compare">{{ compare | money }}</s>
-      {%- endif -%}
+    <div class="cd-rec-card__body__main">
+      <div class="cd-rec-card__body">
+        <p class="cd-rec-card__title">{{ product.title | escape }}</p>
+        {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
+        {%- if recipe != blank -%}
+          <p class="cd-rec-card__subtitle">{{ recipe }}</p>
+        {%- endif -%}
+        {%- if product.metafields.custom.pack_size != blank -%}
+          <p class="cd-rec-card__meta">{{ product.metafields.custom.pack_size.value }}</p>
+        {%- endif -%}
+      </div>
+      <div class="cd-rec-card__price">
+        <span class="cd-rec-card__final">{{ price | money }}</span>
+        {%- if compare > price -%}
+          <s class="cd-rec-card__compare">{{ compare | money }}</s>
+        {%- endif -%}
+      </div>
     </div>
     {%- if card_variant.available -%}
       <button
