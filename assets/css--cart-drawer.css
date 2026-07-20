@@ -237,12 +237,18 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-item {
-display: flex;
-    gap: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     padding: 1.6rem;
-    background: rgba(255, 255, 255, 0.5);
+    background: #ffffff80;
     border-radius: 16px;
     align-items: center;
+}
+
+.cd-item_hold {
+    display: flex;
+    gap: 16px;
 }
 
 .cd-item__media {
@@ -398,9 +404,6 @@ width: 20px;
 }
 
 /* Subscription toggle + frequency */
-.cd-item__sub {
-  margin-top: 1.2rem;
-}
 
 .cd-item__divider {
     display: block;
