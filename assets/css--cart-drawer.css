@@ -584,7 +584,6 @@ appearance: none;
   opacity:0.25;
 }
 
-.cd-recommend__track,
 .cd-shop__track {
   display: flex;
   gap: 1.2rem;
@@ -592,6 +591,17 @@ appearance: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 6.8rem;
+  overflow-x: auto;
+}
+
+
+.cd-recommend__track {
+  display: flex;
+  gap: 1.2rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 2.8rem;
   overflow-x: auto;
 }
 
