@@ -768,6 +768,12 @@ color: rgba(0, 0, 0, 0.25);
     text-transform: uppercase;
     cursor: pointer;
     padding: 20px 20px 18.4px;
+    transition: all 0.3s ease;
+}
+
+.cd-checkout:hover {
+    background: #000;
+    color: #fff9ef;
 }
 
 .cd-guarantee {
