@@ -541,9 +541,9 @@ appearance: none;
 .cd-recommend__title {
     margin: 0;
     font-family: 'TAY Birdie';
-    font-size: 20px;
+    font-size: 16px;
     line-height: 28px;
-    letter-spacing: -0.80px;
+    letter-spacing: -.64px;
     text-transform: uppercase;
 }
 
