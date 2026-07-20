@@ -237,24 +237,24 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-item {
-  display: flex;
-  gap: 1.6rem;
-  padding: 1.6rem;
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 16px;
+display: flex;
+    gap: 1.6rem;
+    padding: 1.6rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    align-items: center;
 }
 
 .cd-item__media {
-  flex: none;
-  width: 96px;
+    flex: none;
+    width: 120px;
+    height: 120px;
 }
 
 .cd-item__img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: contain;
-  background: rgba(255, 249, 239, 0.6);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .cd-item__main {
@@ -269,25 +269,30 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-item__name {
-  display: block;
-  font-family: var(--font-heading-family, inherit);
-  font-size: 2rem;
-  line-height: 1.1;
-  text-transform: uppercase;
-  color: #000;
-  text-decoration: none;
+    display: block;
+    font-family: 'TAYRosemary';
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
 }
 
 .cd-item__recipe {
-  margin: 0.2rem 0 0;
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height:20px;
+  letter-spacing: -0.56px;
   text-transform: uppercase;
 }
 
 .cd-item__note {
-  margin: 0.4rem 0 0;
-  font-size: 1.3rem;
+    margin: 0;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 .cd-item__price {
@@ -296,10 +301,12 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-item__price-row {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  font-size: 1.5rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: .5rem;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
 .cd-item__compare {
@@ -308,53 +315,60 @@ cart-drawer.active .cd__inner {
 
 .cd-item__final {
   font-weight: 500;
+      color: #000000;
 }
 
 .cd-item__off {
-  display: block;
-  margin-top: 0.2rem;
-  color: var(--cd-accent);
-  font-size: 1.3rem;
-  text-transform: uppercase;
+display: block;
+    color: var(--cd-accent);
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    letter-spacing: -1.12px;
+    font-family: 'TAY Birdie';
 }
 
 .cd-item__bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
-  margin-top: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
+    margin-top: 1.6rem;
 }
 
 .cd-qty {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border: 1px solid #000;
-  border-radius: 200px;
-  padding: 0.2rem 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    border: 1px solid #000;
+    border-radius: 200px;
+    padding: .32rem 1.02rem;
 }
 
 .cd-qty__btn {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  font-size: 1.6rem;
-  line-height: 1;
+    width: 12px;
+    height: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    line-height: 1;
 }
 
 .cd-qty__input {
-  width: 28px;
-  border: 0;
-  background: none;
-  text-align: center;
-  font-size: 1.5rem;
-  -moz-appearance: textfield;
+width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: center;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0;
+    -moz-appearance: textfield;
 }
 
 .cd-qty__input::-webkit-outer-spin-button,
