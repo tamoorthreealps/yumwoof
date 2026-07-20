@@ -477,28 +477,44 @@ function initRecommendSlider() {
 
   if (!slider || slider.classList.contains("is-initialized")) return;
 
+  const totalSlides = slider.querySelectorAll(".splide__slide").length;
+
   slider.classList.add("is-initialized");
 
-  const splide = new Splide(slider, {
+  const options = {
     type: "slide",
     perPage: 1,
     perMove: 1,
     gap: "16px",
     pagination: false,
     arrows: false,
-     padding: {
-    right: "50px",
-  },
     drag: true,
     breakpoints: {
-      768: {
-        perPage: 1,
-      },
       1024: {
         perPage: 1,
       },
+      768: {
+        perPage: 1,
+      },
     },
-  });
+  };
+
+  // Show next card preview only when more than one slide exists
+  if (totalSlides > 1) {
+    options.padding = {
+      right: "50px",
+    };
+
+    options.breakpoints[1024].padding = {
+      right: "40px",
+    };
+
+    options.breakpoints[768].padding = {
+      right: "24px",
+    };
+  }
+
+  const splide = new Splide(slider, options);
 
   const prevBtn = document.querySelector("[data-cd-prev]");
   const nextBtn = document.querySelector("[data-cd-next]");
@@ -507,7 +523,8 @@ function initRecommendSlider() {
     if (!prevBtn || !nextBtn) return;
 
     prevBtn.disabled = splide.index === 0;
-    nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
+    nextBtn.disabled =
+      splide.index >= splide.length - splide.options.perPage;
 
     prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
     nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
