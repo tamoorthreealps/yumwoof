@@ -140,6 +140,7 @@
             slide.appendChild(card);
             track.appendChild(slide);
           });
+          initRecommendSlider();
         }.bind(this))
         .catch(
           function () {
