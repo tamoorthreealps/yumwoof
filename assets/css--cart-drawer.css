@@ -498,14 +498,13 @@ appearance: none;
   position: absolute;
   right: 1.2rem;
   top: 50%;
-  width: 8px;
-  height: 8px;
-  border-right: 1.5px solid #000;
-  border-bottom: 1.5px solid #000;
-  transform: translateY(-70%) rotate(45deg);
+  width: 10px;
+  height: 5px;
+  transform: translateY(-50%);
   pointer-events: none;
+  background: center / contain no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5' fill='none'%3E%3Cpath d='M5 5C4.88364 5 4.76728 4.95917 4.67864 4.87792L0.133266 0.71125C0.00326778 0.592083 -0.0358225 0.412917 0.0346309 0.257083C0.10463 0.10125 0.27099 0 0.454624 0H9.54538C9.72901 0 9.89537 0.10125 9.96537 0.257083C10.0358 0.412917 9.99673 0.592083 9.86673 0.71125L5.32136 4.87792C5.23272 4.95917 5.11636 5 5 5Z' fill='black'/%3E%3C/svg%3E");
 }
-
 .cd-busy {
   opacity: 0.55;
   pointer-events: none;
