@@ -526,5 +526,3 @@ function initRecommendSlider() {
 
   updateArrows();
 }
-
-document.addEventListener("DOMContentLoaded", initRecommendSlider);
