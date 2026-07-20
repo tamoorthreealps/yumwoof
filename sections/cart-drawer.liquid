@@ -600,14 +600,31 @@
           </cart-recommendations>
 
           {%- comment -%} ===== FOOTER ===== {%- endcomment -%}
+           {%- assign strike_total = 0 -%}
+           {%- for item in cart.items -%}
+
+            {%- assign qty = item.quantity -%}
+            {%- assign unit_price = item.variant.price -%}
+            {%- assign cap = item.variant.compare_at_price -%}
+            {%- assign line_strike_candidate = item.original_line_price -%}
+            {%- if cap and cap > unit_price -%}
+              {%- assign line_strike_candidate = cap | times: qty -%}
+            {%- endif -%}
+
+            {%- assign strike_total = strike_total | plus: line_strike_candidate -%}
+          {%- endfor -%}
+
+          {%- assign before_savings = strike_total -%}
+          {%- assign savings = before_savings | minus: cart.total_price -%}
+          {%- if savings < 0 -%}{%- assign savings = 0 -%}{%- endif -%}
           <div class="drawer__footer cd-footer">
             <div class="cart-drawer__footer">
               <div class="cd-totals">
                 <div class="cd-totals__row cd-totals__row--total">
                   <span class="cd-totals__label">Subtotal</span>
                   <span class="cd-totals__value">
-                    {%- if total_savings > 0 -%}
-                      <s class="cd-totals__was">{{ cart.original_total_price | money }}</s>
+                    {%- if before_savings > cart.total_price -%}
+                      <s class="cd-totals__was">{{ before_savings | money }}</s>
                     {% endif -%}
                     {{ cart.total_price | money }}
                   </span>
