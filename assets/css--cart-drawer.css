@@ -632,7 +632,7 @@ appearance: none;
 
 .cd-rec-card__media {
   flex: none;
-  width: 70;
+  width: 70px;
   background: var(--cd-drawer-bg);
   border-radius: 12px;
   line-height: 0;
