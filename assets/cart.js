@@ -483,7 +483,7 @@ function initRecommendSlider() {
     type: "slide",
     perPage: 1,
     perMove: 1,
-    gap: "12px",
+    gap: "16px",
     pagination: false,
     arrows: false,
     drag: true,
