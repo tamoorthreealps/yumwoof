@@ -616,16 +616,23 @@ appearance: none;
 
 /* Recommendation card */
 .cd-rec-card {
-  position: relative;
-  padding: 1.2rem;
-  background: #fff;
-  border: 1px solid #000;
-  border-radius: 16px;
+    padding: 1.2rem;
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 16px;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    list-style-type: none !important;
+    margin: 0;
+    display: flex;
+    position: relative;
 }
 
 .cd-rec-card__media {
   flex: none;
-  width: 88px;
+  width: 70;
   background: var(--cd-drawer-bg);
   border-radius: 12px;
   line-height: 0;
