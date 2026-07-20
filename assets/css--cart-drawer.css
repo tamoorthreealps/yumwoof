@@ -726,7 +726,7 @@ flex: none;
 
 .cd-rec-card__add {
     flex: none;
-    width: 64px;
+    min-width: 64px;
     height: 48px;
     background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Vector_3_e8483195-886b-476a-81c5-6cdb2d8df1ea.svg?v=1784554539) center / 100% 100% no-repeat;
 }
