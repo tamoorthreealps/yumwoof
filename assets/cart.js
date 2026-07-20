@@ -492,7 +492,7 @@ function initRecommendSlider() {
         perPage: 1,
       },
       1024: {
-        perPage: 1.3,
+        perPage: 1.2,
       },
     },
   });
