@@ -489,6 +489,8 @@ appearance: none;
     letter-spacing: 0;
         font-family: 'Matter';
     font-weight: 500;
+    outline: none;
+    box-shadow: inherit;
 }
 
 .cd-freq::after {
