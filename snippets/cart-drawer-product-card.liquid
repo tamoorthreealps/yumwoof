@@ -39,8 +39,7 @@
   </div>
 
 {%- else -%}
-  <div class="splide__slide">
-    <div class="cd-rec-card">
+  <div class="cd-rec-card">
     <a href="{{ product.url }}" class="cd-rec-card__media" tabindex="-1" aria-hidden="true">
       {%- if product.featured_image -%}
         {{
@@ -81,6 +80,5 @@
     {%- else -%}
       <span class="cd-hex-btn cd-rec-card__add cd-rec-card__add--disabled">SOLD OUT</span>
     {%- endif -%}
-  </div>
   </div>
 {%- endif -%}
