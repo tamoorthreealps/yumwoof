@@ -617,11 +617,6 @@ appearance: none;
 /* Recommendation card */
 .cd-rec-card {
   position: relative;
-  flex: 0 0 88%;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
   padding: 1.2rem;
   background: #fff;
   border: 1px solid #000;
