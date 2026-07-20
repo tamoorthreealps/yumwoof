@@ -534,9 +534,9 @@ appearance: none;
   display: none;
 }
 
-.cd-recommend .splide__slide {
+/* .cd-recommend .splide__slide {
   width:calc(86.64% + 0px) !important;
-}
+} */
 
 .cd-recommend .splide__track {
   overflow: visible;

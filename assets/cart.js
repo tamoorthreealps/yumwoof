@@ -486,6 +486,9 @@ function initRecommendSlider() {
     gap: "16px",
     pagination: false,
     arrows: false,
+     padding: {
+    right: "50px",
+  },
     drag: true,
     breakpoints: {
       768: {
