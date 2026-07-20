@@ -400,6 +400,10 @@ width: 20px;
     display: block;
 }
 
+.cd-item__remove:hover svg path {
+  fill:#661D1D;
+}
+
 .cart-item__error {
      width: 100%;
     margin: 0;
