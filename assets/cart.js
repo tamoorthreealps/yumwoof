@@ -467,20 +467,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function initRecommendSlider() {
-  const slider = document.querySelector("[data-cd-slider]");
+document.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector(".cd-recommend__slider");
 
-  if (!slider || slider.classList.contains("is-initialized")) return;
-
-  slider.classList.add("is-initialized");
+  if (!slider) return;
 
   const splide = new Splide(slider, {
     type: "slide",
     perPage: 2,
     perMove: 1,
     gap: "12px",
-    pagination: false,
     arrows: false,
+    pagination: false,
     drag: true,
     breakpoints: {
       768: {
@@ -501,4 +499,4 @@ function initRecommendSlider() {
   document.querySelector("[data-cd-next]")?.addEventListener("click", () => {
     splide.go(">");
   });
-}
+});
