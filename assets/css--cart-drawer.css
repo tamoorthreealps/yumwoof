@@ -339,6 +339,7 @@ display: block;
 .cd-item__bottom {
     display: flex;
     align-items: flex-end;
+        flex-wrap: wrap;
     justify-content: space-between;
     gap: 1.2rem;
     margin-top: 1.6rem;
