@@ -227,7 +227,7 @@ cart-drawer.active .cd__inner {
 /* Items --------------------------------------------------------------------*/
 .cd-items-wrap {
   display: block;
-  padding: 0 2.4rem;
+  padding: 0 2rem;
 }
 
 .cd-items {
