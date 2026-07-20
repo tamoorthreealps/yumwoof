@@ -534,7 +534,7 @@ appearance: none;
 }
 
 .cd-recommend .splide__slide {
-  width:calc(86.64% + 0px);
+  width:calc(86.64% + 0px) !important;
 }
 
 .cd-shop__head {
