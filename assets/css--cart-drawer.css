@@ -215,7 +215,7 @@ cart-drawer.active .cd__inner {
 
 /* Banner -------------------------------------------------------------------*/
 .cd-banner {
-	margin: .4rem 2rem 2.8rem;
+	margin: 2rem 2rem 2.8rem;
 	border-radius: 8px;
 	overflow: hidden;
 	line-height: 0;
