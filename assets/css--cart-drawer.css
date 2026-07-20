@@ -403,12 +403,16 @@ width: 20px;
 }
 
 .cd-item__divider {
-  display: block;
-  height: 1px;
-  background: var(--cd-line);
-  margin-bottom: 1.2rem;
+    display: block;
+    height: 1px;
+    margin-bottom: 1.2rem;
 }
 
+.cd-item__divider svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 .cd-item__sub-row {
   display: flex;
   align-items: center;
