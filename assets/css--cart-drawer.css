@@ -527,15 +527,10 @@ appearance: none;
 .cd-recommend {
   display: block;
   padding: 4rem 2rem 0.8rem;
-  overflow:hidden;
 }
 
 .cd-recommend[hidden] {
   display: none;
-}
-
-.cd-recommend .splide__track {
-  overflow:visible;
 }
 
 .cd-shop__head {
