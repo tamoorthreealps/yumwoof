@@ -401,7 +401,7 @@ width: 20px;
 }
 
 .cd-item__remove:hover svg path {
-  fill:#661D1D;
+    fill: #b00;
 }
 
 .cart-item__error {
