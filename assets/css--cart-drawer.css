@@ -19,10 +19,12 @@ cart-drawer {
 	inset: 0;
 	z-index: 1000;
 	visibility: hidden;
+  transition: visibility 0s linear .65s;
 }
 
 cart-drawer.active {
 	visibility: visible;
+  transition-delay: 0s;
 }
 
 .cart-drawer__overlay {
