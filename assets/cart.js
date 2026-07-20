@@ -415,10 +415,12 @@ if (!customElements.get('cart-note')) {
   );
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initEmptyCartSlider() {
   const slider = document.querySelector(".js-empty-cart-slider");
 
-  if (!slider) return;
+  if (!slider || slider.classList.contains("is-initialized")) return;
+
+  slider.classList.add("is-initialized");
 
   const splide = new Splide(slider, {
     type: "slide",
@@ -445,7 +447,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!prevBtn || !nextBtn) return;
 
     prevBtn.disabled = splide.index === 0;
-    nextBtn.disabled = splide.index >= splide.length - splide.options.perPage;
+    nextBtn.disabled =
+      splide.index >= splide.length - splide.options.perPage;
 
     prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
     nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
@@ -464,9 +467,11 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     splide.go(">");
   });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initEmptyCartSlider();
 });
-
-
 
 
 
