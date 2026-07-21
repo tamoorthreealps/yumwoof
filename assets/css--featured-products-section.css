@@ -442,6 +442,21 @@
     object-fit: contain;
 }
 
+.fp-popup__right_img_bowl {
+    position: absolute;
+    right: 0;
+    height: 81%;
+    width: auto;
+    bottom: 30px;
+}
+
+.fp-popup__right_img_bowl img {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
 .fp-popup__close{
 position: absolute;
     right: 28px;
