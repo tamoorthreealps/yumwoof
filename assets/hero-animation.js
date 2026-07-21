@@ -38,18 +38,23 @@ document.addEventListener("DOMContentLoaded", () => {
         ease:"elastic.out(1,0.6)"
     },"-=.4");
 
-});
 
+    // Featured Products Animation
+    if(document.querySelector(".fp")){
 
+        gsap.from(".fp__card",{
+            y:120,
+            opacity:0,
+            stagger:.18,
+            duration:1,
+            ease:"power4.out",
+            scrollTrigger:{
+                trigger:".fp",
+                start:"top 70%",
+                markers:true
+            }
+        });
 
-gsap.from(".fp__card",{
-    y:120,
-    opacity:0,
-    stagger:.18,
-    duration:1,
-    ease:"power4.out",
-    scrollTrigger:{
-        trigger:".fp",
-        start:"top 70%"
     }
+
 });
