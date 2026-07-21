@@ -76,10 +76,28 @@
             "popup_subtitle": "",
             "popup_image": "shopify://shop_images/Mask_group.png"
           }
+        },
+        "popup_8bD8iP": {
+          "type": "popup",
+          "settings": {
+            "popup_title": "",
+            "popup_subtitle": "",
+            "popup_image": "shopify://shop_images/Mask_group_1.png"
+          }
+        },
+        "popup_mjGWMw": {
+          "type": "popup",
+          "settings": {
+            "popup_title": "",
+            "popup_subtitle": "",
+            "popup_image": "shopify://shop_images/Mask_group_2.png"
+          }
         }
       },
       "block_order": [
-        "popup_DmxhaY"
+        "popup_DmxhaY",
+        "popup_8bD8iP",
+        "popup_mjGWMw"
       ],
       "settings": {
         "heading": "Explore our air dried food",
