@@ -5,367 +5,371 @@
    ========================================================================== */
 
 .fp {
-  --fp-bg: #fff9ef;
-  --fp-text: #000000;
-  --fp-card-bg: #ffffff;
-  --fp-card-border: #000000;
-  --fp-label: #661d1d;
+	--fp-bg: #fff9ef;
+	--fp-text: #000000;
+	--fp-card-bg: #ffffff;
+	--fp-card-border: #000000;
+	--fp-label: #661d1d;
 
-  background-color: var(--fp-bg);
-  color: var(--fp-text);
-  padding: 4.8rem 0 5.6rem;
-  overflow: hidden;
+	background-color: var(--fp-bg);
+	color: var(--fp-text);
+	padding: 4.8rem 0 5.6rem;
+	overflow: hidden;
 }
 
 .fp__inner {
-    max-width: 1198px;
-    margin: 0 auto;
-    padding: 0;
+	max-width: 1198px;
+	margin: 0 auto;
+	padding: 0;
 }
 
 .fp__heading {
-    margin: 0 0 3.6rem;
-    text-align: center;
-    font-size: 34px;
-    line-height: 38px;
-    letter-spacing: -0.34px;
-    color: var(--fp-text);
-    font-family: 'TAYRosemary';
-    padding:0 20px;
+	margin: 0 0 3.6rem;
+	text-align: center;
+	font-size: 34px;
+	line-height: 38px;
+	letter-spacing: -0.34px;
+	color: var(--fp-text);
+	font-family: 'TAYRosemary';
+	padding: 0 20px;
 }
 
 
 .fp--uppercase .fp__heading,
 .fp--uppercase .fp__title {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 /* --------------------------------------------------------------------------
    Viewport / track (carousel on mobile, centered row on desktop)
    -------------------------------------------------------------------------- */
 .fp__viewport {
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding-bottom: 5.86rem;
-  padding-inline: 46.4px;
-    box-sizing: border-box;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	padding-bottom: 5.86rem;
+	padding-inline: 46.4px;
+	box-sizing: border-box;
 }
 
 .fp__viewport::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 .fp__track {
-  display: flex;
-  align-items: stretch;
-  flex-wrap: nowrap;
-  gap: 0;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+	display: flex;
+	align-items: stretch;
+	flex-wrap: nowrap;
+	gap: 0;
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
 
 .fp__track::after {
-    content: "";
-    flex: 0 0 46.4px;
+	content: "";
+	flex: 0 0 46.4px;
 }
 
 /* --------------------------------------------------------------------------
    Card
    -------------------------------------------------------------------------- */
 .fp__card {
-  position: relative;
-  flex: 0 0 100%;
-    width: 100%;
-  scroll-snap-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-color: var(--fp-card-bg);
-  border: 1.5px solid var(--fp-card-border);
-  border-radius: 24px;
-  padding: 3.2rem 2rem 4rem;
-  transform: scale(.8803);
-    scroll-snap-stop:always;
+	position: relative;
+	flex: 0 0 100%;
+	width: 100%;
+	scroll-snap-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	background-color: var(--fp-card-bg);
+	border: 1.5px solid var(--fp-card-border);
+	border-radius: 24px;
+	padding: 3.2rem 2rem 4rem;
+	transform: scale(.8803);
+	scroll-snap-stop: always;
 }
 
 .fp__card.is-active {
-  transform: scale(1);
+	transform: scale(1);
 }
+
 .fp__title {
-    margin: 0 0 1.2rem;
-    font-weight: 400;
-    font-size: 23.8px;
-    line-height: 27.2px;
-    font-family: 'TAYRosemary';
-    letter-spacing: 0;
+	margin: 0 0 1.2rem;
+	font-weight: 400;
+	font-size: 23.8px;
+	line-height: 27.2px;
+	font-family: 'TAYRosemary';
+	letter-spacing: 0;
 }
 
 .fp__labels {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6.8px;
-    margin: 0 0 12px;
-    padding: 0;
-    list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 6.8px;
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
 }
 
 .fp__label {
-padding: 5.1px 10.2px 4.1px;
-    border: 1px solid var(--fp-label);
-    border-radius: 100px;
-    color: var(--fp-label);
-    font-size: 10.2px;
-    line-height: 11.9px;
-    letter-spacing: -0.22px;
-    text-transform: capitalize;
-    font-family: 'TAY Birdie';
-    font-weight: 400;
+	padding: 5.1px 10.2px 4.1px;
+	border: 1px solid var(--fp-label);
+	border-radius: 100px;
+	color: var(--fp-label);
+	font-size: 10.2px;
+	line-height: 11.9px;
+	letter-spacing: -0.22px;
+	text-transform: capitalize;
+	font-family: 'TAY Birdie';
+	font-weight: 400;
 }
 
 .fp__media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 212px;
-  margin-bottom: 1.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 212px;
+	margin-bottom: 1.6rem;
 }
 
 .fp__img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  transition:.45s;
-  animation:float 4s ease-in-out infinite;
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+	transition: .45s;
+	animation: float 4s ease-in-out infinite;
 }
 
-.fp__card:hover .fp__img{
+.fp__card:hover .fp__img {
 
-transform:scale(1.08);
+	transform: scale(1.08);
 
 }
 
-@keyframes float{
+@keyframes float {
 
-0%,100%{
-transform:translateY(0);
-}
+	0%,
+	100% {
+		transform: translateY(0);
+	}
 
-50%{
-transform:translateY(-8px);
-}
+	50% {
+		transform: translateY(-8px);
+	}
 
 }
 
 .fp__desc {
-margin: 0 0 1.2rem;
-    max-width: 20rem;
-    font-size: 12.75px;
-    line-height: 18.7px;
-    letter-spacing: 0;
-    color: #000000;
-    font-family: 'Matter';
+	margin: 0 0 1.2rem;
+	max-width: 20rem;
+	font-size: 12.75px;
+	line-height: 18.7px;
+	letter-spacing: 0;
+	color: #000000;
+	font-family: 'Matter';
 }
 
 .fp__recipes {
-margin-top: auto;
-    color: var(--fp-text);
-    font-size: 11.05px;
-    line-height: 17px;
-    letter-spacing: 0.44px;
-    text-transform: capitalize;
-    text-decoration: none;
-    font-family: "FFBlurProMedium";
-    text-decoration: underline;
+	margin-top: auto;
+	color: var(--fp-text);
+	font-size: 11.05px;
+	line-height: 17px;
+	letter-spacing: 0.44px;
+	text-transform: capitalize;
+	text-decoration: none;
+	font-family: "FFBlurProMedium";
+	text-decoration: underline;
 }
 
 /* Amber hexagon SHOP button overlapping the card's bottom edge */
 .fp__shop {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 50%);
-  width: 139.4px;
-  height: 61.2px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: url("https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684") center / 100% 100% no-repeat;
-  color: #000000;
-  text-decoration: none;
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, 50%);
+	width: 139.4px;
+	height: 61.2px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: url("https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684") center / 100% 100% no-repeat;
+	color: #000000;
+	text-decoration: none;
 }
 
 
 .fp__shop-label {
-    font-size: 12.75px;
-    line-height: 20.4px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    font-family: "FFBlurProMedium";
+	font-size: 12.75px;
+	line-height: 20.4px;
+	font-weight: 500;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	font-family: "FFBlurProMedium";
 }
 
 /* --------------------------------------------------------------------------
    Mobile nav (arrows + dots)
    -------------------------------------------------------------------------- */
 .fp__nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.6rem;
 }
 
 .fp__arrow {
-  width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--fp-text);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--fp-text);
-  cursor: pointer;
-  padding: 0;
+	width: 36px;
+	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1.5px solid var(--fp-text);
+	border-radius: 50%;
+	background: transparent;
+	color: var(--fp-text);
+	cursor: pointer;
+	padding: 0;
 }
 
 .fp__arrow svg {
-  width: 12px;
-  height: 12px;
+	width: 12px;
+	height: 12px;
 }
 
 .fp__dots {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 
 .fp__dot {
-width: 10px;
-    height: 10px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: transparent;
-    cursor: pointer;
-    border: 1px solid #000000;
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	cursor: pointer;
+	border: 1px solid #000000;
 }
 
 .fp__dot[aria-current='true'] {
-  background: var(--fp-text);
+	background: var(--fp-text);
 }
 
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
-  .fp {
-    padding: 9.6rem 0 13rem;
-  }
+	.fp {
+		padding: 9.6rem 0 13rem;
+	}
 
-  .fp__heading {
-    font-size: 56px;
-        letter-spacing: -0.56px;
-        line-height: 64px;
-        margin-bottom: 32px;
-  }
+	.fp__heading {
+		font-size: 56px;
+		letter-spacing: -0.56px;
+		line-height: 64px;
+		margin-bottom: 32px;
+	}
 
-  .fp__viewport {
-    overflow: visible;
-    scroll-snap-type: none;
-    padding-bottom: 0;
-    padding-inline: 0;
-  }
+	.fp__viewport {
+		overflow: visible;
+		scroll-snap-type: none;
+		padding-bottom: 0;
+		padding-inline: 0;
+	}
 
-  .fp__track {
-justify-content: center;
-        gap: 2rem;
-        padding: 0;
-        flex-wrap: wrap;
-  }
+	.fp__track {
+		justify-content: center;
+		gap: 2rem;
+		padding: 0;
+		flex-wrap: wrap;
+	}
 
-  .fp__track::after {
-    display:none;
-  }
+	.fp__track::after {
+		display: none;
+	}
 
-  .fp__card {
-width: 38.6rem;
-flex: 0 0 auto;
-    max-width: 100%;
-    scroll-snap-align: none;
-    padding: 3.9rem 3.2rem 6.3rem;
-    transform: inherit;
-    transition:.45s;
-  }
+	.fp__card {
+		width: 38.6rem;
+		flex: 0 0 auto;
+		max-width: 100%;
+		scroll-snap-align: none;
+		padding: 3.9rem 3.2rem 6.3rem;
+		transform: inherit;
+		transition: .45s;
+	}
 
-  .fp__card:hover{
+	.fp__card:hover {
 
-transform:translateY(-12px);
+		transform: translateY(-12px);
 
-box-shadow:0 30px 70px rgba(0,0,0,.12);
+		box-shadow: 0 30px 70px rgba(0, 0, 0, .12);
 
-}
+	}
 
-  .fp__title {
-            font-size: 3.6rem;
-        line-height: 4rem;
-        margin-bottom: .8rem;
-  }
-.fp__labels {
-  gap: 8px;
-  margin: 0 0 4rem;
-}
-  .fp__label {
-  font-size: 1.4rem;
-        line-height: 16px;
-        letter-spacing: -0.28px;
-        padding: 6px 9.02px 4.4px;
-        text-transform: uppercase;
-  }
+	.fp__title {
+		font-size: 3.6rem;
+		line-height: 4rem;
+		margin-bottom: .8rem;
+	}
 
-  .fp__media {
-height: 240px;
-        margin-bottom: 23px;
-  }
+	.fp__labels {
+		gap: 8px;
+		margin: 0 0 4rem;
+	}
 
-  .fp__desc {
-font-size: 1.6rem;
-        line-height: 24px;
-        margin-bottom: 1.7rem;
-        max-width: 200px;
-  }
+	.fp__label {
+		font-size: 1.4rem;
+		line-height: 16px;
+		letter-spacing: -0.28px;
+		padding: 6px 9.02px 4.4px;
+		text-transform: uppercase;
+	}
 
-  .fp__recipes {
-            font-size: 1.4rem;
-        line-height: 24px;
-        letter-spacing: 0.56px;
-        border-bottom: 1px solid #000000;
-        padding-bottom: 3.2px;
-        text-decoration: none;
-        text-transform: uppercase;
-  }
+	.fp__media {
+		height: 240px;
+		margin-bottom: 23px;
+	}
 
-  .fp__shop {
-    width: 164px;
-    height: 72px;
-  }
+	.fp__desc {
+		font-size: 1.6rem;
+		line-height: 24px;
+		margin-bottom: 1.7rem;
+		max-width: 200px;
+	}
 
-  .fp__shop-label {
-    font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 1.28px;
-  }
+	.fp__recipes {
+		font-size: 1.4rem;
+		line-height: 24px;
+		letter-spacing: 0.56px;
+		border-bottom: 1px solid #000000;
+		padding-bottom: 3.2px;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
 
-  .fp__nav {
-    display: none;
-  }
+	.fp__shop {
+		width: 164px;
+		height: 72px;
+	}
+
+	.fp__shop-label {
+		font-size: 16px;
+		line-height: 24px;
+		letter-spacing: 1.28px;
+	}
+
+	.fp__nav {
+		display: none;
+	}
 }
