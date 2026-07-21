@@ -32,22 +32,6 @@
     color: var(--fp-text);
     font-family: 'TAYRosemary';
     padding:0 20px;
-    overflow: hidden;
-    position: relative;
-}
-
-.fp__heading::after{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.8),
-        transparent
-    );
-    transform: translateX(-120%);
-    pointer-events: none;
 }
 
 .fp--uppercase .fp__heading,

@@ -65,16 +65,12 @@ if (hero) {
         });
 
         fpTl
-        .fromTo(".fp__heading",
-    {
-        clipPath: "inset(0 100% 0 0)"
-    },
-    {
-        clipPath: "inset(0 0% 0 0)",
-        duration: 9.8,
-        ease: "power4.out"
-    }
-)
+        .from(".fp__heading", {
+            y: 80,
+            opacity: 0,
+            duration: .8,
+            ease: "power3.out"
+        })
 
         .from(".fp__title", {
             y: 50,
