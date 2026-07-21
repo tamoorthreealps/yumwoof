@@ -32,29 +32,9 @@
     color: var(--fp-text);
     font-family: 'TAYRosemary';
     padding:0 20px;
-
-        position: relative;
-    color: #d8d8d8;
-    background: linear-gradient(
-        90deg,
-        #d8d8d8 0%,
-        #ffffff 45%,
-        #000000 50%,
-        #000000 100%
-    );
-    background-size: 250% 100%;
-    background-position: 100% 0;
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    animation: textReveal 2s ease forwards;
+    
 }
-@keyframes textReveal{
-    to{
-        background-position: 0 0;
-    }
-}
+
 .fp--uppercase .fp__heading,
 .fp--uppercase .fp__title {
   text-transform: uppercase;
