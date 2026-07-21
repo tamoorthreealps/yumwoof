@@ -42,7 +42,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
 }
 
-
 .hero-banner__inner {
   position: relative;
   z-index: 2;
@@ -82,46 +81,25 @@
   align-items: center;
 }
 
-.hero-banner__heading{
-    margin: 0 0 4px;
+.hero-banner__heading {
+margin: 0 0 4px;
     color: var(--hb-text);
     font-family: 'TAYRosemary';
     font-size: 88px;
     line-height: 88px;
     letter-spacing: -0.176px;
-
-    opacity:0;
-    transform:translateY(50px);
-    animation:heroHeading .9s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-@keyframes heroHeading{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .hero-banner--uppercase .hero-banner__heading {
   text-transform: uppercase;
 }
 
-.hero-banner__subheading{
-  margin: 0 0 4px;
+.hero-banner__subheading {
+margin: 0 0 4px;
     font-size: 20px;
     line-height: 32px;
     letter-spacing: 0;
     color: var(--hb-text);
-    opacity:0;
-    transform:translateY(30px);
-    animation:heroText .9s .25s ease forwards;
-}
-
-@keyframes heroText{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .hero-banner__cta-wrap {
@@ -130,16 +108,6 @@
     gap: 1.2rem;
     align-items: flex-start;
     margin-top: 16px;
-    opacity:0;
-    transform:translateY(30px);
-    animation:heroBtn .8s .5s ease forwards;
-}
-
-@keyframes heroBtn{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
 }
 
 .hero-banner--center .hero-banner__cta-wrap {
@@ -159,24 +127,14 @@ display: inline-flex;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    transition:.35s;
+    transition: transform .15s ease;
     background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/banner-btn-bg.svg?v=1784209988) center / 100% 100% no-repeat;
     font-family: "FFBlurProMedium";
   color: var(--hb-btn-text);
-  animation:buttonFloat 4s ease-in-out infinite;
 }
 
 .hero-banner__cta:hover {
-  transform:translateY(-5px) scale(1.04);
-}
-
-@keyframes buttonFloat{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-6px);
-    }
+  transform: translateY(-2px);
 }
 
 .hero-banner__offer {
