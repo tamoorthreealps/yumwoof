@@ -351,31 +351,34 @@ document.querySelectorAll(".fp-popup").forEach(function(popup){
 
   }
 
-  document.querySelectorAll('.fp-popup__tabs button').forEach(function(tab){
+document.querySelectorAll(".fp-popup").forEach(function(popup){
 
-      tab.onclick=function(){
+    const tabs = popup.querySelectorAll(".fp-popup__tabs button");
+    const contents = popup.querySelectorAll(".fp-popup__content");
 
-          document.querySelectorAll('.fp-popup__tabs button').forEach(function(btn){
+    tabs.forEach(function(tab){
 
-              btn.classList.remove('active');
+        tab.addEventListener("click",function(){
 
-          });
+            tabs.forEach(function(btn){
+                btn.classList.remove("active");
+            });
 
-          tab.classList.add('active');
+            contents.forEach(function(content){
+                content.classList.remove("active");
+            });
 
-          document.querySelectorAll('.fp-popup__content').forEach(function(content){
+            tab.classList.add("active");
 
-              content.classList.remove('active');
+            popup
+                .querySelector('[data-content="'+tab.dataset.tab+'"]')
+                .classList.add("active");
 
-          });
+        });
 
-          document
-              .querySelector('[data-content="'+tab.dataset.tab+'"]')
-              .classList.add('active');
+    });
 
-      }
-
-  });
+});
 </script>
 
 {% schema %}
