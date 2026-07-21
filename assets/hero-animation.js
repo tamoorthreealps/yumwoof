@@ -41,4 +41,46 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+gsap.from(".fp__title",{
+    y:80,
+    opacity:0,
+    stagger:.15,
+    scrollTrigger:{
+        trigger:".fp",
+        start:"top 75%"
+    }
+});
 
+gsap.from(".fp__media",{
+    y:120,
+    opacity:0,
+    stagger:.15,
+    delay:.2,
+    scrollTrigger:{
+        trigger:".fp",
+        start:"top 75%"
+    }
+});
+
+gsap.from(".fp__desc",{
+    y:60,
+    opacity:0,
+    stagger:.15,
+    delay:.4,
+    scrollTrigger:{
+        trigger:".fp",
+        start:"top 75%"
+    }
+});
+
+gsap.from(".fp__shop",{
+    scale:.4,
+    opacity:0,
+    stagger:.15,
+    delay:.6,
+    ease:"elastic.out(1,.5)",
+    scrollTrigger:{
+        trigger:".fp",
+        start:"top 75%"
+    }
+});
