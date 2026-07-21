@@ -405,7 +405,7 @@
     transition:transform .6s cubic-bezier(.22,1,.36,1);
     width:min(1392px,90vw);
     background:#ffffffe6;
-    border-radius:0 0 24px 24px;
+    border-radius:24px;
     overflow:hidden;
     display:flex;
     align-items:self-end;
