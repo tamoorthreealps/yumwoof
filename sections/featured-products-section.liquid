@@ -26,6 +26,7 @@
       <ul class="fp__track" data-fp-track role="list">
         {%- if products.size > 0 -%}
           {%- for product in products -%}
+            {% assign popup = section.blocks[forloop.index0] %}
             {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
             {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
             {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
@@ -69,7 +70,7 @@
               {%- endif -%}
 
               {%- if section.settings.recipes_label != blank -%}
-                <a class="fp__recipes" href="#">{{ section.settings.recipes_label }}</a>
+                <a class="fp__recipes" href="#" data-popup="popup-{{ forloop.index }}">{{ section.settings.recipes_label }}</a>
               {%- endif -%}
 
               <a class="fp__shop" href="{{ product.url }}">
@@ -127,7 +128,13 @@
 </section>
 
 {% comment %} popup--html--code {% endcomment %}
-<div class="fp-popup">
+ {% if products.size > 0 %}
+
+{% for product in products %}
+
+    {% assign popup = section.blocks[forloop.index0] %}
+    {% assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] %}
+<div class="fp-popup" id="popup-{{ forloop.index }}">
   <div class="fp-popup__overlay"></div>
   <div class="fp-popup__panel">
     <button class="fp-popup__close">
@@ -138,8 +145,8 @@
       </svg>
     </button>
     <div class="fp-popup__left">
-      <h2 class="fp-popup__title">ANCESTRAL BLEND</h2>
-      <p class="fp-popup__subtitle">Nutrient-dense nutrition dogs evolved to eat.</p>
+      <h2 class="fp-popup__title">{{ popup.settings.popup_title | default: product.title }}</h2>
+      <p class="fp-popup__subtitle">{{ popup.settings.popup_subtitle | default: desc_mf.value }}</p>
       <div class="fp-popup__tabs">
         <button class="active" data-tab="1">LAND & SEA RECIPE</button>
         <button data-tab="2">TURKEY RECIPE</button>
@@ -172,10 +179,11 @@
     </div>
     <div class="fp-popup__right">
       <div class="fp-popup__right_img">
-        <img
-          src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Mask_group.png?v=1784657021"
-          alt=""
-        >
+        {% if popup.settings.popup_image != blank %}
+          <img src="{{ popup.settings.popup_image | image_url: width:900 }}">
+        {% else %}
+          {{ product.featured_image | image_url: width: 900 | image_tag }}
+        {% endif %}
       </div>
       <div class="fp-popup__right_img_bowl">
         <img
@@ -186,7 +194,10 @@
     </div>
   </div>
 </div>
+{% endfor %}
 
+{% endif %}
+{% comment %} required--js--code {% endcomment %}
 <script>
     (function () {
       function initCarousel(section) {
@@ -302,23 +313,37 @@
 
 
     {% comment %} popup--js--code {% endcomment %}
-     document.querySelectorAll('.fp__recipes').forEach(function(button){
+document.querySelectorAll(".fp__recipes").forEach(function(button){
 
-      button.addEventListener('click',function(e){
+    button.addEventListener("click",function(e){
 
-          e.preventDefault();
+        e.preventDefault();
 
-          document.querySelector('.fp-popup').classList.add('active');
+        const popup=document.getElementById(this.dataset.popup);
 
-      });
+        if(popup){
+            popup.classList.add("active");
+        }
 
-  });
+    });
 
-  document.querySelector('.fp-popup__close').onclick=function(){
+});
 
-      document.querySelector('.fp-popup').classList.remove('active');
+document.querySelectorAll(".fp-popup").forEach(function(popup){
 
-  }
+    popup.querySelector(".fp-popup__close").addEventListener("click",function(){
+
+        popup.classList.remove("active");
+
+    });
+
+    popup.querySelector(".fp-popup__overlay").addEventListener("click",function(){
+
+        popup.classList.remove("active");
+
+    });
+
+});
 
   document.querySelector('.fp-popup__overlay').onclick=function(){
 
@@ -447,6 +472,29 @@
       "id": "label_color",
       "label": "Label pill",
       "default": "#661D1D"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "popup",
+      "name": "Popup",
+      "settings": [
+        {
+          "type": "text",
+          "id": "popup_title",
+          "label": "Popup Title"
+        },
+        {
+          "type": "textarea",
+          "id": "popup_subtitle",
+          "label": "Popup Subtitle"
+        },
+        {
+          "type": "image_picker",
+          "id": "popup_image",
+          "label": "Popup Right Image"
+        }
+      ]
     }
   ],
   "presets": [
