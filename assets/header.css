@@ -51,7 +51,7 @@
   transition: transform 0.3s ease;
   will-change: transform;
 }
-.yw-header--sticky.yw-header--hidden, , .yw-header--fixed.yw-header--hidden {
+.yw-header--sticky.yw-header--hidden, .yw-header--fixed.yw-header--hidden {
   transform: translateY(-40px);
 }
 
