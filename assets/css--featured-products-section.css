@@ -399,16 +399,16 @@
 
 .fp-popup__panel{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(.96);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(.96);
+    transition:.35s;
     width: min(1392px, 90vw);
     background: #ffffffe6;
     border-radius: 24px;
     overflow: hidden;
     display: flex;
 	align-items: self-end;
-    transition: .35s;
     padding: 88px 71px 84px 98px;
     gap: 21px;
 }
