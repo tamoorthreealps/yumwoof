@@ -19,7 +19,7 @@
 -%}
 
 <yw-header
-  class="yw-header{% if section.settings.enable_sticky %} yw-header--sticky{% endif %}"
+  class="yw-header{% if section.settings.enable_sticky %}{% if request.page_type == 'index' %} yw-header--fixed{% else %} yw-header--sticky{% endif %}{% endif %}"
   data-mobile-target="{{ mobile_id }}"
   {% if section.settings.enable_sticky %}
     data-sticky
