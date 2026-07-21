@@ -127,7 +127,7 @@ display: inline-flex;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    transition: transform .15s ease;
+    transition:.4s;
     background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/banner-btn-bg.svg?v=1784209988) center / 100% 100% no-repeat;
     font-family: "FFBlurProMedium";
   color: var(--hb-btn-text);
@@ -135,7 +135,7 @@ display: inline-flex;
 }
 
 .hero-banner__cta:hover {
-  transform: translateY(-2px);
+  transform:translateY(-8px) scale(1.05);
 }
 
 @keyframes float{
