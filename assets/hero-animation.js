@@ -52,3 +52,11 @@ gsap.to(".hero-banner__content",{
         scrub:true
     }
 });
+
+
+ScrollTrigger.create({
+    trigger: ".hero-banner",
+    start: "top center",
+    end: "bottom center",
+    markers: true
+});
