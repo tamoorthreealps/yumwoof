@@ -71,7 +71,7 @@ if (hero) {
     },
     {
         clipPath: "inset(0 0% 0 0)",
-        duration: 1.4,
+        duration: 2.8,
         ease: "power4.out"
     }
 )
