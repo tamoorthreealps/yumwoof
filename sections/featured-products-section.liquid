@@ -69,7 +69,7 @@
               {%- endif -%}
 
               {%- if section.settings.recipes_label != blank -%}
-                <a class="fp__recipes" href="{{ recipes_url }}">{{ section.settings.recipes_label }}</a>
+                <a class="fp__recipes" href="#">{{ section.settings.recipes_label }}</a>
               {%- endif -%}
 
               <a class="fp__shop" href="{{ product.url }}">
@@ -173,117 +173,169 @@
 </div>
 
 <script>
-  (function () {
-    function initCarousel(section) {
-      var viewport = section.querySelector('[data-fp-viewport]');
-      var track = section.querySelector('[data-fp-track]');
-      if (!viewport || !track || track.dataset.fpReady) return;
+    (function () {
+      function initCarousel(section) {
+        var viewport = section.querySelector('[data-fp-viewport]');
+        var track = section.querySelector('[data-fp-track]');
+        if (!viewport || !track || track.dataset.fpReady) return;
 
-      var slides = Array.prototype.slice.call(track.querySelectorAll('[data-fp-slide]'));
-      if (slides.length === 0) return;
+        var slides = Array.prototype.slice.call(track.querySelectorAll('[data-fp-slide]'));
+        if (slides.length === 0) return;
 
-      var prev = section.querySelector('[data-fp-prev]');
-      var next = section.querySelector('[data-fp-next]');
-      var dotsWrap = section.querySelector('[data-fp-dots]');
-      var dots = [];
+        var prev = section.querySelector('[data-fp-prev]');
+        var next = section.querySelector('[data-fp-next]');
+        var dotsWrap = section.querySelector('[data-fp-dots]');
+        var dots = [];
 
-      if (dotsWrap) {
-        dotsWrap.innerHTML = '';
-        slides.forEach(function (_, i) {
-          var dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'fp__dot';
-          dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-          dot.addEventListener('click', function () {
-            scrollToSlide(i);
-          });
-          dotsWrap.appendChild(dot);
-          dots.push(dot);
-        });
-      }
-
-      function scrollToSlide(i) {
-        var slide = slides[i];
-        if (!slide) return;
-
-        var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
-
-        viewport.scrollTo({
-          left: left,
-          behavior: 'smooth',
-        });
-      }
-
-      function currentIndex() {
-        var center = viewport.scrollLeft + viewport.clientWidth / 2;
-        var best = 0;
-        var bestDist = Infinity;
-        slides.forEach(function (slide, i) {
-          var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-          var dist = Math.abs(slideCenter - center);
-          if (dist < bestDist) {
-            bestDist = dist;
-            best = i;
-          }
-        });
-        return best;
-      }
-
-      function update() {
-        var idx = currentIndex();
-
-        slides.forEach(function (slide, i) {
-          slide.classList.toggle('is-active', i === idx);
-        });
-
-        dots.forEach(function (dot, i) {
-          dot.setAttribute('aria-current', i === idx ? 'true' : 'false');
-        });
-      }
-
-      if (prev)
-        prev.addEventListener('click', function () {
-          scrollToSlide(Math.max(0, currentIndex() - 1));
-        });
-      if (next)
-        next.addEventListener('click', function () {
-          scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1));
-        });
-      let ticking = false;
-
-      viewport.addEventListener(
-        'scroll',
-        function () {
-          if (!ticking) {
-            window.requestAnimationFrame(function () {
-              update();
-              ticking = false;
+        if (dotsWrap) {
+          dotsWrap.innerHTML = '';
+          slides.forEach(function (_, i) {
+            var dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'fp__dot';
+            dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+            dot.addEventListener('click', function () {
+              scrollToSlide(i);
             });
-            ticking = true;
-          }
-        },
-        { passive: true }
-      );
+            dotsWrap.appendChild(dot);
+            dots.push(dot);
+          });
+        }
 
-      update();
-      track.dataset.fpReady = 'true';
-    }
+        function scrollToSlide(i) {
+          var slide = slides[i];
+          if (!slide) return;
 
-    function init(root) {
-      root.querySelectorAll('.fp').forEach(initCarousel);
-    }
+          var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
 
-    if (document.readyState !== 'loading') {
-      init(document);
-    } else {
-      document.addEventListener('DOMContentLoaded', function () {
+          viewport.scrollTo({
+            left: left,
+            behavior: 'smooth',
+          });
+        }
+
+        function currentIndex() {
+          var center = viewport.scrollLeft + viewport.clientWidth / 2;
+          var best = 0;
+          var bestDist = Infinity;
+          slides.forEach(function (slide, i) {
+            var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+            var dist = Math.abs(slideCenter - center);
+            if (dist < bestDist) {
+              bestDist = dist;
+              best = i;
+            }
+          });
+          return best;
+        }
+
+        function update() {
+          var idx = currentIndex();
+
+          slides.forEach(function (slide, i) {
+            slide.classList.toggle('is-active', i === idx);
+          });
+
+          dots.forEach(function (dot, i) {
+            dot.setAttribute('aria-current', i === idx ? 'true' : 'false');
+          });
+        }
+
+        if (prev)
+          prev.addEventListener('click', function () {
+            scrollToSlide(Math.max(0, currentIndex() - 1));
+          });
+        if (next)
+          next.addEventListener('click', function () {
+            scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1));
+          });
+        let ticking = false;
+
+        viewport.addEventListener(
+          'scroll',
+          function () {
+            if (!ticking) {
+              window.requestAnimationFrame(function () {
+                update();
+                ticking = false;
+              });
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
+
+        update();
+        track.dataset.fpReady = 'true';
+      }
+
+      function init(root) {
+        root.querySelectorAll('.fp').forEach(initCarousel);
+      }
+
+      if (document.readyState !== 'loading') {
         init(document);
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          init(document);
+        });
+      }
+      document.addEventListener('shopify:section:load', function (event) {
+        init(event.target);
       });
-    }
-    document.addEventListener('shopify:section:load', function (event) {
-      init(event.target);
-    });
-  })();
+    })();
+
+
+    {% comment %} popup--js--code {% endcomment %}
+     document.querySelectorAll('.fp__recipes').forEach(function(button){
+
+      button.addEventListener('click',function(e){
+
+          e.preventDefault();
+
+          document.querySelector('.fp-popup').classList.add('active');
+
+      });
+
+  });
+
+  document.querySelector('.fp-popup__close').onclick=function(){
+
+      document.querySelector('.fp-popup').classList.remove('active');
+
+  }
+
+  document.querySelector('.fp-popup__overlay').onclick=function(){
+
+      document.querySelector('.fp-popup').classList.remove('active');
+
+  }
+
+  document.querySelectorAll('.fp-popup__tabs button').forEach(function(tab){
+
+      tab.onclick=function(){
+
+          document.querySelectorAll('.fp-popup__tabs button').forEach(function(btn){
+
+              btn.classList.remove('active');
+
+          });
+
+          tab.classList.add('active');
+
+          document.querySelectorAll('.fp-popup__content').forEach(function(content){
+
+              content.classList.remove('active');
+
+          });
+
+          document
+              .querySelector('[data-content="'+tab.dataset.tab+'"]')
+              .classList.add('active');
+
+      }
+
+  });
 </script>
 
 {% schema %}
