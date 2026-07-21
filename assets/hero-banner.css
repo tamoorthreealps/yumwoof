@@ -129,6 +129,16 @@
     gap: 1.2rem;
     align-items: flex-start;
     margin-top: 16px;
+    opacity:0;
+    transform:translateY(30px);
+    animation:heroBtn .8s .5s ease forwards;
+}
+
+@keyframes heroBtn{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .hero-banner--center .hero-banner__cta-wrap {
@@ -148,14 +158,14 @@ display: inline-flex;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    transition: transform .15s ease;
+    transition:.35s;
     background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/banner-btn-bg.svg?v=1784209988) center / 100% 100% no-repeat;
     font-family: "FFBlurProMedium";
   color: var(--hb-btn-text);
 }
 
 .hero-banner__cta:hover {
-  transform: translateY(-2px);
+  transform:translateY(-5px) scale(1.04);
 }
 
 .hero-banner__offer {
