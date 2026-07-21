@@ -498,6 +498,7 @@ color: #661D1D;
 .fp-popup__content{
     display:none;
     animation:fade .3s;
+	max-width: 640px;
 }
 
 .fp-popup__content.active{
