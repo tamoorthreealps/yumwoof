@@ -68,6 +68,19 @@
     },
     "featured_products": {
       "type": "featured-products-section",
+      "blocks": {
+        "popup_DmxhaY": {
+          "type": "popup",
+          "settings": {
+            "popup_title": "",
+            "popup_subtitle": "",
+            "popup_image": "shopify://shop_images/Mask_group.png"
+          }
+        }
+      },
+      "block_order": [
+        "popup_DmxhaY"
+      ],
       "settings": {
         "heading": "Explore our air dried food",
         "uppercase_heading": true,
