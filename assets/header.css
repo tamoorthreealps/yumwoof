@@ -20,8 +20,8 @@
   font-size: 1.3rem;
 }
 
-.yw-header--sticky {
-  position: fixed;
+.yw-header--sticky, .yw-header--fixed {
+  position: sticky;
   left: 0;
   right: 0;
   top: 0;
@@ -30,7 +30,11 @@
   transform: none;
 }
 
-.yw-header--sticky.yw-header--hidden {
+.yw-header--fixed {
+  position:fixed;
+}
+
+.yw-header--sticky.yw-header--hidden, .yw-header--fixed.yw-header--hidden {
   transform: translateY(-32px);
 }
 
@@ -47,7 +51,7 @@
   transition: transform 0.3s ease;
   will-change: transform;
 }
-.yw-header--sticky.yw-header--hidden {
+.yw-header--sticky.yw-header--hidden, , .yw-header--fixed.yw-header--hidden {
   transform: translateY(-40px);
 }
 
