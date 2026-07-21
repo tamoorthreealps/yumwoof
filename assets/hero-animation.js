@@ -41,14 +41,3 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-gsap.to(".hero-banner__content",{
-    y:-120,
-    opacity:0,
-    ease:"none",
-    scrollTrigger:{
-        trigger:".hero-banner",
-        start:"top top",
-        end:"bottom top",
-        scrub:true
-    }
-});
