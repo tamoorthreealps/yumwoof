@@ -143,6 +143,19 @@ padding: 5.1px 10.2px 4.1px;
   width: auto;
   height: auto;
   object-fit: contain;
+  animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
 }
 
 .fp__desc {
