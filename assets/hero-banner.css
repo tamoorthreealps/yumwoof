@@ -105,12 +105,22 @@
   text-transform: uppercase;
 }
 
-.hero-banner__subheading {
-margin: 0 0 4px;
+.hero-banner__subheading{
+  margin: 0 0 4px;
     font-size: 20px;
     line-height: 32px;
     letter-spacing: 0;
     color: var(--hb-text);
+    opacity:0;
+    transform:translateY(30px);
+    animation:heroText .9s .25s ease forwards;
+}
+
+@keyframes heroText{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .hero-banner__cta-wrap {
