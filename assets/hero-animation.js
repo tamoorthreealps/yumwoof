@@ -62,3 +62,19 @@ scrub:true
 }
 
 });
+
+
+
+document.addEventListener("mousemove",(e)=>{
+
+gsap.to(".hero-banner__image",{
+
+x:(e.clientX-window.innerWidth/2)/40,
+
+y:(e.clientY-window.innerHeight/2)/40,
+
+duration:1
+
+});
+
+});
