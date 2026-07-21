@@ -10,7 +10,6 @@
   }
 {%- endstyle -%}
 
-
 {%- comment -%} Metafield keys come from settings as "namespace.key". {%- endcomment -%}
 {%- assign labels_parts = section.settings.metafield_labels | split: '.' -%}
 {%- assign desc_parts = section.settings.metafield_description | split: '.' -%}
@@ -90,7 +89,9 @@
               <span class="fp__media">{{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}</span>
               <p class="fp__desc">{{ 'onboarding.product_description' | t | truncatewords: 8 }}</p>
               <span class="fp__recipes">{{ section.settings.recipes_label }}</span>
-              <span class="fp__shop"><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span>
+              <span class="fp__shop"
+                ><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span
+              >
             </li>
           {%- endfor -%}
         {%- endif -%}
@@ -99,17 +100,77 @@
 
     {%- if products.size > 1 -%}
       <div class="fp__nav" data-fp-nav>
-        <button type="button" class="fp__arrow" data-fp-prev aria-label="{{ 'general.slider.previous_slide' | t | default: 'Previous' }}">
-          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M7.5 1.5 3 6l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button
+          type="button"
+          class="fp__arrow"
+          data-fp-prev
+          aria-label="{{ 'general.slider.previous_slide' | t | default: 'Previous' }}"
+        >
+          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+            <path d="M7.5 1.5 3 6l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </button>
         <div class="fp__dots" data-fp-dots></div>
-        <button type="button" class="fp__arrow" data-fp-next aria-label="{{ 'general.slider.next_slide' | t | default: 'Next' }}">
-          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M4.5 1.5 9 6l-4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button
+          type="button"
+          class="fp__arrow"
+          data-fp-next
+          aria-label="{{ 'general.slider.next_slide' | t | default: 'Next' }}"
+        >
+          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+            <path d="M4.5 1.5 9 6l-4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </button>
       </div>
     {%- endif -%}
   </div>
 </section>
+
+{% comment %} popup--html--code {% endcomment %}
+<div class="fp-popup">
+  <div class="fp-popup__overlay"></div>
+
+  <div class="fp-popup__panel">
+    <button class="fp-popup__close">✕</button>
+
+    <div class="fp-popup__left">
+      <h2 class="fp-popup__title">ANCESTRAL BLEND</h2>
+
+      <p class="fp-popup__subtitle">Nutrient-dense nutrition dogs evolved to eat.</p>
+
+      <div class="fp-popup__tabs">
+        <button class="active" data-tab="1">LAND & SEA RECIPE</button>
+
+        <button data-tab="2">TURKEY RECIPE</button>
+
+        <button data-tab="3">WILD CAUGHT FISH</button>
+      </div>
+
+      <div class="fp-popup__content active" data-content="1">
+        <p>
+          85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck
+          heart, gizzard, duck gizzard, cartilage, tripe, whole eggs, beet fiber, brewer's yeast, carrots, blueberries,
+          organic coconut oil, cumin, thyme, turmeric, rose hips.
+        </p>
+      </div>
+
+      <div class="fp-popup__content" data-content="2">
+        <p>Turkey recipe content goes here...</p>
+      </div>
+
+      <div class="fp-popup__content" data-content="3">
+        <p>Fish recipe content goes here...</p>
+      </div>
+    </div>
+
+    <div class="fp-popup__right">
+      <img
+        src="https://placehold.co/600x500"
+        alt=""
+      >
+    </div>
+  </div>
+</div>
 
 <script>
   (function () {
@@ -133,7 +194,9 @@
           dot.type = 'button';
           dot.className = 'fp__dot';
           dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-          dot.addEventListener('click', function () { scrollToSlide(i); });
+          dot.addEventListener('click', function () {
+            scrollToSlide(i);
+          });
           dotsWrap.appendChild(dot);
           dots.push(dot);
         });
@@ -147,7 +210,7 @@
 
         viewport.scrollTo({
           left: left,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
 
@@ -158,7 +221,10 @@
         slides.forEach(function (slide, i) {
           var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
           var dist = Math.abs(slideCenter - center);
-          if (dist < bestDist) { bestDist = dist; best = i; }
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = i;
+          }
         });
         return best;
       }
@@ -175,8 +241,14 @@
         });
       }
 
-      if (prev) prev.addEventListener('click', function () { scrollToSlide(Math.max(0, currentIndex() - 1)); });
-      if (next) next.addEventListener('click', function () { scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1)); });
+      if (prev)
+        prev.addEventListener('click', function () {
+          scrollToSlide(Math.max(0, currentIndex() - 1));
+        });
+      if (next)
+        next.addEventListener('click', function () {
+          scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1));
+        });
       let ticking = false;
 
       viewport.addEventListener(
@@ -204,9 +276,13 @@
     if (document.readyState !== 'loading') {
       init(document);
     } else {
-      document.addEventListener('DOMContentLoaded', function () { init(document); });
+      document.addEventListener('DOMContentLoaded', function () {
+        init(document);
+      });
     }
-    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+    document.addEventListener('shopify:section:load', function (event) {
+      init(event.target);
+    });
   })();
 </script>
 
