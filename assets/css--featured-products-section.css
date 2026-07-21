@@ -524,6 +524,22 @@ font-size: 20px;
     }
 }
 
+.fp-popup__content_btn {
+    background: url(https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
+    color: #000;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.64px;
+    width: 164px;
+    height: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "FFBlurProMedium";
+    margin: 48px 0 0;
+}
+
 @media(max-width:991px){
 
     .fp-popup__panel{
