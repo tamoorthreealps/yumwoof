@@ -398,25 +398,26 @@
 }
 
 .fp-popup__panel{
-position: absolute;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(.96);
     width: min(1392px, 90vw);
-    background: rgba(255, 255, 255, 0.9);
+    background: #ffffffe6;
     border-radius: 24px;
     overflow: hidden;
     display: flex;
     transition: .35s;
+    padding: 88px 71px 68px 98px;
+    gap: 21px;
 }
 
 .fp-popup.active .fp-popup__panel{
     transform:translate(-50%,-50%) scale(1);
 }
 
-.fp-popup__left{
-    width:50%;
-    padding:48px;
+.fp-popup__left {
+    width: 71.17%;
 }
 
 .fp-popup__right{
@@ -434,18 +435,17 @@ position: absolute;
 }
 
 .fp-popup__close{
-    position:absolute;
-    right:22px;
-    top:22px;
-    width:42px;
-    height:42px;
-    border:none;
-    background:#fff;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:22px;
-    line-height:42px;
-    box-shadow:0 10px 20px rgba(0,0,0,.15);
+position: absolute;
+    right: 28px;
+    top: 20px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    margin: 0;
 }
 
 .fp-popup__title{
@@ -469,7 +469,7 @@ margin: 0 0 32px;
 
 .fp-popup__tabs{
     display: flex;
-    gap: 24px;
+    gap: 40px;
     border-bottom: 2px solid transparent;
     margin-bottom: 32px;
 }
