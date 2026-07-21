@@ -296,7 +296,16 @@ flex: 0 0 auto;
     scroll-snap-align: none;
     padding: 3.9rem 3.2rem 6.3rem;
     transform: inherit;
+    transition:.45s;
   }
+
+  .fp__card:hover{
+
+transform:translateY(-12px);
+
+box-shadow:0 30px 70px rgba(0,0,0,.12);
+
+}
 
   .fp__title {
             font-size: 3.6rem;
