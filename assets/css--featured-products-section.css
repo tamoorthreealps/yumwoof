@@ -32,39 +32,24 @@
     color: var(--fp-text);
     font-family: 'TAYRosemary';
     padding:0 20px;
-     position:relative;
-    display:inline-block;
+    overflow: hidden;
+    position: relative;
 }
+
 .fp__heading::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:linear-gradient(
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
         90deg,
         transparent,
-        rgba(255,255,255,.9),
+        rgba(255,255,255,.8),
         transparent
     );
-
-    transform:translateX(-150%) skewX(-20deg);
-
-    animation:shine 1.8s ease forwards;
-
+    transform: translateX(-120%);
+    pointer-events: none;
 }
 
-@keyframes shine{
-
-    to{
-
-        transform:translateX(180%) skewX(-20deg);
-
-    }
-
-}
 .fp--uppercase .fp__heading,
 .fp--uppercase .fp__title {
   text-transform: uppercase;
