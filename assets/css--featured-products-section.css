@@ -302,12 +302,9 @@ flex: 0 0 auto;
     max-width: 100%;
     scroll-snap-align: none;
     padding: 3.9rem 3.2rem 6.3rem;
+    transform: inherit;
     transition:.45s;
-    transform: scale(.8803);
   }
-  .fp__card.is-active {
-    transform: scale(1);
-}
 
   .fp__card:hover{
 

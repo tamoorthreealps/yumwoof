@@ -1,118 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    if (!document.querySelector(".hero-banner")) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
-    /* ==========================
-       HERO BANNER
-    ========================== */
+    const split = new SplitType(".hero-banner__heading", {
+        types: "words"
+    });
 
-    const hero = document.querySelector(".hero-banner");
+    const tl = gsap.timeline();
 
-    if (hero) {
+    tl.from(".hero-banner__image",{
+        scale:1.15,
+        duration:3,
+        ease:"power2.out"
+    })
 
-        const split = new SplitType(".hero-banner__heading", {
-            types: "words"
-        });
+    .from(split.words,{
+        y:120,
+        opacity:0,
+        stagger:.08,
+        duration:1,
+        ease:"power4.out"
+    },"-=2.3")
 
-const tl = gsap.timeline();
+    .from(".hero-banner__subheading",{
+        y:40,
+        opacity:0,
+        filter:"blur(10px)",
+        duration:.8
+    },"-=.6")
 
-tl.fromTo(
-    split.words,
-    {
-        y: 120,
-        opacity: 0
-    },
-    {
-        y: 0,
-        opacity: 1,
-        stagger: 0.08,
-        duration: 1,
-        ease: "power4.out"
-    }
-)
-
-.fromTo(
-    ".hero-banner__subheading",
-    {
-        y: 40,
-        opacity: 0,
-        filter: "blur(10px)"
-    },
-    {
-        y: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: .8
-    },
-    "-=.6"
-)
-
-.fromTo(
-    ".hero-banner__cta-wrap",
-    {
-        y: 40,
-        opacity: 0,
-        scale: .7
-    },
-    {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: .8,
-        ease: "elastic.out(1,0.6)"
-    },
-    "-=.4"
-);
-
-    }
-
-
-    /* ==========================
-       FEATURED PRODUCTS
-    ========================== */
-
-    const fp = document.querySelector(".fp");
-
-    if (fp) {
-
-gsap.fromTo(
-    ".fp__heading",
-    {
-        y: 80,
-        opacity: 0
-    },
-    {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power4.out",
-        scrollTrigger: {
-            trigger: ".fp",
-            start: "top 75%",
-            once: true
-        }
-    }
-);
-
-gsap.fromTo(
-    ".fp__card",
-    {
-        y: 120,
-        opacity: 0
-    },
-    {
-        y: 0,
-        opacity: 1,
-        stagger: 0.18,
-        duration: 1,
-        ease: "power4.out",
-        scrollTrigger: {
-            trigger: ".fp",
-            start: "top 70%",
-            once: true
-        }
-    }
-);
-    }
+    .from(".hero-banner__cta-wrap",{
+        scale:.7,
+        opacity:0,
+        duration:.8,
+        ease:"elastic.out(1,0.6)"
+    },"-=.4");
 
 });
+
+
+
