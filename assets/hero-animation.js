@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y:120,
         opacity:0,
         stagger:.08,
-        duration:2,
+        duration:1,
         ease:"power4.out"
     },"-=2.3")
 
@@ -28,14 +28,28 @@ document.addEventListener("DOMContentLoaded", () => {
         y:40,
         opacity:0,
         filter:"blur(10px)",
-        duration:1.8
+        duration:.8
     },"-=.6")
 
     .from(".hero-banner__cta-wrap",{
         scale:.7,
         opacity:0,
-        duration:1.8,
+        duration:.8,
         ease:"elastic.out(1,0.6)"
     },"-=.4");
 
+});
+
+
+
+gsap.from(".fp__card",{
+    y:120,
+    opacity:0,
+    stagger:.18,
+    duration:1,
+    ease:"power4.out",
+    scrollTrigger:{
+        trigger:".fp",
+        start:"top 70%"
+    }
 });
