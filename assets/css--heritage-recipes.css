@@ -126,6 +126,10 @@ display: inline-flex;
   gap: 1.6rem;
 }
 
+.heritage__ingredient:nth-child(3) .heritage__ingredient-media {
+  height:74.32px;
+}
+
 .heritage__ingredient-media {
   flex: none;
   width: auto;
