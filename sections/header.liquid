@@ -51,7 +51,13 @@
         aria-controls="{{ mobile_id }}"
         aria-label="{{ 'sections.header.menu' | t }}"
       >
-        <span class="svg-wrapper">{{ 'icon-hamburger.svg' | inline_asset_content }}</span>
+        <span class="svg-wrapper">
+          <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23 0C23.5523 0 24 0.447715 24 1C24 1.55228 23.5523 2 23 2H1C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0H23Z" fill="black"/>
+            <path d="M23 7C23.5523 7 24 7.44772 24 8C24 8.55228 23.5523 9 23 9H1C0.447715 9 0 8.55228 0 8C0 7.44772 0.447715 7 1 7H23Z" fill="black"/>
+            <path d="M23 14C23.5523 14 24 14.4477 24 15C24 15.5523 23.5523 16 23 16H1C0.447715 16 0 15.5523 0 15C0 14.4477 0.447715 14 1 14H23Z" fill="black"/>
+          </svg>
+        </span>
       </button>
 
       {%- comment -%} Left: navigation links (with optional mega dropdowns) {%- endcomment -%}
