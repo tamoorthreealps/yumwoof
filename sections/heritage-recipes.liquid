@@ -43,14 +43,12 @@
     {%- comment -%} -------- Left: intro + bowl -------- {%- endcomment -%}
     {%- if section.settings.bowl_image != blank -%}
       {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
-      <div class="heritage__bowl_wrapper">
-        <div class="heritage__bowl">
-          {{
-            section.settings.bowl_image
-            | image_url: width: 900
-            | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
-          }}
-        </div>
+      <div class="heritage__bowl">
+        {{
+          section.settings.bowl_image
+          | image_url: width: 900
+          | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
+        }}
       </div>
     {%- endif -%}
     <div class="heritage__intro">
