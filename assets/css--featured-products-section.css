@@ -555,8 +555,20 @@
     height: 100%;
     width: 100%;
     object-fit: contain;
+	animation: bowlRotatepop 150s linear infinite;
+	transform-origin: center center;
+	will-change: transform;
 }
 
+@keyframes bowlRotatepop {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
 .fp-popup__close{
 position: absolute;
     right: 28px;
