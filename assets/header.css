@@ -624,18 +624,38 @@ font-size: 16px;
    Responsive
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 991px) {
-  .yw-nav-outer {
-    padding: 1.2rem;
-  }
-
+      .yw-nav-outer {
+        padding: 6.4px 16px 4px;
+        margin: 8px 8px 0;
+        border-radius: 8px;
+        border: 1.5px solid var(--yw-nav-border);
+    }
   .yw-nav {
     grid-template-columns: auto 1fr auto;
-    padding: 1.2rem 1.6rem;
+    padding: 0;
   }
 
   .yw-nav__toggle {
     display: inline-flex;
   }
+  .yw-nav__toggle svg {
+    width: 24px;
+    height: 16px;
+}
+.yw-nav__logo img, .yw-nav__logo svg {
+    height: 44px;
+}
+.yw-nav__icons {
+    gap: 1.65rem;
+}
+.yw-icon--account svg {
+    width: 19.59px;
+    height: 20.9px;
+}
+.yw-nav__icon svg {
+    width: 19.5px;
+    height: 24px;
+}
 
   /* Desktop inline nav + membership are replaced by the overlay on mobile */
   .yw-nav__links,
