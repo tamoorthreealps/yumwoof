@@ -39,7 +39,8 @@
 {%- endcapture -%}
 
 <section class="heritage{% if section.settings.uppercase_heading %} heritage--uppercase{% endif %}" data-marquee>
-      {%- comment -%} -------- Left: intro + bowl -------- {%- endcomment -%}
+  <div class="heritage__container">
+    {%- comment -%} -------- Left: intro + bowl -------- {%- endcomment -%}
     {%- if section.settings.bowl_image != blank -%}
       {%- assign bowl_alt = section.settings.bowl_image.alt | default: '' -%}
       <div class="heritage__bowl">
@@ -50,7 +51,6 @@
         }}
       </div>
     {%- endif -%}
-  <div class="heritage__container">
     <div class="heritage__intro">
       {%- if section.settings.heading != blank -%}
         <h2 class="heritage__heading">{{ section.settings.heading }}</h2>
