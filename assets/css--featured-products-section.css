@@ -65,6 +65,11 @@
     font-family: FFBlurProMedium;
 }
 
+.fp__button:hover {
+	color:#fff9ef;
+	background:#000000;
+}
+
 /* --------------------------------------------------------------------------
    Viewport / track (carousel on mobile, centered row on desktop)
    -------------------------------------------------------------------------- */
