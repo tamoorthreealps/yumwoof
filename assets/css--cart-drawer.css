@@ -237,6 +237,24 @@ cart-drawer.active .cd__inner {
 	display: block;
 }
 
+/* Membership banner is a clickable add-to-cart button that shows only the image */
+.cd-banner__btn {
+	display: block;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+	line-height: 0;
+	font: inherit;
+	color: inherit;
+}
+
+.cd-banner__btn.cd-busy {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
 .cd-banner__img {
 	display: block;
 	width: 100%;

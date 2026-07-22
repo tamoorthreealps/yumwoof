@@ -23,10 +23,17 @@
 
   // Re-render the drawer inner (items, rewards, banner, recommendations, footer) + cart bubble.
   async function refreshDrawer() {
-    var res = await fetch('/?section_id=' + encodeURIComponent(sectionId()));
-    if (!res.ok) throw new Error('drawer section fetch failed');
+    // Fetch a FULL-PAGE render (not ?section_id) so the drawer resolves the
+    // section's SAVED settings — membership banner product/images, reward
+    // thresholds, title, etc. The cart drawer is inside a section group, whose
+    // isolated section render falls back to SCHEMA DEFAULTS and drops those.
+    var res = await fetch(window.location.pathname + window.location.search, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    });
+    if (!res.ok) throw new Error('drawer page fetch failed');
     var doc = new DOMParser().parseFromString(await res.text(), 'text/html');
-    var newInner = doc.querySelector('.drawer__inner');
+
+    var newInner = doc.querySelector('#CartDrawer .drawer__inner');
     var curInner = document.querySelector('#CartDrawer .drawer__inner');
     if (newInner && curInner) {
       curInner.className = newInner.className;
@@ -35,17 +42,10 @@
       if (drawer) drawer.classList.toggle('is-empty', newInner.classList.contains('is-empty'));
     }
 
-    try {
-      var bubbleRes = await fetch('/?section_id=cart-icon-bubble');
-      if (bubbleRes.ok) {
-        var bdoc = new DOMParser().parseFromString(await bubbleRes.text(), 'text/html');
-        var target = document.getElementById('cart-icon-bubble');
-        var source = bdoc.querySelector('.shopify-section') || bdoc.body;
-        if (target && source) target.innerHTML = source.innerHTML;
-      }
-    } catch (e) {
-      /* non-fatal */
-    }
+    // Cart icon bubble is in the same full-page response — no extra fetch needed.
+    var newBubble = doc.querySelector('#cart-icon-bubble');
+    var curBubble = document.getElementById('cart-icon-bubble');
+    if (newBubble && curBubble) curBubble.innerHTML = newBubble.innerHTML;
   }
 
   // Remove a line, then re-add the variant with (or without) a selling plan.
@@ -158,6 +158,37 @@
   }
   if (!customElements.get('cart-recommendations')) {
     customElements.define('cart-recommendations', CartRecommendations);
+  }
+
+  /* ---------- Make the Dawn add-to-cart drawer render use the full page ----------
+     Dawn's <cart-drawer>.renderContents() rebuilds the drawer from an isolated
+     section render (schema defaults), which drops the membership banner + saved
+     settings. Override it to full-page refresh so the banner/thresholds are correct
+     whenever the drawer opens on add-to-cart. */
+  function overrideDrawerRender() {
+    if (!window.customElements) return;
+    var CD = customElements.get('cart-drawer');
+    if (!CD || CD.prototype.__ywFullPageRender) return;
+    CD.prototype.__ywFullPageRender = true;
+    CD.prototype.renderContents = function (parsedState) {
+      if (parsedState && parsedState.id != null) this.productId = parsedState.id;
+      var self = this;
+      refreshDrawer()
+        .then(function () {
+          setTimeout(function () {
+            var overlay = self.querySelector('#CartDrawer-Overlay');
+            if (overlay) overlay.addEventListener('click', self.close.bind(self));
+            self.open();
+          });
+        })
+        .catch(function (e) {
+          console.error('[cart] drawer render failed:', e);
+        });
+    };
+  }
+  overrideDrawerRender();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', overrideDrawerRender);
   }
 
   /* ---------- Delegated: ADD buttons + carousel arrows ---------- */
