@@ -650,6 +650,7 @@ font-size: 16px;
 }
 .yw-nav__icons {
     gap: 1.65rem;
+    align-items: baseline;
 }
 .yw-icon--account svg {
     width: 19.59px;
