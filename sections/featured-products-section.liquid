@@ -137,13 +137,15 @@
       </div>
     {%- endif -%}
     {%- if section.settings.button_label != blank -%}
+      <div class="mobile_fp__button">
         <a
           href="{{ section.settings.button_link | default: '#' }}"
-          class="fp__button mobile_fp__button"
+          class="fp__button"
         >
           {{ section.settings.button_label }}
         </a>
-      {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
