@@ -51,83 +51,82 @@
         }}
       </div>
     {%- endif -%}
-    <div class="heritage__container_hold">
-      <div class="heritage__intro">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="heritage__heading">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="heritage__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-        {%- if section.settings.button_label != blank -%}
-          <a class="heritage__button" href="{{ section.settings.button_link | default: '#' }}">
-            {{- section.settings.button_label -}}
-          </a>
-        {%- endif -%}
-      </div>
+    <div class="heritage__intro">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="heritage__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="heritage__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="heritage__button" href="{{ section.settings.button_link | default: '#' }}">
+          {{- section.settings.button_label -}}
+        </a>
+      {%- endif -%}
+    </div>
 
-      {%- comment -%} -------- Right: ingredient card -------- {%- endcomment -%}
-      <div class="heritage__card-wrap">
-        {%- if section.settings.kibble_image_1 != blank -%}
-          <span class="heritage__kibble heritage__kibble--1">
-            {{ section.settings.kibble_image_1 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
-          </span>
-        {%- endif -%}
-        {%- if section.settings.kibble_image_2 != blank -%}
-          <span class="heritage__kibble heritage__kibble--2">
-            {{ section.settings.kibble_image_2 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
-          </span>
-        {%- endif -%}
-        {%- if section.settings.kibble_image_3 != blank -%}
-          <span class="heritage__kibble heritage__kibble--3">
-            {{ section.settings.kibble_image_3 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
-          </span>
-        {%- endif -%}
+    {%- comment -%} -------- Right: ingredient card -------- {%- endcomment -%}
+    <div class="heritage__card-wrap">
+      {%- if section.settings.kibble_image_1 != blank -%}
+        <span class="heritage__kibble heritage__kibble--1">
+          {{ section.settings.kibble_image_1 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.kibble_image_2 != blank -%}
+        <span class="heritage__kibble heritage__kibble--2">
+          {{ section.settings.kibble_image_2 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.kibble_image_3 != blank -%}
+        <span class="heritage__kibble heritage__kibble--3">
+          {{ section.settings.kibble_image_3 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
+        </span>
+      {%- endif -%}
 
-        <div class="heritage__card">
-          <img
-            src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017"
-            class="shape-bg"
-          >
-          <ul class="heritage__ingredients">
-            {%- for i in (1..4) -%}
-              {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
-              {%- assign text_key = 'ingredient_' | append: i | append: '_text' -%}
-              {%- assign image_key = 'ingredient_' | append: i | append: '_image' -%}
-              {%- assign title = section.settings[title_key] -%}
-              {%- assign text = section.settings[text_key] -%}
-              {%- assign image = section.settings[image_key] -%}
-              {%- if title != blank or image != blank -%}
-                <li class="heritage__ingredient">
-                  <span class="heritage__ingredient-media">
-                    {%- if image != blank -%}
-                      {{
-                        image
-                        | image_url: width: 160
-                        | image_tag:
-                          class: 'heritage__ingredient-img',
-                          alt: title,
-                          widths: '80, 120, 160',
-                          loading: 'lazy'
-                      }}
-                    {%- endif -%}
-                  </span>
-                  <span class="heritage__ingredient-text">
-                    {%- if title != blank -%}
-                      <span class="heritage__ingredient-title">{{ title }}</span>
-                    {%- endif -%}
-                    {%- if text != blank -%}
-                      <span class="heritage__ingredient-desc">{{ text }}</span>
-                    {%- endif -%}
-                  </span>
-                </li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        </div>
+      <div class="heritage__card">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017"
+          class="shape-bg"
+        >
+        <ul class="heritage__ingredients">
+          {%- for i in (1..4) -%}
+            {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
+            {%- assign text_key = 'ingredient_' | append: i | append: '_text' -%}
+            {%- assign image_key = 'ingredient_' | append: i | append: '_image' -%}
+            {%- assign title = section.settings[title_key] -%}
+            {%- assign text = section.settings[text_key] -%}
+            {%- assign image = section.settings[image_key] -%}
+            {%- if title != blank or image != blank -%}
+              <li class="heritage__ingredient">
+                <span class="heritage__ingredient-media">
+                  {%- if image != blank -%}
+                    {{
+                      image
+                      | image_url: width: 160
+                      | image_tag:
+                        class: 'heritage__ingredient-img',
+                        alt: title,
+                        widths: '80, 120, 160',
+                        loading: 'lazy'
+                    }}
+                  {%- endif -%}
+                </span>
+                <span class="heritage__ingredient-text">
+                  {%- if title != blank -%}
+                    <span class="heritage__ingredient-title">{{ title }}</span>
+                  {%- endif -%}
+                  {%- if text != blank -%}
+                    <span class="heritage__ingredient-desc">{{ text }}</span>
+                  {%- endif -%}
+                </span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
       </div>
     </div>
   </div>
+
   {%- comment -%} -------- No-No list -------- {%- endcomment -%}
   <div class="heritage__nono-marquee">
     {%- assign nono_items = section.settings.nono_items | split: ',' -%}
