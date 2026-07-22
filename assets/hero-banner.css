@@ -173,6 +173,7 @@ margin: 0;
   .hero-banner__subheading {
             font-size: 1.6rem;
         line-height: 24px;
+        margin:0;
   }
   .hero-banner__cta-wrap {
     gap: 1.2rem;
