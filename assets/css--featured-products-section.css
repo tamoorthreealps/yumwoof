@@ -531,6 +531,7 @@
 .fp-popup__right_img {
     height: 400px;
     width: 100%;
+	margin: 0 0 -30px;
 }
 
 .fp-popup__right img{
