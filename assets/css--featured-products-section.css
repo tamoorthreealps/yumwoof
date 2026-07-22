@@ -245,22 +245,20 @@
 }
 
 .fp__arrow {
-	width: 36px;
-	height: 36px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	border: 1.5px solid var(--fp-text);
-	border-radius: 50%;
-	background: transparent;
-	color: var(--fp-text);
-	cursor: pointer;
-	padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    background: transparent;
+    color: var(--fp-text);
+    cursor: pointer;
+    padding: 0;
+    border: 0;
 }
 
 .fp__arrow svg {
-	width: 12px;
-	height: 12px;
+	width: 16px;
+	height: 8px;
 }
 
 .fp__dots {
