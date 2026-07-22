@@ -630,6 +630,9 @@ font-size: 16px;
         border-radius: 8px;
         border: 1.5px solid var(--yw-nav-border);
     }
+    .yw-nav__logo {
+      margin:0 0 0 30px;
+    }
   .yw-nav {
     grid-template-columns: auto 1fr auto;
     padding: 0;
