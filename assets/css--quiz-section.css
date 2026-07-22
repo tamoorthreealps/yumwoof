@@ -93,12 +93,13 @@ margin: 1.2rem 0 0;
 }
 
 .quiz__decor img {
-  display: block;
-  width: 100%;
-  height: auto;
-	animation: bowlRotate 120s linear infinite;
-	transform-origin: center center;
-	will-change: transform;
+    display: block;
+    width: 100%;
+    height: 100%;
+    animation: bowlRotate 120s linear infinite;
+    transform-origin: center center;
+    will-change: transform;
+    object-fit: contain;
 }
 
 
@@ -171,9 +172,10 @@ margin: 1.2rem 0 0;
   }
 
   .quiz__decor--right {
-            width: 122px;
+width: 132px;
+        height: 132px;
         right: 0;
         top: auto;
-        bottom: -40px;
+        bottom: -60px;
   }
 }
