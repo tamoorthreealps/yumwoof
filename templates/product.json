@@ -34,12 +34,12 @@
             "swatch_shape": "circle"
           }
         },
-        "recharge_subscriptions_subscription_widget_v2_nk9f3G": {
-          "type": "shopify://apps/recharge-subscriptions/blocks/subscription-widget-v2/371eed76-0b44-4869-9813-730372ea378e",
-          "settings": {}
-        },
         "quantity_selector": {
           "type": "quantity_selector",
+          "settings": {}
+        },
+        "appstle_subscription_qkkVmJ": {
+          "type": "appstle_subscription",
           "settings": {}
         },
         "buy_buttons": {
@@ -65,8 +65,8 @@
         "title",
         "price",
         "variant_picker",
-        "recharge_subscriptions_subscription_widget_v2_nk9f3G",
         "quantity_selector",
+        "appstle_subscription_qkkVmJ",
         "buy_buttons",
         "description",
         "share"
