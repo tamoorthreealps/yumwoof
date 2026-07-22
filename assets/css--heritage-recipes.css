@@ -131,6 +131,11 @@ display: inline-flex;
   width:74.32px;
 }
 
+.heritage__ingredient:nth-child(4) .heritage__ingredient-media {
+  width:96.62px;
+  height:74.32px;
+}
+
 .heritage__ingredient-media {
   flex: none;
   width: auto;
