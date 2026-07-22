@@ -1,201 +1,317 @@
-{% liquid
-  assign donation_prod = false
-  if product.id ==  8223924453594
-     assign donation_prod = true  
-  endif
-  assign stay_app_id = '5859381'
+{% comment %}
+  Appstle subscription selector (Online Store 2.0 compatible).
+
+  Renders a Subscribe / One-time purchase widget styled to the Yumwoof design.
+  It drives the product form's hidden #selling-plan-input (in snippets/buy-buttons.liquid):
+    - Subscription (default): input = selected frequency's selling plan id
+    - One-time: input = "" (empty)
+
+  Wrapped in a <appstle-subscription-widget> custom element so it re-initialises
+  when the product section re-renders on a variant change.
+
+  Accepts:
+  - product: {Object} product object
+{% endcomment %}
+
+{%- liquid
   assign appstle_app_id = 'appstle'
-%}
-
-{% comment %}
-   if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
-    assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
-  endif
-{% endcomment %}
-{%- liquid
   assign current_variant = product.selected_or_first_available_variant | default: product.variants.first
-  assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
--%}
 
-{% comment %}
-  Original hardcoded excluded selling plan group IDs (for reference):
-  (Extra 5% off) a8fcc618a7790f12bd8a5e11376b3f32e4b65f57,(Extra 10% off)71f6f6ce31f17f5485f09eed074c90ffb0de1cdb,(Extra 15% off) 9e7085ccf8105277765eac3eda3065a1ef7f42ac, (25% off member discount) 210e68c42d8e0f62e68c9e8675bc0072dba4b838,ffbbcafe4bff7277533745316f11ec066fff1370
-{% endcomment %}
-{%- liquid
-  assign excluded_sp_groups = ''
+  # Pick the BASE "Subscribe & Save" group, skipping Appstle's bundle / member
+  # combined groups (Extra n% / 25% member) — those are switched by the cart engine.
+  assign base_group = null
   for spg in product.selling_plan_groups
-    comment
-      Exclude selling plan groups that do NOT contain "Subscribe & Save" in their name
-      This will include all variations: "Subscribe & Save", "Subscribe & Save 5%", "Subscribe & Save 10%", "Subscribe & Save 20%", etc.
-    endcomment
-    unless spg.name contains 'Subscribe & Save'
-      if excluded_sp_groups == ''
-        assign excluded_sp_groups = spg.id
-      else
-        assign excluded_sp_groups = excluded_sp_groups | append: ',' | append: spg.id
-      endif
-    endunless
+    if base_group == null and spg.app_id == appstle_app_id and spg.name contains 'Subscribe & Save'
+      assign base_group = spg
+    endif
   endfor
-  if excluded_sp_groups != ''
-    assign excluded_sp_groups = excluded_sp_groups | split: ','
-  else
-    assign excluded_sp_groups = '' | split: ','
+  if base_group == null
+    for spg in product.selling_plan_groups
+      assign is_bundle = false
+      if spg.name contains 'Extra' or spg.name contains 'member' or spg.name contains 'Bundle'
+        assign is_bundle = true
+      endif
+      if base_group == null and spg.app_id == appstle_app_id and is_bundle == false
+        assign base_group = spg
+      endif
+    endfor
+  endif
+  if base_group == null and product.selling_plan_groups.size > 0
+    assign base_group = product.selling_plan_groups.first
   endif
 -%}
 
+{%- if base_group != null -%}
+  {%- liquid
+    # Default allocation for the current variant within the base group
+    assign default_alloc = null
+    for alloc in current_variant.selling_plan_allocations
+      if alloc.selling_plan_group_id == base_group.id and default_alloc == null
+        assign default_alloc = alloc
+      endif
+    endfor
+    assign selected_alloc = current_variant.selected_selling_plan_allocation
+    if selected_alloc != null and selected_alloc.selling_plan_group_id == base_group.id
+      assign default_alloc = selected_alloc
+    endif
+  -%}
 
-{% assign exclude_sp_names = 'Delivery every 1 week,Delivery every 2 weeks,Delivery every 5 weeks,Delivery every 1 month,Delivery every 2 months,Delivery every 3 months'
-  | split: ','
-%}
-{% assign _selling_plan_group_ids = '%' %}
-{% for selling_plan in product.selling_plan_groups %}
-  {% if selling_plan.app_id == appstle_app_id %}
-    {% unless excluded_sp_groups contains selling_plan.id %}
-      {% for spa in current_variant.selling_plan_allocations %}
-        {% if spa.selling_plan_group_id == selling_plan.id %}
-          {% assign rtx_selling_plan = selling_plan %}
-        {% endif %}
-      {% endfor %}
-      {% assign _selling_plan_group_ids = _selling_plan_group_ids | append: ',' | append: selling_plan.id %}
-    {% endunless %}
-  {% endif %}
-{% endfor %}
-{% assign selling_plan_group_ids = _selling_plan_group_ids | replace: '%,', '' | split: ',' | json %}
-{% assign first_selling_plan_allocation = product.variants.first.selling_plan_allocations[1] %}
-{% if rtx_selling_plan.name %}
-  {% comment %} <input type='hidden' name="id" id="variant_{{ product.id }}" value="{{ current_variant.id }}"> {% endcomment %}
-  <input
-    type="hidden"
-    name="selling_plan"
-    id="rtx_selling_plan_{{ product.id }}"
-    value="{{ current_selling_plan_allocation.selling_plan.id | default: '' }}"
-  >
-  <div class="rtx_buy_box" id="rtx_buy_box_{{ product.id }}">
-    <div class="rtx_container" data-product="{{ product | json }}">
-      <div class="frequency_options_container">
-        <div class="frequency_option_container bg_selected">
-          <label class="freq_label" for="subsave_sp">
-            <div class="freq_selection_wrapper">
-              <div class="freq_details_container">
-                <div class="freq_radio_container">
-                  <input id="subsave_sp" class="freq_radio" type="radio" name="purchase_plan" value="subsave" checked>
-                </div>
-                <div class="freq_txt_container">
-                  <div class="freq_txt">
-                    <div class="freq_sp_txts_container">
-                      <span id="subsave_sp_txt" class="freq_sp_txt">{% if donation_prod == true %}Donate monthly{% else %}{{ rtx_selling_plan.name }}{% endif %}</span>
-                      <span class="freq_dsc_txt" id="subsave_dsc"></span>
-                    </div>
-                  </div>
-                  <div class="delivery_options_container {% if donation_prod == true %}visually-hidden{% endif %}">
-                    <label for="delivery_opt" class="visually-hidden">Delivery frequency</label>
-                    <select id="delivery_opt" class="delivery_option" aria-label="Delivery frequency">
-                      {% for sp in current_variant.selling_plan_allocations %}
-                        {% if selling_plan_group_ids contains sp.selling_plan_group_id %}
-                          {% unless exclude_sp_names contains sp.selling_plan.name %}                            
-                            <option value="{{ sp.selling_plan.id }}">{{ sp.selling_plan.name | replace:"Delivery","" }}</option>
-                          {% endunless %}
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>          
-            {% if donation_prod == false %}
-            <div class="freq_pricing_wrapper">
-              {% comment %} <div class="freq_pricing">
-                <div class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="sub_price_member"></span></div>
-                <div class="total_price freq_pricing_txt yum_club">
-                  <img class="yum_club_img biege" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_biege.png?v=1705513403">
-                  <img class="yum_club_img black" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_black.png?v=1705513262">
-                </div>
-              </div>
-              <div class="vertical_separator"></div> {% endcomment %}
-              <div class="freq_pricing">
-                <span class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="sub_price"></span></span>
-                {% comment %} <div class="total_price freq_pricing_txt">non-member</div> {% endcomment %}
-              </div>
-            </div>
-            {% endif %}
-          </label>
+  {%- if default_alloc != null -%}
+    {%- liquid
+      assign sub_percent = 0
+      assign adj = default_alloc.selling_plan.price_adjustments.first
+      if adj.value_type == 'percentage'
+        assign sub_percent = adj.value
+      endif
+
+      assign one_time_price = current_variant.price
+      assign sub_price = default_alloc.price
+      assign saving_per_bag = one_time_price | minus: sub_price
+
+      assign exclude_freq = 'Delivery every 1 week,Delivery every 2 weeks,Delivery every 5 weeks,Delivery every 1 month,Delivery every 2 months,Delivery every 3 months' | split: ','
+
+      assign benefits = product.metafields.custom.subscription_benefits.value
+      if benefits == blank
+        assign benefits = 'Free shipping on every order,Save on every delivery,Skip or swap anytime,Cancel whenever you like' | split: ','
+      endif
+
+      assign sub_title = product.metafields.custom.subscription_title.value | default: 'Stay Stocked'
+      assign sub_subtitle = product.metafields.custom.subscription_subtitle.value | default: 'Delivered on your schedule. Skip, swap, or cancel anytime.'
+      assign onetime_subtitle = product.metafields.custom.onetime_subtitle.value | default: 'A single delivery. No subscription.'
+      assign currency_symbol = localization.country.currency.symbol | default: '$'
+    -%}
+
+    <appstle-subscription-widget
+      class="asw is-sub"
+      data-product-id="{{ product.id }}"
+      data-default-plan="{{ default_alloc.selling_plan.id }}"
+      data-saving-cents="{{ saving_per_bag }}"
+      data-currency-symbol="{{ currency_symbol }}"
+    >
+      {%- if saving_per_bag > 0 -%}
+        <div class="asw__banner">
+          <span class="asw__banner-text asw__banner-left">
+            {{- saving_per_bag | money_without_trailing_zeros }} off every bag<span class="asw__banner-year" data-asw-year></span>
+          </span>
+          <span class="asw__banner-text asw__banner-right">You save {{ sub_percent }}%</span>
         </div>
-        <div class="frequency_option_container">
-          <label class="freq_label" for="onetime_sp">
-            <div class="freq_selection_wrapper">
-              <div class="freq_details_container">
-                <div class="freq_radio_container">
-                  <input id="onetime_sp" class="freq_radio" type="radio" name="purchase_plan" value="onetime">
-                </div>
-                <div class="freq_txt_container">
-                  <div class="freq_txt">
-                    <div class="freq_sp_txts_container">
-                      <span class="freq_sp_txt">{% if donation_prod == true %}Donate once{% else %} One time purchase {% endif %}</span>
-                      <span class="freq_dsc_txt" id="onetime_dsc"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% if donation_prod == false %}
-            <div class="freq_pricing_wrapper">
-              {% comment %} <div class="freq_pricing">
-                <span class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="onetime_price_member"></span></span>
-                <div class="total_price freq_pricing_txt yum_club">
-                  <img class="yum_club_img biege" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_biege.png?v=1705513403">
-                  <img class="yum_club_img black" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_black.png?v=1705513262">                
-                </div>
-              </div>
-              <div class="vertical_separator"></div> {% endcomment %}
-              <div class="freq_pricing">
-                <span class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="onetime_price"></span></span>
-                {% comment %} <div class="total_price freq_pricing_txt">non-member</div> {% endcomment %}
-              </div>
-            </div>
-            {% endif %}
-          </label>
-        </div>
+      {%- endif -%}
+
+      {%- comment -%} ---------- Subscription option ---------- {%- endcomment -%}
+      <div class="asw-option asw-option--sub is-selected">
+        <label class="asw-option__label">
+          <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="subsave" checked>
+          <span class="asw-option__radio-icon" aria-hidden="true">
+            <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z" stroke="#000" stroke-width="1.5"/>
+              <path class="asw-fill" d="M12 7 L17 12 L12 17 L7 12 Z" fill="#000"/>
+            </svg>
+          </span>
+          <span class="asw-option__body">
+            <span class="asw-option__head">
+              <span class="asw-option__titles">
+                <span class="asw-option__title">{{ sub_title }}</span>
+                {%- if sub_subtitle != blank -%}<span class="asw-option__subtitle">{{ sub_subtitle }}</span>{%- endif -%}
+              </span>
+              <span class="asw-option__price">
+                {%- if one_time_price > sub_price -%}
+                  <s class="asw-option__price-was">{{ one_time_price | money_without_trailing_zeros }}</s>
+                {%- endif -%}
+                <span class="asw-option__price-now">{{ sub_price | money_without_trailing_zeros }}</span>
+              </span>
+            </span>
+
+            <span class="asw-option__delivery">
+              <span class="asw-option__delivery-label">Delivery</span>
+              <span class="asw-select">
+                <select class="asw-select__field" data-asw-freq aria-label="Delivery frequency">
+                  {%- for alloc in current_variant.selling_plan_allocations -%}
+                    {%- if alloc.selling_plan_group_id == base_group.id -%}
+                      {%- unless exclude_freq contains alloc.selling_plan.name -%}
+                        {%- assign opt_label = alloc.selling_plan.name | remove_first: 'Delivery ' -%}
+                        <option value="{{ alloc.selling_plan.id }}"{% if alloc.selling_plan.id == default_alloc.selling_plan.id %} selected{% endif %}>{{ opt_label }}</option>
+                      {%- endunless -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+                <span class="asw-select__chevron" aria-hidden="true">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5 L6 6 L11 1.5" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </span>
+            </span>
+
+            {%- if benefits.size > 0 -%}
+              <span class="asw-option__benefits">
+                {%- for b in benefits limit: 4 -%}
+                  {%- assign bt = b | strip -%}
+                  {%- if bt != blank -%}
+                    <span class="asw-benefit">
+                      <span class="asw-benefit__check" aria-hidden="true">
+                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6.5 L5 10.5 L13 1.5" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                      <span class="asw-benefit__text">{{ bt }}</span>
+                    </span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </span>
+            {%- endif -%}
+          </span>
+        </label>
       </div>
-    </div>
-  </div>
-{% endif %}
-<script>
-  
-  
-  
-  
-  
-  
-  
-  var product = {{ product | json }}
-  var currentProductId = "{{ product.id }}";
-  
-  function setSellingPlan(prod) {
-      var selected = document.querySelector('input[name="purchase_plan"]:checked');         
-      if (selected.value === "onetime") {
-          document.querySelector(`#rtx_selling_plan_${prod.id}`).value = "";
-      } else {
-          document.querySelector(`#rtx_selling_plan_${prod.id}`).value = document.querySelector(`.delivery_option`).value;
-      } 
-  }
-  setSellingPlan(product)
-  document.querySelector(".delivery_option").addEventListener("change", function (e) {
-      setSellingPlan(product);
-  });
-  
-  document.querySelectorAll('.frequency_options_container').forEach((div)=> {
-      div.addEventListener('click', function(e) {         
-          if(e.target.value === 'subsave'){             
-              document.querySelector(`#rtx_selling_plan_${product.id}`).value = document.querySelector('.delivery_option').value
-          } else if (e.target.value === 'onetime') {              
-              var spgOneTimeValue = "";
-              document.querySelector(`#rtx_selling_plan_${currentProductId}`).value = spgOneTimeValue; 
-              product.variants.forEach((prod)=> {
-                  if(prod.title === "One-time purchase - Regular pricing") {
-                      {% comment %} document.querySelector(`#variant_${currentProductId}`).value = prod.id;  {% endcomment %}
-                  }
-              })
+
+      {%- comment -%} ---------- One-time option ---------- {%- endcomment -%}
+      <div class="asw-option asw-option--one">
+        <label class="asw-option__label">
+          <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="onetime">
+          <span class="asw-option__radio-icon" aria-hidden="true">
+            <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z" stroke="#000" stroke-width="1.5"/>
+              <path class="asw-fill" d="M12 7 L17 12 L12 17 L7 12 Z" fill="#000"/>
+            </svg>
+          </span>
+          <span class="asw-option__body">
+            <span class="asw-option__head">
+              <span class="asw-option__titles">
+                <span class="asw-option__title">One-Time Purchase</span>
+                {%- if onetime_subtitle != blank -%}<span class="asw-option__subtitle">{{ onetime_subtitle }}</span>{%- endif -%}
+              </span>
+              <span class="asw-option__price">
+                <span class="asw-option__price-now">{{ one_time_price | money_without_trailing_zeros }}</span>
+              </span>
+            </span>
+          </span>
+        </label>
+      </div>
+    </appstle-subscription-widget>
+
+    <style>
+      .asw { display: block; width: 100%; color: #000; font-family: var(--font-body-family, inherit); }
+      .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
+
+      .asw__banner {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        min-height: 40px; padding: 8px 16px; background: #3A8450;
+        border: 1px solid #3A8450; border-radius: 12px 12px 0 0;
+      }
+      .asw__banner-text {
+        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+        font-size: 16px; line-height: 24px; text-transform: uppercase;
+        letter-spacing: -1.28px; color: #FFF9EF;
+      }
+      .asw__banner-right { text-align: right; white-space: nowrap; }
+
+      .asw-option { background: #fff; border: 1px solid #000; border-top: 0; }
+      .asw-option--one { border-radius: 0 0 12px 12px; }
+      .asw-option.is-selected { background: #E6E0D7; }
+
+      .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
+      .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+      .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
+      .asw-diamond { display: block; }
+      .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
+
+      .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+      .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+      .asw-option__titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500; }
+      .asw-option__subtitle { font-size: 14px; line-height: 20px; color: rgba(0, 0, 0, 0.5); }
+      .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap; }
+      .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
+      .asw-option__price-now { color: #000; }
+
+      .asw-option__delivery { display: flex; flex-direction: column; gap: 8px; }
+      .asw-option__delivery-label {
+        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+        font-size: 14px; line-height: 20px; text-transform: uppercase; letter-spacing: -0.5px;
+      }
+      .asw-select { position: relative; display: block; }
+      .asw-select__field {
+        -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        width: 100%; height: 44px; padding: 0 40px 0 16px;
+        background: #fff; border: 1px solid #000; border-radius: 8px;
+        font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 500;
+        color: #000; cursor: pointer; text-transform: capitalize;
+      }
+      .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; }
+
+      .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+      .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; line-height: 20px; }
+      .asw-benefit__check { flex: 0 0 auto; margin-top: 3px; display: flex; }
+
+      /* Collapse the subscription details when the shopper picks one-time */
+      .asw-option--sub:not(.is-selected) .asw-option__delivery,
+      .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+
+      @media (max-width: 749px) {
+        .asw__banner-text { font-size: 13px; letter-spacing: -0.8px; }
+        .asw-option__benefits { grid-template-columns: 1fr; }
+      }
+    </style>
+
+    <script>
+      (function () {
+        if (!('customElements' in window) || customElements.get('appstle-subscription-widget')) return;
+
+        class AppstleSubscriptionWidget extends HTMLElement {
+          connectedCallback() {
+            if (this._bound) return;
+            this._bound = true;
+            this.subOption = this.querySelector('.asw-option--sub');
+            this.oneOption = this.querySelector('.asw-option--one');
+            this.freqSelect = this.querySelector('[data-asw-freq]');
+            this.yearEl = this.querySelector('[data-asw-year]');
+            this.addEventListener('change', this.apply.bind(this));
+
+            this.apply();
+            // #selling-plan-input lives further down the page (buy-buttons); on the
+            // initial parse it may not exist yet, so re-sync once the DOM is ready.
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', this.apply.bind(this), { once: true });
+            }
           }
-      })
-  })
-</script>
+
+          sellingPlanInput() {
+            return document.getElementById('selling-plan-input');
+          }
+
+          apply() {
+            var sub = this.querySelector('input[value="subsave"]');
+            var isSub = !!(sub && sub.checked);
+
+            if (this.subOption) this.subOption.classList.toggle('is-selected', isSub);
+            if (this.oneOption) this.oneOption.classList.toggle('is-selected', !isSub);
+            this.classList.toggle('is-sub', isSub);
+
+            var input = this.sellingPlanInput();
+            if (input) {
+              input.value = isSub && this.freqSelect ? this.freqSelect.value : '';
+            }
+            this.updateYear();
+          }
+
+          updateYear() {
+            if (!this.yearEl) return;
+            var savingCents = parseInt(this.dataset.savingCents, 10) || 0;
+            var sym = this.dataset.currencySymbol || '$';
+            var weeks = 0;
+            if (this.freqSelect && this.freqSelect.options.length) {
+              var txt = (this.freqSelect.options[this.freqSelect.selectedIndex] || {}).text || '';
+              var mWeek = txt.match(/(\d+)\s*week/i);
+              var mMonth = txt.match(/(\d+)\s*month/i);
+              if (mWeek) weeks = parseInt(mWeek[1], 10);
+              else if (mMonth) weeks = parseInt(mMonth[1], 10) * 4;
+            }
+            if (weeks > 0 && savingCents > 0) {
+              var perYear = Math.round(52 / weeks) * savingCents;
+              this.yearEl.textContent = ' · save ' + sym + Math.round(perYear / 100) + '/year';
+            } else {
+              this.yearEl.textContent = '';
+            }
+          }
+        }
+
+        customElements.define('appstle-subscription-widget', AppstleSubscriptionWidget);
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
