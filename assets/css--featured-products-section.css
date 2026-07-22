@@ -511,8 +511,6 @@
     align-items:self-end;
     padding:88px 71px 84px 98px;
     gap:21px;
-	-webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
 }
 
 .fp-popup.active .fp-popup__panel{

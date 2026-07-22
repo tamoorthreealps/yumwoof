@@ -1,3 +1,4 @@
+{% comment %} 
 {% comment %}
   Appstle subscription selector (Online Store 2.0 compatible).
 
@@ -12,7 +13,69 @@
   Accepts:
   - product: {Object} product object
 {% endcomment %}
+    <style>
+      .asw { display: block; width: 100%; color: #000; font-family: var(--font-body-family, inherit); }
+      .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
 
+      .asw__banner {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        min-height: 40px; padding: 8px 16px; background: #3A8450;
+        border: 1px solid #3A8450; border-radius: 12px 12px 0 0;
+      }
+      .asw__banner-text {
+        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+        font-size: 16px; line-height: 24px; text-transform: uppercase;
+        letter-spacing: -1.28px; color: #FFF9EF;
+      }
+      .asw__banner-right { text-align: right; white-space: nowrap; }
+
+      .asw-option { background: #fff; border: 1px solid #000; border-top: 0; }
+      .asw-option--one { border-radius: 0 0 12px 12px; }
+      .asw-option.is-selected { background: #E6E0D7; }
+
+      .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
+      .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+      .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
+      .asw-diamond { display: block; }
+      .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
+
+      .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+      .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+      .asw-option__titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500; }
+      .asw-option__subtitle { font-size: 14px; line-height: 20px; color: rgba(0, 0, 0, 0.5); }
+      .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap; }
+      .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
+      .asw-option__price-now { color: #000; }
+
+      .asw-option__delivery { display: flex; flex-direction: column; gap: 8px; }
+      .asw-option__delivery-label {
+        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+        font-size: 14px; line-height: 20px; text-transform: uppercase; letter-spacing: -0.5px;
+      }
+      .asw-select { position: relative; display: block; }
+      .asw-select__field {
+        -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        width: 100%; height: 44px; padding: 0 40px 0 16px;
+        background: #fff; border: 1px solid #000; border-radius: 8px;
+        font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 500;
+        color: #000; cursor: pointer; text-transform: capitalize;
+      }
+      .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; }
+
+      .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+      .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; line-height: 20px; }
+      .asw-benefit__check { flex: 0 0 auto; margin-top: 3px; display: flex; }
+
+      /* Collapse the subscription details when the shopper picks one-time */
+      .asw-option--sub:not(.is-selected) .asw-option__delivery,
+      .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+
+      @media (max-width: 749px) {
+        .asw__banner-text { font-size: 13px; letter-spacing: -0.8px; }
+        .asw-option__benefits { grid-template-columns: 1fr; }
+      }
+    </style>
 {%- liquid
   assign appstle_app_id = 'appstle'
   assign current_variant = product.selected_or_first_available_variant | default: product.variants.first
@@ -184,70 +247,6 @@
       </div>
     </appstle-subscription-widget>
 
-    <style>
-      .asw { display: block; width: 100%; color: #000; font-family: var(--font-body-family, inherit); }
-      .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
-
-      .asw__banner {
-        display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        min-height: 40px; padding: 8px 16px; background: #3A8450;
-        border: 1px solid #3A8450; border-radius: 12px 12px 0 0;
-      }
-      .asw__banner-text {
-        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
-        font-size: 16px; line-height: 24px; text-transform: uppercase;
-        letter-spacing: -1.28px; color: #FFF9EF;
-      }
-      .asw__banner-right { text-align: right; white-space: nowrap; }
-
-      .asw-option { background: #fff; border: 1px solid #000; border-top: 0; }
-      .asw-option--one { border-radius: 0 0 12px 12px; }
-      .asw-option.is-selected { background: #E6E0D7; }
-
-      .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
-      .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-      .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
-      .asw-diamond { display: block; }
-      .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
-
-      .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
-      .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-      .asw-option__titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-      .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500; }
-      .asw-option__subtitle { font-size: 14px; line-height: 20px; color: rgba(0, 0, 0, 0.5); }
-      .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap; }
-      .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
-      .asw-option__price-now { color: #000; }
-
-      .asw-option__delivery { display: flex; flex-direction: column; gap: 8px; }
-      .asw-option__delivery-label {
-        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
-        font-size: 14px; line-height: 20px; text-transform: uppercase; letter-spacing: -0.5px;
-      }
-      .asw-select { position: relative; display: block; }
-      .asw-select__field {
-        -webkit-appearance: none; -moz-appearance: none; appearance: none;
-        width: 100%; height: 44px; padding: 0 40px 0 16px;
-        background: #fff; border: 1px solid #000; border-radius: 8px;
-        font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 500;
-        color: #000; cursor: pointer; text-transform: capitalize;
-      }
-      .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; }
-
-      .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
-      .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; line-height: 20px; }
-      .asw-benefit__check { flex: 0 0 auto; margin-top: 3px; display: flex; }
-
-      /* Collapse the subscription details when the shopper picks one-time */
-      .asw-option--sub:not(.is-selected) .asw-option__delivery,
-      .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
-
-      @media (max-width: 749px) {
-        .asw__banner-text { font-size: 13px; letter-spacing: -0.8px; }
-        .asw-option__benefits { grid-template-columns: 1fr; }
-      }
-    </style>
-
     <script>
       (function () {
         if (!('customElements' in window) || customElements.get('appstle-subscription-widget')) return;
@@ -314,4 +313,4 @@
       })();
     </script>
   {%- endif -%}
-{%- endif -%}
+{%- endif -%} {% endcomment %}
