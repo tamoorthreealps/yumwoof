@@ -22,7 +22,18 @@
   }
 
   // Re-render the drawer inner (items, rewards, banner, recommendations, footer) + cart bubble.
-  async function refreshDrawer() {
+  // Coalesce concurrent calls so Dawn's own render + our cart:update hook don't double-fetch.
+  var _refreshPromise = null;
+  function refreshDrawer() {
+    if (_refreshPromise) return _refreshPromise;
+    _refreshPromise = doRefreshDrawer();
+    var clear = function () {
+      _refreshPromise = null;
+    };
+    _refreshPromise.then(clear, clear);
+    return _refreshPromise;
+  }
+  async function doRefreshDrawer() {
     // Fetch a FULL-PAGE render (not ?section_id) so the drawer resolves the
     // section's SAVED settings — membership banner product/images, reward
     // thresholds, title, etc. The cart drawer is inside a section group, whose
@@ -191,17 +202,41 @@
     document.addEventListener('DOMContentLoaded', overrideDrawerRender);
   }
 
+  /* ---------- Keep banner + thresholds correct after Dawn cart mutations ----------
+     Dawn's quantity/remove path (cart.js) replaces the whole .drawer__inner from an
+     isolated section render (schema defaults), dropping the membership banner and
+     resetting the reward tiers. After any cart:update, re-render from the full page
+     (coalesced with any in-flight render, so no double fetch). */
+  if (
+    typeof subscribe === 'function' &&
+    typeof PUB_SUB_EVENTS !== 'undefined' &&
+    PUB_SUB_EVENTS.cartUpdate
+  ) {
+    subscribe(PUB_SUB_EVENTS.cartUpdate, function () {
+      refreshDrawer().catch(function () {});
+    });
+  }
+
   /* ---------- Delegated: ADD buttons + carousel arrows ---------- */
   async function addRecommended(btn) {
     if (btn.classList.contains('cd-busy')) return;
     btn.classList.add('cd-busy');
     var variant = parseInt(btn.dataset.variantId, 10);
+    var body = { id: variant, quantity: 1 };
+    // Subscription/membership products require a selling plan; include it when present.
+    var plan = parseInt(btn.dataset.sellingPlan, 10);
+    if (plan) body.selling_plan = plan;
     try {
-      var res = await post('/cart/add.js', { id: variant, quantity: 1 });
-      if (!res.ok) throw new Error('add failed');
+      var res = await post('/cart/add.js', body);
+      if (!res.ok) {
+        var err = await res.json().catch(function () {
+          return {};
+        });
+        throw new Error(err.description || err.message || 'add failed (' + res.status + ')');
+      }
       await refreshDrawer();
     } catch (e) {
-      console.error('[cart] add recommended failed:', e);
+      console.error('[cart] add to cart failed:', e);
       btn.classList.remove('cd-busy');
     }
   }
