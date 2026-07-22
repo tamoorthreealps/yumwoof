@@ -18,6 +18,7 @@
   overflow: hidden;
   background-color: var(--hb-bg);
   color: var(--hb-text);
+  margin-top: 40px;
 }
 
 /* Optional background image */
