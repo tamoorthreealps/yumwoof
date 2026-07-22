@@ -152,7 +152,8 @@
         "card_background": "#ffffff",
         "card_border": "#000000",
         "kibble_image_1": "shopify://shop_images/heritage_icon_1.png",
-        "kibble_image_2": "shopify://shop_images/heritage_icon_2.png"
+        "kibble_image_2": "shopify://shop_images/heritage_icon_2.png",
+        "kibble_image_3": "shopify://shop_images/heritage_icon_3.png"
       }
     },
     "founder_section": {
