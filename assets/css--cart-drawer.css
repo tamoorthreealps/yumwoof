@@ -173,7 +173,19 @@ cart-drawer.active .cd__inner {
 	height: 100%;
 	border-radius: 100px;
 	background: #3A8450;
-	transition: width .4s ease;
+	/* Base width = target, so the bar is correct even if the animation is skipped. */
+	width: var(--cd-fill, 0%);
+	/* Replays on every drawer re-render (each fresh element), growing left -> right. */
+	animation: cd-reward-fill .6s ease-out both;
+}
+
+@keyframes cd-reward-fill {
+	from { width: 0; }
+	to { width: var(--cd-fill, 0%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cd-reward__fill { animation: none; }
 }
 
 .cd-reward__label {
