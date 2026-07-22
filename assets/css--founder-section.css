@@ -65,6 +65,20 @@
   display: block;
   width: 100%;
   height: auto;
+	animation: bowlRotate 150s linear infinite;
+	transform-origin: center center;
+	will-change: transform;
+}
+
+
+@keyframes bowlRotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 /* --------------------------------------------------------------------------
