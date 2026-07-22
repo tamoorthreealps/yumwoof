@@ -49,6 +49,19 @@
             {%- assign recipes_url = recipes_mf.value | default: product.url -%}
 
             <li class="fp__card" data-fp-slide>
+              {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
+              <div class="fp__hover-media">
+                {% if hover_media %}
+                  {% if hover_media.media_type == 'image' %}
+                    {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
+                  {% elsif hover_media.media_type == 'video' %}
+                    {{
+                      hover_media
+                      | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'fp__hover-video'
+                    }}
+                  {% endif %}
+                {% endif %}
+              </div>
               <h3 class="fp__title">{{ product.title }}</h3>
 
               {%- if labels_list.size > 0 -%}
