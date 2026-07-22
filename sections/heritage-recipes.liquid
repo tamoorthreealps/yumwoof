@@ -77,6 +77,11 @@
           {{ section.settings.kibble_image_2 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
         </span>
       {%- endif -%}
+      {%- if section.settings.kibble_image_3 != blank -%}
+        <span class="heritage__kibble heritage__kibble--3">
+          {{ section.settings.kibble_image_3 | image_url: width: 200 | image_tag: alt: '', loading: 'lazy' }}
+        </span>
+      {%- endif -%}
 
       <div class="heritage__card">
         <img src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017" class="shape-bg">
