@@ -160,6 +160,20 @@ margin: 0 0 20px;
   width: 52px;
   height: 52px;
   object-fit: contain;
+	animation: bowlRotate 150s linear infinite;
+	transform-origin: center center;
+	will-change: transform;
+}
+
+
+@keyframes bowlRotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .cmp__col-label {
