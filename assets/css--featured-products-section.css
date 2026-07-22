@@ -305,6 +305,10 @@
 	height: 8px;
 }
 
+.fp__arrow:disabled svg{
+	opacity:0.25;
+}
+
 .fp__dots {
 	display: flex;
 	align-items: center;
