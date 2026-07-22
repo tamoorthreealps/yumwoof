@@ -23,7 +23,7 @@
         "member_enable": true,
         "member_tag": "Yum Club Membership!",
         "member_percent": 25,
-        "member_message": "Yum Club member — {percent}% off applied",
+        "member_message": "{percent}% applied",
         "unlocked_message": "You've unlocked every reward! 🎉",
         "threshold_1_enable": true,
         "threshold_1_label": "Free Shipping",

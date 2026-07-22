@@ -15,9 +15,17 @@
 
 {%- liquid
   # Threshold progress is measured on the pre-discount subtotal, NOT cart.total_price.
-  # items_subtotal_price excludes cart-level automatic discounts and manual codes, so
-  # e.g. a 5%-off automatic discount at $160 can't drop the cart back under the tier.
+  # items_subtotal_price already excludes cart/ORDER-level automatic discounts and
+  # codes; we then add back any LINE-level automatic/code discount allocations so a
+  # discount that targets the products themselves also can't lower the threshold
+  # basis. Subscription (selling-plan) pricing is intentionally kept.
+  # Example: a $200 item with 5% off still measures the tier against $200, not $190.
   assign cart_cents = cart.items_subtotal_price
+  for cart_item in cart.items
+    for cart_alloc in cart_item.line_level_discount_allocations
+      assign cart_cents = cart_cents | plus: cart_alloc.amount
+    endfor
+  endfor
 
   # --- Active market currency: thresholds are entered per market (US/EU/UK/CH). ---
   # Pick the field suffix from the cart's currency, falling back to USD.
@@ -103,7 +111,7 @@
   # Member scheme message ({percent} is replaced here, never inside a {{ }} tag)
   assign member_message = ''
   if show_member_scheme
-    assign member_message = section.settings.member_message | default: 'Yum Club member — {percent}% off applied'
+    assign member_message = section.settings.member_message | default: '{percent}% applied'
     assign member_message = member_message | replace: '{percent}', member_percent
   endif
 
@@ -708,7 +716,7 @@
       "id": "member_message",
       "label": "Member message",
       "info": "Use {percent} for the discount value.",
-      "default": "Yum Club member — {percent}% off applied"
+      "default": "{percent}% applied"
     },
     { "type": "header", "content": "Reward thresholds (non-members)" },
     {
