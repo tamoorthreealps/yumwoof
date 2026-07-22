@@ -84,7 +84,10 @@
       {%- endif -%}
 
       <div class="heritage__card">
-        <img src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017" class="shape-bg">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017"
+          class="shape-bg"
+        >
         <ul class="heritage__ingredients">
           {%- for i in (1..4) -%}
             {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
@@ -125,49 +128,49 @@
   </div>
 
   {%- comment -%} -------- No-No list -------- {%- endcomment -%}
-   <div class="heritage__nono-marquee">
-  {%- assign nono_items = section.settings.nono_items | split: ',' -%}
-  {%- if section.settings.nono_heading != blank or nono_items.size > 0 -%}
-    <div class="heritage__nono">
-      <span class="heritage__divider" aria-hidden="true"></span>
-      {%- if section.settings.nono_heading != blank -%}
-        <h3 class="heritage__nono-heading">{{ section.settings.nono_heading }}</h3>
-      {%- endif -%}
-      {%- if section.settings.nono_subheading != blank -%}
-        <p class="heritage__nono-subheading">{{ section.settings.nono_subheading }}</p>
-      {%- endif -%}
-    </div>
-
-    {%- if nono_items.size > 0 -%}
-      {%- comment -%} Split items into two rows (alternating) for the two marquee lines. {%- endcomment -%}
-      <div class="heritage-marquee">
-        {%- for row in (1..2) -%}
-          <div
-            class="heritage-marquee__row{% if row == 2 %} heritage-marquee__row--reverse{% endif %}"
-            data-speed="{{ section.settings.marquee_speed }}"
-          >
-            <div class="heritage-marquee__track">
-              {%- for item in nono_items -%}
-                {%- assign label = item | strip -%}
-                {%- if label != blank -%}
-                  {%- assign remainder = forloop.index0 | modulo: 2 -%}
-                  {%- comment -%} Row 1 = even items, row 2 = odd items. {%- endcomment -%}
-                  {%- assign target_row = remainder | plus: 1 -%}
-                  {%- if target_row == row -%}
-                    <span class="heritage-chip">
-                      {{- x_icon -}}
-                      <span class="heritage-chip__label">{{ label }}</span></span
-                    >
-                  {%- endif -%}
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          </div>
-        {%- endfor -%}
+  <div class="heritage__nono-marquee">
+    {%- assign nono_items = section.settings.nono_items | split: ',' -%}
+    {%- if section.settings.nono_heading != blank or nono_items.size > 0 -%}
+      <div class="heritage__nono">
+        <span class="heritage__divider" aria-hidden="true"></span>
+        {%- if section.settings.nono_heading != blank -%}
+          <h3 class="heritage__nono-heading">{{ section.settings.nono_heading }}</h3>
+        {%- endif -%}
+        {%- if section.settings.nono_subheading != blank -%}
+          <p class="heritage__nono-subheading">{{ section.settings.nono_subheading }}</p>
+        {%- endif -%}
       </div>
+
+      {%- if nono_items.size > 0 -%}
+        {%- comment -%} Split items into two rows (alternating) for the two marquee lines. {%- endcomment -%}
+        <div class="heritage-marquee">
+          {%- for row in (1..2) -%}
+            <div
+              class="heritage-marquee__row{% if row == 2 %} heritage-marquee__row--reverse{% endif %}"
+              data-speed="{{ section.settings.marquee_speed }}"
+            >
+              <div class="heritage-marquee__track">
+                {%- for item in nono_items -%}
+                  {%- assign label = item | strip -%}
+                  {%- if label != blank -%}
+                    {%- assign remainder = forloop.index0 | modulo: 2 -%}
+                    {%- comment -%} Row 1 = even items, row 2 = odd items. {%- endcomment -%}
+                    {%- assign target_row = remainder | plus: 1 -%}
+                    {%- if target_row == row -%}
+                      <span class="heritage-chip">
+                        {{- x_icon -}}
+                        <span class="heritage-chip__label">{{ label }}</span></span
+                      >
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     {%- endif -%}
   </div>
-  {%- endif -%}
 </section>
 
 <script>
