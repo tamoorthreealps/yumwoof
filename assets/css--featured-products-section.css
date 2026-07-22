@@ -144,11 +144,6 @@
     object-fit:cover;
 }
 
-.fp__card>*{
-    position:relative;
-    z-index:2;
-}
-
 .fp__card:hover .fp__hover-media{
     opacity:1;
 }
