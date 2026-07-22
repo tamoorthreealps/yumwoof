@@ -198,6 +198,9 @@ font-size: 13px;
   display: block;
   width: 100%;
   height: auto;
+  animation: bowlRotate 150s linear infinite;
+    transform-origin: center center;
+    will-change: transform;
 }
 
 .heritage__kibble--1 {
