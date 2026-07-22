@@ -6,8 +6,6 @@
     --hr-text: {{ section.settings.text_color }};
     --hr-card-bg: {{ section.settings.card_background }};
     --hr-card-border: {{ section.settings.card_border }};
-    --ingredient-image-width: {{ section.settings.ingredient_image_width | default: '64' }}px;
-    --ingredient-image-height: {{ section.settings.ingredient_image_height | default: '64' }}px;
 
     {% if section.settings.background_image != blank %}
       background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
@@ -257,18 +255,6 @@
       "type": "header",
       "content": "Ingredients",
       "info": "Up to 4 highlights shown in the card. Each appears only when it has a title or image."
-    },
-    {
-      "type": "text",
-      "id": "ingredient_image_width",
-      "label": "Ingredient Icon width",
-      "default": "64"
-    },
-    {
-      "type": "text",
-      "id": "ingredient_image_height",
-      "label": "Ingredient Icon height",
-      "default": "64"
     },
     {
       "type": "image_picker",
