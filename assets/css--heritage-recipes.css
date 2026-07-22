@@ -85,6 +85,18 @@ display: inline-flex;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
+    animation: bowlRotate 10s linear infinite;
+    transform-origin: center center;
+}
+
+
+@keyframes bowlRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* --------------------------------------------------------------------------
