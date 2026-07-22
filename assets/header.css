@@ -687,3 +687,7 @@ body.yw-menu-open {
 body.yw-menu-open .yw-header--fixed {
   position: sticky;
 }
+
+body.yw-menu-open .yw-topbar {
+  z-index:1;
+}
