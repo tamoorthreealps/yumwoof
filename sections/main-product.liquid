@@ -208,6 +208,14 @@
                     <span class="visually-hidden">{{ 'products.product.sku' | t }}:</span>
                     {{- product.selected_or_first_available_variant.sku -}}
                   </p>
+                {%- when 'appstle_subscription' -%}
+                  <div class="qty freq">          
+                      <div class="frequency_title_container">
+                          <h2 class='selector-title'>Select a frequency:</h2>         
+                      </div>               
+                      {% render "appstle-subscription", product: product %}
+                      
+                  </div>
                 {%- when 'custom_liquid' -%}
                   {{ block.settings.custom_liquid }}
                 {%- when 'collapsible_tab' -%}
