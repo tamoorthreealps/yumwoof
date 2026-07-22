@@ -97,6 +97,7 @@ display: inline-flex;
 }
 
 .heritage__card {
+    position: relative;
 }
 
 .heritage__ingredients {
