@@ -683,3 +683,7 @@ font-size: 16px;
 body.yw-menu-open {
   overflow: hidden;
 }
+
+body.yw-menu-open .yw-header--fixed {
+  position: sticky;
+}
