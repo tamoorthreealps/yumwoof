@@ -85,7 +85,7 @@
   font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 0.72px;
-  text-transform: none;
+  text-transform: uppercase;
   line-height: 1.6rem;
 }
 
@@ -106,7 +106,6 @@
 .yw-topbar__link {
   font-size: 1.4rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 }
 
