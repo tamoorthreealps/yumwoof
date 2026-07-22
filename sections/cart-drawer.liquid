@@ -52,6 +52,34 @@
     assign show_member_scheme = true
   endif
 
+  # --- Membership banner ---
+  # Non-members see a clickable banner that adds the membership product (no reload).
+  # Logged-in members never see it. If the product is already in the cart, a
+  # separate "congrats" banner is shown instead.
+  assign banner_product = section.settings.banner_product
+  assign banner_variant_id = ''
+  if banner_product != blank
+    assign banner_variant_id = banner_product.selected_or_first_available_variant.id | default: banner_product.variants.first.id
+  endif
+  assign banner_product_in_cart = false
+  if banner_product != blank
+    for item in cart.items
+      if item.product.id == banner_product.id
+        assign banner_product_in_cart = true
+        break
+      endif
+    endfor
+  endif
+  assign show_membership_banner = false
+  assign show_congrats_banner = false
+  if section.settings.banner_enable and is_member == false
+    if banner_product_in_cart
+      assign show_congrats_banner = true
+    else
+      assign show_membership_banner = true
+    endif
+  endif
+
   # Reward thresholds (up to 4) live in section settings so they survive AJAX re-renders.
   assign threshold_count = 0
   assign max_threshold_cents = 0
@@ -284,24 +312,49 @@
             </div>
           {%- endif -%}
 
-          {%- comment -%} ===== BANNER OFFER ===== {%- endcomment -%}
-          {%- if section.settings.banner_enable -%}
-            {%- capture banner_inner -%}
-            {%- if section.settings.banner_image_desktop != blank -%}
-              {%- assign bd_alt = section.settings.banner_image_desktop.alt | default: '' -%}
-              {{ section.settings.banner_image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: bd_alt, loading: 'lazy' }}
+          {%- comment -%} ===== MEMBERSHIP / CONGRATS BANNER ===== {%- endcomment -%}
+          {%- if show_membership_banner -%}
+            {%- capture membership_img -%}
+              {%- if section.settings.banner_image_desktop != blank -%}
+                {%- assign bd_alt = section.settings.banner_image_desktop.alt | default: 'Add membership' -%}
+                {{ section.settings.banner_image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: bd_alt, loading: 'lazy' }}
+              {%- endif -%}
+              {%- if section.settings.banner_image_mobile != blank -%}
+                {%- assign bm_alt = section.settings.banner_image_mobile.alt | default: 'Add membership' -%}
+                {{ section.settings.banner_image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: bm_alt, loading: 'lazy' }}
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- if membership_img != blank and banner_variant_id != blank -%}
+              {%- assign banner_add_label = banner_product.title | escape -%}
+              <div class="cd-banner cd-banner--membership">
+                <button
+                  type="button"
+                  class="cd-banner__btn"
+                  data-cd-add
+                  data-variant-id="{{ banner_variant_id }}"
+                  aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_add_label }}"
+                >
+                  {{ membership_img }}
+                </button>
+              </div>
             {%- endif -%}
-            {%- if section.settings.banner_image_mobile != blank -%}
-              {%- assign bm_alt = section.settings.banner_image_mobile.alt | default: '' -%}
-              {{ section.settings.banner_image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: bm_alt, loading: 'lazy' }}
-            {%- endif -%}
-          {%- endcapture -%}
-            {%- if banner_inner != blank -%}
-              <div class="cd-banner">
-                {%- if section.settings.banner_link != blank -%}
-                  <a href="{{ section.settings.banner_link }}" class="cd-banner__link">{{ banner_inner }}</a>
+          {%- elsif show_congrats_banner -%}
+            {%- capture congrats_img -%}
+              {%- if section.settings.banner_congrats_image_desktop != blank -%}
+                {%- assign cd_alt = section.settings.banner_congrats_image_desktop.alt | default: 'Membership added' -%}
+                {{ section.settings.banner_congrats_image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: cd_alt, loading: 'lazy' }}
+              {%- endif -%}
+              {%- if section.settings.banner_congrats_image_mobile != blank -%}
+                {%- assign cm_alt = section.settings.banner_congrats_image_mobile.alt | default: 'Membership added' -%}
+                {{ section.settings.banner_congrats_image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: cm_alt, loading: 'lazy' }}
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- if congrats_img != blank -%}
+              <div class="cd-banner cd-banner--congrats">
+                {%- if section.settings.banner_congrats_link != blank -%}
+                  <a href="{{ section.settings.banner_congrats_link }}" class="cd-banner__link">{{ congrats_img }}</a>
                 {%- else -%}
-                  {{ banner_inner }}
+                  {{ congrats_img }}
                 {%- endif -%}
               </div>
             {%- endif -%}
@@ -679,7 +732,7 @@
 {
   "name": "Cart drawer",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "IN YOUR BAG" },
+    { "type": "text", "id": "title", "label": "Title", "default": "YOUR BAG" },
     { "type": "text", "id": "checkout_label", "label": "Checkout button label", "default": "PROCEED TO CHECKOUT" },
     { "type": "text", "id": "guarantee_text", "label": "Guarantee note", "default": "21-day money-back guarantee" },
     { "type": "header", "content": "Subscription (Appstle)" },
@@ -772,7 +825,7 @@
     { "type": "number", "id": "threshold_3_amount_gbp", "label": "Amount — UK (£)", "default": 270 },
     { "type": "number", "id": "threshold_3_amount_chf", "label": "Amount — CH (CHF)", "default": 330 },
     { "type": "header", "content": "Threshold 4" },
-    { "type": "checkbox", "id": "threshold_4_enable", "label": "Enable", "default": true },
+    { "type": "checkbox", "id": "threshold_4_enable", "label": "Enable", "default": false },
     { "type": "text", "id": "threshold_4_label", "label": "Milestone label", "default": "15% Off" },
     {
       "type": "text",
@@ -785,11 +838,16 @@
     { "type": "number", "id": "threshold_4_amount_eur", "label": "Amount — EU (€)", "default": 360 },
     { "type": "number", "id": "threshold_4_amount_gbp", "label": "Amount — UK (£)", "default": 360 },
     { "type": "number", "id": "threshold_4_amount_chf", "label": "Amount — CH (CHF)", "default": 440 },
-    { "type": "header", "content": "Offer banner" },
-    { "type": "checkbox", "id": "banner_enable", "label": "Show banner", "default": false },
+    { "type": "header", "content": "Membership banner" },
+    { "type": "paragraph", "content": "Shown to non-members. Clicking it adds the selected product to the cart (no page reload). Hidden for logged-in members. When the product is already in the cart, the congrats banner below is shown instead." },
+    { "type": "checkbox", "id": "banner_enable", "label": "Show banner", "default": true },
+    { "type": "product", "id": "banner_product", "label": "Product to add on click" },
     { "type": "image_picker", "id": "banner_image_desktop", "label": "Banner image (desktop)" },
     { "type": "image_picker", "id": "banner_image_mobile", "label": "Banner image (mobile)" },
-    { "type": "url", "id": "banner_link", "label": "Banner link" },
+    { "type": "header", "content": "Congrats banner (product already in cart)" },
+    { "type": "image_picker", "id": "banner_congrats_image_desktop", "label": "Congrats image (desktop)" },
+    { "type": "image_picker", "id": "banner_congrats_image_mobile", "label": "Congrats image (mobile)" },
+    { "type": "url", "id": "banner_congrats_link", "label": "Congrats banner link" },
     { "type": "header", "content": "Empty state" },
     { "type": "text", "id": "empty_heading", "label": "Heading", "default": "An empty bag won't feed itself" },
     {
