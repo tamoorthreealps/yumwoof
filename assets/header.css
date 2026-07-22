@@ -677,9 +677,6 @@ font-size: 16px;
   .yw-mobile-menu {
     display: none;
   }
-  .yw-header--fixed {
-    position:sticky;
-  }
 }
 
 /* Lock background scroll while the overlay is open */
