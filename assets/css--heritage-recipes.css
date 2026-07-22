@@ -382,7 +382,7 @@
 	.heritage__container {
 		display: grid;
 		grid-template-columns: 470px 1fr;
-		gap: 12.6rem;
+		gap: 10.6rem;
 		max-width: 1276px;
 		padding: 0 6rem 7.8rem;
 		overflow: hidden;
