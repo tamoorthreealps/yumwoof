@@ -131,24 +131,12 @@ display: inline-flex;
     background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/banner-btn-bg.svg?v=1784209988) center / 100% 100% no-repeat;
     font-family: "FFBlurProMedium";
   color: var(--hb-btn-text);
-  animation:float 4s ease-in-out infinite;
 }
 
 .hero-banner__cta:hover {
   transform:translateY(-8px) scale(1.05);
 }
 
-@keyframes float{
-
-0%,100%{
-transform:translateY(0);
-}
-
-50%{
-transform:translateY(-8px);
-}
-
-}
 
 .hero-banner__offer {
 margin: 0;
