@@ -128,7 +128,7 @@
         "subheading": "Inspired by the original canine diet and backed by rigorous sourcing, nutrition, and testing standards.",
         "button_label": "See our standards →",
         "button_link": "",
-        "bowl_image": "shopify://shop_images/Yumwoof_Ancestral_Blend_Dog_Food_Image_1_46889af8-5db7-42ba-81d5-575ab6ae3e82.png",
+        "bowl_image": "shopify://shop_images/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.png",
         "ingredient_1_image": "shopify://shop_images/f1.png",
         "ingredient_1_title": "Premium protein",
         "ingredient_1_text": "Wild-caught fish, locally sourced, non-GMO",
@@ -151,8 +151,8 @@
         "text_color": "#000000",
         "card_background": "#ffffff",
         "card_border": "#000000",
-        "kibble_image_1": "shopify://shop_images/g1.png",
-        "kibble_image_2": "shopify://shop_images/g2.png"
+        "kibble_image_1": "shopify://shop_images/heritage_icon_1.png",
+        "kibble_image_2": "shopify://shop_images/heritage_icon_2.png"
       }
     },
     "founder_section": {
