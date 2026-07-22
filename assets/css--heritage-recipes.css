@@ -395,9 +395,10 @@ margin: 0 0 .6rem;
   }
 
   .heritage__kibble--1 {
-    width: 88px;
-    top: -2.4rem;
-    right: -3.2rem;
+width: 126px;
+        height: 128px;
+        top: 4px;
+        right: -49px;
   }
 
   .heritage__kibble--2 {
