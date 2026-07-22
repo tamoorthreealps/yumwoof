@@ -257,7 +257,7 @@
                     {%- endif -%}
                     <div class="cd-reward{% if reached %} is-reached{% endif %}">
                       <span class="cd-reward__bar"
-                        ><span class="cd-reward__fill" style="width: {{ seg_pct }}%"></span
+                        ><span class="cd-reward__fill" style="--cd-fill: {{ seg_pct }}%; animation-delay: {{ forloop.index0 | times: 0.1 }}s"></span
                       ></span>
                       <span class="cd-reward__label">
                         {%- if reached -%}
