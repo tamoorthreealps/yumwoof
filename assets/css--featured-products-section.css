@@ -118,8 +118,8 @@
 	align-items: center;
 	text-align: center;
 	background-color: var(--fp-card-bg);
-	border: 1.5px solid var(--fp-card-border);
-	border-radius: 24px;
+	border: 1.28px solid var(--fp-card-border);
+	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem ;
 	transform: scale(.8803);
 	scroll-snap-stop: always;
@@ -348,6 +348,8 @@
 		padding: 4rem 3.2rem 6.4rem;
 		transform: inherit;
 		transition: .45s;
+		border-radius:24px;
+		border: 1.5px solid var(--fp-card-border);
 	}
 
 	.fp__card:hover {
