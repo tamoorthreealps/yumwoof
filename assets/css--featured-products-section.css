@@ -27,7 +27,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin: 0 0 3.2rem;
+    margin: 0 0 2.4rem;
 }
 
 .fp__heading {
@@ -297,6 +297,10 @@
 @media screen and (min-width: 990px) {
 	.fp {
 		padding: 9rem 0 13rem;
+	}
+
+	.fp__inner__head {
+		margin-bottom:3.2rem;
 	}
 
 	.fp__heading {
