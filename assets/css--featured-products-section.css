@@ -739,4 +739,17 @@ font-size: 20px;
     bottom: 18px;
 }
 
+.fp-popup__close {
+    right: 16px;
+    top: 16px;
+    width: 24px;
+    height: 20px;
+}
+
+.fp-popup__close svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 }
