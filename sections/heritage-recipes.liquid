@@ -215,6 +215,33 @@
       init(event.target);
     });
   })();
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const section = document.querySelector(".heritage");
+
+  if (!section) return;
+
+  const items = [
+    { el: document.querySelector(".heritage__kibble--1"), speed: 30 },
+    { el: document.querySelector(".heritage__kibble--2"), speed: -25 },
+    { el: document.querySelector(".heritage__kibble--3"), speed: 20 }
+  ];
+
+  function updateParallax() {
+    const rect = section.getBoundingClientRect();
+    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+    items.forEach(item => {
+      if (!item.el) return;
+
+      item.el.style.transform = `translateY(${progress * item.speed}px)`;
+    });
+  }
+
+  updateParallax();
+  window.addEventListener("scroll", updateParallax, { passive: true });
+});
 </script>
 
 {% schema %}
