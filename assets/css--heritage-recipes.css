@@ -199,20 +199,20 @@
 	display: block;
 	width: 100%;
 	height: auto;
-	animation: float1 6s ease-in-out infinite,
-               bowlRotate 150s linear infinite;
+	animation: bowlRotate 150s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
 }
 
 
-@keyframes float1{
-    0%,100%{
-        transform:translateY(0) rotate(0deg);
-    }
-    50%{
-        transform:translateY(-18px) rotate(180deg);
-    }
+@keyframes bowlRotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .heritage__kibble--1 {

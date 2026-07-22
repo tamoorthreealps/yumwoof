@@ -215,28 +215,6 @@
       init(event.target);
     });
   })();
-
-
-  document.addEventListener("DOMContentLoaded", () => {
-  const section = document.querySelector(".heritage");
-
-  if (!section) return;
-
-  const icons = document.querySelectorAll(".heritage__kibble");
-
-  function parallax() {
-    const sectionTop = section.offsetTop;
-    const scroll = window.scrollY - sectionTop;
-
-    icons.forEach((icon, index) => {
-      const speed = [0.08, -0.06, 0.05][index] || 0.05;
-      icon.style.transform = `translateY(${scroll * speed}px)`;
-    });
-  }
-
-  window.addEventListener("scroll", parallax, { passive: true });
-  parallax();
-});
 </script>
 
 {% schema %}
