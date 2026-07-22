@@ -144,6 +144,10 @@
     object-fit:cover;
 }
 
+.fp__hover-image img {
+	border-radius:20px;
+}
+
 .fp__card>*{
     position:relative;
     z-index:2;
@@ -390,6 +394,10 @@
 		transition: .45s;
 		border-radius:24px;
 		border: 1.5px solid var(--fp-card-border);
+	}
+	
+	.fp__hover-image img {
+		border-radius:24px;
 	}
 
 	/* .fp__card:hover {
