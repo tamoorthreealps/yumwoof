@@ -156,7 +156,8 @@ margin: 0;
 }
   .hero-banner__inner {
     min-height: var(--hb-min-height-mobile, 480px);
-    padding: 3.6rem 2rem;
+    padding: 12.8rem 2.4rem 2.4rem;
+        text-align: center;
   }
 
   .hero-banner__heading {
@@ -173,6 +174,7 @@ margin: 0;
   .hero-banner__cta-wrap {
     gap: 1rem;
     margin-top: 20px;
+            align-items: center;
 }
 
       .hero-banner__cta {
