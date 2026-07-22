@@ -149,17 +149,17 @@
     z-index:2;
 }
 
-.fp__card:hover .fp__hover-media{
+.fp__card__hover:hover .fp__hover-media{
     opacity:1;
 }
 
-.fp__card:hover .fp__title, .fp__card:hover .fp__label,
-.fp__card:hover .fp__desc, .fp__card:hover .fp__recipes{
+.fp__card__hover:hover .fp__title, .fp__card__hover:hover .fp__label,
+.fp__card__hover:hover .fp__desc, .fp__card__hover:hover .fp__recipes{
     color:#FFF9EF;
 	border-color:#FFF9EF;
 }
 
-.fp__card:hover .fp__img {
+.fp__card__hover:hover .fp__img {
 	opacity:0;
 }
 
