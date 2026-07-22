@@ -203,6 +203,16 @@ font-size: 13px;
     will-change: transform;
 }
 
+
+@keyframes bowlRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .heritage__kibble--1 {
   width: 64px;
   top: -1.6rem;
@@ -224,6 +234,21 @@ font-size: 13px;
     z-index: -1;
 }
 
+.heritage__kibble--3 img {
+    animation: iconRotate 150s linear infinite;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+
+@keyframes iconRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
 /* --------------------------------------------------------------------------
    No-no list header
    -------------------------------------------------------------------------- */
