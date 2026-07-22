@@ -103,7 +103,7 @@
         "heading": "Explore our air dried food",
         "uppercase_heading": true,
         "button_label": "SHOP ALL PRODUCTS",
-        "button_link": "",
+        "button_link": "shopify://collections/all",
         "products": [
           "ancestral-blend",
           "elevated-harvest",
