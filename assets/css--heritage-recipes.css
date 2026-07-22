@@ -334,10 +334,12 @@ margin: 0 0 .6rem;
   }
 
   .heritage__container {
-    display: grid;
+        display: grid;
         grid-template-columns: 470px 1fr;
         gap: 12.6rem;
-         padding-bottom:7.8rem;
+        max-width: 1276px;
+        padding: 0 6rem 7.8rem;
+        overflow: hidden;
   }
 
   .heritage__intro {
