@@ -58,8 +58,16 @@
   # separate "congrats" banner is shown instead.
   assign banner_product = section.settings.banner_product
   assign banner_variant_id = ''
+  assign banner_selling_plan_id = ''
   if banner_product != blank
-    assign banner_variant_id = banner_product.selected_or_first_available_variant.id | default: banner_product.variants.first.id
+    assign banner_variant = banner_product.selected_or_first_available_variant | default: banner_product.variants.first
+    assign banner_variant_id = banner_variant.id
+    # Membership products are subscriptions (requires_selling_plan) — the add MUST
+    # include a selling plan, otherwise /cart/add.js rejects it.
+    assign banner_alloc = banner_variant.selling_plan_allocations.first
+    if banner_alloc != blank
+      assign banner_selling_plan_id = banner_alloc.selling_plan.id
+    endif
   endif
   assign banner_product_in_cart = false
   if banner_product != blank
@@ -251,11 +259,12 @@
           </div>
         {%- else -%}
           {%- comment -%} ===== REWARDS: member scheme OR spend-based tiers ===== {%- endcomment -%}
+          {%- comment -%} Hide the spend tiers for members AND when the membership product is in the cart. {%- endcomment -%}
           {%- if show_member_scheme -%}
             <div class="cd-rewards cd-rewards--member">
               <p class="cd-rewards__msg">{{ member_message }}</p>
             </div>
-          {%- elsif threshold_count > 0 -%}
+          {%- elsif threshold_count > 0 and banner_product_in_cart == false -%}
             <div class="cd-rewards">
               <p class="cd-rewards__msg">{{ reward_message }}</p>
 
@@ -332,6 +341,7 @@
                   class="cd-banner__btn"
                   data-cd-add
                   data-variant-id="{{ banner_variant_id }}"
+                  data-selling-plan="{{ banner_selling_plan_id }}"
                   aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_add_label }}"
                 >
                   {{ membership_img }}
