@@ -48,7 +48,7 @@
             {%- endif -%}
             {%- assign recipes_url = recipes_mf.value | default: product.url -%}
             {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
-            <li class="fp__card" data-fp-slide>
+            <li class="fp__card {% if hover_media %}fp__card__hover{% endif %}" data-fp-slide>
               <div class="fp__hover-media">
                 {% if hover_media %}
                   {% if hover_media.media_type == 'image' %}
