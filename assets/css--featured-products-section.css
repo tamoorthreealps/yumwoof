@@ -258,6 +258,11 @@
 }
 
 
+.fp__card__hover:hover .fp__shop{
+	background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button.svg?v=1784734468") center / 100% 100% no-repeat;
+}
+
+
 .fp__shop-label {
 	font-size: 12.75px;
 	line-height: 20.4px;
