@@ -359,10 +359,11 @@ margin: 0 0 .6rem;
   }
 
   .heritage__bowl {
-    bottom: -4px;
+        bottom: -324px;
         top: auto;
         margin: 0;
-        width: 590px;
+        width: 688px;
+        left: 0;
   }
 
   .heritage__card-wrap {
