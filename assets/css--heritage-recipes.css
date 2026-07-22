@@ -107,6 +107,11 @@ display: inline-flex;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.4rem;
+  position: absolute;
+  top: 50%;
+  left: 73px;
+  transform: translate(0, -50%);
+  width: 100%;
 }
 
 .heritage__ingredient {
@@ -344,6 +349,7 @@ margin: 0 0 .6rem;
   .heritage__ingredients {
     grid-template-columns: 1fr 1fr;
     gap: 4.4rem 3.2rem;
+    max-width: 480px;
   }
 
   /* Desktop cells stack the image above the text */
