@@ -348,12 +348,13 @@ body.is-open .yw-nav-outer {
   gap: 9.5rem;
   align-items: center;
   padding: 4.8rem 9.6rem;
-  background: rgba(255, 249, 239, 0.9);
+  background: rgba(255, 249, 239, 0.85);
   border-radius: 24px;
   max-width: 1392px;
   margin: 0 auto;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+  border: 1.5px solid #000000;
   /*box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); */
 }
 
