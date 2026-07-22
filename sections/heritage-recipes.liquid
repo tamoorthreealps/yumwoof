@@ -222,25 +222,20 @@
 
   if (!section) return;
 
-  const items = [
-    { el: document.querySelector(".heritage__kibble--1"), speed: 30 },
-    { el: document.querySelector(".heritage__kibble--2"), speed: -25 },
-    { el: document.querySelector(".heritage__kibble--3"), speed: 20 }
-  ];
+  const icons = document.querySelectorAll(".heritage__kibble");
 
-  function updateParallax() {
-    const rect = section.getBoundingClientRect();
-    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+  function parallax() {
+    const sectionTop = section.offsetTop;
+    const scroll = window.scrollY - sectionTop;
 
-    items.forEach(item => {
-      if (!item.el) return;
-
-      item.el.style.transform = `translateY(${progress * item.speed}px)`;
+    icons.forEach((icon, index) => {
+      const speed = [0.08, -0.06, 0.05][index] || 0.05;
+      icon.style.transform = `translateY(${scroll * speed}px)`;
     });
   }
 
-  updateParallax();
-  window.addEventListener("scroll", updateParallax, { passive: true });
+  window.addEventListener("scroll", parallax, { passive: true });
+  parallax();
 });
 </script>
 
