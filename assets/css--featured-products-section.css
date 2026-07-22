@@ -665,7 +665,7 @@ font-size: 20px;
 @media(max-width:991px){
 
        .fp-popup__panel {
-        overflow: auto;
+        overflow-y: auto;
         padding: 40px 28px 26px;
         width: 96vw;
         flex-direction: column;
