@@ -1,0 +1,201 @@
+{% liquid
+  assign donation_prod = false
+  if product.id ==  8223924453594
+     assign donation_prod = true  
+  endif
+  assign stay_app_id = '5859381'
+  assign appstle_app_id = 'appstle'
+%}
+
+{% comment %}
+   if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+    assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+  endif
+{% endcomment %}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant | default: product.variants.first
+  assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+-%}
+
+{% comment %}
+  Original hardcoded excluded selling plan group IDs (for reference):
+  (Extra 5% off) a8fcc618a7790f12bd8a5e11376b3f32e4b65f57,(Extra 10% off)71f6f6ce31f17f5485f09eed074c90ffb0de1cdb,(Extra 15% off) 9e7085ccf8105277765eac3eda3065a1ef7f42ac, (25% off member discount) 210e68c42d8e0f62e68c9e8675bc0072dba4b838,ffbbcafe4bff7277533745316f11ec066fff1370
+{% endcomment %}
+{%- liquid
+  assign excluded_sp_groups = ''
+  for spg in product.selling_plan_groups
+    comment
+      Exclude selling plan groups that do NOT contain "Subscribe & Save" in their name
+      This will include all variations: "Subscribe & Save", "Subscribe & Save 5%", "Subscribe & Save 10%", "Subscribe & Save 20%", etc.
+    endcomment
+    unless spg.name contains 'Subscribe & Save'
+      if excluded_sp_groups == ''
+        assign excluded_sp_groups = spg.id
+      else
+        assign excluded_sp_groups = excluded_sp_groups | append: ',' | append: spg.id
+      endif
+    endunless
+  endfor
+  if excluded_sp_groups != ''
+    assign excluded_sp_groups = excluded_sp_groups | split: ','
+  else
+    assign excluded_sp_groups = '' | split: ','
+  endif
+-%}
+
+
+{% assign exclude_sp_names = 'Delivery every 1 week,Delivery every 2 weeks,Delivery every 5 weeks,Delivery every 1 month,Delivery every 2 months,Delivery every 3 months'
+  | split: ','
+%}
+{% assign _selling_plan_group_ids = '%' %}
+{% for selling_plan in product.selling_plan_groups %}
+  {% if selling_plan.app_id == appstle_app_id %}
+    {% unless excluded_sp_groups contains selling_plan.id %}
+      {% for spa in current_variant.selling_plan_allocations %}
+        {% if spa.selling_plan_group_id == selling_plan.id %}
+          {% assign rtx_selling_plan = selling_plan %}
+        {% endif %}
+      {% endfor %}
+      {% assign _selling_plan_group_ids = _selling_plan_group_ids | append: ',' | append: selling_plan.id %}
+    {% endunless %}
+  {% endif %}
+{% endfor %}
+{% assign selling_plan_group_ids = _selling_plan_group_ids | replace: '%,', '' | split: ',' | json %}
+{% assign first_selling_plan_allocation = product.variants.first.selling_plan_allocations[1] %}
+{% if rtx_selling_plan.name %}
+  {% comment %} <input type='hidden' name="id" id="variant_{{ product.id }}" value="{{ current_variant.id }}"> {% endcomment %}
+  <input
+    type="hidden"
+    name="selling_plan"
+    id="rtx_selling_plan_{{ product.id }}"
+    value="{{ current_selling_plan_allocation.selling_plan.id | default: '' }}"
+  >
+  <div class="rtx_buy_box" id="rtx_buy_box_{{ product.id }}">
+    <div class="rtx_container" data-product="{{ product | json }}">
+      <div class="frequency_options_container">
+        <div class="frequency_option_container bg_selected">
+          <label class="freq_label" for="subsave_sp">
+            <div class="freq_selection_wrapper">
+              <div class="freq_details_container">
+                <div class="freq_radio_container">
+                  <input id="subsave_sp" class="freq_radio" type="radio" name="purchase_plan" value="subsave" checked>
+                </div>
+                <div class="freq_txt_container">
+                  <div class="freq_txt">
+                    <div class="freq_sp_txts_container">
+                      <span id="subsave_sp_txt" class="freq_sp_txt">{% if donation_prod == true %}Donate monthly{% else %}{{ rtx_selling_plan.name }}{% endif %}</span>
+                      <span class="freq_dsc_txt" id="subsave_dsc"></span>
+                    </div>
+                  </div>
+                  <div class="delivery_options_container {% if donation_prod == true %}visually-hidden{% endif %}">
+                    <label for="delivery_opt" class="visually-hidden">Delivery frequency</label>
+                    <select id="delivery_opt" class="delivery_option" aria-label="Delivery frequency">
+                      {% for sp in current_variant.selling_plan_allocations %}
+                        {% if selling_plan_group_ids contains sp.selling_plan_group_id %}
+                          {% unless exclude_sp_names contains sp.selling_plan.name %}                            
+                            <option value="{{ sp.selling_plan.id }}">{{ sp.selling_plan.name | replace:"Delivery","" }}</option>
+                          {% endunless %}
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>          
+            {% if donation_prod == false %}
+            <div class="freq_pricing_wrapper">
+              {% comment %} <div class="freq_pricing">
+                <div class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="sub_price_member"></span></div>
+                <div class="total_price freq_pricing_txt yum_club">
+                  <img class="yum_club_img biege" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_biege.png?v=1705513403">
+                  <img class="yum_club_img black" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_black.png?v=1705513262">
+                </div>
+              </div>
+              <div class="vertical_separator"></div> {% endcomment %}
+              <div class="freq_pricing">
+                <span class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="sub_price"></span></span>
+                {% comment %} <div class="total_price freq_pricing_txt">non-member</div> {% endcomment %}
+              </div>
+            </div>
+            {% endif %}
+          </label>
+        </div>
+        <div class="frequency_option_container">
+          <label class="freq_label" for="onetime_sp">
+            <div class="freq_selection_wrapper">
+              <div class="freq_details_container">
+                <div class="freq_radio_container">
+                  <input id="onetime_sp" class="freq_radio" type="radio" name="purchase_plan" value="onetime">
+                </div>
+                <div class="freq_txt_container">
+                  <div class="freq_txt">
+                    <div class="freq_sp_txts_container">
+                      <span class="freq_sp_txt">{% if donation_prod == true %}Donate once{% else %} One time purchase {% endif %}</span>
+                      <span class="freq_dsc_txt" id="onetime_dsc"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if donation_prod == false %}
+            <div class="freq_pricing_wrapper">
+              {% comment %} <div class="freq_pricing">
+                <span class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="onetime_price_member"></span></span>
+                <div class="total_price freq_pricing_txt yum_club">
+                  <img class="yum_club_img biege" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_biege.png?v=1705513403">
+                  <img class="yum_club_img black" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/theyumclub_black.png?v=1705513262">                
+                </div>
+              </div>
+              <div class="vertical_separator"></div> {% endcomment %}
+              <div class="freq_pricing">
+                <span class="total_price"><span class="currency">{{ localization.country.currency.symbol }}</span><span id="onetime_price"></span></span>
+                {% comment %} <div class="total_price freq_pricing_txt">non-member</div> {% endcomment %}
+              </div>
+            </div>
+            {% endif %}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+<script>
+  
+  
+  
+  
+  
+  
+  
+  var product = {{ product | json }}
+  var currentProductId = "{{ product.id }}";
+  
+  function setSellingPlan(prod) {
+      var selected = document.querySelector('input[name="purchase_plan"]:checked');         
+      if (selected.value === "onetime") {
+          document.querySelector(`#rtx_selling_plan_${prod.id}`).value = "";
+      } else {
+          document.querySelector(`#rtx_selling_plan_${prod.id}`).value = document.querySelector(`.delivery_option`).value;
+      } 
+  }
+  setSellingPlan(product)
+  document.querySelector(".delivery_option").addEventListener("change", function (e) {
+      setSellingPlan(product);
+  });
+  
+  document.querySelectorAll('.frequency_options_container').forEach((div)=> {
+      div.addEventListener('click', function(e) {         
+          if(e.target.value === 'subsave'){             
+              document.querySelector(`#rtx_selling_plan_${product.id}`).value = document.querySelector('.delivery_option').value
+          } else if (e.target.value === 'onetime') {              
+              var spgOneTimeValue = "";
+              document.querySelector(`#rtx_selling_plan_${currentProductId}`).value = spgOneTimeValue; 
+              product.variants.forEach((prod)=> {
+                  if(prod.title === "One-time purchase - Regular pricing") {
+                      {% comment %} document.querySelector(`#variant_${currentProductId}`).value = prod.id;  {% endcomment %}
+                  }
+              })
+          }
+      })
+  })
+</script>
