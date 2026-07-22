@@ -215,24 +215,6 @@
       init(event.target);
     });
   })();
-
-
-
-  const heritage = document.querySelector(".heritage");
-
-if (heritage) {
-  const icons = document.querySelectorAll(".heritage__kibble");
-
-  window.addEventListener("scroll", () => {
-    const rect = heritage.getBoundingClientRect();
-    const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-
-    icons.forEach((icon, index) => {
-      const speed = [30, -20, 15][index] || 20;
-      icon.style.transform = `translateY(${progress * speed}px)`;
-    });
-  });
-}
 </script>
 
 {% schema %}
