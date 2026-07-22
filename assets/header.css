@@ -410,17 +410,19 @@ margin: 0;
 }
 
 .yw-mega-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3.2rem;
-  padding: 4rem 1.6rem 3.2rem;
-  background-color: #ffffff;
-  border: 1.5px solid var(--yw-nav-border);
-  border-radius: 19px;
-  text-decoration: none;
-  color: var(--yw-nav-text);
-  transition: transform 0.15s ease;
+display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.2rem;
+    padding: 4rem 1.6rem 3.2rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1.5px solid var(--yw-nav-border);
+    border-radius: 19px;
+    text-decoration: none;
+    color: var(--yw-nav-text);
+    transition: transform .15s ease;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .yw-mega-card:hover {
