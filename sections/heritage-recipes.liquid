@@ -79,7 +79,7 @@
       {%- endif -%}
 
       <div class="heritage__card">
-        <img src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017" class="shape-bg">
+        {% comment %} <img src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017" class="shape-bg"> {% endcomment %}
         <ul class="heritage__ingredients">
           {%- for i in (1..4) -%}
             {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}

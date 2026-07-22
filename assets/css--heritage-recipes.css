@@ -96,8 +96,15 @@ display: inline-flex;
   z-index: 1;
 }
 
+/* .heritage__card {
+    position: relative;
+} */
+
 .heritage__card {
     position: relative;
+    background: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017')
+      center center / 100% 100% no-repeat;
+    aspect-ratio: 600 / 637;
 }
 
 .shape-bg {
