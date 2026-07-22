@@ -159,6 +159,10 @@ margin: 0;
     padding: 12.8rem 2.4rem 2.4rem;
         text-align: center;
   }
+  .hero-banner--bottom .hero-banner__inner {
+    justify-content: flex-start;
+}
+
 
   .hero-banner__heading {
             font-size: 48px;
