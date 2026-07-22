@@ -665,23 +665,11 @@ font-size: 20px;
 @media(max-width:991px){
 
     .fp-popup__panel{
-        width:95vw;
-        display:block;
-        max-height:90vh;
-        overflow:auto;
-    }
-
-    .fp-popup__left,
-    .fp-popup__right{
-        width:100%;
-    }
-
-    .fp-popup__left{
-        padding:28px;
-    }
-
-    .fp-popup__right{
-        height:280px;
+        overflow: auto;
+        padding: 40px 28px 26px;
+        width: 96vw;
+        flex-direction: column;
+        gap: 28px;
     }
 
 }
