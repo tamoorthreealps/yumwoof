@@ -125,6 +125,7 @@
   </div>
 
   {%- comment -%} -------- No-No list -------- {%- endcomment -%}
+   <div class="heritage__nono-marquee">
   {%- assign nono_items = section.settings.nono_items | split: ',' -%}
   {%- if section.settings.nono_heading != blank or nono_items.size > 0 -%}
     <div class="heritage__nono">
@@ -165,6 +166,7 @@
         {%- endfor -%}
       </div>
     {%- endif -%}
+  </div>
   {%- endif -%}
 </section>
 
