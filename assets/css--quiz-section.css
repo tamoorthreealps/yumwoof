@@ -147,8 +147,7 @@ margin: 1.2rem 0 0;
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .quiz__inner__container {
-    padding: 146px 6rem 122px;
-    max-width:1276px;
+    padding: 146px 2rem 122px;
 }
 
   .quiz__heading {
