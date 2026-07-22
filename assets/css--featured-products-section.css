@@ -282,6 +282,14 @@
 	background: var(--fp-text);
 }
 
+
+.mobile_fp__button {
+	display:block;
+}
+
+.desktop_fp__button {
+	display:none;
+}
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
@@ -387,8 +395,12 @@
 		letter-spacing: 1.28px;
 	}
 
-	.fp__nav {
+	.fp__nav, .mobile_fp__button {
 		display: none;
+	}
+
+	.desktop_fp__button {
+		display:inline;
 	}
 }
 
