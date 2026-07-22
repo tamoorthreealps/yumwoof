@@ -402,9 +402,10 @@ width: 126px;
   }
 
   .heritage__kibble--2 {
-    width: 80px;
-    bottom: -2.4rem;
-    left: -2.4rem;
+    width: 128px;
+        bottom: -26px;
+        left: auto;
+        right: 40px;
   }
 
   .heritage__nono {
