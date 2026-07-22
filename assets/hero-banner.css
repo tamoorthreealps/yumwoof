@@ -165,10 +165,9 @@ margin: 0;
 
 
   .hero-banner__heading {
-            font-size: 48px;
-        line-height: 48px;
-        letter-spacing: -0.96px;
-        margin: 0 0 16px;
+                   font-size: 56px;
+        line-height: 56px;
+        letter-spacing: -1.12px;
   }
 
   .hero-banner__subheading {
@@ -176,20 +175,19 @@ margin: 0;
         line-height: 24px;
   }
   .hero-banner__cta-wrap {
-    gap: 1rem;
-    margin-top: 20px;
-            align-items: center;
+    gap: 1.2rem;
+        align-items: center;
 }
 
-      .hero-banner__cta {
-        padding: 26px 36.2px 22px;
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.64px;
-        background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/banner-btn-bg-mobile.svg?v=1784209988) center / 100% 100% no-repeat;
+          .hero-banner__cta {
+        padding: 22px 29.93px 22px;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: .56px;
+        background: url(/cdn/shop/files/banner-btn-bg-mobile.svg?v=1784209988) center / 100% 100% no-repeat;
     }
     .hero-banner__offer {
-    font-size: 14px;
-    line-height: 20px;
-}
+        font-size: 14px;
+        line-height: 20px;
+    }
 }
