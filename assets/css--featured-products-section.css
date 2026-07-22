@@ -156,6 +156,7 @@
 .fp__card:hover .fp__title, .fp__card:hover .fp__label,
 .fp__card:hover .fp__desc, .fp__card:hover .fp__recipes{
     color:#FFF9EF;
+	border-color:#FFF9EF;
 }
 
 .fp__title {
