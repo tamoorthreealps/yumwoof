@@ -85,10 +85,10 @@ display: inline-flex;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-    animation: bowlRotate 200s linear infinite;
+    animation: bowlRotate 120s linear infinite;
     transform-origin: center center;
+    will-change: transform;
 }
-
 
 @keyframes bowlRotate {
     from {
