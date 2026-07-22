@@ -114,28 +114,30 @@
    Navbar shell
    -------------------------------------------------------------------------- */
 .yw-nav-outer {
-  max-width: 151.2rem;
   margin: 0 auto;
-  padding: 1.2rem 6rem 0;
   position: relative;
+  background: #fff9efcc;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-bottom: 1.5px solid var(--yw-nav-border);
+  border-top: 1.5px solid var(--yw-nav-border);
 }
 
+body.is-open .yw-nav-outer {
+  background-color: #fff9ef;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
 .yw-nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 2.4rem;
-  padding: 0 2.4rem;
-  background-color: rgba(255, 249, 239, 0.8);
-  border: 1.5px solid var(--yw-nav-border);
-  border-radius: var(--yw-radius);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-}
-
-body.is-open .yw-nav {
-  background-color: rgba(255, 249, 239, 1);
-  backdrop-filter: none;
+  padding: 0 6rem;
+  border-radius: 0;
+  max-width: 151.2rem;
+  margin: 0 auto;
+  border-left: 0;
 }
 
 /* --------------------------------------------------------------------------
