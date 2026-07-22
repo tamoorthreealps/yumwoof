@@ -159,6 +159,10 @@
 	border-color:#FFF9EF;
 }
 
+.fp__card:hover .fp__img {
+	opacity:0;
+}
+
 .fp__title {
 	    margin: 0 0 8px;
     font-weight: 400;
