@@ -100,6 +100,12 @@ display: inline-flex;
     position: relative;
 }
 
+.shape-bg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .heritage__ingredients {
   list-style: none;
   margin: 0;
@@ -107,11 +113,12 @@ display: inline-flex;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.4rem;
-  position: absolute;
-  top: 50%;
-  left: 73px;
-  transform: translate(0, -50%);
-  width: 100%;
+    position: absolute;
+    inset: 0;
+    padding: 12% 11%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 6%;
 }
 
 .heritage__ingredient {
