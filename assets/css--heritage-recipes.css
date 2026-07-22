@@ -85,7 +85,7 @@ display: inline-flex;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-    animation: bowlRotate 10s linear infinite;
+    animation: bowlRotate 90s linear infinite;
     transform-origin: center center;
 }
 
