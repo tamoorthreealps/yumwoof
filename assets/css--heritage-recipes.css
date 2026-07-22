@@ -97,7 +97,6 @@ display: inline-flex;
 }
 
 .heritage__card {
-  padding: 3.2rem 2.4rem;
 }
 
 .heritage__ingredients {
@@ -339,11 +338,6 @@ margin: 0 0 .6rem;
 
   .heritage__card-wrap {
     margin-top: 0;
-  }
-
-  .heritage__card {
-    padding: 4.8rem 4rem;
-    border-radius: 40px;
   }
 
   .heritage__ingredients {
