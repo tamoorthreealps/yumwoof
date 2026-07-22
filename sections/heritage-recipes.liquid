@@ -6,6 +6,8 @@
     --hr-text: {{ section.settings.text_color }};
     --hr-card-bg: {{ section.settings.card_background }};
     --hr-card-border: {{ section.settings.card_border }};
+    --ingredient-image-width: {{ section.settings.ingredient_image_width | default: '64' }}px;
+    --ingredient-image-height: {{ section.settings.ingredient_image_height | default: '64' }}px;
 
     {% if section.settings.background_image != blank %}
       background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');

@@ -128,8 +128,8 @@ display: inline-flex;
 
 .heritage__ingredient-media {
   flex: none;
-  width: auto;
-  height:64px;
+  width: var(--ingredient-image-width);
+  height: var(--ingredient-image-height);
   display: flex;
   align-items: center;
   justify-content: center;
