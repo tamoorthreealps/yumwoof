@@ -651,16 +651,20 @@ font-size: 16px;
 }
 
 .yw-mm-link__img {
-  flex: 0 0 auto;
-  width: 4.8rem;
-  height: 4.8rem;
-  object-fit: contain;
+    flex: 0 0 auto;
+    width: 5.6rem;
+    height: 5.6rem;
+    object-fit: contain;
+    border: 1px solid #000;
+    border-radius: 8px;
+    background: #fff;
+    padding: 8px 10px;
 }
 
 /* Link-with-cards block */
 .yw-mm-cards-block {
-  padding: 1.6rem 0 2rem;
-  border-top: 1px solid #000;
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .yw-mm-cards__head {
