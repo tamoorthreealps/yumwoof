@@ -333,6 +333,7 @@
         "uppercase_heading": true,
         "body": "<p>We use omega-3 rich Cocomega™ superfats instead of heavily processed seed oils.</p>",
         "button_label": "Explore Cocomega →",
+        "button_label_mobile": "Explore Cocomega",
         "button_link": "",
         "image": "shopify://shop_images/Additional_Image_1.png",
         "badge_image": "shopify://shop_images/cocomega-badge.svg",
@@ -375,6 +376,7 @@
         "perk_W4je7p",
         "perk_q3zz67"
       ],
+      "disabled": true,
       "name": "Explore membership",
       "settings": {
         "eyebrow": "Membership has its perks",
@@ -397,6 +399,8 @@
       "type": "quiz-section",
       "name": "Quiz call to action",
       "settings": {
+        "background_image": "shopify://shop_images/Membership_Section_Background.png",
+        "background_image_mobile": "shopify://shop_images/Quiz_CTA_Background.png",
         "heading": "Your dog's food is our life's work.",
         "uppercase_heading": true,
         "subheading": "Take our quiz to find the recipe that's right for your dog.",
@@ -405,7 +409,7 @@
         "offer_text": "Get 30% Off and Free Shipping.",
         "decor_left": "shopify://shop_images/Group_82.png",
         "decor_right": "shopify://shop_images/Group_83_1.png",
-        "background_color": "#1a1a1a",
+        "background_color": "#FFF9EF",
         "text_color": "#fff9ef"
       }
     },
