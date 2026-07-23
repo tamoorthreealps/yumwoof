@@ -10,6 +10,9 @@
 
 <section class="founder founder--image-{{ section.settings.image_position }}{% if section.settings.uppercase_heading %} founder--uppercase{% endif %}">
   <div class="founder__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="founder__heading founder__heading_mobile">{{ section.settings.heading }}</h2>
+    {%- endif -%}
     <div class="founder__media">
       {%- if section.settings.image != blank -%}
         {%- assign founder_alt = section.settings.image.alt | default: section.settings.heading -%}
@@ -41,7 +44,7 @@
 
     <div class="founder__content">
       {%- if section.settings.heading != blank -%}
-        <h2 class="founder__heading">{{ section.settings.heading }}</h2>
+        <h2 class="founder__heading founder__heading_desktop">{{ section.settings.heading }}</h2>
       {%- endif -%}
 
       {%- if section.settings.body != blank -%}
