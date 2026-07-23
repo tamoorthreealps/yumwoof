@@ -162,9 +162,16 @@
 /* Design: gallery 824 / info 504, 64px gap, 60px page margins. */
 @media screen and (min-width: 990px) {
   .product.grid--2-col-tablet {
-    grid-template-columns: minmax(0, 824fr) minmax(0, 504fr);
+    display: grid;
+    grid-template-columns: 824fr 504fr;
     column-gap: 6.4rem;
     align-items: start;
+  }
+  /* Dawn caps the wrappers at 65%/35% of their own track (product--large/medium),
+     which squashes the columns — remove so the grid alone controls the widths. */
+  .product.grid--2-col-tablet > .product__media-wrapper,
+  .product.grid--2-col-tablet > .product__info-wrapper {
+    max-width: none;
   }
   .product__info-wrapper {
     padding-top: 0;
@@ -204,29 +211,33 @@
     overflow: hidden;
   }
 
-  /* One image at a time, square, horizontally swipeable */
+  /* One image at a time: stack all media and show only the active one.
+     (Dawn's slider-component blocks native scroll on desktop, so the arrows
+     switch the active image via setActiveMedia instead — see pdp-gallery.js.) */
   .pdp-gallery .product__media-list {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0;
+    position: relative;
+    display: block;
     margin: 0;
     aspect-ratio: 1 / 1;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-  }
-  .pdp-gallery .product__media-list::-webkit-scrollbar {
-    display: none;
+    overflow: hidden;
   }
   .pdp-gallery .product__media-item {
-    flex: 0 0 100%;
+    position: absolute;
+    inset: 0;
     width: 100%;
     max-width: 100%;
-    scroll-snap-align: center;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .pdp-gallery .product__media-item.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
   }
   .pdp-gallery .product__media-item .product__media {
     background: transparent;
@@ -244,9 +255,9 @@
     border-radius: 0;
   }
 
-  /* Counter + arrows, bottom-left over the card */
-  .pdp-gallery .slider-buttons {
-    display: flex;
+  /* Counter + arrows, bottom-left over the card (Dawn hides these on desktop) */
+  .pdp-gallery media-gallery .slider-buttons {
+    display: flex !important;
     position: absolute;
     left: 2.4rem;
     bottom: 2.4rem;
