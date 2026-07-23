@@ -56,13 +56,13 @@
         {%- if clabel != blank -%}
           {%- assign cicon = section.settings[icon_key] -%}
           <button type="button" class="cmp__tab" role="tab" data-comp-index="{{ i }}">
-            {%- if cicon != blank -%}
+            {% comment %} {%- if cicon != blank -%}
               {{
                 cicon
                 | image_url: width: 80
                 | image_tag: class: 'cmp__tab-icon', alt: '', widths: '40, 60, 80', loading: 'lazy'
               }}
-            {%- endif -%}
+            {%- endif -%} {% endcomment %}
             <span>{{ clabel }}</span>
           </button>
         {%- endif -%}
@@ -87,7 +87,18 @@
                 section.settings.brand_logo
                 | image_url: width: 260
                 | image_tag:
-                  class: 'cmp__brand-logo',
+                  class: 'cmp__brand-logo cmp__brand-logo_desktop',
+                  alt: section.settings.brand_label,
+                  widths: '130, 200, 260',
+                  loading: 'lazy'
+              }}
+            {%- endif -%}
+            {%- if section.settings.brand_logo_mobile != blank -%}
+              {{
+                section.settings.brand_logo_mobile
+                | image_url: width: 260
+                | image_tag:
+                  class: 'cmp__brand-logo cmp__brand-logo_mobile',
                   alt: section.settings.brand_label,
                   widths: '130, 200, 260',
                   loading: 'lazy'
@@ -214,6 +225,42 @@
       init(event.target);
     });
   })();
+
+
+  function equalComparisonRows() {
+  document.querySelectorAll(".cmp").forEach(section => {
+    const cols = [...section.querySelectorAll(".cmp__col")];
+    if (!cols.length) return;
+
+    const rows = cols[0].querySelectorAll(".cmp__cell");
+
+    rows.forEach((_, index) => {
+      let maxHeight = 0;
+      const cells = [];
+
+      cols.forEach(col => {
+        const cell = col.querySelectorAll(".cmp__cell")[index];
+        if (!cell) return;
+
+        cell.style.height = "auto";
+        cell.style.flexBasis = "auto";
+
+        cells.push(cell);
+        maxHeight = Math.max(maxHeight, cell.offsetHeight);
+      });
+
+      cells.forEach(cell => {
+        cell.style.height = maxHeight + "px";
+        cell.style.flexBasis = maxHeight + "px";
+      });
+    });
+  });
+}
+
+window.addEventListener("load", equalComparisonRows);
+window.addEventListener("resize", equalComparisonRows);
+
+document.addEventListener("shopify:section:load", equalComparisonRows);
 </script>
 
 {% schema %}
@@ -259,7 +306,12 @@
     {
       "type": "image_picker",
       "id": "brand_logo",
-      "label": "Logo"
+      "label": "Logo (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_logo_mobile",
+      "label": "Logo (Mobile)"
     },
     {
       "type": "image_picker",

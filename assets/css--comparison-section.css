@@ -10,16 +10,15 @@
   --cmp-highlight: #c8912a;
   --cmp-accent: #661d1d;
   --cmp-line: rgba(0, 0, 0, 0.14);
-
   background-color: var(--cmp-bg);
   color: var(--cmp-text);
-  padding: 4.8rem 0;
+  padding: 8rem 0;
 }
 
 .cmp__inner {
-  max-width: 1236px;
+  max-width: 1244px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 2.4rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -27,24 +26,24 @@
    -------------------------------------------------------------------------- */
 .cmp__intro {
   text-align: center;
-  margin-bottom: 2.8rem;
+  margin-bottom: 2rem;
 }
 
 .cmp__eyebrow {
-margin: 0 0 20px;
-    font-family: 'TAY Birdie';
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: -0.40px;
+    margin: 0 0 16px;
+    font-family: TAY Birdie;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -.28px;
 }
 
 .cmp__heading {
-    margin: 0 auto 1rem;
+    margin: 0 auto .8rem;
     max-width: 935px;
-    font-family: 'TAYRosemary';
-    font-size: 32px;
-    line-height: 36px;
-    letter-spacing: -0.32px;
+    font-family: TAYRosemary;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -.40px;
 }
 
 .cmp--uppercase .cmp__eyebrow,
@@ -54,10 +53,11 @@ margin: 0 0 20px;
 
 .cmp__subheading {
     margin: 0 auto;
-    font-size: 1.5rem;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 20px;
     letter-spacing: 0;
     font-weight: 500;
+    max-width:264px;
 }
 
 /* --------------------------------------------------------------------------
@@ -68,27 +68,29 @@ margin: 0 0 20px;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3.2rem;
 }
 
 .cmp__tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.6rem 1.4rem;
-  border: 1.5px solid var(--cmp-text);
-  border-radius: 100px;
-  background: transparent;
-  color: var(--cmp-text);
-  cursor: pointer;
-  font-size: 1.3rem;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 7px 1.0975rem 5.4px;
+    border: 1px solid var(--cmp-text);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--cmp-text);
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1.4rem;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    font-family: 'TAY Birdie';
 }
 
-.cmp__tab[aria-selected='true'] {
-  background: var(--cmp-highlight);
-  border-color: var(--cmp-highlight);
+.cmp__tab[aria-selected='true'], .cmp__tab[aria-selected='true'] span {
+  background: var(--cmp-text);
+  color: #FFF9EF;
 }
 
 .cmp__tab-icon {
@@ -101,14 +103,14 @@ margin: 0 0 20px;
    Table
    -------------------------------------------------------------------------- */
 .cmp__scroll {
-  padding: 4.4rem 0 16px;
+  padding: 3.5rem 0 11px;
 }
 
 .cmp__table {
   display: flex;
   align-items: stretch;
   border: 1px solid var(--cmp-text);
-  border-radius: 24px;
+  border-radius: 16px;
 }
 
 .cmp__col {
@@ -120,7 +122,7 @@ margin: 0 0 20px;
 }
 
 .cmp__col--labels {
-  flex: 1.3 1 0;
+  flex: 1.0114 1 0;
 }
 
 .cmp__col--comp {
@@ -135,30 +137,34 @@ margin: 0 0 20px;
    flex-shrink:0 stops the empty label header from collapsing. */
 .cmp__head {
   position: relative;
-  height: 132px;
-  flex: 0 0 132px;
+  height: 124px;
+  flex: 0 0 124px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   gap: 0.6rem;
-  padding: 1.6rem 1rem 1.2rem;
+  padding: 1.6rem;
 }
 
 /* Logo sits in the raised area above the header so it doesn't change its height */
 .cmp__brand-logo {
   position: absolute;
-  top: -1.4rem;
+  top: -1.6rem;
   left: 50%;
   transform: translateX(-50%);
-  height: 20px;
+  height: 32px;
   width: auto;
   object-fit: contain;
 }
 
+.cmp__brand-logo_desktop {
+  display:none;
+}
+
 .cmp__col-icon {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
 	animation: bowlRotate 100s linear infinite;
 	transform-origin: center center;
@@ -177,10 +183,10 @@ margin: 0 0 20px;
 }
 
 .cmp__col-label {
-font-family: 'TAY Birdie';
-    font-size: 10px;
-    line-height: 12px;
-    letter-spacing: 0;
+font-family: TAY Birdie;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.28px;
     text-transform: uppercase;
     text-align: center;
 }
@@ -191,28 +197,32 @@ font-family: 'TAY Birdie';
 
 /* Cells */
 .cmp__cell {
-  height: 56px;
-  flex: 0 0 56px;
+  height: 40px;
+  flex: 0 0 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-top: 1px solid #000000;
-  font-size: 1.5rem;
+  font-size: 12px;
+    line-height: 16px;
+    letter-spacing:-0.48px;
 }
 
 .cmp__cell--label {
     justify-content: flex-start;
     text-align: left;
-    padding: 0 1rem 0 1.8rem;
+    padding: 1.2rem 1.2rem 1.1rem;
     font-weight: 500;
-    letter-spacing: -.02em;
+    letter-spacing: -.48px;
     text-transform: uppercase;
-    font-family: 'TAY Birdie';
+    font-family: TAY Birdie;
+    font-size: 12px;
+    line-height: 16px;
 }
 
 .cmp__head--empty {
-  height: 132px;
-  flex: 0 0 132px;
+  height: 124px;
+  flex: 0 0 124px;
   display: flex !important;
 }
 
@@ -222,16 +232,16 @@ font-family: 'TAY Birdie';
 }
 
 .cmp__col--brand::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -4.4rem;
-  bottom: -1.6rem;
-  background: var(--cmp-highlight);
-  border: 1px solid var(--cmp-text);
-  border-radius: 24px;
-  z-index: 0;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -3.6rem;
+    bottom: -1.2rem;
+    background: var(--cmp-highlight);
+    border: 1px solid var(--cmp-text);
+    border-radius: 16px;
+    z-index: 0;
 }
 
 .cmp__col--brand > * {
@@ -256,8 +266,8 @@ font-family: 'TAY Birdie';
 }
 
 .cmp__mark svg {
-  width: 22px;
-  height: 18px;
+  width: 20px;
+  height: 16px;
 }
 
 .cmp__mark--yes {
@@ -266,6 +276,11 @@ font-family: 'TAY Birdie';
 
 .cmp__mark--no {
   color: rgba(0, 0, 0, 0.28);
+}
+
+.cmp__dollar {
+  width:7px;
+  height:16px;
 }
 
 /* .cmp__cost {
@@ -300,6 +315,13 @@ font-family: 'TAY Birdie';
     margin-bottom: 4rem;
   }
 
+  .cmp__eyebrow {
+margin: 0 0 20px;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.40px;
+}
+
   .cmp__heading {
         font-size: 56px;
         line-height: 64px;
@@ -310,11 +332,36 @@ font-family: 'TAY Birdie';
   .cmp__subheading {
             font-size: 18px;
         line-height: 28px;
+        max-width:100%;
   }
 
   .cmp__tabs {
     display: none;
   }
+
+  .cmp__scroll {
+  padding: 4.4rem 0 16px;
+}
+
+  .cmp__table {
+  border-radius: 24px;
+}
+
+.cmp__head {
+  height: 132px;
+  flex: 0 0 132px;
+  gap: 0.6rem;
+  padding: 1.6rem 1rem 1.2rem;
+}
+
+.cmp__head--empty {
+  height: 132px;
+  flex: 0 0 132px;
+}
+
+.cmp__col--labels {
+  flex: 1.3 1 0;
+}
 
   .cmp__col--comp {
     display: flex;
@@ -352,9 +399,33 @@ font-family: 'TAY Birdie';
     font-size: 20px;
         line-height: 28px;
         letter-spacing: -0.40px;
+        height: 56px;
+  flex: 0 0 56px;
   }
 
   .cmp__cell--label {
+    padding: 1.5rem 1rem 1.2rem 2.4rem;
+    letter-spacing: -.02em;
     padding-left: 2.4rem;
-  }
+}
+.cmp__col--brand::before {
+  top: -4.4rem;
+  bottom: -1.6rem;
+  border-radius: 24px;
+}
+.cmp__mark svg {
+  width: 22px;
+  height: 18px;
+}
+.cmp__dollar {
+  width:11px;
+  height:23px;
+}
+.cmp__brand-logo_desktop {
+  display:block;
+}
+
+.cmp__brand-logo_mobile {
+  display:none;
+}
 }
