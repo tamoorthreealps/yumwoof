@@ -317,12 +317,13 @@
         "eyebrow_1": "Butcher Quality food with",
         "heading_1": "Superior nutrition research and vet made recipes",
         "eyebrow_2": "that makes",
-        "heading_2": "Your happy stick-loving dog love you more!",
+        "heading_2": "Your happy<br> stick-loving dog love you more!",
         "stats_title": "What Yumwoof pet parents noticed",
         "stats_note": "*Based on Yumwoof Customer Survey",
         "background_color": "#fff9ef",
+        "text_color": "#fff9ef",
         "background_image": "shopify://shop_images/Rectangle_24.png",
-        "text_color": "#fff9ef"
+        "background_image_mobile": "shopify://shop_images/Quality_Results_Background.png"
       }
     },
     "cocomega_section": {
@@ -333,6 +334,7 @@
         "body": "<p>We use omega-3 rich Cocomega™ superfats instead of heavily processed seed oils.</p>",
         "button_label": "Explore Cocomega →",
         "button_link": "",
+        "image": "shopify://shop_images/Additional_Image_1.png",
         "badge_image": "shopify://shop_images/cocomega-badge.svg",
         "image_position": "right",
         "image_radius": 32,
