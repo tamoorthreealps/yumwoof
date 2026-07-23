@@ -1,20 +1,32 @@
 /**
  * Yumwoof PDP gallery.
  * On desktop the gallery shows one image at a time in a square card (see
- * css--pdp-custom.css). Dawn's slider-component blocks native scrolling on desktop,
- * so the prev/next arrows switch the active image via the gallery's own
- * setActiveMedia() (which toggles .is-active), and this keeps the counter in sync.
+ * css--pdp-custom.css: images are stacked, only .is-active is visible).
+ *
+ * Dawn's slider-component blocks native scroll on desktop and mis-computes its
+ * counter in the stacked layout (NaN), and its button handler reverts the image.
+ * So we hide Dawn's slider-buttons and render our own counter + arrows, which
+ * switch the image via the gallery's own setActiveMedia() (verified to work).
  */
 (function () {
   function initGallery(gallery) {
     if (!gallery || gallery.dataset.ywGallery) return;
-    var list = gallery.querySelector('.product__media-list');
-    if (!list) return;
+    var mediaItems = gallery.querySelectorAll('.product__media-item');
+    if (mediaItems.length === 0) return;
     gallery.dataset.ywGallery = '1';
 
-    var prev = gallery.querySelector('.slider-button--prev');
-    var next = gallery.querySelector('.slider-button--next');
-    var current = gallery.querySelector('.slider-counter--current');
+    var nav = document.createElement('div');
+    nav.className = 'yw-gallery-nav';
+    nav.innerHTML =
+      '<span class="yw-gallery-counter"><span class="yw-gallery-current">1</span> / <span class="yw-gallery-total"></span></span>' +
+      '<button type="button" class="yw-gallery-btn yw-gallery-prev" aria-label="Previous image">&#8592;</button>' +
+      '<button type="button" class="yw-gallery-btn yw-gallery-next" aria-label="Next image">&#8594;</button>';
+    gallery.appendChild(nav);
+
+    var current = nav.querySelector('.yw-gallery-current');
+    var total = nav.querySelector('.yw-gallery-total');
+    var prev = nav.querySelector('.yw-gallery-prev');
+    var next = nav.querySelector('.yw-gallery-next');
 
     function items() {
       return Array.prototype.slice.call(gallery.querySelectorAll('.product__media-item'));
@@ -31,40 +43,37 @@
       i = Math.max(0, Math.min(its.length - 1, i));
       var target = its[i];
       if (!target) return;
-      if (typeof gallery.setActiveMedia === 'function') {
-        gallery.setActiveMedia(target.dataset.mediaId, false);
-      } else {
-        its.forEach(function (it) {
-          it.classList.remove('is-active');
-        });
-        target.classList.add('is-active');
-      }
+      // Toggle .is-active directly. NOT gallery.setActiveMedia() — that calls
+      // resetPages() which fires a debounced slideChanged that reverts the image
+      // back to the scroll position (always 0 in this stacked layout).
+      its.forEach(function (it) {
+        it.classList.remove('is-active');
+      });
+      target.classList.add('is-active');
       update();
     }
     function update() {
       var i = activeIndex();
       var n = items().length;
-      if (current) current.textContent = i + 1;
-      if (prev) prev.disabled = i <= 0;
-      if (next) next.disabled = i >= n - 1;
+      current.textContent = i + 1;
+      total.textContent = n;
+      prev.disabled = i <= 0;
+      next.disabled = i >= n - 1;
+      nav.style.display = n > 1 ? '' : 'none';
     }
 
-    if (prev) {
-      prev.addEventListener('click', function (e) {
-        e.preventDefault();
-        go(activeIndex() - 1);
-      });
-    }
-    if (next) {
-      next.addEventListener('click', function (e) {
-        e.preventDefault();
-        go(activeIndex() + 1);
-      });
-    }
+    prev.addEventListener('click', function (e) {
+      e.preventDefault();
+      go(activeIndex() - 1);
+    });
+    next.addEventListener('click', function (e) {
+      e.preventDefault();
+      go(activeIndex() + 1);
+    });
 
     // A variant change can switch the active image — keep the counter in sync.
     if (window.MutationObserver) {
-      new MutationObserver(update).observe(list, {
+      new MutationObserver(update).observe(gallery, {
         subtree: true,
         attributes: true,
         attributeFilter: ['class'],
