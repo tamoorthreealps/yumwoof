@@ -707,9 +707,12 @@ font-size: 16px;
 }
 
 .yw-mm-card__title {
-  font-size: 1.3rem;
-  font-weight: 500;
-  line-height: 1.2;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0;
+    font-family: 'TAYRosemary';
 }
 
 .yw-mm-card__caption {
