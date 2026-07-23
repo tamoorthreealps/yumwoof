@@ -29,6 +29,7 @@
         },
         "usps_wWfcV4": {
           "type": "usps",
+          "disabled": true,
           "settings": {
             "scroll_seconds": 25
           }
