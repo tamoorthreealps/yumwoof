@@ -651,6 +651,11 @@ font-size: 16px;
     position: relative;
 }
 
+a.yw-mm-link.yw-mm-link--shop-all-products {
+    padding-top: 0;
+    border-top: 0;
+}
+
 .yw-mm-link svg {
     position: absolute;
     right: 0;
