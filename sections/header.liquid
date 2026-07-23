@@ -246,19 +246,90 @@
     </div>
 
     <div class="yw-mobile-menu__body">
-      {%- comment -%} Shop All / CTA (renders its mega content inline when attached) {%- endcomment -%}
-      {%- if section.settings.cta_text != blank -%}
-        {%- assign cta_needle = section.settings.cta_text | downcase | strip -%}
-        {%- assign cta_mega = blank -%}
+      {%- comment -%} The mobile menu is built from Mobile:* blocks (customizer). {%- endcomment -%}
+      {%- liquid
+        assign mobile_block_count = 0
+        for block in section.blocks
+          case block.type
+            when 'mobile_link', 'mobile_cards', 'mobile_linklist', 'mobile_banner'
+              assign mobile_block_count = mobile_block_count | plus: 1
+          endcase
+        endfor
+      -%}
+
+      {%- if mobile_block_count > 0 -%}
         {%- for block in section.blocks -%}
-          {%- if block.type == 'mega_menu' and block.settings.title != blank -%}
-            {%- assign hay = block.settings.title | downcase | strip -%}
-            {%- if hay == cta_needle -%}{%- assign cta_mega = block -%}{%- endif -%}
-          {%- endif -%}
+          {%- case block.type -%}
+            {%- when 'mobile_link' -%}
+              <a
+                class="yw-mm-link{% if block.settings.image != blank %} yw-mm-link--img{% endif %}"
+                href="{{ block.settings.link | default: '#' }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.image != blank -%}
+                  {%- assign ml_alt = block.settings.text | escape -%}
+                  {{ block.settings.image | image_url: width: 160 | image_tag: class: 'yw-mm-link__img', alt: ml_alt, widths: '80, 120, 160', loading: 'lazy' }}
+                {%- endif -%}
+                <span class="yw-mm-link__text">{{ block.settings.text }}</span>
+              </a>
+
+            {%- when 'mobile_cards' -%}
+              <div class="yw-mm-cards-block" {{ block.shopify_attributes }}>
+                {%- if block.settings.text != blank -%}
+                  <a class="yw-mm-cards__head" href="{{ block.settings.link | default: '#' }}">
+                    {{- block.settings.text -}}
+                  </a>
+                {%- endif -%}
+                <div class="yw-mm-cards">
+                  {%- for i in (1..3) -%}
+                    {%- assign ik = 'card_' | append: i | append: '_image' -%}
+                    {%- assign tk = 'card_' | append: i | append: '_title' -%}
+                    {%- assign ck = 'card_' | append: i | append: '_caption' -%}
+                    {%- assign lk = 'card_' | append: i | append: '_link' -%}
+                    {%- assign c_img = block.settings[ik] -%}
+                    {%- assign c_title = block.settings[tk] -%}
+                    {%- assign c_caption = block.settings[ck] -%}
+                    {%- assign c_link = block.settings[lk] -%}
+                    {%- if c_title != blank or c_img != blank -%}
+                      <a class="yw-mm-card" href="{{ c_link | default: '#' }}">
+                        <span class="yw-mm-card__media">
+                          {%- if c_img != blank -%}
+                            {%- assign c_alt = c_title | escape -%}
+                            {{ c_img | image_url: width: 300 | image_tag: class: 'yw-mm-card__img', alt: c_alt, widths: '150, 220, 300', loading: 'lazy' }}
+                          {%- endif -%}
+                        </span>
+                        {%- if c_title != blank -%}<span class="yw-mm-card__title">{{ c_title }}</span>{%- endif -%}
+                        {%- if c_caption != blank -%}<span class="yw-mm-card__caption">{{ c_caption }}</span>{%- endif -%}
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+
+            {%- when 'mobile_linklist' -%}
+              <div class="yw-mm-list" {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <p class="yw-mm-list__title">{{ block.settings.title }}</p>
+                {%- endif -%}
+                {%- if block.settings.menu != blank -%}
+                  {%- for link in block.settings.menu.links -%}
+                    <a class="yw-mm-link" href="{{ link.url }}">{{ link.title }}</a>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+
+            {%- when 'mobile_banner' -%}
+              {%- if block.settings.image != blank -%}
+                <a class="yw-mm-banner" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.image | image_url: width: 800 | image_tag: class: 'yw-mm-banner__img', alt: '', widths: '344, 500, 800', loading: 'lazy' }}
+                </a>
+              {%- endif -%}
+          {%- endcase -%}
         {%- endfor -%}
-        {%- if cta_mega != blank -%}
-          <div class="yw-mobile-mega">{% render 'header-mega-content', block: cta_mega %}</div>
-        {%- else -%}
+
+      {%- else -%}
+        {%- comment -%} Fallback: no Mobile:* blocks configured yet — show the nav. {%- endcomment -%}
+        {%- if section.settings.cta_text != blank -%}
           <a
             class="yw-nav__cta yw-mobile-menu__cta"
             href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}"
@@ -266,33 +337,19 @@
             {{- section.settings.cta_text -}}
           </a>
         {%- endif -%}
-      {%- endif -%}
-
-      {%- comment -%} Secondary links {%- endcomment -%}
-      <div class="yw-mobile-menu__links">
-        {%- if section.settings.membership_text != blank -%}
-          <a class="yw-mobile-menu__link" href="{{ section.settings.membership_link | default: '#' }}">
-            {{- section.settings.membership_text -}}
-          </a>
-        {%- endif -%}
-        {%- if section.settings.menu != blank -%}
-          {%- for link in section.settings.menu.links -%}
-            {%- assign link_needle = link.title | downcase | strip -%}
-            {%- assign link_mega = blank -%}
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'mega_menu' and block.settings.title != blank -%}
-                {%- assign hay = block.settings.title | downcase | strip -%}
-                {%- if hay == link_needle -%}{%- assign link_mega = block -%}{%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if link_mega != blank -%}
-              <div class="yw-mobile-mega">{% render 'header-mega-content', block: link_mega %}</div>
-            {%- else -%}
+        <div class="yw-mobile-menu__links">
+          {%- if section.settings.membership_text != blank -%}
+            <a class="yw-mobile-menu__link" href="{{ section.settings.membership_link | default: '#' }}">
+              {{- section.settings.membership_text -}}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.menu != blank -%}
+            {%- for link in section.settings.menu.links -%}
               <a class="yw-mobile-menu__link" href="{{ link.url }}">{{ link.title }}</a>
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
-      </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </yw-header>
@@ -575,6 +632,57 @@
           "id": "card_3_link",
           "label": "Link"
         }
+      ]
+    },
+    {
+      "type": "mobile_link",
+      "name": "Mobile: link",
+      "settings": [
+        { "type": "paragraph", "content": "A single link in the mobile menu. Add an image to show it beside the text." },
+        { "type": "text", "id": "text", "label": "Link text", "default": "Shop all products" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Image (optional)" }
+      ]
+    },
+    {
+      "type": "mobile_cards",
+      "name": "Mobile: link with cards",
+      "settings": [
+        { "type": "paragraph", "content": "A link with up to 3 product cards below it (like the desktop mega menu)." },
+        { "type": "text", "id": "text", "label": "Link text", "default": "Air dried food" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "header", "content": "Card 1" },
+        { "type": "image_picker", "id": "card_1_image", "label": "Image" },
+        { "type": "text", "id": "card_1_title", "label": "Title" },
+        { "type": "text", "id": "card_1_caption", "label": "Caption" },
+        { "type": "url", "id": "card_1_link", "label": "Link" },
+        { "type": "header", "content": "Card 2" },
+        { "type": "image_picker", "id": "card_2_image", "label": "Image" },
+        { "type": "text", "id": "card_2_title", "label": "Title" },
+        { "type": "text", "id": "card_2_caption", "label": "Caption" },
+        { "type": "url", "id": "card_2_link", "label": "Link" },
+        { "type": "header", "content": "Card 3" },
+        { "type": "image_picker", "id": "card_3_image", "label": "Image" },
+        { "type": "text", "id": "card_3_title", "label": "Title" },
+        { "type": "text", "id": "card_3_caption", "label": "Caption" },
+        { "type": "url", "id": "card_3_link", "label": "Link" }
+      ]
+    },
+    {
+      "type": "mobile_linklist",
+      "name": "Mobile: menu list",
+      "settings": [
+        { "type": "paragraph", "content": "Renders every link from the chosen menu." },
+        { "type": "text", "id": "title", "label": "Title (optional)" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "mobile_banner",
+      "name": "Mobile: banner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Banner image" },
+        { "type": "url", "id": "link", "label": "Link" }
       ]
     },
     {

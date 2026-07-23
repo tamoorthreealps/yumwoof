@@ -621,6 +621,123 @@ font-size: 16px;
 }
 
 /* --------------------------------------------------------------------------
+   Mobile menu blocks (dynamic, built from customizer blocks)
+   -------------------------------------------------------------------------- */
+.yw-mm-link {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.35);
+  color: var(--yw-nav-text);
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.yw-mm-link__img {
+  flex: 0 0 auto;
+  width: 4.8rem;
+  height: 4.8rem;
+  object-fit: contain;
+}
+
+/* Link-with-cards block */
+.yw-mm-cards-block {
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.yw-mm-cards__head {
+  display: block;
+  margin-bottom: 1.6rem;
+  color: var(--yw-nav-text);
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.yw-mm-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.yw-mm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  background: #fff9ef;
+  border-radius: 12px;
+  color: #000;
+  text-decoration: none;
+}
+
+.yw-mm-card__media {
+  display: block;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.yw-mm-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.yw-mm-card__title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.yw-mm-card__caption {
+  display: none;
+}
+
+/* Menu list block */
+.yw-mm-list {
+  padding: 1.6rem 0 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.35);
+}
+
+.yw-mm-list__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--yw-nav-text);
+  opacity: 0.7;
+}
+
+.yw-mm-list .yw-mm-link {
+  border-top: 0;
+  padding: 1.2rem 0;
+}
+
+/* Banner block */
+.yw-mm-banner {
+  display: block;
+  margin: 2.4rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.yw-mm-banner__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 991px) {
