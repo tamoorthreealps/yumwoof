@@ -27,6 +27,12 @@
           "type": "price",
           "settings": {}
         },
+        "usps_wWfcV4": {
+          "type": "usps",
+          "settings": {
+            "scroll_seconds": 25
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -64,6 +70,7 @@
         "vendor",
         "title",
         "price",
+        "usps_wWfcV4",
         "variant_picker",
         "quantity_selector",
         "appstle_subscription_qkkVmJ",
