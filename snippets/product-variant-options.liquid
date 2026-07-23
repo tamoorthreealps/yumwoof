@@ -65,6 +65,19 @@
     {%- comment -%} Image = the value's handle + .png, uploaded to Settings > Files. {%- endcomment -%}
     {%- assign recipe_image_name = value | handleize | append: '.png' -%}
     {%- assign recipe_image_url = recipe_image_name | file_url -%}
+    {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
+    {%- assign swatch_badge = '' -%}
+    {%- assign value_name = value | strip -%}
+    {%- assign recipe_opt_idx = option.position | minus: 1 -%}
+    {%- for v in product.variants -%}
+      {%- if v.options[recipe_opt_idx] == value_name -%}
+        {%- assign vb = v.metafields.custom.swatch_badge.value -%}
+        {%- if vb != blank -%}
+          {%- assign swatch_badge = vb -%}
+        {%- endif -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
     <div class="recipe-swatch">
       <input
         type="radio"
@@ -83,6 +96,9 @@
         <span class="recipe-swatch__title">{{ value }}</span>
         {{ label_unavailable }}
       </label>
+      {%- if swatch_badge != blank -%}
+        <span class="recipe-swatch__badge">{{ swatch_badge }}</span>
+      {%- endif -%}
     </div>
   {%- elsif picker_type == 'swatch' -%}
     {%- capture help_text -%}
