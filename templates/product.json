@@ -12,12 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "usps_dikrw9": {
-          "type": "usps",
-          "settings": {
-            "scroll_seconds": 25
-          }
-        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -67,7 +61,6 @@
         }
       },
       "block_order": [
-        "usps_dikrw9",
         "vendor",
         "title",
         "price",
