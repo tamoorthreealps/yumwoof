@@ -4,174 +4,212 @@
    ========================================================================== */
 
 .research {
-  --rs-bg: #1a1a1a;
-  --rs-text: #fff9ef;
+	--rs-bg: #1a1a1a;
+	--rs-text: #fff9ef;
 
-  background-color: var(--rs-bg);
-  color: var(--rs-text);
-  padding: 7.2rem 0;
+	background-color: var(--rs-bg);
+	color: var(--rs-text);
+	padding: 6.4rem 0;
 }
 
 .research__inner {
-  max-width:1236px;
-  margin: 0 auto;
-  padding: 0 2rem;
+	max-width: 1244px;
+	margin: 0 auto;
+	padding: 0 2.4rem;
 }
 
 /* --------------------------------------------------------------------------
    Intro
    -------------------------------------------------------------------------- */
 .research__intro {
-      text-align: center;
-    margin-bottom: 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 392px;
+	max-width: 272px;
+	margin: 0 auto 79px;
 }
 
 .research__eyebrow {
-    margin: 0 0 2rem;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: -0.40px;
-    color: var(--rs-text);
-    font-family: 'TAY Birdie';
+	margin: 0 0 16px;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: 0;
+	color: var(--rs-text);
+	font-family: TAY Birdie;
 }
 
 .research__heading {
-margin: 0 auto;
-    max-width: 565px;
-    font-size: 34px;
-    line-height: 38px;
-    letter-spacing: -0.34px;
-    color: var(--rs-text);
-    font-family: 'TAYRosemary';
+	margin: 0 auto;
+	max-width: 565px;
+	font-size: 40px;
+	line-height: 40px;
+	letter-spacing: -.40px;
+	color: var(--rs-text);
+	font-family: TAYRosemary;
 }
 
 .research--uppercase .research__eyebrow,
 .research--uppercase .research__heading {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 /* --------------------------------------------------------------------------
    Results
    -------------------------------------------------------------------------- */
 .research__divider {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background: #FFF9EF;
-  margin-bottom: 16px;
+	display: block;
+	height: 1px;
+	width: 100%;
+	background: #FFF9EF;
+	margin-bottom: 16px;
 }
 
 .research__results-head {
-display: flex;
-    flex-direction: column;
-    gap: .6rem;
-    margin-bottom: 3.2rem;
+	display: flex;
+	flex-direction: column;
+	gap: .6rem;
+	margin-bottom: 3.2rem;
 }
 
 .research__results-title {
-    margin: 0;
-    font-size: 16px;
-    line-height: 22px;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    font-family: 'TAY Birdie';
+	margin: 0;
+	font-size: 16px;
+	line-height: 20px;
+	letter-spacing: -0.32px;
+	text-transform: uppercase;
+	font-family: TAY Birdie;
 }
 
 .research__results-note {
-    margin: 0;
-    font-size: 16px;
-    line-height: 28px;
-    letter-spacing: 0;
+	margin: 32px 0 0;
+	font-size: 13px;
+	line-height: 20px;
+	letter-spacing: 0;
 }
 
 .research__stats {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3.2rem 2.4rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 2rem;
 }
 
 .research__stat {
-display: flex;
-    flex-direction: column;
-    text-align: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	text-align: left;
+	gap: 28px;
 }
 
 .research__stat-value {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    font-size: 56px;
-    line-height: 60px;
-    letter-spacing: 0;
-    font-family: 'TAYRosemary';
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	font-size: 48px;
+	line-height: 48px;
+	letter-spacing: -0.96px;
+	font-family: TAYRosemary;
 }
 
 .research__stat-suffix {
-  font-size: inherit;
+	font-size: inherit;
 }
 
 .research__stat-label {
-font-size: 20px;
-    line-height: 28px;
-    letter-spacing: -0.40px;
-    text-transform: uppercase;
-    font-family: 'TAY Birdie';
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: -.28px;
+	text-transform: uppercase;
+	font-family: TAY Birdie;
 }
 
 .research__stat-label br {
-    display:none;
-  }
+	display: none;
+}
 
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
-  .research {
-    padding: 120px 0 148px;
+	.research {
+		padding: 120px 0 148px;
+	}
+
+	.research__intro {
+		margin-bottom: 136px;
+		gap: 518px;
+		max-width: 100%;
+	}
+
+	.research__eyebrow {
+		margin: 0 0 2rem;
+		font-size: 20px;
+		line-height: 24px;
+		letter-spacing: -0.40px;
+	}
+
+	.research__heading {
+		font-size: 56px;
+		line-height: 64px;
+		letter-spacing: -0.56px;
+	}
+
+  .research__heading br {
+    display:none;
   }
 
-  .research__intro {
-    margin-bottom: 136px;
-        gap: 518px;
-  }
+	.research__results-head {
+		flex-direction: row;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-bottom: 6.8rem;
+	}
 
-  .research__heading {
-font-size: 56px;
-        line-height: 64px;
-        letter-spacing: -0.56px;
-  }
+	.research__results-title {
+		font-size: 20px;
+		line-height: 28px;
+		letter-spacing: -0.40px;
+	}
 
-  .research__results-head {
-        flex-direction: row;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 2rem;
-        margin-bottom: 6.8rem;
-  }
+	.research__results-note {
+		margin: 0;
+		font-size: 16px;
+		line-height: 28px;
+	}
 
-  .research__results-title {
-    font-size: 20px;
-        line-height: 28px;
-        letter-spacing: -0.40px;
-  }
+	.research__stats {
+		grid-template-columns: repeat(5, 1fr);
+		gap: 5rem;
+	}
 
-  .research__stats {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5rem;
-  }
+	.research__stat {
+		flex-direction: column;
+		text-align: center;
+		gap: 0;
+	}
 
-  .research__stat-value {
-            font-size: 80px;
-        line-height: 80px;
-        letter-spacing: -1.16px;
-  }
-  .research__stat-label br {
-    display:block;
-  }
+	.research__stat-value {
+		font-size: 80px;
+		line-height: 80px;
+		letter-spacing: -1.16px;
+	}
+
+	.research__stat-label {
+		font-size: 20px;
+		line-height: 28px;
+		letter-spacing: -0.40px;
+	}
+
+	.research__stat-label br {
+		display: block;
+	}
+
+	.research__divider {
+		height: 2px;
+	}
 }
