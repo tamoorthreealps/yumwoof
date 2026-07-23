@@ -61,7 +61,30 @@
 
   {% assign escaped_value = value | escape %}
 
-  {%- if picker_type == 'swatch' -%}
+  {%- if picker_type == 'recipe_image' -%}
+    {%- comment -%} Image = the value's handle + .png, uploaded to Settings > Files. {%- endcomment -%}
+    {%- assign recipe_image_name = value | handleize | append: '.png' -%}
+    {%- assign recipe_image_url = recipe_image_name | file_url -%}
+    <div class="recipe-swatch">
+      <input
+        type="radio"
+        class="recipe-swatch__input{% if option_disabled %} disabled{% endif %}"
+        id="{{ input_id }}"
+        name="{{ input_name | escape }}"
+        value="{{ escaped_value }}"
+        form="{{ product_form_id }}"
+        {% if value.selected %}checked{% endif %}
+        {{ input_dataset }}
+      >
+      <label class="recipe-swatch__label" for="{{ input_id }}">
+        {%- if recipe_image_url != blank -%}
+          <img class="recipe-swatch__img" src="{{ recipe_image_url }}" alt="" loading="lazy" width="64" height="64">
+        {%- endif -%}
+        <span class="recipe-swatch__title">{{ value }}</span>
+        {{ label_unavailable }}
+      </label>
+    </div>
+  {%- elsif picker_type == 'swatch' -%}
     {%- capture help_text -%}
       <span class="visually-hidden">{{ escaped_value }}</span>
       {{ label_unavailable }}

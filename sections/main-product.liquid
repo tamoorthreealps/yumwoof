@@ -15,6 +15,7 @@
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'css--pdp-custom.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -208,6 +209,24 @@
                     <span class="visually-hidden">{{ 'products.product.sku' | t }}:</span>
                     {{- product.selected_or_first_available_variant.sku -}}
                   </p>
+                {%- when 'usps' -%}
+                  {%- assign usps = product.metafields.custom.usps_list.value -%}
+                  {%- if usps != blank and usps.size > 0 -%}
+                    <div class="pdp-usps" {{ block.shopify_attributes }}>
+                      <div
+                        class="pdp-usps__track"
+                        style="--pdp-usps-duration: {{ block.settings.scroll_seconds | default: 25 }}s;"
+                      >
+                        {%- for usp in usps -%}
+                          <span class="pdp-usps__item">{{ usp }}</span>
+                        {%- endfor -%}
+                        {%- comment -%} Duplicate the list so the loop is seamless (no jerk on restart). {%- endcomment -%}
+                        {%- for usp in usps -%}
+                          <span class="pdp-usps__item" aria-hidden="true">{{ usp }}</span>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
                 {%- when 'appstle_subscription' -%}
                   <div class="qty freq">          
                       <div class="frequency_title_container">
@@ -811,6 +830,27 @@
       "type": "appstle_subscription",
       "name": "Appstle Subscription",
       "limit": 1
+    },
+    {
+      "type": "usps",
+      "name": "USPs marquee",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Continuously scrolling USPs from the product metafield custom.usps_list (single line text, list)."
+        },
+        {
+          "type": "range",
+          "id": "scroll_seconds",
+          "min": 10,
+          "max": 60,
+          "step": 5,
+          "unit": "s",
+          "label": "Scroll duration",
+          "default": 25
+        }
+      ]
     },
     {
       "type": "price",

@@ -33,8 +33,26 @@
             assign picker_type = 'swatch'
           endif
         endif
+
+        # Recipe option renders image + title cards (image = value handle + .png, from Files).
+        assign option_name_down = option.name | downcase
+        if option_name_down == 'recipe' or option_name_down == 'recipes'
+          assign picker_type = 'recipe_image'
+        endif
       -%}
-      {%- if picker_type == 'swatch' -%}
+      {%- if picker_type == 'recipe_image' -%}
+        <fieldset class="js product-form__input product-form__input--recipe">
+          <legend class="form__label form__label--numbered">{{ forloop.index }}. {{ option.name }}</legend>
+          <div class="recipe-swatches">
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
+        </fieldset>
+      {%- elsif picker_type == 'swatch' -%}
         <fieldset class="js product-form__input product-form__input--swatch">
           <legend class="form__label">
             {{ option.name }}:
@@ -51,7 +69,7 @@
         </fieldset>
       {%- elsif picker_type == 'button' -%}
         <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
+          <legend class="form__label form__label--numbered">{{ forloop.index }}. {{ option.name }}</legend>
           {% render 'product-variant-options',
             product: product,
             option: option,
