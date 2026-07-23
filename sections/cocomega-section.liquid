@@ -6,10 +6,14 @@
     --co-text: {{ section.settings.text_color }};
     --co-radius: {{ section.settings.image_radius }}px;
   }
+
 {%- endstyle -%}
 
 <section class="cocomega cocomega--image-{{ section.settings.image_position }}{% if section.settings.uppercase_heading %} cocomega--uppercase{% endif %}">
   <div class="cocomega__inner">
+    {%- if section.settings.heading != blank -%}
+        <h2 class="cocomega__heading cocomega__heading_mobile">{{ section.settings.heading }}</h2>
+      {%- endif -%}
     <div class="cocomega__media">
       {%- if section.settings.image != blank -%}
         {%- assign co_alt = section.settings.image.alt | default: section.settings.heading -%}
@@ -31,7 +35,7 @@
 
     <div class="cocomega__content">
       {%- if section.settings.heading != blank -%}
-        <h2 class="cocomega__heading">{{ section.settings.heading }}</h2>
+        <h2 class="cocomega__heading cocomega__heading_desktop">{{ section.settings.heading }}</h2>
       {%- endif -%}
       {%- if section.settings.body != blank -%}
         <div class="cocomega__body rte">{{ section.settings.body }}</div>
