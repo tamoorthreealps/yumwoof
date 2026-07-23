@@ -227,11 +227,17 @@
             <span class="visually-hidden">{{ 'customer.account_fallback' | t }}</span>
           </a>
         {%- endif -%}
-        <a href="{{ routes.cart_url }}" class="yw-nav__icon yw-icon--cart">
+        <a
+          href="{{ routes.cart_url }}"
+          class="yw-nav__icon yw-icon--cart link focus-inset"
+          id="cart-icon-bubble"
+        >
           {% if cart == empty %}
-            <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+            <span class="svg-wrapper">{{ 'cart--icon.svg' | inline_asset_content }}</span>
+            <span aria-hidden="true" class="cart-count-bubble">{{ cart.item_count }}</span>
           {% else %}
-            <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+            <span class="svg-wrapper">{{ 'cart--icon.svg' | inline_asset_content }}</span>
+            <span aria-hidden="true" class="cart-count-bubble">{{ cart.item_count }}</span>
           {% endif %}
           <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
           {%- if cart != empty -%}
@@ -239,6 +245,7 @@
               {%- if cart.item_count < 100 -%}
                 <span aria-hidden="true">{{ cart.item_count }}</span>
               {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
             </div>
           {%- endif -%}
         </a>
@@ -268,7 +275,11 @@
               >
                 {%- if block.settings.image != blank -%}
                   {%- assign ml_alt = block.settings.text | escape -%}
-                  {{ block.settings.image | image_url: width: 160 | image_tag: class: 'yw-mm-link__img', alt: ml_alt, widths: '80, 120, 160', loading: 'lazy' }}
+                  {{
+                    block.settings.image
+                    | image_url: width: 160
+                    | image_tag: class: 'yw-mm-link__img', alt: ml_alt, widths: '80, 120, 160', loading: 'lazy'
+                  }}
                 {%- endif -%}
                 <span class="yw-mm-link__text">{{ block.settings.text }}</span>
               </a>
@@ -295,11 +306,23 @@
                         <span class="yw-mm-card__media">
                           {%- if c_img != blank -%}
                             {%- assign c_alt = c_title | escape -%}
-                            {{ c_img | image_url: width: 300 | image_tag: class: 'yw-mm-card__img', alt: c_alt, widths: '150, 220, 300', loading: 'lazy' }}
+                            {{
+                              c_img
+                              | image_url: width: 300
+                              | image_tag:
+                                class: 'yw-mm-card__img',
+                                alt: c_alt,
+                                widths: '150, 220, 300',
+                                loading: 'lazy'
+                            }}
                           {%- endif -%}
                         </span>
-                        {%- if c_title != blank -%}<span class="yw-mm-card__title">{{ c_title }}</span>{%- endif -%}
-                        {%- if c_caption != blank -%}<span class="yw-mm-card__caption">{{ c_caption }}</span>{%- endif -%}
+                        {%- if c_title != blank -%}
+                          <span class="yw-mm-card__title">{{ c_title }}</span>
+                        {%- endif -%}
+                        {%- if c_caption != blank -%}
+                          <span class="yw-mm-card__caption">{{ c_caption }}</span>
+                        {%- endif -%}
                       </a>
                     {%- endif -%}
                   {%- endfor -%}
@@ -321,7 +344,11 @@
             {%- when 'mobile_banner' -%}
               {%- if block.settings.image != blank -%}
                 <a class="yw-mm-banner" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
-                  {{ block.settings.image | image_url: width: 800 | image_tag: class: 'yw-mm-banner__img', alt: '', widths: '344, 500, 800', loading: 'lazy' }}
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag: class: 'yw-mm-banner__img', alt: '', widths: '344, 500, 800', loading: 'lazy'
+                  }}
                 </a>
               {%- endif -%}
           {%- endcase -%}
@@ -638,7 +665,10 @@
       "type": "mobile_link",
       "name": "Mobile: link",
       "settings": [
-        { "type": "paragraph", "content": "A single link in the mobile menu. Add an image to show it beside the text." },
+        {
+          "type": "paragraph",
+          "content": "A single link in the mobile menu. Add an image to show it beside the text."
+        },
         { "type": "text", "id": "text", "label": "Link text", "default": "Shop all products" },
         { "type": "url", "id": "link", "label": "Link" },
         { "type": "image_picker", "id": "image", "label": "Image (optional)" }
