@@ -4,67 +4,70 @@
    ========================================================================== */
 
 .founder {
-  --fs-bg: #fff9ef;
-  --fs-text: #000000;
-  --fs-radius: 32px;
+	--fs-bg: #fff9ef;
+	--fs-text: #000000;
+	--fs-radius: 32px;
 
-  background-color: var(--fs-bg);
-  color: var(--fs-text);
-  padding: 5.6rem 0 0;
+	background-color: var(--fs-bg);
+	color: var(--fs-text);
+	padding: 6.4rem 0 0;
+	overflow: hidden;
 }
 
 .founder__inner {
-  max-width: 1236px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3.2rem;
+	max-width: 1244px;
+	margin: 0 auto;
+	padding: 0 2.4rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
 }
 
 /* --------------------------------------------------------------------------
    Media
    -------------------------------------------------------------------------- */
 .founder__media {
-  position: relative;
+	position: relative;
+	width: 100%;
+	height: 396px;
 }
 
 .founder__image {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: var(--fs-radius);
-  background-color: #000000;
+	display: block;
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	border-radius: 20px;
+	background-color: #000000;
 }
 
 .founder__image--placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
 }
 
 .founder__image--placeholder .placeholder-svg {
-  width: 60%;
-  height: auto;
-  opacity: 0.4;
+	width: 60%;
+	height: auto;
+	opacity: 0.4;
 }
 
 .founder__badge {
-  position: absolute;
-  top: -1.6rem;
-  right: -0.8rem;
-  width: 32%;
-  max-width: 160px;
-  line-height: 0;
+	position: absolute;
+	top: -32px;
+	right: -16px;
+	width: 100%;
+	max-width: 136px;
+	line-height: 0;
 }
 
 .founder__badge img {
-  display: block;
-  width: 100%;
-  height: auto;
+	display: block;
+	width: 100%;
+	height: auto;
 	animation: bowlRotate 150s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
@@ -85,116 +88,137 @@
    Content
    -------------------------------------------------------------------------- */
 .founder__content {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .founder__heading {
-margin: 0 0 1.6rem;
-    font-size: 36px;
-    line-height: 40px;
-    letter-spacing: -0.36px;
-    color: var(--fs-text);
-    font-family: 'TAYRosemary';
+	margin: 0 0 2rem;
+	font-size: 36px;
+	line-height: 40px;
+	letter-spacing: -0.36px;
+	color: var(--fs-text);
+	font-family: 'TAYRosemary';
 }
 
 .founder--uppercase .founder__heading {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 .founder__body {
-    font-size: 15px;
-    line-height: 22px;
-    color: var(--fs-text);
-    letter-spacing: 0;
-    font-weight: 500;
+	font-size: 14px;
+	line-height: 20px;
+	color: var(--fs-text);
+	letter-spacing: 0;
+	font-weight: 500;
+	margin: 28px 0 0;
 }
 
-.founder__body > p {
-  margin: 0 0 1.6rem;
+.founder__body>p {
+	margin: 0 0 1.6rem;
 }
 
-.founder__body > p:last-child {
-  margin-bottom: 0;
+.founder__body>p:last-child {
+	margin-bottom: 0;
 }
 
 .founder__signature {
-  margin-top: 2.4rem;
+	margin-top: 2.4rem;
 }
 
 .founder__signature-img {
-display: block;
-    width: auto;
-    max-width: 288px;
-    height: auto;
+	display: block;
+	width: 100%;
+	max-width: 200px;
+	height: auto;
 }
 
 .founder__signature-name {
-margin: 0;
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 1.4;
-    letter-spacing: 0;
+	margin: 1.6rem 0 0;
+	font-size: 1.4rem;
+	font-weight: 500;
+	line-height: 20px;
+	letter-spacing: 0;
+}
+
+.founder__heading_desktop {
+	display: none;
 }
 
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
-  .founder {
-    padding: 120px 0 0;
-  }
+	.founder {
+		padding: 120px 0 0;
+	}
 
-  .founder__inner {
-    flex-direction: row;
-    align-items: center;
-    gap: 118px;
-  }
+	.founder__inner {
+		flex-direction: row;
+		align-items: center;
+		gap: 118px;
+	}
 
-  .founder__media {
-    flex: 1 1 588px;
-  max-width: 588px;
-  }
+	.founder__media {
+		flex: 1 1 49.164%;
+		max-width: 49.164%;
+		height: 100%;
+	}
 
-  .founder__content {
-     flex: 1;
-  min-width: 0;
-  }
+	.founder__content {
+		flex: 1;
+		min-width: 0;
+	}
 
-  .founder__image {
-    aspect-ratio: 588 / 680;
-  }
+	.founder__image {
+		aspect-ratio: 588 / 680;
+		border-radius: var(--fs-radius);
+		height: auto;
+	}
 
-  .founder--image-right .founder__media {
-    order: 2;
-  }
+	.founder--image-right .founder__media {
+		order: 2;
+	}
 
-  .founder__badge {
-    top: 20px;
-        right: -70px;
-        max-width: 224px;
-  }
+	.founder__badge {
+		top: 20px;
+		right: -70px;
+		max-width: 224px;
+	}
 
-  .founder__heading {
-    font-size: 56px;
-        line-height: 64px;
-        letter-spacing: -0.56px;
-        margin: 0 0 8px;
-        padding-right: 40px;
-  }
+	.founder__heading {
+		font-size: 56px;
+		line-height: 64px;
+		letter-spacing: -0.56px;
+		margin: 0 0 8px;
+		padding-right: 40px;
+	}
 
-  .founder__body {
-    font-size: 18px;
-        line-height: 28px;
-  }
+	.founder__body {
+		font-size: 18px;
+		line-height: 28px;
+		margin: 0;
+	}
 
-  .founder__signature {
-    margin-top: 3.2rem;
-  }
+	.founder__signature {
+		margin-top: 3.2rem;
+	}
 
-  .founder__signature-name {
-            font-size: 2rem;
-        line-height: 24px;
-        margin: 16px 0 0;
-  }
+	.founder__signature-img {
+		max-width: 288px;
+	}
+
+	.founder__signature-name {
+		font-size: 2rem;
+		line-height: 24px;
+		margin: 16px 0 0;
+	}
+
+	.founder__heading_desktop {
+		display: block;
+	}
+
+	.founder__heading_mobile {
+		display: none;
+	}
 }
