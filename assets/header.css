@@ -679,18 +679,19 @@ font-size: 16px;
 .yw-mm-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
+  gap: .4rem;
 }
 
 .yw-mm-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  padding: 0.8rem;
-  background: #fff9ef;
-  border-radius: 12px;
-  color: #000;
-  text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 11.65px;
+    padding: 15px 16px 11px;
+    background: #fff;
+    border-radius: 12px;
+    color: #000;
+    text-decoration: none;
+    border: 1px solid #000000;
 }
 
 .yw-mm-card__media {
