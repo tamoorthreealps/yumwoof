@@ -10,16 +10,16 @@
 
   background-color: var(--co-bg);
   color: var(--co-text);
-  padding: 4.8rem 0;
+  padding: 64px 0 80px;
 }
 
 .cocomega__inner {
-  max-width: 1236px;
+  max-width: 1244px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 2.4rem;
   display: flex;
   flex-direction: column;
-  gap: 5.6rem;
+  gap: 20px;
 }
 
 /* --------------------------------------------------------------------------
@@ -33,9 +33,9 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 352 / 300;
+  aspect-ratio: 344 / 280;
   object-fit: cover;
-  border-radius: var(--co-radius);
+  border-radius: 24px;
   background-color: #000000;
 }
 
@@ -52,11 +52,12 @@
 }
 
 .cocomega__badge {
-  position: absolute;
-  top: -2rem;
-  left: -1.2rem;
-  width: 88px;
-  line-height: 0;
+    position: absolute;
+    top: -4rem;
+    left: auto;
+    right: 22px;
+    width: 80px;
+    line-height: 0;
 }
 
 .cocomega__badge img {
@@ -89,12 +90,13 @@
 }
 
 .cocomega__heading {
-    margin: 0 0 1.4rem;
-    font-size: 36px;
+    margin: 0 0 -4px;
+    font-size: 40px;
     line-height: 40px;
-    letter-spacing: -0.36px;
+    letter-spacing: -.40px;
+    padding-right: 105px;
     color: var(--co-text);
-    font-family: 'TAYRosemary';
+    font-family: TAYRosemary;
 }
 
 .cocomega--uppercase .cocomega__heading {
@@ -102,8 +104,8 @@
 }
 
 .cocomega__body {
-font-size: 15px;
-    line-height: 22px;
+    font-size: 14px;
+    line-height: 20px;
     color: var(--co-text);
     letter-spacing: 0;
 }
@@ -117,22 +119,23 @@ font-size: 15px;
 }
 
 .cocomega__button {
-display: inline-flex;
-    align-items: center;
-    margin-top: 3.2rem;
-    padding: .8rem 2.4rem;
-    border: 1.5px solid var(--co-text);
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    padding: .72rem 2.32rem;
+    border: 1px solid var(--co-text);
     border-radius: 100px;
     color: var(--co-text);
-    font-size: 16px;
+    font-size: 13px;
     line-height: 24px;
     font-weight: 500;
-    letter-spacing: 0.64px;
+    letter-spacing: .52px;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
     transition: background-color .15s ease, color .15s ease;
-    font-family: "FFBlurProMedium";
+    font-family: FFBlurProMedium;
 }
 
 .cocomega__button:hover {
@@ -140,12 +143,20 @@ display: inline-flex;
   color: var(--co-bg);
 }
 
+.cocomega__heading_mobile, .cocomega__button--mobile {
+    display:block;
+  }
+
+  .cocomega__heading_desktop, .cocomega__button--desktop {
+    display:none;
+  }
+
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
   .cocomega {
-    padding: 9.6rem 0 8rem;
+    padding: 9.6rem 0 15.4rem;
   }
 
   .cocomega__inner {
@@ -155,8 +166,8 @@ display: inline-flex;
   }
 
   .cocomega__media {
-    flex: 1 1 726px;
-        max-width: 726px;
+    flex: 1 1 60.703%;
+        max-width: 60.703%;
   }
 
   .cocomega__content {
@@ -170,11 +181,13 @@ display: inline-flex;
 
   .cocomega__image {
     aspect-ratio: 726 / 588;
+    border-radius: var(--co-radius);
   }
 
   .cocomega__badge {
             top: 56px;
         left: -6rem;
+        right:auto;
         width: 120px;
   }
 
@@ -189,5 +202,25 @@ display: inline-flex;
   .cocomega__body {
             font-size: 18px;
         line-height: 28px;
+  }
+
+  .cocomega__button {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 3.2rem;
+    padding: .72rem 2.32rem;
+    border: 1.5px solid var(--co-text);
+    line-height: 24px;
+    letter-spacing: .64px;
+    font-size:1.6rem;
+    width:auto;
+}
+
+.cocomega__heading_mobile, .cocomega__button--mobile {
+    display:none;
+  }
+
+  .cocomega__heading_desktop, .cocomega__button--desktop {
+    display:block;
   }
 }

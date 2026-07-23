@@ -6,29 +6,38 @@
     --co-text: {{ section.settings.text_color }};
     --co-radius: {{ section.settings.image_radius }}px;
   }
-
 {%- endstyle -%}
 
 <section class="cocomega cocomega--image-{{ section.settings.image_position }}{% if section.settings.uppercase_heading %} cocomega--uppercase{% endif %}">
   <div class="cocomega__inner">
     {%- if section.settings.heading != blank -%}
-        <h2 class="cocomega__heading cocomega__heading_mobile">{{ section.settings.heading }}</h2>
-      {%- endif -%}
+      <h2 class="cocomega__heading cocomega__heading_mobile">{{ section.settings.heading }}</h2>
+    {%- endif -%}
     <div class="cocomega__media">
       {%- if section.settings.image != blank -%}
         {%- assign co_alt = section.settings.image.alt | default: section.settings.heading -%}
         {{
           section.settings.image
           | image_url: width: 1400
-          | image_tag: class: 'cocomega__image', widths: '400, 700, 1000, 1400', sizes: '(min-width: 990px) 55vw, 100vw', alt: co_alt
+          | image_tag:
+            class: 'cocomega__image',
+            widths: '400, 700, 1000, 1400',
+            sizes: '(min-width: 990px) 55vw, 100vw',
+            alt: co_alt
         }}
       {%- else -%}
-        <div class="cocomega__image cocomega__image--placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        <div class="cocomega__image cocomega__image--placeholder">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
       {%- endif -%}
 
       {%- if section.settings.badge_image != blank -%}
         <span class="cocomega__badge">
-          {{ section.settings.badge_image | image_url: width: 220 | image_tag: alt: '', widths: '88, 132, 220', loading: 'lazy' }}
+          {{
+            section.settings.badge_image
+            | image_url: width: 220
+            | image_tag: alt: '', widths: '88, 132, 220', loading: 'lazy'
+          }}
         </span>
       {%- endif -%}
     </div>
@@ -40,11 +49,25 @@
       {%- if section.settings.body != blank -%}
         <div class="cocomega__body rte">{{ section.settings.body }}</div>
       {%- endif -%}
-      {%- if section.settings.button_label != blank -%}
-        <a class="cocomega__button" href="{{ section.settings.button_link | default: '#' }}">
-          {{- section.settings.button_label -}}
+      {% if section.settings.button_label != blank %}
+        <a
+          class="cocomega__button cocomega__button--desktop"
+          href="{{ section.settings.button_link | default: '#' }}"
+        >
+          {{ section.settings.button_label }}
         </a>
-      {%- endif -%}
+      {% endif %}
+
+      {% assign mobile_label = section.settings.button_label_mobile | default: section.settings.button_label %}
+
+      {% if mobile_label != blank %}
+        <a
+          class="cocomega__button cocomega__button--mobile"
+          href="{{ section.settings.button_link | default: '#' }}"
+        >
+          {{ mobile_label }}
+        </a>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -78,6 +101,12 @@
       "id": "button_label",
       "label": "Button label",
       "default": "Explore Cocomega →"
+    },
+    {
+      "type": "text",
+      "id": "button_label_mobile",
+      "label": "Button label - Mobile",
+      "default": "Explore Cocomega"
     },
     {
       "type": "url",
