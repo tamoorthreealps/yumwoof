@@ -648,6 +648,12 @@ font-size: 16px;
     text-transform: uppercase;
     font-family: 'TAYRosemary';
     font-weight: 400;
+    position: relative;
+}
+
+.yw-mm-link svg {
+    position: absolute;
+    right: 0;
 }
 
 a.yw-mm-link.yw-mm-link--img {
