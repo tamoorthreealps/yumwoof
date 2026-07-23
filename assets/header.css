@@ -813,7 +813,7 @@ body.yw-menu-open {
 }
 
 body.yw-menu-open .yw-header--fixed {
-  position: sticky;
+  position: fixed;
 }
 
 body.yw-menu-open .yw-topbar {
