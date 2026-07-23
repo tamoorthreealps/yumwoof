@@ -46,6 +46,7 @@
         },
         "appstle_subscription_qkkVmJ": {
           "type": "appstle_subscription",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons": {
