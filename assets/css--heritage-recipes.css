@@ -14,27 +14,38 @@
 	overflow: hidden;
 	background-color: var(--hr-bg);
 	color: var(--hr-text);
-	padding: 5.6rem 0 4rem;
+	padding: 6.4rem 0;
 }
 
 .heritage__container {
 	max-width: 1236px;
 	margin: 0 auto;
-	padding: 0 2rem;
+	padding: 0 2.4rem 18.5rem;
 	position: relative;
+	overflow: hidden;
+}
+
+.heritage__intro {
+	text-align: center;
+	max-width: 265px;
+	margin: 0 auto;
+}
+
+.heritage__intro .heritage__button {
+	display: none;
 }
 
 /* --------------------------------------------------------------------------
    Intro (heading, subheading, button, bowl)
    -------------------------------------------------------------------------- */
 .heritage__heading {
-	margin: 0 0 1.6rem;
+	margin: 0 0 .8rem;
 	font-weight: 400;
-	font-size: 38px;
-	line-height: 42px;
-	letter-spacing: -0.38px;
+	font-size: 40px;
+	line-height: 40px;
+	letter-spacing: -.4px;
 	color: var(--hr-text);
-	font-family: 'TAYRosemary';
+	font-family: TAYRosemary;
 }
 
 .heritage--uppercase .heritage__heading,
@@ -45,28 +56,32 @@
 .heritage__subheading {
 	margin: 0 0 2.4rem;
 	max-width: 42rem;
-	font-size: 1.6rem;
-	line-height: 24px;
+	font-size: 1.4rem;
+	line-height: 20px;
 	color: var(--hr-text);
 	letter-spacing: 0;
 }
 
 .heritage__button {
-	display: inline-flex;
+	display: block;
 	align-items: center;
+	text-align: center;
 	padding: .72rem 2.4rem;
 	border: 1px solid var(--hr-text);
 	border-radius: 100px;
 	color: var(--hr-text);
-	font-size: 16px;
+	font-size: 13px;
 	line-height: 24px;
 	font-weight: 500;
-	letter-spacing: .64px;
+	letter-spacing: .52px;
 	text-transform: uppercase;
 	text-decoration: none;
 	white-space: nowrap;
 	transition: background-color .15s ease, color .15s ease;
-	font-family: "FFBlurProMedium";
+	font-family: FFBlurProMedium;
+	z-index: 1;
+	position: relative;
+	margin: 32px 0 0;
 }
 
 .heritage__button:hover {
@@ -76,7 +91,12 @@
 
 .heritage__bowl {
 	position: absolute;
-	top: 0;
+	top: auto;
+	bottom: -151px;
+	left: 0;
+	right: 0;
+	width: 312.64px;
+	margin: 0 auto;
 }
 
 .heritage__bowl img {
@@ -105,13 +125,20 @@
    -------------------------------------------------------------------------- */
 .heritage__card-wrap {
 	position: relative;
-	margin-top: -2.4rem;
 	z-index: 1;
+	max-width: 344px;
+	margin: 0 auto;
 }
 
 .heritage__card {
 	position: relative;
+	min-height: 528px;
+	max-width: 344px;
+	margin: 0 auto;
+	padding: 48px 26px 64px;
+	width: 100%;
 }
+
 
 .shape-bg {
 	display: block;
@@ -126,33 +153,21 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 2.4rem;
-	position: absolute;
-	top: 50%;
-	left: 73px;
-	transform: translate(0, -50%);
+	position: relative;
+	z-index: 1;
 }
 
 .heritage__ingredient {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-	gap: 1.6rem;
-}
-
-.heritage__ingredient:nth-child(3) .heritage__ingredient-media {
-	height: 74.32px;
-	width: 74.32px;
-}
-
-.heritage__ingredient:nth-child(4) .heritage__ingredient-media {
-	width: 96.62px;
-	height: 74.32px;
+	gap: 2.4rem;
 }
 
 .heritage__ingredient-media {
 	flex: none;
-	width: auto;
-	height: 64px;
+	width: 80px;
+	height: 68px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -173,16 +188,16 @@
 .heritage__ingredient-title {
 	font-size: 16px;
 	font-weight: 400;
-	line-height: 20px;
-	letter-spacing: 0;
+	line-height: 24px;
+	letter-spacing: -0.32px;
 	text-transform: uppercase;
-	font-family: 'TAY Birdie';
+	font-family: TAY Birdie;
 	margin: 0 0 4px;
 }
 
 .heritage__ingredient-desc {
 	font-size: 13px;
-	line-height: 18px;
+	line-height: 20px;
 	letter-spacing: 0;
 	font-weight: 500;
 }
@@ -216,15 +231,15 @@
 }
 
 .heritage__kibble--1 {
-	width: 64px;
-	top: -1.6rem;
-	right: -0.8rem;
+	width: 88px;
+	top: -31px;
+	right: -14px;
 }
 
 .heritage__kibble--2 {
-	width: 56px;
-	bottom: -1.6rem;
-	left: -1.2rem;
+	width: 81px;
+	bottom: -30px;
+	left: -8px;
 }
 
 .heritage__kibble--3 {
@@ -234,6 +249,7 @@
 	left: -73px;
 	top: 180px;
 	z-index: -1;
+	display: none;
 }
 
 .heritage__kibble--3 img {
@@ -259,7 +275,7 @@
 .heritage__nono {
 	max-width: 151.2rem;
 	margin: 0 auto 0;
-	padding: 0 2rem;
+	padding: 0 2.8rem;
 	text-align: center;
 }
 
@@ -268,21 +284,22 @@
 	height: 2px;
 	width: 100%;
 	background-color: var(--hr-text);
-	margin-bottom: 43px;
+	margin-bottom: 28px;
 }
 
 .heritage__nono-heading {
-	margin: 0 0 .6rem;
-	font-size: 24px;
-	line-height: 30px;
-	letter-spacing: 0;
-	font-family: 'TAY Birdie';
+	margin: 0 0 .4rem;
+	font-size: 20px;
+	line-height: 28px;
+	letter-spacing: -0.80px;
+	font-family: TAY Birdie;
 }
 
 .heritage__nono-subheading {
 	margin: 0;
-	font-size: 1.5rem;
-	line-height: 1.4;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -291,9 +308,10 @@
 .heritage-marquee {
 	display: flex;
 	flex-direction: column;
-	gap: 1.4rem;
-	margin-top: 2.8rem;
+	gap: 1.6rem;
+	margin-top: 2.4rem;
 	overflow: hidden;
+	padding-bottom: 1px;
 }
 
 .heritage-marquee__row {
@@ -322,11 +340,11 @@
 .heritage-chip {
 	display: inline-flex;
 	align-items: center;
-	gap: 10px;
-	margin-right: 28px;
-	padding: 9.4px 23.25px 7.4px;
+	gap: 8px;
+	margin-right: 12px;
+	padding: 8.4px 14px 6px;
 	background-color: #fff;
-	border: 2px solid #000000;
+	border: 1px solid #000000;
 	border-radius: 100px;
 	color: #000;
 	white-space: nowrap;
@@ -334,8 +352,8 @@
 
 .heritage-chip__x {
 	flex: none;
-	width: 11px;
-	height: 11px;
+	width: 9px;
+	height: 9px;
 }
 
 .heritage-chip__label {
@@ -343,6 +361,7 @@
 	line-height: 18px;
 	letter-spacing: 0;
 	font-family: 'TAY Birdie';
+	text-transform: uppercase;
 }
 
 @keyframes heritage-scroll {
@@ -371,26 +390,53 @@
 	}
 }
 
+
+.desktop--hexagone--img {
+	display: none;
+}
+
+.mobile--hexagone--img {
+	display: block;
+	position: absolute;
+	inset: 0;
+	height: 100%;
+	width: 100%;
+}
+
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
 	.heritage {
-		padding: 76px 0 93px;
+		padding: 73px 0 93px;
 	}
 
 	.heritage__container {
 		display: grid;
 		grid-template-columns: 470px 1fr;
-		gap: 10.6rem;
-		max-width: 1276px;
+		gap: 12.6rem;
+		max-width: 1316px;
 		padding: 0 6rem 7.8rem;
-		overflow: hidden;
 	}
 
 	.heritage__intro {
 		position: relative;
 		padding-right: 20px;
+		padding-top: 40px;
+		max-width: 100%;
+		text-align: left;
+	}
+
+	.heritage__intro .heritage__button {
+		display: inline-block;
+	}
+
+	.heritage__button {
+		display: inline-flex;
+		align-items: center;
+		font-size: 16px;
+		letter-spacing: .64px;
+		margin: 0;
 	}
 
 	.heritage__heading {
@@ -407,27 +453,49 @@
 	}
 
 	.heritage__bowl {
-		bottom: -324px;
-		top: auto;
-		margin: 0;
-		width: 688px;
-		left: 50px;
+		bottom: -320px;
+        top: auto;
+        margin: 0;
+        width: 688px;
+        left: 36px;
+        right: auto;
 	}
 
 	.heritage__card-wrap {
 		margin-top: 0;
+		max-width: 100%;
+	}
+
+	.heritage__card {
+		min-height: inherit;
+		max-width: 100%;
+		padding: 0;
 	}
 
 	.heritage__ingredients {
 		grid-template-columns: 1fr 1fr;
 		gap: 4.4rem 3.2rem;
 		max-width: 480px;
+		position: absolute;
+		top: 50%;
+		left: 75px;
+		transform: translate(0, -50%);
 	}
 
 	/* Desktop cells stack the image above the text */
 	.heritage__ingredient {
 		flex-direction: column;
 		gap: 1.2rem;
+	}
+
+	.heritage__ingredient:nth-child(3) .heritage__ingredient-media {
+		height: 74.32px;
+		width: 74.32px;
+	}
+
+	.heritage__ingredient:nth-child(4) .heritage__ingredient-media {
+		width: 96.62px;
+		height: 74.32px;
 	}
 
 	.heritage__ingredient-title {
@@ -457,25 +525,63 @@
 		right: 40px;
 	}
 
+	.heritage__kibble--3 {
+		display: block;
+	}
+
 	.heritage__nono {
 		padding: 0 6rem;
+	}
+
+	.heritage__divider {
+		margin-bottom: 43px;
 	}
 
 	.heritage__nono-heading {
 		font-size: 28px;
 		line-height: 36px;
 		margin: 0 0 .8rem;
+		letter-spacing: 0;
+	}
+
+	.heritage__nono-subheading {
+		font-size: 18px;
+		line-height: 24px;
+		letter-spacing: 0;
 	}
 
 	.heritage-marquee {
 		gap: 2.4rem;
 		margin-top: 3.6rem;
+		padding-bottom: 0;
 	}
 
 	.heritage-chip__label {
 		font-size: 20px;
 		line-height: 28px;
 		letter-spacing: -0.40px;
-		text-transform: uppercase;
 	}
+
+	.heritage-chip {
+		gap: 10px;
+		margin-right: 28px;
+		padding: 9.4px 23.25px 7.4px;
+		border: 2px solid #000000;
+	}
+
+	.heritage-chip__x {
+		width: 11px;
+		height: 11px;
+	}
+
+
+	.desktop--hexagone--img {
+		display: block;
+	}
+
+	.mobile--hexagone--img,
+	.heritage__button__mobile {
+		display: none;
+	}
+
 }
