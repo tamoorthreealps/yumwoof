@@ -605,7 +605,7 @@
           {%- comment -%} ===== ADD MORE, SAVE MORE ===== {%- endcomment -%}
           {%- assign last_item = cart.items.last -%}
           <cart-recommendations
-            class="cd-recommend"
+            class="cd-recommend {% if show_membership_banner %} cd-recommend--has-banner{% endif %}"
             data-url="{{ routes.product_recommendations_url }}?section_id=cart-recommendations&intent={{ rec_intent }}&limit=6"
             data-product-id="{{ last_item.product.id }}"
           >
