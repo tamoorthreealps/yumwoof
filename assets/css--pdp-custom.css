@@ -167,11 +167,14 @@
     column-gap: 6.4rem;
     align-items: start;
   }
-  /* Dawn caps the wrappers at 65%/35% of their own track (product--large/medium),
-     which squashes the columns — remove so the grid alone controls the widths. */
+  /* Dawn caps the wrappers at 65%/35% (product--large/medium) and gives them
+     flex-grow/basis, so they size to content instead of filling their grid track.
+     Remove the cap AND force them to stretch so the grid alone sets the widths. */
   .product.grid--2-col-tablet > .product__media-wrapper,
   .product.grid--2-col-tablet > .product__info-wrapper {
     max-width: none;
+    width: auto;
+    justify-self: stretch;
   }
   .product__info-wrapper {
     padding-top: 0;
@@ -213,7 +216,7 @@
 
   /* One image at a time: stack all media and show only the active one.
      (Dawn's slider-component blocks native scroll on desktop, so the arrows
-     switch the active image via setActiveMedia instead — see pdp-gallery.js.) */
+     switch the active image by toggling .is-active — see pdp-gallery.js.) */
   .pdp-gallery .product__media-list {
     position: relative;
     display: block;
@@ -255,38 +258,61 @@
     border-radius: 0;
   }
 
-  /* Counter + arrows, bottom-left over the card (Dawn hides these on desktop) */
+  /* Dawn's own slider-buttons/counter break in the stacked layout (NaN counter,
+     and their handlers revert the image). Use our own nav (pdp-gallery.js). */
   .pdp-gallery media-gallery .slider-buttons {
-    display: flex !important;
-    position: absolute;
-    left: 2.4rem;
-    bottom: 2.4rem;
-    z-index: 3;
-    width: auto;
-    padding: 0;
-    gap: 0.8rem;
-    align-items: center;
-  }
-  .pdp-gallery .slider-counter {
-    order: -1;
-    min-width: auto;
-    margin: 0;
-    color: #000;
-    font-weight: 500;
-    font-size: 1.4rem;
-  }
-  .pdp-gallery .slider-button {
-    width: 3.2rem;
-    height: 3.2rem;
-    color: #000;
-    background: transparent;
-  }
-  .pdp-gallery .slider-button:disabled {
-    opacity: 0.35;
+    display: none !important;
   }
 
   /* Design has no thumbnails in the gallery */
   .pdp-gallery .thumbnail-slider {
+    display: none !important;
+  }
+}
+
+/* ---------- Custom gallery nav (counter + arrows), bottom-left ---------- */
+.pdp-gallery .yw-gallery-nav {
+  position: absolute;
+  left: 2.4rem;
+  bottom: 2.4rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pdp-gallery .yw-gallery-counter {
+  margin-right: 0.8rem;
+  color: #000;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pdp-gallery .yw-gallery-btn {
+  width: 3.2rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pdp-gallery .yw-gallery-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Custom gallery nav is desktop-only; mobile uses Dawn's native gallery slider. */
+@media screen and (max-width: 749px) {
+  .pdp-gallery .yw-gallery-nav {
     display: none !important;
   }
 }
