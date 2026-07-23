@@ -356,7 +356,7 @@
                 {%- endif -%}
                 {%- if block.settings.menu != blank -%}
                   {%- for link in block.settings.menu.links -%}
-                    <a class="yw-mm-link" href="{{ link.url }}">{{ link.title }}</a>
+                    <a class="yw-mm-link yw-mm-link--{{ link.title | handleize }}" href="{{ link.url }}">{{ link.title }}</a>
                   {%- endfor -%}
                 {%- endif -%}
               </div>
