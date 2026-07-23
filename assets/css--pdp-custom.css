@@ -1,0 +1,156 @@
+/* ============================================================
+   PDP custom elements: USPs marquee + recipe image swatches
+   ============================================================ */
+
+/* ---------- USPs marquee ---------- */
+.pdp-usps {
+  overflow: hidden;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 1.2rem 0;
+  margin: 1.6rem 0;
+}
+
+.pdp-usps__track {
+  display: flex;
+  width: max-content;
+  flex-wrap: nowrap;
+  will-change: transform;
+  /* Two identical copies of the list are rendered; animating to -50% lands
+     copy 2's start exactly on copy 1's start, so the loop has no jerk. */
+  animation: pdp-usps-scroll var(--pdp-usps-duration, 25s) linear infinite;
+}
+
+.pdp-usps:hover .pdp-usps__track {
+  animation-play-state: paused;
+}
+
+.pdp-usps__item {
+  flex: 0 0 auto;
+  font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #000;
+  padding: 0 2.4rem;
+}
+
+@keyframes pdp-usps-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pdp-usps {
+    overflow-x: auto;
+  }
+  .pdp-usps__track {
+    animation: none;
+  }
+}
+
+/* ---------- Numbered option legend (1. RECIPE, 2. BAG SIZE) ---------- */
+.product-form__input .form__label.form__label--numbered {
+  font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.64px;
+  text-transform: uppercase;
+  color: #000;
+}
+
+/* ---------- Recipe image swatches ---------- */
+.product-form__input--recipe {
+  margin-bottom: 1.6rem;
+}
+
+.recipe-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  /* room above the cards for the POPULAR badge that sits over the top edge */
+  margin: 1.2rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.recipe-swatch {
+  position: relative;
+  display: block;
+}
+
+.recipe-swatch__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.recipe-swatch__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 160px;
+  height: 56px;
+  padding-right: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.recipe-swatch__input:checked + .recipe-swatch__label {
+  border-color: #000;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.recipe-swatch__input:focus-visible + .recipe-swatch__label {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+.recipe-swatch__img {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.recipe-swatch__title {
+  font-family: var(--font-body-family, sans-serif);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #000;
+}
+
+.recipe-swatch__badge {
+  position: absolute;
+  top: -9px;
+  left: 44px;
+  z-index: 1;
+  padding: 1px 10px 2px;
+  border: 1px solid #e1523c;
+  border-radius: 16px;
+  background: #fff9ef;
+  color: #e1523c;
+  font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: -0.52px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.recipe-swatch__input.disabled + .recipe-swatch__label {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
