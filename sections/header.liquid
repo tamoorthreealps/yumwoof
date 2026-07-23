@@ -283,7 +283,7 @@
           {%- case block.type -%}
             {%- when 'mobile_link' -%}
               <a
-                class="yw-mm-link yw-mm-link--{{ link.title | handleize }} {% if block.settings.image != blank %} yw-mm-link--img{% endif %}"
+                class="yw-mm-link yw-mm-link--{{ block.settings.text | handleize }} {% if block.settings.image != blank %} yw-mm-link--img{% endif %}"
                 href="{{ block.settings.link | default: '#' }}"
                 {{ block.shopify_attributes }}
               >
