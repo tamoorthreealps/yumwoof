@@ -431,11 +431,8 @@ function initEmptyCartSlider() {
     arrows: false,
     drag: true,
     breakpoints: {
-      768: {
-        perPage: 2,
-      },
-      1024: {
-        perPage: 2,
+      750: {
+        perPage: 1.6,
       },
     },
   });
