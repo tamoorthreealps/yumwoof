@@ -58,7 +58,7 @@
         "threshold_4_amount_gbp": 360,
         "threshold_4_amount_chf": 440,
         "banner_enable": true,
-        "banner_product": "membership",
+        "banner_product": "ancestral-blend",
         "banner_image_desktop": "shopify://shop_images/cart--baner-img-desktop.png",
         "banner_image_mobile": "shopify://shop_images/cart--baner-img-mobile.png",
         "banner_congrats_link": "",
