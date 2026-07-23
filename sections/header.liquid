@@ -193,6 +193,20 @@
 
   {%- comment -%} ---------------- Mobile menu overlay ---------------- {%- endcomment -%}
   <div class="yw-mobile-menu" id="{{ mobile_id }}">
+    {%- comment -%} ---------------- Announcement topbar ---------------- {%- endcomment -%}
+    {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+      <div class="yw-topbar" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
+        <div class="yw-topbar__inner">
+          {%- if section.settings.announcement_link != blank -%}
+            <a class="yw-topbar__link" href="{{ section.settings.announcement_link }}">
+              {{- section.settings.announcement_text -}}
+            </a>
+          {%- else -%}
+            <p class="yw-topbar__text">{{ section.settings.announcement_text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
     <div class="yw-mobile-menu__bar">
       <button
         type="button"
