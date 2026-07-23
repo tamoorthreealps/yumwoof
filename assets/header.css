@@ -635,17 +635,19 @@ font-size: 16px;
    Mobile menu blocks (dynamic, built from customizer blocks)
    -------------------------------------------------------------------------- */
 .yw-mm-link {
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.6rem 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.35);
-  color: var(--yw-nav-text);
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid #000000;
+    color: var(--yw-nav-text);
+    text-decoration: none;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-family: 'TAYRosemary';
+    font-weight: 400;
 }
 
 .yw-mm-link__img {
