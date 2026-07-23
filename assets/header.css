@@ -650,6 +650,10 @@ font-size: 16px;
     font-weight: 400;
 }
 
+a.yw-mm-link.yw-mm-link--img {
+    padding: 1.16rem 0;
+}
+
 .yw-mm-link__img {
     flex: 0 0 auto;
     width: 5.6rem;
