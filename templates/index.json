@@ -409,7 +409,7 @@
         "offer_text": "Get 30% Off and Free Shipping.",
         "decor_left": "shopify://shop_images/Group_82.png",
         "decor_right": "shopify://shop_images/Group_83_1.png",
-        "background_color": "#FFF9EF",
+        "background_color": "#fff9ef",
         "text_color": "#fff9ef"
       }
     },
@@ -454,7 +454,7 @@
       "name": "FAQs",
       "settings": {
         "heading": "Any Questions?",
-        "subheading": "Every dog is different. Find the recipe that's right for yours.",
+        "subheading": "Every dog is different. <br>Find the recipe that's right for yours.",
         "open_first": true,
         "background_color": "#fff9ef",
         "text_color": "#000000",
