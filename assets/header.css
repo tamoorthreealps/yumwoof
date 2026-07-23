@@ -678,7 +678,10 @@ a.yw-mm-link.yw-mm-link--img {
 }
 
 .yw-mm-cards__head {
-    display: block;
+display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.6rem;
     margin-bottom: 1.2rem;
     color: var(--yw-nav-text);
     text-decoration: none;
@@ -687,7 +690,7 @@ a.yw-mm-link.yw-mm-link--img {
     font-weight: 400;
     letter-spacing: 0;
     text-transform: uppercase;
-    font-family: 'TAYRosemary';
+    font-family: TAYRosemary;
 }
 
 .yw-mm-cards {
