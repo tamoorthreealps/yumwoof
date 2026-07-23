@@ -16,14 +16,15 @@
     {% endif %}
   }
 
+
+
   @media (max-width: 989px) {
     #shopify-section-{{ section.id }} .heritage {
       {% if section.settings.background_image_mobile != blank %}
         background-image: url('{{ section.settings.background_image_mobile | image_url: width: 1200 }}');
-        background-size: cover;
+        background-size: 100% 100%;
         background-position: center;
         background-repeat: no-repeat;
-        background-color: transparent;
       {% else %}
         background-image: none;
         background-color: {{ section.settings.mobile_background_color }};
@@ -84,10 +85,20 @@
       {%- endif -%}
 
       <div class="heritage__card">
-        <img
-          src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/hexagone_img.svg?v=1784709017"
-          class="shape-bg"
-        >
+        {% if section.settings.hexagon_image != blank %}
+          {{
+            section.settings.hexagon_image
+            | image_url: width: 800
+            | image_tag: class: 'shape-bg desktop--hexagone--img', alt: 'Hexagon Background', loading: 'lazy'
+          }}
+        {% endif %}
+        {% if section.settings.hexagon_bg_mobile != blank %}
+          {{
+            section.settings.hexagon_bg_mobile
+            | image_url: width: 800
+            | image_tag: class: 'shape-bg mobile--hexagone--img', alt: 'Hexagon Background', loading: 'lazy'
+          }}
+        {% endif %}
         <ul class="heritage__ingredients">
           {%- for i in (1..4) -%}
             {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
@@ -123,6 +134,11 @@
             {%- endif -%}
           {%- endfor -%}
         </ul>
+        {%- if section.settings.button_label_mobile != blank -%}
+          <a class="heritage__button heritage__button__mobile" href="{{ section.settings.button_link | default: '#' }}">
+            {{- section.settings.button_label_mobile -}}
+          </a>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -252,6 +268,12 @@
       "default": "See our standards →"
     },
     {
+      "type": "text",
+      "id": "button_label_mobile",
+      "label": "Button label",
+      "default": "See our standards →"
+    },
+    {
       "type": "url",
       "id": "button_link",
       "label": "Button link"
@@ -265,6 +287,16 @@
       "type": "header",
       "content": "Ingredients",
       "info": "Up to 4 highlights shown in the card. Each appears only when it has a title or image."
+    },
+    {
+      "type": "image_picker",
+      "id": "hexagon_image",
+      "label": "Ingredient Background - Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "hexagon_bg_mobile",
+      "label": "Ingredient Background - Mobile"
     },
     {
       "type": "image_picker",
