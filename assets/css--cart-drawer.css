@@ -604,6 +604,10 @@ cart-drawer.active .cd__inner {
 	overflow: hidden;
 }
 
+.cd-recommend.cd-recommend--has-banner {
+    padding-bottom: 0;
+}
+
 .cd-recommend[hidden] {
 	display: none;
 }
