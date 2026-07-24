@@ -89,6 +89,7 @@ cart-drawer.active .cd__inner {
 	background: var(--cd-header-bg);
 	color: var(--cd-header-text);
 	border-radius: 19px 19px 0 0;
+	    border-bottom: 1.5px solid #000000;
 }
 
 .cd__title {
