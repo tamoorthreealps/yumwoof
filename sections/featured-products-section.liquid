@@ -314,19 +314,21 @@
             next.addEventListener('click', function () {
               scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1));
             });
-          let scrollTimer;
+          let ticking = false;
 
-viewport.addEventListener(
-  'scroll',
-  function () {
-    clearTimeout(scrollTimer);
-
-    scrollTimer = setTimeout(function () {
-      update();
-    }, 80);
-  },
-  { passive: true }
-);
+          viewport.addEventListener(
+            'scroll',
+            function () {
+              if (!ticking) {
+                window.requestAnimationFrame(function () {
+                  update();
+                  ticking = false;
+                });
+                ticking = true;
+              }
+            },
+            { passive: true }
+          );
 
           update();
           track.dataset.fpReady = 'true';
