@@ -1060,6 +1060,35 @@ cart-drawer.active .cd__inner {
 .cd__header {
 	padding:8px 20px;
 }
+.cd-rewards {
+    padding: 1.6rem 1.68em 1.6rem;
+}
+.cd-rewards__msg {
+    margin: 0 0 .8rem;
+    font-size: 12px;
+    line-height: 20px;
+}
+.cd-rewards__track {
+    gap: 6px;
+}
+.cd-reward__bar {
+    height: 4px;
+}
+.cd-reward__label {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 6px 0 0;
+}
+.cd-reward__check {
+    width: 8px;
+    height: 6px;
+}
+.cd-reward__amount {
+    font-size: 11px;
+    line-height: 12px;
+    letter-spacing: -.44px;
+    margin: 0;
+}
 .cd__title {
     font-size: 14px;
     line-height: 24px;
