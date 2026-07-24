@@ -126,7 +126,6 @@ cart-drawer.active .cd__inner {
     padding: 2rem 2rem 1.6rem;
     text-align: center;
     background: rgba(255, 255, 255, 0.5);
-    margin-bottom: 2rem;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
@@ -275,6 +274,7 @@ cart-drawer.active .cd__inner {
 .cd-items-wrap {
 	display: block;
 	padding: 0 2rem;
+	margin: 2rem 0 0;
 }
 
 .cd-items {
