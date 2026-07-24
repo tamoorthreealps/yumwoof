@@ -1154,6 +1154,16 @@ cart-drawer.active .cd__inner {
     width: 12px;
     height: 12px;
 }
+.cd-toggle.is-on .cd-toggle__knob {
+    left: 24px;
+}
+
+
+
+
+
+
+
 
 .cd-empty {
     padding: 40px 24px;
