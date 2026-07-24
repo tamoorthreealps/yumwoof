@@ -29,7 +29,6 @@
         },
         "usps_wWfcV4": {
           "type": "usps",
-          "disabled": true,
           "settings": {
             "scroll_seconds": 25
           }
@@ -47,7 +46,6 @@
         },
         "appstle_subscription_qkkVmJ": {
           "type": "appstle_subscription",
-          "disabled": true,
           "settings": {}
         },
         "buy_buttons": {
