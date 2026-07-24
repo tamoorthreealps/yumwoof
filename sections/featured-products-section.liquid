@@ -250,8 +250,8 @@ new Splide(slider, {
       drag: true,
       trimSpace: false,
 
-      arrows: true,
-      pagination: true,
+      arrows: false,
+      pagination: false,
 
       classes: {
         arrows: "fp__nav",
@@ -267,15 +267,15 @@ new Splide(slider, {
 
     splide.mount();
 
-    const wrapper = slider.closest(".fp");
+const wrapper = slider.closest(".fp");
 
-    wrapper.querySelector("[data-fp-prev]")?.addEventListener("click", () => {
-      splide.go("<");
-    });
+wrapper.querySelector(".splide__arrow--prev").onclick = () => splide.go("<");
+wrapper.querySelector(".splide__arrow--next").onclick = () => splide.go(">");
 
-    wrapper.querySelector("[data-fp-next]")?.addEventListener("click", () => {
-      splide.go(">");
-    });
+const pagination = wrapper.querySelector(".fp__dots");
+
+splide.Components.Pagination.mount();
+pagination.append(...slider.querySelectorAll(".splide__pagination li"));
 
   });
 });
