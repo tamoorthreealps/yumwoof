@@ -329,7 +329,7 @@
     display: flex;
 }
 
-.fp__dot {
+.fp__dots li button{
 	width: 8px;
 	height: 8px;
 	padding: 0;
@@ -340,7 +340,7 @@
 	border: 1px solid #000000;
 }
 
-.fp__dot[aria-current='true'] {
+.fp__dots li button[aria-current='true'] {
 	background: var(--fp-text);
 }
 
