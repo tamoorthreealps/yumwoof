@@ -128,7 +128,7 @@
     transition: height .35s ease;
 }
 
-.splide__slide.is-active .fp__card{
+.is-active.fp__card{
     height: auto;
 }
 
