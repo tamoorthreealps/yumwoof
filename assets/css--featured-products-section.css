@@ -314,6 +314,10 @@
 	opacity:0.25;
 }
 
+.fp__nav .splide__arrow:disabled {
+    opacity:0.25;
+}
+
 .fp__dots {
     display: flex !important;
     align-items: center;
