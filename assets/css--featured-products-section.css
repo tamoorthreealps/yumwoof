@@ -381,6 +381,7 @@
 		justify-content: center;
 		gap: 2rem;
 		padding: 0;
+		flex-wrap: wrap;
 	}
 
 	.fp__track::after {
@@ -388,7 +389,7 @@
 	}
 
 	.fp__card {
-		width: 38.6rem;
+		width: 32.221%;
 		flex: 0 0 auto;
 		max-width: 100%;
 		scroll-snap-align: none;
