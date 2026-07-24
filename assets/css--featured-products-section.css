@@ -125,7 +125,7 @@
     transform: scale(.85);
 }
 
-.fp__card.is-active {
+.fp__card.my-active {
 	transform: scale(1);
 }
 
