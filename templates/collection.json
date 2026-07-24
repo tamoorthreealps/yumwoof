@@ -4,33 +4,24 @@
       "type": "main-collection-banner",
       "settings": {
         "show_collection_description": true,
-        "show_collection_image": false,
-        "color_scheme": "scheme-1"
+        "health_label": "Shop by health goal",
+        "band_color": "#1A1A1A",
+        "band_text_color": "#FFF9EF",
+        "accent_color": "#000000"
       }
     },
-    "product-grid": {
-      "type": "main-collection-product-grid",
+    "products-grid": {
+      "type": "main-collection-products-grid",
       "settings": {
-        "products_per_page": 16,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "enable_filtering": true,
-        "filter_type": "horizontal",
-        "enable_sorting": true,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "show_collection_products": true,
+        "products_per_page": 24,
+        "columns_desktop": 3,
+        "short_desc_metafield": "user_interface.go_cart_short_dsc"
       }
     }
   },
   "order": [
     "banner",
-    "product-grid"
+    "products-grid"
   ]
 }

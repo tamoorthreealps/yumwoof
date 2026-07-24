@@ -1,0 +1,220 @@
+/* Collection products grid — main-collection-products-grid.liquid */
+
+.mcg {
+  padding-top: 2.4rem;
+  padding-bottom: 4.8rem;
+}
+
+.mcg__group {
+  margin-top: 4rem;
+}
+
+.mcg__group:first-child {
+  margin-top: 0;
+}
+
+.mcg__group-heading {
+  margin: 0 0 0.4rem;
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  line-height: 1.15;
+}
+
+.mcg__group-sub {
+  margin: 0 0 2.4rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+  max-width: 60rem;
+}
+
+.mcg__group-heading + .mcg__grid,
+.mcg__group-sub + .mcg__grid {
+  margin-top: 2.4rem;
+}
+
+.mcg__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--mcg-cols, 3), minmax(0, 1fr));
+  gap: 2.4rem;
+}
+
+/* ---------- GoCart product card (card-product-yw.liquid) ---------- */
+.yw-pcard {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.yw-pcard__media {
+  position: relative;
+  display: block;
+  background: #ffc069;
+  aspect-ratio: 1 / 1;
+  padding: 2rem;
+}
+
+.yw-pcard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.yw-pcard__badge {
+  position: absolute;
+  top: 1.2rem;
+  z-index: 1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.yw-pcard__badge--dark {
+  left: 1.2rem;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.yw-pcard__badge--outline {
+  right: 1.2rem;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.yw-pcard__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.8rem 2.4rem;
+  flex: 1 1 auto;
+}
+
+.yw-pcard__title {
+  font-size: 2rem;
+  line-height: 1.15;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.yw-pcard__title:hover {
+  text-decoration: underline;
+}
+
+.yw-pcard__recipe {
+  margin: 0.6rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #661d1d;
+}
+
+.yw-pcard__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.yw-pcard__stars {
+  position: relative;
+  display: inline-block;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.yw-pcard__stars-off {
+  color: rgba(0, 0, 0, 0.18);
+}
+
+.yw-pcard__stars-on {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: calc(var(--yw-stars, 0) / 5 * 100%);
+  color: #f5a623;
+}
+
+.yw-pcard__rating-count {
+  font-size: 1.25rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.yw-pcard__desc {
+  margin: 1rem 0 0;
+  font-size: 1.35rem;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.yw-pcard__price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 1.4rem;
+}
+
+.yw-pcard__price-main {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.yw-pcard__price-day {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.yw-pcard__btn {
+  margin-top: 1.6rem;
+  display: inline-block;
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background: #1a1a1a;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 999px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.yw-pcard__btn:hover {
+  background: #000;
+}
+
+@media screen and (max-width: 989px) {
+  .mcg__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .mcg__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem;
+  }
+
+  .yw-pcard__title {
+    font-size: 1.6rem;
+  }
+
+  .yw-pcard__btn {
+    padding: 1rem 1.4rem;
+    font-size: 1.4rem;
+  }
+}
