@@ -31,96 +31,104 @@
         </a>
       {%- endif -%}
     </div>
-
-    <div class="fp__viewport" data-fp-viewport>
-      <ul class="fp__track" data-fp-track role="list">
-        {%- if products.size > 0 -%}
-          {%- for product in products -%}
-            {% assign popup = section.blocks[forloop.index0] %}
-            {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
-            {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
-            {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
-            {%- comment -%} A "list" metafield already returns an array; a plain text one is comma separated. {%- endcomment -%}
-            {%- if labels_mf.type contains 'list' -%}
-              {%- assign labels_list = labels_mf.value -%}
-            {%- else -%}
-              {%- assign labels_list = labels_mf.value | split: ',' -%}
-            {%- endif -%}
-            {%- assign recipes_url = recipes_mf.value | default: product.url -%}
-            {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
-            <li class="fp__card {% if hover_media %}fp__card__hover{% endif %}" data-fp-slide>
-              <div class="fp__hover-media">
-                {% if hover_media %}
-                  {% if hover_media.media_type == 'image' %}
-                    {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
-                  {% elsif hover_media.media_type == 'video' %}
-                    {{
-                      hover_media
-                      | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'fp__hover-video'
-                    }}
-                  {% endif %}
-                {% endif %}
-              </div>
-              <h3 class="fp__title">{{ product.title }}</h3>
-
-              {%- if labels_list.size > 0 -%}
-                <ul class="fp__labels" role="list">
-                  {%- for label in labels_list -%}
-                    {%- assign label_text = label | strip -%}
-                    {%- if label_text != blank -%}
-                      <li class="fp__label">{{ label_text }}</li>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
-
-              <a class="fp__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
-                {%- if product.featured_image -%}
-                  {%- assign fp_alt = product.featured_image.alt | default: product.title -%}
-                  {{
-                    product.featured_image
-                    | image_url: width: 600
-                    | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: fp_alt, loading: 'lazy'
-                  }}
+    <div class="splide fp-slider">
+      <div class="splide__track">
+        <div class="fp__viewport" data-fp-viewport>
+          <ul class="splide__list fp__track" data-fp-track role="list">
+            {%- if products.size > 0 -%}
+              {%- for product in products -%}
+                {% assign popup = section.blocks[forloop.index0] %}
+                {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
+                {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
+                {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
+                {%- comment -%} A "list" metafield already returns an array; a plain text one is comma separated. {%- endcomment -%}
+                {%- if labels_mf.type contains 'list' -%}
+                  {%- assign labels_list = labels_mf.value -%}
                 {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}
+                  {%- assign labels_list = labels_mf.value | split: ',' -%}
                 {%- endif -%}
-              </a>
+                {%- assign recipes_url = recipes_mf.value | default: product.url -%}
+                {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
+                <li class="splide__slide fp__card {% if hover_media %}fp__card__hover{% endif %}" data-fp-slide>
+                  <div class="fp__hover-media">
+                    {% if hover_media %}
+                      {% if hover_media.media_type == 'image' %}
+                        {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
+                      {% elsif hover_media.media_type == 'video' %}
+                        {{
+                          hover_media
+                          | video_tag:
+                            autoplay: true,
+                            loop: true,
+                            muted: true,
+                            playsinline: true,
+                            class: 'fp__hover-video'
+                        }}
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                  <h3 class="fp__title">{{ product.title }}</h3>
 
-              {%- if desc_mf.value != blank -%}
-                <p class="fp__desc">{{ desc_mf.value }}</p>
-              {%- endif -%}
+                  {%- if labels_list.size > 0 -%}
+                    <ul class="fp__labels" role="list">
+                      {%- for label in labels_list -%}
+                        {%- assign label_text = label | strip -%}
+                        {%- if label_text != blank -%}
+                          <li class="fp__label">{{ label_text }}</li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
 
-              {%- if section.settings.recipes_label != blank -%}
-                <a class="fp__recipes" href="#" data-popup="popup-{{ forloop.index }}">
-                  {{- section.settings.recipes_label -}}
-                </a>
-              {%- endif -%}
+                  <a class="fp__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+                    {%- if product.featured_image -%}
+                      {%- assign fp_alt = product.featured_image.alt | default: product.title -%}
+                      {{
+                        product.featured_image
+                        | image_url: width: 600
+                        | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: fp_alt, loading: 'lazy'
+                      }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}
+                    {%- endif -%}
+                  </a>
 
-              <a class="fp__shop" href="{{ product.url }}">
-                <span class="fp__shop-label">{{ section.settings.shop_label }}</span>
-              </a>
-            </li>
-          {%- endfor -%}
-        {%- else -%}
-          {%- comment -%} Editor placeholders when no products are selected. {%- endcomment -%}
-          {%- for i in (1..3) -%}
-            <li class="fp__card" data-fp-slide>
-              <h3 class="fp__title">{{ 'onboarding.product_title' | t }}</h3>
-              <ul class="fp__labels" role="list">
-                <li class="fp__label">Grain-Free</li>
-                <li class="fp__label">Organ-Rich</li>
-              </ul>
-              <span class="fp__media">{{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}</span>
-              <p class="fp__desc">{{ 'onboarding.product_description' | t | truncatewords: 8 }}</p>
-              <span class="fp__recipes">{{ section.settings.recipes_label }}</span>
-              <span class="fp__shop"
-                ><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span
-              >
-            </li>
-          {%- endfor -%}
-        {%- endif -%}
-      </ul>
+                  {%- if desc_mf.value != blank -%}
+                    <p class="fp__desc">{{ desc_mf.value }}</p>
+                  {%- endif -%}
+
+                  {%- if section.settings.recipes_label != blank -%}
+                    <a class="fp__recipes" href="#" data-popup="popup-{{ forloop.index }}">
+                      {{- section.settings.recipes_label -}}
+                    </a>
+                  {%- endif -%}
+
+                  <a class="fp__shop" href="{{ product.url }}">
+                    <span class="fp__shop-label">{{ section.settings.shop_label }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%} Editor placeholders when no products are selected. {%- endcomment -%}
+              {%- for i in (1..3) -%}
+                <li class="fp__card" data-fp-slide>
+                  <h3 class="fp__title">{{ 'onboarding.product_title' | t }}</h3>
+                  <ul class="fp__labels" role="list">
+                    <li class="fp__label">Grain-Free</li>
+                    <li class="fp__label">Organ-Rich</li>
+                  </ul>
+                  <span class="fp__media">{{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}</span>
+                  <p class="fp__desc">{{ 'onboarding.product_description' | t | truncatewords: 8 }}</p>
+                  <span class="fp__recipes">{{ section.settings.recipes_label }}</span>
+                  <span class="fp__shop"
+                    ><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span
+                  >
+                </li>
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </div>
+      </div>
     </div>
 
     {%- if products.size > 1 -%}
