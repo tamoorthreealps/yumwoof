@@ -94,10 +94,10 @@ collection-component {
 
 @font-face {
     font-family: 'Matter';
-    src: url('Matter-Medium.eot');
-    src: url('Matter-Medium.eot?#iefix') format('embedded-opentype'),
-        url('Matter-Medium.woff2') format('woff2'),
-        url('Matter-Medium.woff') format('woff');
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.eot?v=1784897700');
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.eot?v=1784897700?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.woff2?v=1784897700') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.woff?v=1784897700') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
