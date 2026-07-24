@@ -236,42 +236,30 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sliders = document.querySelectorAll('.fp-slider');
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.fp-slider').forEach((slider) => {
+    new Splide(slider, {
+      mediaQuery: 'min',
 
-    sliders.forEach((slider) => {
-      new Splide(slider, {
-        type: 'slide',
-        perPage: 3,
-        perMove: 1,
-        focus: 'center',
-        gap: '24px',
-        arrows: true,
-        pagination: true,
-        drag: true,
-        speed: 600,
-        rewind: false,
-        trimSpace: false,
+      destroy: true,
 
-        breakpoints: {
-          1200: {
-            perPage: 2.5,
-          },
-          990: {
-            perPage: 2,
-          },
-          768: {
-            perPage: 1.3,
-            gap: '16px',
-          },
-          480: {
-            perPage: 1.15,
-            gap: '12px',
-          },
+      breakpoints: {
+        990: {
+          destroy: false,
+          type: 'slide',
+          perPage: 1.15,
+          focus: 'center',
+          gap: '16px',
+          arrows: true,
+          pagination: true,
+          drag: true,
+          speed: 600,
+          trimSpace: false,
         },
-      }).mount();
-    });
+      },
+    }).mount();
   });
+});
 
 
         {% comment %} popup--js--code {% endcomment %}
