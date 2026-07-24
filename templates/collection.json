@@ -47,7 +47,7 @@
         "collection_heading": "",
         "products_per_page": 24,
         "columns_desktop": 3,
-        "short_desc_metafield": "user_interface.go_cart_short_dsc"
+        "short_desc_metafield": "custom.collection_short_description"
       }
     }
   },
