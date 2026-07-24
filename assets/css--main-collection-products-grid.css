@@ -63,10 +63,27 @@
   display: block;
 }
 
-.yw-pcard__badge {
+.yw-pcard__badges {
   position: absolute;
   top: 1.2rem;
+  left: 1.2rem;
+  right: 1.2rem;
   z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+.yw-pcard__badges-right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.yw-pcard__badge {
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -74,16 +91,15 @@
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .yw-pcard__badge--dark {
-  left: 1.2rem;
   background: #1a1a1a;
   color: #fff;
 }
 
 .yw-pcard__badge--outline {
-  right: 1.2rem;
   background: rgba(255, 255, 255, 0.85);
   color: #1a1a1a;
   border: 1px solid rgba(0, 0, 0, 0.25);
