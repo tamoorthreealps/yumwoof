@@ -258,7 +258,9 @@
           },
         },
       });
-
+      splide.on('mounted', function () {
+  slider.classList.add('is-ready');
+});
       splide.mount();
       
 
