@@ -318,6 +318,10 @@
     padding: 0;
 }
 
+.fp__dots li {
+    display: flex;
+}
+
 .fp__dot {
 	width: 8px;
 	height: 8px;
