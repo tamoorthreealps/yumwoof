@@ -105,10 +105,10 @@ collection-component {
 
 @font-face {
     font-family: 'TAYRosemary';
-    src: url('TAYRosemaryRegular.eot');
-    src: url('TAYRosemaryRegular.eot?#iefix') format('embedded-opentype'),
-        url('TAYRosemaryRegular.woff2') format('woff2'),
-        url('TAYRosemaryRegular.woff') format('woff');
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.eot?v=1784897699');
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.eot?v=1784897699?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.woff2?v=1784897699') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.woff?v=1784897699') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
