@@ -198,6 +198,7 @@ width: 132px;
         top: auto;
         bottom: -60px;
         left:auto;
+                overflow: hidden;
 
   }
   .quiz__offer {
