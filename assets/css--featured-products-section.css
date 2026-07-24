@@ -123,14 +123,14 @@
 	padding: 2.4rem 2rem 4.4rem ;
 	scroll-snap-stop: always;
 }
-/* .fp__card{
-    height: 344px;
+.fp__card .fp__media{
+    height: 86px;
     transition: height .35s ease;
 }
 
-.is-active.fp__card{
-    height: auto;
-} */
+.is-active.fp__card .fp__media{
+    height: 172px;
+}
 
 /* .fp__card.my-active {
 	transform: scale(1);
