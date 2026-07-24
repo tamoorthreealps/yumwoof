@@ -123,7 +123,6 @@
 	padding: 2.4rem 2rem 4.4rem ;
 	scroll-snap-stop: always;
     transform: scale(.85);
-    transition: transform .35s ease, opacity .35s ease;
 }
 
 .fp__card.is-active {
