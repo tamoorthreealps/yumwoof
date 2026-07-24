@@ -124,7 +124,6 @@
 	transform: scale(.8803);
 	scroll-snap-align: center;
     scroll-snap-stop: normal;
-    transition: transform .35s ease;
 }
 
 .fp__card.is-active {
