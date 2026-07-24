@@ -350,6 +350,12 @@
 		padding: 8rem 0 13.2rem;
 	}
 
+    .fp__inner {
+        max-width: 1244px;
+        margin: 0 auto;
+        padding: 0 2.4rem;
+    }
+
 	.fp__inner__head {
 		margin-bottom:3.2rem;
 	}
