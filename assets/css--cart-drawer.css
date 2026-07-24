@@ -1094,6 +1094,57 @@ cart-drawer.active .cd__inner {
     line-height: 24px;
     letter-spacing: 0;
 }
+.cd-items-wrap {
+    padding: 0 1.6rem;
+    margin: 1.6rem 0 0;
+}
+.cd-item {
+    gap: 16px;
+    padding: 1.2rem 1.6rem;
+    border-radius: 12px;
+}
+.cd-item_hold {
+    gap: 4px;
+}
+.cd-item__media {
+    width: 72px;
+    height: 72px;
+}
+.cd-item__top {
+    gap: 1.2rem;
+}
+.cd-item__name {
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0;
+}
+.cd-item__note {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0;
+}
+.cd-item__price-row {
+    gap: .6rem;
+    font-size: 13px;
+    line-height: 16px;
+}
+.cd-item__off {
+    font-size: 11px;
+    line-height: 12px;
+    letter-spacing: -0.22px;
+}
+.cd-item__bottom {
+    margin-top: 1.2rem;
+}
+.cd-qty__input {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+
+
+
 .cd-empty {
     padding: 40px 24px;
 }
