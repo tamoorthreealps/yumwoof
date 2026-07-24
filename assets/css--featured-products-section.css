@@ -122,12 +122,11 @@
 	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem ;
 	scroll-snap-stop: always;
-    transform: scale(.85);
 }
 
-.fp__card.my-active {
+/* .fp__card.my-active {
 	transform: scale(1);
-}
+} */
 
 .fp__hover-media{
     position:absolute !important;
