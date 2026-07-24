@@ -236,25 +236,34 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.fp-slider').forEach((slider) => {
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".fp-slider").forEach((slider) => {
     new Splide(slider, {
-      mediaQuery: 'max',
-
+      mediaQuery: "max",
       destroy: true,
 
       breakpoints: {
         990: {
           destroy: false,
-          type: 'slide',
+          type: "slide",
           perPage: 1,
-          focus: 'center',
-          gap: '16px',
+          focus: "center",
+          gap: "16px",
+          speed: 600,
+          drag: true,
+          trimSpace: false,
+
           arrows: true,
           pagination: true,
-          drag: true,
-          speed: 600,
-          trimSpace: false,
+
+          classes: {
+            arrows: "fp__nav",
+            arrow: "fp__arrow",
+            prev: "fp__arrow fp__arrow--prev",
+            next: "fp__arrow fp__arrow--next",
+            pagination: "fp__dots",
+            page: "fp__dot",
+          },
         },
       },
     }).mount();
