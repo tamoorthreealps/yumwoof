@@ -1057,6 +1057,9 @@ cart-drawer.active .cd__inner {
 }
 
 @media screen and (max-width: 750px) {
+.cd__header {
+	padding:8px 20px;
+}
 .cd__title {
     font-size: 14px;
     line-height: 24px;
