@@ -278,6 +278,8 @@
 
 splide.on("mounted move", updateArrows);
 
+updateArrows(); // Initial load par bhi check karega
+
       const prevBtn = wrapper.querySelector('.splide__arrow--prev');
       const nextBtn = wrapper.querySelector('.splide__arrow--next');
       const customPagination = wrapper.querySelector('.fp__dots');
