@@ -20,7 +20,7 @@
 .fp__inner {
 	max-width: 1246px;
 	margin: 0 auto;
-	padding: 0 2.4rem;
+	padding: 0;
 }
 
 .fp__inner__head {
@@ -353,6 +353,10 @@
 	.fp__inner__head {
 		margin-bottom:3.2rem;
 	}
+
+    .fp__inner {
+	padding: 0 2.4rem;
+}
 
 	.fp__heading {
 		        font-size: 56px;
