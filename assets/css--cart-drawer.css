@@ -901,7 +901,7 @@ cart-drawer.active .cd__inner {
 	line-height: 20px;
 	text-transform: uppercase;
 	letter-spacing: -.64px;
-	font-family: "FFBlurProMedium";
+	font-family: 'TAY Birdie';
 }
 
 /* Empty state --------------------------------------------------------------*/
@@ -1240,7 +1240,12 @@ cart-drawer.active .cd__inner {
     letter-spacing: .8px;
     padding: 13.4px 14px 13px;
 }
-
+.cd-guarantee {
+    margin: 1.2rem 0 0;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -.48px;
+}
 
 
 
