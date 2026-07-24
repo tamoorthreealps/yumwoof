@@ -1157,6 +1157,9 @@ cart-drawer.active .cd__inner {
 .cd-toggle.is-on .cd-toggle__knob {
     left: 24px;
 }
+.cd-item__sub-row {
+    gap: .2rem;
+}
 .cd-toggle__label {
     font-size: 12px;
     line-height: 20px;
