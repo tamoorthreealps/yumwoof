@@ -260,6 +260,7 @@
         {%- else -%}
           {%- comment -%} ===== REWARDS: member scheme OR spend-based tiers ===== {%- endcomment -%}
           {%- comment -%} Hide the spend tiers for members AND when the membership product is in the cart. {%- endcomment -%}
+           <div class="fill--cart--container">
           {%- if show_member_scheme -%}
             <div class="cd-rewards cd-rewards--member">
               <p class="cd-rewards__msg">{{ member_message }}</p>
@@ -683,6 +684,7 @@
               </div>
             {%- endif -%}
           {%- endif -%}
+        </div>
 
           {%- comment -%} ===== FOOTER ===== {%- endcomment -%}
            {%- assign strike_total = 0 -%}
