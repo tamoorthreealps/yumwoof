@@ -309,13 +309,14 @@
 }
 
 .fp__dots {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     gap: 8px;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    position: static;
 }
 
 .fp__dots li {
