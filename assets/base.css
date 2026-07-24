@@ -83,10 +83,10 @@ collection-component {
 /*----- custom--font-families----- */
 @font-face {
     font-family: 'TAY Birdie';
-    src: url('TAYBirdieRegular.eot');
-    src: url('TAYBirdieRegular.eot?#iefix') format('embedded-opentype'),
-        url('TAYBirdieRegular.woff2') format('woff2'),
-        url('TAYBirdieRegular.woff') format('woff');
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.eot?v=1784897700');
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.eot?v=1784897700?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.woff2?v=1784897699') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.woff?v=1784897699') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
