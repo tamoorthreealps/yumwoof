@@ -129,31 +129,27 @@
       </div>
     </div>
 
-    {%- if products.size > 1 -%}
-      <div class="fp__nav" data-fp-nav>
-        <button
-          type="button"
-          class="fp__arrow"
-          data-fp-prev
-          aria-label="{{ 'general.slider.previous_slide' | t | default: 'Previous' }}"
-        >
-          <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5.96542 8C5.67819 7.33884 5.37993 6.75482 5.07061 6.24793C4.76129 5.71901 4.45197 5.26722 4.14265 4.89256H16V3.10744H4.14265C4.45197 2.71074 4.76129 2.25895 5.07061 1.75207C5.37993 1.22314 5.67819 0.639119 5.96542 0H4.40778C3.01585 1.60882 1.54659 2.7989 0 3.57025V4.42975C1.54659 5.17906 3.01585 6.36915 4.40778 8H5.96542Z" fill="black"/>
-          </svg>
-        </button>
-        <div class="fp__dots" data-fp-dots></div>
-        <button
-          type="button"
-          class="fp__arrow"
-          data-fp-next
-          aria-label="{{ 'general.slider.next_slide' | t | default: 'Next' }}"
-        >
-          <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.0346 8C10.3218 7.33884 10.6201 6.75482 10.9294 6.24793C11.2387 5.71901 11.548 5.26722 11.8573 4.89256H0V3.10744H11.8573C11.548 2.71074 11.2387 2.25895 10.9294 1.75207C10.6201 1.22314 10.3218 0.639119 10.0346 0H11.5922C12.9841 1.60882 14.4534 2.7989 16 3.57025V4.42975C14.4534 5.17906 12.9841 6.36915 11.5922 8H10.0346Z" fill="black"/>
-          </svg>
-        </button>
-      </div>
-    {%- endif -%}
+{%- if products.size > 1 -%}
+<div class="fp__nav splide__arrows">
+
+  <button
+    class="fp__arrow splide__arrow splide__arrow--prev"
+    aria-label="{{ 'general.slider.previous_slide' | t | default: 'Previous' }}"
+  >
+    <!-- tumhara SVG -->
+  </button>
+
+  <ul class="fp__dots splide__pagination"></ul>
+
+  <button
+    class="fp__arrow splide__arrow splide__arrow--next"
+    aria-label="{{ 'general.slider.next_slide' | t | default: 'Next' }}"
+  >
+    <!-- tumhara SVG -->
+  </button>
+
+</div>
+{%- endif -%}
     {%- if section.settings.button_label != blank -%}
       <div class="mobile_fp__button">
         <a
@@ -236,44 +232,35 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".fp-slider").forEach((slider) => {
+new Splide(slider, {
+  mediaQuery: "max",
+  destroy: true,
 
-    const splide = new Splide(slider, {
-      mediaQuery: "max",
-      destroy: true,
+  breakpoints: {
+    990: {
+      destroy: false,
+      type: "slide",
+      perPage: 1,
+      focus: "center",
+      gap: "16px",
+      speed: 600,
+      drag: true,
+      trimSpace: false,
 
-      breakpoints: {
-        990: {
-          destroy: false,
-          type: "slide",
-          perPage: 1,
-          focus: "center",
-          gap: "16px",
-          speed: 600,
-          drag: true,
-          trimSpace: false,
+      arrows: true,
+      pagination: true,
 
-          arrows: false,
-          pagination: false,
-        },
+      classes: {
+        arrows: "fp__nav",
+        arrow: "fp__arrow",
+        prev: "fp__arrow fp__arrow--prev",
+        next: "fp__arrow fp__arrow--next",
+        pagination: "fp__dots",
+        page: "fp__dot",
       },
-    });
-
-    splide.mount();
-
-    const wrapper = slider.closest(".fp");
-
-    wrapper.querySelector("[data-fp-prev]")?.addEventListener("click", () => {
-      splide.go("<");
-    });
-
-    wrapper.querySelector("[data-fp-next]")?.addEventListener("click", () => {
-      splide.go(">");
-    });
-
-  });
-});
+    },
+  },
+}).mount();
 
 
         {% comment %} popup--js--code {% endcomment %}
