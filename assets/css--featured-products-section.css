@@ -304,6 +304,7 @@
 .fp__arrow svg {
 	width: 16px;
 	height: 8px;
+    transform: inherit;
 }
 
 .fp__arrow:disabled svg{
