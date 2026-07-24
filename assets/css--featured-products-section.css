@@ -378,6 +378,7 @@
 	}
 
 	.fp__track {
+        display:flex !important;
 		justify-content: center;
 		gap: 2rem;
 		padding: 0;
