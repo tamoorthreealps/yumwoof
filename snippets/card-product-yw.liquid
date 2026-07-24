@@ -1,0 +1,79 @@
+{% comment %}
+  Yumwoof "GoCart" product card (collection / product-group grid).
+
+  Accepts:
+  - product: {Object} product
+  - short_desc_mf: {String} "namespace.key" for the short description above the price
+      (default 'user_interface.go_cart_short_dsc')
+
+  Optional product metafields used (namespace.key), shown only when present:
+  - custom.badge_primary   -> dark badge (e.g. BESTSELLER)
+  - custom.badge_secondary -> outline badge (e.g. ALL BREEDS & STAGES)
+  - custom.recipe          -> recipe line (e.g. LAND & SEA RECIPE)
+  - custom.per_day_price   -> "as low as X / day"
+  - reviews.rating / reviews.rating_count -> star rating (Shopify product reviews)
+{% endcomment %}
+
+{%- liquid
+  assign sd_key = short_desc_mf | default: 'user_interface.go_cart_short_dsc'
+  assign sd_parts = sd_key | split: '.'
+  assign short_desc = product.metafields[sd_parts[0]][sd_parts[1]]
+
+  assign badge1 = product.metafields.custom.badge_primary
+  assign badge2 = product.metafields.custom.badge_secondary
+  assign recipe = product.metafields.custom.recipe
+  assign per_day = product.metafields.custom.per_day_price
+
+  assign rating = product.metafields.reviews.rating
+  assign rating_count = product.metafields.reviews.rating_count
+-%}
+
+<div class="yw-pcard">
+  <a class="yw-pcard__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if badge1 != blank -%}<span class="yw-pcard__badge yw-pcard__badge--dark">{{ badge1 }}</span>{%- endif -%}
+    {%- if badge2 != blank -%}<span class="yw-pcard__badge yw-pcard__badge--outline">{{ badge2 }}</span>{%- endif -%}
+    {%- if product.featured_image != blank -%}
+      {%- assign card_alt = product.featured_image.alt | default: product.title | escape -%}
+      {{
+        product.featured_image
+        | image_url: width: 600
+        | image_tag: class: 'yw-pcard__img', widths: '200, 300, 460, 600', alt: card_alt, loading: 'lazy'
+      }}
+    {%- endif -%}
+  </a>
+
+  <div class="yw-pcard__body">
+    <a class="yw-pcard__title" href="{{ product.url }}">{{ product.title }}</a>
+
+    {%- if recipe != blank -%}
+      <p class="yw-pcard__recipe">{{ recipe }}</p>
+    {%- endif -%}
+
+    {%- if rating != blank -%}
+      {%- assign rating_val = rating.value | default: rating | times: 1.0 -%}
+      <div class="yw-pcard__rating">
+        <span class="yw-pcard__stars" style="--yw-stars: {{ rating_val }};" aria-hidden="true">
+          <span class="yw-pcard__stars-on">★★★★★</span>
+          <span class="yw-pcard__stars-off">★★★★★</span>
+        </span>
+        <span class="yw-pcard__rating-count">{{ rating_val }}{% if rating_count != blank %} ({{ rating_count }}){% endif %}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if short_desc != blank -%}
+      <p class="yw-pcard__desc">{{ short_desc }}</p>
+    {%- endif -%}
+
+    <div class="yw-pcard__price">
+      <span class="yw-pcard__price-main">
+        {%- if product.price_varies -%}{{ 'products.product.price.from_price_html' | t: price: product.price_min | money }}
+        {%- else -%}{{ product.price | money }}{%- endif -%}
+      </span>
+      {%- if per_day != blank -%}
+        <span class="yw-pcard__price-day">as low as {{ per_day }} / day</span>
+      {%- endif -%}
+    </div>
+
+    <a class="yw-pcard__btn" href="{{ product.url }}">Shop now</a>
+  </div>
+</div>
