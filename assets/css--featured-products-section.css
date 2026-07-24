@@ -77,7 +77,7 @@
 .fp__viewport {
 	overflow-x: auto;
 	overflow-y: hidden;
-	scroll-snap-type: x mandatory;
+	scroll-snap-type: x proximity;
 	-webkit-overflow-scrolling: touch;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
@@ -122,7 +122,9 @@
 	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem;
 	transform: scale(.8803);
-	scroll-snap-stop: always;
+	scroll-snap-align: center;
+    scroll-snap-stop: normal;
+    transition: transform .35s ease;
 }
 
 .fp__card.is-active {
