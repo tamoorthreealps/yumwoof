@@ -1123,7 +1123,7 @@ cart-drawer.active .cd__inner {
     line-height: 12px;
     letter-spacing: 0;
 }
-.cd-item__price-row {
+.cd-item__price-row, .cd-item__price {
     gap: .6rem;
     font-size: 13px;
     line-height: 16px;
