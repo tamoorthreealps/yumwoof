@@ -342,6 +342,11 @@
     opacity: 1;
 }
 
+.fp__dots li button.is-active {
+    background: #000;
+    transform: none;
+}
+
 .fp__dots li button[aria-current='true'] {
 	background: var(--fp-text);
 }
