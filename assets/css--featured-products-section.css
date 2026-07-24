@@ -381,7 +381,6 @@
 		justify-content: center;
 		gap: 2rem;
 		padding: 0;
-		flex-wrap: wrap;
 	}
 
 	.fp__track::after {
