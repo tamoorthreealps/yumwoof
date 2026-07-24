@@ -497,6 +497,7 @@ function initRecommendSlider() {
       },
       768: {
         perPage: 1,
+        gap: "8px",
       },
     },
   };
