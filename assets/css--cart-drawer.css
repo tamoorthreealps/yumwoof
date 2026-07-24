@@ -706,7 +706,7 @@ cart-drawer.active .cd__inner {
 
 /* Recommendation card */
 .cd-rec-card {
-	padding: 1.6rem;
+	padding: .8rem 1.6rem .8rem .8rem;
 	background: #fff;
 	border: 1px solid #000;
 	border-radius: 16px;
@@ -742,6 +742,7 @@ cart-drawer.active .cd__inner {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: end;
+	padding: 12px 0 8px;
 }
 
 .cd-rec-card__body__content {
