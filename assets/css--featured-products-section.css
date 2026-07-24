@@ -124,17 +124,6 @@
 	scroll-snap-stop: always;
 }
 
-.splide__slide {
-  transform: scale(.82);
-  opacity: .5;
-  transition: transform .35s ease, opacity .35s ease;
-}
-
-.splide__slide.is-active {
-  transform: scale(1);
-  opacity: 1;
-  z-index: 10;
-}
 
 /* .fp__card.my-active {
 	transform: scale(1);
