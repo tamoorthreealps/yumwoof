@@ -232,116 +232,150 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".fp-slider").forEach((slider) => {
+ document.addEventListener("DOMContentLoaded", function () {
 
-new Splide(slider, {
-  mediaQuery: "max",
-  destroy: true,
+  document.querySelectorAll(".fp-slider").forEach(function (slider) {
 
-  breakpoints: {
-    990: {
-      destroy: false,
-      type: "slide",
-      perPage: 1,
-      focus: "center",
-      gap: "16px",
-      speed: 600,
-      drag: true,
-      trimSpace: false,
+    const wrapper = slider.closest(".fp");
 
-      arrows: false,
-      pagination: false,
+    const splide = new Splide(slider, {
+      mediaQuery: "max",
+      destroy: true,
 
-      classes: {
-        arrows: "fp__nav",
-        arrow: "fp__arrow",
-        prev: "fp__arrow fp__arrow--prev",
-        next: "fp__arrow fp__arrow--next",
-        pagination: "fp__dots",
-        page: "fp__dot",
+      breakpoints: {
+        990: {
+          destroy: false,
+          type: "slide",
+          perPage: 1,
+          focus: "center",
+          gap: "16px",
+          speed: 600,
+          drag: true,
+          trimSpace: false,
+
+          arrows: false,
+          pagination: true,
+        },
       },
-    },
-  },
-}).mount();
+    });
 
     splide.mount();
 
-const wrapper = slider.closest(".fp");
+    const prevBtn = wrapper.querySelector(".splide__arrow--prev");
+    const nextBtn = wrapper.querySelector(".splide__arrow--next");
+    const customPagination = wrapper.querySelector(".fp__dots");
 
-wrapper.querySelector(".splide__arrow--prev").onclick = () => splide.go("<");
-wrapper.querySelector(".splide__arrow--next").onclick = () => splide.go(">");
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        splide.go("<");
+      });
+    }
 
-const pagination = wrapper.querySelector(".fp__dots");
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        splide.go(">");
+      });
+    }
 
-splide.Components.Pagination.mount();
-pagination.append(...slider.querySelectorAll(".splide__pagination li"));
+    if (customPagination) {
 
-  });
-});
+      const defaultPagination = slider.querySelector(".splide__pagination");
 
+      if (defaultPagination) {
+        customPagination.innerHTML = defaultPagination.innerHTML;
+        defaultPagination.remove();
 
-        {% comment %} popup--js--code {% endcomment %}
-    document.querySelectorAll(".fp__recipes").forEach(function(button){
+        customPagination
+          .querySelectorAll(".splide__pagination__page")
+          .forEach(function (dot, index) {
 
-        button.addEventListener("click",function(e){
+            dot.addEventListener("click", function () {
+              splide.go(index);
+            });
 
-            e.preventDefault();
+          });
 
-            const popup=document.getElementById(this.dataset.popup);
+        splide.on("move", function (newIndex) {
 
-            if(popup){
-                popup.classList.add("active");
-            }
-
-        });
-
-    });
-
-    document.querySelectorAll(".fp-popup").forEach(function(popup){
-
-        popup.querySelector(".fp-popup__close").addEventListener("click",function(){
-
-            popup.classList.remove("active");
-
-        });
-
-        popup.querySelector(".fp-popup__overlay").addEventListener("click",function(){
-
-            popup.classList.remove("active");
-
-        });
-
-    });
-
-    document.querySelectorAll(".fp-popup").forEach(function(popup){
-
-        const tabs = popup.querySelectorAll(".fp-popup__tabs button");
-        const contents = popup.querySelectorAll(".fp-popup__content");
-
-        tabs.forEach(function(tab){
-
-            tab.addEventListener("click",function(){
-
-                tabs.forEach(function(btn){
-                    btn.classList.remove("active");
-                });
-
-                contents.forEach(function(content){
-                    content.classList.remove("active");
-                });
-
-                tab.classList.add("active");
-
-                popup
-                    .querySelector('[data-content="'+tab.dataset.tab+'"]')
-                    .classList.add("active");
-
+          customPagination
+            .querySelectorAll(".splide__pagination__page")
+            .forEach(function (dot, index) {
+              dot.classList.toggle("is-active", index === newIndex);
             });
 
         });
 
+      }
+
+    }
+
+  });
+
+
+
+
+  document.querySelectorAll(".fp__recipes").forEach(function (button) {
+
+    button.addEventListener("click", function (e) {
+
+      e.preventDefault();
+
+      const popup = document.getElementById(this.dataset.popup);
+
+      if (popup) {
+        popup.classList.add("active");
+      }
+
     });
+
+  });
+
+
+
+  document.querySelectorAll(".fp-popup").forEach(function (popup) {
+
+    popup.querySelector(".fp-popup__close").addEventListener("click", function () {
+      popup.classList.remove("active");
+    });
+
+    popup.querySelector(".fp-popup__overlay").addEventListener("click", function () {
+      popup.classList.remove("active");
+    });
+
+  });
+
+
+
+  document.querySelectorAll(".fp-popup").forEach(function (popup) {
+
+    const tabs = popup.querySelectorAll(".fp-popup__tabs button");
+    const contents = popup.querySelectorAll(".fp-popup__content");
+
+    tabs.forEach(function (tab) {
+
+      tab.addEventListener("click", function () {
+
+        tabs.forEach(function (btn) {
+          btn.classList.remove("active");
+        });
+
+        contents.forEach(function (content) {
+          content.classList.remove("active");
+        });
+
+        tab.classList.add("active");
+
+        popup
+          .querySelector('[data-content="' + tab.dataset.tab + '"]')
+          .classList.add("active");
+
+      });
+
+    });
+
+  });
+
+});
 </script>
 
 {% schema %}
