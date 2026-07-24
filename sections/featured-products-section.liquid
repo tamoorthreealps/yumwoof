@@ -260,6 +260,20 @@
       });
       
       splide.mount();
+
+      function setActiveSlide(index) {
+  slider.querySelectorAll('.splide__slide').forEach((slide, i) => {
+    slide.classList.toggle('my-active', i === index);
+  });
+}
+
+splide.on('mounted', () => {
+  setActiveSlide(splide.index);
+});
+
+splide.on('move', (newIndex) => {
+  setActiveSlide(newIndex);
+});
       
 
       const prevBtn = wrapper.querySelector('.splide__arrow--prev');
