@@ -75,12 +75,6 @@
    Viewport / track (carousel on mobile, centered row on desktop)
    -------------------------------------------------------------------------- */
 .fp__viewport {
-	overflow-x: auto;
-	overflow-y: hidden;
-	scroll-snap-type: x mandatory;
-	-webkit-overflow-scrolling: touch;
-	scrollbar-width: none;
-	-ms-overflow-style: none;
 	padding-bottom: 4rem;
 	padding-inline: 64px;
 	box-sizing: border-box;
