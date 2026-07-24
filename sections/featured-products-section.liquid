@@ -232,6 +232,9 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".fp-slider").forEach((slider) => {
+
 new Splide(slider, {
   mediaQuery: "max",
   destroy: true,
@@ -261,6 +264,21 @@ new Splide(slider, {
     },
   },
 }).mount();
+
+    splide.mount();
+
+    const wrapper = slider.closest(".fp");
+
+    wrapper.querySelector("[data-fp-prev]")?.addEventListener("click", () => {
+      splide.go("<");
+    });
+
+    wrapper.querySelector("[data-fp-next]")?.addEventListener("click", () => {
+      splide.go(">");
+    });
+
+  });
+});
 
 
         {% comment %} popup--js--code {% endcomment %}
