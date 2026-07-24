@@ -1222,10 +1222,24 @@ cart-drawer.active .cd__inner {
 .cd-footer {
     padding: 1.6rem 1.6rem 2.4rem;
 }
-
-
-
-
+.cd-totals__row--total {
+    font-size: 16px;
+    line-height: 24px;
+}
+.cd-totals {
+    margin-bottom: 1.6rem;
+}
+.cd-totals__row--total {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+}
+.cd-checkout {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: .8px;
+    padding: 13.4px 14px 13px;
+}
 
 
 
