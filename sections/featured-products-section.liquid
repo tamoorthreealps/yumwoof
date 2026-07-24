@@ -260,17 +260,19 @@
       });
 
       splide.mount();
+      
+
+      const prevBtn = wrapper.querySelector('.splide__arrow--prev');
+      const nextBtn = wrapper.querySelector('.splide__arrow--next');
       function updateArrows() {
   if (prevBtn) {
     const isFirst = splide.index === 0;
-
     prevBtn.disabled = isFirst;
     prevBtn.classList.toggle("is-disabled", isFirst);
   }
 
   if (nextBtn) {
     const isLast = splide.index >= splide.length - splide.options.perPage;
-
     nextBtn.disabled = isLast;
     nextBtn.classList.toggle("is-disabled", isLast);
   }
@@ -278,10 +280,8 @@
 
 splide.on("mounted move", updateArrows);
 
-updateArrows(); // Initial load par bhi check karega
-
-      const prevBtn = wrapper.querySelector('.splide__arrow--prev');
-      const nextBtn = wrapper.querySelector('.splide__arrow--next');
+// Initial load par bhi check kare
+setTimeout(updateArrows, 0);
       const customPagination = wrapper.querySelector('.fp__dots');
 
       if (prevBtn) {
