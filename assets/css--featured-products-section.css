@@ -13,7 +13,7 @@
 
 	background-color: var(--fp-bg);
 	color: var(--fp-text);
-	padding: 5rem 0 6.4rem;
+	padding: 4.8rem 0 6.4rem;
 	overflow: hidden;
 }
 
@@ -75,10 +75,15 @@
    Viewport / track (carousel on mobile, centered row on desktop)
    -------------------------------------------------------------------------- */
 .fp__viewport {
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 	padding-bottom: 4rem;
 	padding-inline: 64px;
 	box-sizing: border-box;
-    overflow: visible;
 }
 
 .fp__viewport::-webkit-scrollbar {
@@ -95,19 +100,14 @@
 	list-style: none;
 }
 
-/* .fp__track::after {
+.fp__track::after {
 	content: "";
 	flex: 0 0 64px;
-} */
+}
 
 /* --------------------------------------------------------------------------
    Card
    -------------------------------------------------------------------------- */
-.fp-slider {
-    padding:0 6.4rem;
-}
-
-
 .fp__card {
 	position: relative;
 	flex: 0 0 100%;
@@ -121,12 +121,13 @@
 	border: 1.28px solid var(--fp-card-border);
 	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem ;
+	transform: scale(.8803);
 	scroll-snap-stop: always;
 }
 
-/* .fp__card.my-active {
+.fp__card.is-active {
 	transform: scale(1);
-} */
+}
 
 .fp__hover-media{
     position:absolute !important;
@@ -297,47 +298,24 @@
     cursor: pointer;
     padding: 0;
     border: 0;
-    position: static;
-    opacity: 1;
-    height: auto;
-    width: auto;
-    transform: none;
 }
 
 .fp__arrow svg {
 	width: 16px;
 	height: 8px;
-    transform: inherit;
 }
 
 .fp__arrow:disabled svg{
 	opacity:0.25;
 }
 
-.fp__nav .splide__arrow:disabled {
-    opacity:0.75;
-}
-
-.fp__nav .splide__pagination {
-    display: none;
-}
-
 .fp__dots {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    position: static;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 
-.fp__dots li {
-    display: flex;
-}
-
-.fp__dots li button{
+.fp__dot {
 	width: 8px;
 	height: 8px;
 	padding: 0;
@@ -346,16 +324,9 @@
 	background: transparent;
 	cursor: pointer;
 	border: 1px solid #000000;
-        margin: 0;
-    opacity: 1;
 }
 
-.fp__dots li button.is-active {
-    background: #000;
-    transform: none;
-}
-
-.fp__dots li button[aria-current='true'] {
+.fp__dot[aria-current='true'] {
 	background: var(--fp-text);
 }
 
@@ -379,12 +350,6 @@
 		padding: 8rem 0 13.2rem;
 	}
 
-    .fp__inner {
-        max-width: 1246px;
-        margin: 0 auto;
-        padding: 0 2.4rem;
-    }
-
 	.fp__inner__head {
 		margin-bottom:3.2rem;
 	}
@@ -397,11 +362,6 @@
         padding: 0;
 		max-width: 100%;
 	}
-
-    .fp-slider {
-    padding:0;
-}
-
 
 	.fp__button {
 		display: inline-flex;
@@ -418,10 +378,10 @@
 	}
 
 	.fp__track {
-        display:flex !important;
 		justify-content: center;
 		gap: 2rem;
 		padding: 0;
+		flex-wrap: wrap;
 	}
 
 	.fp__track::after {
@@ -429,7 +389,7 @@
 	}
 
 	.fp__card {
-		width: 32.221%;
+		width: 38.6rem;
 		flex: 0 0 auto;
 		max-width: 100%;
 		scroll-snap-align: none;

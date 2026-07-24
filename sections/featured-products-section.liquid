@@ -31,119 +31,115 @@
         </a>
       {%- endif -%}
     </div>
-    <div class="splide fp-slider">
-      <div class="splide__track fp__viewport" data-fp-viewport>
-        <ul class="splide__list fp__track" data-fp-track role="list">
-          {%- if products.size > 0 -%}
-            {%- for product in products -%}
-              {% assign popup = section.blocks[forloop.index0] %}
-              {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
-              {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
-              {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
-              {%- comment -%} A "list" metafield already returns an array; a plain text one is comma separated. {%- endcomment -%}
-              {%- if labels_mf.type contains 'list' -%}
-                {%- assign labels_list = labels_mf.value -%}
-              {%- else -%}
-                {%- assign labels_list = labels_mf.value | split: ',' -%}
-              {%- endif -%}
-              {%- assign recipes_url = recipes_mf.value | default: product.url -%}
-              {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
-              <li class="splide__slide fp__card {% if hover_media %}fp__card__hover{% endif %}" data-fp-slide>
-                <div class="fp__hover-media">
-                  {% if hover_media %}
-                    {% if hover_media.media_type == 'image' %}
-                      {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
-                    {% elsif hover_media.media_type == 'video' %}
-                      {{
-                        hover_media
-                        | video_tag:
-                          autoplay: true,
-                          loop: true,
-                          muted: true,
-                          playsinline: true,
-                          class: 'fp__hover-video'
-                      }}
-                    {% endif %}
-                  {% endif %}
-                </div>
-                <h3 class="fp__title">{{ product.title }}</h3>
 
-                {%- if labels_list.size > 0 -%}
-                  <ul class="fp__labels" role="list">
-                    {%- for label in labels_list -%}
-                      {%- assign label_text = label | strip -%}
-                      {%- if label_text != blank -%}
-                        <li class="fp__label">{{ label_text }}</li>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </ul>
-                {%- endif -%}
-
-                <a class="fp__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
-                  {%- if product.featured_image -%}
-                    {%- assign fp_alt = product.featured_image.alt | default: product.title -%}
+    <div class="fp__viewport" data-fp-viewport>
+      <ul class="fp__track" data-fp-track role="list">
+        {%- if products.size > 0 -%}
+          {%- for product in products -%}
+            {% assign popup = section.blocks[forloop.index0] %}
+            {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
+            {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
+            {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
+            {%- comment -%} A "list" metafield already returns an array; a plain text one is comma separated. {%- endcomment -%}
+            {%- if labels_mf.type contains 'list' -%}
+              {%- assign labels_list = labels_mf.value -%}
+            {%- else -%}
+              {%- assign labels_list = labels_mf.value | split: ',' -%}
+            {%- endif -%}
+            {%- assign recipes_url = recipes_mf.value | default: product.url -%}
+            {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
+            <li class="fp__card {% if hover_media %}fp__card__hover{% endif %}" data-fp-slide>
+              <div class="fp__hover-media">
+                {% if hover_media %}
+                  {% if hover_media.media_type == 'image' %}
+                    {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
+                  {% elsif hover_media.media_type == 'video' %}
                     {{
-                      product.featured_image
-                      | image_url: width: 600
-                      | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: fp_alt, loading: 'lazy'
+                      hover_media
+                      | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'fp__hover-video'
                     }}
-                  {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}
-                  {%- endif -%}
-                </a>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <h3 class="fp__title">{{ product.title }}</h3>
 
-                {%- if desc_mf.value != blank -%}
-                  <p class="fp__desc">{{ desc_mf.value }}</p>
-                {%- endif -%}
-
-                {%- if section.settings.recipes_label != blank -%}
-                  <a class="fp__recipes" href="#" data-popup="popup-{{ forloop.index }}">
-                    {{- section.settings.recipes_label -}}
-                  </a>
-                {%- endif -%}
-
-                <a class="fp__shop" href="{{ product.url }}">
-                  <span class="fp__shop-label">{{ section.settings.shop_label }}</span>
-                </a>
-              </li>
-            {%- endfor -%}
-          {%- else -%}
-            {%- comment -%} Editor placeholders when no products are selected. {%- endcomment -%}
-            {%- for i in (1..3) -%}
-              <li class="fp__card" data-fp-slide>
-                <h3 class="fp__title">{{ 'onboarding.product_title' | t }}</h3>
+              {%- if labels_list.size > 0 -%}
                 <ul class="fp__labels" role="list">
-                  <li class="fp__label">Grain-Free</li>
-                  <li class="fp__label">Organ-Rich</li>
+                  {%- for label in labels_list -%}
+                    {%- assign label_text = label | strip -%}
+                    {%- if label_text != blank -%}
+                      <li class="fp__label">{{ label_text }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
                 </ul>
-                <span class="fp__media">{{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}</span>
-                <p class="fp__desc">{{ 'onboarding.product_description' | t | truncatewords: 8 }}</p>
-                <span class="fp__recipes">{{ section.settings.recipes_label }}</span>
-                <span class="fp__shop"
-                  ><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span
-                >
-              </li>
-            {%- endfor -%}
-          {%- endif -%}
-        </ul>
-      </div>
+              {%- endif -%}
+
+              <a class="fp__media" href="{{ product.url }}" tabindex="-1" aria-hidden="true">
+                {%- if product.featured_image -%}
+                  {%- assign fp_alt = product.featured_image.alt | default: product.title -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 600
+                    | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: fp_alt, loading: 'lazy'
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}
+                {%- endif -%}
+              </a>
+
+              {%- if desc_mf.value != blank -%}
+                <p class="fp__desc">{{ desc_mf.value }}</p>
+              {%- endif -%}
+
+              {%- if section.settings.recipes_label != blank -%}
+                <a class="fp__recipes" href="#" data-popup="popup-{{ forloop.index }}">
+                  {{- section.settings.recipes_label -}}
+                </a>
+              {%- endif -%}
+
+              <a class="fp__shop" href="{{ product.url }}">
+                <span class="fp__shop-label">{{ section.settings.shop_label }}</span>
+              </a>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} Editor placeholders when no products are selected. {%- endcomment -%}
+          {%- for i in (1..3) -%}
+            <li class="fp__card" data-fp-slide>
+              <h3 class="fp__title">{{ 'onboarding.product_title' | t }}</h3>
+              <ul class="fp__labels" role="list">
+                <li class="fp__label">Grain-Free</li>
+                <li class="fp__label">Organ-Rich</li>
+              </ul>
+              <span class="fp__media">{{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}</span>
+              <p class="fp__desc">{{ 'onboarding.product_description' | t | truncatewords: 8 }}</p>
+              <span class="fp__recipes">{{ section.settings.recipes_label }}</span>
+              <span class="fp__shop"
+                ><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span
+              >
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
     </div>
 
     {%- if products.size > 1 -%}
-      <div class="fp__nav splide__arrows">
+      <div class="fp__nav" data-fp-nav>
         <button
-          class="fp__arrow splide__arrow splide__arrow--prev"
+          type="button"
+          class="fp__arrow"
+          data-fp-prev
           aria-label="{{ 'general.slider.previous_slide' | t | default: 'Previous' }}"
         >
           <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M5.96542 8C5.67819 7.33884 5.37993 6.75482 5.07061 6.24793C4.76129 5.71901 4.45197 5.26722 4.14265 4.89256H16V3.10744H4.14265C4.45197 2.71074 4.76129 2.25895 5.07061 1.75207C5.37993 1.22314 5.67819 0.639119 5.96542 0H4.40778C3.01585 1.60882 1.54659 2.7989 0 3.57025V4.42975C1.54659 5.17906 3.01585 6.36915 4.40778 8H5.96542Z" fill="black"/>
           </svg>
         </button>
-
-        <ul class="fp__dots splide__pagination"></ul>
-
+        <div class="fp__dots" data-fp-dots></div>
         <button
-          class="fp__arrow splide__arrow splide__arrow--next"
+          type="button"
+          class="fp__arrow"
+          data-fp-next
           aria-label="{{ 'general.slider.next_slide' | t | default: 'Next' }}"
         >
           <svg width="16" height="8" viewBox="0 0 16 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -234,146 +230,187 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.fp-slider').forEach(function (slider) {
-      const wrapper = slider.closest('.fp');
+      (function () {
+        function initCarousel(section) {
+          var viewport = section.querySelector('[data-fp-viewport]');
+          var track = section.querySelector('[data-fp-track]');
+          if (!viewport || !track || track.dataset.fpReady) return;
 
-      const splide = new Splide(slider, {
-        mediaQuery: 'max',
-        destroy: true,
+          var slides = Array.prototype.slice.call(track.querySelectorAll('[data-fp-slide]'));
+          if (slides.length === 0) return;
 
-        breakpoints: {
-          990: {
-            destroy: false,
-            type: 'slide',
-            perPage: 1,
-            focus: 'center',
-            gap: '12px',
-            speed: 600,
-            drag: true,
-            trimSpace: false,
+          var prev = section.querySelector('[data-fp-prev]');
+          var next = section.querySelector('[data-fp-next]');
+          var dotsWrap = section.querySelector('[data-fp-dots]');
+          var dots = [];
 
-            arrows: false,
-            pagination: true,
-          },
-        },
+          if (dotsWrap) {
+            dotsWrap.innerHTML = '';
+            slides.forEach(function (_, i) {
+              var dot = document.createElement('button');
+              dot.type = 'button';
+              dot.className = 'fp__dot';
+              dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+              dot.addEventListener('click', function () {
+                scrollToSlide(i);
+              });
+              dotsWrap.appendChild(dot);
+              dots.push(dot);
+            });
+          }
+
+          function scrollToSlide(i) {
+            var slide = slides[i];
+            if (!slide) return;
+
+            var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+
+            viewport.scrollTo({
+              left: left,
+              behavior: 'smooth',
+            });
+          }
+
+          function currentIndex() {
+            var center = viewport.scrollLeft + viewport.clientWidth / 2;
+            var best = 0;
+            var bestDist = Infinity;
+            slides.forEach(function (slide, i) {
+              var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+              var dist = Math.abs(slideCenter - center);
+              if (dist < bestDist) {
+                bestDist = dist;
+                best = i;
+              }
+            });
+            return best;
+          }
+
+          function update() {
+            var idx = currentIndex();
+
+            slides.forEach(function (slide, i) {
+              slide.classList.toggle('is-active', i === idx);
+            });
+
+            dots.forEach(function (dot, i) {
+              dot.setAttribute('aria-current', i === idx ? 'true' : 'false');
+            });
+
+            if (prev) {
+              prev.disabled = idx === 0;
+            }
+
+            if (next) {
+              next.disabled = idx === slides.length - 1;
+            }
+          }
+
+          if (prev)
+            prev.addEventListener('click', function () {
+              scrollToSlide(Math.max(0, currentIndex() - 1));
+            });
+          if (next)
+            next.addEventListener('click', function () {
+              scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1));
+            });
+          let ticking = false;
+
+          viewport.addEventListener(
+            'scroll',
+            function () {
+              if (!ticking) {
+                window.requestAnimationFrame(function () {
+                  update();
+                  ticking = false;
+                });
+                ticking = true;
+              }
+            },
+            { passive: true }
+          );
+
+          update();
+          track.dataset.fpReady = 'true';
+        }
+
+        function init(root) {
+          root.querySelectorAll('.fp').forEach(initCarousel);
+        }
+
+        if (document.readyState !== 'loading') {
+          init(document);
+        } else {
+          document.addEventListener('DOMContentLoaded', function () {
+            init(document);
+          });
+        }
+        document.addEventListener('shopify:section:load', function (event) {
+          init(event.target);
+        });
+      })();
+
+
+      {% comment %} popup--js--code {% endcomment %}
+  document.querySelectorAll(".fp__recipes").forEach(function(button){
+
+      button.addEventListener("click",function(e){
+
+          e.preventDefault();
+
+          const popup=document.getElementById(this.dataset.popup);
+
+          if(popup){
+              popup.classList.add("active");
+          }
+
       });
-      
-      splide.mount();
 
-      function setActiveSlide(index) {
-  slider.querySelectorAll('.splide__slide').forEach((slide, i) => {
-    slide.classList.toggle('my-active', i === index);
   });
-}
 
-splide.on('mounted', () => {
-  setActiveSlide(splide.index);
-});
+  document.querySelectorAll(".fp-popup").forEach(function(popup){
 
-splide.on('move', (newIndex) => {
-  setActiveSlide(newIndex);
-});
-      
+      popup.querySelector(".fp-popup__close").addEventListener("click",function(){
 
-      const prevBtn = wrapper.querySelector('.splide__arrow--prev');
-      const nextBtn = wrapper.querySelector('.splide__arrow--next');
-      function updateArrows() {
-  if (prevBtn) {
-    const isFirst = splide.index === 0;
-    prevBtn.disabled = isFirst;
-    prevBtn.classList.toggle("is-disabled", isFirst);
-  }
+          popup.classList.remove("active");
 
-  if (nextBtn) {
-    const isLast = splide.index >= splide.length - splide.options.perPage;
-    nextBtn.disabled = isLast;
-    nextBtn.classList.toggle("is-disabled", isLast);
-  }
-}
-
-splide.on("mounted move", updateArrows);
-
-// Initial load par bhi check kare
-setTimeout(updateArrows, 0);
-      const customPagination = wrapper.querySelector('.fp__dots');
-
-      if (prevBtn) {
-        prevBtn.addEventListener('click', function () {
-          splide.go('<');
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', function () {
-          splide.go('>');
-        });
-      }
-
-      if (customPagination) {
-        const defaultPagination = slider.querySelector('.splide__pagination');
-
-        if (defaultPagination) {
-          customPagination.innerHTML = defaultPagination.innerHTML;
-          defaultPagination.remove();
-
-          customPagination.querySelectorAll('.splide__pagination__page').forEach(function (dot, index) {
-            dot.addEventListener('click', function () {
-              splide.go(index);
-            });
-          });
-
-          splide.on('move', function (newIndex) {
-            customPagination.querySelectorAll('.splide__pagination__page').forEach(function (dot, index) {
-              dot.classList.toggle('is-active', index === newIndex);
-            });
-          });
-        }
-      }
-    });
-
-    document.querySelectorAll('.fp__recipes').forEach(function (button) {
-      button.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        const popup = document.getElementById(this.dataset.popup);
-
-        if (popup) {
-          popup.classList.add('active');
-        }
-      });
-    });
-
-    document.querySelectorAll('.fp-popup').forEach(function (popup) {
-      popup.querySelector('.fp-popup__close').addEventListener('click', function () {
-        popup.classList.remove('active');
       });
 
-      popup.querySelector('.fp-popup__overlay').addEventListener('click', function () {
-        popup.classList.remove('active');
+      popup.querySelector(".fp-popup__overlay").addEventListener("click",function(){
+
+          popup.classList.remove("active");
+
       });
-    });
 
-    document.querySelectorAll('.fp-popup').forEach(function (popup) {
-      const tabs = popup.querySelectorAll('.fp-popup__tabs button');
-      const contents = popup.querySelectorAll('.fp-popup__content');
+  });
 
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          tabs.forEach(function (btn) {
-            btn.classList.remove('active');
+  document.querySelectorAll(".fp-popup").forEach(function(popup){
+
+      const tabs = popup.querySelectorAll(".fp-popup__tabs button");
+      const contents = popup.querySelectorAll(".fp-popup__content");
+
+      tabs.forEach(function(tab){
+
+          tab.addEventListener("click",function(){
+
+              tabs.forEach(function(btn){
+                  btn.classList.remove("active");
+              });
+
+              contents.forEach(function(content){
+                  content.classList.remove("active");
+              });
+
+              tab.classList.add("active");
+
+              popup
+                  .querySelector('[data-content="'+tab.dataset.tab+'"]')
+                  .classList.add("active");
+
           });
 
-          contents.forEach(function (content) {
-            content.classList.remove('active');
-          });
-
-          tab.classList.add('active');
-
-          popup.querySelector('[data-content="' + tab.dataset.tab + '"]').classList.add('active');
-        });
       });
-    });
+
   });
 </script>
 
