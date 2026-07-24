@@ -1174,7 +1174,44 @@ cart-drawer.active .cd__inner {
 .cd-freq:after {
     right: .8rem;
 }
-
+.cd-recommend__title {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -.56px;
+}
+.cd-rec-card {
+    border-radius: 12px;
+    gap: 12px;
+}
+.cd-rec-card__media {
+    height: 106px;
+    width: 88px;
+    border-radius: 8px;
+    padding: 11px 18px;
+}
+.cd-rec-card__body__main {
+    padding: 8px 0;
+}
+.cd-rec-card__title {
+    font-size: 16px;
+    line-height: 20px;
+}
+.cd-rec-card__subtitle {
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: -.4px;
+}
+.cd-rec-card__price {
+    font-size: 12px;
+    line-height: 16px;
+}
+.cd-rec-card__add {
+    min-width: 56px;
+    height: 36px;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+}
 
 
 
