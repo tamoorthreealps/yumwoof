@@ -78,6 +78,7 @@
 	padding-bottom: 4rem;
 	padding-inline: 64px;
 	box-sizing: border-box;
+    overflow: visible;
 }
 
 .fp__viewport::-webkit-scrollbar {
