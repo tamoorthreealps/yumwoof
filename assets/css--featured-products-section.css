@@ -297,6 +297,8 @@
     cursor: pointer;
     padding: 0;
     border: 0;
+    position:static;
+    opacity:1;
 }
 
 .fp__arrow svg {
