@@ -121,13 +121,12 @@
 	border: 1.28px solid var(--fp-card-border);
 	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem ;
-	transform: scale(.8803);
 	scroll-snap-stop: always;
 }
 
-.fp__card.is-active {
+/* .fp__card.is-active {
 	transform: scale(1);
-}
+} */
 
 .fp__hover-media{
     position:absolute !important;
