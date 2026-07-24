@@ -116,7 +116,7 @@ collection-component {
 
 @font-face {
   font-family: "FFBlurProMedium";
-  src: url('font.woff2') format('woff2'), url('font.woff') format('woff');
+  src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/font.woff2?v=1784897699') format('woff2'), url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/font.woff?v=1784897699') format('woff');
 }
 
 body {
