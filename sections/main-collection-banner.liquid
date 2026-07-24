@@ -27,6 +27,9 @@
         <h1 class="mcb__heading">{{ banner_heading }}</h1>
       {%- endif -%}
       {%- assign banner_sub = section.settings.subheading -%}
+      {%- if banner_sub == blank -%}
+        {%- assign banner_sub = collection.metafields.custom.short_description -%}
+      {%- endif -%}
       {%- if banner_sub == blank and section.settings.show_collection_description -%}
         {%- assign banner_sub = collection.description -%}
       {%- endif -%}
