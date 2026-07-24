@@ -1157,9 +1157,20 @@ cart-drawer.active .cd__inner {
 .cd-toggle.is-on .cd-toggle__knob {
     left: 24px;
 }
-
-
-
+.cd-toggle__label {
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: .48px;
+}
+.cd-freq__select {
+    padding: 8px 24px 8px 8px;
+    font-size: 12px;
+    line-height: 16px;
+    max-width: 104px;
+}
+.cd-freq:after {
+    right: .8rem;
+}
 
 
 
