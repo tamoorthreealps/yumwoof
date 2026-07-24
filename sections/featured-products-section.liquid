@@ -238,7 +238,8 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".fp-slider").forEach((slider) => {
-    new Splide(slider, {
+
+    const splide = new Splide(slider, {
       mediaQuery: "max",
       destroy: true,
 
@@ -253,20 +254,24 @@ document.addEventListener("DOMContentLoaded", () => {
           drag: true,
           trimSpace: false,
 
-          arrows: true,
-          pagination: true,
-
-          classes: {
-            arrows: "fp__nav",
-            arrow: "fp__arrow",
-            prev: "fp__arrow fp__arrow--prev",
-            next: "fp__arrow fp__arrow--next",
-            pagination: "fp__dots",
-            page: "fp__dot",
-          },
+          arrows: false,
+          pagination: false,
         },
       },
-    }).mount();
+    });
+
+    splide.mount();
+
+    const wrapper = slider.closest(".fp");
+
+    wrapper.querySelector("[data-fp-prev]")?.addEventListener("click", () => {
+      splide.go("<");
+    });
+
+    wrapper.querySelector("[data-fp-next]")?.addEventListener("click", () => {
+      splide.go(">");
+    });
+
   });
 });
 
