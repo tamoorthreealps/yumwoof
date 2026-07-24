@@ -338,6 +338,8 @@
 	background: transparent;
 	cursor: pointer;
 	border: 1px solid #000000;
+        margin: 0;
+    opacity: 1;
 }
 
 .fp__dots li button[aria-current='true'] {
