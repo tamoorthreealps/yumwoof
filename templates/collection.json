@@ -1,19 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
       "type": "main-collection-banner",
       "settings": {
+        "heading": "",
+        "subheading": "",
         "show_collection_description": true,
+        "category_menu": "",
         "health_label": "Shop by health goal",
-        "band_color": "#1A1A1A",
-        "band_text_color": "#FFF9EF",
+        "health_menu": "",
+        "band_color": "#1a1a1a",
+        "band_text_color": "#fff9ef",
         "accent_color": "#000000"
       }
     },
     "products-grid": {
       "type": "main-collection-products-grid",
+      "blocks": {
+        "product_group_b9bXUj": {
+          "type": "product_group",
+          "settings": {
+            "heading": "Air dried food",
+            "subheading": "Ac nisl non sit ac augue pharetra. Sagittis morbi.",
+            "products": [
+              "charity-poop-bags",
+              "perfect-digestion",
+              "perfect-dog-food-mix"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "product_group_b9bXUj"
+      ],
       "settings": {
-        "show_collection_products": true,
+        "show_collection_products": false,
+        "collection_heading": "",
         "products_per_page": 24,
         "columns_desktop": 3,
         "short_desc_metafield": "user_interface.go_cart_short_dsc"
