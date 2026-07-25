@@ -1,0 +1,448 @@
+/* ==========================================================================
+   Yumwoof — FAQs
+   Built from Figma "Yumwoof - Site V.3": FAQs_DESKTOP (3951:4536) and
+   FAQs_MOBILE (3961:4734).
+
+   Everything is scoped under .yw-faqs so it can't collide with theme CSS.
+   Colours, fonts and spacing come from custom properties set inline by
+   sections/yumwoof-faqs.liquid, so the theme editor drives them.
+   ========================================================================== */
+
+.yw-faqs {
+  --yw-rule-weight: 1px;
+  --yw-icon: 12px;
+  --yw-icon-bar: 1.63px;
+  --yw-group-gap: 40px;
+  --yw-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --yw-speed: 340ms;
+
+  background: var(--yw-bg, #fff9ef);
+  color: var(--yw-ink, #000);
+  padding-block: var(--yw-pt-m, 40px) var(--yw-pb-m, 80px);
+  font-family: var(--yw-font-body, 'Matter', Arial, sans-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+.yw-faqs *,
+.yw-faqs *::before,
+.yw-faqs *::after {
+  box-sizing: border-box;
+}
+
+/* width:min() keeps the 24px mobile gutter and the 155px desktop gutter without
+   padding eating into --yw-max, so the two columns land exactly as designed. */
+.yw-faqs__wrap {
+  width: min(100% - 48px, var(--yw-max, 1200px));
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Left rail — title, intro, topic filter
+   -------------------------------------------------------------------------- */
+
+.yw-faqs__rail {
+  margin-bottom: 36px;
+}
+
+.yw-faqs__title {
+  margin: 0;
+  font-family: var(--yw-font-display, Georgia, serif);
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 56px;
+  letter-spacing: -0.56px;
+  color: var(--yw-ink, #000);
+}
+
+.yw-faqs__lede {
+  margin-top: 4px;
+  max-width: 260px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.yw-faqs__lede p {
+  margin: 0;
+}
+
+.yw-faqs__lede a {
+  color: var(--yw-link, #661d1d);
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+/* Pills — desktop only */
+.yw-faqs__pills {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.yw-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0;
+  padding: 6px 20px;
+  border: 1px solid var(--yw-rule, #000);
+  border-radius: 46px;
+  background: transparent;
+  color: var(--yw-ink, #000);
+  font-family: var(--yw-font-label, Arial, sans-serif);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.56px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 200ms var(--yw-ease), color 200ms var(--yw-ease);
+}
+
+.yw-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.yw-pill.is-active {
+  background: var(--yw-ink, #000);
+  color: var(--yw-bg, #fff9ef);
+}
+
+/* Dropdown — mobile only */
+.yw-faqs__select {
+  position: relative;
+  margin-top: 20px;
+}
+
+.yw-pill--select {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.yw-pill--select:hover {
+  background: transparent;
+}
+
+.yw-pill__chevron {
+  display: block;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  transition: transform 220ms var(--yw-ease);
+}
+
+.yw-pill__chevron svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.yw-pill--select[aria-expanded='true'] .yw-pill__chevron {
+  transform: rotate(180deg);
+}
+
+.yw-faqs__select-menu {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--yw-rule, #000);
+  border-radius: 20px;
+  background: var(--yw-bg, #fff9ef);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.yw-faqs__select-menu[hidden] {
+  display: none;
+}
+
+.yw-faqs__select-option {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--yw-ink, #000);
+  font-family: var(--yw-font-label, Arial, sans-serif);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.56px;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+
+.yw-faqs__select-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.yw-faqs__select-option.is-active {
+  background: var(--yw-ink, #000);
+  color: var(--yw-bg, #fff9ef);
+}
+
+/* --------------------------------------------------------------------------
+   Groups and questions
+   -------------------------------------------------------------------------- */
+
+.yw-faqs__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--yw-group-gap);
+}
+
+.yw-faqs__group.is-filtered-out {
+  display: none;
+}
+
+.yw-faqs__group-title {
+  margin: 0 0 20px;
+  font-family: var(--yw-font-display, Georgia, serif);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: -0.4px;
+}
+
+.yw-faq {
+  border-top: var(--yw-rule-weight) solid var(--yw-rule, #000);
+  padding-block: 12px 16px;
+}
+
+.yw-faqs__items > .yw-faq:last-child {
+  border-bottom: var(--yw-rule-weight) solid var(--yw-rule, #000);
+}
+
+.yw-faq.is-hidden {
+  display: none;
+}
+
+.yw-faq__h {
+  margin: 0;
+  font: inherit;
+}
+
+.yw-faq__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--yw-ink, #000);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.yw-faq__question {
+  display: block;
+}
+
+.yw-faq__trigger:focus-visible {
+  outline: 2px solid var(--yw-link, #661d1d);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Plus that morphs into a minus */
+.yw-faq__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--yw-icon);
+  height: var(--yw-icon);
+}
+
+.yw-faq__icon-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.yw-faq__icon-bar--h {
+  width: 100%;
+  height: var(--yw-icon-bar);
+  transform: translate(-50%, -50%);
+}
+
+.yw-faq__icon-bar--v {
+  width: var(--yw-icon-bar);
+  height: 100%;
+  transform: translate(-50%, -50%);
+  transition: transform var(--yw-speed) var(--yw-ease), opacity 200ms var(--yw-ease);
+}
+
+.yw-faq.is-open .yw-faq__icon-bar--v {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+/* Answer panel — height is animated from JS */
+.yw-faq__panel {
+  overflow: hidden;
+}
+
+.yw-faqs.is-enhanced .yw-faq__panel {
+  height: 0;
+  visibility: hidden;
+  transition: height var(--yw-speed) var(--yw-ease), visibility 0s linear var(--yw-speed);
+}
+
+.yw-faqs.is-enhanced .yw-faq__panel.is-open {
+  visibility: visible;
+  transition: height var(--yw-speed) var(--yw-ease), visibility 0s;
+}
+
+.yw-faq__answer {
+  padding-top: 16px;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.yw-faq__answer > *:first-child {
+  margin-top: 0;
+}
+
+.yw-faq__answer > *:last-child {
+  margin-bottom: 0;
+}
+
+.yw-faq__answer a {
+  color: var(--yw-link, #661d1d);
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+.yw-faqs__empty {
+  margin: 0;
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   Tablet — pills replace the dropdown
+   -------------------------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .yw-faqs__pills {
+    display: flex;
+  }
+
+  .yw-faqs__select {
+    display: none;
+  }
+
+  .yw-faqs__rail {
+    margin-bottom: 48px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Desktop — two columns, full type scale
+   -------------------------------------------------------------------------- */
+
+@media screen and (min-width: 990px) {
+  .yw-faqs {
+    --yw-rule-weight: 1.5px;
+    --yw-icon: 16px;
+    --yw-icon-bar: 2.17px;
+    --yw-group-gap: 48px;
+
+    padding-block: var(--yw-pt, 76px) var(--yw-pb, 160px);
+  }
+
+  .yw-faqs__wrap {
+    display: grid;
+    grid-template-columns: 376px minmax(0, 1fr);
+    column-gap: 97px;
+    align-items: start;
+  }
+
+  .yw-faqs__rail {
+    margin-bottom: 0;
+    position: sticky;
+    top: 24px;
+  }
+
+  .yw-faqs__title {
+    font-size: 88px;
+    line-height: 88px;
+    letter-spacing: -1.76px;
+  }
+
+  .yw-faqs__lede {
+    max-width: 356px;
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  .yw-pill {
+    font-size: 16px;
+    letter-spacing: 0.64px;
+  }
+
+  .yw-faqs__group-title {
+    margin-bottom: 24px;
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .yw-faq {
+    padding-block: 16px 24px;
+  }
+
+  .yw-faq__trigger {
+    gap: 24px;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .yw-faq__answer {
+    padding-top: 20px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility and print
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .yw-faqs.is-enhanced .yw-faq__panel,
+  .yw-faq__icon-bar--v,
+  .yw-pill,
+  .yw-pill__chevron {
+    transition-duration: 1ms !important;
+  }
+}
+
+@media print {
+  .yw-faqs.is-enhanced .yw-faq__panel {
+    height: auto !important;
+    visibility: visible !important;
+  }
+
+  .yw-faqs__pills,
+  .yw-faqs__select {
+    display: none !important;
+  }
+}
