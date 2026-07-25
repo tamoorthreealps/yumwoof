@@ -74,7 +74,7 @@
 }
 
 .legal-page__section-heading {
-    color: var(--legal-heading, #000000);
+color: var(--legal-heading, #000000);
     font-size: 32px;
     line-height: 36px;
     text-transform: uppercase;
@@ -85,10 +85,18 @@
 
 .legal-page__rte,
 .legal-page__rte p {
-  color: var(--legal-text, #333333);
-  font-size: 14px;
-  line-height: 1.7;
-  margin: 0 0 12px;
+color: var(--legal-text, #333333);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+}
+
+.legal-page__rte p {
+    margin: 0 0 16px;
+}
+
+.legal-page__rte p:last-child {
+    margin: 0;
 }
 
 .legal-page__rte ul,
