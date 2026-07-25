@@ -23,29 +23,13 @@
         "legal_section_DfBdFx": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
-          }
-        },
-        "legal_section_TT6dWk": {
-          "type": "legal_section",
-          "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
-          }
-        },
-        "legal_section_XfFreV": {
-          "type": "legal_section",
-          "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "CONTACT",
+            "content": "<p>Email: <a href=\"mailto:accessibility@yumwoof.com\">accessibility@yumwoof.com</a></p><p>Response time: We aim to respond within 2 business days.</p>"
           }
         }
       },
       "block_order": [
-        "legal_section_DfBdFx",
-        "legal_section_TT6dWk",
-        "legal_section_XfFreV"
+        "legal_section_DfBdFx"
       ],
       "name": "Legal page Block",
       "settings": {
@@ -55,11 +39,11 @@
         "date_source": "page",
         "custom_date": "",
         "show_overview": true,
-        "overview_heading": "Overview",
-        "overview_text": "<p>Add your introductory paragraph here.</p>",
+        "overview_heading": "",
+        "overview_text": "<p>We are committed to ensuring our website is accessible to everyone, including individuals with disabilities.</p><p>We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA, which outline best practices for making web content more accessible to people using assistive technologies such as screen readers, keyboard navigation, and other adaptive tools.</p><p>Accessibility is an ongoing effort. We regularly review our site to identify and address accessibility barriers and continue to improve the user experience for all visitors.</p><p>If you experience difficulty accessing any part of our website or need assistance, please contact us and we will work with you to provide the information, product, or service you need through an accessible alternative.</p><p>Some content may not yet fully conform to all accessibility standards. We appreciate your patience as we continue to improve.</p>",
         "heading_color": "#000",
         "text_color": "#333333",
-        "section_background": "#7BA6DD"
+        "section_background": "#7ba6dd"
       }
     }
   },
