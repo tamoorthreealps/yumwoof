@@ -175,6 +175,7 @@ color: var(--legal-text, #333333);
     margin: 0 0 12px;
 }
 .legal-page__rte p:has(strong) {
+  margin:-4px 0 0;
 }
 .legal-page__rte p strong {
     font-size: 14px;
