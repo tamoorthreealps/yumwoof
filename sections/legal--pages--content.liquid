@@ -1,4 +1,4 @@
-{{ 'section-legal-page.css' | asset_url | stylesheet_tag }}
+{{ 'css--legal--page.css' | asset_url | stylesheet_tag }}
 
 {%- comment -%} Resolve heading: page title vs. customizer override {%- endcomment -%}
 {%- assign legal_heading = page.title -%}
@@ -184,7 +184,7 @@
   ],
   "presets": [
     {
-      "name": "Legal page",
+      "name": "Legal page Block",
       "blocks": [
         { "type": "legal_section" },
         { "type": "legal_section" },

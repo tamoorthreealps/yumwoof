@@ -1,0 +1,131 @@
+.legal-page {
+  background: var(--legal-section-bg, #7BA6DD);
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.legal-page__card {
+  background: var(--legal-container-bg, #ffffff);
+  width: 100%;
+  max-width: 760px;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  padding: 48px 56px;
+}
+
+.legal-page__breadcrumb {
+  font-size: 12px;
+  margin-bottom: 24px;
+  color: var(--legal-text, #333333);
+  opacity: 0.7;
+}
+
+.legal-page__breadcrumb a {
+  color: var(--legal-text, #333333);
+  text-decoration: underline;
+}
+
+.legal-page__breadcrumb-sep {
+  margin: 0 6px;
+}
+
+.legal-page__breadcrumb-current {
+  font-weight: 600;
+}
+
+.legal-page__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.legal-page__title {
+  color: var(--legal-text, #333333);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.legal-page__title-divider {
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin: 0 auto;
+  background: var(--legal-text, #333333);
+  opacity: 0.5;
+}
+
+.legal-page__updated {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--legal-text, #333333);
+  opacity: 0.7;
+}
+
+.legal-page__overview {
+  margin-bottom: 32px;
+}
+
+.legal-page__section {
+  margin-bottom: 28px;
+}
+
+.legal-page__section-heading {
+  color: var(--legal-text, #333333);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 10px;
+}
+
+.legal-page__rte,
+.legal-page__rte p {
+  color: var(--legal-text, #333333);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+.legal-page__rte ul,
+.legal-page__rte ol {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  color: var(--legal-text, #333333);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.legal-page__rte a {
+  color: var(--legal-text, #333333);
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media screen and (max-width: 749px) {
+  .legal-page {
+    padding: 28px 12px;
+  }
+
+  .legal-page__card {
+    padding: 28px 20px;
+    border-radius: 4px;
+  }
+
+  .legal-page__title {
+    font-size: 20px;
+  }
+
+  .legal-page__section-heading {
+    font-size: 13px;
+  }
+
+  .legal-page__rte,
+  .legal-page__rte p,
+  .legal-page__rte ul,
+  .legal-page__rte ol {
+    font-size: 13px;
+  }
+}
