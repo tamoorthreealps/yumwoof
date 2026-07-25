@@ -9,94 +9,156 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
-    },
-    "yumwoof_faqs_minjTA": {
+    "faqs": {
       "type": "yumwoof-faqs",
       "blocks": {
-        "category_C47LjA": {
+        "cat-general": {
           "type": "category",
           "settings": {
             "title": "GENERAL",
             "pill_label": ""
           }
         },
-        "question_kkEc47": {
-          "type": "question",
-          "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
-            "open_by_default": false
-          }
-        },
-        "question_r8A6cL": {
-          "type": "question",
-          "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
-            "open_by_default": false
-          }
-        },
-        "question_ArBKBD": {
-          "type": "question",
-          "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
-            "open_by_default": false
-          }
-        },
-        "question_AVCYbA": {
-          "type": "question",
-          "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
-            "open_by_default": false
-          }
-        },
-        "category_r4cYAY": {
-          "type": "category",
-          "settings": {
-            "title": "AIR DRIED FOOD",
-            "pill_label": ""
-          }
-        },
-        "question_T64M97": {
+        "q-general-1": {
           "type": "question",
           "settings": {
             "question": "Why doesn’t Yumwoof use seed oils?",
             "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in our founder’s book.</p>",
             "open_by_default": false
           }
+        },
+        "q-general-2": {
+          "type": "question",
+          "settings": {
+            "question": "Why choose air-dried over fresh food?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-general-3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer a money-back guarantee?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-general-4": {
+          "type": "question",
+          "settings": {
+            "question": "Why are organ meats important for dogs?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "cat-air-dried": {
+          "type": "category",
+          "settings": {
+            "title": "AIR DRIED FOOD",
+            "pill_label": ""
+          }
+        },
+        "q-air-dried-1": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn’t Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in our founder’s book.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-air-dried-2": {
+          "type": "question",
+          "settings": {
+            "question": "Why choose air-dried over fresh food?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-air-dried-3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer a money-back guarantee?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-air-dried-4": {
+          "type": "question",
+          "settings": {
+            "question": "Why are organ meats important for dogs?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "cat-toppers": {
+          "type": "category",
+          "settings": {
+            "title": "TOPPERS",
+            "pill_label": ""
+          }
+        },
+        "q-toppers-1": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn’t Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in our founder’s book.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-toppers-2": {
+          "type": "question",
+          "settings": {
+            "question": "Why choose air-dried over fresh food?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-toppers-3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer a money-back guarantee?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
+        },
+        "q-toppers-4": {
+          "type": "question",
+          "settings": {
+            "question": "Why are organ meats important for dogs?",
+            "answer": "<p>Add this answer in the theme editor — it isn’t in the Figma file.</p>",
+            "open_by_default": false
+          }
         }
       },
       "block_order": [
-        "category_C47LjA",
-        "question_kkEc47",
-        "question_r8A6cL",
-        "question_ArBKBD",
-        "question_AVCYbA",
-        "category_r4cYAY",
-        "question_T64M97"
+        "cat-general",
+        "q-general-1",
+        "q-general-2",
+        "q-general-3",
+        "q-general-4",
+        "cat-air-dried",
+        "q-air-dried-1",
+        "q-air-dried-2",
+        "q-air-dried-3",
+        "q-air-dried-4",
+        "cat-toppers",
+        "q-toppers-1",
+        "q-toppers-2",
+        "q-toppers-3",
+        "q-toppers-4"
       ],
-      "name": "FAQs",
       "settings": {
         "title": "FAQs",
-        "lede": "<p>Don't see the answer you're looking for? Reach out to woof@yumwoof.com and we'll get back to you in a flash.</p>",
+        "lede": "<p>Don’t see the answer you’re looking for? Reach out to <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a> and we’ll get back to you in a flash.</p>",
         "show_filters": true,
         "show_all_option": true,
         "all_label": "All",
         "filter_label": "Filter questions by topic",
         "open_first": true,
         "single_open": true,
-        "color_bg": "#fff9ef",
+        "color_bg": "#FFF9EF",
         "color_text": "#000000",
-        "color_link": "#661d1d",
+        "color_link": "#661D1D",
         "color_rule": "#000000",
         "font_display": "'TAYRosemary', 'TAY Rosemary', Georgia, serif",
         "font_body": "'Matter', 'Helvetica Neue', Arial, sans-serif",
@@ -110,7 +172,6 @@
     }
   },
   "order": [
-    "main",
-    "yumwoof_faqs_minjTA"
+    "faqs"
   ]
 }
