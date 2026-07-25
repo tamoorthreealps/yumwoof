@@ -1,5 +1,5 @@
 {% comment %}
-  Yumwoof "GoCart" product card (collection / product-group grid).
+  Yumwoof "GoCart" product card — matches Figma collection design (node 3845:168).
 
   Accepts:
   - product: {Object} product
@@ -7,15 +7,17 @@
       (default 'custom.collection_short_description')
 
   Behaviour:
-  - Badges: dark "BESTSELLER" badge when the product has the `best-seller` tag,
-    plus outline badges from the `custom.product_card_badges` list metafield
-    (list of single line text).
-  - Recipe variants: if the product has an option named "Recipe", one card is
+  - Dark "BESTSELLER" flag (top-left of the image) when the product has the
+    `best-seller` tag.
+  - Outline category badge(s) straddling the bottom of the image, from the
+    `custom.product_card_badges` list metafield (list of single line text),
+    e.g. "ALL BREEDS & STAGES".
+  - Recipe variants: when the product has an option named "Recipe", one card is
     rendered per distinct recipe value. Each card shows that recipe as its
-    subtitle, the lowest price among that recipe's variants ("From $X"), an
-    "as low as $Y / day" line (lowest price / 30) and a "Shop now" button that
-    links straight to the PDP for that variant.
-  - Short description above the price comes from `custom.collection_short_description`.
+    subtitle, the lowest price of that recipe's variants ("From $X"), the
+    compare-at price struck through when higher, an "as low as $Y / day" line
+    (lowest price / 30) and a "Shop now" button linking to that variant's PDP.
+  - Short description from `custom.collection_short_description`.
 {% endcomment %}
 
 {%- liquid
@@ -82,6 +84,7 @@
       assign group_count = product.variants.size
     endif
 
+    assign rep_compare = rep_variant.compare_at_price
     assign per_day_cents = group_min | divided_by: 30
     assign card_url = rep_variant.url | default: product.url
     assign card_image = rep_variant.image | default: product.featured_image
@@ -89,29 +92,27 @@
 
   <div class="yw-pcard">
     <a class="yw-pcard__media" href="{{ card_url }}" aria-label="{{ product.title | escape }}">
-      {%- if is_bestseller or extra_badges != blank -%}
-        <div class="yw-pcard__badges">
-          {%- if is_bestseller -%}
-            <span class="yw-pcard__badge yw-pcard__badge--dark">BESTSELLER</span>
-          {%- else -%}
-            <span></span>
-          {%- endif -%}
-          {%- if extra_badges != blank -%}
-            <span class="yw-pcard__badges-right">
-              {%- for b in extra_badges -%}
-                <span class="yw-pcard__badge yw-pcard__badge--outline">{{ b }}</span>
-              {%- endfor -%}
-            </span>
-          {%- endif -%}
-        </div>
+      <span class="yw-pcard__imgwrap">
+        {%- if card_image != blank -%}
+          {%- assign card_alt = card_image.alt | default: product.title | escape -%}
+          {{
+            card_image
+            | image_url: width: 600
+            | image_tag: class: 'yw-pcard__img', widths: '200, 300, 460, 600', alt: card_alt, loading: 'lazy'
+          }}
+        {%- endif -%}
+      </span>
+
+      {%- if is_bestseller -%}
+        <span class="yw-pcard__flag">BESTSELLER</span>
       {%- endif -%}
-      {%- if card_image != blank -%}
-        {%- assign card_alt = card_image.alt | default: product.title | escape -%}
-        {{
-          card_image
-          | image_url: width: 600
-          | image_tag: class: 'yw-pcard__img', widths: '200, 300, 460, 600', alt: card_alt, loading: 'lazy'
-        }}
+
+      {%- if extra_badges != blank -%}
+        <span class="yw-pcard__tags">
+          {%- for b in extra_badges -%}
+            <span class="yw-pcard__tag">{{ b }}</span>
+          {%- endfor -%}
+        </span>
       {%- endif -%}
     </a>
 
@@ -119,7 +120,7 @@
       <a class="yw-pcard__title" href="{{ card_url }}">{{ product.title }}</a>
 
       {%- if recipe_label != blank -%}
-        <p class="yw-pcard__recipe">{{ recipe_label | upcase }}</p>
+        <p class="yw-pcard__recipe">{{ recipe_label }}</p>
       {%- endif -%}
 
       {%- if rating != blank -%}
@@ -138,16 +139,18 @@
       {%- endif -%}
 
       <div class="yw-pcard__price">
-        <span class="yw-pcard__price-main">
-          {%- if group_count > 1 -%}From {{ group_min | money }}
-          {%- else -%}{{ group_min | money }}{%- endif -%}
-        </span>
-        {%- if group_min > 0 -%}
-          <span class="yw-pcard__price-day">as low as {{ per_day_cents | money }} / day</span>
+        {%- if group_count > 1 -%}<span class="yw-pcard__price-from">From</span>{%- endif -%}
+        <span class="yw-pcard__price-now">{{ group_min | money }}</span>
+        {%- if rep_compare != blank and rep_compare > group_min -%}
+          <s class="yw-pcard__price-was">{{ rep_compare | money }}</s>
         {%- endif -%}
       </div>
 
-      <a class="yw-pcard__btn" href="{{ card_url }}">Shop now</a>
+      {%- if group_min > 0 -%}
+        <p class="yw-pcard__perday">as low as {{ per_day_cents | money }} / day</p>
+      {%- endif -%}
+
+      <a class="yw-pcard__btn" href="{{ card_url }}"><span>Shop now</span></a>
     </div>
   </div>
 {%- endfor -%}
