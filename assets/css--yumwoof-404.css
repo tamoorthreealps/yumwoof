@@ -54,7 +54,7 @@
   /* Height runs from the top of the numerals to the bottom of the dog, so the
      gap below is measured off the artwork rather than the 156px line box. */
   height: 177px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   overflow: visible;
   line-height: 0;
 }
