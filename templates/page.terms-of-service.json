@@ -205,13 +205,13 @@
         "title_source": "page",
         "custom_title": "",
         "date_source": "custom",
-        "custom_date": "Last Updated · [DATE]",
+        "custom_date": "[DATE]",
         "show_overview": true,
         "overview_heading": "Overview",
         "overview_text": "<p>This website is operated by Yumwoof Natural Pet Food Inc. (“Yumwoof”, “we”, “us”, “our”). Yumwoof offers this website, including all information, tools, and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies, and notices stated here.</p><p>By visiting our site and/or purchasing something from us, you engage in our “Service” and agree to be bound by these Terms of Service (“Terms”), including those additional terms and policies referenced herein and/or available by hyperlink.</p><p>Our store is hosted on Shopify Inc., which provides the e-commerce platform that allows us to sell our products and services.</p>",
-        "text_color": "#1A1714",
-        "container_background": "#FFFFFF",
-        "section_background": "#7BA6DD"
+        "heading_color": "#000000",
+        "text_color": "#1a1714",
+        "section_background": "#7ba6dd"
       }
     }
   },
