@@ -26,12 +26,12 @@
     line-height: 16px;
     letter-spacing: 0.96px;
     margin-bottom: 32px;
-    color: var(--legal-text, #333333);
+    color: var(--legal-heading, #661D1D);
     text-transform: uppercase;
 }
 
 .legal-page__breadcrumb a {
-  color: var(--legal-text, #333333);
+  color: var(--legal-heading, #661D1D);
   text-decoration: underline;
 }
 
