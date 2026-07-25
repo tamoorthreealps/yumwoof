@@ -1,5 +1,4 @@
 {{ 'css--yumwoof-faqs.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'yumwoof-faqs.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign category_count = 0
@@ -254,6 +253,254 @@
     }
   </script>
 {%- endif -%}
+
+
+<script>
+/* ==========================================================================
+   Yumwoof — FAQs
+   Progressive enhancement: without JS every answer renders open and readable.
+   On load we collapse them and take over with an animated height transition.
+   ========================================================================== */
+
+(function () {
+  'use strict';
+
+  var SPEED_FALLBACK = 340;
+
+  function YumwoofFaqs(root) {
+    this.root = root;
+    this.singleOpen = root.getAttribute('data-single-open') === 'true';
+    this.openFirst = root.getAttribute('data-open-first') === 'true';
+    this.items = Array.prototype.slice.call(root.querySelectorAll('[data-yw-item]'));
+    this.groups = Array.prototype.slice.call(root.querySelectorAll('[data-yw-group]'));
+    this.select = root.querySelector('[data-yw-select]');
+    this.init();
+  }
+
+  YumwoofFaqs.prototype.init = function () {
+    this.root.classList.add('is-enhanced');
+    this.setInitialState();
+    this.bindAccordion();
+    this.bindFilters();
+    this.bindSelect();
+  };
+
+  /* ---------- accordion ------------------------------------------------- */
+
+  YumwoofFaqs.prototype.setInitialState = function () {
+    var self = this;
+
+    this.groups.forEach(function (group) {
+      var items = Array.prototype.slice.call(group.querySelectorAll('[data-yw-item]'));
+      var alreadyFlagged = items.some(function (item) {
+        return item.classList.contains('is-open');
+      });
+
+      if (!alreadyFlagged && self.openFirst && items.length) {
+        items[0].classList.add('is-open');
+      }
+
+      items.forEach(function (item) {
+        var panel = item.querySelector('[data-yw-panel]');
+        var trigger = item.querySelector('[data-yw-trigger]');
+        if (!panel || !trigger) return;
+
+        if (item.classList.contains('is-open')) {
+          panel.classList.add('is-open');
+          panel.style.height = 'auto';
+          trigger.setAttribute('aria-expanded', 'true');
+        } else {
+          panel.classList.remove('is-open');
+          panel.style.height = '0px';
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  };
+
+  YumwoofFaqs.prototype.bindAccordion = function () {
+    var self = this;
+
+    this.items.forEach(function (item) {
+      var trigger = item.querySelector('[data-yw-trigger]');
+      if (!trigger) return;
+
+      trigger.addEventListener('click', function () {
+        if (item.classList.contains('is-open')) {
+          self.close(item);
+        } else {
+          self.open(item);
+        }
+      });
+    });
+  };
+
+  YumwoofFaqs.prototype.open = function (item) {
+    var self = this;
+    var panel = item.querySelector('[data-yw-panel]');
+    var trigger = item.querySelector('[data-yw-trigger]');
+    if (!panel || !trigger) return;
+
+    if (this.singleOpen) {
+      var group = item.closest('[data-yw-group]') || this.root;
+      Array.prototype.slice.call(group.querySelectorAll('[data-yw-item]')).forEach(function (sibling) {
+        if (sibling !== item && sibling.classList.contains('is-open')) {
+          self.close(sibling);
+        }
+      });
+    }
+
+    item.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.classList.add('is-open');
+    panel.style.height = panel.scrollHeight + 'px';
+
+    var settle = function (event) {
+      if (event && event.propertyName !== 'height') return;
+      panel.removeEventListener('transitionend', settle);
+      // The user may have closed it again before this fired — don't fight them.
+      if (!panel.classList.contains('is-open')) return;
+      panel.style.height = 'auto';
+    };
+
+    panel.addEventListener('transitionend', settle);
+    // Safety net in case the transition never fires (reduced motion, hidden tab)
+    window.setTimeout(settle, SPEED_FALLBACK + 60);
+  };
+
+  YumwoofFaqs.prototype.close = function (item) {
+    var panel = item.querySelector('[data-yw-panel]');
+    var trigger = item.querySelector('[data-yw-trigger]');
+    if (!panel || !trigger) return;
+
+    panel.style.height = panel.scrollHeight + 'px';
+    void panel.offsetHeight; // force reflow so the next value animates
+
+    item.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('is-open');
+    panel.style.height = '0px';
+  };
+
+  /* ---------- topic filter ---------------------------------------------- */
+
+  YumwoofFaqs.prototype.bindFilters = function () {
+    var self = this;
+    var buttons = Array.prototype.slice.call(this.root.querySelectorAll('[data-yw-filter]'));
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        self.applyFilter(button.getAttribute('data-yw-filter'), button.textContent.trim());
+        self.closeSelect();
+      });
+    });
+  };
+
+  YumwoofFaqs.prototype.applyFilter = function (value, label) {
+    this.groups.forEach(function (group) {
+      var match = value === 'all' || group.getAttribute('data-yw-category') === value;
+      group.classList.toggle('is-filtered-out', !match);
+    });
+
+    Array.prototype.slice.call(this.root.querySelectorAll('[data-yw-filter]')).forEach(function (button) {
+      var active = button.getAttribute('data-yw-filter') === value;
+      button.classList.toggle('is-active', active);
+
+      if (button.hasAttribute('aria-pressed')) {
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      }
+      if (button.hasAttribute('aria-selected')) {
+        button.setAttribute('aria-selected', active ? 'true' : 'false');
+      }
+    });
+
+    var currentLabel = this.root.querySelector('[data-yw-select-label]');
+    if (currentLabel && label) {
+      currentLabel.textContent = label;
+    }
+  };
+
+  /* ---------- mobile dropdown ------------------------------------------- */
+
+  YumwoofFaqs.prototype.bindSelect = function () {
+    if (!this.select) return;
+
+    var self = this;
+    this.selectTrigger = this.select.querySelector('[data-yw-select-trigger]');
+    this.selectMenu = this.select.querySelector('.yw-faqs__select-menu');
+    if (!this.selectTrigger || !this.selectMenu) return;
+
+    this.selectTrigger.addEventListener('click', function (event) {
+      event.stopPropagation();
+      if (self.selectTrigger.getAttribute('aria-expanded') === 'true') {
+        self.closeSelect();
+      } else {
+        self.openSelect();
+      }
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!self.select.contains(event.target)) self.closeSelect();
+    });
+
+    this.select.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        self.closeSelect();
+        self.selectTrigger.focus();
+      }
+    });
+  };
+
+  YumwoofFaqs.prototype.openSelect = function () {
+    if (!this.selectMenu) return;
+    this.selectMenu.hidden = false;
+    this.selectTrigger.setAttribute('aria-expanded', 'true');
+  };
+
+  YumwoofFaqs.prototype.closeSelect = function () {
+    if (!this.selectMenu) return;
+    this.selectMenu.hidden = true;
+    this.selectTrigger.setAttribute('aria-expanded', 'false');
+  };
+
+  /* ---------- boot ------------------------------------------------------- */
+
+  function boot(scope) {
+    var context = scope || document;
+    Array.prototype.slice.call(context.querySelectorAll('[data-yw-faqs]')).forEach(function (root) {
+      if (root.dataset.ywReady === 'true') return;
+      root.dataset.ywReady = 'true';
+      new YumwoofFaqs(root);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      boot();
+    });
+  } else {
+    boot();
+  }
+
+  /* Theme editor support */
+  document.addEventListener('shopify:section:load', function (event) {
+    boot(event.target);
+  });
+
+  document.addEventListener('shopify:block:select', function (event) {
+    var block = event.target;
+    if (!block) return;
+
+    var group = block.closest ? block.closest('[data-yw-group]') : null;
+    if (group) group.classList.remove('is-filtered-out');
+
+    var trigger = block.querySelector ? block.querySelector('[data-yw-trigger]') : null;
+    if (trigger && trigger.getAttribute('aria-expanded') === 'false') {
+      trigger.click();
+    }
+  });
+})();
+</script>
 
 {% schema %}
 {
