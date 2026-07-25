@@ -109,7 +109,7 @@ color: var(--legal-text, #333333);
 }
 
 .legal-page__rte a {
-  color: var(--legal-text, #333333);
+  color: #661D1D;
   text-decoration: underline;
 }
 
