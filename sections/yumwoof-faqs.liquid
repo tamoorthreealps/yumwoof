@@ -330,16 +330,23 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
       const label = btn.textContent.trim();
 
       filters.forEach((b) => {
-        const active = b.dataset.ywFilter === value;
+  let active = b.dataset.ywFilter === value;
 
-        b.classList.toggle("is-active", active);
+  // Desktop par All kabhi active na ho
+  if (window.innerWidth >= 750 && b.dataset.ywFilter === "all") {
+    active = false;
+  }
 
-        if (b.hasAttribute("aria-pressed"))
-          b.setAttribute("aria-pressed", active);
+  b.classList.toggle("is-active", active);
 
-        if (b.hasAttribute("aria-selected"))
-          b.setAttribute("aria-selected", active);
-      });
+  if (b.hasAttribute("aria-pressed")) {
+    b.setAttribute("aria-pressed", active);
+  }
+
+  if (b.hasAttribute("aria-selected")) {
+    b.setAttribute("aria-selected", active);
+  }
+});
 
       if (selectLabel) {
         selectLabel.textContent = label;
