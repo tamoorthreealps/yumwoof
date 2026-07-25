@@ -228,32 +228,6 @@
   </div>
 </div>
 
-{%- if section.settings.enable_schema and question_count > 0 -%}
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {%- assign i = 0 -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'question' and block.settings.question != blank -%}
-            {%- assign i = i | plus: 1 -%}
-            {%- if i > 1 %},{% endif %}
-            {
-              "@type": "Question",
-              "name": {{ block.settings.question | strip_html | json }},
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
-              }
-            }
-          {%- endif -%}
-        {%- endfor -%}
-      ]
-    }
-  </script>
-{%- endif -%}
-
 
 <script>
 /* ==========================================================================
@@ -561,13 +535,6 @@
       "type": "checkbox",
       "id": "single_open",
       "label": "Only one question open at a time",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_schema",
-      "label": "Add FAQ rich-result markup",
-      "info": "Lets Google surface these questions in search results.",
       "default": true
     },
     { "type": "header", "content": "Colours" },
