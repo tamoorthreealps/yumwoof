@@ -127,15 +127,15 @@
   border: 0;
 }
 
-.yw-404__button:hover {
+/* .yw-404__button:hover {
   background: var(--yw-ink);
   color: var(--yw-bg);
-}
+} */
 
-.yw-404__button:focus-visible {
+/* .yw-404__button:focus-visible {
   outline: 2px solid var(--yw-maroon);
   outline-offset: 4px;
-}
+} */
 
 .yw-404__button-label {
   font-family: var(--yw-font-label);
