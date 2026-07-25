@@ -120,13 +120,12 @@
 }
 
 .yw-pill--select {
-  width: 100%;
-  justify-content: space-between;
+    width: 100%;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 8px;
 }
 
-.yw-pill--select:hover {
-  background: transparent;
-}
 
 .yw-pill__chevron {
   display: block;
@@ -426,6 +425,10 @@
     font-size: 18px;
     line-height: 28px;
   }
+
+  .yw-pill--select:hover {
+  background: transparent;
+}
 }
 
 /* --------------------------------------------------------------------------
