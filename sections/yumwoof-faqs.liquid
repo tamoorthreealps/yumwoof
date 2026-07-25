@@ -68,7 +68,7 @@
               -%}
               <button
                 type="button"
-                class="yw-pill{% unless section.settings.show_all_option %}{% if forloop.first %} is-active{% endif %}{% endunless %}"
+                class="yw-pill{% if forloop.first %} is-active{% endif %}"
                 data-yw-filter="{{ block.id }}"
                 aria-pressed="false"
               >
