@@ -169,7 +169,7 @@
   width: 100%;
   padding: 10px 14px;
   border: 0;
-  border-radius: 14px;
+  border-radius: 8px;
   background: transparent;
   color: var(--yw-ink, #000);
   font-family: var(--yw-font-label, Arial, sans-serif);
@@ -180,6 +180,7 @@
   text-transform: uppercase;
   text-align: left;
   cursor: pointer;
+  font-family: FFBlurProMedium;
 }
 
 .yw-faqs__select-option:hover {
