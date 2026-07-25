@@ -45,49 +45,84 @@
           "type": "legal_section",
           "settings": {
             "heading": "RETURNED PACKAGES",
-            "content": "<p>If the mail carrier is unable to deliver your order after attempting to do so, and it is returned back to us, we will automatically refund your order upon receiving your package less a $15 restocking fee**.</p><p>** We wish we didn't have to charge restocking fees, but we are unfortunately charged fees by the mail carrier when this happens. We still lose money on these orders, even after the restocking fee.</p>"
+            "content": "<p>If the mail carrier is unable to deliver your order after attempting to do so, and it is returned back to us, we will automatically refund your order upon receiving your package less a $15 restocking fee**.</p><p><em>** We wish we didn't have to charge restocking fees, but we are unfortunately charged fees by the mail carrier when this happens. We still lose money on these orders, even after the restocking fee.</em></p>"
+          }
+        },
+        "legal_section_mUw73p": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "21 DAY POLICY",
+            "content": "<p>We recently extended our money-back guarantee to 21 days. Our refund policy now lasts 21 days from the time your order is delivered. If 21 days have gone by since your shipment arrived, unfortunately we can’t offer you a refund or exchange.</p>"
           }
         },
         "legal_section_9hEHrL": {
           "type": "legal_section",
           "settings": {
-            "heading": "THIRD-PARTY SERVICES WE USE",
-            "content": "<p>Tag Management: Google Tag Manager</p><p>Analytics: Google Analytics, Amplitude</p><p>Advertising: Google Ads, DoubleClick, Microsoft Bing Ads (UET), Bing Shopping, Meta Ads, Klickly</p><p>Email & SMS: Klaviyo, Attentive</p><p>Marketing Tools: GoAffPro, ReConvert, ProofFactor, ONE</p><p>Support: Gorgias</p><p>Embedded Content: YouTube, Opinew</p>"
+            "heading": "TOPPER REFUND POLICY",
+            "content": "<p>Our toppers including Perfect Immunity, Perfect Digestion, Perfect Probiotics, Perfect Yumsauce and Perfect Wild Alaskan Salmon Oil are not eligible for refunds. If your dog is suffering from allergies or gut health issues, please reach out to our support team for additional nutrition recommendations.</p>"
           }
         },
         "legal_section_37bb7x": {
           "type": "legal_section",
           "settings": {
-            "heading": "CALIFORNIA PRIVACY RIGHTS",
-            "content": "<p>California residents may request access, deletion, or correction and may opt out of the sale or sharing of personal information for cross-context behavioral advertising via the “Do Not Sell or Share My Personal Information” link or cookie settings. We honor Global Privacy Control signals where applicable.</p>"
+            "heading": "STARTER PACK REFUND POLICY",
+            "content": "<p>Our Picky Eater Starter Pack and all Starter Packs with multiple bundled products are not eligible for refunds.</p>"
           }
         },
         "legal_section_3B33A4": {
           "type": "legal_section",
           "settings": {
-            "heading": "DATA RETENTION",
-            "content": "<p>We retain information as necessary for operations, legal compliance, dispute resolution, and enforcement.</p>"
+            "heading": "YUMCLUB MEMBERSHIP REFUND POLICY",
+            "content": "<p>Our Yum! Club quarterly membership fee is not eligible for refunds. If your dog is a picky eater, please consider having your dog try our products at full price first before becoming a member. If you subscribe to a Yum! Club membership and your dog will not eat their food, please reach out to our support team for additional recommendation, and to try other foods including Perfect Superfood and Perfect Dog Food Mix. We are committed to finding a healthy meal plan your dog loves!</p>"
           }
         },
         "legal_section_QFaimY": {
           "type": "legal_section",
           "settings": {
-            "heading": "MINORS",
-            "content": "<p>The Site is not intended for individuals under 18.</p>"
+            "heading": "APPAREL REFUND POLICY",
+            "content": "<p>Due to the handmade nature of our hats, every hat is different and we cannot accept returns.</p>"
           }
         },
         "legal_section_Qn9wgY": {
           "type": "legal_section",
           "settings": {
-            "heading": "Changes",
-            "content": "<p>We may update this Privacy Policy from time to time.</p>"
+            "heading": "SUBSCRIPTION REFUND POLICY",
+            "content": "<p>When you subscribe to our products, your orders are processed automatically based on your chosen schedule. Please note the following policies regarding subscription cancellations and order management:</p><p>• Cancellation Timing: If you cancel your subscription after an order has already been processed, the cancellation will only apply to future orders. The processed order will still be shipped as scheduled.</p><p>• Order Cancellation Requests: If you wish to cancel an order that has already been processed, please contact us as soon as possible. We will do our best to accommodate your request, but if the order has already shipped, we will be unable to cancel it.</p>"
           }
         },
         "legal_section_YfeBnV": {
           "type": "legal_section",
           "settings": {
-            "heading": "Contact",
-            "content": "<p>Questions or requests may be sent to <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a>.</p>"
+            "heading": "GIFT CARDS",
+            "content": "<p>Gift cards are exempt from being returned.</p>"
+          }
+        },
+        "legal_section_nHqn6d": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "HOW TO REQUEST A REFUND",
+            "content": "<p>To complete your refund, please email <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a> and request a refund.</p><p>If you are approved, then your refund will be processed, and a credit will automatically be applied to your credit card or original method of payment, within a certain amount of days.</p>"
+          }
+        },
+        "legal_section_Mr7dXD": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "LATE OR MISSING REFUNDS",
+            "content": "<p>If you haven’t received a refund yet, first check your bank account again.</p><p>Then contact your credit card company, as it may take some time before your refund is officially posted.</p><p>Next, contact your bank. There is often some processing time before a refund is posted.</p><p>If you’ve done all of this and still have not received your refund, please contact us at <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a>.</p>"
+          }
+        },
+        "legal_section_mM7egA": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "SHIPPING",
+            "content": "<p>You will be responsible for paying your own shipping costs for returning your item. Shipping costs are non-refundable. If you receive a refund, the cost of return shipping will be deducted from your refund.</p><p>Depending on where you live, the time it may take for your exchanged product to reach you may vary.</p><p>If you are shipping items over $50, you should consider using a trackable shipping service or purchasing shipping insurance. We do not guarantee that we will receive your returned item.</p>"
+          }
+        },
+        "legal_section_WxbG9x": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "",
+            "content": "<p><em>Thank you for your understanding and honesty. We'll always do our best to help customers in difficult situations. Our company is still boutique in size, so we appreciate you taking the time to read our refund policy to make the best purchase decision for you.</em></p>"
           }
         }
       },
@@ -96,12 +131,17 @@
         "legal_section_mrF4dX",
         "legal_section_FVAqUm",
         "legal_section_JBHUep",
+        "legal_section_mUw73p",
         "legal_section_9hEHrL",
         "legal_section_37bb7x",
         "legal_section_3B33A4",
         "legal_section_QFaimY",
         "legal_section_Qn9wgY",
-        "legal_section_YfeBnV"
+        "legal_section_YfeBnV",
+        "legal_section_nHqn6d",
+        "legal_section_Mr7dXD",
+        "legal_section_mM7egA",
+        "legal_section_WxbG9x"
       ],
       "name": "Legal page Block",
       "settings": {
