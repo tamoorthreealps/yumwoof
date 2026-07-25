@@ -11,7 +11,7 @@
 
   /* Match these to the @font-face names your theme already loads. */
   --yw-font-display: 'TAYRosemary', 'TAY Rosemary', Georgia, serif;
-  --yw-font-script: 'TAY Birdie', 'TAYBirdie', 'TAYRosemary', Georgia, serif;
+  --yw-font-script: 'TAY Birdie';
   --yw-font-body: 'Matter', 'Helvetica Neue', Arial, sans-serif;
   --yw-font-label: "FFBlurProMedium";
 
