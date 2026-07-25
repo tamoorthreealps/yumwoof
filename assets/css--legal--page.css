@@ -103,6 +103,10 @@ color: var(--legal-text, #333333);
   color:#661D1D;
 }
 
+.legal-page__rte p:has(em) em {
+  font-style: normal;
+}
+
 .legal-page__rte p strong {
     font-size: 18px;
     line-height: 28px;
