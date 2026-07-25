@@ -32,6 +32,16 @@
             "heading": "Air dried food",
             "subheading": "Ac nisl non sit ac augue pharetra. Sagittis morbi.",
             "products": [
+              "ancestral-blend"
+            ]
+          }
+        },
+        "product_group_bT4yhm": {
+          "type": "product_group",
+          "settings": {
+            "heading": "Air dried food",
+            "subheading": "Ac nisl non sit ac augue pharetra. Sagittis morbi.",
+            "products": [
               "charity-poop-bags",
               "perfect-digestion",
               "perfect-dog-food-mix"
@@ -40,7 +50,8 @@
         }
       },
       "block_order": [
-        "product_group_b9bXUj"
+        "product_group_b9bXUj",
+        "product_group_bT4yhm"
       ],
       "settings": {
         "show_collection_products": false,
