@@ -151,7 +151,7 @@
         "title": "FAQs",
         "lede": "<p>Don’t see the answer you’re looking for? Reach out to <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a> and we’ll get back to you in a flash.</p>",
         "show_filters": true,
-        "show_all_option": false,
+        "show_all_option": true,
         "all_label": "All",
         "filter_label": "Filter questions by topic",
         "color_bg": "#fff9ef",
