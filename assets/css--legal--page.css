@@ -74,12 +74,13 @@
 }
 
 .legal-page__section-heading {
-  color: var(--legal-heading, #000000);
-  font-size: 15px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin: 0 0 10px;
+    color: var(--legal-heading, #000000);
+    font-size: 32px;
+    line-height: 36px;
+    text-transform: uppercase;
+    letter-spacing: -0.32px;
+    margin: 0 0 12px;
+    font-family: 'TAYRosemary';
 }
 
 .legal-page__rte,
