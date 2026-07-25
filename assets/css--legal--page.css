@@ -40,7 +40,7 @@
 }
 
 .legal-page__title {
-  color: var(--legal-text, #333333);
+  color: var(--legal-heading, #661D1D);
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -53,7 +53,7 @@
   width: 60px;
   height: 3px;
   margin: 0 auto;
-  background: var(--legal-text, #333333);
+  background: var(--legal-heading, #661D1D);
   opacity: 0.5;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .legal-page__section-heading {
-  color: var(--legal-text, #333333);
+  color: var(--legal-heading, #661D1D);
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;

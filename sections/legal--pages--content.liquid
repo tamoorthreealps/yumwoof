@@ -18,6 +18,7 @@
     --legal-section-bg: {{ section.settings.section_background }};
     --legal-container-bg: {{ section.settings.container_background }};
     --legal-text: {{ section.settings.text_color }};
+    --legal-heading: {{ section.settings.heading_color }};
   "
 >
   <div class="legal-page__card">
@@ -142,6 +143,12 @@
     {
       "type": "header",
       "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000"
     },
     {
       "type": "color",
