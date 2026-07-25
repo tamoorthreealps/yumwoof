@@ -300,60 +300,66 @@ function closeItem(item) {
 }
   /* ---------------- Filters ---------------- */
 
-  function applyFilter(value, label) {
+ filters.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const value = btn.dataset.ywFilter;
+    const label = btn.textContent.trim();
 
-  const mobile = window.innerWidth < 750;
+    // Active state
+    filters.forEach((b) => {
+      const active = b.dataset.ywFilter === value;
 
-  if (mobile) {
-    groups.forEach(group => {
-      group.classList.toggle(
-        "is-filtered-out",
-        value !== "all" &&
-        group.dataset.ywCategory !== value
-      );
+      b.classList.toggle("is-active", active);
+
+      if (b.hasAttribute("aria-pressed"))
+        b.setAttribute("aria-pressed", active);
+
+      if (b.hasAttribute("aria-selected"))
+        b.setAttribute("aria-selected", active);
     });
-  } else {
-    groups.forEach(group => {
+
+    if (selectLabel) {
+      selectLabel.textContent = label;
+    }
+
+    // Mobile
+    if (window.innerWidth < 750) {
+      groups.forEach((group) => {
+        group.classList.toggle(
+          "is-filtered-out",
+          value !== "all" && group.dataset.ywCategory !== value
+        );
+      });
+
+      closeDropdown();
+      return;
+    }
+
+    // Desktop
+    groups.forEach((group) => {
       group.classList.remove("is-filtered-out");
     });
 
-    if (value !== "all") {
-      const target = faq.querySelector(
-        `[data-yw-category="${value}"]`
-      );
-
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      }
-    } else {
+    if (value === "all") {
       window.scrollTo({
         top: faq.offsetTop,
-        behavior: "smooth"
+        behavior: "smooth",
+      });
+      return;
+    }
+
+    const target = faq.querySelector(
+      `[data-yw-category="${value}"]`
+    );
+
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
-  }
-
-  filters.forEach(btn => {
-    const active = btn.dataset.ywFilter === value;
-
-    btn.classList.toggle("is-active", active);
-
-    if (btn.hasAttribute("aria-pressed"))
-      btn.setAttribute("aria-pressed", active);
-
-    if (btn.hasAttribute("aria-selected"))
-      btn.setAttribute("aria-selected", active);
   });
-
-  if (selectLabel) {
-    selectLabel.textContent = label;
-  }
-
-  closeDropdown();
-}
+});
   /* ---------------- Mobile Dropdown ---------------- */
 
   if (select && selectTrigger && selectMenu) {
