@@ -58,6 +58,21 @@
             "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
             "open_by_default": false
           }
+        },
+        "category_r4cYAY": {
+          "type": "category",
+          "settings": {
+            "title": "AIR DRIED FOOD",
+            "pill_label": ""
+          }
+        },
+        "question_T64M97": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn’t Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in our founder’s book.</p>",
+            "open_by_default": false
+          }
         }
       },
       "block_order": [
@@ -65,7 +80,9 @@
         "question_kkEc47",
         "question_r8A6cL",
         "question_ArBKBD",
-        "question_AVCYbA"
+        "question_AVCYbA",
+        "category_r4cYAY",
+        "question_T64M97"
       ],
       "name": "FAQs",
       "settings": {
@@ -77,10 +94,9 @@
         "filter_label": "Filter questions by topic",
         "open_first": true,
         "single_open": true,
-        "enable_schema": true,
-        "color_bg": "#FFF9EF",
+        "color_bg": "#fff9ef",
         "color_text": "#000000",
-        "color_link": "#661D1D",
+        "color_link": "#661d1d",
         "color_rule": "#000000",
         "font_display": "'TAYRosemary', 'TAY Rosemary', Georgia, serif",
         "font_body": "'Matter', 'Helvetica Neue', Arial, sans-serif",
