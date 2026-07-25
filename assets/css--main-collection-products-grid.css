@@ -6,7 +6,7 @@
 }
 
 .mcg__group {
-  margin-top: 4rem;
+  margin-top: 4.8rem;
 }
 
 .mcg__group:first-child {
@@ -15,45 +15,62 @@
 
 .mcg__group-heading {
   margin: 0 0 0.4rem;
-  font-size: clamp(2.2rem, 3vw, 3.2rem);
-  line-height: 1.15;
+  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(2.6rem, 3.4vw, 4rem);
+  line-height: 1.1;
+  color: #1a1a1a;
 }
 
 .mcg__group-sub {
   margin: 0 0 2.4rem;
-  font-size: 1.6rem;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.5rem;
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.55);
   max-width: 60rem;
 }
 
 .mcg__group-heading + .mcg__grid,
 .mcg__group-sub + .mcg__grid {
-  margin-top: 2.4rem;
+  margin-top: 2rem;
 }
 
 .mcg__grid {
   display: grid;
   grid-template-columns: repeat(var(--mcg-cols, 3), minmax(0, 1fr));
-  gap: 2.4rem;
+  gap: 1.9rem;
 }
 
 /* ---------- GoCart product card (card-product-yw.liquid) ---------- */
 .yw-pcard {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: #fff;
-  border-radius: 1.6rem;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1.5px solid #000;
+  border-radius: 2.4rem;
 }
 
+/* Image band */
 .yw-pcard__media {
   position: relative;
   display: block;
+  aspect-ratio: 386 / 320;
+}
+
+.yw-pcard__imgwrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
   background: #ffc069;
-  aspect-ratio: 1 / 1;
-  padding: 2rem;
+  border-radius: 2.3rem 2.3rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
 }
 
 .yw-pcard__img {
@@ -63,63 +80,69 @@
   display: block;
 }
 
-.yw-pcard__badges {
+/* BESTSELLER flag — top-left of the image */
+.yw-pcard__flag {
   position: absolute;
   top: 1.2rem;
-  left: 1.2rem;
-  right: 1.2rem;
-  z-index: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.6rem;
-  pointer-events: none;
+  left: 1.4rem;
+  z-index: 2;
+  background: #000;
+  color: #fff9ef;
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.096em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.55rem 1.4rem;
+  border-radius: 10rem;
 }
 
-.yw-pcard__badges-right {
+/* Category badge(s) — straddling the bottom edge of the image */
+.yw-pcard__tags {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.6rem;
+  width: max-content;
+  max-width: 90%;
 }
 
-.yw-pcard__badge {
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+.yw-pcard__tag {
+  background: #fff9ef;
+  border: 1px solid #000;
+  color: #000;
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.096em;
   text-transform: uppercase;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
   line-height: 1;
+  padding: 0.55rem 1.4rem;
+  border-radius: 10rem;
   white-space: nowrap;
 }
 
-.yw-pcard__badge--dark {
-  background: #1a1a1a;
-  color: #fff;
-}
-
-.yw-pcard__badge--outline {
-  background: rgba(255, 255, 255, 0.85);
-  color: #1a1a1a;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
+/* Body */
 .yw-pcard__body {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 2rem 1.8rem 2.4rem;
+  padding: 2.6rem 1.8rem 2.4rem;
   flex: 1 1 auto;
 }
 
 .yw-pcard__title {
-  font-size: 2rem;
-  line-height: 1.15;
-  color: #1a1a1a;
+  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-size: 3.2rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #000;
   text-decoration: none;
-  font-weight: 600;
 }
 
 .yw-pcard__title:hover {
@@ -127,10 +150,11 @@
 }
 
 .yw-pcard__recipe {
-  margin: 0.6rem 0 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  margin: 0.4rem 0 0;
+  font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+  font-size: 1.6rem;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #661d1d;
 }
@@ -138,19 +162,20 @@
 .yw-pcard__rating {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.8rem;
+  gap: 0.8rem;
+  margin-top: 1.4rem;
 }
 
 .yw-pcard__stars {
   position: relative;
   display: inline-block;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1;
+  letter-spacing: 0.4rem;
 }
 
 .yw-pcard__stars-off {
-  color: rgba(0, 0, 0, 0.18);
+  color: rgba(0, 0, 0, 0.15);
 }
 
 .yw-pcard__stars-on {
@@ -164,53 +189,68 @@
 }
 
 .yw-pcard__rating-count {
-  font-size: 1.25rem;
-  color: rgba(0, 0, 0, 0.55);
+  font-family: 'Matter', sans-serif;
+  font-size: 1.4rem;
+  color: #000;
 }
 
 .yw-pcard__desc {
-  margin: 1rem 0 0;
-  font-size: 1.35rem;
-  line-height: 1.45;
-  color: rgba(0, 0, 0, 0.7);
+  margin: 1.4rem 0 0;
+  max-width: 24.4rem;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.47;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .yw-pcard__price {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-  margin-top: 1.4rem;
-}
-
-.yw-pcard__price-main {
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.8rem;
+  font-family: 'Matter', sans-serif;
   font-size: 1.8rem;
-  font-weight: 700;
-  color: #1a1a1a;
+  color: #000;
 }
 
-.yw-pcard__price-day {
-  font-size: 1.2rem;
-  color: rgba(0, 0, 0, 0.55);
+.yw-pcard__price-was {
+  color: rgba(0, 0, 0, 0.25);
+  text-decoration: line-through;
 }
 
+.yw-pcard__perday {
+  margin: 0.6rem 0 0;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  color: #661d1d;
+}
+
+/* Shop now — amber lozenge button (Figma blob) */
 .yw-pcard__btn {
   margin-top: 1.6rem;
-  display: inline-block;
-  width: 100%;
-  padding: 1.2rem 2rem;
-  background: #1a1a1a;
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16.4rem;
+  min-height: 5.4rem;
+  padding: 1.4rem 3.2rem;
+  background: url("data:image/svg+xml,%3Csvg preserveAspectRatio='none' viewBox='0 0 165.5 71.8219' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M77.132 70.2667L12.2668 51.2818C5.44071 49.2839 0.749987 43.0234 0.75 35.9109C0.750013 28.7985 5.44074 22.5381 12.2669 20.5402L77.132 1.55525C80.8004 0.481582 84.6996 0.481583 88.368 1.55525L153.233 20.5402C160.059 22.5381 164.75 28.7985 164.75 35.911C164.75 43.0235 160.059 49.2839 153.233 51.2818L88.368 70.2667C84.6996 71.3403 80.8004 71.3403 77.132 70.2667Z' fill='%23FFC069' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  color: #000;
   text-decoration: none;
-  text-align: center;
-  border-radius: 999px;
-  font-size: 1.5rem;
-  font-weight: 600;
-  transition: background 0.15s ease;
+  transition: filter 0.15s ease;
+}
+
+.yw-pcard__btn span {
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 .yw-pcard__btn:hover {
-  background: #000;
+  filter: brightness(0.96);
 }
 
 @media screen and (max-width: 989px) {
@@ -222,15 +262,28 @@
 @media screen and (max-width: 749px) {
   .mcg__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.4rem;
+    gap: 1.2rem;
   }
 
   .yw-pcard__title {
-    font-size: 1.6rem;
+    font-size: 2.4rem;
+  }
+
+  .yw-pcard__body {
+    padding: 2.2rem 1.2rem 2rem;
+  }
+
+  .yw-pcard__desc {
+    font-size: 1.35rem;
   }
 
   .yw-pcard__btn {
-    padding: 1rem 1.4rem;
+    min-width: 13rem;
+    min-height: 4.8rem;
+    padding: 1.2rem 2.2rem;
+  }
+
+  .yw-pcard__btn span {
     font-size: 1.4rem;
   }
 }
