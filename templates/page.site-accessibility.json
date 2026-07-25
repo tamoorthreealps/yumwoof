@@ -11,13 +11,60 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "legal_pages_content_E8qANQ": {
+      "type": "legal--pages--content",
+      "blocks": {
+        "legal_section_DfBdFx": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Section 1 — Heading",
+            "content": "<p>Add section text here.</p>"
+          }
+        },
+        "legal_section_TT6dWk": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Section 1 — Heading",
+            "content": "<p>Add section text here.</p>"
+          }
+        },
+        "legal_section_XfFreV": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Section 1 — Heading",
+            "content": "<p>Add section text here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "legal_section_DfBdFx",
+        "legal_section_TT6dWk",
+        "legal_section_XfFreV"
+      ],
+      "name": "Legal page Block",
+      "settings": {
+        "show_breadcrumb": true,
+        "title_source": "page",
+        "custom_title": "",
+        "date_source": "page",
+        "custom_date": "",
+        "show_overview": true,
+        "overview_heading": "Overview",
+        "overview_text": "<p>Add your introductory paragraph here.</p>",
+        "heading_color": "#000",
+        "text_color": "#333333",
+        "section_background": "#7BA6DD"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "legal_pages_content_E8qANQ"
   ]
 }
