@@ -46,7 +46,6 @@
 
 .yw-faqs__title {
   margin: 0;
-  font-family: var(--yw-font-display, Georgia, serif);
   font-weight: 400;
   font-size: 56px;
   line-height: 56px;
@@ -206,7 +205,6 @@
 
 .yw-faqs__group-title {
   margin: 0 0 20px;
-  font-family: var(--yw-font-display, Georgia, serif);
   font-weight: 400;
   font-size: 40px;
   line-height: 40px;
