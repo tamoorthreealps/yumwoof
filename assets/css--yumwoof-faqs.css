@@ -104,7 +104,9 @@
   transition: background-color 200ms var(--yw-ease), color 200ms var(--yw-ease);
 }
 
-
+.yw-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
 
 .yw-pill.is-active {
   background: var(--yw-ink, #000);
@@ -144,18 +146,18 @@
 }
 
 .yw-faqs__select-menu {
-  position: absolute;
-  z-index: 5;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  border: 1px solid var(--yw-rule, #000);
-  border-radius: 20px;
-  background: var(--yw-bg, #fff9ef);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border: 1px solid var(--yw-rule, #000);
+    border-radius: 8px;
+    background: var(--yw-bg, #fff9ef);
+    box-shadow: 0 12px 28px #0000001f;
 }
 
 .yw-faqs__select-menu[hidden] {
@@ -426,9 +428,6 @@
 
   .yw-pill--select:hover {
   background: transparent;
-}
-.yw-pill:hover {
-  background: rgba(0, 0, 0, 0.06);
 }
 }
 
