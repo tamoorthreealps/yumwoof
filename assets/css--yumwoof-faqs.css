@@ -32,9 +32,8 @@
 /* width:min() keeps the 24px mobile gutter and the 155px desktop gutter without
    padding eating into --yw-max, so the two columns land exactly as designed. */
 .yw-faqs__wrap {
-  max-width:1248px;
-  margin:0 auto;
-  padding:0 2.4rem;
+  width: min(100% - 48px, var(--yw-max, 1200px));
+  margin-inline: auto;
 }
 
 /* --------------------------------------------------------------------------
