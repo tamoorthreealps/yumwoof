@@ -263,37 +263,46 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
     openItem(item);
   });
 
-  function openItem(item) {
-    const panel = item.querySelector("[data-yw-panel]");
-    const trigger = item.querySelector("[data-yw-trigger]");
+  function openItem(item, animate = true) {
+  const panel = item.querySelector("[data-yw-panel]");
+  const trigger = item.querySelector("[data-yw-trigger]");
 
-    item.classList.add("is-open");
-    trigger.setAttribute("aria-expanded", "true");
+  item.classList.add("is-open");
+  trigger.setAttribute("aria-expanded", "true");
 
-    panel.style.height = panel.scrollHeight + "px";
+  panel.classList.add("is-open");
 
-    panel.addEventListener(
-      "transitionend",
-      function handler() {
-        panel.style.height = "auto";
-        panel.removeEventListener("transitionend", handler);
-      },
-      { once: true }
-    );
+  if (!animate) {
+    panel.style.height = "auto";
+    return;
   }
 
-  function closeItem(item) {
-    const panel = item.querySelector("[data-yw-panel]");
-    const trigger = item.querySelector("[data-yw-trigger]");
+  panel.style.height = "0px";
 
+  requestAnimationFrame(() => {
     panel.style.height = panel.scrollHeight + "px";
-    panel.offsetHeight;
+  });
+
+  panel.addEventListener("transitionend", function end() {
+    panel.style.height = "auto";
+    panel.removeEventListener("transitionend", end);
+  }, { once: true });
+}
+
+function closeItem(item) {
+  const panel = item.querySelector("[data-yw-panel]");
+  const trigger = item.querySelector("[data-yw-trigger]");
+
+  panel.style.height = panel.scrollHeight + "px";
+
+  requestAnimationFrame(() => {
     panel.style.height = "0px";
+  });
 
-    item.classList.remove("is-open");
-    trigger.setAttribute("aria-expanded", "false");
-  }
-
+  item.classList.remove("is-open");
+  trigger.setAttribute("aria-expanded", "false");
+  panel.classList.remove("is-open");
+}
   /* ---------------- Filters ---------------- */
 
   function applyFilter(value, label) {
