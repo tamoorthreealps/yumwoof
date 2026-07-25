@@ -240,28 +240,23 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
   const selectMenu = faq.querySelector(".yw-faqs__select-menu");
 
   /* ---------------- Accordion ---------------- */
-
-  faq.addEventListener("click", (e) => {
+faq.addEventListener("click", (e) => {
     const trigger = e.target.closest("[data-yw-trigger]");
     if (!trigger) return;
 
     const item = trigger.closest("[data-yw-item]");
-    const panel = item.querySelector("[data-yw-panel]");
+    const group = item.closest("[data-yw-group]");
 
-    if (item.classList.contains("is-open")) {
-      closeItem(item);
-      return;
-    }
+    if (item.classList.contains("is-open")) return;
 
-    if (singleOpen) {
-      const group = item.closest("[data-yw-group]");
-      group.querySelectorAll(".is-open").forEach((openItem) => {
-        if (openItem !== item) closeItem(openItem);
-      });
-    }
+    const current = group.querySelector(".yw-faq.is-open");
 
     openItem(item);
-  });
+
+    if (current && current !== item) {
+        closeItem(current);
+    }
+});
 
   function openItem(item, animate = true) {
   const panel = item.querySelector("[data-yw-panel]");
