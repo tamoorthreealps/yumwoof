@@ -361,13 +361,15 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
         group.classList.remove("is-filtered-out");
       });
 
-      if (value === "all") {
-        window.scrollTo({
-          top: faq.offsetTop,
-          behavior: "smooth",
-        });
-        return;
-      }
+      // Mobile only
+if (window.innerWidth < 750 && value === "all") {
+  groups.forEach((group) => {
+    group.classList.remove("is-filtered-out");
+  });
+
+  closeDropdown();
+  return;
+}
 
       const target = faq.querySelector(
         `[data-yw-category="${value}"]`
