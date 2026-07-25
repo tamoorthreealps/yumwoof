@@ -320,6 +320,7 @@
   font-size: 13px;
   line-height: 20px;
   font-weight: 500;
+  letter-spacing:0;
 }
 
 .yw-faq__answer > *:first-child {
