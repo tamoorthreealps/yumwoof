@@ -58,12 +58,6 @@
         -%}
 
         <div class="yw-faqs__pills" role="group" aria-label="{{ section.settings.filter_label | escape }}">
-          {%- if section.settings.show_all_option -%}
-            <button type="button" class="yw-pill is-active" data-yw-filter="all" aria-pressed="true">
-              {{ all_label | escape }}
-            </button>
-          {%- endif -%}
-
           {%- for block in section.blocks -%}
             {%- if block.type == 'category' -%}
               {%- liquid
@@ -448,7 +442,7 @@
     {
       "type": "checkbox",
       "id": "show_all_option",
-      "label": "Include an \"All\" option",
+      "label": "Show \"All\" option on mobile",
       "default": true
     },
     {
