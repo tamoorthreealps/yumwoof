@@ -22,45 +22,45 @@
   "
 >
   <div class="legal-page__card">
+    <div class="legal-page__card_container">
+      {% if section.settings.show_breadcrumb %}
+        <nav class="legal-page__breadcrumb" aria-label="breadcrumb">
+          <a href="{{ routes.root_url }}">Home</a>
+          <span class="legal-page__breadcrumb-sep" aria-hidden="true">/</span>
+          <span class="legal-page__breadcrumb-current">{{ legal_heading }}</span>
+        </nav>
+      {% endif %}
 
-    {% if section.settings.show_breadcrumb %}
-      <nav class="legal-page__breadcrumb" aria-label="breadcrumb">
-        <a href="{{ routes.root_url }}">Home</a>
-        <span class="legal-page__breadcrumb-sep" aria-hidden="true">/</span>
-        <span class="legal-page__breadcrumb-current">{{ legal_heading }}</span>
-      </nav>
-    {% endif %}
+      {% if legal_heading != blank %}
+        <div class="legal-page__header">
+          <h1 class="legal-page__title">{{ legal_heading }}</h1>
+          <span class="legal-page__title-divider" aria-hidden="true"></span>
+          {% if legal_updated != blank %}
+            <p class="legal-page__updated">Last updated: {{ legal_updated }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
 
-    {% if legal_heading != blank %}
-      <div class="legal-page__header">
-        <h1 class="legal-page__title">{{ legal_heading }}</h1>
-        <span class="legal-page__title-divider" aria-hidden="true"></span>
-        {% if legal_updated != blank %}
-          <p class="legal-page__updated">Last updated: {{ legal_updated }}</p>
-        {% endif %}
-      </div>
-    {% endif %}
+      {% if section.settings.show_overview and section.settings.overview_text != blank %}
+        <div class="legal-page__overview">
+          {% if section.settings.overview_heading != blank %}
+            <h2 class="legal-page__section-heading">{{ section.settings.overview_heading }}</h2>
+          {% endif %}
+          <div class="legal-page__rte">{{ section.settings.overview_text }}</div>
+        </div>
+      {% endif %}
 
-    {% if section.settings.show_overview and section.settings.overview_text != blank %}
-      <div class="legal-page__overview">
-        {% if section.settings.overview_heading != blank %}
-          <h2 class="legal-page__section-heading">{{ section.settings.overview_heading }}</h2>
-        {% endif %}
-        <div class="legal-page__rte">{{ section.settings.overview_text }}</div>
-      </div>
-    {% endif %}
-
-    {% for block in section.blocks %}
-      <div class="legal-page__section" {{ block.shopify_attributes }}>
-        {% if block.settings.heading != blank %}
-          <h2 class="legal-page__section-heading">{{ block.settings.heading }}</h2>
-        {% endif %}
-        {% if block.settings.content != blank %}
-          <div class="legal-page__rte">{{ block.settings.content }}</div>
-        {% endif %}
-      </div>
-    {% endfor %}
-
+      {% for block in section.blocks %}
+        <div class="legal-page__section" {{ block.shopify_attributes }}>
+          {% if block.settings.heading != blank %}
+            <h2 class="legal-page__section-heading">{{ block.settings.heading }}</h2>
+          {% endif %}
+          {% if block.settings.content != blank %}
+            <div class="legal-page__rte">{{ block.settings.content }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 
@@ -186,11 +186,7 @@
   "presets": [
     {
       "name": "Legal page Block",
-      "blocks": [
-        { "type": "legal_section" },
-        { "type": "legal_section" },
-        { "type": "legal_section" }
-      ]
+      "blocks": [{ "type": "legal_section" }, { "type": "legal_section" }, { "type": "legal_section" }]
     }
   ]
 }
