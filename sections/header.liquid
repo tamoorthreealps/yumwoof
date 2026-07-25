@@ -19,7 +19,7 @@
 -%}
 
 <yw-header
-  class="yw-header{% if section.settings.enable_sticky %}{% if request.page_type == 'index' or template.suffix == 'legal-page' %} yw-header--fixed{% else %} yw-header--sticky{% endif %}{% endif %}"
+  class="yw-header{% if section.settings.enable_sticky %}{% if request.page_type == 'index' or template.suffix == 'terms-of-service' or template.suffix == 'privacy-policy' %} yw-header--fixed{% else %} yw-header--sticky{% endif %}{% endif %}"
   data-mobile-target="{{ mobile_id }}"
   {% if section.settings.enable_sticky %}
     data-sticky
