@@ -176,6 +176,7 @@ color: var(--legal-text, #333333);
 }
 .legal-page__rte p:has(strong) {
   margin-top:-4px;
+  line-height: 16px;
 }
 .legal-page__rte p:has(strong):first-child {
   margin-top: 0;
