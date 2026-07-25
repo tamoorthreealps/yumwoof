@@ -26,12 +26,12 @@
     line-height: 16px;
     letter-spacing: 0.96px;
     margin-bottom: 32px;
-    color: var(--legal-heading, #661D1D);
+    color: var(--legal-heading, #000000);
     text-transform: uppercase;
 }
 
 .legal-page__breadcrumb a {
-  color: var(--legal-heading, #661D1D);
+  color: var(--legal-heading, #000000);
   text-decoration: underline;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .legal-page__title {
-    color: var(--legal-heading, #661D1D);
+    color: var(--legal-heading, #000000);
     font-size: 64px;
     line-height: 64px;
     letter-spacing: -1.28px;
@@ -61,7 +61,7 @@
     font-size: 18px;
     line-height: 24px;
     letter-spacing: 0;
-    color: var(--legal-heading, #661D1D);
+    color: var(--legal-heading, #000000);
     margin: 0;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .legal-page__section-heading {
-  color: var(--legal-heading, #661D1D);
+  color: var(--legal-heading, #000000);
   font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
