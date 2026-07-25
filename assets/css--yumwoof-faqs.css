@@ -100,6 +100,7 @@
   letter-spacing: 0.56px;
   text-transform: uppercase;
   cursor: pointer;
+  font-family: "FFBlurProMedium";
   transition: background-color 200ms var(--yw-ease), color 200ms var(--yw-ease);
 }
 
