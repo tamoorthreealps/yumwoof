@@ -227,8 +227,6 @@
 
 <script>
 document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
-  const singleOpen = faq.dataset.singleOpen === "true";
-
   const groups = faq.querySelectorAll("[data-yw-group]");
   const filters = faq.querySelectorAll("[data-yw-filter]");
 
@@ -238,126 +236,152 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
   const selectMenu = faq.querySelector(".yw-faqs__select-menu");
 
   /* ---------------- Accordion ---------------- */
-faq.addEventListener("click", (e) => {
+
+  function openItem(item, animate = true) {
+    const panel = item.querySelector("[data-yw-panel]");
+    const trigger = item.querySelector("[data-yw-trigger]");
+
+    item.classList.add("is-open");
+    trigger.setAttribute("aria-expanded", "true");
+    panel.classList.add("is-open");
+
+    if (!animate) {
+      panel.style.height = "auto";
+      return;
+    }
+
+    panel.style.height = "0px";
+
+    requestAnimationFrame(() => {
+      panel.style.height = panel.scrollHeight + "px";
+    });
+
+    panel.addEventListener(
+      "transitionend",
+      function end() {
+        panel.style.height = "auto";
+        panel.removeEventListener("transitionend", end);
+      },
+      { once: true }
+    );
+  }
+
+  function closeItem(item) {
+    const panel = item.querySelector("[data-yw-panel]");
+    const trigger = item.querySelector("[data-yw-trigger]");
+
+    panel.style.height = panel.scrollHeight + "px";
+
+    requestAnimationFrame(() => {
+      panel.style.height = "0px";
+    });
+
+    item.classList.remove("is-open");
+    trigger.setAttribute("aria-expanded", "false");
+    panel.classList.remove("is-open");
+  }
+
+  // First accordion of every topic open
+  groups.forEach((group) => {
+    const items = group.querySelectorAll("[data-yw-item]");
+
+    items.forEach((item) => {
+      item.classList.remove("is-open");
+
+      const trigger = item.querySelector("[data-yw-trigger]");
+      const panel = item.querySelector("[data-yw-panel]");
+
+      trigger.setAttribute("aria-expanded", "false");
+      panel.classList.remove("is-open");
+      panel.style.height = "0px";
+    });
+
+    if (items.length) {
+      openItem(items[0], false);
+    }
+  });
+
+  faq.addEventListener("click", (e) => {
     const trigger = e.target.closest("[data-yw-trigger]");
     if (!trigger) return;
 
     const item = trigger.closest("[data-yw-item]");
     const group = item.closest("[data-yw-group]");
 
-    if (item.classList.contains("is-open")) return;
+    if (item.classList.contains("is-open")) {
+      closeItem(item);
+      return;
+    }
 
-    const current = group.querySelector(".yw-faq.is-open");
+    group.querySelectorAll("[data-yw-item].is-open").forEach((openItemEl) => {
+      if (openItemEl !== item) {
+        closeItem(openItemEl);
+      }
+    });
 
     openItem(item);
-
-    if (current && current !== item) {
-        closeItem(current);
-    }
-});
-
-  function openItem(item, animate = true) {
-  const panel = item.querySelector("[data-yw-panel]");
-  const trigger = item.querySelector("[data-yw-trigger]");
-
-  item.classList.add("is-open");
-  trigger.setAttribute("aria-expanded", "true");
-
-  panel.classList.add("is-open");
-
-  if (!animate) {
-    panel.style.height = "auto";
-    return;
-  }
-
-  panel.style.height = "0px";
-
-  requestAnimationFrame(() => {
-    panel.style.height = panel.scrollHeight + "px";
   });
 
-  panel.addEventListener("transitionend", function end() {
-    panel.style.height = "auto";
-    panel.removeEventListener("transitionend", end);
-  }, { once: true });
-}
-
-function closeItem(item) {
-  const panel = item.querySelector("[data-yw-panel]");
-  const trigger = item.querySelector("[data-yw-trigger]");
-
-  panel.style.height = panel.scrollHeight + "px";
-
-  requestAnimationFrame(() => {
-    panel.style.height = "0px";
-  });
-
-  item.classList.remove("is-open");
-  trigger.setAttribute("aria-expanded", "false");
-  panel.classList.remove("is-open");
-}
   /* ---------------- Filters ---------------- */
 
- filters.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const value = btn.dataset.ywFilter;
-    const label = btn.textContent.trim();
+  filters.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const value = btn.dataset.ywFilter;
+      const label = btn.textContent.trim();
 
-    // Active state
-    filters.forEach((b) => {
-      const active = b.dataset.ywFilter === value;
+      filters.forEach((b) => {
+        const active = b.dataset.ywFilter === value;
 
-      b.classList.toggle("is-active", active);
+        b.classList.toggle("is-active", active);
 
-      if (b.hasAttribute("aria-pressed"))
-        b.setAttribute("aria-pressed", active);
+        if (b.hasAttribute("aria-pressed"))
+          b.setAttribute("aria-pressed", active);
 
-      if (b.hasAttribute("aria-selected"))
-        b.setAttribute("aria-selected", active);
-    });
+        if (b.hasAttribute("aria-selected"))
+          b.setAttribute("aria-selected", active);
+      });
 
-    if (selectLabel) {
-      selectLabel.textContent = label;
-    }
+      if (selectLabel) {
+        selectLabel.textContent = label;
+      }
 
-    // Mobile
-    if (window.innerWidth < 750) {
+      if (window.innerWidth < 750) {
+        groups.forEach((group) => {
+          group.classList.toggle(
+            "is-filtered-out",
+            value !== "all" && group.dataset.ywCategory !== value
+          );
+        });
+
+        closeDropdown();
+        return;
+      }
+
       groups.forEach((group) => {
-        group.classList.toggle(
-          "is-filtered-out",
-          value !== "all" && group.dataset.ywCategory !== value
-        );
+        group.classList.remove("is-filtered-out");
       });
 
-      closeDropdown();
-      return;
-    }
+      if (value === "all") {
+        window.scrollTo({
+          top: faq.offsetTop,
+          behavior: "smooth",
+        });
+        return;
+      }
 
-    // Desktop
-    groups.forEach((group) => {
-      group.classList.remove("is-filtered-out");
+      const target = faq.querySelector(
+        `[data-yw-category="${value}"]`
+      );
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     });
-
-    if (value === "all") {
-      window.scrollTo({
-        top: faq.offsetTop,
-        behavior: "smooth",
-      });
-      return;
-    }
-
-    const target = faq.querySelector(
-      `[data-yw-category="${value}"]`
-    );
-
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
   });
-});
+
   /* ---------------- Mobile Dropdown ---------------- */
 
   if (select && selectTrigger && selectMenu) {
