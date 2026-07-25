@@ -328,7 +328,7 @@ body.is-open .yw-nav-outer {
   right: 0;
   top: 100%;
   z-index: -1;
-  padding:16px 16px 0;
+  padding-top:16px;
   transform: translateY(-150%);
   transition: transform .6s cubic-bezier(.22,.61,.36,1),
               visibility 0s linear .35s;
@@ -466,6 +466,11 @@ font-size: 16px;
     line-height: 24px;
     letter-spacing: 0;
     color: var(--yw-nav-text);
+}
+
+
+@media screen and (max-width: 991px){
+
 }
 
 /* --------------------------------------------------------------------------
@@ -631,10 +636,6 @@ font-size: 16px;
   display: none;
 }
 
-
-@media screen and (max-width: 991px) {
-
-}
 
 /* --------------------------------------------------------------------------
    Mobile menu blocks (dynamic, built from customizer blocks)
