@@ -330,23 +330,16 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
       const label = btn.textContent.trim();
 
       filters.forEach((b) => {
-  let active = b.dataset.ywFilter === value;
+        const active = b.dataset.ywFilter === value;
 
-  // Desktop par All kabhi active na ho
-  if (window.innerWidth >= 750 && b.dataset.ywFilter === "all") {
-    active = false;
-  }
+        b.classList.toggle("is-active", active);
 
-  b.classList.toggle("is-active", active);
+        if (b.hasAttribute("aria-pressed"))
+          b.setAttribute("aria-pressed", active);
 
-  if (b.hasAttribute("aria-pressed")) {
-    b.setAttribute("aria-pressed", active);
-  }
-
-  if (b.hasAttribute("aria-selected")) {
-    b.setAttribute("aria-selected", active);
-  }
-});
+        if (b.hasAttribute("aria-selected"))
+          b.setAttribute("aria-selected", active);
+      });
 
       if (selectLabel) {
         selectLabel.textContent = label;
@@ -368,15 +361,13 @@ document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
         group.classList.remove("is-filtered-out");
       });
 
-      // Mobile only
-if (window.innerWidth < 750 && value === "all") {
-  groups.forEach((group) => {
-    group.classList.remove("is-filtered-out");
-  });
-
-  closeDropdown();
-  return;
-}
+      if (value === "all") {
+        window.scrollTo({
+          top: faq.offsetTop,
+          behavior: "smooth",
+        });
+        return;
+      }
 
       const target = faq.querySelector(
         `[data-yw-category="${value}"]`
