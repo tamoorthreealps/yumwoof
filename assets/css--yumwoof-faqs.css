@@ -354,9 +354,6 @@
   .yw-faqs__rail {
     margin-bottom: 48px;
   }
-   .yw-faqs__pills [data-yw-filter="all"] {
-    display: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
