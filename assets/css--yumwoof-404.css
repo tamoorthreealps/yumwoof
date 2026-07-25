@@ -78,7 +78,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 160px;
-  height: 145px;
+  height: 160px;
   object-fit: cover;
   z-index: 1;
 }
@@ -222,7 +222,7 @@
   .yw-404__dog {
     top: 26px;
     width: 128px;
-    height: 116px;
+    height: 128px;
   }
 }
 
