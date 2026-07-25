@@ -11,13 +11,90 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "yumwoof_faqs_minjTA": {
+      "type": "yumwoof-faqs",
+      "blocks": {
+        "category_C47LjA": {
+          "type": "category",
+          "settings": {
+            "title": "GENERAL",
+            "pill_label": ""
+          }
+        },
+        "question_kkEc47": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "open_by_default": false
+          }
+        },
+        "question_r8A6cL": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "open_by_default": false
+          }
+        },
+        "question_ArBKBD": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "open_by_default": false
+          }
+        },
+        "question_AVCYbA": {
+          "type": "question",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "category_C47LjA",
+        "question_kkEc47",
+        "question_r8A6cL",
+        "question_ArBKBD",
+        "question_AVCYbA"
+      ],
+      "name": "FAQs",
+      "settings": {
+        "title": "FAQs",
+        "lede": "<p>Don't see the answer you're looking for? Reach out to woof@yumwoof.com and we'll get back to you in a flash.</p>",
+        "show_filters": true,
+        "show_all_option": true,
+        "all_label": "All",
+        "filter_label": "Filter questions by topic",
+        "open_first": true,
+        "single_open": true,
+        "enable_schema": true,
+        "color_bg": "#FFF9EF",
+        "color_text": "#000000",
+        "color_link": "#661D1D",
+        "color_rule": "#000000",
+        "font_display": "'TAYRosemary', 'TAY Rosemary', Georgia, serif",
+        "font_body": "'Matter', 'Helvetica Neue', Arial, sans-serif",
+        "font_label": "'Blur', 'Matter', Arial, sans-serif",
+        "content_width": 1200,
+        "padding_top": 76,
+        "padding_bottom": 160,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 80
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "yumwoof_faqs_minjTA"
   ]
 }
