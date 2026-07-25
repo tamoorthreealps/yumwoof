@@ -37,15 +37,23 @@
         "legal_section_FVAqUm": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "SECTION 3 – ACCURACY, COMPLETENESS, AND TIMELINESS",
+            "content": "<p>Information on this site is provided for general information only and may not always be accurate, complete, or current. Any reliance on site information is at your own risk.</p>"
+          }
+        },
+        "legal_section_JBHUep": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "SECTION 4 – MODIFICATIONS TO THE SERVICE AND PRICES",
+            "content": "<p>Prices and Services may change or be discontinued at any time without notice. We are not liable for any modification, price change, suspension, or discontinuance.</p>"
           }
         }
       },
       "block_order": [
         "legal_section_KJEy7a",
         "legal_section_mrF4dX",
-        "legal_section_FVAqUm"
+        "legal_section_FVAqUm",
+        "legal_section_JBHUep"
       ],
       "name": "Legal page Block",
       "settings": {
