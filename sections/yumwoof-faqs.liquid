@@ -60,7 +60,6 @@
           endif
         -%}
 
-        {# Desktop: stacked outline pills #}
         <div class="yw-faqs__pills" role="group" aria-label="{{ section.settings.filter_label | escape }}">
           {%- if section.settings.show_all_option -%}
             <button type="button" class="yw-pill is-active" data-yw-filter="all" aria-pressed="true">
@@ -88,7 +87,6 @@
           {%- endfor -%}
         </div>
 
-        {# Mobile: the same options as a single dropdown #}
         <div class="yw-faqs__select" data-yw-select>
           <button
             type="button"
