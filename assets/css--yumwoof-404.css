@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Yumwoof — 404
+   From Figma "Yumwoof - Site V.3": 404_DESKTOP (3888:3317) / 404_MOBILE (3888:3762).
+   Mobile-first. Everything is scoped under .yw-404.
+   ========================================================================== */
+
+.yw-404 {
+  --yw-bg: #fff9ef;
+  --yw-ink: #000000;
+  --yw-maroon: #661d1d;
+
+  /* Match these to the @font-face names your theme already loads. */
+  --yw-font-display: 'TAYRosemary', 'TAY Rosemary', Georgia, serif;
+  --yw-font-script: 'TAY Birdie', 'TAYBirdie', 'TAYRosemary', Georgia, serif;
+  --yw-font-body: 'Matter', 'Helvetica Neue', Arial, sans-serif;
+  --yw-font-label: 'Blur', 'Matter', Arial, sans-serif;
+
+  background: var(--yw-bg);
+  color: var(--yw-ink);
+  padding-block: 48px 84px;
+  font-family: var(--yw-font-body);
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.yw-404 *,
+.yw-404 *::before,
+.yw-404 *::after {
+  box-sizing: border-box;
+}
+
+.yw-404__inner {
+  width: min(100% - 44px, 1200px);
+  margin-inline: auto;
+}
+
+/* --- "PAGE NOT FOUND" ---------------------------------------------------- */
+
+.yw-404__eyebrow {
+  margin: 0 0 8px;
+  font-family: var(--yw-font-script);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.64px;
+  text-transform: uppercase;
+}
+
+/* --- 404 numerals with the dog sitting over them ------------------------- */
+
+.yw-404__figure {
+  position: relative;
+  display: block;
+  /* Height runs from the top of the numerals to the bottom of the dog, so the
+     gap below is measured off the artwork rather than the 156px line box. */
+  height: 177px;
+  margin-bottom: 40px;
+  overflow: visible;
+  line-height: 0;
+}
+
+.yw-404__code {
+  display: block;
+  font-family: var(--yw-font-display);
+  font-weight: 400;
+  font-size: 180px;
+  line-height: 156px;
+  letter-spacing: 18px;
+  /* letter-spacing adds trailing space after the last glyph — pull it back
+     so the numerals stay optically centred. */
+  text-indent: 18px;
+  color: var(--yw-maroon);
+}
+
+.yw-404__dog {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 145px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* --- Headline and body --------------------------------------------------- */
+
+.yw-404__copy {
+  max-width: 333px;
+  margin-inline: auto;
+}
+
+.yw-404__heading {
+  margin: 0;
+  font-family: var(--yw-font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.32px;
+  text-wrap: balance;
+}
+
+.yw-404__text {
+  margin: 4px 0 0;
+  max-width: 284px;
+  margin-inline: auto;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+/* --- Sticker button ------------------------------------------------------ */
+
+.yw-404__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 168px;
+  height: 72px;
+  margin-top: 24px;
+  border: 1.5px solid var(--yw-ink);
+  /* The Figma sticker is a hand-drawn oval. A true ellipse is the closest
+     pure-CSS match; swap in the exported SVG by uncommenting below. */
+  border-radius: 50%;
+  color: var(--yw-ink);
+  text-decoration: none;
+  transition: background-color 200ms ease, color 200ms ease;
+
+  /* background: url("yumwoof-404-button.svg") center / contain no-repeat;
+     border: 0; */
+}
+
+.yw-404__button:hover {
+  background: var(--yw-ink);
+  color: var(--yw-bg);
+}
+
+.yw-404__button:focus-visible {
+  outline: 2px solid var(--yw-maroon);
+  outline-offset: 4px;
+}
+
+.yw-404__button-label {
+  font-family: var(--yw-font-label);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 24px;
+  letter-spacing: 1.04px;
+  text-transform: uppercase;
+}
+
+/* --- Desktop ------------------------------------------------------------- */
+
+@media screen and (min-width: 990px) {
+  .yw-404 {
+    padding-block: 92px 136px;
+  }
+
+  .yw-404__eyebrow {
+    margin-bottom: 36px;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.8px;
+  }
+
+  .yw-404__figure {
+    height: 276px;
+  }
+
+  .yw-404__code {
+    font-size: 360px;
+    line-height: 312px;
+    letter-spacing: 36px;
+    text-indent: 36px;
+  }
+
+  .yw-404__dog {
+    top: 59px;
+    width: 240px;
+    height: 217px;
+  }
+
+  .yw-404__copy {
+    max-width: 492px;
+  }
+
+  .yw-404__heading {
+    font-size: 56px;
+    line-height: 64px;
+    letter-spacing: -0.56px;
+  }
+
+  .yw-404__text {
+    max-width: 492px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .yw-404__button {
+    width: 212px;
+    height: 80px;
+  }
+
+  .yw-404__button-label {
+    font-size: 16px;
+    letter-spacing: 1.28px;
+  }
+}
+
+/* --- Very narrow phones -------------------------------------------------- */
+
+@media screen and (max-width: 360px) {
+  .yw-404__code {
+    font-size: 140px;
+    line-height: 124px;
+    letter-spacing: 14px;
+    text-indent: 14px;
+  }
+
+  .yw-404__figure {
+    height: 142px;
+  }
+
+  .yw-404__dog {
+    top: 26px;
+    width: 128px;
+    height: 116px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yw-404__button {
+    transition-duration: 1ms;
+  }
+}
