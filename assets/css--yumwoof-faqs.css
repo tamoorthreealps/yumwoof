@@ -428,9 +428,6 @@
   .yw-pill--select:hover {
   background: transparent;
 }
-.yw-pill:hover {
-  background: rgba(0, 0, 0, 0.06);
-}
 }
 
 /* --------------------------------------------------------------------------
