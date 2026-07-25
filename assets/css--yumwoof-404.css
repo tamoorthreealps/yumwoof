@@ -123,7 +123,7 @@
   color: var(--yw-ink);
   text-decoration: none;
   transition: background-color 200ms ease, color 200ms ease;
-  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button_5aa6fb69-b240-4be3-85f5-47b3d5e90004.svg?v=1785017111") center / contain no-repeat;
+  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Sticker.svg?v=1785017194") center / contain no-repeat;
   border: 0;
 }
 
@@ -196,6 +196,7 @@
   .yw-404__button {
     width: 212px;
     height: 80px;
+    background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button_5aa6fb69-b240-4be3-85f5-47b3d5e90004.svg?v=1785017111") center / contain no-repeat;
   }
 
   .yw-404__button-label {
