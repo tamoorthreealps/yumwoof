@@ -61,7 +61,7 @@
     font-size: 18px;
     line-height: 24px;
     letter-spacing: 0;
-    color: var(--legal-text, #333333);
+    color: var(--legal-heading, #661D1D);
     margin: 0;
 }
 
