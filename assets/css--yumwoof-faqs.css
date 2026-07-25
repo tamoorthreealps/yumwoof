@@ -320,7 +320,6 @@
   font-size: 13px;
   line-height: 20px;
   font-weight: 500;
-  letter-spacing:0;
 }
 
 .yw-faq__answer > *:first-child {
@@ -369,7 +368,7 @@
   .yw-faqs {
     --yw-rule-weight: 1.5px;
     --yw-icon: 16px;
-    --yw-icon-bar: 2.17px;
+    --yw-icon-bar: 1.9px;
     --yw-group-gap: 48px;
 
     padding-block: var(--yw-pt, 76px) var(--yw-pb, 160px);
