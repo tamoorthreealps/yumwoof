@@ -39,7 +39,6 @@
   data-open-first="{{ section.settings.open_first }}"
 >
   <div class="yw-faqs__wrap">
-
     <aside class="yw-faqs__rail">
       <div class="yw-faqs__masthead">
         {%- if section.settings.title != blank -%}
@@ -107,18 +106,22 @@
               {%- endif -%}
             </span>
             <span class="yw-pill__chevron" aria-hidden="true">
-              
-<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.79268 9.22723C6.68117 9.22723 6.56965 9.18454 6.48471 9.09959L2.12869 4.74357C2.00411 4.61899 1.96665 4.43168 2.03416 4.26877C2.10125 4.10585 2.26068 4 2.43666 4H11.1487C11.3247 4 11.4841 4.10585 11.5512 4.26877C11.6187 4.43168 11.5813 4.61899 11.4567 4.74357L7.10065 9.09959C7.01571 9.18454 6.9042 9.22723 6.79268 9.22723Z" fill="black"/>
-</svg>
-
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.79268 9.22723C6.68117 9.22723 6.56965 9.18454 6.48471 9.09959L2.12869 4.74357C2.00411 4.61899 1.96665 4.43168 2.03416 4.26877C2.10125 4.10585 2.26068 4 2.43666 4H11.1487C11.3247 4 11.4841 4.10585 11.5512 4.26877C11.6187 4.43168 11.5813 4.61899 11.4567 4.74357L7.10065 9.09959C7.01571 9.18454 6.9042 9.22723 6.79268 9.22723Z" fill="black"/>
+              </svg>
             </span>
           </button>
 
           <ul class="yw-faqs__select-menu" id="yw-select-menu-{{ section.id }}" role="listbox" hidden>
             {%- if section.settings.show_all_option -%}
               <li role="presentation">
-                <button type="button" class="yw-faqs__select-option is-active" role="option" aria-selected="true" data-yw-filter="all">
+                <button
+                  type="button"
+                  class="yw-faqs__select-option is-active"
+                  role="option"
+                  aria-selected="true"
+                  data-yw-filter="all"
+                >
                   {{ all_label | escape }}
                 </button>
               </li>
@@ -151,10 +154,9 @@
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
-
           {%- when 'category' -%}
             {%- if group_open -%}
-                </div>
+              </div>
               </section>
             {%- endif -%}
             {%- if first_category_id == blank -%}
@@ -170,13 +172,12 @@
                 <h2 class="yw-faqs__group-title">{{ block.settings.title | escape }}</h2>
               {%- endif -%}
               <div class="yw-faqs__items">
-            {%- assign group_open = true -%}
-
+                {%- assign group_open = true -%}
           {%- when 'question' -%}
             {%- unless group_open -%}
               <section class="yw-faqs__group" data-yw-group data-yw-category="uncategorised">
                 <div class="yw-faqs__items">
-              {%- assign group_open = true -%}
+                  {%- assign group_open = true -%}
             {%- endunless -%}
 
             {%- assign is_open = block.settings.open_by_default -%}
@@ -209,12 +210,11 @@
                 <div class="yw-faq__answer">{{ block.settings.answer }}</div>
               </div>
             </div>
-
         {%- endcase -%}
       {%- endfor -%}
 
       {%- if group_open -%}
-          </div>
+        </div>
         </section>
       {%- endif -%}
 
@@ -222,205 +222,198 @@
         <p class="yw-faqs__empty">Add a category and some questions to build this page.</p>
       {%- endif -%}
     </div>
-
   </div>
 </div>
 
-
 <script>
-document.querySelectorAll("[data-yw-faqs]").forEach((faq) => {
-  const groups = faq.querySelectorAll("[data-yw-group]");
-  const filters = faq.querySelectorAll("[data-yw-filter]");
+  document.querySelectorAll('[data-yw-faqs]').forEach((faq) => {
+    const groups = faq.querySelectorAll('[data-yw-group]');
+    const filters = faq.querySelectorAll('[data-yw-filter]');
 
-  const select = faq.querySelector("[data-yw-select]");
-  const selectTrigger = faq.querySelector("[data-yw-select-trigger]");
-  const selectLabel = faq.querySelector("[data-yw-select-label]");
-  const selectMenu = faq.querySelector(".yw-faqs__select-menu");
+    const select = faq.querySelector('[data-yw-select]');
+    const selectTrigger = faq.querySelector('[data-yw-select-trigger]');
+    const selectLabel = faq.querySelector('[data-yw-select-label]');
+    const selectMenu = faq.querySelector('.yw-faqs__select-menu');
 
-  /* ---------------- Accordion ---------------- */
+    /* ---------------- Accordion ---------------- */
 
-  function openItem(item, animate = true) {
-    const panel = item.querySelector("[data-yw-panel]");
-    const trigger = item.querySelector("[data-yw-trigger]");
+    function openItem(item, animate = true) {
+      const panel = item.querySelector('[data-yw-panel]');
+      const trigger = item.querySelector('[data-yw-trigger]');
 
-    item.classList.add("is-open");
-    trigger.setAttribute("aria-expanded", "true");
-    panel.classList.add("is-open");
+      item.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      panel.classList.add('is-open');
 
-    if (!animate) {
-      panel.style.height = "auto";
-      return;
-    }
-
-    panel.style.height = "0px";
-
-    requestAnimationFrame(() => {
-      panel.style.height = panel.scrollHeight + "px";
-    });
-
-    panel.addEventListener(
-      "transitionend",
-      function end() {
-        panel.style.height = "auto";
-        panel.removeEventListener("transitionend", end);
-      },
-      { once: true }
-    );
-  }
-
-  function closeItem(item) {
-    const panel = item.querySelector("[data-yw-panel]");
-    const trigger = item.querySelector("[data-yw-trigger]");
-
-    panel.style.height = panel.scrollHeight + "px";
-
-    requestAnimationFrame(() => {
-      panel.style.height = "0px";
-    });
-
-    item.classList.remove("is-open");
-    trigger.setAttribute("aria-expanded", "false");
-    panel.classList.remove("is-open");
-  }
-
-  // First accordion of every topic open
-  groups.forEach((group) => {
-    const items = group.querySelectorAll("[data-yw-item]");
-
-    items.forEach((item) => {
-      item.classList.remove("is-open");
-
-      const trigger = item.querySelector("[data-yw-trigger]");
-      const panel = item.querySelector("[data-yw-panel]");
-
-      trigger.setAttribute("aria-expanded", "false");
-      panel.classList.remove("is-open");
-      panel.style.height = "0px";
-    });
-
-    if (items.length) {
-      openItem(items[0], false);
-    }
-  });
-
-  faq.addEventListener("click", (e) => {
-    const trigger = e.target.closest("[data-yw-trigger]");
-    if (!trigger) return;
-
-    const item = trigger.closest("[data-yw-item]");
-    const group = item.closest("[data-yw-group]");
-
-    if (item.classList.contains("is-open")) {
-      closeItem(item);
-      return;
-    }
-
-    group.querySelectorAll("[data-yw-item].is-open").forEach((openItemEl) => {
-      if (openItemEl !== item) {
-        closeItem(openItemEl);
-      }
-    });
-
-    openItem(item);
-  });
-
-  /* ---------------- Filters ---------------- */
-
-  filters.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const value = btn.dataset.ywFilter;
-      const label = btn.textContent.trim();
-
-      filters.forEach((b) => {
-  let active = b.dataset.ywFilter === value;
-
-  // Desktop par All kabhi active na ho
-  if (window.innerWidth >= 750 && b.dataset.ywFilter === "all") {
-    active = false;
-  }
-
-  b.classList.toggle("is-active", active);
-
-  if (b.hasAttribute("aria-pressed")) {
-    b.setAttribute("aria-pressed", active);
-  }
-
-  if (b.hasAttribute("aria-selected")) {
-    b.setAttribute("aria-selected", active);
-  }
-});
-
-      if (selectLabel) {
-        selectLabel.textContent = label;
-      }
-
-      if (window.innerWidth < 750) {
-        groups.forEach((group) => {
-          group.classList.toggle(
-            "is-filtered-out",
-            value !== "all" && group.dataset.ywCategory !== value
-          );
-        });
-
-        closeDropdown();
+      if (!animate) {
+        panel.style.height = 'auto';
         return;
       }
 
-      groups.forEach((group) => {
-        group.classList.remove("is-filtered-out");
+      panel.style.height = '0px';
+
+      requestAnimationFrame(() => {
+        panel.style.height = panel.scrollHeight + 'px';
       });
 
-      // Mobile only
-if (window.innerWidth < 750 && value === "all") {
-  groups.forEach((group) => {
-    group.classList.remove("is-filtered-out");
-  });
-
-  closeDropdown();
-  return;
-}
-
-      const target = faq.querySelector(
-        `[data-yw-category="${value}"]`
+      panel.addEventListener(
+        'transitionend',
+        function end() {
+          panel.style.height = 'auto';
+          panel.removeEventListener('transitionend', end);
+        },
+        { once: true }
       );
+    }
 
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+    function closeItem(item) {
+      const panel = item.querySelector('[data-yw-panel]');
+      const trigger = item.querySelector('[data-yw-trigger]');
+
+      panel.style.height = panel.scrollHeight + 'px';
+
+      requestAnimationFrame(() => {
+        panel.style.height = '0px';
+      });
+
+      item.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('is-open');
+    }
+
+    // First accordion of every topic open
+    groups.forEach((group) => {
+      const items = group.querySelectorAll('[data-yw-item]');
+
+      items.forEach((item) => {
+        item.classList.remove('is-open');
+
+        const trigger = item.querySelector('[data-yw-trigger]');
+        const panel = item.querySelector('[data-yw-panel]');
+
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.classList.remove('is-open');
+        panel.style.height = '0px';
+      });
+
+      if (items.length) {
+        openItem(items[0], false);
       }
     });
+
+    faq.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-yw-trigger]');
+      if (!trigger) return;
+
+      const item = trigger.closest('[data-yw-item]');
+      const group = item.closest('[data-yw-group]');
+
+      if (item.classList.contains('is-open')) {
+        closeItem(item);
+        return;
+      }
+
+      group.querySelectorAll('[data-yw-item].is-open').forEach((openItemEl) => {
+        if (openItemEl !== item) {
+          closeItem(openItemEl);
+        }
+      });
+
+      openItem(item);
+    });
+
+    /* ---------------- Filters ---------------- */
+
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = btn.dataset.ywFilter;
+        const label = btn.textContent.trim();
+
+        filters.forEach((b) => {
+          let active = b.dataset.ywFilter === value;
+
+          // Desktop par All kabhi active na ho
+          if (window.innerWidth >= 750 && b.dataset.ywFilter === 'all') {
+            active = false;
+          }
+
+          b.classList.toggle('is-active', active);
+
+          if (b.hasAttribute('aria-pressed')) {
+            b.setAttribute('aria-pressed', active);
+          }
+
+          if (b.hasAttribute('aria-selected')) {
+            b.setAttribute('aria-selected', active);
+          }
+        });
+
+        if (selectLabel) {
+          selectLabel.textContent = label;
+        }
+
+        if (window.innerWidth < 750) {
+          groups.forEach((group) => {
+            group.classList.toggle('is-filtered-out', value !== 'all' && group.dataset.ywCategory !== value);
+          });
+
+          closeDropdown();
+          return;
+        }
+
+        groups.forEach((group) => {
+          group.classList.remove('is-filtered-out');
+        });
+
+        // Mobile only
+        if (window.innerWidth < 750 && value === 'all') {
+          groups.forEach((group) => {
+            group.classList.remove('is-filtered-out');
+          });
+
+          closeDropdown();
+          return;
+        }
+
+        const target = faq.querySelector(`[data-yw-category="${value}"]`);
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      });
+    });
+
+    /* ---------------- Mobile Dropdown ---------------- */
+
+    if (select && selectTrigger && selectMenu) {
+      selectTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const open = selectTrigger.getAttribute('aria-expanded') === 'true';
+
+        selectTrigger.setAttribute('aria-expanded', !open);
+        selectMenu.hidden = open;
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!select.contains(e.target)) closeDropdown();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeDropdown();
+      });
+    }
+
+    function closeDropdown() {
+      if (!selectMenu || !selectTrigger) return;
+
+      selectMenu.hidden = true;
+      selectTrigger.setAttribute('aria-expanded', 'false');
+    }
   });
-
-  /* ---------------- Mobile Dropdown ---------------- */
-
-  if (select && selectTrigger && selectMenu) {
-    selectTrigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-
-      const open = selectTrigger.getAttribute("aria-expanded") === "true";
-
-      selectTrigger.setAttribute("aria-expanded", !open);
-      selectMenu.hidden = open;
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!select.contains(e.target)) closeDropdown();
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeDropdown();
-    });
-  }
-
-  function closeDropdown() {
-    if (!selectMenu || !selectTrigger) return;
-
-    selectMenu.hidden = true;
-    selectTrigger.setAttribute("aria-expanded", "false");
-  }
-});
 </script>
 
 {% schema %}
@@ -476,11 +469,47 @@ if (window.innerWidth < 750 && value === "all") {
     { "type": "color", "id": "color_link", "label": "Links", "default": "#661D1D" },
     { "type": "color", "id": "color_rule", "label": "Divider lines", "default": "#000000" },
     { "type": "header", "content": "Spacing — desktop" },
-    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 76 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 160 },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
     { "type": "header", "content": "Spacing — mobile" },
-    { "type": "range", "id": "padding_top_mobile", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 }
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
   ],
   "blocks": [
     {
