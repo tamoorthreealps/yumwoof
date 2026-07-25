@@ -11,7 +11,14 @@
   "sections": {
     "main": {
       "type": "main-404",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Page Not Found",
+        "heading": "This page was delicious.",
+        "text": "We can't prove he ate it, but the crumbs say otherwise. To a dachshund, everything on the site is technically food.",
+        "image": "shopify://shop_images/404--dog.png",
+        "button_label": "Back to shop",
+        "button_link": ""
+      }
     }
   },
   "order": [
