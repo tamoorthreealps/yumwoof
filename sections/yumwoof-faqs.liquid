@@ -25,7 +25,6 @@
     --yw-rule: {{ section.settings.color_rule }};
     --yw-font-body: {{ section.settings.font_body }};
     --yw-font-label: {{ section.settings.font_label }};
-    --yw-max: {{ section.settings.content_width }}px;
     --yw-pt: {{ section.settings.padding_top }}px;
     --yw-pb: {{ section.settings.padding_bottom }}px;
     --yw-pt-m: {{ section.settings.padding_top_mobile }}px;
@@ -441,17 +440,6 @@ function closeItem(item) {
     { "type": "color", "id": "color_text", "label": "Text", "default": "#000000" },
     { "type": "color", "id": "color_link", "label": "Links", "default": "#661D1D" },
     { "type": "color", "id": "color_rule", "label": "Divider lines", "default": "#000000" },
-    { "type": "header", "content": "Layout" },
-    {
-      "type": "range",
-      "id": "content_width",
-      "label": "Max content width",
-      "min": 900,
-      "max": 1500,
-      "step": 20,
-      "unit": "px",
-      "default": 1200
-    },
     { "type": "header", "content": "Spacing — desktop" },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 76 },
     { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 160 },
