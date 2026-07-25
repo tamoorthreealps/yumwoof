@@ -17,7 +17,7 @@
 
   background: var(--yw-bg);
   color: var(--yw-ink);
-  padding-block: 48px 84px;
+  padding-block: 144px 84px;
   font-family: var(--yw-font-body);
   text-align: center;
   -webkit-font-smoothing: antialiased;
@@ -153,7 +153,7 @@
 
 @media screen and (min-width: 990px) {
   .yw-404 {
-    padding-block: 92px 136px;
+    padding-block: 208px 136px;
   }
 
   .yw-404__eyebrow {
