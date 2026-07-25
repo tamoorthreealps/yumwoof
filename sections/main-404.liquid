@@ -1,4 +1,4 @@
-<style type="text/css">
+{% comment %} <style type="text/css">
   .template-404 .title + * {
     margin-top: 1rem;
   }
@@ -20,4 +20,107 @@
   <a href="{{ routes.all_products_collection_url }}" class="button">
     {{ 'general.continue_shopping' | t }}
   </a>
+</div> {% endcomment %}
+
+
+
+{{ 'css--yumwoof-404.css' | asset_url | stylesheet_tag }}
+
+<div class="yw-404">
+  <div class="yw-404__inner">
+
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="yw-404__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    <div class="yw-404__figure">
+      <span class="yw-404__code" aria-hidden="true">404</span>
+
+      {%- if section.settings.image != blank -%}
+        <img
+          class="yw-404__dog"
+          src="{{ section.settings.image | image_url: width: 480 }}"
+          srcset="{{ section.settings.image | image_url: width: 240 }} 240w,
+                  {{ section.settings.image | image_url: width: 480 }} 480w"
+          sizes="(min-width: 990px) 240px, 160px"
+          alt=""
+          width="240"
+          height="217"
+          loading="eager"
+        >
+      {%- else -%}
+        <img
+          class="yw-404__dog"
+          src="{{ 'yumwoof-404-dog.png' | asset_url }}"
+          alt=""
+          width="240"
+          height="217"
+          loading="eager"
+        >
+      {%- endif -%}
+    </div>
+
+    <div class="yw-404__copy">
+      {%- if section.settings.heading != blank -%}
+        <h1 class="yw-404__heading">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <p class="yw-404__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <a class="yw-404__button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        <span class="yw-404__button-label">{{ section.settings.button_label | escape }}</span>
+      </a>
+    {%- endif -%}
+
+  </div>
 </div>
+
+{% schema %}
+{
+  "name": "404",
+  "tag": "section",
+  "class": "yw-404-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Page Not Found"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "This page was delicious."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Body text",
+      "default": "We can't prove he ate it, but the crumbs say otherwise. To a dachshund, everything on the site is technically food."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Dog illustration",
+      "info": "Leave empty to use assets/yumwoof-404-dog.png instead."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Back to shop"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to the all-products collection."
+    }
+  ]
+}
+{% endschema %}
