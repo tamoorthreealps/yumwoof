@@ -1,0 +1,428 @@
+{{ 'yumwoof-faqs.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'yumwoof-faqs.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign category_count = 0
+  assign question_count = 0
+  for block in section.blocks
+    if block.type == 'category'
+      assign category_count = category_count | plus: 1
+    elsif block.type == 'question'
+      assign question_count = question_count | plus: 1
+    endif
+  endfor
+
+  assign show_filters = false
+  if section.settings.show_filters and category_count > 0
+    assign show_filters = true
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --yw-bg: {{ section.settings.color_bg }};
+    --yw-ink: {{ section.settings.color_text }};
+    --yw-link: {{ section.settings.color_link }};
+    --yw-rule: {{ section.settings.color_rule }};
+    --yw-font-display: {{ section.settings.font_display }};
+    --yw-font-body: {{ section.settings.font_body }};
+    --yw-font-label: {{ section.settings.font_label }};
+    --yw-max: {{ section.settings.content_width }}px;
+    --yw-pt: {{ section.settings.padding_top }}px;
+    --yw-pb: {{ section.settings.padding_bottom }}px;
+    --yw-pt-m: {{ section.settings.padding_top_mobile }}px;
+    --yw-pb-m: {{ section.settings.padding_bottom_mobile }}px;
+  }
+</style>
+
+<div
+  class="yw-faqs"
+  data-yw-faqs
+  data-single-open="{{ section.settings.single_open }}"
+  data-open-first="{{ section.settings.open_first }}"
+>
+  <div class="yw-faqs__wrap">
+
+    <aside class="yw-faqs__rail">
+      <div class="yw-faqs__masthead">
+        {%- if section.settings.title != blank -%}
+          <h1 class="yw-faqs__title">{{ section.settings.title | escape }}</h1>
+        {%- endif -%}
+        {%- if section.settings.lede != blank -%}
+          <div class="yw-faqs__lede">{{ section.settings.lede }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if show_filters -%}
+        {%- liquid
+          assign all_label = section.settings.all_label
+          if all_label == blank
+            assign all_label = 'All'
+          endif
+        -%}
+
+        {# Desktop: stacked outline pills #}
+        <div class="yw-faqs__pills" role="group" aria-label="{{ section.settings.filter_label | escape }}">
+          {%- if section.settings.show_all_option -%}
+            <button type="button" class="yw-pill is-active" data-yw-filter="all" aria-pressed="true">
+              {{ all_label | escape }}
+            </button>
+          {%- endif -%}
+
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              {%- liquid
+                assign pill_text = block.settings.pill_label
+                if pill_text == blank
+                  assign pill_text = block.settings.title
+                endif
+              -%}
+              <button
+                type="button"
+                class="yw-pill{% unless section.settings.show_all_option %}{% if forloop.first %} is-active{% endif %}{% endunless %}"
+                data-yw-filter="{{ block.id }}"
+                aria-pressed="false"
+              >
+                {{ pill_text | escape }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {# Mobile: the same options as a single dropdown #}
+        <div class="yw-faqs__select" data-yw-select>
+          <button
+            type="button"
+            class="yw-pill yw-pill--select"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-controls="yw-select-menu-{{ section.id }}"
+            data-yw-select-trigger
+          >
+            <span data-yw-select-label>
+              {%- if section.settings.show_all_option -%}
+                {{ all_label | escape }}
+              {%- else -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'category' -%}
+                    {{ block.settings.pill_label | default: block.settings.title | escape }}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </span>
+            <span class="yw-pill__chevron" aria-hidden="true">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 4.25 L6 8.25 L10 4.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+
+          <ul class="yw-faqs__select-menu" id="yw-select-menu-{{ section.id }}" role="listbox" hidden>
+            {%- if section.settings.show_all_option -%}
+              <li role="presentation">
+                <button type="button" class="yw-faqs__select-option is-active" role="option" aria-selected="true" data-yw-filter="all">
+                  {{ all_label | escape }}
+                </button>
+              </li>
+            {%- endif -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'category' -%}
+                <li role="presentation">
+                  <button
+                    type="button"
+                    class="yw-faqs__select-option{% unless section.settings.show_all_option %}{% if forloop.first %} is-active{% endif %}{% endunless %}"
+                    role="option"
+                    aria-selected="false"
+                    data-yw-filter="{{ block.id }}"
+                  >
+                    {{ block.settings.pill_label | default: block.settings.title | escape }}
+                  </button>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </aside>
+
+    <div class="yw-faqs__main" data-yw-main>
+      {%- liquid
+        assign group_open = false
+        assign first_category_id = ''
+      -%}
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'category' -%}
+            {%- if group_open -%}
+                </div>
+              </section>
+            {%- endif -%}
+            {%- if first_category_id == blank -%}
+              {%- assign first_category_id = block.id -%}
+            {%- endif -%}
+            <section
+              class="yw-faqs__group"
+              data-yw-group
+              data-yw-category="{{ block.id }}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.title != blank -%}
+                <h2 class="yw-faqs__group-title">{{ block.settings.title | escape }}</h2>
+              {%- endif -%}
+              <div class="yw-faqs__items">
+            {%- assign group_open = true -%}
+
+          {%- when 'question' -%}
+            {%- unless group_open -%}
+              <section class="yw-faqs__group" data-yw-group data-yw-category="uncategorised">
+                <div class="yw-faqs__items">
+              {%- assign group_open = true -%}
+            {%- endunless -%}
+
+            {%- assign is_open = block.settings.open_by_default -%}
+
+            <div class="yw-faq{% if is_open %} is-open{% endif %}" data-yw-item {{ block.shopify_attributes }}>
+              <h3 class="yw-faq__h">
+                <button
+                  type="button"
+                  class="yw-faq__trigger"
+                  id="yw-q-{{ section.id }}-{{ block.id }}"
+                  aria-controls="yw-a-{{ section.id }}-{{ block.id }}"
+                  aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+                  data-yw-trigger
+                >
+                  <span class="yw-faq__question">{{ block.settings.question | escape }}</span>
+                  <span class="yw-faq__icon" aria-hidden="true">
+                    <span class="yw-faq__icon-bar yw-faq__icon-bar--h"></span>
+                    <span class="yw-faq__icon-bar yw-faq__icon-bar--v"></span>
+                  </span>
+                </button>
+              </h3>
+
+              <div
+                class="yw-faq__panel{% if is_open %} is-open{% endif %}"
+                id="yw-a-{{ section.id }}-{{ block.id }}"
+                role="region"
+                aria-labelledby="yw-q-{{ section.id }}-{{ block.id }}"
+                data-yw-panel
+              >
+                <div class="yw-faq__answer">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- if group_open -%}
+          </div>
+        </section>
+      {%- endif -%}
+
+      {%- if question_count == 0 -%}
+        <p class="yw-faqs__empty">Add a category and some questions to build this page.</p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{%- if section.settings.enable_schema and question_count > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign i = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'question' and block.settings.question != blank -%}
+            {%- assign i = i | plus: 1 -%}
+            {%- if i > 1 %},{% endif %}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | strip_html | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+              }
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQs",
+  "tag": "section",
+  "class": "yw-faqs-section",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title",
+      "default": "FAQs"
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Intro text",
+      "default": "<p>Don't see the answer you're looking for? Reach out to woof@yumwoof.com and we'll get back to you in a flash.</p>",
+      "info": "Add the email as a link so it inherits the maroon underline."
+    },
+    { "type": "header", "content": "Topic filter" },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show topic filter",
+      "info": "Stacked pills on desktop, a dropdown on mobile. Needs at least one category block.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_option",
+      "label": "Include an \"All\" option",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_label",
+      "label": "\"All\" label",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "filter_label",
+      "label": "Filter label for screen readers",
+      "default": "Filter questions by topic"
+    },
+    { "type": "header", "content": "Behaviour" },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open the first question in each topic",
+      "info": "Matches the design, where the top question of every group starts expanded.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Only one question open at a time",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_schema",
+      "label": "Add FAQ rich-result markup",
+      "info": "Lets Google surface these questions in search results.",
+      "default": true
+    },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "color_bg", "label": "Background", "default": "#FFF9EF" },
+    { "type": "color", "id": "color_text", "label": "Text", "default": "#000000" },
+    { "type": "color", "id": "color_link", "label": "Links", "default": "#661D1D" },
+    { "type": "color", "id": "color_rule", "label": "Divider lines", "default": "#000000" },
+    { "type": "header", "content": "Typography" },
+    {
+      "type": "text",
+      "id": "font_display",
+      "label": "Display font stack",
+      "info": "Used for the page title and topic headings. Must match the @font-face name already loaded by the theme.",
+      "default": "'TAYRosemary', 'TAY Rosemary', Georgia, serif"
+    },
+    {
+      "type": "text",
+      "id": "font_body",
+      "label": "Body font stack",
+      "default": "'Matter', 'Helvetica Neue', Arial, sans-serif"
+    },
+    {
+      "type": "text",
+      "id": "font_label",
+      "label": "Label font stack",
+      "info": "Used for the uppercase filter pills.",
+      "default": "'Blur', 'Matter', Arial, sans-serif"
+    },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Max content width",
+      "min": 900,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1200
+    },
+    { "type": "header", "content": "Spacing — desktop" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 76 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 160 },
+    { "type": "header", "content": "Spacing — mobile" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Topic",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Topic heading",
+          "info": "Shown above the questions. Set in capitals to match the design.",
+          "default": "GENERAL"
+        },
+        {
+          "type": "text",
+          "id": "pill_label",
+          "label": "Filter label",
+          "info": "Optional shorter wording for the pill. Falls back to the topic heading."
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Why doesn't Yumwoof use seed oils?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Start expanded",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs",
+      "blocks": [
+        { "type": "category" },
+        { "type": "question" },
+        { "type": "question" },
+        { "type": "question" },
+        { "type": "question" }
+      ]
+    }
+  ]
+}
+{% endschema %}
