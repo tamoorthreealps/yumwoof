@@ -23,29 +23,29 @@
         "legal_section_KJEy7a": {
           "type": "legal_section",
           "settings": {
-            "heading": "INFORMATION WE COLLECT",
-            "content": "<p>We collect information you provide (contact details, orders, communications), information collected automatically (IP address, device data, site usage), and information from service providers consistent with consent and applicable law.</p>"
+            "heading": "ONE BAG REFUND GUARANTEE",
+            "content": "<p>If your dog tried Yumwoof but did not like it, we offer a 21-day money-back guarantee on one bag from your first order to customers in the continental United States. Please note that this is only applicable to one (1) bag in your first order, so please keep that in mind if purchasing two (2+) or more bags for a dog who hasn't yet tried Yumwoof.</p><p>Over your 21-day initial trial period, if your picky eater won't eat the food we've recommended, our nutritionists will offer solutions we've created for picky eaters. We'll do everything we can to help your dog find a meal plan they love!</p><p>Shipping is non-refundable. If you are eligible for a refund, you will be refunded the entire cost of that bag less shipping.</p>"
           }
         },
         "legal_section_mrF4dX": {
           "type": "legal_section",
           "settings": {
-            "heading": "COOKIES AND TRACKING TECHNOLOGIES",
-            "content": "<p>We use cookies, pixels, SDKs, and similar technologies for required site functionality, analytics, advertising, session replay, and personalization.</p><p>Certain analytics and advertising technologies may load automatically when you visit the Site, including technologies operated by our service providers and their downstream partners (such as audience measurement, attribution, or advertising partners). These technologies help operate, secure, and measure our services. You can manage your preferences for analytics, advertising, personalization, and other non-essential technologies through our cookie/consent manager at any time.</p><p>We use our consent management platform to provide transparency, preference controls, and consent logging. Where required by applicable law, we obtain affirmative consent for non-essential tracking technologies before sharing personal information with third parties.</p>"
+            "heading": "CANCELING MID-SHIPMENT",
+            "content": "<p>If an order with your first bag has already shipped and you need to cancel the order while it is on its way to you, we may accept a return of an unopened bag at our discretion less a $15 restocking fee**. Please note you will also be responsible for paying the return shipping cost.</p>"
           }
         },
         "legal_section_FVAqUm": {
           "type": "legal_section",
           "settings": {
-            "heading": "HOW WE USE INFORMATION",
-            "content": "<p>We use information to fulfill orders, provide support, prevent fraud, improve the site, communicate with you, and measure advertising performance consistent with your consent.</p>"
+            "heading": "CONTINENTAL UNITED STATES ONLY",
+            "content": "<p>Items purchased from or delivered to Hawaii, Alaska, military base addresses, or anywhere outside of the continental United States are not eligible for returns. This limitation includes our One Bag Refund Guarantee.</p>"
           }
         },
         "legal_section_JBHUep": {
           "type": "legal_section",
           "settings": {
-            "heading": "HOW WE DISCLOSE INFORMATION",
-            "content": "<p>We disclose information to commerce infrastructure providers (including Shopify), payment processors, fulfillment partners, support tools, analytics and advertising partners (as permitted by your preferences and applicable law), and legal authorities when required.</p>"
+            "heading": "RETURNED PACKAGES",
+            "content": "<p>If the mail carrier is unable to deliver your order after attempting to do so, and it is returned back to us, we will automatically refund your order upon receiving your package less a $15 restocking fee**.</p><p>** We wish we didn't have to charge restocking fees, but we are unfortunately charged fees by the mail carrier when this happens. We still lose money on these orders, even after the restocking fee.</p>"
           }
         },
         "legal_section_9hEHrL": {
@@ -111,8 +111,8 @@
         "date_source": "custom",
         "custom_date": "[DATE]",
         "show_overview": true,
-        "overview_heading": "Overview",
-        "overview_text": "<p>This Privacy Policy explains how Yumwoof Natural Pet Food Inc. (“Yumwoof”, “we”, “us”, “our”) collects, uses, discloses, and retains personal information when you visit yumwoof.com.</p>",
+        "overview_heading": "",
+        "overview_text": "<p>Thanks for taking the time to read our refund policy in advance to make the best purchase decision for you. We are still a boutique brand, and as a smaller company, we appreciate your understanding and honesty in these situations.</p>",
         "heading_color": "#000000",
         "text_color": "#1a1714",
         "section_background": "#7ba6dd"
