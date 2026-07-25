@@ -300,10 +300,11 @@
   overflow: hidden;
 }
 
-.yw-faqs.is-enhanced .yw-faq__panel {
-  height: 0;
-  visibility: hidden;
-  transition: height var(--yw-speed) var(--yw-ease), visibility 0s linear var(--yw-speed);
+.yw-faq__panel {
+    overflow: hidden;
+    height: 0;
+    transition: height .45s cubic-bezier(.25,.46,.45,.94);
+    will-change: height;
 }
 
 .yw-faqs.is-enhanced .yw-faq__panel.is-open {
