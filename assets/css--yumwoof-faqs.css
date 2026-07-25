@@ -104,9 +104,7 @@
   transition: background-color 200ms var(--yw-ease), color 200ms var(--yw-ease);
 }
 
-.yw-pill:hover {
-  background: rgba(0, 0, 0, 0.06);
-}
+
 
 .yw-pill.is-active {
   background: var(--yw-ink, #000);
@@ -428,6 +426,9 @@
 
   .yw-pill--select:hover {
   background: transparent;
+}
+.yw-pill:hover {
+  background: rgba(0, 0, 0, 0.06);
 }
 }
 
