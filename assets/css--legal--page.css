@@ -65,12 +65,12 @@
     margin: 0;
 }
 
-.legal-page__overview {
+.legal-page__overview, .legal-page__section {
   margin-bottom: 32px;
 }
 
-.legal-page__section {
-  margin-bottom: 32px;
+.legal-page__section:last-child {
+  margin-bottom: 0;
 }
 
 .legal-page__section-heading {
