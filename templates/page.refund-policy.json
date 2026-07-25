@@ -1,0 +1,126 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "legal_pages_content_7rBNzr": {
+      "type": "legal--pages--content",
+      "blocks": {
+        "legal_section_KJEy7a": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "INFORMATION WE COLLECT",
+            "content": "<p>We collect information you provide (contact details, orders, communications), information collected automatically (IP address, device data, site usage), and information from service providers consistent with consent and applicable law.</p>"
+          }
+        },
+        "legal_section_mrF4dX": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "COOKIES AND TRACKING TECHNOLOGIES",
+            "content": "<p>We use cookies, pixels, SDKs, and similar technologies for required site functionality, analytics, advertising, session replay, and personalization.</p><p>Certain analytics and advertising technologies may load automatically when you visit the Site, including technologies operated by our service providers and their downstream partners (such as audience measurement, attribution, or advertising partners). These technologies help operate, secure, and measure our services. You can manage your preferences for analytics, advertising, personalization, and other non-essential technologies through our cookie/consent manager at any time.</p><p>We use our consent management platform to provide transparency, preference controls, and consent logging. Where required by applicable law, we obtain affirmative consent for non-essential tracking technologies before sharing personal information with third parties.</p>"
+          }
+        },
+        "legal_section_FVAqUm": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "HOW WE USE INFORMATION",
+            "content": "<p>We use information to fulfill orders, provide support, prevent fraud, improve the site, communicate with you, and measure advertising performance consistent with your consent.</p>"
+          }
+        },
+        "legal_section_JBHUep": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "HOW WE DISCLOSE INFORMATION",
+            "content": "<p>We disclose information to commerce infrastructure providers (including Shopify), payment processors, fulfillment partners, support tools, analytics and advertising partners (as permitted by your preferences and applicable law), and legal authorities when required.</p>"
+          }
+        },
+        "legal_section_9hEHrL": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "THIRD-PARTY SERVICES WE USE",
+            "content": "<p>Tag Management: Google Tag Manager</p><p>Analytics: Google Analytics, Amplitude</p><p>Advertising: Google Ads, DoubleClick, Microsoft Bing Ads (UET), Bing Shopping, Meta Ads, Klickly</p><p>Email & SMS: Klaviyo, Attentive</p><p>Marketing Tools: GoAffPro, ReConvert, ProofFactor, ONE</p><p>Support: Gorgias</p><p>Embedded Content: YouTube, Opinew</p>"
+          }
+        },
+        "legal_section_37bb7x": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "CALIFORNIA PRIVACY RIGHTS",
+            "content": "<p>California residents may request access, deletion, or correction and may opt out of the sale or sharing of personal information for cross-context behavioral advertising via the “Do Not Sell or Share My Personal Information” link or cookie settings. We honor Global Privacy Control signals where applicable.</p>"
+          }
+        },
+        "legal_section_3B33A4": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "DATA RETENTION",
+            "content": "<p>We retain information as necessary for operations, legal compliance, dispute resolution, and enforcement.</p>"
+          }
+        },
+        "legal_section_QFaimY": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "MINORS",
+            "content": "<p>The Site is not intended for individuals under 18.</p>"
+          }
+        },
+        "legal_section_Qn9wgY": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Changes",
+            "content": "<p>We may update this Privacy Policy from time to time.</p>"
+          }
+        },
+        "legal_section_YfeBnV": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Contact",
+            "content": "<p>Questions or requests may be sent to <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "legal_section_KJEy7a",
+        "legal_section_mrF4dX",
+        "legal_section_FVAqUm",
+        "legal_section_JBHUep",
+        "legal_section_9hEHrL",
+        "legal_section_37bb7x",
+        "legal_section_3B33A4",
+        "legal_section_QFaimY",
+        "legal_section_Qn9wgY",
+        "legal_section_YfeBnV"
+      ],
+      "name": "Legal page Block",
+      "settings": {
+        "show_breadcrumb": true,
+        "title_source": "page",
+        "custom_title": "",
+        "date_source": "custom",
+        "custom_date": "[DATE]",
+        "show_overview": true,
+        "overview_heading": "Overview",
+        "overview_text": "<p>This Privacy Policy explains how Yumwoof Natural Pet Food Inc. (“Yumwoof”, “we”, “us”, “our”) collects, uses, discloses, and retains personal information when you visit yumwoof.com.</p>",
+        "heading_color": "#000000",
+        "text_color": "#1a1714",
+        "section_background": "#7ba6dd"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "legal_pages_content_7rBNzr"
+  ]
+}
