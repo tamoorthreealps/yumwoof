@@ -1,8 +1,8 @@
 .legal-page {
   background: var(--legal-section-bg, #7BA6DD);
-  padding: 60px 20px;
-  display: flex;
-  justify-content: center;
+    padding: 40px 0 80px;
+    display: flex;
+    justify-content: center;
 }
 
 .legal-page__card {
