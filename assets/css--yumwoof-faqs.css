@@ -320,7 +320,6 @@
   font-size: 13px;
   line-height: 20px;
   font-weight: 500;
-  letter-spacing:0;
 }
 
 .yw-faq__answer > *:first-child {
@@ -385,7 +384,7 @@
   .yw-faqs__rail {
     margin-bottom: 0;
     position: sticky;
-    top: 24px;
+    top: 120px;
   }
 
   .yw-faqs__title {
