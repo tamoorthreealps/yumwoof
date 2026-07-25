@@ -6,12 +6,14 @@
 }
 
 .legal-page__card {
-  background: var(--legal-container-bg, #ffffff);
-  width: 100%;
-  max-width: 760px;
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  padding: 48px 56px;
+    background: rgba(255, 249, 239, 0.8);
+    width: 100%;
+    max-width: 1152px;
+    border-radius: 32px;
+    padding: 40px 115px 80px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid #000000;
 }
 
 .legal-page__breadcrumb {
