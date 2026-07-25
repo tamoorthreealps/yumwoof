@@ -99,6 +99,13 @@ color: var(--legal-text, #333333);
     margin: 0;
 }
 
+.legal-page__rte p strong {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: -0.72px;
+    font-family: 'TAY Birdie';
+}
+
 .legal-page__rte ul,
 .legal-page__rte ol {
   margin: 0 0 12px;
