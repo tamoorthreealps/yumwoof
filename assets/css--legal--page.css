@@ -12,7 +12,7 @@
 }
 
 .legal-page__card_container {
-    background: rgba(255, 249, 239, 0.8);
+    background: #fff9efcc;
     width: 100%;
     max-width: 1152px;
     border-radius: 32px;
@@ -22,10 +22,12 @@
 }
 
 .legal-page__breadcrumb {
-  font-size: 12px;
-  margin-bottom: 24px;
-  color: var(--legal-text, #333333);
-  opacity: 0.7;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.96px;
+    margin-bottom: 32px;
+    color: var(--legal-text, #333333);
+    text-transform: uppercase;
 }
 
 .legal-page__breadcrumb a {
@@ -37,31 +39,22 @@
   margin: 0 6px;
 }
 
-.legal-page__breadcrumb-current {
-  font-weight: 600;
-}
-
 .legal-page__header {
-  text-align: center;
-  margin-bottom: 32px;
+    text-align: left;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #000000;
 }
 
 .legal-page__title {
-  color: var(--legal-heading, #661D1D);
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  margin: 0 0 12px;
-}
-
-.legal-page__title-divider {
-  display: block;
-  width: 60px;
-  height: 3px;
-  margin: 0 auto;
-  background: var(--legal-heading, #661D1D);
-  opacity: 0.5;
+    color: var(--legal-heading, #661D1D);
+    font-size: 64px;
+    line-height: 64px;
+    letter-spacing: -1.28px;
+    text-transform: uppercase;
+    margin: 0 0 4px;
+    font-family: 'TAYRosemary';
+    font-weight: 400;
 }
 
 .legal-page__updated {
