@@ -125,47 +125,45 @@
 
 /* Health goal pills */
 .mcb__goals {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.2rem;
-  margin-top: 2.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 2.4rem;
 }
 
 .mcb__goals-label {
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #000;
+    font-family: 'TAY Birdie';
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .mcb__goals-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
+  gap: 1.2rem;
 }
 
 .mcb__pill {
-  display: inline-block;
-  padding: 0.5rem 1.4rem;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: 10rem;
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.3rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #000;
-  text-decoration: none;
-  background: transparent;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    display: inline-block;
+    padding: 8px 9.59px 4.4px;
+    border: 1px solid #000000;
+    border-radius: 10rem;
+    font-family: 'TAY Birdie';
+    font-size: 1.4rem;
+    line-height: 100%;
+    letter-spacing: -0.28px;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    background: transparent;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
 }
 
-.mcb__pill:hover {
-  border-color: #000;
-}
-
-.mcb__pill.is-active {
+.mcb__pill.is-active, .mcb__pill:hover {
   background: var(--mcb-accent, #000);
   border-color: var(--mcb-accent, #000);
   color: #fff9ef;
