@@ -10,7 +10,7 @@
 
 <div class="mcb page-width">
   {%- comment -%} Breadcrumb {%- endcomment -%}
-  <nav class="mcb__crumbs" aria-label="Breadcrumb">
+  <nav class="mcb__crumbs desktop_mcb__crumbs" aria-label="Breadcrumb">
     <a href="{{ routes.root_url }}">Home</a>
     <span aria-hidden="true">/</span>
     <span class="mcb__crumb-current">{{ collection.title | default: section.settings.heading }}</span>
@@ -22,6 +22,11 @@
     {% if section.settings.band_image != blank %}style="background-image: url({{ section.settings.band_image | image_url: width: 1600 }});"{% endif %}
   >
     <div class="mcb__band-inner">
+        <nav class="mcb__crumbs mobile_mcb__crumbs" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span aria-hidden="true">/</span>
+    <span class="mcb__crumb-current">{{ collection.title | default: section.settings.heading }}</span>
+  </nav>
       {%- assign banner_heading = section.settings.heading | default: collection.title -%}
       {%- if banner_heading != blank -%}
         <h1 class="mcb__heading">{{ banner_heading }}</h1>

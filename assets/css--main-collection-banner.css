@@ -169,6 +169,12 @@
   color: #fff9ef;
 }
 
+
+
+.mobile_mcb__crumbs {
+  display:none;
+}
+
 @media screen and (max-width: 749px) {
   .mcb__band {
     min-height: 16rem;
@@ -188,4 +194,12 @@
     flex-direction: column;
     gap: 1rem;
   }
+
+  .desktop_mcb__crumbs {
+    display:none;
+  }
+
+  .mobile_mcb__crumbs {
+  display:flex;
+}
 }
