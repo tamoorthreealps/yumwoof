@@ -255,6 +255,11 @@
 		margin: 0 2.4rem;
 	}
 
+	.mcb__tab.is-active:after,
+	.mcb__tabs .mcb__tabs__hold:after {
+		height:1px;
+	}
+
 	.mcb__tabs {
 		margin: 16px 0 0;
 	}
