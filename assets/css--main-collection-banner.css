@@ -23,7 +23,7 @@
 
 .mcb__crumbs a {
     color: rgba(0, 0, 0, 0.5);
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .mcb__crumbs a:hover, .mcb__crumb-current {
@@ -176,24 +176,36 @@
 }
 
 @media screen and (max-width: 749px) {
-  .mcb__band {
-    min-height: 16rem;
-    padding: 2.4rem 2rem;
-    border-radius: 1.6rem;
-  }
+.mcb.page-width {
+    max-width: 1244px;
+    margin: 0 auto;
+    padding: 0 0 4.1rem;
+}
 
-  .mcb__tabs {
-    gap: 0.4rem 2rem;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
+.mcb__crumbs {
+    font-size: 1.2rem;
+    line-height: 100%;
+    letter-spacing: 0.96px;
+    color: rgba(255, 249, 239, 0.6);
+    margin-bottom: 4.6rem;
+}
 
-  .mcb__goals {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 1rem;
-  }
+.mcb__crumbs a:hover, .mcb__crumb-current {
+    color: #FFF9EF;
+}
+
+.mcb__heading {
+    font-size: 40px;
+    line-height: 100%;
+    letter-spacing: 0;
+}
+
+.mcb__subheading {
+    margin: 4px 0 0;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: 0;
+}
 
   .desktop_mcb__crumbs {
     display:none;
