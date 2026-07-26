@@ -15,23 +15,23 @@
 }
 
 .mcg__group-heading {
-  margin: 0 0 0.4rem;
-  font-family: 'TAYRosemary', var(--font-heading-family, serif);
-  font-weight: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  font-size: clamp(2.6rem, 3.4vw, 4rem);
-  line-height: 1.1;
-  color: #1a1a1a;
+    margin: 0 0 .4rem;
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -0.40px;
+    color: #000000;
 }
 
 .mcg__group-sub {
-  margin: 0 0 2.4rem;
-  font-family: 'Matter', sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.5;
-  color: rgba(0, 0, 0, 0.55);
-  max-width: 60rem;
+    margin: 0 0 32px;
+    font-family: Matter, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    max-width: 60rem;
 }
 
 .mcg__group-heading + .mcg__grid,
