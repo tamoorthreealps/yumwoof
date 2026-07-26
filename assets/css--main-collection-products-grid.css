@@ -42,7 +42,7 @@
 .mcg__grid {
   display: grid;
   grid-template-columns: repeat(var(--mcg-cols, 3), minmax(0, 1fr));
-  gap: 1.9rem;
+  gap: 6.4rem 1.9rem;
 }
 
 /* ---------- GoCart product card (card-product-yw.liquid) ---------- */
