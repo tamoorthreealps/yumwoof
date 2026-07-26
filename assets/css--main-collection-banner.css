@@ -144,7 +144,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: -2px;
     height: 2px;
     background: #000;
     border-radius: 999px;
