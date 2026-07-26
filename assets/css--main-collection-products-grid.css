@@ -63,15 +63,18 @@
 }
 
 .yw-pcard__imgwrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: #ffc069;
-  border-radius: 2.3rem 2.3rem 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.6rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 2.3rem 2.3rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.6rem 1.8rem;
 }
 
 .yw-pcard__img {
@@ -83,19 +86,19 @@
 
 /* BESTSELLER flag — top-left of the image */
 .yw-pcard__flag {
-  position: absolute;
-  top: 1.2rem;
-  left: 1.4rem;
-  z-index: 2;
-  background: #000;
-  color: #fff9ef;
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.096em;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 0.55rem 1.4rem;
-  border-radius: 10rem;
+    position: absolute;
+    top: 1.2rem;
+    left: 1.4rem;
+    z-index: 2;
+    background: #000000;
+    color: #fff9ef;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 6px 13.625px 6px;
+    border-radius: 10rem;
 }
 
 /* Category badge(s) — straddling the bottom edge of the image */
