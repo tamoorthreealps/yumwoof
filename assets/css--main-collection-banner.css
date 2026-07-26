@@ -217,7 +217,20 @@
     line-height: 2rem;
     letter-spacing: 0;
 }
-
+.mcb__tabs {
+    flex-wrap: nowrap;
+    gap: 4rem;
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 1.6rem 2.4rem 0;
+}
+.mcb__tab {
+    padding: 0 0 11px;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    letter-spacing: .52px;
+}
   .desktop_mcb__crumbs {
     display:none;
   }
