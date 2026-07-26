@@ -238,13 +238,15 @@
 
 /* Shop now — amber lozenge button (Figma blob) */
 .yw-pcard__btn {
-  margin-top: 1.6rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 16.4rem;
-  min-height: 5.4rem;
-  padding: 1.4rem 3.2rem;
+margin-top: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 164px;
+    min-height: 72px;
+    padding: 0;
+    position: absolute;
+    bottom: -36px;
   background: url("data:image/svg+xml,%3Csvg preserveAspectRatio='none' viewBox='0 0 165.5 71.8219' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M77.132 70.2667L12.2668 51.2818C5.44071 49.2839 0.749987 43.0234 0.75 35.9109C0.750013 28.7985 5.44074 22.5381 12.2669 20.5402L77.132 1.55525C80.8004 0.481582 84.6996 0.481583 88.368 1.55525L153.233 20.5402C160.059 22.5381 164.75 28.7985 164.75 35.911C164.75 43.0235 160.059 49.2839 153.233 51.2818L88.368 70.2667C84.6996 71.3403 80.8004 71.3403 77.132 70.2667Z' fill='%23FFC069' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   color: #000;
   text-decoration: none;
