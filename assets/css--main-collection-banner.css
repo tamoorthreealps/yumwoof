@@ -197,6 +197,10 @@
     margin-bottom: 4.6rem;
 }
 
+.mcb__crumbs a {
+    color: rgba(255, 249, 239, 0.6);
+}
+
 .mcb__crumbs a:hover, .mcb__crumb-current {
     color: #FFF9EF;
 }
