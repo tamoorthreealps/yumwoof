@@ -86,14 +86,6 @@
 
 /* Category tabs */
 .mcb__tabs .mcb__tabs__hold {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1.6rem 4.8rem;
-	margin-top: 2.8rem;
-	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-}
-
-.mcb__tabs .mcb__tabs__hold {
     display: flex;
     flex-wrap: nowrap;
     gap: 1.6rem 4.8rem;
@@ -101,6 +93,17 @@
     border-bottom: 2px solid rgba(0, 0, 0, .1);
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+.mcb__tabs,
+.mcb__goals-pills {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.mcb__tabs::-webkit-scrollbar,
+.mcb__goals-pills::-webkit-scrollbar {
+	display: none;
 }
 
 .mcb__tab {
@@ -268,16 +271,7 @@
 	.mcb__pill {
 		white-space: nowrap;
 	}
-.mcb__tabs,
-.mcb__goals-pills {
-	-ms-overflow-style: none;
-	scrollbar-width: none;
-}
 
-.mcb__tabs::-webkit-scrollbar,
-.mcb__goals-pills::-webkit-scrollbar {
-	display: none;
-}
 	.desktop_mcb__crumbs {
 		display: none;
 	}
