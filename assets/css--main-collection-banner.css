@@ -85,7 +85,7 @@
 }
 
 /* Category tabs */
-.mcb__tabs {
+.mcb__tabs .mcb__tabs__hold {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1.6rem 4.8rem;
