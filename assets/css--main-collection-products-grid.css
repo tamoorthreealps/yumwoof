@@ -272,6 +272,16 @@ margin-top: 0;
 }
 
 @media screen and (max-width: 749px) {
+  .mcg__group-heading {
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: -.32px;
+}
+.mcg__group-sub {
+    margin: 0 0 24px;
+    font-size: 14px;
+    line-height: 20px;
+}
     .mcg__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 4.4rem .8rem;
