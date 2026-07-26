@@ -104,9 +104,13 @@
         "heading": "Any Questions?",
         "subheading": "Every dog is different. Find the recipe that's right for yours.",
         "open_first": true,
-        "background_color": "#FFF9EF",
+        "background_color": "#fff9ef",
         "text_color": "#000000",
-        "line_color": "#000000"
+        "line_color": "#000000",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 176,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64
       }
     }
   },
