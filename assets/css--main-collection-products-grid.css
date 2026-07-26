@@ -132,21 +132,23 @@
 
 /* Body */
 .yw-pcard__body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2.6rem 1.8rem 2.4rem;
-  flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2.8rem 1.8rem 5.2rem;
+    flex: 1 1 auto;
+    position: relative;
 }
 
 .yw-pcard__title {
-  font-family: 'TAYRosemary', var(--font-heading-family, serif);
-  font-size: 3.2rem;
-  line-height: 1.1;
-  text-transform: uppercase;
-  color: #000;
-  text-decoration: none;
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-size: 32px;
+    line-height: 36px;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 0;
 }
 
 .yw-pcard__title:hover {
@@ -154,13 +156,13 @@
 }
 
 .yw-pcard__recipe {
-  margin: 0.4rem 0 0;
-  font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
-  font-size: 1.6rem;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: #661d1d;
+    margin: 0;
+    font-family: "TAY Birdie", var(--font-body-family, sans-serif);
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0.32px;
+    text-transform: uppercase;
+    color: #661D1D;
 }
 
 .yw-pcard__rating {
@@ -199,23 +201,26 @@
 }
 
 .yw-pcard__desc {
-  margin: 1.4rem 0 0;
-  max-width: 24.4rem;
-  font-family: 'Matter', sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.47;
-  color: rgba(0, 0, 0, 0.5);
+    margin: 1.6rem 0 0;
+    max-width: 24.4rem;
+    font-family: Matter, sans-serif;
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .yw-pcard__price {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.8rem;
-  font-family: 'Matter', sans-serif;
-  font-size: 1.8rem;
-  color: #000;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1.6rem;
+    font-family: Matter, sans-serif;
+    font-size: 1.8rem;
+    line-height: 100%;
+    color: #000;
+    letter-spacing: 0;
 }
 
 .yw-pcard__price-was {
@@ -224,10 +229,11 @@
 }
 
 .yw-pcard__perday {
-  margin: 0.6rem 0 0;
-  font-family: 'Matter', sans-serif;
-  font-size: 1.3rem;
-  color: #661d1d;
+    margin: .7rem 0 0;
+    font-family: Matter, sans-serif;
+    font-size: 13px;
+    line-height: 16px;
+    color: #661D1D;
 }
 
 /* Shop now — amber lozenge button (Figma blob) */
