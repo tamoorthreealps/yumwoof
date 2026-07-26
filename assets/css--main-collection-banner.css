@@ -222,7 +222,7 @@
 		letter-spacing: 0;
 	}
 
-	.mcb__tabs {
+	.mcb__tabs .mcb__tabs__hold {
 		flex-wrap: nowrap;
 		gap: 4rem;
 		border-bottom: 2px solid rgba(0, 0, 0, .1);
