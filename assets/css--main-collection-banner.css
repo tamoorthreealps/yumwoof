@@ -10,42 +10,39 @@
 
 /* Breadcrumb */
 .mcb__crumbs {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
-  margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    font-size: 1.3rem;
+    line-height: 2rem;
+    letter-spacing: 1.04px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 1.6rem;
 }
 
 .mcb__crumbs a {
-  color: inherit;
-  text-decoration: none;
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
 }
 
-.mcb__crumbs a:hover {
-  color: #000;
-}
-
-.mcb__crumb-current {
-  color: #000;
+.mcb__crumbs a:hover, .mcb__crumb-current {
+    color: #661D1D;
 }
 
 /* Dark band */
 .mcb__band {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 22rem;
-  background: var(--mcb-band-bg, #1a1a1a);
-  color: var(--mcb-band-text, #fff9ef);
-  border-radius: 2.4rem;
-  padding: 3.2rem 3.8rem;
-  background-size: cover;
-  background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 22rem;
+    background: var(--mcb-band-bg, #1a1a1a);
+    color: var(--mcb-band-text, #fff9ef);
+    border-radius: 1.6rem;
+    padding: 3.6rem 3.8rem;
+    background-size: cover;
+    background-position: center;
+    border: 1.5px solid #000;
 }
 
 .mcb__band--image {
@@ -66,23 +63,23 @@
 }
 
 .mcb__heading {
-  margin: 0;
-  color: var(--mcb-band-text, #fff9ef);
-  font-family: 'TAYRosemary', var(--font-heading-family, serif);
-  font-weight: normal;
-  text-transform: uppercase;
-  font-size: clamp(3.6rem, 5vw, 6.4rem);
-  line-height: 1;
-  letter-spacing: 0;
+    margin: 0;
+    color: var(--mcb-band-text, #fff9ef);
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 56px;
+    line-height: 56px;
+    letter-spacing: -0.56px;
 }
 
 .mcb__subheading {
-  margin: 1.2rem 0 0;
-  font-family: 'Matter', sans-serif;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  color: var(--mcb-band-text, #fff9ef);
-  opacity: 0.92;
+    margin: 0;
+    font-family: Matter, sans-serif;
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+    color: var(--mcb-band-text, #fff9ef);
+    letter-spacing: 0;
 }
 
 /* Category tabs */
