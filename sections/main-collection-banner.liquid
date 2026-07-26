@@ -19,14 +19,16 @@
   {%- comment -%} Dark banner band {%- endcomment -%}
   <div
     class="mcb__band{% if section.settings.band_image != blank %} mcb__band--image{% endif %}"
-    {% if section.settings.band_image != blank %}style="background-image: url({{ section.settings.band_image | image_url: width: 1600 }});"{% endif %}
+    {% if section.settings.band_image != blank %}
+      style="background-image: url({{ section.settings.band_image | image_url: width: 1600 }});"
+    {% endif %}
   >
     <div class="mcb__band-inner">
-        <nav class="mcb__crumbs mobile_mcb__crumbs" aria-label="Breadcrumb">
-    <a href="{{ routes.root_url }}">Home</a>
-    <span aria-hidden="true">/</span>
-    <span class="mcb__crumb-current">{{ collection.title | default: section.settings.heading }}</span>
-  </nav>
+      <nav class="mcb__crumbs mobile_mcb__crumbs" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span aria-hidden="true">/</span>
+        <span class="mcb__crumb-current">{{ collection.title | default: section.settings.heading }}</span>
+      </nav>
       {%- assign banner_heading = section.settings.heading | default: collection.title -%}
       {%- if banner_heading != blank -%}
         <h1 class="mcb__heading">{{ banner_heading }}</h1>
@@ -47,15 +49,19 @@
   {%- comment -%} Category tabs (from a menu / link list) {%- endcomment -%}
   {%- if section.settings.category_menu != blank -%}
     <nav class="mcb__tabs" aria-label="Categories">
-      {%- for link in section.settings.category_menu.links -%}
-        <a
-          class="mcb__tab{% if link.current or link.child_current %} is-active{% endif %}"
-          href="{{ link.url }}"
-          {% if link.current %}aria-current="page"{% endif %}
-        >
-          {{- link.title -}}
-        </a>
-      {%- endfor -%}
+      <div class="mcb__tabs__hold">
+        {%- for link in section.settings.category_menu.links -%}
+          <a
+            class="mcb__tab{% if link.current or link.child_current %} is-active{% endif %}"
+            href="{{ link.url }}"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{- link.title -}}
+          </a>
+        {%- endfor -%}
+      </div>
     </nav>
   {%- endif -%}
 
@@ -82,10 +88,20 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "info": "Defaults to the collection title." },
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
-    { "type": "checkbox", "id": "show_collection_description", "label": "Fall back to collection description", "default": true },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "label": "Fall back to collection description",
+      "default": true
+    },
     { "type": "image_picker", "id": "band_image", "label": "Banner background image" },
     { "type": "header", "content": "Category tabs" },
-    { "type": "link_list", "id": "category_menu", "label": "Tabs menu", "info": "Each link becomes a tab; the current page's link is highlighted." },
+    {
+      "type": "link_list",
+      "id": "category_menu",
+      "label": "Tabs menu",
+      "info": "Each link becomes a tab; the current page's link is highlighted."
+    },
     { "type": "header", "content": "Health goals" },
     { "type": "text", "id": "health_label", "label": "Label", "default": "Shop by health goal" },
     { "type": "link_list", "id": "health_menu", "label": "Health goal menu", "info": "Each link becomes a pill." },
