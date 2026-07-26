@@ -84,23 +84,24 @@
 
 /* Category tabs */
 .mcb__tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 3.2rem;
-  margin-top: 2.4rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem 4.8rem;
+    margin-top: 2.8rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .mcb__tab {
-  position: relative;
-  padding: 1.2rem 0.2rem;
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-  white-space: nowrap;
+    position: relative;
+    padding: 0 0 12px;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    letter-spacing: 0.64px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.45);
 }
 
 .mcb__tab:hover {
@@ -119,6 +120,7 @@
   bottom: -1px;
   height: 2px;
   background: var(--mcb-accent, #000);
+  border-radius: 50px;
 }
 
 /* Health goal pills */
