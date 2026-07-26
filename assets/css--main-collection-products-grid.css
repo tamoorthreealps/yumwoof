@@ -272,6 +272,9 @@ margin-top: 0;
 }
 
 @media screen and (max-width: 749px) {
+  .mcg {
+    padding: 0 24px 88px;
+}
   .mcg__group-heading {
     font-size: 32px;
     line-height: 32px;
