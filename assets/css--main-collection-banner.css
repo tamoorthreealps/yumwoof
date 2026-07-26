@@ -231,6 +231,24 @@
     line-height: 2rem;
     letter-spacing: .52px;
 }
+.mcb__goals {
+    gap: .7rem;
+    margin-top: 1.6rem;
+    padding: 0 0 0 24px;
+}
+.mcb__goals-label {
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: -.52px;
+}
+.mcb__goals-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.mcb__pill {
+    white-space: nowrap;
+}
   .desktop_mcb__crumbs {
     display:none;
   }
