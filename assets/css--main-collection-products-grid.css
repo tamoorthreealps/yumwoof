@@ -274,7 +274,7 @@ margin-top: 0;
 @media screen and (max-width: 749px) {
     .mcg__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: .8rem;
+        gap: 4.4rem .8rem;
     }
     .yw-pcard {
     border: 1px solid #000;
