@@ -1,8 +1,9 @@
 /* Collection products grid — main-collection-products-grid.liquid */
 
 .mcg {
-  padding-top: 2.4rem;
-  padding-bottom: 4.8rem;
+    max-width: 1244px;
+    margin: 0 auto;
+    padding: 0 24px 196px;
 }
 
 .mcg__group {
