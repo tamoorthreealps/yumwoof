@@ -276,6 +276,10 @@ margin-top: 0;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: .8rem;
     }
+    .yw-pcard {
+    border: 1px solid #000;
+    border-radius: 1.2rem;
+}
     .yw-pcard__flag {
     top: .8rem;
     left: .8rem;
@@ -288,25 +292,47 @@ margin-top: 0;
     letter-spacing: .80px;
     padding: 2.2px 7.38px;
 }
-  .yw-pcard__title {
-    font-size: 2.4rem;
-  }
+      .yw-pcard__title {
+        font-size: 2rem;
+        line-height: 2.4rem;
+        letter-spacing: -0.20px;
+    }
 
       .yw-pcard__body {
         padding: 2rem 1.2rem 3.6rem;
     }
+    .yw-pcard__recipe {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: .24px;
+}
 
-  .yw-pcard__desc {
-    font-size: 1.35rem;
-  }
-
-  .yw-pcard__btn {
-    min-width: 13rem;
-    min-height: 4.8rem;
-    padding: 1.2rem 2.2rem;
-  }
-
-  .yw-pcard__btn span {
+    .yw-pcard__desc {
+        font-size: 12px;
+        line-height: 16px;
+        margin: 1.2rem 0 0;
+    }
+    .yw-pcard__price {
+    gap: .4rem;
+    margin-top: 1.2rem;
     font-size: 1.4rem;
-  }
+    line-height: 20px;
+    letter-spacing: 0;
+}
+.yw-pcard__perday {
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 0;
+}
+    .yw-pcard__btn {
+        min-width: 108px;
+        min-height: 48px;
+        bottom: -24px;
+    }
+
+    .yw-pcard__btn span {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.98px;
+    }
 }
