@@ -85,18 +85,41 @@
 }
 
 /* Category tabs */
+.mcb__tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.mcb__tabs::-webkit-scrollbar {
+    display: none;
+}
 
 .mcb__tabs .mcb__tabs__hold {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.6rem 4.8rem;
-    margin-top: 2.8rem;
-    border-bottom: 2px solid rgba(0, 0, 0, .1);
+    flex-wrap: nowrap;
+    gap: 4.8rem;
+    width: max-content;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.mcb__tabs .mcb__tabs__hold::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: rgba(0,0,0,.12);
+    border-radius: 999px;
 }
 
 .mcb__tab {
 	position: relative;
 	padding: 0 0 12px;
+	flex: 0 0 auto;
 	font-family: FFBlurProMedium, sans-serif;
 	font-size: 1.6rem;
 	line-height: 2.4rem;
@@ -116,14 +139,15 @@
 }
 
 .mcb__tab.is-active::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: -1px;
-	height: 2px;
-	background: var(--mcb-accent, #000);
-	border-radius: 50px;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #000;
+    border-radius: 999px;
+    z-index: 3;
 }
 
 /* Health goal pills */
@@ -225,7 +249,6 @@
 	.mcb__tabs .mcb__tabs__hold {
 		flex-wrap: nowrap;
 		gap: 4rem;
-		border-bottom: 2px solid rgba(0, 0, 0, .1);
 		overflow-x: auto;
 		overflow-y: hidden;
 		margin: 1.6rem 2.4rem 0;
