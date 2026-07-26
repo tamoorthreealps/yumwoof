@@ -207,7 +207,7 @@
 
 .mcb__heading {
     font-size: 40px;
-    line-height: 37px;
+    line-height: 100%;
     letter-spacing: 0;
 }
 
