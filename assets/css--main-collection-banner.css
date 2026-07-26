@@ -93,6 +93,16 @@
 	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+.mcb__tabs .mcb__tabs__hold {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.6rem 4.8rem;
+    margin-top: 2.8rem;
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 .mcb__tab {
 	position: relative;
 	padding: 0 0 12px;
