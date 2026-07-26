@@ -259,34 +259,6 @@
 		white-space: nowrap;
 	}
 
-  .mcb__tabs,
-.mcb__goals-pills {
-	-webkit-overflow-scrolling: touch;
-	scrollbar-width: thin;
-	scrollbar-color: rgba(0, 0, 0, .25) transparent;
-}
-
-.mcb__tabs::-webkit-scrollbar,
-.mcb__goals-pills::-webkit-scrollbar {
-	height: 3px;
-}
-
-.mcb__tabs::-webkit-scrollbar-track,
-.mcb__goals-pills::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-.mcb__tabs::-webkit-scrollbar-thumb,
-.mcb__goals-pills::-webkit-scrollbar-thumb {
-	background: rgba(0, 0, 0, .25);
-	border-radius: 999px;
-}
-
-.mcb__tabs::-webkit-scrollbar-thumb:hover,
-.mcb__goals-pills::-webkit-scrollbar-thumb:hover {
-	background: rgba(0, 0, 0, .4);
-}
-
 	.desktop_mcb__crumbs {
 		display: none;
 	}
