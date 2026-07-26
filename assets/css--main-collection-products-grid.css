@@ -117,17 +117,17 @@
 }
 
 .yw-pcard__tag {
-  background: #fff9ef;
-  border: 1px solid #000;
-  color: #000;
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.096em;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 0.55rem 1.4rem;
-  border-radius: 10rem;
-  white-space: nowrap;
+    background: #fff9ef;
+    border: 1px solid #000;
+    color: #000;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 5.2px 12.02px;
+    border-radius: 10rem;
+    white-space: nowrap;
 }
 
 /* Body */
