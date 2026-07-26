@@ -258,7 +258,16 @@
 	.mcb__pill {
 		white-space: nowrap;
 	}
+.mcb__tabs,
+.mcb__goals-pills {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
 
+.mcb__tabs::-webkit-scrollbar,
+.mcb__goals-pills::-webkit-scrollbar {
+	display: none;
+}
 	.desktop_mcb__crumbs {
 		display: none;
 	}
