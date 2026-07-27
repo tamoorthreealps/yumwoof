@@ -12,16 +12,16 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
         "vendor": {
           "type": "text",
           "settings": {
             "text": "{{ product.vendor }}",
             "text_style": "uppercase"
           }
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
         },
         "price": {
           "type": "price",
@@ -67,8 +67,8 @@
         }
       },
       "block_order": [
-        "vendor",
         "title",
+        "vendor",
         "price",
         "usps_wWfcV4",
         "variant_picker",
@@ -89,9 +89,7 @@
         "media_position": "left",
         "image_zoom": "lightbox",
         "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 100,
-        "padding_bottom": 12
+        "enable_video_looping": false
       }
     },
     "disclosures": {
