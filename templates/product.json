@@ -23,6 +23,10 @@
             "text_style": "uppercase"
           }
         },
+        "short_description_HghaRg": {
+          "type": "short_description",
+          "settings": {}
+        },
         "price": {
           "type": "price",
           "disabled": true,
@@ -70,6 +74,7 @@
       "block_order": [
         "title",
         "vendor",
+        "short_description_HghaRg",
         "price",
         "usps_wWfcV4",
         "variant_picker",
