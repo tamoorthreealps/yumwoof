@@ -198,7 +198,16 @@
     };
   }
   overrideDrawerRender();
-  if (document.readyState === 'loading') {
+  // This script is injected by sections/cart-drawer.liquid, which renders in the section
+  // group EARLIER in the document than cart-drawer.js (layout/theme.liquid). Deferred
+  // scripts run in document order with readyState === 'interactive', so at this point
+  // <cart-drawer> is not defined yet AND the old `readyState === 'loading'` guard was never
+  // true — meaning the override never attached and Dawn's isolated renderContents kept
+  // running alongside our full-page refresh, rendering the drawer (and reward thresholds)
+  // TWICE per add. whenDefined attaches the override reliably, whatever the load order.
+  if (window.customElements && customElements.whenDefined) {
+    customElements.whenDefined('cart-drawer').then(overrideDrawerRender);
+  } else if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', overrideDrawerRender);
   }
 
