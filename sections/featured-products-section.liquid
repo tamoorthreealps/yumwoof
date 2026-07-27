@@ -281,18 +281,18 @@
           }
 
           function scrollToSlide(i) {
-            var slide = slides[i];
-            if (!slide) return;
+              var slide = slides[i];
+              if (!slide) return;
 
-            slides.forEach(function(item) {
-              item.classList.remove("is-active");
-            });
+              slides.forEach(function(item) {
+                  item.classList.remove("is-active");
+              });
 
-            slide.classList.add("is-active");
+              slide.classList.add("is-active");
 
-            var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+              var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
 
-            smoothScrollTo(viewport, left, 650);
+              smoothScrollTo(viewport, left, 650);
           }
 
           function currentIndex() {
@@ -313,7 +313,9 @@
           function update() {
             var idx = currentIndex();
 
-            if (!viewport.matches(":hover")) return;
+            slides.forEach(function (slide, i) {
+              slide.classList.toggle('is-active', i === idx);
+            });
 
             dots.forEach(function (dot, i) {
               dot.setAttribute('aria-current', i === idx ? 'true' : 'false');
