@@ -1,3 +1,204 @@
+<style>
+  /* Base styling the old theme served globally: brand fonts, CSS variables, the
+     green CTA, section-2 hero classes and the FAQ accordion. Kept inline in this
+     template (not a shared asset) so nothing leaks outside /pages/membership.
+     The vw-based layout block further down layers on top of this. */
+
+  /* ---------- Fonts (same files as the old theme, on the store CDN) ---------- */
+  @font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/GalanoGrotesque-Light.woff2?v=1666854399') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/GalanoGrotesque-Light.woff?v=1666854399') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/GalanoGrotesque-Regular.woff2?v=1666854399') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/GalanoGrotesque-Regular.woff?v=1666854399') format('woff');
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'ClaremontRR Light';
+    src: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/ClaremontRR-Light.woff2?v=1666854399') format('woff2'),
+         url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/ClaremontRR-Light.woff?v=1666854399') format('woff');
+    font-weight: 300 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* ---------- Page scope: variables + base ---------- */
+  .yum-club-membership {
+    --headline-font-family: 'GalanoGrotesque';
+    --base-color: #f3e6d3;
+    --base-font-color: #1c1f2b;
+    --base-bg-color: #88b8d1;
+    --base-bg-color-2: #a8a843;
+    font-family: 'ClaremontRR Light', sans-serif;
+    color: #212529;
+    line-height: 1.4;
+  }
+
+  .yum-club-membership *,
+  .yum-club-membership *::before,
+  .yum-club-membership *::after {
+    box-sizing: border-box;
+  }
+
+  .yum-club-membership img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+  }
+
+  /* Benefit rows use bare <li> without a <ul> */
+  .yum-club-membership li {
+    list-style: none;
+  }
+
+  .yum-club-membership .page-section-container {
+    display: block;
+  }
+
+  .yum-club-membership a {
+    color: inherit;
+  }
+
+  /* ---------- Green CTA button ---------- */
+  .yum-club-membership .site-btn-green {
+    display: inline-block;
+    background: var(--base-bg-color-2);
+    color: var(--base-color);
+    font-family: var(--headline-font-family);
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 2vw;
+    line-height: 1.7;
+    padding: 0.5vw 3.5vw;
+    border: 0;
+    border-radius: 90px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .yum-club-membership .site-btn-green:hover {
+    opacity: 0.9;
+  }
+
+  .yum-club-membership .lnk-login {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .yum-club-membership .banner-heading-section .lnk-login {
+    color: var(--base-color);
+  }
+
+  /* ---------- Section 2: "Become a member" hero ---------- */
+  .yum-club-membership .become-a-member-sec {
+    padding: 0;
+  }
+  .yum-club-membership .personalize {
+    background: #1c1f2b;
+    padding: 4.2vw 0;
+  }
+  .yum-club-membership .site-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2.4rem;
+  }
+  .yum-club-membership .inide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 62rem;
+    margin: 0 auto;
+  }
+  .yum-club-membership .svg-text {
+    width: 19vw;
+    max-width: 300px;
+    height: auto;
+    margin: 0 0 1.6rem;
+  }
+  .yum-club-membership .title-regular {
+    font-family: var(--headline-font-family);
+    font-weight: 300;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 5.4vw;
+    line-height: 0.9;
+    margin: 0 0 2vw;
+  }
+  .yum-club-membership .site-para {
+    font-family: 'ClaremontRR Light', sans-serif;
+    color: #fff;
+    font-size: 1.7vw;
+    line-height: 1.4;
+    margin: 0 0 2vw;
+  }
+  .yum-club-membership .become-a-member-sec .site-btn-green {
+    margin-top: 0.8vw;
+  }
+
+  /* ---------- FAQ accordion (replaces Bootstrap collapse) ---------- */
+  .yum-club-member_faq-container .accordion-header {
+    margin: 0;
+  }
+  .yum-club-member_faq-container .accordion-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    color: var(--base-font-color);
+    font-family: inherit;
+  }
+  .yum-club-member_faq-container .accordion-button::after {
+    content: "";
+    flex-shrink: 0;
+    margin-left: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .yum-club-member_faq-container .accordion-collapse.collapse {
+    display: none;
+  }
+  .yum-club-member_faq-container .accordion-collapse.collapse.show {
+    display: block;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media only screen and (max-width: 749px) {
+    .yum-club-membership .site-btn-green {
+      font-size: 6.25vw;
+      padding: 3.5vw 11vw;
+    }
+    .yum-club-membership .personalize {
+      padding: 14vw 0;
+    }
+    .yum-club-membership .inide {
+      max-width: none;
+      padding: 0 6vw;
+    }
+    .yum-club-membership .svg-text {
+      width: 45vw;
+    }
+    .yum-club-membership .title-regular {
+      font-size: 10vw;
+      line-height: 0.85;
+      margin-bottom: 4vw;
+    }
+    .yum-club-membership .site-para {
+      font-size: 4.6vw;
+      margin-bottom: 6vw;
+    }
+  }
+</style>
+
 <div class="page-main-wrapper">
   <div class="contents-container yum-club-membership">
     {% section 'yum-club-section-1' %}
@@ -6,12 +207,62 @@
     {% section 'yum-club-section-2' %}
   </div>
 </div>
+
+{%- liquid
+  assign membership_variant = 44284368290010
+  assign membership_selling_plan = 26541326554
+  assign is_yum_member = false
+  if customer and customer.tags contains 'Yum Club Membership!'
+    assign is_yum_member = true
+  endif
+-%}
 <script>
-  $('.js-btn-join-membership').on('click', function () {
-    if (!goCart.cart_obj.gocart.is_yum_member && !goCart.cart_obj.gocart.contains_membership) {
-      goCart.addItem(44284368290010, 1, 26541326554);
+  /* GoCart replacement: add the Yum Club membership to OUR cart drawer.
+     Old theme used goCart.addItem(...); this theme uses the native <cart-drawer>
+     whose renderContents override (custom-cart-subscription.js) does a full-page
+     refresh + open. Guards: skip if the shopper is already a member or the
+     membership is already in the cart (mirrors goCart is_yum_member / contains_membership). */
+  (function () {
+    var VARIANT = {{ membership_variant | json }};
+    var SELLING_PLAN = {{ membership_selling_plan | json }};
+    var IS_MEMBER = {{ is_yum_member | json }};
+
+    function openDrawer() {
+      var cd = document.querySelector('cart-drawer');
+      if (cd && cd.constructor && cd.constructor.prototype.__ywFullPageRender) {
+        cd.renderContents({}); // full-page refresh + open
+      } else {
+        window.location.href = '{{ routes.cart_url }}';
+      }
     }
-  });
+
+    function join() {
+      fetch('{{ routes.cart_url }}.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          var already = (cart.items || []).some(function (i) {
+            return i.variant_id === VARIANT || i.id === VARIANT;
+          });
+          if (IS_MEMBER || already) { openDrawer(); return; }
+          return fetch('{{ routes.cart_url }}/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ items: [{ id: VARIANT, quantity: 1, selling_plan: SELLING_PLAN }] }),
+          }).then(function (res) {
+            if (!res.ok) throw new Error('membership add failed (' + res.status + ')');
+            openDrawer();
+          });
+        })
+        .catch(function (e) { console.error('[membership] join failed:', e); });
+    }
+
+    document.addEventListener('click', function (event) {
+      var btn = event.target.closest('.js-btn-join-membership');
+      if (!btn) return;
+      event.preventDefault();
+      join();
+    });
+  })();
 </script>
 <style>
   /* .page-wrapper{

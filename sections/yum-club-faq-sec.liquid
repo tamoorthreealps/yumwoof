@@ -136,3 +136,36 @@
     color: var(--base-font-color);
   }
 </style>
+<script>
+  /* Vanilla replacement for Bootstrap's accordion collapse (Bootstrap JS is not
+     loaded in this theme). Toggles .show on the target panel and .collapsed on the
+     button, closing siblings in the same accordion (data-bs-parent). */
+  (function () {
+    if (window.__ywYumClubFaqBound) return;
+    window.__ywYumClubFaqBound = true;
+    document.addEventListener('click', function (event) {
+      var btn = event.target.closest('.yum-club-member_faq-container .accordion-button');
+      if (!btn) return;
+      event.preventDefault();
+      var target = document.querySelector(btn.getAttribute('data-bs-target'));
+      if (!target) return;
+      var isOpen = target.classList.contains('show');
+      var parentSel = target.getAttribute('data-bs-parent');
+      var parent = parentSel ? document.querySelector(parentSel) : null;
+      if (parent) {
+        parent.querySelectorAll('.accordion-collapse.show').forEach(function (panel) {
+          panel.classList.remove('show');
+        });
+        parent.querySelectorAll('.accordion-button').forEach(function (b) {
+          b.classList.add('collapsed');
+          b.setAttribute('aria-expanded', 'false');
+        });
+      }
+      if (!isOpen) {
+        target.classList.add('show');
+        btn.classList.remove('collapsed');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  })();
+</script>
