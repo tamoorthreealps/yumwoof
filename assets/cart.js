@@ -425,20 +425,27 @@ function initEmptyCartSlider() {
 
   slider.classList.add("is-initialized");
 
-  const splide = new Splide(slider, {
-    type: "slide",
-    perPage: 2,
-    perMove: 1,
-    gap: "12px",
-    pagination: false,
-    arrows: false,
-    drag: true,
-    breakpoints: {
-      750: {
-        perPage: 1.6,
-      },
+const splide = new Splide(slider, {
+  type: "slide",
+  perPage: 1.6,
+  perMove: 1,
+  gap: "12px",
+  pagination: false,
+  arrows: false,
+  drag: true,
+  omitEnd: true,
+  trimSpace: true,
+  focus: 0,
+  breakpoints: {
+    750: {
+      perPage: 1.6,
+      gap: "12px",
+      omitEnd: true,
+      trimSpace: true,
+      focus: 0,
     },
-  });
+  },
+});
 
   const wrapper = slider.closest(".cd-shop--main");
 
