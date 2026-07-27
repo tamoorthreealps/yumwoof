@@ -66,6 +66,7 @@ cart-drawer.active .cart-drawer__overlay {
 	flex-direction: column;
 	overscroll-behavior: contain;
 	overflow: hidden;
+	transition: transform .4s ease;
 }
 
 
