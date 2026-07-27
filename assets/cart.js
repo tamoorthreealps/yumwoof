@@ -255,6 +255,9 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
         });
 
         publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: parsedState, variantId: variantId });
+        setTimeout(() => {
+          initEmptyCartSlider();
+        }, 0);
       })
       .catch((e) => {
         this.querySelectorAll('.loading__spinner').forEach((overlay) => overlay.classList.add('hidden'));
