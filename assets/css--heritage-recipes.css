@@ -456,7 +456,7 @@
 		bottom: -320px;
         top: auto;
         margin: 0;
-        width: 688px;
+        width: 600px;
         left: 58px;
         right: auto;
 	}
@@ -592,5 +592,9 @@
 	.heritage__container {
 		grid-template-columns: 470px 1fr;
 		gap: 12.6rem;
+	}
+
+	.heritage__bowl {
+        width: 688px;
 	}
 }
