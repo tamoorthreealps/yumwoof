@@ -481,7 +481,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initEmptyCartSlider();
 });
 
-
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("cd__inner")) {
+    document.querySelector("cart-drawer")?.close();
+  }
+});
 
 
 
