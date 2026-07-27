@@ -163,10 +163,66 @@
               "faq-question": "How do I access my account if my membership email address is not recognized?",
               "faq-answer": "This issue usually arises when an account hasn’t been activated yet. When signing up for Membership, an account activation email should have been sent right away. Once locating that email, you should be able to activate your account immediately. Please reach out to concierge if this issue continues to persist. We’re eager to help!"
             }
+          },
+          "faq_item_ctDBgA": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "How do I access my benefits once I have signed up?",
+              "faq-answer": "Sign up or log in through the <a href=\"/account/login\">account page</a> using the same email address at checkout.\n<br><br>\nOnce you’ve signed in, your perks will automatically apply: 25% off all orders, locked-in pricing, etc."
+            }
+          },
+          "faq_item_mUzwRJ": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "Do I need to have an account to access my membership?",
+              "faq-answer": "Yes. Once you sign up, you’ll be prompted to create an account (if you don’t already have one), which will grant you access to all your Member perks."
+            }
+          },
+          "faq_item_wFU7nV": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "How do I become a member?",
+              "faq-answer": "Add the membership to your cart from this page and check out! Then you will be prompted to either create an account or sign in to your existing account."
+            }
+          },
+          "faq_item_DU3jHG": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "Can I purchase multiple memberships?",
+              "faq-answer": "No. But we love your enthusiasm."
+            }
+          },
+          "faq_item_QrLbrU": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "How can I cancel my membership?",
+              "faq-answer": "Please reach out to <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a> for support. We can help ensure that your Membership does not automatically renew after your first year ends. There are no termination fees or hidden costs to cancel, but we do not provide refunds or credits, including partially used billing periods."
+            }
+          },
+          "faq_item_awiXrB": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "Is the membership fee a recurring charge?",
+              "faq-answer": "Yes. Members pay <yum_club_price> once a quarter to access all membership benefits. If you do not cancel upon the end of the first quarter, the cycle will automatically renew and you will be charged again.</yum_club_price>"
+            }
+          },
+          "faq_item_LJ3LrH": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "How do I receive 25% off all my orders?",
+              "faq-answer": "25% off will automatically apply at checkout. No code needed."
+            }
           }
         },
         "block_order": [
-          "faq_item_UcH3GU"
+          "faq_item_UcH3GU",
+          "faq_item_ctDBgA",
+          "faq_item_mUzwRJ",
+          "faq_item_wFU7nV",
+          "faq_item_DU3jHG",
+          "faq_item_QrLbrU",
+          "faq_item_awiXrB",
+          "faq_item_LJ3LrH"
         ],
         "settings": {
           "yum-club": "membership"
@@ -175,7 +231,7 @@
       "yum-club-section-2": {
         "type": "yum-club-section-2",
         "settings": {
-          "yum-club": "membership"
+          "yum-club": ""
         }
       }
     },
