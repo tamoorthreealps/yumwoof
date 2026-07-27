@@ -670,7 +670,7 @@
 	margin: 48px 0 0;
 }
 
-@media(max-width:991px) {
+@media(max-width:768px) {
 
 	.fp-popup__panel {
 		overflow-y: auto;
