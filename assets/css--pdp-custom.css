@@ -346,3 +346,7 @@
     width: calc(48.275% - 8.4rem);
     padding: 0;
 }
+
+.product__info-container {
+    max-width: 504px;
+}
