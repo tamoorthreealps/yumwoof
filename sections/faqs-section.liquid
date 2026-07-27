@@ -1,11 +1,21 @@
 {{ 'css--faqs-section.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
+#shopify-section-{{ section.id }} .faqs {
+  --faq-bg: {{ section.settings.background_color }};
+  --faq-text: {{ section.settings.text_color }};
+  --faq-line: {{ section.settings.line_color }};
+
+  padding-top: {{ section.settings.padding_top_mobile }}px;
+  padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+}
+
+@media (min-width: 990px) {
   #shopify-section-{{ section.id }} .faqs {
-    --faq-bg: {{ section.settings.background_color }};
-    --faq-text: {{ section.settings.text_color }};
-    --faq-line: {{ section.settings.line_color }};
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
   }
+}
 {%- endstyle -%}
 
 {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
