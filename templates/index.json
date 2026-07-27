@@ -74,7 +74,19 @@
           "settings": {
             "popup_title": "",
             "popup_subtitle": "",
-            "popup_image": "shopify://shop_images/Mask_group.png"
+            "popup_image": "shopify://shop_images/Mask_group.png",
+            "tab_1_title": "LAND & SEA",
+            "tab_1_content": "85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck heart, turkey gizzard, duck gizzard, cartilage), tapioca, whole eggs, beet fiber, brewer’s yeast, carrots, blueberries, organic coconut oil, cumin, thyme, turmeric, rose hip.",
+            "tab_1_button_label": "SHOP NOW",
+            "tab_1_button_link": "shopify://collections",
+            "tab_2_title": "TURKEY",
+            "tab_2_content": "85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck heart, turkey gizzard, duck gizzard, cartilage), tapioca, whole eggs, beet fiber, brewer’s yeast, carrots, blueberries, organic coconut oil, cumin, thyme, turmeric, rose hip.",
+            "tab_2_button_label": "SHOP NOW",
+            "tab_2_button_link": "shopify://collections",
+            "tab_3_title": "WILD CAUGHT FISH",
+            "tab_3_content": "85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck heart, turkey gizzard, duck gizzard, cartilage), tapioca, whole eggs, beet fiber, brewer’s yeast, carrots, blueberries, organic coconut oil, cumin, thyme, turmeric, rose hip.",
+            "tab_3_button_label": "SHOP NOW",
+            "tab_3_button_link": "shopify://collections"
           }
         },
         "popup_8bD8iP": {
@@ -82,7 +94,19 @@
           "settings": {
             "popup_title": "",
             "popup_subtitle": "",
-            "popup_image": "shopify://shop_images/Mask_group_1.png"
+            "popup_image": "shopify://shop_images/Mask_group_1.png",
+            "tab_1_title": "LAND & SEA",
+            "tab_1_content": "",
+            "tab_1_button_label": "SHOP NOW",
+            "tab_1_button_link": "",
+            "tab_2_title": "TURKEY",
+            "tab_2_content": "",
+            "tab_2_button_label": "SHOP NOW",
+            "tab_2_button_link": "",
+            "tab_3_title": "WILD CAUGHT FISH",
+            "tab_3_content": "",
+            "tab_3_button_label": "SHOP NOW",
+            "tab_3_button_link": ""
           }
         },
         "popup_mjGWMw": {
@@ -90,7 +114,19 @@
           "settings": {
             "popup_title": "",
             "popup_subtitle": "",
-            "popup_image": "shopify://shop_images/Mask_group_2.png"
+            "popup_image": "shopify://shop_images/Mask_group_2.png",
+            "tab_1_title": "LAND & SEA",
+            "tab_1_content": "",
+            "tab_1_button_label": "SHOP NOW",
+            "tab_1_button_link": "",
+            "tab_2_title": "TURKEY",
+            "tab_2_content": "",
+            "tab_2_button_label": "SHOP NOW",
+            "tab_2_button_link": "",
+            "tab_3_title": "WILD CAUGHT FISH",
+            "tab_3_content": "",
+            "tab_3_button_label": "SHOP NOW",
+            "tab_3_button_link": ""
           }
         }
       },
@@ -458,7 +494,11 @@
         "open_first": true,
         "background_color": "#fff9ef",
         "text_color": "#000000",
-        "line_color": "#000000"
+        "line_color": "#000000",
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 120,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
       }
     }
   },
