@@ -765,10 +765,3 @@
 	}
 
 }
-
-
-@media(max-width:991px) { 
-	.fp-popup__panel {
-		padding:88px 71px 84px 98px;
-	}
-}
