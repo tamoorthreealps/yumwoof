@@ -413,8 +413,8 @@
 
 	.heritage__container {
 		display: grid;
-		grid-template-columns: 470px 1fr;
-		gap: 12.6rem;
+		grid-template-columns: 380px 1fr;
+		gap: 6rem;
 		max-width: 1316px;
 		padding: 0 6rem 7.8rem;
 	}
@@ -584,4 +584,13 @@
 		display: none;
 	}
 
+}
+
+
+@media screen and (min-width: 1249px) {
+
+	.heritage__container {
+		grid-template-columns: 470px 1fr;
+		gap: 12.6rem;
+	}
 }
