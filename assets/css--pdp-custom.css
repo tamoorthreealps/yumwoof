@@ -380,3 +380,11 @@
     line-height: 16px;
     letter-spacing: 1.04px;
 }
+
+.product--short--info {
+    margin: 2rem 0 0;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #000;
+}
