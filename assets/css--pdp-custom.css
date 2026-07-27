@@ -333,16 +333,17 @@
 
 .product--main .product--main--grid {
     display: flex;
+    flex-wrap: nowrap;
     gap: 8.4rem;
-    align-items: flex-start;
 }
 
 .product--main .product--main--grid .product__media-wrapper {
-    flex: 0 0 51.725%;
+    max-width: 51.725%;
+    width: 51.725%;
 }
 
 .product--main .product--main--grid .product__info-wrapper {
-    flex: 1;
-    max-width: 504px;
     padding: 0;
+    max-width: 504px;
+    width: 100%;
 }
