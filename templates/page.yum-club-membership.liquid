@@ -40,6 +40,10 @@
     font-family: 'ClaremontRR Light', sans-serif;
     color: #212529;
     line-height: 1.4;
+    /* Old theme rendered this page on a white background (makes the beige FAQ
+       panel + white benefit/savings sections read correctly); the new theme's
+       default page background is cream, so set it explicitly here. */
+    background: #ffffff;
   }
 
   .yum-club-membership *,
@@ -146,6 +150,7 @@
   /* ---------- FAQ accordion (replaces Bootstrap collapse) ---------- */
   .yum-club-member_faq-container .accordion-header {
     margin: 0;
+    font-family: 'ClaremontRR Light', sans-serif;
   }
   .yum-club-member_faq-container .accordion-button {
     display: flex;
@@ -155,7 +160,9 @@
     text-align: left;
     cursor: pointer;
     color: var(--base-font-color);
-    font-family: inherit;
+    /* Explicit, not inherit: the button sits inside an <h2> that the theme styles
+       with its heading font (Assistant); inherit would pick that up. */
+    font-family: 'ClaremontRR Light', sans-serif;
   }
   .yum-club-member_faq-container .accordion-button::after {
     content: "";
