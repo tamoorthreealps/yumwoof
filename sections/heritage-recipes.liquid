@@ -17,7 +17,23 @@
   }
 
 
+.heritage__card{
+    position: relative;
+}
 
+.heritage__card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url('{{ section.settings.hexagon_image | image_url }}') center center no-repeat;
+    background-size:contain;
+    z-index:0;
+}
+
+.heritage__ingredients{
+    position:relative;
+    z-index:2;
+}
   @media (max-width: 989px) {
     #shopify-section-{{ section.id }} .heritage {
       {% if section.settings.background_image_mobile != blank %}
