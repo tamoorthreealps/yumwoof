@@ -1,3 +1,5 @@
+{{ 'css--yum-club-membership.css' | asset_url | stylesheet_tag }}
+
 <div class="page-main-wrapper">
   <div class="contents-container yum-club-membership">
     {% section 'yum-club-section-1' %}
@@ -6,12 +8,62 @@
     {% section 'yum-club-section-2' %}
   </div>
 </div>
+
+{%- liquid
+  assign membership_variant = 44284368290010
+  assign membership_selling_plan = 26541326554
+  assign is_yum_member = false
+  if customer and customer.tags contains 'Yum Club Membership!'
+    assign is_yum_member = true
+  endif
+-%}
 <script>
-  $('.js-btn-join-membership').on('click', function () {
-    if (!goCart.cart_obj.gocart.is_yum_member && !goCart.cart_obj.gocart.contains_membership) {
-      goCart.addItem(44284368290010, 1, 26541326554);
+  /* GoCart replacement: add the Yum Club membership to OUR cart drawer.
+     Old theme used goCart.addItem(...); this theme uses the native <cart-drawer>
+     whose renderContents override (custom-cart-subscription.js) does a full-page
+     refresh + open. Guards: skip if the shopper is already a member or the
+     membership is already in the cart (mirrors goCart is_yum_member / contains_membership). */
+  (function () {
+    var VARIANT = {{ membership_variant | json }};
+    var SELLING_PLAN = {{ membership_selling_plan | json }};
+    var IS_MEMBER = {{ is_yum_member | json }};
+
+    function openDrawer() {
+      var cd = document.querySelector('cart-drawer');
+      if (cd && cd.constructor && cd.constructor.prototype.__ywFullPageRender) {
+        cd.renderContents({}); // full-page refresh + open
+      } else {
+        window.location.href = '{{ routes.cart_url }}';
+      }
     }
-  });
+
+    function join() {
+      fetch('{{ routes.cart_url }}.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          var already = (cart.items || []).some(function (i) {
+            return i.variant_id === VARIANT || i.id === VARIANT;
+          });
+          if (IS_MEMBER || already) { openDrawer(); return; }
+          return fetch('{{ routes.cart_url }}/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ items: [{ id: VARIANT, quantity: 1, selling_plan: SELLING_PLAN }] }),
+          }).then(function (res) {
+            if (!res.ok) throw new Error('membership add failed (' + res.status + ')');
+            openDrawer();
+          });
+        })
+        .catch(function (e) { console.error('[membership] join failed:', e); });
+    }
+
+    document.addEventListener('click', function (event) {
+      var btn = event.target.closest('.js-btn-join-membership');
+      if (!btn) return;
+      event.preventDefault();
+      join();
+    });
+  })();
 </script>
 <style>
   /* .page-wrapper{
