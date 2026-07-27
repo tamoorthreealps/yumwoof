@@ -156,6 +156,18 @@
       },
       "yum-club-faq-sec": {
         "type": "yum-club-faq-sec",
+        "blocks": {
+          "faq_item_UcH3GU": {
+            "type": "faq_item",
+            "settings": {
+              "faq-question": "How do I access my account if my membership email address is not recognized?",
+              "faq-answer": "This issue usually arises when an account hasn’t been activated yet. When signing up for Membership, an account activation email should have been sent right away. Once locating that email, you should be able to activate your account immediately. Please reach out to concierge if this issue continues to persist. We’re eager to help!"
+            }
+          }
+        },
+        "block_order": [
+          "faq_item_UcH3GU"
+        ],
         "settings": {
           "yum-club": "membership"
         }
