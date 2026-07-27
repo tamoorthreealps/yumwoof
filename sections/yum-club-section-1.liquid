@@ -1,0 +1,113 @@
+{% assign yum_club_price = section.settings['yum-club'].price %}
+<section class="page-section-container banner-heading-section">
+  <div class="banner-heading-contents two-columns">
+    <div class="banner-heading-col col-content-container banner-heading-img">
+      <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/yumclub_dog.jpg?v=1700612782">
+    </div>
+    <div class="banner-heading-col col-content-container">
+      <div class="header-container">MEMBERSHIP HAS ITS PERKS</div>
+      <div class="header-dsc-container">
+        With 25% off every order & inflation protection—it's clear why you should join yumwoof's membership club. For
+        {{ yum_club_price | money_without_trailing_zeros }}, you will improve your dog's long term health at an
+        affordable price.
+      </div>
+      <div class="header-btn-container">
+        <button class="site-btn-green js-btn-join-membership">Join Membership</button>
+        <div class="btn-subtxt-billing">
+          ({{ yum_club_price | divided_by: 3 | money_without_trailing_zeros }}/mo billed quarterly)
+        </div>
+        <div class="btn-member-login">Already a club member? <a href="/account/login" class="lnk-login">Log in</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page-section-container membership-benefits-section">
+  <div class="membership-benefits-contents two-columns">
+    <div class="member-benefits-col img-container col-content-container">
+      <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/testimonial_3.jpg?v=1674488251">
+    </div>
+    <div class="member-benefits-col text-container col-content-container">
+      <!--
+        <div class="member-benefits-heading">
+          <div>Keep your dog healthy.</div>
+          <div>Membership Benefits</div>
+          <div>$129 per year</div>
+        </div>
+      -->
+      <div class="member-benefits-container">
+        <li class="member-benefits-heading">
+          <div class="banner">Keep your dog healthy.</div>
+          <div class="header">Membership Benefits</div>
+          <div class="subtxt">Join for only {{ yum_club_price | money_without_trailing_zeros }} per quarter</div>
+        </li>
+        <li class="member-benefits-item">
+          <div class="member-benefit-header">25% Off All Orders</div>
+          <div class="member-benefit-subtxt">Get yumwoof food & toppers at an unbeatable price.</div>
+        </li>
+        <li class="member-benefits-item">
+          <div class="member-benefit-header">Inflation Protection</div>
+          <div class="member-benefit-subtxt">Lock-in our current prices for 12 months when you order.</div>
+        </li>
+        {% comment %}
+          <li class="member-benefits-item">
+            <div class="member-benefit-header">$50 for Vet Care</div>
+            <div class="member-benefit-subtxt">Get $50 towards online veterinary care with The Vets.</div>
+          </li>
+        {% endcomment %}
+        <li class="member-benefits-item">
+          <div class="member-benefit-header">The Cocomega Book</div>
+          <div class="member-benefit-subtxt">$24 value. Get a free digital version of The Canine Cocomega Effect.</div>
+        </li>
+        <li class="member-benefits-item">
+          <div class="member-benefit-header">Priority Concierge Support</div>
+          <div class="member-benefit-subtxt">
+            Get to the top of the queue with our team for anything you might need.
+          </div>
+        </li>
+        <div class="header-btn-container">
+          <button class="site-btn-green js-btn-join-membership">Join Membership</button>
+          <div class="btn-subtxt-billing">
+            ({{ yum_club_price | divided_by: 3 | money_without_trailing_zeros }}/mo billed quarterly)
+          </div>
+          <div class="btn-member-login">
+            Already a club member? <a href="/account/login" class="lnk-login">Log in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page-section-container vision-section">
+  <div class="vision-section-contents two-columns">
+    <div class="vision-section-col img-col col-content-container">
+      <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/fur-doggo.png?v=1667394411">
+    </div>
+    <div class="vision-section-col text-col col-content-container ">
+      <div class="vision-text-container">
+        "We believe everyone should have quality dog food at an affordable price. By joining our membership club, you
+        can save thousands of dollars."
+      </div>
+      <div class="vision-founder-container">
+        <div class="vision-founder-avatar">
+          <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/jaron_personal_portrait.png?v=1678721900">
+        </div>
+        <div class="vision-founder-txt-container">
+          <div class="vision-founder-name">Jaron Lukas</div>
+          <div class="vision-founder-pos">Yumwoof CEO & Founder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Yum club section 1",
+  "settings": [
+    {
+      "type": "product",
+      "id": "yum-club",
+      "label": "Yum club membership"
+    }
+  ]
+}
+{% endschema %}
