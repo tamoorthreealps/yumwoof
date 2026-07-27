@@ -670,6 +670,14 @@
 	margin: 48px 0 0;
 }
 
+@media(max-width:991px) {
+	.fp-popup__panel {
+		padding: 40px 28px 26px;
+		width: 96vw;
+		gap: 28px;
+	}
+}
+
 @media(max-width:768px) {
 
 	.fp-popup__panel {
