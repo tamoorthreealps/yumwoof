@@ -67,17 +67,12 @@ cart-drawer.active .cart-drawer__overlay {
 	overscroll-behavior: contain;
 	overflow: hidden;
 	transition: transform .4s ease;
-	transform: translateX(100%);
-}
-
-cart-drawer.active .drawer__inner_container {
-	transform: translateX(0);
 }
 
 
-/* cart-drawer.active .cd__inner {
+cart-drawer.active .cd__inner {
 	transform: translateX(0);
-} */
+}
 
 .cd__inner>* {
 	flex-shrink: 0;
