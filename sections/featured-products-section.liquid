@@ -295,6 +295,24 @@
               smoothScrollTo(viewport, left, 650);
           }
 
+          function updateScale() {
+            var viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
+
+            slides.forEach(function (slide) {
+              var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+
+              var distance = Math.abs(viewportCenter - slideCenter);
+
+              var maxDistance = viewport.clientWidth / 2;
+
+              var progress = Math.max(0, 1 - distance / maxDistance);
+
+              var scale = 0.9 + progress * 0.1;
+
+              slide.style.transform = "scale(" + scale + ")";
+            });
+          }
+
           function currentIndex() {
             var center = viewport.scrollLeft + viewport.clientWidth / 2;
             var best = 0;
@@ -328,6 +346,7 @@
             if (next) {
               next.disabled = idx === slides.length - 1;
             }
+            updateScale();
           }
 
           if (prev)
