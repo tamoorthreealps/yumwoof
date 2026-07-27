@@ -350,3 +350,7 @@
 .product__info-container {
     max-width: 504px;
 }
+
+.product__column-sticky {
+  top:0;
+}
