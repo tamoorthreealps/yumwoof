@@ -281,12 +281,18 @@
           }
 
           function scrollToSlide(i) {
-            var slide = slides[i];
-            if (!slide) return;
+              var slide = slides[i];
+              if (!slide) return;
 
-            var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+              slides.forEach(function(item) {
+                  item.classList.remove("is-active");
+              });
 
-            smoothScrollTo(viewport, left, 1650);
+              slide.classList.add("is-active");
+
+              var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
+
+              smoothScrollTo(viewport, left, 650);
           }
 
           function currentIndex() {
@@ -307,9 +313,7 @@
           function update() {
             var idx = currentIndex();
 
-            slides.forEach(function (slide, i) {
-              slide.classList.toggle('is-active', i === idx);
-            });
+            if (!viewport.matches(":hover")) return;
 
             dots.forEach(function (dot, i) {
               dot.setAttribute('aria-current', i === idx ? 'true' : 'false');
