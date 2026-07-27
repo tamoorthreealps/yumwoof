@@ -89,6 +89,11 @@
   endif
 
   # Reward thresholds (up to 4) live in section settings so they survive AJAX re-renders.
+  # NOTE: this section is in a section group (cart-drawer-group), so Shopify's isolated
+  # Section Rendering API (?section_id=cart-drawer) renders it with SCHEMA DEFAULTS, not the
+  # saved settings. To keep the tier count/amounts identical across the full-page render and
+  # any isolated re-render, every threshold_* schema default MUST mirror the saved config in
+  # cart-drawer-group.json (e.g. threshold_4_enable default is true because it's enabled there).
   assign threshold_count = 0
   assign max_threshold_cents = 0
   assign next_index = 0
@@ -836,7 +841,7 @@
     { "type": "number", "id": "threshold_3_amount_gbp", "label": "Amount — UK (£)", "default": 270 },
     { "type": "number", "id": "threshold_3_amount_chf", "label": "Amount — CH (CHF)", "default": 330 },
     { "type": "header", "content": "Threshold 4" },
-    { "type": "checkbox", "id": "threshold_4_enable", "label": "Enable", "default": false },
+    { "type": "checkbox", "id": "threshold_4_enable", "label": "Enable", "default": true },
     { "type": "text", "id": "threshold_4_label", "label": "Milestone label", "default": "15% Off" },
     {
       "type": "text",
