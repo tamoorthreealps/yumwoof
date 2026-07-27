@@ -16,42 +16,6 @@
     {% endif %}
   }
 
-
-.heritage__card{
-    position: relative;
-}
-
-.heritage__card::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:url('{{ section.settings.hexagon_image | image_url }}') center center no-repeat;
-    background-size:contain;
-    z-index:0;
-}
-
-.heritage__ingredients{
-    position:relative;
-    z-index:2;
-}
-.heritage__card{
-    position:relative;
-}
-
-.shape-bg{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    object-position:center;
-    z-index:0;
-}
-
-.heritage__ingredients{
-    position:relative;
-    z-index:2;
-}
   @media (max-width: 989px) {
     #shopify-section-{{ section.id }} .heritage {
       {% if section.settings.background_image_mobile != blank %}
@@ -119,7 +83,7 @@
       {%- endif -%}
 
       <div class="heritage__card">
-        {% comment %} {% if section.settings.hexagon_image != blank %}
+        {% if section.settings.hexagon_image != blank %}
           {{
             section.settings.hexagon_image
             | image_url: width: 800
@@ -132,7 +96,7 @@
             | image_url: width: 800
             | image_tag: class: 'shape-bg mobile--hexagone--img', alt: 'Hexagon Background', loading: 'lazy'
           }}
-        {% endif %} {% endcomment %}
+        {% endif %}
         <ul class="heritage__ingredients">
           {%- for i in (1..4) -%}
             {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
