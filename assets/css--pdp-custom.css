@@ -359,6 +359,7 @@
     font-size: 48px;
     line-height: 56px;
     letter-spacing: -0.48px;
+    margin: 0;
     color: #000000;
     font-family: 'TAYRosemary';
 }
@@ -370,4 +371,12 @@
 .product__title h5,
 .product__title h6 {
   font-family: 'TAYRosemary';
+}
+
+.product__title+.product__text.caption-with-letter-spacing {
+    margin-top: 0;
+    color: #000000;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 1.04px;
 }
