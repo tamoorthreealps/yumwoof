@@ -440,8 +440,10 @@ function initEmptyCartSlider() {
     },
   });
 
-  const prevBtn = document.querySelector(".empty-prev");
-  const nextBtn = document.querySelector(".empty-next");
+  const wrapper = slider.closest(".cd-shop--main");
+
+  const prevBtn = wrapper?.querySelector(".empty-prev");
+  const nextBtn = wrapper?.querySelector(".empty-next");
 
   function updateArrows() {
     if (!prevBtn || !nextBtn) return;
