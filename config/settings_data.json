@@ -148,7 +148,11 @@
       },
       "membership-savings-section": {
         "type": "membership-savings-section",
-        "settings": {}
+        "settings": {
+          "base-food": "perfect-superfood",
+          "topper-price": 3299,
+          "yum-club": "membership"
+        }
       },
       "yum-club-faq-sec": {
         "type": "yum-club-faq-sec",
