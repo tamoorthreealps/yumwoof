@@ -445,16 +445,15 @@ function initEmptyCartSlider() {
   const prevBtn = wrapper?.querySelector(".empty-prev");
   const nextBtn = wrapper?.querySelector(".empty-next");
 
-  function updateArrows() {
-    if (!prevBtn || !nextBtn) return;
+function updateArrows() {
+  if (!prevBtn || !nextBtn) return;
 
-    prevBtn.disabled = splide.index === 0;
-    nextBtn.disabled =
-      splide.index >= splide.length - splide.options.perPage;
+  prevBtn.disabled = splide.index <= 0;
+  nextBtn.disabled = splide.index >= splide.Components.Controller.getEnd();
 
-    prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
-    nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
-  }
+  prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
+  nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
+}
 
   splide.on("mounted moved resized updated", updateArrows);
 
