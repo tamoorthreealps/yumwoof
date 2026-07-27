@@ -180,34 +180,63 @@
           <h2 class="fp-popup__title">{{ popup.settings.popup_title | default: product.title }}</h2>
           <p class="fp-popup__subtitle">{{ popup.settings.popup_subtitle | default: desc_mf.value }}</p>
           <div class="fp-popup__tabs">
-            <button class="active" data-tab="1">LAND & SEA</button>
-            <button data-tab="2">TURKEY</button>
-            <button data-tab="3">WILD CAUGHT FISH</button>
+            {% if popup.settings.tab_1_title != blank %}
+              <button class="active" data-tab="1">{{ popup.settings.tab_1_title }}</button>
+            {% endif %}
+
+            {% if popup.settings.tab_2_title != blank %}
+              <button data-tab="2">{{ popup.settings.tab_2_title }}</button>
+            {% endif %}
+
+            {% if popup.settings.tab_3_title != blank %}
+              <button data-tab="3">{{ popup.settings.tab_3_title }}</button>
+            {% endif %}
           </div>
-          <div class="fp-popup__content active" data-content="1">
-            <p>
-              85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck
-              heart, gizzard, duck gizzard, cartilage, tripe, whole eggs, beet fiber, brewer's yeast, carrots,
-              blueberries, organic coconut oil, cumin, thyme, turmeric, rose hips.
-            </p>
-            <a href="#" class="fp-popup__content_btn">SHOP NOW</a>
-          </div>
-          <div class="fp-popup__content" data-content="2">
-            <p>
-              85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck
-              heart, gizzard, duck gizzard, cartilage, tripe, whole eggs, beet fiber, brewer's yeast, carrots,
-              blueberries, organic coconut oil, cumin, thyme, turmeric, rose hips.
-            </p>
-            <a href="#" class="fp-popup__content_btn">SHOP NOW</a>
-          </div>
-          <div class="fp-popup__content" data-content="3">
-            <p>
-              85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck
-              heart, gizzard, duck gizzard, cartilage, tripe, whole eggs, beet fiber, brewer's yeast, carrots,
-              blueberries, organic coconut oil, cumin, thyme, turmeric, rose hips.
-            </p>
-            <a href="#" class="fp-popup__content_btn">SHOP NOW</a>
-          </div>
+
+          {% if popup.settings.tab_1_content != blank %}
+            <div class="fp-popup__content active" data-content="1">
+              <p>{{ popup.settings.tab_1_content }}</p>
+
+              {% if popup.settings.tab_1_button_label != blank %}
+                <a
+                  href="{{ popup.settings.tab_1_button_link | default: '#' }}"
+                  class="fp-popup__content_btn"
+                >
+                  {{ popup.settings.tab_1_button_label }}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if popup.settings.tab_2_content != blank %}
+            <div class="fp-popup__content" data-content="2">
+              <p>{{ popup.settings.tab_2_content }}</p>
+
+              {% if popup.settings.tab_2_button_label != blank %}
+                <a
+                  href="{{ popup.settings.tab_2_button_link | default: '#' }}"
+                  class="fp-popup__content_btn"
+                >
+                  {{ popup.settings.tab_2_button_label }}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if popup.settings.tab_3_content != blank %}
+            <div class="fp-popup__content" data-content="3">
+              <p>{{ popup.settings.tab_3_content }}</p>
+
+              {% if popup.settings.tab_3_button_label != blank %}
+                <a
+                  href="{{ popup.settings.tab_3_button_link | default: '#' }}"
+                  class="fp-popup__content_btn"
+                >
+                  {{ popup.settings.tab_3_button_label }}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
         <div class="fp-popup__right">
           <div class="fp-popup__right_img">
@@ -581,6 +610,76 @@
           "type": "image_picker",
           "id": "popup_image",
           "label": "Popup Right Image"
+        },
+        {
+          "type": "header",
+          "content": "Popup Tabs"
+        },
+        {
+          "type": "text",
+          "id": "tab_1_title",
+          "label": "Tab 1 Title",
+          "default": "LAND & SEA"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_1_content",
+          "label": "Tab 1 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_1_button_label",
+          "label": "Tab 1 Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "tab_1_button_link",
+          "label": "Tab 1 Button Link"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_title",
+          "label": "Tab 2 Title",
+          "default": "TURKEY"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_2_content",
+          "label": "Tab 2 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_button_label",
+          "label": "Tab 2 Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "tab_2_button_link",
+          "label": "Tab 2 Button Link"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_title",
+          "label": "Tab 3 Title",
+          "default": "WILD CAUGHT FISH"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_3_content",
+          "label": "Tab 3 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_button_label",
+          "label": "Tab 3 Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "tab_3_button_link",
+          "label": "Tab 3 Button Link"
         }
       ]
     }
