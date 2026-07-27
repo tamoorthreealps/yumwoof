@@ -456,7 +456,7 @@
 		bottom: -320px;
         top: auto;
         margin: 0;
-        width: 600px;
+        width: 570px;
         left: 58px;
         right: auto;
 	}
@@ -586,6 +586,10 @@
 
 }
 
+
+@media screen and (min-width: 1099px) {
+
+}
 
 @media screen and (min-width: 1249px) {
 
