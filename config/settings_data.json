@@ -157,7 +157,7 @@
       "yum-club-faq-sec": {
         "type": "yum-club-faq-sec",
         "settings": {
-          "yum-club": ""
+          "yum-club": "membership"
         }
       },
       "yum-club-section-2": {
