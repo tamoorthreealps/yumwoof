@@ -101,7 +101,7 @@
       {%- endif -%}
 
       <div class="heritage__card">
-        {% if section.settings.hexagon_image != blank %}
+        {% comment %} {% if section.settings.hexagon_image != blank %}
           {{
             section.settings.hexagon_image
             | image_url: width: 800
@@ -114,7 +114,7 @@
             | image_url: width: 800
             | image_tag: class: 'shape-bg mobile--hexagone--img', alt: 'Hexagon Background', loading: 'lazy'
           }}
-        {% endif %}
+        {% endif %} {% endcomment %}
         <ul class="heritage__ingredients">
           {%- for i in (1..4) -%}
             {%- assign title_key = 'ingredient_' | append: i | append: '_title' -%}
