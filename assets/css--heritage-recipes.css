@@ -413,8 +413,8 @@
 
 	.heritage__container {
 		display: grid;
-		grid-template-columns: 380px 1fr;
-		gap: 6rem;
+		grid-template-columns: 325px 1fr;
+		gap: 4rem;
 		max-width: 1316px;
 		padding: 0 6rem 7.8rem;
 	}
@@ -474,7 +474,7 @@
 
 	.heritage__ingredients {
 		grid-template-columns: 1fr 1fr;
-		gap: 4.4rem 3.2rem;
+		gap: 2.4rem 2.2rem;
 		max-width: 480px;
 		position: absolute;
 		top: 50%;
@@ -588,7 +588,14 @@
 
 
 @media screen and (min-width: 1099px) {
+	.heritage__container {
+		grid-template-columns: 380px 1fr;
+		gap: 6rem;
+	}
 
+	.heritage__ingredients {
+		gap: 4.4rem 3.2rem;
+	}
 }
 
 @media screen and (min-width: 1249px) {
