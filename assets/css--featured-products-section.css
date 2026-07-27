@@ -77,6 +77,7 @@
 .fp__viewport {
 	overflow-x: auto;
 	overflow-y: hidden;
+	scroll-behavior: smooth;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
 	scrollbar-width: none;
