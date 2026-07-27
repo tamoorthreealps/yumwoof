@@ -1,0 +1,123 @@
+{% assign yum_club_price = section.settings['yum-club'].price %}
+<section class="page-section-container savings-section">
+  <div class="savings-sec-title">HOW MUCH WILL I SAVE?</div>
+  <div class="savings-sec-subtxt">By starting your membership, here is how much you can save every year.</div>
+  <div class="dog-classes-container">
+    <div class="dog-class-container">
+      <img class="dog-class-img" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/s.jpg?v=1700536577">
+      <div class="dog-class-text-container">
+        {% assign qty = 1 %}
+        {% assign regular_price = section.settings['base-food'].variants[6].price
+          | times: qty
+          | plus: section.settings['topper-price']
+        %}
+        {% assign mem_price = regular_price | times: 0.25 %}
+        {% assign savings = mem_price | times: 12 | divided_by: 100 | round | times: 100 %}
+        <div class="dog-class-name">Small (1-25 lbs)</div>
+        <div class="dog-class-savings-container">
+          <div class="you-save">You save</div>
+          <div class="savings">{{ savings | money_without_trailing_zeros }}</div>
+          <div class="granularity">yearly</div>
+        </div>
+      </div>
+    </div>
+    <div class="dog-class-container">
+      <img class="dog-class-img" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/m.jpg?v=1700536577">
+      <div class="dog-class-text-container">
+        {% assign qty = 2 %}
+        {% assign regular_price = section.settings['base-food'].variants[6].price
+          | times: qty
+          | plus: section.settings['topper-price']
+        %}
+        {% assign mem_price = regular_price | times: 0.25 %}
+        {% assign savings = mem_price | times: 12 | divided_by: 100 | round | times: 100 %}
+        <div class="dog-class-name">Medium (26-50 lbs)</div>
+        <div class="dog-class-savings-container">
+          <div class="you-save">You save</div>
+          <div class="savings">{{ savings | money_without_trailing_zeros }}</div>
+          <div class="granularity">yearly</div>
+        </div>
+      </div>
+    </div>
+    <div class="dog-class-container">
+      <img class="dog-class-img" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/l.jpg?v=1700536577">
+      <div class="dog-class-text-container">
+        {% assign qty = 2.4 %}
+        {% assign regular_price = section.settings['base-food'].variants[6].price
+          | times: qty
+          | plus: section.settings['topper-price']
+        %}
+        {% assign mem_price = regular_price | times: 0.25 %}
+        {% assign savings = mem_price | times: 12 | divided_by: 100 | round | times: 100 %}
+        <div class="dog-class-name">Large (51-75 lbs)</div>
+        <div class="dog-class-savings-container">
+          <div class="you-save">You save</div>
+          <div class="savings">{{ savings | money_without_trailing_zeros }}</div>
+          <div class="granularity">yearly</div>
+        </div>
+      </div>
+    </div>
+    <div class="dog-class-container">
+      <img class="dog-class-img" src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/xl.jpg?v=1700536577">
+      <div class="dog-class-text-container">
+        {% assign qty = 3 %}
+        {% assign regular_price = section.settings['base-food'].variants[6].price
+          | times: qty
+          | plus: section.settings['topper-price']
+        %}
+        {% assign mem_price = regular_price | times: 0.25 %}
+        {% assign savings = mem_price | times: 12 | divided_by: 100 | round | times: 100 %}
+        <div style="display: none">
+          {{ 116012 | money }}
+          {{ 116012 | money_with_currency }}
+          {{ 116012 | money_without_currency }}
+          {{ 116012 | money_without_trailing_zeros }}
+
+          <br>
+          {{ 1123 | money }}
+          {{ 1123 | money_with_currency }}
+          {{ 1123 | money_without_currency }}
+          {{ 1123 | money_without_trailing_zeros }}
+        </div>
+        <div class="dog-class-name">X-Large (76-100 lbs)</div>
+        <div class="dog-class-savings-container">
+          <div class="you-save">You save</div>
+          <div class="savings">{{ savings | money_without_trailing_zeros }}</div>
+          <div class="granularity">yearly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-btn-container">
+    <button class="site-btn-green js-btn-join-membership">Join Membership</button>
+    <div class="btn-subtxt-billing">
+      ({{ yum_club_price | divided_by: 3 | money_without_trailing_zeros }}/mo billed quarterly)
+    </div>
+    <div class="btn-member-login">
+      Already a club member? <a href="/account/login" class="lnk-login black">Log in</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Savings Section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "base-food",
+      "label": "Base Food"
+    },
+    {
+      "type": "number",
+      "id": "topper-price",
+      "label": "Topper Price"
+    },
+    {
+      "type": "product",
+      "id": "yum-club",
+      "label": "Yum club membership"
+    }
+  ]
+}
+{% endschema %}

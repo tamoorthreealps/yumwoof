@@ -139,13 +139,35 @@
         "settings": {
           "color_scheme": "scheme-1"
         }
+      },
+      "yum-club-section-1": {
+        "type": "yum-club-section-1",
+        "settings": {
+          "yum-club": "membership"
+        }
+      },
+      "membership-savings-section": {
+        "type": "membership-savings-section",
+        "settings": {}
+      },
+      "yum-club-faq-sec": {
+        "type": "yum-club-faq-sec",
+        "settings": {
+          "yum-club": ""
+        }
+      },
+      "yum-club-section-2": {
+        "type": "yum-club-section-2",
+        "settings": {
+          "yum-club": ""
+        }
       }
     },
     "content_for_index": [],
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#FFF9EF",
+          "background": "#fff9ef",
           "background_gradient": "",
           "text": "#121212",
           "button": "#121212",
