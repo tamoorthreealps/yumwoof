@@ -259,16 +259,34 @@
             });
           }
 
+          function smoothScrollTo(element, target, duration = 650) {
+            const start = element.scrollLeft;
+            const change = target - start;
+            const startTime = performance.now();
+
+            function animate(currentTime) {
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+
+              const ease = 1 - Math.pow(1 - progress, 3);
+
+              element.scrollLeft = start + change * ease;
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            }
+
+            requestAnimationFrame(animate);
+          }
+
           function scrollToSlide(i) {
             var slide = slides[i];
             if (!slide) return;
 
             var left = slide.offsetLeft - (viewport.clientWidth - slide.offsetWidth) / 2;
 
-            viewport.scrollTo({
-              left: left,
-              behavior: 'smooth',
-            });
+            smoothScrollTo(viewport, left, 650);
           }
 
           function currentIndex() {
