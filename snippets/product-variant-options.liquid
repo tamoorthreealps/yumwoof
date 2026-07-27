@@ -86,7 +86,9 @@
         name="{{ input_name | escape }}"
         value="{{ escaped_value }}"
         form="{{ product_form_id }}"
-        {% if value.selected %}checked{% endif %}
+        {% if value.selected %}
+          checked
+        {% endif %}
         {{ input_dataset }}
       >
       <label class="recipe-swatch__label" for="{{ input_id }}">
@@ -106,8 +108,7 @@
       {{ label_unavailable }}
     {%- endcapture -%}
 
-    {%
-      render 'swatch-input',
+    {% render 'swatch-input',
       id: input_id,
       name: input_name,
       value: escaped_value,
