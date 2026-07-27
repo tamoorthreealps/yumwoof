@@ -338,11 +338,12 @@
 }
 
 .product--main .product--main--grid .product__media-wrapper {
-    width: 51.725%;
     max-width: 51.725%;
+    width: 51.725%;
 }
 
 .product--main .product--main--grid .product__info-wrapper {
-    width: calc(48.275% - 8.4rem);
     padding: 0;
+    max-width: 504px;
+    width: 100%;
 }
