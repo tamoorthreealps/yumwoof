@@ -676,6 +676,11 @@
 		width: 96vw;
 		gap: 28px;
 	}
+
+	.fp-popup__right_img_bowl {
+		height: 330px;
+		bottom: 45px;
+	}
 }
 
 @media(max-width:768px) {
