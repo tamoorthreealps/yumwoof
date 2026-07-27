@@ -175,7 +175,7 @@
       "yum-club-section-2": {
         "type": "yum-club-section-2",
         "settings": {
-          "yum-club": ""
+          "yum-club": "membership"
         }
       }
     },
