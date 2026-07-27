@@ -1,32 +1,3 @@
-.product--main--info {
-    padding: 148px 0 120px;
-}
-
-.custom--page-width {
-  padding: 0 6rem;
-  max-width: 151.2rem;
-  margin: 0 auto;
-}
-
-.product--main .product--main--grid {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8.4rem;
-}
-
-.product--main .product--main--grid .product__media-wrapper {
-    max-width: 51.725%;
-    width: 51.725%;
-}
-
-.product--main .product--main--grid .product__info-wrapper {
-    padding: 0;
-    max-width: 504px;
-    width: 100%;
-}
-
-
-
 /* ============================================================
    PDP custom elements: USPs marquee + recipe image swatches
    ============================================================ */
@@ -344,4 +315,35 @@
   .pdp-gallery .yw-gallery-nav {
     display: none !important;
   }
+}
+
+
+
+
+/*------ custom--waqar--css ------*/
+.product--main--info {
+    padding: 148px 0 120px;
+}
+
+.custom--page-width {
+  padding: 0 6rem;
+  max-width: 151.2rem;
+  margin: 0 auto;
+}
+
+.product--main .product--main--grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8.4rem;
+}
+
+.product--main .product--main--grid .product__media-wrapper {
+    max-width: 51.725%;
+    width: 51.725%;
+}
+
+.product--main .product--main--grid .product__info-wrapper {
+    padding: 0;
+    max-width: 504px;
+    width: 100%;
 }
