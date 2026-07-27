@@ -302,7 +302,7 @@
               var distance = Math.abs(viewportCenter - slideCenter);
               var maxDistance = viewport.clientWidth / 2;
               var progress = Math.max(0, 1 - distance / maxDistance);
-              var scale = 0.8 + progress * 0.2;
+              var scale = 0.85 + progress * 0.15;
               slide.style.transform = "scale(" + scale + ")";
             });
           }
