@@ -1,0 +1,138 @@
+{% assign yum_club_price = section.settings['yum-club'].price %}
+<div class="yum-club-member_faq-container">
+  <div class="yum-club-member_faq-header-container">
+    <div class="yum-club-member_faq-header">FAQ</div>
+    <div class="yum-club-member_faq-subtxt">
+      We are always here to help. If you can’t find your answer, reach out to our
+      <a href="mailto:woof@yumwoof.com">concierge team</a>.
+    </div>
+  </div>
+  <div class="accordion faq-accordian accordion-flush" id="accordion_yum-club-faqs">
+    {% for block in section.blocks %}
+      {% if block.type == 'faq_item' %}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="yum-club-faq-question-{{forloop.index}}">
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#yum-club-faq-ans-{{ forloop.index }}"
+              aria-expanded="true"
+              aria-controls="yum-club-faq-ans-{{ forloop.index }}"
+            >
+              {{ block.settings['faq-question'] }}
+            </button>
+          </h2>
+          <div
+            id="yum-club-faq-ans-{{ forloop.index }}"
+            class="accordion-collapse collapse"
+            aria-labelledby="yum-club-faq-question-{{forloop.index}}"
+            data-bs-parent="#accordion_yum-club-faqs"
+          >
+            {% assign yum_club_price_with_currecny = yum_club_price | money_without_trailing_zeros %}
+            <div class="accordion-body">
+              {{ block.settings['faq-answer'] | replace: '<yum_club_price>', yum_club_price_with_currecny }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "FAQ section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "yum-club",
+      "label": "Yum club membership"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "FAQ item",
+      "type": "faq_item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "faq-question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "faq-answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+  .yum-club-member_faq-container {
+    padding: 2.86vw 1.43vw;
+  }
+  .yum-club-member_faq-container .faq-accordian {
+    width: 57vw;
+    /* max-width: 800px; */
+    margin: auto;
+  }
+
+  .yum-club-member_faq-container .accordion-item {
+    background-color: var(--base-color);
+  }
+
+  .yum-club-member_faq-container .accordion-button {
+    background-color: var(--base-color);
+    outline: 0;
+    box-shadow: none;
+    border-top: 0.1vw solid var(--base-font-color);
+    font-weight: 600;
+    font-size: 1.14vw;
+    padding: 2vw 0;
+  }
+  .yum-club-member_faq-container .accordion-button:after {
+    background-image: url(/cdn/shop/files/cross.png?v=1667388822);
+    transform: rotate(45deg);
+    width: 1vw;
+    height: 1vw;
+    background-size: 100%;
+  }
+  .yum-club-member_faq-container .accordion-button:not(.collapsed) {
+    background-color: transparent;
+    color: var(--base-font-color);
+  }
+  .yum-club-member_faq-container .accordion-button:not(.collapsed):after {
+    background-image: url(/cdn/shop/files/cross.png?v=1667388822);
+    transform: rotate(0);
+  }
+  .yum-club-member_faq-container .accordion-item:first-child .accordion-button {
+    border-top: 0;
+  }
+  .yum-club-member_faq-container .accordion-item .accordion-collapse .accordion-body {
+    color: var(--base-font-color);
+    font-size: 1.2vw;
+    padding: 0 0 2vw;
+    font-weight: 300;
+    /* font-family: var(--headline-font-family); */
+  }
+  .yum-club-member_faq-header-container {
+    margin: auto;
+    text-align: center;
+    width: 45.7vw;
+  }
+
+  .yum-club-member_faq-header {
+    font-size: 4.23vw;
+    font-family: var(--headline-font-family);
+    font-weight: 300;
+  }
+  .yum-club-member_faq-subtxt {
+    font-size: 1.29vw;
+  }
+
+  .yum-club-member_faq-container a {
+    color: var(--base-font-color);
+  }
+</style>
