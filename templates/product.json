@@ -51,6 +51,12 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "ingridient_bar_f6NAmj": {
+          "type": "ingridient-bar",
+          "settings": {
+            "ingri_content": "<p>Not sure how much to order? <a href=\"#\" title=\"#\"><span style=\"text-decoration:underline\">Let us help decide</span></a></p>"
+          }
+        },
         "appstle_subscription_qkkVmJ": {
           "type": "appstle_subscription",
           "settings": {}
@@ -81,6 +87,7 @@
         "usps_wWfcV4",
         "variant_picker",
         "quantity_selector",
+        "ingridient_bar_f6NAmj",
         "appstle_subscription_qkkVmJ",
         "buy_buttons",
         "description",
