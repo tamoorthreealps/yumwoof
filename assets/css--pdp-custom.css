@@ -458,6 +458,17 @@
     margin: 0 0 1.2rem;
 }
 
+.product-form__quantity .form__label {
+    margin-bottom: 1.2rem;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.64px;
+    font-family: 'TAY Birdie';
+    text-transform: uppercase;
+    color: #000;
+    opacity: 1;
+}
+
 quantity-input.quantity {
     border: 1px solid #000000;
     border-radius: 8px;
