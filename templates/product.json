@@ -55,6 +55,10 @@
             "ingri_content": "<p>Not sure how much to order? <a href=\"#\" title=\"#\"><span style=\"text-decoration:underline\">Let us help decide</span></a></p>"
           }
         },
+        "quantity_calculator_HFLFAL": {
+          "type": "quantity-calculator",
+          "settings": {}
+        },
         "appstle_subscription_qkkVmJ": {
           "type": "appstle_subscription",
           "settings": {}
@@ -88,6 +92,7 @@
         "variant_picker",
         "quantity_selector",
         "ingridient_bar_f6NAmj",
+        "quantity_calculator_HFLFAL",
         "appstle_subscription_qkkVmJ",
         "buy_buttons",
         "description",
