@@ -14,9 +14,7 @@
       "blocks": {
         "title": {
           "type": "title",
-          "settings": {
-            "title_badge_image": "shopify://shop_images/badge_title.svg"
-          }
+          "settings": {}
         },
         "vendor": {
           "type": "text",
@@ -64,16 +62,18 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false
           }
         },
         "description": {
           "type": "description",
+          "disabled": true,
           "settings": {}
         },
         "share": {
           "type": "share",
+          "disabled": true,
           "settings": {
             "share_label": "Share"
           }
