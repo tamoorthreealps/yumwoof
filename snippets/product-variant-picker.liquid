@@ -42,7 +42,7 @@
       -%}
       {%- if picker_type == 'recipe_image' -%}
         <fieldset class="js product-form__input product-form__input--recipe">
-          <legend class="form__label form__label--numbered">{{ forloop.index }}. {{ option.name }}</legend>
+          <legend class="form__label form__label--numbered">{{ option.name }}</legend>
           <div class="recipe-swatches">
             {% render 'product-variant-options',
               product: product,
@@ -70,12 +70,14 @@
       {%- elsif picker_type == 'button' -%}
         <fieldset class="js product-form__input product-form__input--pill">
           <legend class="form__label form__label--numbered">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
+          <div class="form--label--options">
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
         </fieldset>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">
