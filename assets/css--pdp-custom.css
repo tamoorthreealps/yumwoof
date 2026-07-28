@@ -485,7 +485,7 @@ quantity-input.quantity::after, quantity-input.quantity::before {
 
 .quantity__button {
     color: #000;
-    opacity: 1;
+    opacity: 1 !important;
     width: 10.6px;
     margin: 0 !important;
     height: auto;
