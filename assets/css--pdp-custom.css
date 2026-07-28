@@ -542,17 +542,17 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     margin-bottom: 1rem;
     border: 1px solid #000000;
     border-radius: 8px;
-    background: #FFC069;
+    background: #ffc069;
     font-size: 20px;
     line-height: 24px;
-    letter-spacing: 0.8px;
+    letter-spacing: .8px;
     text-transform: uppercase;
-    font-family: 'FFBlurProMedium';
-    padding: 20px;
+    font-family: FFBlurProMedium;
+    padding: 20.4px 20px 18px;
     min-height: auto;
     min-width: auto;
     box-shadow: inherit;
-    color: #000000;
+    color: #000;
 }
 
 .product-form__submit::after, .product-form__submit::before {
