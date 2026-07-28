@@ -446,7 +446,7 @@
     align-items: center;
 }
 
-.product-form__input--pill input[type=radio]:checked+label {
+.product-form__input--pill .form--label--options input[type=radio]:checked+label {
     background-color: #00000014;
     color: #000;
 }
