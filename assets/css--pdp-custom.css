@@ -72,6 +72,12 @@
   margin-bottom: 1.6rem;
 }
 
+.product-form__input {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 2.4rem;
+}
+
 .recipe-swatches {
     display: flex;
     flex-wrap: wrap;
@@ -391,4 +397,26 @@
     line-height: 24px;
     letter-spacing: 0;
     color: #000;
+}
+
+.form--label--options {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    width: 100%;
+}
+
+.product-form__input--pill input[type=radio]+label {
+    margin: 0;
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.56px;
+    text-align: left;
+    padding: 6px 20px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
 }
