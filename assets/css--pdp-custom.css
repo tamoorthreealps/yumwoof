@@ -114,7 +114,8 @@
   overflow: hidden;
 }
 
-.recipe-swatch__input:checked + .recipe-swatch__label {
+.recipe-swatch__input:checked + .recipe-swatch__label,
+.recipe-swatch__input:checked + .recipe-swatch__label:hover {
   border-color: #000;
   background: rgba(0, 0, 0, 0.08);
 }
