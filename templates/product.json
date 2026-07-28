@@ -15,7 +15,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "title_image": "shopify://shop_images/badge_title.svg"
+            "title_badge_image": "shopify://shop_images/badge_title.svg"
           }
         },
         "vendor": {
