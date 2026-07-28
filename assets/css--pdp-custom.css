@@ -488,4 +488,6 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     color: #000000;
     font-family: 'Matter';
     letter-spacing: 0;
+    font-weight: 500;
+    opacity: 1;
 }
