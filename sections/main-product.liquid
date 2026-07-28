@@ -121,15 +121,17 @@
                         </h2>
                       </a>
                       {%- if block.settings.title_badge_image != blank -%}
-                        {{
-                          block.settings.title_badge_image
-                          | image_url: width: 208
-                          | image_tag:
-                            alt: 'Title Badge',
-                            class: 'product-title-badge',
-                            widths: '104, 160, 208',
-                            loading: 'lazy'
-                        }}
+                        <div class="badge--title--icon">
+                          {{
+                            block.settings.title_badge_image
+                            | image_url: width: 208
+                            | image_tag:
+                              alt: 'Title Badge',
+                              class: 'product-title-badge',
+                              widths: '104, 160, 208',
+                              loading: 'lazy'
+                          }}
+                        </div>
                       {%- endif -%}
                     </div>
                   {%- when 'short_description' -%}
