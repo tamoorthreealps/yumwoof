@@ -1,0 +1,508 @@
+/* Quantity calculator (PDP) — quantity selector, CTA, dog summary + quiz modal */
+
+:root {
+  --qc-cream: #fff9ef;
+  --qc-ink: #1a1a1a;
+  --qc-mute: #6e645c;
+  --qc-amber: #ffc069;
+  --qc-burg: #661d1d;
+  --qc-peri: #7ba6dd;
+  --qc-hair: rgba(26, 26, 26, 0.14);
+  --qc-hair-s: rgba(26, 26, 26, 0.28);
+  --qc-greige: #efeae0;
+}
+
+/* ---------------- styled Dawn quantity selector (block: quantity_selector) --------------- */
+.product-form__quantity .quantity__label,
+.product-form__quantity .quantity__label span {
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--qc-ink);
+}
+.product-form__quantity quantity-input.quantity {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  min-width: 13rem;
+  background: #fff;
+  border: 1px solid var(--qc-hair-s);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.product-form__quantity .quantity__button {
+  width: 4.4rem;
+  height: 4.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--qc-mute);
+  cursor: pointer;
+}
+.product-form__quantity .quantity__button:hover {
+  color: var(--qc-ink);
+}
+.product-form__quantity .quantity__input {
+  width: 4.4rem;
+  min-height: 4.4rem;
+  text-align: center;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--qc-ink);
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* ---------------- calculator block ---------------- */
+.qcalc {
+  display: block;
+  margin-top: 1.4rem;
+}
+
+/* CTA bar */
+.qcalc__cta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  background: var(--qc-peri);
+  color: var(--qc-ink);
+  border: none;
+  border-radius: 1rem;
+  padding: 1.6rem 1.8rem;
+  cursor: pointer;
+  text-align: left;
+  transition: filter 0.15s ease;
+}
+.qcalc__cta:hover {
+  filter: brightness(0.97);
+}
+.qcalc__cta-text {
+  font-family: 'Matter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.qcalc__cta-text u {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.qcalc__cta-arrow {
+  font-size: 1.8rem;
+  flex: none;
+}
+
+/* saved-dogs summary card */
+.qcalc__summary {
+  background: var(--qc-cream);
+  border: 1px solid var(--qc-hair);
+  border-radius: 1rem;
+  padding: 1.4rem 1.6rem;
+}
+.qcalc__dog + .qcalc__dog {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--qc-hair);
+}
+.qcalc__dog-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+.qcalc__dog-top b {
+  font-family: 'Matter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.qcalc__dog-acts {
+  display: flex;
+  gap: 1.2rem;
+  flex: none;
+}
+.qcalc__dog-acts button {
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  color: var(--qc-burg);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.qcalc__dog-eat {
+  font-family: 'Matter', sans-serif;
+  font-size: 1.35rem;
+  color: var(--qc-mute);
+  margin-top: 0.4rem;
+}
+.qcalc__dog-eat b {
+  color: var(--qc-ink);
+  font-weight: 600;
+}
+.qcalc__summary-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--qc-hair);
+  font-family: 'Matter', sans-serif;
+  font-size: 1.35rem;
+  color: var(--qc-mute);
+}
+.qcalc__summary-foot b {
+  color: var(--qc-ink);
+  font-weight: 600;
+}
+.qcalc__summary-foot button {
+  font-size: 1.3rem;
+  color: var(--qc-burg);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  flex: none;
+}
+
+/* ---------------- quiz modal ---------------- */
+.qz-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(26, 26, 26, 0.46);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.qz-scrim[hidden] {
+  display: none;
+}
+.qz-modal {
+  background: var(--qc-cream);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 472px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(26, 26, 26, 0.3);
+  animation: qz-rise 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+@keyframes qz-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.qz-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--qc-hair);
+}
+.qz-back {
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  color: var(--qc-mute);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.qz-back[hidden] {
+  visibility: hidden;
+  display: inline-block;
+}
+.qz-dots {
+  display: flex;
+  gap: 7px;
+}
+.qz-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--qc-hair-s);
+  display: block;
+}
+.qz-dots i.on {
+  background: var(--qc-burg);
+}
+.qz-close {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--qc-mute);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.qz-body {
+  padding: 32px 28px 28px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+.qz-step {
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--qc-mute);
+  margin-bottom: 12px;
+}
+.qz-body h2 {
+  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 3rem;
+  line-height: 1.04;
+  margin: 0 0 9px;
+  color: var(--qc-ink);
+}
+.qz-sub {
+  font-family: 'Matter', sans-serif;
+  font-size: 1.4rem;
+  color: var(--qc-mute);
+  margin: 0 0 26px;
+  line-height: 1.5;
+}
+
+/* step 1 — weight */
+.qz-wbig {
+  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-size: 6.4rem;
+  line-height: 1;
+  text-align: center;
+  color: var(--qc-ink);
+}
+.qz-wbig span {
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--qc-mute);
+  margin-left: 6px;
+}
+.qz-range {
+  width: 100%;
+  accent-color: var(--qc-burg);
+  margin: 22px 0 6px;
+  height: 20px;
+}
+.qz-scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.2rem;
+  color: var(--qc-mute);
+}
+.qz-presets {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.qz-presets button {
+  background: #fff;
+  border: 1px solid var(--qc-hair);
+  border-radius: 7px;
+  padding: 8px 14px;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  color: var(--qc-mute);
+  cursor: pointer;
+  transition: 0.15s;
+}
+.qz-presets button:hover {
+  border-color: var(--qc-hair-s);
+  color: var(--qc-ink);
+}
+
+/* step 2 — age options */
+.qz-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.qz-opt {
+  background: #fff;
+  border: 1px solid var(--qc-hair);
+  border-radius: 9px;
+  padding: 16px 17px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.qz-opt:hover {
+  border-color: var(--qc-hair-s);
+}
+.qz-opt.on {
+  background: var(--qc-greige);
+  border-color: var(--qc-hair-s);
+}
+.qz-opt b {
+  display: block;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--qc-ink);
+}
+.qz-opt small {
+  display: block;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  color: var(--qc-mute);
+  margin-top: 2px;
+}
+
+/* step 3 — name */
+.qz-name {
+  margin-top: 6px;
+}
+.qz-name input {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--qc-hair);
+  border-radius: 9px;
+  padding: 15px 16px;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.6rem;
+  color: var(--qc-ink);
+}
+.qz-name input:focus {
+  outline: none;
+  border-color: var(--qc-hair-s);
+}
+
+/* result */
+.qz-result {
+  text-align: center;
+}
+.qz-plan {
+  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-size: 2.8rem;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 14px 0 6px;
+  color: var(--qc-ink);
+}
+.qz-plan em {
+  font-style: normal;
+  color: var(--qc-burg);
+}
+.qz-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 22px;
+  border-top: 1px solid var(--qc-hair-s);
+  border-bottom: 1px solid var(--qc-hair-s);
+}
+.qz-grid div {
+  padding: 17px 6px;
+  border-right: 1px solid var(--qc-hair);
+}
+.qz-grid div:last-child {
+  border-right: none;
+}
+.qz-grid b {
+  display: block;
+  font-family: 'Matter', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--qc-ink);
+}
+.qz-grid small {
+  display: block;
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--qc-mute);
+  margin-top: 5px;
+}
+.qz-know {
+  margin-top: 20px;
+  text-align: left;
+  background: #fbf3e3;
+  border: 1px solid rgba(200, 161, 42, 0.35);
+  border-radius: 9px;
+  padding: 13px 15px;
+}
+.qz-know-lab {
+  display: block;
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8a6d1c;
+  margin-bottom: 6px;
+}
+.qz-know p {
+  margin: 0;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: #4a4234;
+}
+.qz-know b {
+  color: var(--qc-ink);
+}
+
+/* footer buttons */
+.qz-foot {
+  margin-top: auto;
+  padding-top: 26px;
+}
+.qz-next {
+  width: 100%;
+  background: var(--qc-amber);
+  color: var(--qc-ink);
+  border: 1px solid var(--qc-ink);
+  border-radius: 9px;
+  padding: 16px;
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.qz-next:hover {
+  filter: brightness(0.97);
+}
+.qz-next:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.qz-add {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: 'Matter', sans-serif;
+  font-size: 1.3rem;
+  color: var(--qc-mute);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media screen and (max-width: 520px) {
+  .qz-scrim {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .qz-modal {
+    max-width: none;
+    border-radius: 14px 14px 0 0;
+  }
+  .qz-body h2 {
+    font-size: 2.6rem;
+  }
+}
