@@ -386,6 +386,17 @@
     width: 100%;
     object-fit: contain;
     display: block;
+    animation: rotateBadge 15s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes rotateBadge {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .product__title h1,
