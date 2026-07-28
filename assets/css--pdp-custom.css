@@ -527,6 +527,11 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     margin: 0;
 }
 
+.ingri--bar--main a {
+  padding-left:8px;
+  text-decoration: underline;
+}
+
 .ingri--bar--main svg {
     position: absolute;
     right: 16px;
