@@ -112,6 +112,7 @@
   background: transparent;
   cursor: pointer;
   overflow: hidden;
+  transition: all 0.35s ease;
 }
 
 .recipe-swatch__input:checked + .recipe-swatch__label,
