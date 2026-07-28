@@ -406,7 +406,7 @@
     width: 100%;
 }
 
-.product-form__input--pill input[type=radio]+label {
+.product-form__input--pill .form--label--options input[type=radio]+label {
     margin: 0;
     flex: 1;
     border: 1px solid rgba(0, 0, 0, 0.1);
