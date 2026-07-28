@@ -110,19 +110,6 @@
                           {{ product.title | escape }}
                         </h2>
                       </a>
-                      {%- if block.settings.title_badge_image != blank -%}
-                        <div class="badge--title--icon">
-                          {{
-                            block.settings.title_badge_image
-                            | image_url: width: 208
-                            | image_tag:
-                              alt: 'Title Badge',
-                              class: 'product-title-badge',
-                              widths: '104, 160, 208',
-                              loading: 'lazy'
-                          }}
-                        </div>
-                      {%- endif -%}
                       {%- assign gallery_badge_img = product.metafields.custom.gallery_badge.value -%}
                       {%- if gallery_badge_img != blank -%}
                         <div class="pdp-gallery-badge">
@@ -891,14 +878,7 @@
     {
       "type": "title",
       "name": "t:sections.main-product.blocks.title.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "title_badge_image",
-          "label": "Title Badge Image"
-        }
-      ]
+      "limit": 1
     },
     {
       "type": "appstle_subscription",
