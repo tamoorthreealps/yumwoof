@@ -450,4 +450,5 @@
 .product-form__input--pill .form--label--options input[type=radio]+label:hover {
     background-color: #00000014;
     color: #000;
+    border-color: #000;
 }
