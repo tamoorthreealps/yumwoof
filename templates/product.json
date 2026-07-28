@@ -14,7 +14,9 @@
       "blocks": {
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "title_image": "shopify://shop_images/badge_title.svg"
+          }
         },
         "vendor": {
           "type": "text",
