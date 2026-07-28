@@ -533,3 +533,28 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     text-transform: uppercase;
     margin: 0 0 1.2rem;
 }
+
+.product-form__buttons {
+    max-width: 100%;
+}
+
+.product-form__submit {
+    margin-bottom: 1rem;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background: #FFC069;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-family: 'FFBlurProMedium';
+    padding: 20px;
+    min-height: auto;
+    min-width: auto;
+    box-shadow: inherit;
+    color: #000000;
+}
+
+.product-form__submit::after, .product-form__submit::before {
+  display:none;
+}
