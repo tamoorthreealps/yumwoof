@@ -453,3 +453,39 @@
     color: #000;
     border-color: #000;
 }
+
+.product-form__input.product-form__quantity {
+    margin: 0 0 1.2rem;
+}
+
+quantity-input.quantity {
+    border: 1px solid #000000;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: inherit;
+    width: 140px;
+    min-height: 64px;
+    background: #fff;
+}
+
+quantity-input.quantity::after, quantity-input.quantity::before {
+  display:none;
+}
+
+.quantity__button {
+    color: #000;
+    opacity: 1;
+    width: 10.6px;
+    margin: 0 !important;
+    height: auto;
+    border: 0;
+}
+
+.quantity__input[type=number] {
+    padding: 0;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    font-family: 'Matter';
+    letter-spacing: 0;
+}
