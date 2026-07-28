@@ -505,3 +505,29 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     font-weight: 500;
     opacity: 1;
 }
+
+.ingri--bar--main {
+    margin: 0;
+    background: #7AA5DD;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px 36px 12px 18px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    font-weight: 500;
+    position: relative;
+    color: #000;
+}
+
+.ingri--bar--main p, .ingri--bar--main a {
+    color: #000;
+    font-family: 'Matter';
+    margin: 0;
+}
+
+.ingri--bar--main svg {
+    position: absolute;
+    right: 16px;
+}
