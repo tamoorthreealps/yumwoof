@@ -365,6 +365,13 @@
   top:0;
 }
 
+.badge--title--icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 85px;
+}
+
 .product__title {
     font-size: 48px;
     line-height: 56px;
@@ -372,6 +379,13 @@
     margin: 0;
     color: #000000;
     font-family: 'TAYRosemary';
+}
+
+.badge--title--icon img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .product__title h1,
@@ -420,3 +434,4 @@
     display: flex;
     align-items: center;
 }
+
