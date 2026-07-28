@@ -553,6 +553,12 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     min-width: auto;
     box-shadow: inherit;
     color: #000;
+    transition: all 0.35s ease 0s;
+}
+
+.product-form__submit:hover {
+    background: #000000;
+    color: #fff9ef;
 }
 
 .product-form__submit::after, .product-form__submit::before {
