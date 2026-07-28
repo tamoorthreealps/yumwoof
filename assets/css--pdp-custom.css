@@ -386,7 +386,7 @@
     width: 100%;
     object-fit: contain;
     display: block;
-    animation: rotateBadge 15s linear infinite;
+    animation: rotateBadge 25s linear infinite;
     transform-origin: center;
 }
 
