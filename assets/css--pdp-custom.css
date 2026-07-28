@@ -470,13 +470,15 @@
 }
 
 quantity-input.quantity {
-    border: 1px solid #000000;
+border: 1px solid #000000;
     border-radius: 8px;
     outline: none;
     box-shadow: inherit;
     width: 140px;
     min-height: 64px;
     background: #fff;
+    gap: 6px;
+    padding: 0 16px;
 }
 
 quantity-input.quantity::after, quantity-input.quantity::before {
