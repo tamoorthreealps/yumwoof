@@ -479,6 +479,7 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     margin: 0 !important;
     height: auto;
     border: 0;
+    background: transparent !important;
 }
 
 .quantity__input[type=number] {
