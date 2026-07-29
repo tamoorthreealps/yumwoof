@@ -13,74 +13,81 @@
   - product: {Object} product object
 {% endcomment %}
 <style>
-  .asw { display: block; width: 100%; color: #000; font-family: var(--font-body-family, inherit); }
-  .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
+    .asw { display: block; width: 100%; color: #000; font-family: var(--font-body-family, inherit); }
+    .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
 
-  .asw-option { background: #fff; border: 1px solid #000; }
-  .asw-option--sub { border-radius: 12px 12px 0 0; }
-  .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
-  .asw-option.is-selected { background: #E6E0D7; }
+    .asw-option { background: #fff; border: 1px solid #000; }
+    .asw-option--sub { border-radius: 12px 12px 0 0; }
+    .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
+    .asw-option.is-selected { background: #E6E0D7; }
 
-  .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.asw__save-pill {
-    display: inline-flex;
-    align-items: center;
-    background: #FFC069;
-    color: #000000;
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: -1.28px;
-    text-transform: uppercase;
-    padding: 2px 6.58px 0.4px;
-    border-radius: 999px;
-    white-space: nowrap;
-    border: 1px solid #000000;
-    font-family: 'TAY Birdie';
-}
-
-  .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
-  .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-  .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
-  .asw-diamond { display: block; }
-  .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
-  .asw-option .asw-fill {fill: #FFF9EF;}
-  .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
-
-  .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
-  .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .asw-option__titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
-  .asw-option__subtitle { font-size: 14px; line-height: 20px; color: rgba(0, 0, 0, 0.5); }
-  .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap; }
-  .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
-  .asw-option__price-now { color: #000; }
-
-  .asw-option__delivery { display: flex; flex-direction: column; gap: 8px; }
-  .asw-option__delivery-label {
-    font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
-    font-size: 14px; line-height: 20px; text-transform: uppercase; letter-spacing: -0.5px;
+    .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .asw__save-pill {
+      display: inline-flex;
+      align-items: center;
+      background: #FFC069;
+      color: #000000;
+      font-size: 16px;
+      line-height: 16px;
+      letter-spacing: -1.28px;
+      text-transform: uppercase;
+      padding: 2px 6.58px 0.4px;
+      border-radius: 999px;
+      white-space: nowrap;
+      border: 1px solid #000000;
+      font-family: 'TAY Birdie';
   }
-  .asw-select { position: relative; display: block; }
-  .asw-select__field {
-    -webkit-appearance: none; -moz-appearance: none; appearance: none;
-    width: 100%; height: 44px; padding: 0 40px 0 16px;
-    background: #fff; border: 1px solid #000; border-radius: 8px;
-    font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 500;
-    color: #000; cursor: pointer; text-transform: capitalize;
+
+    .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
+    .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
+    .asw-diamond { display: block; }
+    .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
+    .asw-option .asw-fill {fill: #FFF9EF;}
+    .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
+
+    .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+    .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .asw-option__titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
+  .asw-option__subtitle {
+      font-size: 13px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.5);
+      letter-spacing: 0;
+      font-family: Matter, sans-serif;
   }
-  .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; }
+    .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
+    .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
+    .asw-option__price-now { color: #000; }
 
-  .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
-  .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; line-height: 20px; }
-  .asw-benefit__check { flex: 0 0 auto; margin-top: 3px; display: flex; }
+    .asw-option__delivery { display: flex; flex-direction: column; gap: 8px; }
+    .asw-option__delivery-label {
+      font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+      font-size: 14px; line-height: 20px; text-transform: uppercase; letter-spacing: -0.5px;
+    }
+    .asw-select { position: relative; display: block; }
+    .asw-select__field {
+      -webkit-appearance: none; -moz-appearance: none; appearance: none;
+      width: 100%; height: 44px; padding: 0 40px 0 16px;
+      background: #fff; border: 1px solid #000; border-radius: 8px;
+      font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 500;
+      color: #000; cursor: pointer; text-transform: capitalize; outline: none;
+      box-shadow: inherit;
+    }
+    .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; }
 
-  /* Collapse the subscription details when the shopper picks one-time */
-  .asw-option--sub:not(.is-selected) .asw-option__delivery,
-  .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+    .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+    .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; line-height: 20px; }
+    .asw-benefit__check { flex: 0 0 auto; margin-top: 3px; display: flex; }
 
-  @media (max-width: 749px) {
-    .asw-option__benefits { grid-template-columns: 1fr; }
-  }
+    /* Collapse the subscription details when the shopper picks one-time */
+    .asw-option--sub:not(.is-selected) .asw-option__delivery,
+    .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+
+    @media (max-width: 749px) {
+      .asw-option__benefits { grid-template-columns: 1fr; }
+    }
 </style>
 {%- liquid
   assign appstle_app_id = 'appstle'
@@ -209,8 +216,8 @@
                   {%- endfor -%}
                 </select>
                 <span class="asw-select__chevron" aria-hidden="true">
-                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-                    <path d="M1 1.5 L6 6 L11 1.5" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.79171 5.22723C4.68019 5.22723 4.56868 5.18454 4.48374 5.09959L0.127714 0.743573C0.00313165 0.618991 -0.0343301 0.431682 0.0331882 0.268766C0.100271 0.105851 0.259701 0 0.435685 0H9.14773C9.32371 0 9.48314 0.105851 9.55022 0.268766C9.61774 0.431682 9.58028 0.618991 9.4557 0.743573L5.09968 5.09959C5.01473 5.18454 4.90322 5.22723 4.79171 5.22723Z" fill="black"/>
                   </svg>
                 </span>
               </span>
