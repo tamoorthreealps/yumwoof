@@ -149,13 +149,16 @@
         if (e.key === 'Escape' && !this.scrim.hidden) this.closeQuiz();
       });
 
-      // re-sync when the shopper changes the variant (Dawn fires change on the option inputs)
-      this.container.addEventListener('change', (e) => {
-        if (e.target.closest('variant-selects, variant-radios, .product-form__input')) {
-          clearTimeout(this._vt);
-          this._vt = setTimeout(() => this.renderSlot(true), 250);
+      // re-sync when the shopper changes the recipe/size. Dawn updates [name="id"]
+      // asynchronously (it fetches the section), so a fixed delay can read the OLD
+      // variant. Poll until the id actually changes, then recompute.
+      var onVariantTouch = (e) => {
+        if (e.target.closest('variant-selects, variant-radios, .product-form__input, fieldset')) {
+          this.watchVariant();
         }
-      });
+      };
+      this.container.addEventListener('change', onVariantTouch);
+      this.container.addEventListener('click', onVariantTouch);
       // keep instances in sync if dogs change elsewhere
       document.addEventListener('qcalc:dogs-changed', () => {
         this.dogs = loadDogs();
@@ -176,6 +179,21 @@
       var vs = this.cfg.variants || [];
       for (var i = 0; i < vs.length; i++) if (String(vs[i].id) === id) return vs[i];
       return vs[0] || { title: '', id: id };
+    }
+    /* wait for Dawn to actually swap [name="id"] to the new variant, then recompute */
+    watchVariant() {
+      var start = this.currentVariantId();
+      var self = this;
+      var tries = 0;
+      clearInterval(this._poll);
+      this._poll = setInterval(function () {
+        tries++;
+        if (self.currentVariantId() !== start || tries >= 24) {
+          clearInterval(self._poll);
+          if (self.debug) console.log('[qcalc] variant changed →', self.currentVariant().title);
+          self.renderSlot(true);
+        }
+      }, 100);
     }
     /* cups a single bag of the selected variant holds */
     variantCups(variant) {
