@@ -172,6 +172,9 @@
       // asynchronously (it fetches the section), so a fixed delay can read the OLD
       // variant. Poll until the id actually changes, then recompute.
       var onVariantTouch = (e) => {
+        // the quantity stepper is also a .product-form__input — nudging it must
+        // NOT be treated as a variant change (it would reset the manual quantity).
+        if (e.target.closest('.product-form__quantity')) return;
         if (e.target.closest('variant-selects, variant-radios, .product-form__input, fieldset')) {
           this.watchVariant();
         }
@@ -202,10 +205,18 @@
       clearInterval(this._poll);
       this._poll = setInterval(function () {
         tries++;
-        if (self.currentVariantId() !== start || tries >= 24) {
+        var changed = self.currentVariantId() !== start;
+        if (changed || tries >= 24) {
           clearInterval(self._poll);
-          if (self.debug) console.log('[qcalc] variant changed →', self.currentVariant().title);
-          self.renderSlot(true);
+          if (changed) {
+            // bag size changed → re-sync the recommended quantity
+            if (self.debug) console.log('[qcalc] variant changed →', self.currentVariant().title);
+            self.renderSlot(true);
+          } else {
+            // no variant change (e.g. re-selecting the current option) → keep the
+            // shopper's quantity, just refresh the coverage line
+            self.renderCoverage();
+          }
         }
       }, 100);
     }
