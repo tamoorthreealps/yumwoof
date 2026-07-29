@@ -73,6 +73,17 @@
   margin: 0;
 }
 
+.recipe-view-ingredients {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: #661D1D;
+    font-family: 'Matter';
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0;
+}
+
 /* ---------- Recipe image swatches ---------- */
 .product-form__input--recipe {
   margin-bottom: 1.6rem;
