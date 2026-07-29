@@ -579,7 +579,6 @@
                       block: block,
                       product_form_id: product_form_id
                     %}
-                    {% render 'ingridients-popup' %}
                   {%- when 'buy_buttons' -%}
                     {%- render 'buy-buttons',
                       block: block,
@@ -842,6 +841,8 @@
     </div>
   </product-component>
 </product-info>
+
+{% render 'ingridients-popup' %}
 
 {% schema %}
 {
