@@ -77,9 +77,9 @@
     }
     .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; }
 
-    .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
-    .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 14px; line-height: 20px; }
-    .asw-benefit__check { flex: 0 0 auto; margin-top: 3px; display: flex; }
+    .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
+    .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
+    .asw-benefit__check { flex: 0 0 auto; margin-top: 7px; display: flex; }
 
     /* Collapse the subscription details when the shopper picks one-time */
     .asw-option--sub:not(.is-selected) .asw-option__delivery,
@@ -230,8 +230,8 @@
                   {%- if bt != blank -%}
                     <span class="asw-benefit">
                       <span class="asw-benefit__check" aria-hidden="true">
-                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
-                          <path d="M1 6.5 L5 10.5 L13 1.5" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.6642 0C13.8339 0.00219528 13.9072 0.0972231 13.9966 0.227983C13.9996 0.325936 14.016 0.424169 13.9366 0.495877C13.3254 1.04129 12.4992 1.50301 11.833 1.97663C8.43276 4.39418 5.67369 7.69773 3.6665 11.3592C3.33852 11.9575 2.01104 12.2578 1.46527 11.7192C0.469308 10.7364 0.149357 8.93597 0.022637 7.57851C-0.00648618 6.82084 -0.0497088 5.81936 0.199456 5.09854C0.291853 4.83131 0.696688 4.56507 0.973647 4.72271C1.33809 4.93021 1.39518 5.58751 1.50994 5.96194C1.81082 7.22335 2.0905 8.47414 2.50735 9.70379C4.55025 5.92469 9.52366 1.24929 13.6642 0Z" fill="black"/>
                         </svg>
                       </span>
                       <span class="asw-benefit__text">{{ bt }}</span>
