@@ -8,24 +8,32 @@
  * age and name; dogs persist until removed and multiple dogs are summed.
  */
 (function () {
-  var DOGS_KEY = 'yumwoof_qcalc_dogs';
-
-  /* ---------- shared dog store (localStorage) ---------- */
-  function loadDogs() {
+  // Dogs are saved PER PRODUCT (quantity is sized to each product's own feeding
+  // table) and expire after 7 days.
+  var STORE_PREFIX = 'yumwoof_qcalc_p';
+  var TTL_MS = 7 * 24 * 60 * 60 * 1000;
+  function storeKey(pid) {
+    return STORE_PREFIX + pid;
+  }
+  function loadDogs(pid) {
     try {
-      var raw = localStorage.getItem(DOGS_KEY);
-      var arr = raw ? JSON.parse(raw) : [];
-      return Array.isArray(arr) ? arr : [];
+      var raw = localStorage.getItem(storeKey(pid));
+      if (!raw) return [];
+      var obj = JSON.parse(raw);
+      if (!obj || !obj.ts || Date.now() - obj.ts > TTL_MS) {
+        localStorage.removeItem(storeKey(pid));
+        return [];
+      }
+      return Array.isArray(obj.dogs) ? obj.dogs : [];
     } catch (e) {
       return [];
     }
   }
-  function saveDogs(dogs) {
+  function saveDogs(pid, dogs) {
     try {
-      localStorage.setItem(DOGS_KEY, JSON.stringify(dogs));
+      if (!dogs || !dogs.length) localStorage.removeItem(storeKey(pid));
+      else localStorage.setItem(storeKey(pid), JSON.stringify({ dogs: dogs, ts: Date.now() }));
     } catch (e) {}
-    // let other <quantity-calculator> instances on the page react
-    document.dispatchEvent(new CustomEvent('qcalc:dogs-changed'));
   }
 
   /* ---------- helpers ---------- */
@@ -124,6 +132,7 @@
       if (this.debug) console.log('[qcalc] config parsed', JSON.parse(JSON.stringify(this.cfg)));
 
       this.sectionId = this.getAttribute('data-section');
+      this.productId = this.getAttribute('data-product');
       this.slotEl = this.querySelector('[data-qcalc-slot]');
       this.scrim = this.querySelector('[data-qz-scrim]');
       this.body = this.querySelector('[data-qz-body]');
@@ -131,13 +140,18 @@
       this.backBtn = this.querySelector('[data-qz-back]');
       this.container = this.closest('.shopify-section, section, product-info') || document;
 
-      this.dogs = loadDogs();
+      // Move the modal to <body> so position:fixed centres on the viewport — an
+      // ancestor transform (theme animations) otherwise makes it a containing
+      // block and the modal lands off-centre inside the buy column.
+      if (this.scrim.parentNode !== document.body) document.body.appendChild(this.scrim);
+
+      this.dogs = loadDogs(this.productId);
       this.draft = null;
       this.editIdx = null;
       this.step = 0;
 
       // modal chrome
-      this.querySelector('[data-qz-close]').addEventListener('click', this.closeQuiz.bind(this));
+      this.scrim.querySelector('[data-qz-close]').addEventListener('click', this.closeQuiz.bind(this));
       this.backBtn.addEventListener('click', () => {
         this.step = Math.max(0, this.step - 1);
         this.drawStep();
@@ -147,6 +161,11 @@
       });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !this.scrim.hidden) this.closeQuiz();
+      });
+
+      // recompute the coverage line when the shopper nudges the quantity stepper
+      this.container.addEventListener('change', (e) => {
+        if (e.target.closest('.product-form__quantity')) this.renderCoverage();
       });
 
       // re-sync when the shopper changes the recipe/size. Dawn updates [name="id"]
@@ -159,11 +178,6 @@
       };
       this.container.addEventListener('change', onVariantTouch);
       this.container.addEventListener('click', onVariantTouch);
-      // keep instances in sync if dogs change elsewhere
-      document.addEventListener('qcalc:dogs-changed', () => {
-        this.dogs = loadDogs();
-        this.renderSlot(true);
-      });
 
       this.renderSlot(true);
     }
@@ -258,6 +272,7 @@
           '<span class="qcalc__cta-arrow" aria-hidden="true">&rarr;</span>' +
           '</button>';
         this.slotEl.querySelector('[data-open]').addEventListener('click', () => this.openQuiz(null));
+        this.renderCoverage();
         return;
       }
 
@@ -308,11 +323,93 @@
       this.slotEl.querySelector('[data-add]').addEventListener('click', () => this.openQuiz(null));
 
       if (syncQuantity) this.syncQty(p.qty);
+      this.renderCoverage();
+    }
+
+    /* names joined for the coverage line ("Bella", "Bella & Max", …) */
+    dogNames() {
+      var names = this.dogs.filter((d) => d.name).map((d) => d.name);
+      if (!names.length) return '';
+      if (names.length === 1) return names[0];
+      if (names.length === 2) return names[0] + ' & ' + names[1];
+      return names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1];
+    }
+
+    qtyInputValue() {
+      var input =
+        document.getElementById('Quantity-' + this.sectionId) ||
+        (this.container.querySelector && this.container.querySelector('.quantity__input'));
+      return input ? Math.max(1, parseInt(input.value, 10) || 1) : 1;
+    }
+
+    /* how the CURRENT quantity lands against the delivery cycle */
+    coverage(qty) {
+      var v = this.currentVariant();
+      var vc = this.variantCups(v);
+      var daily = this.totalDailyCups();
+      var cadence = this.cfg.cadenceDays || 28;
+      if (!daily || !vc) return null;
+      var days = Math.round((qty * vc) / daily);
+      var fitQty = Math.max(1, Math.ceil((daily * cadence) / vc));
+      var gap = days - cadence;
+      var base = { days: days, names: this.dogNames(), fixQty: fitQty };
+      if (gap < -0.5)
+        return Object.assign(base, { warn: true, mark: '! ', text: 'Runs out ' + Math.round(-gap) + ' days before the next delivery' });
+      if (gap > cadence * 0.6)
+        return Object.assign(base, { warn: false, mark: '✓ ', text: Math.round(gap) + ' days spare every cycle — it’ll pile up' });
+      return Object.assign(base, {
+        warn: false,
+        mark: '✓ ',
+        text: 'Covers your ' + Math.round(cadence / 7) + '-week cycle' + (gap > 1 ? ', ' + Math.round(gap) + ' days spare' : ''),
+      });
+    }
+
+    /* inject the "N days of food / coverage" cell beside the theme stepper */
+    renderCoverage() {
+      var block = this.container.querySelector && this.container.querySelector('.product-form__quantity');
+      if (!block) return;
+      var qi = block.querySelector('quantity-input.quantity') || block.querySelector('.quantity');
+      if (!qi) return;
+      var box = block.querySelector('.qcalc-qtybox');
+      var cov = this.dogs.length ? this.coverage(this.qtyInputValue()) : null;
+
+      if (!cov) {
+        // unwrap: put the stepper back where it was and drop the box
+        if (box) {
+          box.parentNode.insertBefore(qi, box);
+          box.remove();
+        }
+        block.classList.remove('qcalc-qty--lead');
+        return;
+      }
+      block.classList.add('qcalc-qty--lead');
+      if (!box) {
+        box = document.createElement('div');
+        box.className = 'qcalc-qtybox';
+        qi.parentNode.insertBefore(box, qi);
+        box.appendChild(qi); // move the stepper into the box (left cell)
+        var infoNew = document.createElement('div');
+        infoNew.className = 'qcalc-qty__info';
+        box.appendChild(infoNew);
+      }
+      var info = box.querySelector('.qcalc-qty__info');
+      info.innerHTML =
+        '<span class="qcalc-qty__lead"><b>' + cov.days + ' days</b> of food' +
+        (cov.names ? ' for ' + esc(cov.names) : '') + '</span>' +
+        '<span class="qcalc-qty__cover' + (cov.warn ? ' warn' : '') + '">' +
+        cov.mark +
+        esc(cov.text) +
+        (cov.fixQty && cov.fixQty !== this.qtyInputValue()
+          ? ' · <button type="button" data-fix="' + cov.fixQty + '">Send ' + cov.fixQty + '</button>'
+          : '') +
+        '</span>';
+      var fix = info.querySelector('[data-fix]');
+      if (fix) fix.addEventListener('click', () => this.syncQty(+fix.dataset.fix));
     }
 
     removeDog(i) {
       this.dogs.splice(i, 1);
-      saveDogs(this.dogs);
+      saveDogs(this.productId, this.dogs);
       this.renderSlot(true);
     }
 
@@ -462,7 +559,7 @@
       if (!this.draft.name) return;
       if (this.editIdx != null) this.dogs[this.editIdx] = Object.assign({}, this.draft);
       else this.dogs.push(Object.assign({}, this.draft));
-      saveDogs(this.dogs);
+      saveDogs(this.productId, this.dogs);
       this.renderSlot(true);
       if (addAnother) {
         this.openQuiz(null);

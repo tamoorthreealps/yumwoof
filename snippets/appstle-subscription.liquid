@@ -16,21 +16,19 @@
   .asw { display: block; width: 100%; color: #000; font-family: var(--font-body-family, inherit); }
   .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
 
-  .asw__banner {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    min-height: 40px; padding: 8px 16px; background: #3A8450;
-    border: 1px solid #3A8450; border-radius: 12px 12px 0 0;
-  }
-  .asw__banner-text {
-    font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
-    font-size: 16px; line-height: 24px; text-transform: uppercase;
-    letter-spacing: -1.28px; color: #FFF9EF;
-  }
-  .asw__banner-right { text-align: right; white-space: nowrap; }
-
-  .asw-option { background: #fff; border: 1px solid #000; border-top: 0; }
-  .asw-option--one { border-radius: 0 0 12px 12px; }
+  .asw-option { background: #fff; border: 1px solid #000; }
+  .asw-option--sub { border-radius: 12px 12px 0 0; }
+  .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
   .asw-option.is-selected { background: #E6E0D7; }
+
+  .asw-option__title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .asw__save-pill {
+    display: inline-flex; align-items: center;
+    background: #FFC069; color: #1A1A1A;
+    font-family: 'FFBlurProMedium', var(--font-body-family, sans-serif);
+    font-size: 11px; line-height: 1; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 10px 3px; border-radius: 999px; white-space: nowrap;
+  }
 
   .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
   .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -71,7 +69,6 @@
   .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
 
   @media (max-width: 749px) {
-    .asw__banner-text { font-size: 13px; letter-spacing: -0.8px; }
     .asw-option__benefits { grid-template-columns: 1fr; }
   }
 </style>
@@ -134,10 +131,10 @@
 
       assign benefits = product.metafields.custom.subscription_benefits.value
       if benefits == blank
-        assign benefits = 'Free shipping on every order,Save on every delivery,Skip or swap anytime,Cancel whenever you like' | split: ','
+        assign benefits = 'Sized to your dog,Swap recipe anytime,Modify or Cancel Anytime,Your price stays locked' | split: ','
       endif
 
-      assign sub_title = product.metafields.custom.subscription_title.value | default: 'Stay Stocked'
+      assign sub_title = product.metafields.custom.subscription_title.value | default: 'Autoship'
       assign sub_subtitle = product.metafields.custom.subscription_subtitle.value | default: 'Delivered on your schedule. Skip, swap, or cancel anytime.'
       assign onetime_subtitle = product.metafields.custom.onetime_subtitle.value | default: 'A single delivery. No subscription.'
       assign currency_symbol = localization.country.currency.symbol | default: '$'
@@ -150,32 +147,25 @@
       data-saving-cents="{{ saving_per_bag }}"
       data-currency-symbol="{{ currency_symbol }}"
     >
-      {%- if saving_per_bag > 0 -%}
-        <div class="asw__banner">
-          <span class="asw__banner-text asw__banner-left">
-            {{- saving_per_bag | money_without_trailing_zeros }} off every bag<span
-              class="asw__banner-year"
-              data-asw-year
-            ></span>
-          </span>
-          <span class="asw__banner-text asw__banner-right">You save {{ sub_percent }}%</span>
-        </div>
-      {%- endif -%}
-
       {%- comment -%} ---------- Subscription option ---------- {%- endcomment -%}
       <div class="asw-option asw-option--sub is-selected">
         <label class="asw-option__label">
           <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="subsave" checked>
           <span class="asw-option__radio-icon" aria-hidden="true">
             <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z" stroke="#000" stroke-width="1.5"/>
-              <path class="asw-fill" d="M12 7 L17 12 L12 17 L7 12 Z" fill="#000"/>
+              <circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5"/>
+              <circle class="asw-fill" cx="12" cy="12" r="5.5" fill="#000"/>
             </svg>
           </span>
           <span class="asw-option__body">
             <span class="asw-option__head">
               <span class="asw-option__titles">
-                <span class="asw-option__title">{{ sub_title }}</span>
+                <span class="asw-option__title-row">
+                  <span class="asw-option__title">{{ sub_title }}</span>
+                  {%- if sub_percent > 0 -%}
+                    <span class="asw__save-pill">Save {{ sub_percent }}%</span>
+                  {%- endif -%}
+                </span>
                 {%- if sub_subtitle != blank -%}
                   <span class="asw-option__subtitle">{{ sub_subtitle }}</span>
                 {%- endif -%}
@@ -243,8 +233,8 @@
           <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="onetime">
           <span class="asw-option__radio-icon" aria-hidden="true">
             <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z" stroke="#000" stroke-width="1.5"/>
-              <path class="asw-fill" d="M12 7 L17 12 L12 17 L7 12 Z" fill="#000"/>
+              <circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5"/>
+              <circle class="asw-fill" cx="12" cy="12" r="5.5" fill="#000"/>
             </svg>
           </span>
           <span class="asw-option__body">
