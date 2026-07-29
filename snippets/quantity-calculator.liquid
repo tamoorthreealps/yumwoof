@@ -28,17 +28,18 @@
     <script type="application/json" data-qcalc-config>
       {
         "cadenceDays": 28,
+        {%- comment -%} number_decimal metaobject fields are strings; times:1.0 emits real JSON numbers {%- endcomment -%}
         "table": {
-          "cupsPerBag": {{ ft.cups_per_bag | default: 0 | json }},
-          "fullBagOz": {{ ft.full_bag_weight_oz | default: 0 | json }},
-          "trialBagOz": {{ ft.trial_bag_weight_oz | default: 0 | json }},
+          "cupsPerBag": {{ ft.cups_per_bag | times: 1.0 }},
+          "fullBagOz": {{ ft.full_bag_weight_oz | times: 1.0 }},
+          "trialBagOz": {{ ft.trial_bag_weight_oz | times: 1.0 }},
           "bands": [
             {%- for band in ft.title_bands.value -%}
               {
-                "minW": {{ band.min_weight_lb | default: 0 | json }},
-                "maxW": {{ band.max_weight_lb | default: 0 | json }},
-                "minC": {{ band.min_cups | default: 0 | json }},
-                "maxC": {{ band.max_cups | default: 0 | json }}
+                "minW": {{ band.min_weight_lb | times: 1.0 }},
+                "maxW": {{ band.max_weight_lb | times: 1.0 }},
+                "minC": {{ band.min_cups | times: 1.0 }},
+                "maxC": {{ band.max_cups | times: 1.0 }}
               }{%- unless forloop.last -%},{%- endunless -%}
             {%- endfor -%}
           ]
