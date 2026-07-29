@@ -110,6 +110,19 @@
       }
       if (!this.cfg || !this.cfg.table || !this.cfg.table.bands.length) return;
 
+      // Shopify number_decimal metaobject fields come through as strings
+      // ("20.0", "0.2"); coerce every table number so the math is real.
+      var t = this.cfg.table;
+      t.cupsPerBag = Number(t.cupsPerBag) || 0;
+      t.fullBagOz = Number(t.fullBagOz) || 0;
+      t.trialBagOz = Number(t.trialBagOz) || 0;
+      t.bands = t.bands.map(function (b) {
+        return { minW: Number(b.minW), maxW: Number(b.maxW), minC: Number(b.minC), maxC: Number(b.maxC) };
+      });
+
+      this.debug = /[?&]qcalc(debug)?=1/.test(location.search) || window.QCALC_DEBUG === true;
+      if (this.debug) console.log('[qcalc] config parsed', JSON.parse(JSON.stringify(this.cfg)));
+
       this.sectionId = this.getAttribute('data-section');
       this.slotEl = this.querySelector('[data-qcalc-slot]');
       this.scrim = this.querySelector('[data-qz-scrim]');
@@ -183,7 +196,27 @@
       var cadence = this.cfg.cadenceDays || 28;
       var qty = vc > 0 && daily > 0 ? Math.max(1, Math.ceil((daily * cadence) / vc)) : 1;
       var daysPerBag = vc > 0 && daily > 0 ? Math.round(vc / daily) : 0;
-      return { variant: v, variantCups: vc, daily: daily, qty: qty, daysPerBag: daysPerBag, cadence: cadence };
+      var p = { variant: v, variantCups: vc, daily: daily, qty: qty, daysPerBag: daysPerBag, cadence: cadence };
+      if (this.debug) {
+        var bands = this.cfg.table.bands;
+        console.groupCollapsed('[qcalc] plan → ' + qty + ' × ' + bagLabelFromTitle(v.title));
+        console.log('variant:', v.title, '| bag oz:', bagOzFromTitle(v.title), '| fullBagOz:', this.cfg.table.fullBagOz, '| cupsPerBag(full):', this.cfg.table.cupsPerBag);
+        console.log('variant cups/bag =', vc);
+        console.table(
+          this.dogs.map(function (d) {
+            return {
+              name: d.name, weight: d.weight, stage: d.stage,
+              cupsPerDay_base: cupsPerDay(d.weight, bands),
+              dailyCups: dailyCups(d, bands),
+            };
+          })
+        );
+        console.log('total daily cups =', daily, '| cadence days =', cadence);
+        console.log('qty = ceil(daily × cadence / variantCups) = ceil(' + daily + ' × ' + cadence + ' / ' + vc + ') =', qty);
+        console.log('days per bag = round(variantCups / daily) =', daysPerBag);
+        console.groupEnd();
+      }
+      return p;
     }
 
     /* push the recommended quantity into Dawn's quantity input */
