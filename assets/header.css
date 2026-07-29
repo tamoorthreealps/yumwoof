@@ -113,30 +113,31 @@
    Navbar shell
    -------------------------------------------------------------------------- */
 .yw-nav-outer {
-  margin: 0 auto;
-  position: relative;
-  background: #fff9efcc;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-bottom: 1.5px solid var(--yw-nav-border);
-  border-top: 1.5px solid var(--yw-nav-border);
-}
-
-body.is-open .yw-nav-outer {
-  background-color: #fff9ef;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+    max-width: 151.2rem;
+    margin: 0 auto;
+    padding: 1.6rem 3.2rem 0;
+    position: relative;
 }
 .yw-nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 2.4rem;
-  padding: 0 6rem;
-  border-radius: 0;
   max-width: 151.2rem;
   margin: 0 auto;
+  padding: 0 28px;
   border-left: 0;
+  background: #fff9efcc;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--yw-nav-border);
+  border-radius: 8px;
+}
+
+body.is-open .yw-nav {
+  background-color: #fff9ef;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -173,19 +174,20 @@ body.is-open .yw-nav-outer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.8rem 2.782rem 1.8rem;
-  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/header--btn--bg.svg?v=1784725113") center / 100% 100% no-repeat;
+  padding: 1.12rem 2.665rem;
   color: var(--yw-cta-text);
-  font-family: "FFBlurProMedium";
-  font-size: 1.2rem;
+  font-family: FFBlurProMedium;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  line-height: 16px;
-  transition: transform 0.15s ease;
-  border:0;
+  transition: transform .15s ease;
+  background: #FEC068;
+  border: 1.5px solid var(--yw-nav-border);
+  border-radius: 10px;
 }
 
 .yw-nav__cta:hover {
@@ -319,7 +321,7 @@ body.is-open .yw-nav-outer {
   position: static;
   display: flex;
   align-items: center;
-  padding: 11.2px 0;
+  padding: 1.32rem 0;
 }
 
 .yw-mega {
@@ -328,7 +330,7 @@ body.is-open .yw-nav-outer {
   right: 0;
   top: 100%;
   z-index: -1;
-  padding:16px 16px 0;
+  padding:16px 32px 0;
   transform: translateY(-150%);
   transition: transform .6s cubic-bezier(.22,.61,.36,1),
               visibility 0s linear .35s;
@@ -349,7 +351,7 @@ body.is-open .yw-nav-outer {
   padding: 4.8rem 9.6rem;
   background: rgba(255, 249, 239, 0.85);
   border-radius: 24px;
-  max-width: 1392px;
+  max-width: 1448px;
   margin: 0 auto;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -818,17 +820,15 @@ display: flex;
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 991px) {
       .yw-nav-outer {
-        padding: 6.4px 16px 4px;
         margin: 8px 8px 0;
-        border-radius: 8px;
-        border: 1.5px solid var(--yw-nav-border);
+        padding: 0;
     }
     .yw-nav__logo {
       margin:0 0 0 30px;
     }
   .yw-nav {
     grid-template-columns: auto 1fr auto;
-    padding: 0;
+    padding: 6.4px 16px 4px;
   }
 
   .yw-nav__toggle {
