@@ -1,0 +1,90 @@
+<div class="ym-guarantee-ribbon">
+  <div class="ym-guarantee-ribbon__content">
+    <h3 class="ym-guarantee-ribbon__title">
+      21-Day First Bag Guarantee
+    </h3>
+    <p class="ym-guarantee-ribbon__text">
+      Money back if your dog doesn't love it
+    </p>
+  </div>
+</div>
+
+
+
+<style>
+.ym-guarantee-ribbon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 50px;
+  background: #f4ddb0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.ym-guarantee-ribbon::before,
+.ym-guarantee-ribbon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 42px;
+  height: 100%;
+  background: #f8f4ec;
+}
+
+.ym-guarantee-ribbon::before {
+  left: 0;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.ym-guarantee-ribbon::after {
+  right: 0;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.ym-guarantee-ribbon__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.ym-guarantee-ribbon__title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #171717;
+}
+
+.ym-guarantee-ribbon__text {
+  margin: 10px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #6f675d;
+}
+
+@media (max-width: 767px) {
+  .ym-guarantee-ribbon {
+    padding: 18px 30px;
+  }
+
+  .ym-guarantee-ribbon::before,
+  .ym-guarantee-ribbon::after {
+    width: 28px;
+  }
+
+  .ym-guarantee-ribbon__title {
+    font-size: 24px;
+  }
+
+  .ym-guarantee-ribbon__text {
+    margin-top: 6px;
+    font-size: 15px;
+  }
+}
+</style>
