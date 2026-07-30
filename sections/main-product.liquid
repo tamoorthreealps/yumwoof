@@ -822,6 +822,17 @@
 
 {% render 'ingridients-popup' %}
 
+{% comment %} videos--reviews--popup--html {% endcomment %}
+ <div class="ek-video-popup">
+  <div class="ek-video-popup__inner">
+    <button class="ek-video-popup__close" type="button">&times;</button>
+
+    <video controls playsinline>
+      <source src="" type="video/mp4">
+    </video>
+  </div>
+</div>
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",
