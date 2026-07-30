@@ -131,6 +131,13 @@
     <p class="yumw-video--title">WHY PET PARENTS LOVE IT</p>
     <div class="yumw-video-grid">
       {% for media in product.metafields.custom.review_videos.value %}
+        {{ media | json }}
+<br>
+{{ media.url }}
+<br>
+
+{{ media | file_url }}
+<br>
         <div
           class="yumw-video-card"
           data-video="{{ media | file_url }}"
