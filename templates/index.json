@@ -167,19 +167,12 @@
         "button_label": "See our standards →",
         "button_label_mobile": "See our standards →",
         "button_link": "",
-        "bowl_image": "shopify://shop_images/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.png",
-        "hexagon_image": "shopify://shop_images/hexagone_img.svg",
-        "hexagon_bg_mobile": "shopify://shop_images/USP_Shape.svg",
-        "ingredient_1_image": "shopify://shop_images/f1.png",
         "ingredient_1_title": "Premium protein",
         "ingredient_1_text": "Wild-caught fish, locally sourced, non-GMO",
-        "ingredient_2_image": "shopify://shop_images/f2.png",
         "ingredient_2_title": "Cocomega superfats",
         "ingredient_2_text": "Healthy fats to support microbiome and gut health",
-        "ingredient_3_image": "shopify://shop_images/f3.png",
         "ingredient_3_title": "Gently air-dried",
         "ingredient_3_text": "Low-temp drying helps preserve nutrients + flavor",
-        "ingredient_4_image": "shopify://shop_images/f4.png",
         "ingredient_4_title": "Ancestral nutrition",
         "ingredient_4_text": "Packed with organs rich in bioavailable nutrients",
         "nono_heading": "The no-no list",
@@ -188,14 +181,9 @@
         "marquee_speed": 20,
         "background_color": "#fff9ef",
         "mobile_background_color": "#fff9ef",
-        "background_image": "shopify://shop_images/BG.png",
-        "background_image_mobile": "shopify://shop_images/BG_1.png",
         "text_color": "#000000",
         "card_background": "#ffffff",
-        "card_border": "#000000",
-        "kibble_image_1": "shopify://shop_images/heritage_icon_1.png",
-        "kibble_image_2": "shopify://shop_images/heritage_icon_2.png",
-        "kibble_image_3": "shopify://shop_images/heritage_icon_3.png"
+        "card_border": "#000000"
       }
     },
     "founder_section": {
@@ -204,11 +192,8 @@
         "heading": "Clean ingredients from farms we trust.",
         "uppercase_heading": true,
         "body": "<p>Your dog's food is our life's work. Yumwoof was built by people who care deeply about what goes into the bowl and what it does next. That's why we use carefully sourced meats, wild-caught fish, and non-GMO whole food ingredients selected to meet our Butcher Quality™ standards.</p><p>Every recipe is air-dried for optimal nutrition and lab tested beyond industry standards for safety and quality — so you can feed your dog with confidence.</p>",
-        "signature_image": "shopify://shop_images/signature.svg",
         "signature_name": "Jaron & Ana",
         "signature_title": "Founders",
-        "image": "shopify://shop_images/Additional_Image_96167b69-c74d-498e-8a05-5e4c0533ad99.png",
-        "badge_image": "shopify://shop_images/yumwoof-badge.svg",
         "image_position": "left",
         "image_radius": 32,
         "background_color": "#fff9ef",
@@ -283,14 +268,9 @@
         "subheading": "Cooked at low temperatures to preserve whole food nutrition and flavor.",
         "brand_label": "Air-Dried",
         "brand_logo": "shopify://shop_images/yumwoof.svg",
-        "brand_logo_mobile": "shopify://shop_images/yumwoof_mobile.svg",
-        "brand_icon": "shopify://shop_images/table__yumwoof_icon_33ab7e7a-133c-4d59-9a2d-348d5bc3f511.png",
         "comp1_label": "Dry Kibble",
-        "comp1_icon": "shopify://shop_images/dry-kibble.png",
         "comp2_label": "Raw",
-        "comp2_icon": "shopify://shop_images/raw.png",
         "comp3_label": "Fresh",
-        "comp3_icon": "shopify://shop_images/fresh.png",
         "background_color": "#fff9ef",
         "text_color": "#000000",
         "highlight_color": "#c8912a",
@@ -357,9 +337,7 @@
         "stats_title": "What Yumwoof pet parents noticed",
         "stats_note": "*Based on Yumwoof Customer Survey",
         "background_color": "#fff9ef",
-        "text_color": "#fff9ef",
-        "background_image": "shopify://shop_images/Rectangle_24.png",
-        "background_image_mobile": "shopify://shop_images/Quality_Results_Background.png"
+        "text_color": "#fff9ef"
       }
     },
     "cocomega_section": {
@@ -371,8 +349,6 @@
         "button_label": "Explore Cocomega →",
         "button_label_mobile": "Explore Cocomega",
         "button_link": "",
-        "image": "shopify://shop_images/Additional_Image_1.png",
-        "badge_image": "shopify://shop_images/cocomega-badge.svg",
         "image_position": "right",
         "image_radius": 32,
         "background_color": "#fff9ef",
@@ -385,7 +361,6 @@
         "perk_EBxbWR": {
           "type": "perk",
           "settings": {
-            "icon": "shopify://shop_images/Membership_Image.png",
             "title": "25% off every order",
             "subtitle": "Member rate on food"
           }
@@ -393,7 +368,6 @@
         "perk_W4je7p": {
           "type": "perk",
           "settings": {
-            "icon": "shopify://shop_images/Membership_Image.png",
             "title": "Free shipping",
             "subtitle": "On every membership order"
           }
@@ -401,7 +375,6 @@
         "perk_q3zz67": {
           "type": "perk",
           "settings": {
-            "icon": "shopify://shop_images/Membership_Image.png",
             "title": "Exclusive perks",
             "subtitle": "Members-only benefits"
           }
@@ -419,13 +392,11 @@
         "description": "<p>Become a member to save <strong>25% on every order</strong>, avoid a year of inflation, and enjoy exclusive benefits.</p>",
         "button_label": "Explore Membership →",
         "button_link": "",
-        "image": "shopify://shop_images/image_52.png",
         "image_position": "left",
         "uppercase_perk_title": true,
         "autoplay": true,
         "autoplay_speed": 5,
         "background_color": "#fff9ef",
-        "background_image": "shopify://shop_images/Additional_Image.png",
         "card_background": "#fff9ef",
         "text_color": "#000000",
         "accent_color": "#661d1d"
@@ -435,16 +406,12 @@
       "type": "quiz-section",
       "name": "Quiz call to action",
       "settings": {
-        "background_image": "shopify://shop_images/Membership_Section_Background.png",
-        "background_image_mobile": "shopify://shop_images/Quiz_CTA_Background.png",
         "heading": "Your dog's food is our life's work.",
         "uppercase_heading": true,
         "subheading": "Take our quiz to find the recipe that's right for your dog.",
         "button_label": "Take the quiz",
         "button_link": "",
         "offer_text": "Get 30% Off and Free Shipping.",
-        "decor_left": "shopify://shop_images/Group_82.png",
-        "decor_right": "shopify://shop_images/Group_83_1.png",
         "background_color": "#fff9ef",
         "text_color": "#fff9ef"
       }
