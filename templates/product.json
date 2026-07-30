@@ -66,7 +66,17 @@
         },
         "guarantee_ribbon_NUFwfW": {
           "type": "guarantee-ribbon",
-          "settings": {}
+          "settings": {
+            "heading": "21-Day First Bag Guarantee",
+            "text": "Money back if your dog doesn't love it",
+            "background_image": "shopify://shop_images/Background.png",
+            "background_color": "#cb890040",
+            "ribbon_color": "#fff9ef",
+            "heading_color": "#000000",
+            "text_color": "#3F4042",
+            "padding_top_bottom": 12,
+            "padding_left_right": 50
+          }
         },
         "description": {
           "type": "description",
