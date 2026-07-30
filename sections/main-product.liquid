@@ -468,6 +468,9 @@
                             {%- endif -%}
                           </price-per-item>
                         {%- endif -%}
+                        <div {{ block.shopify_attributes }}>
+                      {%- render 'quantity-calculator', product: product, section_id: section.id -%}
+                    </div>
                       </div>
                       <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
                         {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
