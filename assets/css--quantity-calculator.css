@@ -34,6 +34,7 @@ font-family: 'TAY Birdie';
     outline: none;
     box-shadow: inherit;
     width: 140px;
+    flex: 0 0 140px;
     min-height: 64px;
     background: #fff;
     gap: 6px;
@@ -69,6 +70,7 @@ font-family: 'TAY Birdie';
 /* ---------------- calculator block ---------------- */
 .component--quantity-calculator {
     width: 100%;
+    flex:1;
 }
 
 .qcalc {
