@@ -378,6 +378,8 @@
 .product--main .product--main--grid .product__media-wrapper {
     width: 51.725%;
     max-width: 51.725%;
+        position: sticky;
+    top: 120px;
 }
 
 .product--main .product--main--grid .product__info-wrapper {
