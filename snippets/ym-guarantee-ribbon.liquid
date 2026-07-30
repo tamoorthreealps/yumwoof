@@ -1,14 +1,13 @@
 <div
   class="ym-guarantee-ribbon"
   style="
-    --ribbon-color: {{ block.settings.ribbon_color }};
-
     {% if block.settings.background_image != blank %}
       background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     {% else %}
+     --ribbon-color: {{ block.settings.ribbon_color }};
       background-color: {{ block.settings.background_color }};
     {% endif %}
   "
