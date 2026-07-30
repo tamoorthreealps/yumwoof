@@ -133,18 +133,11 @@
       {% for media in product.metafields.custom.review_videos.value %}
         <div
           class="yumw-video-card"
-          data-video="{{ media.url }}"
+          data-video="{{ media | file_url }}"
         >
-          {{
-            media
-            | video_tag:
-              autoplay: true,
-              loop: true,
-              muted: true,
-              controls: false,
-              playsinline: true,
-              preload: 'metadata'
-          }}
+          <video autoplay muted loop playsinline preload="metadata">
+            <source src="{{ media | file_url }}" type="video/mp4">
+          </video>
 
           <button class="yumw-video-play" type="button">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
