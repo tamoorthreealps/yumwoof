@@ -81,6 +81,10 @@
             "ribbon_color": "#fff9ef"
           }
         },
+        "pdp_videos_azzcwK": {
+          "type": "pdp-videos",
+          "settings": {}
+        },
         "description": {
           "type": "description",
           "disabled": true,
@@ -107,6 +111,7 @@
         "appstle_subscription_qkkVmJ",
         "buy_buttons",
         "guarantee_ribbon_NUFwfW",
+        "pdp_videos_azzcwK",
         "description",
         "share"
       ],
