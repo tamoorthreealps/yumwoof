@@ -587,8 +587,10 @@
                       section_id: section.id,
                       show_pickup_availability: true
                     -%}
-                    {%- when 'guarantee-ribbon' -%}
-                      {% render 'ym-guarantee-ribbon' %}
+
+                  {%- when 'guarantee-ribbon' -%}
+                    {% render 'ym-guarantee-ribbon' %}
+
                   {%- when 'rating' -%}
                     {%- if product.metafields.reviews.rating.value != blank -%}
                       <div class="rating-wrapper">
