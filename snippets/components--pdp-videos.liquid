@@ -150,44 +150,65 @@
 
 
 <script>
-    const videoCards = document.querySelectorAll(".yumw-video-card");
-const popup = document.querySelector(".yumw-video-popup");
-const popupClose = document.querySelector(".yumw-video-popup__close");
-const video = popup.querySelector("video");
-const source = video.querySelector("source");
+document.addEventListener("DOMContentLoaded", function () {
 
-videoCards.forEach(card => {
-    card.addEventListener("click", () => {
-        source.src = card.dataset.video;
-        video.load();
+    const popup = document.querySelector(".yumw-video-popup");
 
-        popup.classList.add("active");
+    if (!popup) {
+        console.error("Popup not found");
+        return;
+    }
 
-        video.play().catch(() => {});
+    const popupClose = popup.querySelector(".yumw-video-popup__close");
+    const video = popup.querySelector("video");
+    const source = popup.querySelector("source");
+
+    document.addEventListener("click", function (e) {
+
+        const card = e.target.closest(".yumw-video-card");
+
+        if (card) {
+
+            e.preventDefault();
+
+            const videoSrc = card.dataset.video;
+
+            if (!videoSrc) return;
+
+            source.src = videoSrc;
+            video.load();
+
+            popup.classList.add("active");
+
+            video.play().catch(() => {});
+
+            return;
+        }
+
+        if (e.target.closest(".yumw-video-popup__close")) {
+            closePopup();
+            return;
+        }
+
+        if (e.target === popup) {
+            closePopup();
+        }
+
     });
-});
 
-function closeVideoPopup() {
-    video.pause();
-    video.currentTime = 0;
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && popup.classList.contains("active")) {
+            closePopup();
+        }
+    });
 
-    source.src = "";
-    video.load();
-
-    popup.classList.remove("active");
-}
-
-popupClose.addEventListener("click", closeVideoPopup);
-
-popup.addEventListener("click", e => {
-    if (e.target === popup) {
-        closeVideoPopup();
+    function closePopup() {
+        video.pause();
+        video.currentTime = 0;
+        source.src = "";
+        video.load();
+        popup.classList.remove("active");
     }
-});
 
-document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && popup.classList.contains("active")) {
-        closeVideoPopup();
-    }
 });
 </script>
