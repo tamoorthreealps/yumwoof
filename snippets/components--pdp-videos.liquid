@@ -1,11 +1,11 @@
 <style>
-    .ek-video-grid {
+    .yumw-video-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
 
-.ek-video-card {
+.yumw-video-card {
     position: relative;
     aspect-ratio: 9 / 16;
     border-radius: 12px;
@@ -14,14 +14,14 @@
     background: #1f1f1f;
 }
 
-.ek-video-card img {
+.yumw-video-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
 
-.ek-video-play {
+.yumw-video-play {
     position: absolute;
     left: 10px;
     bottom: 10px;
@@ -37,17 +37,17 @@
     transition: .25s;
 }
 
-.ek-video-play:hover {
+.yumw-video-play:hover {
     transform: scale(1.08);
 }
 
-.ek-video-play svg {
+.yumw-video-play svg {
     width: 10px;
     height: 12px;
     margin-left: 2px;
 }
 
-.ek-video-popup {
+.yumw-video-popup {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, .7);
@@ -60,12 +60,12 @@
     z-index: 9999;
 }
 
-.ek-video-popup.active {
+.yumw-video-popup.active {
     opacity: 1;
     visibility: visible;
 }
 
-.ek-video-popup__inner {
+.yumw-video-popup__inner {
     position: relative;
     background: #fff;
     padding: 18px;
@@ -74,7 +74,7 @@
     width: calc(100% - 30px);
 }
 
-.ek-video-popup__close {
+.yumw-video-popup__close {
     position: absolute;
     top: -12px;
     right: -12px;
@@ -88,7 +88,7 @@
     cursor: pointer;
 }
 
-.ek-video-popup video {
+.yumw-video-popup video {
     width: 100%;
     aspect-ratio: 9 / 16;
     display: block;
@@ -97,16 +97,16 @@
 }
 
 @media (max-width: 767px) {
-    .ek-video-grid {
+    .yumw-video-grid {
         gap: 8px;
     }
 
-    .ek-video-play {
+    .yumw-video-play {
         width: 30px;
         height: 30px;
     }
 
-    .ek-video-play svg {
+    .yumw-video-play svg {
         width: 9px;
         height: 11px;
     }
@@ -114,32 +114,32 @@
 </style>
 
 
-<section class="ek-video-testimonials">
-  <div class="ek-video-grid">
-    <div class="ek-video-card" data-video="video-1.mp4">
+<section class="yumw-video-testimonials">
+  <div class="yumw-video-grid">
+    <div class="yumw-video-card" data-video="video-1.mp4">
       <img src="thumb-1.jpg" alt="Video 1">
 
-      <button class="ek-video-play" type="button">
+      <button class="yumw-video-play" type="button">
         <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
           <path d="M12 7L0 14V0L12 7Z" fill="black"/>
         </svg>
       </button>
     </div>
 
-    <div class="ek-video-card" data-video="video-2.mp4">
+    <div class="yumw-video-card" data-video="video-2.mp4">
       <img src="thumb-2.jpg" alt="Video 2">
 
-      <button class="ek-video-play" type="button">
+      <button class="yumw-video-play" type="button">
         <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
           <path d="M12 7L0 14V0L12 7Z" fill="black"/>
         </svg>
       </button>
     </div>
 
-    <div class="ek-video-card" data-video="video-3.mp4">
+    <div class="yumw-video-card" data-video="video-3.mp4">
       <img src="thumb-3.jpg" alt="Video 3">
 
-      <button class="ek-video-play" type="button">
+      <button class="yumw-video-play" type="button">
         <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
           <path d="M12 7L0 14V0L12 7Z" fill="black"/>
         </svg>
@@ -148,11 +148,21 @@
   </div>
 </section>
 
+<div class="yumw-video-popup">
+  <div class="yumw-video-popup__inner">
+    <button class="yumw-video-popup__close" type="button">&times;</button>
+
+    <video controls playsinline>
+      <source src="" type="video/mp4">
+    </video>
+  </div>
+</div>
+
 
 <script>
-    const videoCards = document.querySelectorAll(".ek-video-card");
-const popup = document.querySelector(".ek-video-popup");
-const popupClose = document.querySelector(".ek-video-popup__close");
+    const videoCards = document.querySelectorAll(".yumw-video-card");
+const popup = document.querySelector(".yumw-video-popup");
+const popupClose = document.querySelector(".yumw-video-popup__close");
 const video = popup.querySelector("video");
 const source = video.querySelector("source");
 
