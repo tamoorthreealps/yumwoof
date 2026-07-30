@@ -23,6 +23,10 @@
             "text_style": "uppercase"
           }
         },
+        "rating_AqGBUP": {
+          "type": "rating",
+          "settings": {}
+        },
         "short_description_HghaRg": {
           "type": "short_description",
           "settings": {}
@@ -71,11 +75,7 @@
             "text": "Money back if your dog doesn't love it",
             "background_image": "shopify://shop_images/Background.png",
             "background_color": "#cb890040",
-            "ribbon_color": "#fff9ef",
-            "heading_color": "#000000",
-            "text_color": "#3F4042",
-            "padding_top_bottom": 12,
-            "padding_left_right": 50
+            "ribbon_color": "#fff9ef"
           }
         },
         "description": {
@@ -94,6 +94,7 @@
       "block_order": [
         "title",
         "vendor",
+        "rating_AqGBUP",
         "short_description_HghaRg",
         "price",
         "usps_wWfcV4",
