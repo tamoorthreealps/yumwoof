@@ -427,11 +427,6 @@
                                     {%- endif -%}
                                   {%- endfor -%}
                                 {%- endif -%}
-                                {% if block.settings.show_quantity_calculator %}
-                                  <div {{ block.shopify_attributes }}>
-                                    {% render 'quantity-calculator', product: product, section_id: section.id %}
-                                  </div>
-                                {% endif %}
                               </div>
                             {%- else -%}
                               {%- assign variant_price = product.selected_or_first_available_variant.price
@@ -544,7 +539,10 @@
                         </volume-pricing>
                       {%- endif -%}
                     </div>
-
+                  {%- when 'quantity-calculator' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- render 'quantity-calculator', product: product, section_id: section.id -%}
+                    </div>
                   {%- when 'popup' -%}
                     <modal-opener
                       class="product-popup-modal__opener quick-add-hidden"
@@ -591,7 +589,7 @@
                     -%}
 
                   {%- when 'guarantee-ribbon' -%}
-                    {% render 'ym-guarantee-ribbon', block: block %}
+                    {% render 'ym-guarantee-ribbon', block: block, %}
 
                   {%- when 'rating' -%}
                     {%- if product.metafields.reviews.rating.value != blank -%}
@@ -1000,12 +998,15 @@
       "type": "quantity_selector",
       "name": "t:sections.main-product.blocks.quantity_selector.name",
       "limit": 1,
+    },
+    {
+      "type": "quantity-calculator",
+      "name": "Quantity calculator",
+      "limit": 1,
       "settings": [
         {
-          "type": "checkbox",
-          "id": "show_quantity_calculator",
-          "label": "Show Quantity Calculator",
-          "default": true
+          "type": "paragraph",
+          "content": "Shows a 'Not sure how much to order?' quiz that sizes the order to the shopper's dog(s). Only appears on products that have a Feeding table set in custom.feeding_table."
         }
       ]
     },
