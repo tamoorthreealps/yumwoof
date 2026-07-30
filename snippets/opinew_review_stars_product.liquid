@@ -1,7 +1,6 @@
-
-             {%- liquid
-  assign rating = product.metafields.reviews.rating.value.rating
-  assign rating_count = product.metafields.reviews.rating_count.value | plus: 0
+{%- liquid
+  assign rating = product.metafields.opinew_metafields.reviews_average
+  assign rating_count = product.metafields.opinew_metafields.reviews_count | plus: 0
 -%}
 
 {% if product.metafields.opinew_metafields['stars_product'] != blank %}
@@ -9,7 +8,7 @@
     {{ product.metafields.opinew_metafields['stars_product'] }}
     {% if rating_count > 0 %}
       <span class="rating-summary">
-        {{ rating | round: 1 }} ({{ rating_count }})
+        {{ rating | times: 1.0 | round: 1 }} ({{ rating_count }})
       </span>
     {% endif %}
   </span>
