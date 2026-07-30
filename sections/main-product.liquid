@@ -468,7 +468,7 @@
                             {%- endif -%}
                           </price-per-item>
                         {%- endif -%}
-                        <div {{ block.shopify_attributes }}>
+                        <div class="component--quantity-calculator" {{ block.shopify_attributes }}>
                       {%- render 'quantity-calculator', product: product, section_id: section.id -%}
                     </div>
                       </div>
