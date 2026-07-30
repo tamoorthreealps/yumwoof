@@ -592,7 +592,6 @@
                     {% render 'ym-guarantee-ribbon', block: block, %}
 
                   {%- when 'rating' -%}
-                    {%- if product.metafields.reviews.rating.value != blank -%}
                       <span class="review-star">
                {% if product.metafields.opinew_metafields['stars_product'] == blank %}
                   <a class="opinew-stars-plugin-link  " href="#opinew-plugin" style="text-decoration: none; color: inherit;" aria-label="Product reviews" role="button">
@@ -608,9 +607,6 @@
                     </span>
                   </a>
                  
-             {% else %}
-               {% render 'opinew_review_stars_product' %}
-             {% endif %}
            </span>
                     {%- endif -%}
                   {%- when 'complementary' -%}
