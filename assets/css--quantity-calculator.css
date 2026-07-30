@@ -67,6 +67,10 @@ font-family: 'TAY Birdie';
 }
 
 /* ---------------- calculator block ---------------- */
+.component--quantity-calculator {
+    width: 100%;
+}
+
 .qcalc {
   display: block;
   margin-top: 1.4rem;
@@ -79,27 +83,31 @@ font-family: 'TAY Birdie';
   align-items: center;
   justify-content: space-between;
   gap: 1.4rem;
-  background: var(--qc-peri);
-  color: var(--qc-ink);
+  background: rgba(122, 165, 221, 0.25);
+  color: #000000;
   border: none;
-  border-radius: 1rem;
-  padding: 1.6rem 1.8rem;
+  border-radius: 8px;
+  padding: 7px 20px 9px 16px;
   cursor: pointer;
   text-align: left;
-  transition: filter 0.15s ease;
+  transition: filter .15s ease;
 }
 .qcalc__cta:hover {
   filter: brightness(0.97);
 }
 .qcalc__cta-text {
-  font-family: 'Matter', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.35;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: 'Matter';
+    letter-spacing: 0;
 }
 .qcalc__cta-text u {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    display: block;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 .qcalc__cta-arrow {
   font-size: 1.8rem;
