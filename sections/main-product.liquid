@@ -589,7 +589,7 @@
                     -%}
 
                   {%- when 'guarantee-ribbon' -%}
-                    {% render 'ym-guarantee-ribbon' %}
+                    {% render 'ym-guarantee-ribbon', block: block, %}
 
                   {%- when 'rating' -%}
                     {%- if product.metafields.reviews.rating.value != blank -%}
