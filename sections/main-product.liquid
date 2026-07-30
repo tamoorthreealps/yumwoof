@@ -428,7 +428,9 @@
                                   {%- endfor -%}
                                 {%- endif -%}
                                 {% if block.settings.show_quantity_calculator %}
-                                  {% render 'quantity-calculator', product: product, section_id: section.id %}
+                                  <div {{ block.shopify_attributes }}>
+                                    {% render 'quantity-calculator', product: product, section_id: section.id %}
+                                  </div>
                                 {% endif %}
                               </div>
                             {%- else -%}
