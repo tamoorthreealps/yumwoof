@@ -71,7 +71,7 @@
     {%- endif -%}
 
     {{ content_for_header }}
-
+    {% render 'opinew_head' %}
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
