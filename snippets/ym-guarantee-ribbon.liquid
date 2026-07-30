@@ -1,39 +1,39 @@
 <div
   class="ym-guarantee-ribbon"
   style="
-    --ribbon-color: {{ section.settings.ribbon_color }};
+    --ribbon-color: {{ block.settings.ribbon_color }};
 
-    {% if section.settings.background_image != blank %}
-      background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
+    {% if block.settings.background_image != blank %}
+      background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     {% else %}
-      background-color: {{ section.settings.background_color }};
+      background-color: {{ block.settings.background_color }};
     {% endif %}
 
-    padding: {{ section.settings.padding_top_bottom }}px {{ section.settings.padding_left_right }}px;
+    padding: {{ block.settings.padding_top_bottom }}px {{ block.settings.padding_left_right }}px;
   "
 >
   <div
     class="ym-guarantee-ribbon__content"
-    style="max-width:{{ section.settings.content_width }}px;"
+    style="max-width:{{ block.settings.content_width }}px;"
   >
-    {% if section.settings.heading != blank %}
+    {% if block.settings.heading != blank %}
       <h3
         class="ym-guarantee-ribbon__title"
-        style="color:{{ section.settings.heading_color }};"
+        style="color:{{ block.settings.heading_color }};"
       >
-        {{ section.settings.heading }}
+        {{ block.settings.heading }}
       </h3>
     {% endif %}
 
-    {% if section.settings.text != blank %}
+    {% if block.settings.text != blank %}
       <p
         class="ym-guarantee-ribbon__text"
-        style="color:{{ section.settings.text_color }};"
+        style="color:{{ block.settings.text_color }};"
       >
-        {{ section.settings.text }}
+        {{ block.settings.text }}
       </p>
     {% endif %}
   </div>
