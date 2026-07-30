@@ -593,10 +593,25 @@
 
                   {%- when 'rating' -%}
                     {%- if product.metafields.reviews.rating.value != blank -%}
-                      <div style="clear:both;"></div><div id="opinew-reviews-product-page-code" class="opw-widget-wrapper-default">
-                <span id="opinew-plugin" data-server-address="https://api.opinew.com" data-opw-prodreviews="{{ product.metafields.opinew_metafields['product_plugin'] }}" data-opinew-shop-id="{{ shop.id }}" data-shop-url="{{shop.domain}}" data-platform-product-id="{{product.id}}">
-                 <span id="opinew_product_plugin_app"></span>
-                </span></div>
+                      <span class="review-star">
+               {% if product.metafields.opinew_metafields['stars_product'] == blank %}
+                  <a class="opinew-stars-plugin-link  " href="#opinew-plugin" style="text-decoration: none; color: inherit;" aria-label="Product reviews" role="button">
+                    <span class="opinew-star-plugin-inside" aria-label="product star rating">
+                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
+                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
+                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
+                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
+                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
+                    </span>
+                    <span class="opinew-no-reviews-stars-plugin" aria-label="review count">
+                      <b>(46)</b>
+                    </span>
+                  </a>
+                 
+             {% else %}
+               {% include 'opinew_review_stars_product' %}
+             {% endif %}
+           </span>
                     {%- endif -%}
                   {%- when 'complementary' -%}
                     <product-recommendations
