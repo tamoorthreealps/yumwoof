@@ -24,38 +24,37 @@ font-family: 'TAY Birdie';
     margin: 0 0 12px;
 }
 .product-form__quantity quantity-input.quantity {
-  display: inline-flex;
-  align-items: center;
-  width: auto;
-  min-width: 13rem;
-  background: #fff;
-  border: 1px solid var(--qc-hair-s);
-  border-radius: 1rem;
-  overflow: hidden;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: inherit;
+    width: 140px;
+    min-height: 64px;
+    background: #fff;
+    gap: 6px;
+    padding: 0 16px;
 }
 .product-form__quantity .quantity__button {
-  width: 4.4rem;
-  height: 4.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--qc-mute);
-  cursor: pointer;
+    color: #000;
+    opacity: 1 !important;
+    width: 10.6px;
+    margin: 0 !important;
+    height: auto;
+    border: 0;
+    background: transparent !important;
 }
 .product-form__quantity .quantity__button:hover {
   color: var(--qc-ink);
 }
 .product-form__quantity .quantity__input {
-  width: 4.4rem;
-  min-height: 4.4rem;
-  text-align: center;
-  font-family: 'Matter', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--qc-ink);
-  border: none;
-  background: transparent;
-  padding: 0;
+    padding: 0;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000;
+    font-family: Matter;
+    letter-spacing: 0;
+    font-weight: 500;
+    opacity: 1;
 }
 
 /* ---------------- calculator block ---------------- */
