@@ -126,11 +126,10 @@
       }
   }
 </style>
-
-<section class="yumw-video-testimonials">
-  <p class="yumw-video--title">WHY PET PARENTS LOVE IT</p>
-  <div class="yumw-video-grid">
-    {% if product.metafields.custom.review_videos.value != blank %}
+{% if product.metafields.custom.review_videos.value != blank %}
+  <section class="yumw-video-testimonials">
+    <p class="yumw-video--title">WHY PET PARENTS LOVE IT</p>
+    <div class="yumw-video-grid">
       {% for media in product.metafields.custom.review_videos.value %}
         <div
           class="yumw-video-card"
@@ -155,10 +154,9 @@
           </button>
         </div>
       {% endfor %}
-    {% endif %}
-  </div>
-</section>
-
+    </div>
+  </section>
+{% endif %}
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const popup = document.querySelector('.yumw-video-popup');
