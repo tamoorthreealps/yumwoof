@@ -51,21 +51,23 @@
           "type": "mobile_link",
           "settings": {
             "text": "NUTRITIONAL MIX",
-            "link": ""
+            "link": "",
+            "image": "shopify://shop_images/Category_IMG_1.png"
           }
         },
         "mobile_link_XBaRhf": {
           "type": "mobile_link",
           "settings": {
             "text": "SUPPLEMENTS",
-            "link": ""
+            "link": "",
+            "image": "shopify://shop_images/Category_IMG_2.png"
           }
         },
         "mobile_linklist_aMBdzj": {
           "type": "mobile_linklist",
           "settings": {
             "title": "",
-            "menu": "main-menu"
+            "menu": "main-new-menu"
           }
         },
         "mega-shop-all": {
