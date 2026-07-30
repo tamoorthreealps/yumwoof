@@ -52,7 +52,7 @@
       background-size: cover;
       background-position: center;
   }
-  {% if block.settings.background_image != blank %}
+  {% if block.settings.background_image == blank %}
   .ym-guarantee-ribbon::before, .ym-guarantee-ribbon::after {
       content: "";
       position: absolute;
