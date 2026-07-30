@@ -330,7 +330,7 @@ body.is-open .yw-nav {
   right: 0;
   top: 100%;
   z-index: -1;
-  padding:16px 32px 0;
+  padding:16px 0 0;
   transform: translateY(-150%);
   transition: transform .6s cubic-bezier(.22,.61,.36,1),
               visibility 0s linear .35s;
