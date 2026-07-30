@@ -23,6 +23,11 @@ font-family: 'TAY Birdie';
     color: #000000;
     margin: 0 0 12px;
 }
+.price-per-item__container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
 .product-form__quantity quantity-input.quantity {
     border: 1px solid #000000;
     border-radius: 8px;

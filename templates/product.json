@@ -51,13 +51,10 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {
-            "show_quantity_calculator": true
-          }
+          "settings": {}
         },
         "quantity_calculator_HFLFAL": {
           "type": "quantity-calculator",
-          "disabled": true,
           "settings": {}
         },
         "appstle_subscription_qkkVmJ": {
