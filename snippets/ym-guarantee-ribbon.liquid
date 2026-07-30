@@ -13,37 +13,39 @@
 
 <style>
 .ym-guarantee-ribbon {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px 50px;
-  background: #f4ddb0;
-  overflow: hidden;
-  box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 12px 50px;
+    background: rgba(203, 137, 0, 0.25);
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 2px;
 }
 
-.ym-guarantee-ribbon::before,
-.ym-guarantee-ribbon::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 42px;
-  height: 100%;
-  background: #f8f4ec;
+.ym-guarantee-ribbon::before, .ym-guarantee-ribbon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 100%;
+    background: #fff9ef;
 }
 
 .ym-guarantee-ribbon::before {
-  left: 0;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+    left: 0;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    border-radius: 2px 0 0 2px;
 }
 
 .ym-guarantee-ribbon::after {
-  right: 0;
-  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    right: 0;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    border-radius: 0 2px 2px 0;
 }
 
 .ym-guarantee-ribbon__content {
@@ -53,19 +55,21 @@
 }
 
 .ym-guarantee-ribbon__title {
-  margin: 0;
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: #171717;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #000000;
+    letter-spacing: 0;
 }
 
 .ym-guarantee-ribbon__text {
-  margin: 10px 0 0;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: #6f675d;
+    margin: 4px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.5);
+    letter-spacing: 0;
 }
 
 @media (max-width: 767px) {
