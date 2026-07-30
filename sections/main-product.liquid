@@ -592,23 +592,8 @@
                     {% render 'ym-guarantee-ribbon', block: block, %}
 
                   {%- when 'rating' -%}
-                      <span class="review-star">
-               {% if product.metafields.opinew_metafields['stars_product'] == blank %}
-                  <a class="opinew-stars-plugin-link  " href="#opinew-plugin" style="text-decoration: none; color: inherit;" aria-label="Product reviews" role="button">
-                    <span class="opinew-star-plugin-inside" aria-label="product star rating">
-                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
-                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
-                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
-                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
-                      <i class="stars-color opw-noci   opw-noci-star-full" aria-hidden="true"></i>
-                    </span>
-                    <span class="opinew-no-reviews-stars-plugin" aria-label="review count">
-                      <b>(46)</b>
-                    </span>
-                  </a>
-                 
-           </span>
-                    {%- endif -%}
+               {% render 'opinew_review_stars_product' %}
+
                   {%- when 'complementary' -%}
                     <product-recommendations
                       class="complementary-products quick-add-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
