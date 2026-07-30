@@ -15,11 +15,13 @@
 /* ---------------- styled Dawn quantity selector (block: quantity_selector) --------------- */
 .product-form__quantity .quantity__label,
 .product-form__quantity .quantity__label span {
-  font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--qc-ink);
+font-family: 'TAY Birdie';
+    font-size: 1.6rem;
+    line-height: 20px;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0 0 12px;
 }
 .product-form__quantity quantity-input.quantity {
   display: inline-flex;
