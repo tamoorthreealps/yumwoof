@@ -55,6 +55,10 @@ font-family: 'TAY Birdie';
     letter-spacing: 0;
     font-weight: 500;
     opacity: 1;
+    outline: none;
+    box-shadow: inherit;
+    border: 0;
+    background: transparent;
 }
 
 /* ---------------- calculator block ---------------- */
