@@ -263,6 +263,10 @@
                         </svg>
                       </div>
                     {% endif %}
+                    
+                  {%- when 'pdp-videos' -%}
+                    {% render 'components--pdp-videos' %}
+
                   {%- when 'appstle_subscription' -%}
                     <div class="qty freq">
                       <div class="frequency_title_container">
@@ -469,10 +473,10 @@
                           </price-per-item>
                         {%- endif -%}
                         {% if block.settings.show_quantity_calculator %}
-                        <div class="component--quantity-calculator" {{ block.shopify_attributes }}>
-                      {%- render 'quantity-calculator', product: product, section_id: section.id -%}
-                    </div>
-                    {% endif %}
+                          <div class="component--quantity-calculator" {{ block.shopify_attributes }}>
+                            {%- render 'quantity-calculator', product: product, section_id: section.id -%}
+                          </div>
+                        {% endif %}
                       </div>
                       <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
                         {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
@@ -594,10 +598,10 @@
                     -%}
 
                   {%- when 'guarantee-ribbon' -%}
-                    {% render 'ym-guarantee-ribbon', block: block, %}
+                    {% render 'ym-guarantee-ribbon', block: block %}
 
                   {%- when 'rating' -%}
-               {% render 'opinew_review_stars_product' %}
+                    {% render 'opinew_review_stars_product' %}
 
                   {%- when 'complementary' -%}
                     <product-recommendations
