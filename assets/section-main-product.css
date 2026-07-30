@@ -225,10 +225,13 @@ product-info {
   max-width: 100%;
 }
 
-.product__info-container .product-form,
 .product__info-container .product__description,
 .product__info-container .icon-with-text {
-  margin: 2.5rem 0;
+  margin: 2.4rem 0;
+}
+
+.product__info-container .product-form {
+  margin:2.4rem 0 1.6rem;
 }
 
 .product__text {
