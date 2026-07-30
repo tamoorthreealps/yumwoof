@@ -593,41 +593,10 @@
 
                   {%- when 'rating' -%}
                     {%- if product.metafields.reviews.rating.value != blank -%}
-                      <div class="rating-wrapper">
-                        {% liquid
-                          assign rating_decimal = 0
-                          assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
-                          if decimal >= 0.3 and decimal <= 0.7
-                            assign rating_decimal = 0.5
-                          elsif decimal > 0.7
-                            assign rating_decimal = 1
-                          endif
-                        %}
-                        <div
-                          class="rating"
-                          role="img"
-                          aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}"
-                        >
-                          <span
-                            aria-hidden="true"
-                            class="rating-star"
-                            style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"
-                          ></span>
-                        </div>
-                        <p class="rating-text caption">
-                          <span aria-hidden="true">
-                            {{- product.metafields.reviews.rating.value }} /
-                            {{ product.metafields.reviews.rating.value.scale_max -}}
-                          </span>
-                        </p>
-                        <p class="rating-count caption">
-                          <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
-                          <span class="visually-hidden">
-                            {{- product.metafields.reviews.rating_count }}
-                            {{ 'accessibility.total_reviews' | t -}}
-                          </span>
-                        </p>
-                      </div>
+                      <div style="clear:both;"></div><div id="opinew-reviews-product-page-code" class="opw-widget-wrapper-default">
+                <span id="opinew-plugin" data-server-address="https://api.opinew.com" data-opw-prodreviews="{{ product.metafields.opinew_metafields['product_plugin'] }}" data-opinew-shop-id="{{ shop.id }}" data-shop-url="{{shop.domain}}" data-platform-product-id="{{product.id}}">
+                 <span id="opinew_product_plugin_app"></span>
+                </span></div>
                     {%- endif -%}
                   {%- when 'complementary' -%}
                     <product-recommendations
