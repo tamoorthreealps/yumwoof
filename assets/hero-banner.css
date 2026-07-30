@@ -131,7 +131,7 @@
 	text-decoration: none;
 	white-space: nowrap;
 	transition: .4s;
-	background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/banner--desktop--btn.svg?v=1784728211) center / 100% 100% no-repeat;
+	background: url(https://cdn.shopify.com/s/files/1/0317/2827/1419/files/desktop--btn--img.svg?v=1785417574) center / 100% 100% no-repeat;
 	font-family: "FFBlurProMedium";
 	color: var(--hb-btn-text);
 }
@@ -191,7 +191,7 @@
 		font-size: 14px;
 		line-height: 20px;
 		letter-spacing: .56px;
-		background: url(/cdn/shop/files/banner-btn-bg-mobile.svg?v=1784209988) center / 100% 100% no-repeat;
+		background: url(https://cdn.shopify.com/s/files/1/0317/2827/1419/files/mobile--btn--banner.svg?v=1785417573) center / 100% 100% no-repeat;
 	}
 
 	.hero-banner__offer {
