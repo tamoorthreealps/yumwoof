@@ -17,7 +17,6 @@
         "mobile_banner_pCWQpt": {
           "type": "mobile_banner",
           "settings": {
-            "image": "shopify://shop_images/YumClub_Banner.png",
             "link": ""
           }
         },
@@ -33,15 +32,12 @@
           "settings": {
             "text": "Air dried food",
             "link": "shopify://collections",
-            "card_1_image": "shopify://shop_images/IMG.png",
             "card_1_title": "Ancestral Blend",
             "card_1_caption": "",
             "card_1_link": "shopify://products/ancestral-blend",
-            "card_2_image": "shopify://shop_images/IMG.png",
             "card_2_title": "PERFECT KIBBLE",
             "card_2_caption": "",
             "card_2_link": "",
-            "card_3_image": "shopify://shop_images/IMG.png",
             "card_3_title": "BIG BREED",
             "card_3_caption": "",
             "card_3_link": "shopify://products/big-breed"
@@ -51,16 +47,14 @@
           "type": "mobile_link",
           "settings": {
             "text": "NUTRITIONAL MIX",
-            "link": "",
-            "image": "shopify://shop_images/Group_42_1.png"
+            "link": ""
           }
         },
         "mobile_link_XBaRhf": {
           "type": "mobile_link",
           "settings": {
             "text": "SUPPLEMENTS",
-            "link": "",
-            "image": "shopify://shop_images/Group_42_2.png"
+            "link": ""
           }
         },
         "mobile_linklist_aMBdzj": {
@@ -78,15 +72,12 @@
             "subheading": "Diam sit molestie orci imperdiet vitae. Nulla lorem ut laoreet.",
             "button_label": "Shop All",
             "button_link": "",
-            "card_1_image": "shopify://shop_images/Group_42.png",
             "card_1_title": "Air Dried Food",
             "card_1_caption": "Fringilla tincidunt eu",
             "card_1_link": "",
-            "card_2_image": "shopify://shop_images/Group_42_1.png",
             "card_2_title": "Nutritional Mix",
             "card_2_caption": "Magna ut sodales turpis",
             "card_2_link": "",
-            "card_3_image": "shopify://shop_images/Group_42_2.png",
             "card_3_title": "Supplements",
             "card_3_caption": "Massa vitae cras leo at",
             "card_3_link": ""
@@ -108,7 +99,7 @@
         "announcement_link": "",
         "announcement_bg": "#661d1d",
         "announcement_text_color": "#fff9ef",
-        "menu": "main-menu",
+        "menu": "main-new-menu",
         "enable_sticky": true,
         "navbar_text_color": "#000000",
         "navbar_border_color": "#000000",
