@@ -92,6 +92,12 @@
             "brand_label": "Ancestral Blend"
           }
         },
+        "nutritional_information_zmAppP": {
+          "type": "nutritional-information",
+          "settings": {
+            "nutrition_heading": ""
+          }
+        },
         "description": {
           "type": "description",
           "disabled": true,
@@ -120,6 +126,7 @@
         "guarantee_ribbon_NUFwfW",
         "pdp_videos_azzcwK",
         "nutrition_label_APTPBb",
+        "nutritional_information_zmAppP",
         "description",
         "share"
       ],
