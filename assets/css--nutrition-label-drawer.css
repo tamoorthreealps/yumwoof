@@ -25,7 +25,8 @@
     flex-direction: column;
     width: 100%;
     max-width: 47.2rem;
-    max-height: 88vh;
+    min-height: 560px;
+    max-height: 560px;
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid #000;
     border-radius: 2rem;
