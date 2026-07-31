@@ -552,6 +552,15 @@
                     <div {{ block.shopify_attributes }}>
                       {%- render 'quantity-calculator', product: product, section_id: section.id -%}
                     </div>
+                  {%- when 'nutrition-label' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- render 'nutrition-label',
+                        product: product,
+                        section_id: section.id,
+                        heading: block.settings.heading,
+                        brand_label: block.settings.brand_label
+                      -%}
+                    </div>
                   {%- when 'popup' -%}
                     <modal-opener
                       class="product-popup-modal__opener quick-add-hidden"
@@ -1000,6 +1009,30 @@
         {
           "type": "paragraph",
           "content": "Shows a 'Not sure how much to order?' quiz that sizes the order to the shopper's dog(s). Only appears on products that have a Feeding table set in custom.feeding_table."
+        }
+      ]
+    },
+    {
+      "type": "nutrition-label",
+      "name": "Nutrition label",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows the 'Know what you're feeding' buttons that open the nutrition-label drawer. Buttons only appear when their data is set: Guaranteed Analysis / Calorie Content / Full Nutritional Data need the variant's custom.nutrition_label; Feeding Guidelines needs custom.feeding_table; How to Transition needs custom.transition_plan."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Know what you're feeding"
+        },
+        {
+          "type": "text",
+          "id": "brand_label",
+          "label": "Drawer eyebrow prefix",
+          "info": "Shown above each drawer title, e.g. 'Ancestral Blend · Land & Sea'.",
+          "default": "Ancestral Blend"
         }
       ]
     },

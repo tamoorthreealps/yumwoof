@@ -1,0 +1,241 @@
+{% comment %}
+  Nutrition label — drawer/popup (PDP)
+  ---------------------------------------------------------------------------
+  The popup opened by the "Know what you're feeding" buttons. Six tabs:
+    ingredients / analysis / calories / full   -> per variant (custom.nutrition_label)
+    feeding                                     -> product custom.feeding_table (JS-computed)
+    transition                                  -> product custom.transition_plan
+
+  Repeating rows are stored as pipe text-tables on the metaobject and parsed
+  into real tables here (split on newlines, then "|"; "#" = section header).
+
+  Assumed metaobject field API keys (change the assigns below if your handles
+  differ):
+    nutrition_label : ingredients_heading, ingredients, ingredients_footnote,
+                      kcal_per_kg, kcal_per_cup, calorie_note_title, calorie_note,
+                      guaranteed_analysis, guaranteed_analysis_footnote, full_data
+    transition_plan : intro, steps, note_title, note
+
+  Accepts:
+  - product     : {Object}
+  - section_id  : {String}
+  - brand_label : {String} eyebrow prefix (e.g. "Ancestral Blend")
+{% endcomment %}
+
+{%- liquid
+  assign brand = brand_label | default: 'Ancestral Blend'
+  assign tp = product.metafields.custom.transition_plan.value
+  assign ft = product.metafields.custom.feeding_table.value
+  assign gpc = product.metafields.custom.feeding_grams_per_cup | default: 160
+  assign all_recipes_eyebrow = brand | append: ' · All Recipes'
+-%}
+
+<div class="nldrawer" data-nldrawer hidden>
+  <div class="nldrawer__scrim" data-nldrawer-close></div>
+
+  <div
+    class="nldrawer__card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="nldrawer-title-{{ section_id }}"
+    tabindex="-1"
+  >
+    <div class="nldrawer__head">
+      <div class="nldrawer__head-text">
+        <p class="nldrawer__eyebrow" data-nldrawer-eyebrow></p>
+        <p class="nldrawer__title" id="nldrawer-title-{{ section_id }}" data-nldrawer-heading></p>
+      </div>
+      <button type="button" class="nldrawer__close" data-nldrawer-close aria-label="Close">{ X }</button>
+    </div>
+
+    <nav class="nldrawer__tabs" data-nldrawer-tabs aria-label="Nutrition sections">
+      {%- for t in 'ingredients,analysis,calories,full,feeding,transition' | split: ',' -%}
+        {%- liquid
+          assign show = false
+          case t
+            when 'ingredients'; assign label = 'Ingredients'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
+            when 'analysis'; assign label = 'Analysis'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
+            when 'calories'; assign label = 'Calories'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
+            when 'full'; assign label = 'Full Data'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
+            when 'feeding'; assign label = 'Feeding'; if ft; assign show = true; endif
+            when 'transition'; assign label = 'Transition'; if tp; assign show = true; endif
+          endcase
+        -%}
+        {%- if show -%}
+          <button type="button" class="nldrawer__tab" data-nldrawer-tab="{{ t }}">{{ label }}</button>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <div class="nldrawer__body" data-nldrawer-body>
+      {%- comment -%} ---------- per-variant panels ---------- {%- endcomment -%}
+      {%- for variant in product.variants -%}
+        {%- assign nl = variant.metafields.custom.nutrition_label.value -%}
+        {%- if nl -%}
+          {%- assign recipe = variant.title -%}
+          {%- if recipe == 'Default Title' -%}{%- assign recipe = product.title -%}{%- endif -%}
+          {%- assign eyebrow = brand | append: ' · ' | append: recipe -%}
+          <div class="nldrawer__variant" data-nldrawer-variant="{{ variant.id }}" hidden>
+
+            {%- comment -%} Ingredients {%- endcomment -%}
+            <section class="nldrawer__panel" data-nldrawer-panel="ingredients"
+              data-title="Ingredients" data-eyebrow="{{ eyebrow | escape }}" hidden>
+              {%- if nl.ingredients_heading != blank -%}
+                <p class="nldrawer__kicker">{{ nl.ingredients_heading }}</p>
+              {%- endif -%}
+              <p class="nldrawer__prose">{{ nl.ingredients }}</p>
+              {%- if nl.ingredients_footnote != blank -%}
+                <hr class="nldrawer__hr">
+                <p class="nldrawer__foot">{{ nl.ingredients_footnote }}</p>
+              {%- endif -%}
+            </section>
+
+            {%- comment -%} Guaranteed Analysis {%- endcomment -%}
+            <section class="nldrawer__panel" data-nldrawer-panel="analysis"
+              data-title="Guaranteed Analysis" data-eyebrow="{{ eyebrow | escape }}" hidden>
+              {%- assign ga_rows = nl.guaranteed_analysis | strip | newline_to_br | strip_newlines | split: '<br />' -%}
+              <table class="nldrawer__table nldrawer__table--ga">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col" class="nldrawer__ta-r">Dry Matter</th>
+                    <th scope="col" class="nldrawer__ta-r">As Packaged</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for line in ga_rows -%}
+                    {%- assign row = line | strip -%}
+                    {%- if row == blank -%}{%- continue -%}{%- endif -%}
+                    {%- assign c = row | split: '|' -%}
+                    <tr>
+                      <td class="nldrawer__c-name">{{ c[0] | strip }}</td>
+                      <td class="nldrawer__c-qual">{{ c[1] | strip }}</td>
+                      <td class="nldrawer__ta-r">{{ c[2] | strip }}</td>
+                      <td class="nldrawer__ta-r">{{ c[3] | strip }}</td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+              {%- if nl.guaranteed_analysis_footnote != blank -%}
+                <p class="nldrawer__foot">{{ nl.guaranteed_analysis_footnote }}</p>
+              {%- endif -%}
+            </section>
+
+            {%- comment -%} Calorie Content {%- endcomment -%}
+            <section class="nldrawer__panel" data-nldrawer-panel="calories"
+              data-title="Calorie Content" data-eyebrow="{{ eyebrow | escape }}" hidden>
+              <p class="nldrawer__kicker nldrawer__kicker--gold">Metabolizable Energy (Calculated)</p>
+              <p class="nldrawer__kcal">{{ nl.kcal_per_kg }} <span class="nldrawer__kcal-unit">Kcal/kg</span></p>
+              <p class="nldrawer__kcal nldrawer__kcal--accent">{{ nl.kcal_per_cup }} <span class="nldrawer__kcal-unit">Kcal/cup</span></p>
+              {%- if nl.calorie_note != blank -%}
+                <div class="nldrawer__callout">
+                  {%- if nl.calorie_note_title != blank -%}
+                    <p class="nldrawer__callout-label">{{ nl.calorie_note_title }}</p>
+                  {%- endif -%}
+                  <p class="nldrawer__callout-body">{{ nl.calorie_note }}</p>
+                </div>
+              {%- endif -%}
+            </section>
+
+            {%- comment -%} Full Nutritional Data {%- endcomment -%}
+            <section class="nldrawer__panel" data-nldrawer-panel="full"
+              data-title="Full Nutritional Data" data-eyebrow="{{ eyebrow | escape }}" hidden>
+              {%- assign fd_rows = nl.full_data | strip | newline_to_br | strip_newlines | split: '<br />' -%}
+              {%- assign open = false -%}
+              {%- for line in fd_rows -%}
+                {%- assign row = line | strip -%}
+                {%- if row == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign first = row | slice: 0 -%}
+                {%- if first == '#' -%}
+                  {%- if open -%}</tbody></table>{%- endif -%}
+                  <p class="nldrawer__section">{{ row | remove_first: '#' | strip }}</p>
+                  <table class="nldrawer__table nldrawer__table--full"><tbody>
+                  {%- assign open = true -%}
+                {%- else -%}
+                  {%- assign c = row | split: '|' -%}
+                  <tr>
+                    <td class="nldrawer__c-name">{{ c[0] | strip }}</td>
+                    <td class="nldrawer__ta-r nldrawer__c-val">{{ c[1] | strip }}</td>
+                  </tr>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if open -%}</tbody></table>{%- endif -%}
+            </section>
+
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} ---------- shared: Feeding (JS-computed) ---------- {%- endcomment -%}
+      {%- if ft -%}
+        <section class="nldrawer__panel nldrawer__panel--shared" data-nldrawer-panel="feeding"
+          data-title="Feeding Guidelines" data-eyebrow="{{ all_recipes_eyebrow | escape }}" hidden>
+          <div class="nldrawer__callout" data-nldrawer-feeding-callout hidden>
+            <p class="nldrawer__callout-label" data-nldrawer-feeding-caltitle></p>
+            <p class="nldrawer__callout-body">Pulled from the plan you built above — the serving already accounts for weight and age.</p>
+          </div>
+          <table class="nldrawer__table nldrawer__table--feeding">
+            <thead>
+              <tr>
+                <th scope="col">Dog Weight</th>
+                <th scope="col" class="nldrawer__ta-r">Daily Serving</th>
+                <th scope="col" class="nldrawer__ta-r">Grams</th>
+              </tr>
+            </thead>
+            <tbody data-nldrawer-feeding-rows></tbody>
+          </table>
+          <p class="nldrawer__foot">Guidelines only — needs vary by age, breed, activity, and metabolism. Puppies need about 2× these amounts; seniors often need less; pregnant or nursing dogs may free feed. Consult your veterinarian.</p>
+
+          <script type="application/json" data-nldrawer-feeding-config>
+            {
+              "productId": {{ product.id | json }},
+              "gramsPerCup": {{ gpc | times: 1.0 }},
+              "weights": [10, 20, 30, 40, 60, 80, 100],
+              "bands": [
+                {%- for band in ft.title_bands.value -%}
+                  {
+                    "minW": {{ band.min_weight_lb | times: 1.0 }},
+                    "maxW": {{ band.max_weight_lb | times: 1.0 }},
+                    "minC": {{ band.min_cups | times: 1.0 }},
+                    "maxC": {{ band.max_cups | times: 1.0 }}
+                  }{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              ]
+            }
+          </script>
+        </section>
+      {%- endif -%}
+
+      {%- comment -%} ---------- shared: Transition ---------- {%- endcomment -%}
+      {%- if tp -%}
+        <section class="nldrawer__panel nldrawer__panel--shared" data-nldrawer-panel="transition"
+          data-title="How to Transition" data-eyebrow="{{ all_recipes_eyebrow | escape }}" hidden>
+          {%- if tp.intro != blank -%}
+            <p class="nldrawer__prose">{{ tp.intro }}</p>
+          {%- endif -%}
+          {%- assign step_rows = tp.steps | strip | newline_to_br | strip_newlines | split: '<br />' -%}
+          <div class="nldrawer__steps">
+            {%- for line in step_rows -%}
+              {%- assign row = line | strip -%}
+              {%- if row == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign c = row | split: '|' -%}
+              <div class="nldrawer__step">
+                <span class="nldrawer__step-label">{{ c[0] | strip }}</span>
+                <span class="nldrawer__step-val">{{ c[1] | strip }}</span>
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if tp.note != blank -%}
+            <div class="nldrawer__callout">
+              {%- if tp.note_title != blank -%}
+                <p class="nldrawer__callout-label">{{ tp.note_title }}</p>
+              {%- endif -%}
+              <p class="nldrawer__callout-body">{{ tp.note }}</p>
+            </div>
+          {%- endif -%}
+        </section>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
