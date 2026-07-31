@@ -228,29 +228,36 @@
 .nldrawer__kcal-unit { font-size: inherit; }
 
 /* Amber callout */
+.nldrawer__callout__main {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 25px;
+}
+
 .nldrawer__callout {
-	margin: 2rem 0 0;
-	padding: 1.4rem 1.5rem;
-	background: #fbf3e3;
-	border: 1px solid rgba(200, 161, 42, 0.35);
-	border-radius: 0.9rem;
+    margin: 1.9rem 0 0;
+    padding: 1.39rem 1.5rem 1.5rem;
+    background: #FBF3E3;
+    border: 1px solid rgba(200, 161, 42, .35);
+    border-radius: .9rem;
 }
 .nldrawer__panel--shared .nldrawer__callout:first-child { margin-top: 0; margin-bottom: 2rem; }
 .nldrawer__callout-label {
-	margin: 0 0 0.8rem;
-	font-family: FFBlurProMedium, sans-serif;
-	font-size: 1.2rem;
-	letter-spacing: 4px;
-	text-transform: uppercase;
-	color: #661d1d;
+    margin: 0 0 1rem;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #661d1d;
 }
 .nldrawer__callout-body {
-	margin: 0;
-	font-family: 'Matter', sans-serif;
-	font-weight: 500;
-	font-size: 1.25rem;
-	line-height: 1.5;
-	color: #4a4234;
+    margin: 0;
+    font-family: Matter, sans-serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: #4a4234;
+    letter-spacing: 0;
 }
 
 /* Feeding highlight */
