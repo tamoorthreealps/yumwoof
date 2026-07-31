@@ -372,6 +372,7 @@
 .product--main .product--main--grid {
     display: flex;
     flex-wrap: nowrap;
+    flex-direction: column;
     gap: 8.4rem;
 }
 
@@ -635,4 +636,12 @@ a.pdp--promo--banner_link p {
 a.pdp--promo--banner_link p strong {
     color: #661D1D;
     font-weight: 500;
+}
+
+
+
+@media screen and (max-width: 990px) {
+  .product--main .product--main--grid {
+    flex-direction: row;
+}
 }
