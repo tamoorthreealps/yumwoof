@@ -4,9 +4,9 @@
 	inset: 0;
 	z-index: 1000;
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 2rem;
+	justify-content: flex-end;
+	align-items: stretch;
+	padding: 0;
 }
 .nldrawer[hidden] { display: none; }
 
@@ -20,25 +20,35 @@
 .nldrawer.is-open .nldrawer__scrim { opacity: 1; }
 
 .nldrawer__card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 47.2rem;
-    min-height: 560px;
-    max-height: 560px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #000;
-    border-radius: 2rem;
-    box-shadow: -2px -2px 12px 0px #0000001A;
-    overflow: hidden;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    transform: translateY(1.2rem) scale(.98);
-    opacity: 0;
-    transition: transform .2s ease, opacity .2s ease;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 47.2rem; /* ya cart drawer jitni width */
+	height: 100%;
+	max-height: none;
+
+	background: rgba(255,255,255,.9);
+	backdrop-filter: blur(10px);
+
+	border: 0;
+	border-left: 2px solid #000;
+	border-radius: 0;
+
+	transform: translateX(100%);
+	opacity: 1;
+
+	transition: transform .3s ease;
+	overflow: hidden;
 }
-.nldrawer.is-open .nldrawer__card { transform: none; opacity: 1; }
+.nldrawer.is-open .nldrawer__card {
+	transform: translateX(0);
+}
+
+.nldrawer__body {
+	flex: 1;
+	overflow-y: auto;
+}
 
 /* Header */
 .nldrawer__head {
