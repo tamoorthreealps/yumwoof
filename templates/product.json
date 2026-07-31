@@ -83,7 +83,6 @@
         },
         "nutrition_label_APTPBb": {
           "type": "nutrition-label",
-          "disabled": true,
           "settings": {
             "heading": "Know what you're feeding",
             "brand_label": "Ancestral Blend"
