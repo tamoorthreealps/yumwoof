@@ -28,6 +28,8 @@
   assign ft = product.metafields.custom.feeding_table.value
   assign gpc = product.metafields.custom.feeding_grams_per_cup | default: 160
   assign all_recipes_eyebrow = brand | append: ' · All Recipes'
+  assign sel_nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
+  assign tab_keys = 'ingredients,analysis,calories,full,feeding,transition' | split: ','
 -%}
 
 <div class="nldrawer" data-nldrawer hidden>
@@ -49,14 +51,14 @@
     </div>
 
     <nav class="nldrawer__tabs" data-nldrawer-tabs aria-label="Nutrition sections">
-      {%- for t in 'ingredients,analysis,calories,full,feeding,transition' | split: ',' -%}
+      {%- for t in tab_keys -%}
         {%- liquid
           assign show = false
           case t
-            when 'ingredients'; assign label = 'Ingredients'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
-            when 'analysis'; assign label = 'Analysis'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
-            when 'calories'; assign label = 'Calories'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
-            when 'full'; assign label = 'Full Data'; if product.selected_or_first_available_variant.metafields.custom.nutrition_label.value; assign show = true; endif
+            when 'ingredients'; assign label = 'Ingredients'; if sel_nl; assign show = true; endif
+            when 'analysis'; assign label = 'Analysis'; if sel_nl; assign show = true; endif
+            when 'calories'; assign label = 'Calories'; if sel_nl; assign show = true; endif
+            when 'full'; assign label = 'Full Data'; if sel_nl; assign show = true; endif
             when 'feeding'; assign label = 'Feeding'; if ft; assign show = true; endif
             when 'transition'; assign label = 'Transition'; if tp; assign show = true; endif
           endcase
