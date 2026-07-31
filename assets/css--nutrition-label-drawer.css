@@ -165,10 +165,9 @@
 	letter-spacing: 0;
 }
 .nldrawer__section {
-    margin: 2rem 0 0;
+    margin: 2.2rem 0 0;
     font-family: FFBlurProMedium, sans-serif;
     font-size: 1.2rem;
-	line-height:1.4rem;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: #8a6d1c;
