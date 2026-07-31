@@ -22,7 +22,6 @@
   - brand_label : {String} eyebrow prefix (e.g. "Ancestral Blend")
 {% endcomment %}
 
-
 {%- liquid
   assign brand = brand_label | default: 'Ancestral Blend'
   assign tp = product.metafields.custom.transition_plan.value
