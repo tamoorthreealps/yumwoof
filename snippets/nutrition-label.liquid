@@ -27,6 +27,7 @@
 
 {%- if nl or tp or ft -%}
   {{ 'css--nutrition-label.css' | asset_url | stylesheet_tag }}
+  {{ 'css--nutrition-label-drawer.css' | asset_url | stylesheet_tag }}
 
   <nutrition-label
     class="nlabel"
@@ -65,5 +66,13 @@
         </button>
       {%- endif -%}
     </div>
+
+    {%- render 'nutrition-label-drawer',
+      product: product,
+      section_id: section_id,
+      brand_label: brand_label
+    -%}
   </nutrition-label>
+
+  <script src="{{ 'nutrition-label.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}

@@ -557,7 +557,8 @@
                       {%- render 'nutrition-label',
                         product: product,
                         section_id: section.id,
-                        heading: block.settings.heading
+                        heading: block.settings.heading,
+                        brand_label: block.settings.brand_label
                       -%}
                     </div>
                   {%- when 'popup' -%}
@@ -1025,6 +1026,13 @@
           "id": "heading",
           "label": "Heading",
           "default": "Know what you're feeding"
+        },
+        {
+          "type": "text",
+          "id": "brand_label",
+          "label": "Drawer eyebrow prefix",
+          "info": "Shown above each drawer title, e.g. 'Ancestral Blend · Land & Sea'.",
+          "default": "Ancestral Blend"
         }
       ]
     },
