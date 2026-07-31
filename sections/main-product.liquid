@@ -75,12 +75,21 @@
       onload="this.media='all'"
     >
   {%- endif -%}
-  
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
     <div class="product--main">
       <div class="custom--page-width">
+        {% if section.settings.banner_content != blank %}
+        <div class="pdp--promo--banner">
+          <a href="{{ section.settings.banner_link }}" class="pdp--promo--banner_link">
+            {{ section.settings.banner_content }}
+          </a>
+          <svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.25982 6.58508C8.49624 6.04086 8.74175 5.56013 8.99636 5.14289C9.25097 4.70752 9.50558 4.33563 9.7602 4.02724H0V2.55784H9.7602C9.50558 2.23131 9.25097 1.85942 8.99636 1.44219C8.74175 1.00681 8.49624 0.526081 8.25982 0H9.54196C10.6877 1.32427 11.8971 2.30387 13.1702 2.9388V3.64628C11.8971 4.26307 10.6877 5.24267 9.54196 6.58508H8.25982Z" fill="#661D1D"/>
+          </svg>
+        </div>
+        {% endif %}
         <div class="product--main--grid product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
           <div class="grid__item product__media-wrapper pdp-gallery">
             {% render 'product-media-gallery', variant_images: variant_images %}
@@ -562,11 +571,14 @@
                         brand_label: block.settings.brand_label
                       -%}
                     </div>
-                    {%- when 'nutritional-information' -%}
-                      <div class="nutritional--info">
-                        <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
-                        <p class="nutritional--info--content">Yumwoof Perfect Superfood is formulated to meet the nutritional levels established by the AAFCO Dog Food Nutrient Profiles for all life stages.</p>
-                      </div>
+                  {%- when 'nutritional-information' -%}
+                    <div class="nutritional--info">
+                      <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
+                      <p class="nutritional--info--content">
+                        Yumwoof Perfect Superfood is formulated to meet the nutritional levels established by the AAFCO
+                        Dog Food Nutrient Profiles for all life stages.
+                      </p>
+                    </div>
                   {%- when 'popup' -%}
                     <modal-opener
                       class="product-popup-modal__opener quick-add-hidden"
@@ -838,7 +850,7 @@
 {% render 'ingridients-popup' %}
 
 {% comment %} videos--reviews--popup--html {% endcomment %}
- <div class="yumw-video-popup">
+<div class="yumw-video-popup">
   <div class="yumw-video-popup__inner">
     <button class="yumw-video-popup__close" type="button">&times;</button>
 
@@ -1070,8 +1082,7 @@
       "type": "pdp-videos",
       "name": "Video Reviews",
       "limit": 1,
-      "settings": [
-      ]
+      "settings": []
     },
     {
       "type": "variant_picker",
@@ -2395,6 +2406,21 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Promo Banner"
+    },
+    {
+      "type": "text",
+      "id": "main_text",
+      "label": "Main Text",
+      "default": "Get a Personalized Meal Plan +30% off"
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Banner Link"
     },
     {
       "type": "header",
