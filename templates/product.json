@@ -133,6 +133,8 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
+        "promo_banner_content": "<p>New to Yumwoof? <strong>Get a Personalized Meal Plan + 30% off</strong></p>",
+        "promo_banner_link": "#",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
