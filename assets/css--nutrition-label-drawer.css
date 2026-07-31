@@ -192,13 +192,14 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .nldrawer__table td {
-	padding: 1rem 0;
-	font-weight: 500;
-	font-size: 1.3rem;
-	color: #000;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-	vertical-align: baseline;
-	letter-spacing: 0;
+    padding: 1.21rem 0;
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 100%;
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    vertical-align: baseline;
+    letter-spacing: 0;
 }
 /* .nldrawer__table tbody tr:last-child td { border-bottom: 0; } */
 .nldrawer__ta-r { text-align: right; }
