@@ -1,4 +1,8 @@
 /* Nutrition label — "Know what you're feeding" launcher buttons (PDP) */
+.component--nutrition--btns {
+    margin: 4rem 0 0;
+}
+
 .nlabel {
 	display: flex;
 	flex-direction: column;
