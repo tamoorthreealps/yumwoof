@@ -198,10 +198,11 @@
 	color: #000;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 	vertical-align: baseline;
+	letter-spacing: 0;
 }
 /* .nldrawer__table tbody tr:last-child td { border-bottom: 0; } */
 .nldrawer__ta-r { text-align: right; }
-.nldrawer__c-name { width: 40%;letter-spacing: 0; }
+.nldrawer__c-name { width: 40%; }
 .nldrawer__table .nldrawer__c-qual {
     font-family: FFBlurProMedium, sans-serif;
     font-weight: 400;
