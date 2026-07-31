@@ -386,10 +386,6 @@
     padding: 0;
 }
 
-.product__info-container {
-    max-width: 490px;
-}
-
 .product__column-sticky {
   top:0;
 }
@@ -651,5 +647,8 @@ a.pdp--promo--banner_link p strong {
 .product--main .product--main--grid .product__info-wrapper {
     width: calc(47.993px - 8.4rem);
     padding: 0;
+}
+.product__info-container {
+    max-width: 490px;
 }
 }
