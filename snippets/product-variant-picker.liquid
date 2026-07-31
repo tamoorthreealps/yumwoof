@@ -8,6 +8,7 @@
   Usage:
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
+{% assign popup = product.metafields.custom.ingredient_popup.value %}
 {%- unless product.has_only_default_variant -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
@@ -44,12 +45,15 @@
         <fieldset class="js product-form__input product-form__input--recipe">
           <div class="recipe-heading">
             <legend class="form__label form__label--numbered">{{ option.name }}</legend>
-            <button
-              class="recipe-view-ingredients"
-              data-popup="ingredients-popup-1"
-            >
-              + View Ingredients
-            </button>
+            {% if popup %}
+              <button
+                class="recipe-view-ingredients"
+                data-popup="ingredients-popup-1"
+                type="button"
+              >
+                + View Ingredients
+              </button>
+            {% endif %}
           </div>
           <div class="recipe-swatches">
             {% render 'product-variant-options',
