@@ -20,20 +20,22 @@
 .nldrawer.is-open .nldrawer__scrim { opacity: 1; }
 
 .nldrawer__card {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	max-width: 47.2rem;
-	max-height: 88vh;
-	background: #ffffff;
-	border: 2px solid #000;
-	border-radius: 2rem;
-	box-shadow: -2px -2px 12px 0 rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-	transform: translateY(1.2rem) scale(0.98);
-	opacity: 0;
-	transition: transform 0.2s ease, opacity 0.2s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 47.2rem;
+    max-height: 88vh;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #000;
+    border-radius: 2rem;
+    box-shadow: -2px -2px 12px 0px #0000001A;
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transform: translateY(1.2rem) scale(.98);
+    opacity: 0;
+    transition: transform .2s ease, opacity .2s ease;
 }
 .nldrawer.is-open .nldrawer__card { transform: none; opacity: 1; }
 
