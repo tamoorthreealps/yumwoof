@@ -81,16 +81,16 @@
             "ribbon_color": "#fff9ef"
           }
         },
+        "pdp_videos_azzcwK": {
+          "type": "pdp-videos",
+          "settings": {}
+        },
         "nutrition_label_APTPBb": {
           "type": "nutrition-label",
           "settings": {
             "heading": "Know what you're feeding",
             "brand_label": "Ancestral Blend"
           }
-        },
-        "pdp_videos_azzcwK": {
-          "type": "pdp-videos",
-          "settings": {}
         },
         "description": {
           "type": "description",
@@ -118,8 +118,8 @@
         "appstle_subscription_qkkVmJ",
         "buy_buttons",
         "guarantee_ribbon_NUFwfW",
-        "nutrition_label_APTPBb",
         "pdp_videos_azzcwK",
+        "nutrition_label_APTPBb",
         "description",
         "share"
       ],
