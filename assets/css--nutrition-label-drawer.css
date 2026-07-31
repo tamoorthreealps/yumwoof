@@ -16,6 +16,7 @@
 	background: rgba(26, 26, 26, 0.55);
 	opacity: 0;
 	transition: opacity 0.2s ease;
+	    display: block !important;
 }
 .nldrawer.is-open .nldrawer__scrim { opacity: 1; }
 
