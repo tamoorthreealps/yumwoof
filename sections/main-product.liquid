@@ -561,6 +561,11 @@
                         brand_label: block.settings.brand_label
                       -%}
                     </div>
+                    {%- when 'nutritional-information' -%}
+                      <div class="nutritional--info">
+                        <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
+                        <p class="nutritional--info--content">Yumwoof Perfect Superfood is formulated to meet the nutritional levels established by the AAFCO Dog Food Nutrient Profiles for all life stages.</p>
+                      </div>
                   {%- when 'popup' -%}
                     <modal-opener
                       class="product-popup-modal__opener quick-add-hidden"
