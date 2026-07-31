@@ -608,3 +608,31 @@ quantity-input.quantity::after, quantity-input.quantity::before {
     color: #000000;
     margin-top: 0;
 }
+
+.pdp--promo--banner {
+    margin: 0 0 3.2rem;
+}
+
+a.pdp--promo--banner_link {
+    background: rgba(102, 28, 28, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-decoration: none;
+    padding: 12px;
+}
+
+a.pdp--promo--banner_link p {
+    margin: 0;
+    color: #000000;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.16px;
+}
+
+a.pdp--promo--banner_link p strong {
+    color: #661D1D;
+    font-weight: 500;
+}
