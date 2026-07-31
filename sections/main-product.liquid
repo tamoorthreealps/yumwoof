@@ -553,7 +553,7 @@
                       {%- render 'quantity-calculator', product: product, section_id: section.id -%}
                     </div>
                   {%- when 'nutrition-label' -%}
-                    <div {{ block.shopify_attributes }}>
+                    <div class="component--nutrition--btns" {{ block.shopify_attributes }}>
                       {%- render 'nutrition-label',
                         product: product,
                         section_id: section.id,
