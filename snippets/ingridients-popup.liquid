@@ -390,41 +390,41 @@
 
 {% comment %} required--js--code {% endcomment %}
 <script>
-  {% comment %} popup--js--code {% endcomment %}
-document.querySelectorAll(".recipe-view-ingredients").forEach(function(button) {
-  button.addEventListener("click", function(e) {
-    e.preventDefault();
+    {% comment %} popup--js--code {% endcomment %}
+  document.querySelectorAll(".recipe-view-ingredients").forEach(function(button) {
+    button.addEventListener("click", function(e) {
+      e.preventDefault();
 
-    document.querySelector(".ingredients-popup").classList.add("active");
-  });
-});
-
-document.querySelectorAll(".ingredients-popup").forEach(function(popup) {
-  popup.querySelector(".ingredients-popup__close").addEventListener("click", function() {
-    popup.classList.remove("active");
+      document.querySelector(".ingredients-popup").classList.add("active");
+    });
   });
 
-  popup.querySelector(".ingredients-popup__overlay").addEventListener("click", function() {
-    popup.classList.remove("active");
-  });
-});
+  document.querySelectorAll(".ingredients-popup").forEach(function(popup) {
+    popup.querySelector(".ingredients-popup__close").addEventListener("click", function() {
+      popup.classList.remove("active");
+    });
 
-   document.querySelectorAll(".ingredients-popup").forEach(function(popup){
-       const tabs = popup.querySelectorAll(".ingredients-popup__tabs button");
-       const contents = popup.querySelectorAll(".ingredients-popup__content");
-       tabs.forEach(function(tab){
-           tab.addEventListener("click",function(){
-               tabs.forEach(function(btn){
-                   btn.classList.remove("active");
-               });
-               contents.forEach(function(content){
-                   content.classList.remove("active");
-               });
-               tab.classList.add("active");
-               popup
-                   .querySelector('[data-content="'+tab.dataset.tab+'"]')
-                   .classList.add("active");
-           });
-       });
-   });
+    popup.querySelector(".ingredients-popup__overlay").addEventListener("click", function() {
+      popup.classList.remove("active");
+    });
+  });
+
+     document.querySelectorAll(".ingredients-popup").forEach(function(popup){
+         const tabs = popup.querySelectorAll(".ingredients-popup__tabs button");
+         const contents = popup.querySelectorAll(".ingredients-popup__content");
+         tabs.forEach(function(tab){
+             tab.addEventListener("click",function(){
+                 tabs.forEach(function(btn){
+                     btn.classList.remove("active");
+                 });
+                 contents.forEach(function(content){
+                     content.classList.remove("active");
+                 });
+                 tab.classList.add("active");
+                 popup
+                     .querySelector('[data-content="'+tab.dataset.tab+'"]')
+                     .classList.add("active");
+             });
+         });
+     });
 </script>
