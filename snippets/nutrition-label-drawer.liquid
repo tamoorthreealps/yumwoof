@@ -29,7 +29,6 @@
   assign gpc = product.metafields.custom.feeding_grams_per_cup | default: 160
   assign all_recipes_eyebrow = brand | append: ' · All Recipes'
   assign sel_nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
-  assign tab_keys = 'ingredients,analysis,calories,full,feeding,transition' | split: ','
 -%}
 
 <div class="nldrawer" data-nldrawer hidden>
@@ -51,22 +50,18 @@
     </div>
 
     <nav class="nldrawer__tabs" data-nldrawer-tabs aria-label="Nutrition sections">
-      {%- for t in tab_keys -%}
-        {%- liquid
-          assign show = false
-          case t
-            when 'ingredients'; assign label = 'Ingredients'; if sel_nl; assign show = true; endif
-            when 'analysis'; assign label = 'Analysis'; if sel_nl; assign show = true; endif
-            when 'calories'; assign label = 'Calories'; if sel_nl; assign show = true; endif
-            when 'full'; assign label = 'Full Data'; if sel_nl; assign show = true; endif
-            when 'feeding'; assign label = 'Feeding'; if ft; assign show = true; endif
-            when 'transition'; assign label = 'Transition'; if tp; assign show = true; endif
-          endcase
-        -%}
-        {%- if show -%}
-          <button type="button" class="nldrawer__tab" data-nldrawer-tab="{{ t }}">{{ label }}</button>
-        {%- endif -%}
-      {%- endfor -%}
+      {%- if sel_nl -%}
+        <button type="button" class="nldrawer__tab" data-nldrawer-tab="ingredients">Ingredients</button>
+        <button type="button" class="nldrawer__tab" data-nldrawer-tab="analysis">Analysis</button>
+        <button type="button" class="nldrawer__tab" data-nldrawer-tab="calories">Calories</button>
+        <button type="button" class="nldrawer__tab" data-nldrawer-tab="full">Full Data</button>
+      {%- endif -%}
+      {%- if ft -%}
+        <button type="button" class="nldrawer__tab" data-nldrawer-tab="feeding">Feeding</button>
+      {%- endif -%}
+      {%- if tp -%}
+        <button type="button" class="nldrawer__tab" data-nldrawer-tab="transition">Transition</button>
+      {%- endif -%}
     </nav>
 
     <div class="nldrawer__body" data-nldrawer-body>
