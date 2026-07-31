@@ -586,4 +586,25 @@ quantity-input.quantity::after, quantity-input.quantity::before {
 .product-form__submit::after, .product-form__submit::before {
   display:none;
 }
-/*---- ingridients--popup--css ----*/
+
+.nutritional--info {
+    margin: 4rem 0 0;
+}
+
+.nutritional--info--heading {
+    margin: 0 0 16px;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+    color: #000000;
+    font-family: 'TAY Birdie';
+    font-weight: 400;
+}
+
+.nutritional--info--content {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #000000;
+    margin-top: 0;
+}
