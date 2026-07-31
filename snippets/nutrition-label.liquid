@@ -1,0 +1,69 @@
+{% comment %}
+  Nutrition label — "Know what you're feeding" (PDP)
+  ---------------------------------------------------------------------------
+  Renders the launcher buttons that open the nutrition-label drawer/popup.
+  Each button opens the popup on a specific tab (data-nlabel-open).
+
+  The popup itself (tabs + tables) is added in a later step; these buttons
+  are wired with the tab keys it will read.
+
+  Data sources (must be set for a button to appear):
+  - analysis / calories / full  -> variant  custom.nutrition_label  (metaobject)
+  - feeding                     -> product  custom.feeding_table     (metaobject)
+  - transition                  -> product  custom.transition_plan   (metaobject)
+
+  Accepts:
+  - product    : {Object} product
+  - section_id : {String} the main-product section id
+  - heading    : {String} optional heading override
+{% endcomment %}
+
+{%- liquid
+  assign nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
+  assign tp = product.metafields.custom.transition_plan.value
+  assign ft = product.metafields.custom.feeding_table.value
+  assign title = heading | default: "Know what you're feeding"
+-%}
+
+{%- if nl or tp or ft -%}
+  {{ 'css--nutrition-label.css' | asset_url | stylesheet_tag }}
+
+  <nutrition-label
+    class="nlabel"
+    data-section="{{ section_id }}"
+    data-product="{{ product.id }}"
+  >
+    <p class="nlabel__title">{{ title }}</p>
+
+    <div class="nlabel__grid" role="list">
+      {%- if nl -%}
+        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="analysis">
+          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__label">Guaranteed Analysis</span>
+        </button>
+        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="calories">
+          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__label">Calorie Content</span>
+        </button>
+        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="full">
+          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__label">Full Nutritional Data</span>
+        </button>
+      {%- endif -%}
+
+      {%- if ft -%}
+        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="feeding">
+          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__label">Feeding Guidelines</span>
+        </button>
+      {%- endif -%}
+
+      {%- if tp -%}
+        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="transition">
+          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__label">How to Transition</span>
+        </button>
+      {%- endif -%}
+    </div>
+  </nutrition-label>
+{%- endif -%}
