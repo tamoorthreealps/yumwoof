@@ -224,7 +224,7 @@
 	letter-spacing: -0.3px;
 	color: #000;
 }
-.nldrawer__kcal--accent { color: #661d1d; }
+.nldrawer__kcal--accent { color: #661d1d; margin: 1.3rem 0 0;}
 .nldrawer__kcal-unit { font-size: inherit; }
 
 /* Amber callout */
