@@ -193,6 +193,9 @@
 	text-align: right;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
+.nldrawer__table th:first-child {
+	text-align: left;
+}
 .nldrawer__table td {
     padding: 1.21rem 0;
     font-weight: 500;
