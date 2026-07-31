@@ -87,13 +87,13 @@
 
 /* Tabs */
 .nldrawer__tabs {
-	display: flex;
-	flex-wrap: wrap;
-	column-gap: 2rem;
-	row-gap: 0.8rem;
-	padding: 1.2rem 2.6rem;
-	border-top: 1px solid rgba(0, 0, 0, 0.15);
-	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: .8rem;
+    padding: 21px 26px 34.4px;
+    border-top: 1px solid rgba(0, 0, 0, .15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 .nldrawer__tab {
 	position: relative;
