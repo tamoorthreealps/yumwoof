@@ -6,7 +6,7 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: stretch;
-	padding: 0;
+	padding: 12px 12px 12px 0;
 }
 .nldrawer[hidden] { display: none; }
 
