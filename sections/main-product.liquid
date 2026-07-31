@@ -75,6 +75,7 @@
       onload="this.media='all'"
     >
   {%- endif -%}
+  
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
