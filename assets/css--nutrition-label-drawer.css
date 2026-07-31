@@ -188,7 +188,7 @@
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	color: #7a6c63;
-	text-align: left;
+	text-align: right;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 .nldrawer__table td {
@@ -199,16 +199,16 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 	vertical-align: baseline;
 }
-.nldrawer__table tbody tr:last-child td { border-bottom: 0; }
+/* .nldrawer__table tbody tr:last-child td { border-bottom: 0; } */
 .nldrawer__ta-r { text-align: right; }
-.nldrawer__c-name { width: 40%; }
-.nldrawer__c-qual {
-	font-family: FFBlurProMedium, sans-serif;
-	font-weight: 400;
-	font-size: 1rem;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: #7a6c63;
+.nldrawer__c-name { width: 40%;letter-spacing: 0; }
+.nldrawer__table .nldrawer__c-qual {
+    font-family: FFBlurProMedium, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7A6C63 !important;
 }
 .nldrawer__c-val { color: #7a6c63; }
 
