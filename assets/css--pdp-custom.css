@@ -364,9 +364,9 @@
 }
 
 .custom--page-width {
-  padding: 0 6rem;
-  max-width: 151.2rem;
-  margin: 0 auto;
+    padding: 0 2.4rem;
+    max-width: 1244px;
+    margin: 0 auto;
 }
 
 .product--main .product--main--grid {
@@ -376,14 +376,14 @@
 }
 
 .product--main .product--main--grid .product__media-wrapper {
-    width: 51.725%;
-    max-width: 51.725%;
-        position: sticky;
+    width: 52.007%;
+    max-width: 52.007%;
+    position: sticky;
     top: 120px;
 }
 
 .product--main .product--main--grid .product__info-wrapper {
-    width: calc(48.275% - 8.4rem);
+    width: calc(47.993px - 8.4rem);
     padding: 0;
 }
 
