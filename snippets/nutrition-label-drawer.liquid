@@ -22,7 +22,6 @@
   - brand_label : {String} eyebrow prefix (e.g. "Ancestral Blend")
 {% endcomment %}
 
-
 {%- liquid
   assign brand = brand_label | default: 'Ancestral Blend'
   assign tp = product.metafields.custom.transition_plan.value
@@ -74,10 +73,14 @@
           {%- if recipe == 'Default Title' -%}{%- assign recipe = product.title -%}{%- endif -%}
           {%- assign eyebrow = brand | append: ' · ' | append: recipe -%}
           <div class="nldrawer__variant" data-nldrawer-variant="{{ variant.id }}" hidden>
-
             {%- comment -%} Ingredients {%- endcomment -%}
-            <section class="nldrawer__panel" data-nldrawer-panel="ingredients"
-              data-title="Ingredients" data-eyebrow="{{ eyebrow | escape }}" hidden>
+            <section
+              class="nldrawer__panel"
+              data-nldrawer-panel="ingredients"
+              data-title="Ingredients"
+              data-eyebrow="{{ eyebrow | escape }}"
+              hidden
+            >
               {%- if nl.ingredients_heading != blank -%}
                 <p class="nldrawer__kicker">{{ nl.ingredients_heading }}</p>
               {%- endif -%}
@@ -89,8 +92,13 @@
             </section>
 
             {%- comment -%} Guaranteed Analysis {%- endcomment -%}
-            <section class="nldrawer__panel" data-nldrawer-panel="analysis"
-              data-title="Guaranteed Analysis" data-eyebrow="{{ eyebrow | escape }}" hidden>
+            <section
+              class="nldrawer__panel"
+              data-nldrawer-panel="analysis"
+              data-title="Guaranteed Analysis"
+              data-eyebrow="{{ eyebrow | escape }}"
+              hidden
+            >
               {%- assign ga_rows = nl.guaranteed_analysis | strip | newline_to_br | strip_newlines | split: '<br />' -%}
               <table class="nldrawer__table nldrawer__table--ga">
                 <thead>
@@ -121,24 +129,42 @@
             </section>
 
             {%- comment -%} Calorie Content {%- endcomment -%}
-            <section class="nldrawer__panel" data-nldrawer-panel="calories"
-              data-title="Calorie Content" data-eyebrow="{{ eyebrow | escape }}" hidden>
+            <section
+              class="nldrawer__panel"
+              data-nldrawer-panel="calories"
+              data-title="Calorie Content"
+              data-eyebrow="{{ eyebrow | escape }}"
+              hidden
+            >
               <p class="nldrawer__kicker nldrawer__kicker--gold">Metabolizable Energy (Calculated)</p>
-              <p class="nldrawer__kcal">{{ nl.kcal_per_kg }} <span class="nldrawer__kcal-unit">Kcal/kg</span></p>
-              <p class="nldrawer__kcal nldrawer__kcal--accent">{{ nl.kcal_per_cup }} <span class="nldrawer__kcal-unit">Kcal/cup</span></p>
+              <p class="nldrawer__kcal">
+                {{ nl.kcal_per_kg }}
+                <span class="nldrawer__kcal-unit">Kcal/kg</span>
+              </p>
+              <p class="nldrawer__kcal nldrawer__kcal--accent">
+                {{ nl.kcal_per_cup }}
+                <span class="nldrawer__kcal-unit">Kcal/cup</span>
+              </p>
               {%- if nl.calorie_note != blank -%}
-                <div class="nldrawer__callout">
-                  {%- if nl.calorie_note_title != blank -%}
-                    <p class="nldrawer__callout-label">{{ nl.calorie_note_title }}</p>
-                  {%- endif -%}
-                  <p class="nldrawer__callout-body">{{ nl.calorie_note }}</p>
+                <div class="nldrawer__callout__main">
+                  <div class="nldrawer__callout">
+                    {%- if nl.calorie_note_title != blank -%}
+                      <p class="nldrawer__callout-label">{{ nl.calorie_note_title }}</p>
+                    {%- endif -%}
+                    <p class="nldrawer__callout-body">{{ nl.calorie_note }}</p>
+                  </div>
                 </div>
               {%- endif -%}
             </section>
 
             {%- comment -%} Full Nutritional Data {%- endcomment -%}
-            <section class="nldrawer__panel" data-nldrawer-panel="full"
-              data-title="Full Nutritional Data" data-eyebrow="{{ eyebrow | escape }}" hidden>
+            <section
+              class="nldrawer__panel"
+              data-nldrawer-panel="full"
+              data-title="Full Nutritional Data"
+              data-eyebrow="{{ eyebrow | escape }}"
+              hidden
+            >
               {%- assign fd_rows = nl.full_data | strip | newline_to_br | strip_newlines | split: '<br />' -%}
               {%- assign open = false -%}
               {%- for line in fd_rows -%}
@@ -146,10 +172,14 @@
                 {%- if row == blank -%}{%- continue -%}{%- endif -%}
                 {%- assign first = row | slice: 0 -%}
                 {%- if first == '#' -%}
-                  {%- if open -%}</tbody></table>{%- endif -%}
+                  {%- if open -%}
+                    </tbody>
+                    </table>
+                  {%- endif -%}
                   <p class="nldrawer__section">{{ row | remove_first: '#' | strip }}</p>
-                  <table class="nldrawer__table nldrawer__table--full"><tbody>
-                  {%- assign open = true -%}
+                  <table class="nldrawer__table nldrawer__table--full">
+                    <tbody>
+                      {%- assign open = true -%}
                 {%- else -%}
                   {%- assign c = row | split: '|' -%}
                   <tr>
@@ -158,20 +188,29 @@
                   </tr>
                 {%- endif -%}
               {%- endfor -%}
-              {%- if open -%}</tbody></table>{%- endif -%}
+              {%- if open -%}
+                </tbody>
+                </table>
+              {%- endif -%}
             </section>
-
           </div>
         {%- endif -%}
       {%- endfor -%}
 
       {%- comment -%} ---------- shared: Feeding (JS-computed) ---------- {%- endcomment -%}
       {%- if ft -%}
-        <section class="nldrawer__panel nldrawer__panel--shared" data-nldrawer-panel="feeding"
-          data-title="Feeding Guidelines" data-eyebrow="{{ all_recipes_eyebrow | escape }}" hidden>
+        <section
+          class="nldrawer__panel nldrawer__panel--shared"
+          data-nldrawer-panel="feeding"
+          data-title="Feeding Guidelines"
+          data-eyebrow="{{ all_recipes_eyebrow | escape }}"
+          hidden
+        >
           <div class="nldrawer__callout" data-nldrawer-feeding-callout hidden>
             <p class="nldrawer__callout-label" data-nldrawer-feeding-caltitle></p>
-            <p class="nldrawer__callout-body">Pulled from the plan you built above — the serving already accounts for weight and age.</p>
+            <p class="nldrawer__callout-body">
+              Pulled from the plan you built above — the serving already accounts for weight and age.
+            </p>
           </div>
           <table class="nldrawer__table nldrawer__table--feeding">
             <thead>
@@ -183,7 +222,10 @@
             </thead>
             <tbody data-nldrawer-feeding-rows></tbody>
           </table>
-          <p class="nldrawer__foot">Guidelines only — needs vary by age, breed, activity, and metabolism. Puppies need about 2× these amounts; seniors often need less; pregnant or nursing dogs may free feed. Consult your veterinarian.</p>
+          <p class="nldrawer__foot">
+            Guidelines only — needs vary by age, breed, activity, and metabolism. Puppies need about 2× these amounts;
+            seniors often need less; pregnant or nursing dogs may free feed. Consult your veterinarian.
+          </p>
 
           <script type="application/json" data-nldrawer-feeding-config>
             {
@@ -207,8 +249,13 @@
 
       {%- comment -%} ---------- shared: Transition ---------- {%- endcomment -%}
       {%- if tp -%}
-        <section class="nldrawer__panel nldrawer__panel--shared" data-nldrawer-panel="transition"
-          data-title="How to Transition" data-eyebrow="{{ all_recipes_eyebrow | escape }}" hidden>
+        <section
+          class="nldrawer__panel nldrawer__panel--shared"
+          data-nldrawer-panel="transition"
+          data-title="How to Transition"
+          data-eyebrow="{{ all_recipes_eyebrow | escape }}"
+          hidden
+        >
           {%- if tp.intro != blank -%}
             <p class="nldrawer__prose">{{ tp.intro }}</p>
           {%- endif -%}
