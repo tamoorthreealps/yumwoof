@@ -226,10 +226,10 @@
     position: relative;
     padding: 2.4rem;
     background: #661d1d;
-    border-radius: 24px;
+    border-radius: 16px;
     overflow: hidden;
   }
-  
+
 .pdp-gallery {
   position: relative;
 }
