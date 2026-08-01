@@ -23,7 +23,7 @@
     '<button type="button" class="yw-gallery-btn yw-gallery-prev" aria-label="Previous image">&#8592;</button>' +
     '<button type="button" class="yw-gallery-btn yw-gallery-next" aria-label="Next image">&#8594;</button>';
     gallery.appendChild(nav);
-
+    var pagination = nav.querySelector('.yw-gallery-pagination');
     var current = nav.querySelector('.yw-gallery-current');
     var total = nav.querySelector('.yw-gallery-total');
     var prev = nav.querySelector('.yw-gallery-prev');
@@ -53,6 +53,21 @@
       target.classList.add('is-active');
       update();
     }
+    function buildPagination() {
+      pagination.innerHTML = '';
+
+      items().forEach(function (_, index) {
+        var bullet = document.createElement('button');
+        bullet.type = 'button';
+        bullet.className = 'yw-gallery-bullet';
+
+        bullet.addEventListener('click', function () {
+          go(index);
+        });
+
+        pagination.appendChild(bullet);
+      });
+    }
     function update() {
       var i = activeIndex();
       var n = items().length;
@@ -61,6 +76,10 @@
       prev.disabled = i <= 0;
       next.disabled = i >= n - 1;
       nav.style.display = n > 1 ? '' : 'none';
+
+      pagination.querySelectorAll('.yw-gallery-bullet').forEach(function (bullet, index) {
+        bullet.classList.toggle('is-active', index === i);
+      });
     }
 
     prev.addEventListener('click', function (e) {
@@ -80,6 +99,7 @@
         attributeFilter: ['class'],
       });
     }
+    buildPagination();
     update();
   }
 
