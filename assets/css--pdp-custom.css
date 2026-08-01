@@ -394,22 +394,18 @@
   top:0;
 }
 
-.product__title {
-    font-size: 48px;
-    line-height: 56px;
-    letter-spacing: -0.48px;
-    margin: 0;
-    color: #000000;
-    font-family: 'TAYRosemary';
-}
-
 .product__title h1,
 .product__title h2,
 .product__title h3,
 .product__title h4,
 .product__title h5,
 .product__title h6 {
-  font-family: 'TAYRosemary';
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: -0.48px;
+    margin: 0;
+    color: #000000;
+    font-family: 'TAYRosemary';
 }
 
 .product__title+.product__text.caption-with-letter-spacing {
