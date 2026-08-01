@@ -51,6 +51,7 @@
     padding: 3.2rem 2.4rem 2.8rem;
     background: rgba(225, 82, 61, 0.9);
     position: relative;
+	border-bottom:1px solid #000000;
 }
 .nldrawer__eyebrow {
     margin: 0;
