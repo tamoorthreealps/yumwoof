@@ -648,6 +648,10 @@ a.pdp--promo--banner_link p strong {
   font-weight: 500;
 }
 
+a.pdp--promo--banner_link svg {
+    width: 8px;
+}
+
 span.opinew-star-plugin-inside {
   display: flex;
   gap: 4px;
@@ -672,6 +676,10 @@ a.pdp--promo--banner_link p {
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.16px;
+}
+
+a.pdp--promo--banner_link svg {
+    width: 13.17px;
 }
 
   .custom--page-width  {
