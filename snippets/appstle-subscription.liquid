@@ -154,7 +154,7 @@
       endif
 
       assign sub_title = product.metafields.custom.subscription_title.value | default: 'Autoship'
-      assign sub_subtitle = product.metafields.custom.subscription_subtitle.value | default: 'Delivered on your schedule. Skip, swap, or cancel anytime.'
+      assign sub_subtitle = product.metafields.custom.subscription_subtitle.value | default: 'Arrives before it runs out.'
       assign onetime_subtitle = product.metafields.custom.onetime_subtitle.value | default: 'A single delivery. No subscription.'
       assign currency_symbol = localization.country.currency.symbol | default: '$'
     -%}
