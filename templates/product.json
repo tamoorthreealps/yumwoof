@@ -205,7 +205,7 @@
         "line_color": "#000000",
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 120,
-        "padding_top_mobile": 64,
+        "padding_top_mobile": 0,
         "padding_bottom_mobile": 64
       }
     },
