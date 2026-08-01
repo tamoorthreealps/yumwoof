@@ -342,6 +342,7 @@
     display:flex;
     gap:8px;
     pointer-events:auto;
+    cursor:pointer;
 }
 
 .yw-gallery-bullet {
