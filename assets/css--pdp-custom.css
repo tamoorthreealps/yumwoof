@@ -636,6 +636,11 @@ a.pdp--promo--banner_link p strong {
     font-weight: 500;
 }
 
+span.opinew-star-plugin-inside {
+    display: flex;
+    gap: 4px;
+}
+
 
 
 @media screen and (min-width: 990px) {
