@@ -327,14 +327,21 @@
 }
 
 /* ---------- Custom gallery nav (counter + arrows), bottom-left ---------- */
-.pdp-gallery .yw-gallery-nav {
-  position: absolute;
-  left: 2.4rem;
-  bottom: 2.4rem;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+.pdp-gallery .yw-gallery-nav{
+    position:absolute;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+}
+
+.yw-gallery-pagination{
+    position:absolute;
+    left:50%;
+    bottom:24px;
+    transform:translateX(-50%);
+    display:flex;
+    gap:8px;
+    pointer-events:auto;
 }
 
 .pdp-gallery .yw-gallery-counter {
@@ -344,26 +351,32 @@
   font-size: 1.4rem;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  display:none;
 }
 
-.pdp-gallery .yw-gallery-btn {
-  width: 3.2rem;
-  height: 3.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #000;
-  font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
+.yw-gallery-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    pointer-events:auto;
+    background:none;
+    border:0;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+.yw-gallery-prev{
+    left:24px;
 }
 
+.yw-gallery-next{
+    right:24px;
+}
 .pdp-gallery .yw-gallery-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
+  opacity:.35;
+    pointer-events:none;
 }
 
 /* Custom gallery nav is desktop-only; mobile uses Dawn's native gallery slider. */
