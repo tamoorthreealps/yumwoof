@@ -143,7 +143,7 @@
               }}
               <button class="yumw-video-play" type="button">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/> <path d="M12.4353 10.0011C11.6869 10.6419 11 11.4652V21.535C11 22.6328 12.2219 23.353 13.1813 22.821L22.2597 17.7861C23.2468 17.2387 23.2468 15.7615 22.2597 15.2141L13.1813 10.1792C12.9414 10.0462 12.6847 9.99125 12.4353 10.0011Z" fill="black"/>
+                  <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/> <path d="M12.4353 10.0011C11.6869 10.0308 11 10.6419 11 11.4652V21.535C11 22.6328 12.2219 23.353 13.1813 22.821L22.2597 17.7861C23.2468 17.2387 23.2468 15.7615 22.2597 15.2141L13.1813 10.1792C12.9414 10.0462 12.6847 9.99125 12.4353 10.0011Z" fill="black"/>
                 </svg>
               </button>
             </div>
@@ -213,21 +213,21 @@
 
   const slider = document.querySelector('.yumw-video-grid.splide');
 
-if (slider) {
-  new Splide(slider, {
-    type: 'slide',
-    perPage: 3,
-    perMove: 1,
-    gap: '8px',
-    pagination: false,
-    arrows: false,
-    drag: true,
-    speed: 600,
-    breakpoints: {
-      767: {
-        perPage: 2.5,
+  if (slider) {
+    new Splide(slider, {
+      type: 'slide',
+      perPage: 3,
+      perMove: 1,
+      gap: '8px',
+      pagination: false,
+      arrows: false,
+      drag: true,
+      speed: 600,
+      breakpoints: {
+        767: {
+          perPage: 2.5,
+        },
       },
-    },
-  }).mount();
-}
+    }).mount();
+  }
 </script>
