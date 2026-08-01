@@ -334,14 +334,28 @@
     pointer-events:none;
 }
 
-.yw-gallery-pagination{
+.yw-gallery-pagination {
     position:absolute;
     left:50%;
-    bottom:24px;
+    bottom:20px;
     transform:translateX(-50%);
     display:flex;
     gap:8px;
     pointer-events:auto;
+}
+
+.yw-gallery-bullet {
+    width: 8px;
+    height: 8px;
+    border: 1px solid #FFF9EF;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border-radius: 100%;
+}
+
+.yw-gallery-bullet.is-active {
+    background: #FFF9EF;
 }
 
 .pdp-gallery .yw-gallery-counter {
