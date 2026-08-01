@@ -611,25 +611,25 @@ quantity-input.quantity::before {
 }
 
 .nutritional--info {
-  margin: 4rem 0 0;
+    margin: 3.2rem 0 0;
 }
 
 .nutritional--info--heading {
-  margin: 0 0 16px;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: -0.16px;
-  color: #000000;
-  font-family: "TAY Birdie";
-  font-weight: 400;
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -.14px;
+    color: #000;
+    font-family: TAY Birdie;
+    font-weight: 400;
 }
 
 .nutritional--info--content {
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: 0;
-  color: #000000;
-  margin-top: 0;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #000;
+    margin-top: 0;
 }
 
 .pdp--promo--banner {
@@ -824,4 +824,19 @@ a.pdp--promo--banner_link svg {
   letter-spacing: 0.8px;
   padding: 20.4px 20px 18px;
 }
+
+.nutritional--info {
+  margin: 4rem 0 0;
+}
+
+.nutritional--info--heading {
+  margin: 0 0 16px;
+  font-size: 16px;
+  letter-spacing: -0.16px;
+}
+
+.nutritional--info--content {
+  line-height: 24px;
+}
+
 }
