@@ -362,11 +362,11 @@
 
 /*------ custom--waqar--css ------*/
 .product--main--info {
-  padding: 156px 0 120px;
+  padding: 104px 0;
 }
 
 .custom--page-width {
-  padding: 0 2.4rem;
+  padding: 0 .8rem;
   max-width: 1244px;
   margin: 0 auto;
 }
@@ -653,6 +653,14 @@ span.opinew-star-plugin-inside {
 }
 
 @media screen and (min-width: 990px) {
+  .product--main--info {
+    padding: 156px 0 120px;
+  }
+
+  .custom--page-width  {
+    padding: 0 2.4rem;
+  }
+
   .product--main .product--main--grid {
     flex-direction: row;
   }
@@ -668,7 +676,7 @@ span.opinew-star-plugin-inside {
     width: calc(47.993px - 8.4rem);
     padding: 0;
   }
-  
+
   .product__info-container {
     max-width: 490px;
   }
