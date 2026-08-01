@@ -239,6 +239,9 @@
       "block_order": [
         "opinew_reviews_product_widget_69CPFT"
       ],
+      "custom_css": [
+        "{background: #000;}"
+      ],
       "settings": {
         "include_margins": true
       }
