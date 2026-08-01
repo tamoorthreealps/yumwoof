@@ -7,7 +7,7 @@
   overflow: hidden;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
-  padding: 1.12rem 0;
+  padding: 1rem 0 0.84rem;
   margin: 2.4rem 0;
 }
 
@@ -26,15 +26,15 @@
 }
 
 .pdp-usps__item {
-  flex: 0 0 auto;
-  font-family: "TAY Birdie", var(--font-body-family, sans-serif);
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: #000;
-  padding: 0 2.2rem;
+    flex: 0 0 auto;
+    font-family: "TAY Birdie", var(--font-body-family, sans-serif);
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #000;
+    padding: 0 1.6rem;
 }
 
 @keyframes pdp-usps-scroll {
@@ -59,18 +59,18 @@
 .recipe-heading {
   display: flex;
   justify-content: space-between;
-  margin: 0 0 20px;
+  margin: 0 0 24px;
 }
 
 .product-form__input .form__label.form__label--numbered {
-  font-family: "TAY Birdie", var(--font-body-family, sans-serif);
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: -0.64px;
-  text-transform: uppercase;
-  color: #000;
-  padding: 0;
-  margin: 0;
+    font-family: "TAY Birdie", var(--font-body-family, sans-serif);
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -.28px;
+    text-transform: uppercase;
+    color: #000;
+    padding: 0;
+    margin: 0;
 }
 
 .product-form__input.product-form__input--pill
@@ -85,7 +85,7 @@
   color: #661d1d;
   font-family: "Matter";
   font-size: 13px;
-  line-height: 20px;
+  line-height: 16px;
   letter-spacing: 0;
   cursor: pointer;
 }
@@ -376,7 +376,7 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
-  gap: 8.4rem;
+  gap: 2.4rem;
 }
 
 .product--main .product--main--grid .product__media-wrapper {
@@ -407,29 +407,29 @@
 .product__title h4,
 .product__title h5,
 .product__title h6 {
-  font-size: 48px;
-  line-height: 56px;
-  letter-spacing: -0.48px;
-  margin: 0;
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: -0.40px;
+  margin: 0 0 4px;
   color: #000000;
   font-family: "TAYRosemary";
 }
 
-.product__title + .product__text.caption-with-letter-spacing {
-  margin-top: 0;
-  margin-bottom: 16px;
-  color: #000000;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: 1.04px;
+.product__title+.product__text.caption-with-letter-spacing {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #000;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: .72px;
 }
 
 .product--short--info {
-  margin: 1.6rem 0 0;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0;
-  color: #000;
+    margin: 1.6rem 0 0;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #000;
 }
 
 .form--label--options {
@@ -664,6 +664,7 @@ span.opinew-star-plugin-inside {
 
   .product--main .product--main--grid {
     flex-direction: row;
+    gap: 8.4rem;
   }
 
   .product--main .product--main--grid .product__media-wrapper {
@@ -680,5 +681,52 @@ span.opinew-star-plugin-inside {
 
   .product__info-container {
     max-width: 490px;
+  }
+
+  .product__title h1,
+  .product__title h2,
+  .product__title h3,
+  .product__title h4,
+  .product__title h5,
+  .product__title h6 {
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: -0.48px;
+    margin: 0;
+  }
+
+  .product__title + .product__text.caption-with-letter-spacing {
+    margin-bottom: 16px;
+    font-size: 13px;
+    letter-spacing: 1.04px;
+  }
+
+  .product--short--info {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .pdp-usps {
+    padding: 1.12rem 0;
+  }
+
+  .pdp-usps__item {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 0 2.2rem;
+  }
+
+  .recipe-heading {
+    margin: 0 0 20px;
+  }
+
+  .product-form__input .form__label.form__label--numbered {
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.64px;
+  }
+
+  .recipe-view-ingredients {
+    line-height: 20px;
   }
 }
