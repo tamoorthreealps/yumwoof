@@ -656,16 +656,19 @@ span.opinew-star-plugin-inside {
   .product--main .product--main--grid {
     flex-direction: row;
   }
+
   .product--main .product--main--grid .product__media-wrapper {
     width: 52.007%;
     max-width: 52.007%;
     position: sticky;
     top: 120px;
   }
+
   .product--main .product--main--grid .product__info-wrapper {
     width: calc(47.993px - 8.4rem);
     padding: 0;
   }
+  
   .product__info-container {
     max-width: 490px;
   }
