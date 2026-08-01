@@ -73,8 +73,25 @@
 	color: #000;
 }
 
-@media screen and (max-width: 749px) {
-	.nlabel {
-		gap: 1.6rem;
-	}
+@media screen and (max-width: 990px) {
+	.component--nutrition--btns {
+    margin: 3.2rem 0 0;
+}
+    .nlabel {
+        gap: 1.2rem;
+    }
+	.nlabel__grid {
+    grid-template-columns: none;
+    gap: .8rem;
+}
+.nlabel__btn {
+    gap: .8rem;
+    padding: .52rem 1.2rem;
+    border-radius: .6rem;
+}
+.nlabel__label {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    letter-spacing: .56px;
+}
 }
