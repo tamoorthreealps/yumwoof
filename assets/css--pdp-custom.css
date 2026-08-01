@@ -583,21 +583,21 @@ quantity-input.quantity::before {
 }
 
 .product-form__submit {
-  margin-bottom: 1rem;
-  border: 1px solid #000000;
-  border-radius: 8px;
-  background: #ffc069;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  font-family: FFBlurProMedium;
-  padding: 20.4px 20px 18px;
-  min-height: auto;
-  min-width: auto;
-  box-shadow: inherit;
-  color: #000;
-  transition: all 0.35s ease 0s;
+    margin-bottom: 1rem;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background: #ffc069;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 1.08px;
+    text-transform: uppercase;
+    font-family: FFBlurProMedium;
+    padding: 15.2px;
+    min-height: auto;
+    min-width: auto;
+    box-shadow: inherit;
+    color: #000;
+    transition: all .35s ease 0s;
 }
 
 .product-form__submit:hover {
@@ -818,4 +818,10 @@ a.pdp--promo--banner_link svg {
   .qty.freq h2.selector-title {
     font-size: 16px;
   }
+
+  .product-form__submit {
+  font-size: 20px;
+  letter-spacing: 0.8px;
+  padding: 20.4px 20px 18px;
+}
 }
