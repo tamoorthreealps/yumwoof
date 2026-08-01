@@ -74,6 +74,10 @@
 }
 
 @media screen and (max-width: 990px) {
+	.nlabel__title {
+    font-size: 1.4rem;
+    letter-spacing: -.14px;
+}
 	.component--nutrition--btns {
     margin: 3.2rem 0 0;
 }
