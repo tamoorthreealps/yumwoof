@@ -565,12 +565,12 @@ quantity-input.quantity::before {
 }
 
 .qty.freq {
-  margin: 2.4rem 0 0;
+  margin: 2rem 0 0;
 }
 
 .qty.freq h2.selector-title {
   color: #000000;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.64px;
   font-family: "TAY Birdie";
@@ -809,5 +809,13 @@ a.pdp--promo--banner_link svg {
   .product-form__input--pill .form--label--options input[type="radio"] + label {
     line-height: 24px;
     padding: 6px 20px;
+  }
+
+  .qty.freq {
+   margin: 2.4rem 0 0;
+  }
+
+  .qty.freq h2.selector-title {
+    font-size: 16px;
   }
 }
