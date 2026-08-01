@@ -240,7 +240,7 @@
         "opinew_reviews_product_widget_69CPFT"
       ],
       "custom_css": [
-        "{background: #000;}"
+        "{background: #000; padding-bottom:100px;padding-top:50px;}"
       ],
       "settings": {
         "include_margins": true
