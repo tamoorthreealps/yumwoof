@@ -21,21 +21,21 @@
 .nldrawer.is-open .nldrawer__scrim { opacity: 1; }
 
 .nldrawer__card {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	max-width: 47.2rem; /* ya cart drawer jitni width */
-	height: 100%;
-	max-height: none;
-	background: rgba(255, 255, 255, 0.9);
-	backdrop-filter: blur(10px);
-	border: 2px solid #000;
-	border-radius: 2rem;
-	transform: translateX(100%);
-	opacity: 1;
-	transition: transform .3s ease;
-	overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 46.4rem;
+    height: 100%;
+    max-height: none;
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 2.4rem;
+    transform: translate(100%);
+    opacity: 1;
+    transition: transform .3s ease;
+    overflow: hidden;
 }
 .nldrawer.is-open .nldrawer__card {
 	transform: translateX(0);
@@ -48,29 +48,27 @@
 
 /* Header */
 .nldrawer__head {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	gap: 1.6rem;
-	padding: 2.4rem 2.6rem 1.6rem;
+    padding: 3rem 2.4rem 2.4rem;
+    background: rgba(225, 82, 61, 0.9);
+    position: relative;
 }
 .nldrawer__eyebrow {
-	margin: 0 0 0.6rem;
-	font-family: FFBlurProMedium, sans-serif;
-	font-size: 1.2rem;
-	line-height: 1.4rem;
-	letter-spacing: 4px;
-	text-transform: uppercase;
-	color: #661d1d;
+    margin: 0;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.32px;
+    text-transform: uppercase;
+    color: #000000;
 }
 .nldrawer__title {
-	margin: 0;
-	font-family: 'TAYRosemary', var(--font-heading-family, serif);
-	font-weight: 400;
-	font-size: 3.2rem;
-	line-height: 1.05;
-	letter-spacing: -1px;
-	color: #000;
+    margin: 0;
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 48px;
+    letter-spacing: -0.44px;
+    color: #000;
 }
 .nldrawer__close {
 	flex: 0 0 auto;
