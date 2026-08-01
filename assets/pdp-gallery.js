@@ -18,9 +18,10 @@
     var nav = document.createElement('div');
     nav.className = 'yw-gallery-nav';
     nav.innerHTML =
-      '<span class="yw-gallery-counter"><span class="yw-gallery-current">1</span> / <span class="yw-gallery-total"></span></span>' +
-      '<button type="button" class="yw-gallery-btn yw-gallery-prev" aria-label="Previous image">&#8592;</button>' +
-      '<button type="button" class="yw-gallery-btn yw-gallery-next" aria-label="Next image">&#8594;</button>';
+    '<span class="yw-gallery-counter"><span class="yw-gallery-current">1</span> / <span class="yw-gallery-total"></span></span>' +
+    '<div class="yw-gallery-pagination"></div>' +
+    '<button type="button" class="yw-gallery-btn yw-gallery-prev" aria-label="Previous image">&#8592;</button>' +
+    '<button type="button" class="yw-gallery-btn yw-gallery-next" aria-label="Next image">&#8594;</button>';
     gallery.appendChild(nav);
 
     var current = nav.querySelector('.yw-gallery-current');
