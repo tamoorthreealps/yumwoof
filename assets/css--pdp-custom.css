@@ -632,6 +632,10 @@ quantity-input.quantity::before {
     margin-top: 0;
 }
 
+.nutritional--info--content:last-child{
+  margin:0;
+}
+
 .pdp--promo--banner {
     margin: 0 0 .8rem;
 }
