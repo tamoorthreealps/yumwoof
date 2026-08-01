@@ -71,16 +71,14 @@
     color: #000;
 }
 .nldrawer__close {
-	flex: 0 0 auto;
-	margin: 0.4rem 0 0;
-	padding: 0.4rem;
-	background: none;
-	border: 0;
-	cursor: pointer;
-	font-family: FFBlurProMedium, sans-serif;
-	font-size: 1.4rem;
-	letter-spacing: 1px;
-	color: #000;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 29px;
+    top: 16px;
 }
 
 /* Tabs */
