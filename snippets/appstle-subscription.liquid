@@ -41,7 +41,7 @@
     .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
     .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
-    .asw-diamond { display: block; }
+    .asw-diamond { display: block;max-width: 100%;height: auto; }
     .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
     .asw-option .asw-fill {fill: #FFF9EF;}
     .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
@@ -85,8 +85,10 @@
     .asw-option--sub:not(.is-selected) .asw-option__delivery,
     .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
 
-    @media (max-width: 749px) {
+    @media (max-width: 990px) {
       .asw-option__benefits { grid-template-columns: 1fr; }
+      .asw-option__radio-icon { flex: 0 0 20px; width: 20px; height: 20px; }
+      .asw-option__body{gap: 12px;}
     }
 </style>
 {%- liquid
