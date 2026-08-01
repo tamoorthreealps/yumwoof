@@ -227,12 +227,28 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "1785625977638f9fd2": {
+      "type": "apps",
+      "blocks": {
+        "opinew_reviews_product_widget_69CPFT": {
+          "type": "shopify://apps/opinew-reviews/blocks/product-widget/e1d8e0dc-17ff-4e4a-8a8a-1e73c8ef8676",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "opinew_reviews_product_widget_69CPFT"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
     "disclosures",
     "faqs_section_B64F3M",
-    "related-products"
+    "related-products",
+    "1785625977638f9fd2"
   ]
 }
