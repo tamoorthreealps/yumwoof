@@ -170,22 +170,22 @@
 }
 
 .recipe-swatch__badge {
-  position: absolute;
-  top: -9px;
-  left: 50%;
-  transform: translate(-50%, 0px);
-  z-index: 1;
-  padding: 3.4px 10.165px 0;
-  border: 1px solid #e1523c;
-  border-radius: 16px;
-  background: #fff9ef;
-  color: #e1523c;
-  font-family: "TAY Birdie", var(--font-body-family, sans-serif);
-  font-size: 13px;
-  line-height: 13px;
-  letter-spacing: -0.52px;
-  text-transform: uppercase;
-  white-space: nowrap;
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 1;
+    padding: 2.4px 7.85px 1px;
+    border: 1px solid #e1523c;
+    border-radius: 16px;
+    background: #fff9ef;
+    color: #e1523c;
+    font-family: "TAY Birdie", var(--font-body-family, sans-serif);
+    font-size: 12px;
+    line-height: 13px;
+    letter-spacing: -.48px;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .recipe-swatch__input.disabled + .recipe-swatch__label {
@@ -780,6 +780,13 @@ a.pdp--promo--banner_link svg {
   .recipe-swatch__title {
     padding: 8px 16px 8px 0;
     text-align: left;
+  }
+
+  .recipe-swatch__badge {
+    padding: 3.4px 10.165px 0;
+    font-size: 13px;
+    line-height: 13px;
+    letter-spacing: -0.52px;
   }
 
   .product-form__input {
