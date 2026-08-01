@@ -385,7 +385,7 @@
 
 .product--main .product--main--grid .product__info-wrapper {
   width: 100%;
-  padding: 0;
+  padding: 0 16px;
 }
 
 .product__info-container {
