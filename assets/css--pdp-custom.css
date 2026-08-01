@@ -57,13 +57,13 @@
 
 /* ---------- Numbered option legend (1. RECIPE, 2. BAG SIZE) ---------- */
 .recipe-heading {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 0 20px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 20px;
 }
 
 .product-form__input .form__label.form__label--numbered {
-  font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+  font-family: "TAY Birdie", var(--font-body-family, sans-serif);
   font-size: 16px;
   line-height: 20px;
   letter-spacing: -0.64px;
@@ -73,20 +73,21 @@
   margin: 0;
 }
 
-.product-form__input.product-form__input--pill .form__label.form__label--numbered {
-  margin-bottom:12px;
+.product-form__input.product-form__input--pill
+  .form__label.form__label--numbered {
+  margin-bottom: 12px;
 }
 
 .recipe-view-ingredients {
-    background: transparent;
-    border: 0;
-    padding: 0;
-    color: #661D1D;
-    font-family: 'Matter';
-    font-size: 13px;
-    line-height: 20px;
-    letter-spacing: 0;
-    cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #661d1d;
+  font-family: "Matter";
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 0;
+  cursor: pointer;
 }
 
 /* ---------- Recipe image swatches ---------- */
@@ -95,18 +96,18 @@
 }
 
 .product-form__input {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 0 2.4rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 2.4rem;
 }
 
 .recipe-swatches {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: .8rem 0 0;
-    padding: 0;
-    border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  border: 0;
 }
 
 .recipe-swatch {
@@ -149,39 +150,39 @@
 }
 
 .recipe-swatch__img {
-    flex: 0 0 auto;
-    width: 56px;
-    height: 56px;
-    object-fit: contain;
-    border-radius: 8px;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 .recipe-swatch__title {
-    font-size: 14px;
-    line-height: 20px;
-    color: #000;
-    letter-spacing: 0;
-    width: 100%;
-    padding:8px 16px 8px 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000;
+  letter-spacing: 0;
+  width: 100%;
+  padding: 8px 16px 8px 0;
 }
 
 .recipe-swatch__badge {
-    position: absolute;
-    top: -9px;
-    left: 50%;
-    transform: translate(-50%, 0px);
-    z-index: 1;
-    padding: 3.4px 10.165px 0;
-    border: 1px solid #E1523C;
-    border-radius: 16px;
-    background: #fff9ef;
-    color: #E1523C;
-    font-family: "TAY Birdie", var(--font-body-family, sans-serif);
-    font-size: 13px;
-    line-height: 13px;
-    letter-spacing: -.52px;
-    text-transform: uppercase;
-    white-space: nowrap;
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translate(-50%, 0px);
+  z-index: 1;
+  padding: 3.4px 10.165px 0;
+  border: 1px solid #e1523c;
+  border-radius: 16px;
+  background: #fff9ef;
+  color: #e1523c;
+  font-family: "TAY Birdie", var(--font-body-family, sans-serif);
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: -0.52px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .recipe-swatch__input.disabled + .recipe-swatch__label {
@@ -222,28 +223,28 @@
 }
 
 .pdp-gallery-badge {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 85px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 85px;
 }
 
 .pdp-gallery-badge__img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-    display: block;
-    animation: rotateBadge 25s linear infinite;
-    transform-origin: center;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  display: block;
+  animation: rotateBadge 25s linear infinite;
+  transform-origin: center;
 }
 
 @keyframes rotateBadge {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (min-width: 750px) {
@@ -251,7 +252,7 @@
     display: block;
     position: relative;
     padding: 2.4rem;
-    background: #661D1D;
+    background: #661d1d;
     border-radius: 24px;
     overflow: hidden;
   }
@@ -359,47 +360,44 @@
   }
 }
 
-
-
-
 /*------ custom--waqar--css ------*/
 .product--main--info {
-    padding: 156px 0 120px;
+  padding: 156px 0 120px;
 }
 
 .custom--page-width {
-    padding: 0 2.4rem;
-    max-width: 1244px;
-    margin: 0 auto;
+  padding: 0 2.4rem;
+  max-width: 1244px;
+  margin: 0 auto;
 }
 
 .product--main .product--main--grid {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    gap: 8.4rem;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  gap: 8.4rem;
 }
 
 .product--main .product--main--grid .product__media-wrapper {
-    width: 100%;
-    max-width: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .product--main .product--main--grid .product__info-wrapper {
-    width: 100%;
-    padding: 0;
+  width: 100%;
+  padding: 0;
 }
 
 .product__info-container {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .product__column-sticky {
-  top:0;
+  top: 0;
 }
 
 .product__title {
-  margin:0;
+  margin: 0;
 }
 
 .product__title h1,
@@ -408,260 +406,267 @@
 .product__title h4,
 .product__title h5,
 .product__title h6 {
-    font-size: 48px;
-    line-height: 56px;
-    letter-spacing: -0.48px;
-    margin: 0;
-    color: #000000;
-    font-family: 'TAYRosemary';
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.48px;
+  margin: 0;
+  color: #000000;
+  font-family: "TAYRosemary";
 }
 
-.product__title+.product__text.caption-with-letter-spacing {
-    margin-top: 0;
-    margin-bottom: 16px;
-    color: #000000;
-    font-size: 13px;
-    line-height: 16px;
-    letter-spacing: 1.04px;
+.product__title + .product__text.caption-with-letter-spacing {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #000000;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 1.04px;
 }
 
 .product--short--info {
-    margin: 1.6rem 0 0;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0;
-    color: #000;
+  margin: 1.6rem 0 0;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #000;
 }
 
 .form--label--options {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 12px;
-    width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  width: 100%;
 }
 
-.product-form__input--pill .form--label--options input[type=radio]+label {
-    margin: 0;
-    flex: 1;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: 0.56px;
-    text-align: left;
-    padding: 6px 20px;
-    min-height: 56px;
-    display: flex;
-    align-items: center;
+.product-form__input--pill .form--label--options input[type="radio"] + label {
+  margin: 0;
+  flex: 1;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.56px;
+  text-align: left;
+  padding: 6px 20px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
 }
 
-.product-form__input--pill .form--label--options input[type=radio]:checked+label,
-.product-form__input--pill .form--label--options input[type=radio]+label:hover {
-    background-color: #00000014;
-    color: #000;
-    border-color: #000;
+.product-form__input--pill
+  .form--label--options
+  input[type="radio"]:checked
+  + label,
+.product-form__input--pill
+  .form--label--options
+  input[type="radio"]
+  + label:hover {
+  background-color: #00000014;
+  color: #000;
+  border-color: #000;
 }
 
 .product-form__input.product-form__quantity {
-    margin: 0 0 1.2rem;
+  margin: 0 0 1.2rem;
 }
 
 .product-form__quantity .form__label {
-    margin-bottom: 1.2rem;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: -0.64px;
-    font-family: 'TAY Birdie';
-    text-transform: uppercase;
-    color: #000;
-    opacity: 1;
+  margin-bottom: 1.2rem;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.64px;
+  font-family: "TAY Birdie";
+  text-transform: uppercase;
+  color: #000;
+  opacity: 1;
 }
 
 quantity-input.quantity {
-border: 1px solid #000000;
-    border-radius: 8px;
-    outline: none;
-    box-shadow: inherit;
-    width: 140px;
-    min-height: 64px;
-    background: #fff;
-    gap: 6px;
-    padding: 0 16px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: inherit;
+  width: 140px;
+  min-height: 64px;
+  background: #fff;
+  gap: 6px;
+  padding: 0 16px;
 }
 
-quantity-input.quantity::after, quantity-input.quantity::before {
-  display:none;
+quantity-input.quantity::after,
+quantity-input.quantity::before {
+  display: none;
 }
 
 .quantity__button {
-    color: #000;
-    opacity: 1 !important;
-    width: 10.6px;
-    margin: 0 !important;
-    height: auto;
-    border: 0;
-    background: transparent !important;
+  color: #000;
+  opacity: 1 !important;
+  width: 10.6px;
+  margin: 0 !important;
+  height: auto;
+  border: 0;
+  background: transparent !important;
 }
 
-.quantity__input[type=number] {
-    padding: 0;
-    font-size: 20px;
-    line-height: 24px;
-    color: #000000;
-    font-family: 'Matter';
-    letter-spacing: 0;
-    font-weight: 500;
-    opacity: 1;
+.quantity__input[type="number"] {
+  padding: 0;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  font-family: "Matter";
+  letter-spacing: 0;
+  font-weight: 500;
+  opacity: 1;
 }
 
 .ingri--bar--main {
-    margin: 0;
-    background: #7AA5DD;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding: 12px 36px 12px 18px;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0;
-    font-weight: 500;
-    position: relative;
-    color: #000;
+  margin: 0;
+  background: #7aa5dd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 12px 36px 12px 18px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  font-weight: 500;
+  position: relative;
+  color: #000;
 }
 
-.ingri--bar--main p, .ingri--bar--main a {
-    color: #000;
-    font-family: 'Matter';
-    margin: 0;
+.ingri--bar--main p,
+.ingri--bar--main a {
+  color: #000;
+  font-family: "Matter";
+  margin: 0;
 }
 
 .ingri--bar--main a {
-  padding-left:8px;
+  padding-left: 8px;
   text-decoration: underline;
 }
 
 .ingri--bar--main svg {
-    position: absolute;
-    right: 16px;
+  position: absolute;
+  right: 16px;
 }
 
 .qty.freq {
-    margin: 2.4rem 0 0;
+  margin: 2.4rem 0 0;
 }
 
 .qty.freq h2.selector-title {
-    color: #000000;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: -0.64px;
-    font-family: 'TAY Birdie';
-    text-transform: uppercase;
-    margin: 0 0 1.2rem;
+  color: #000000;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.64px;
+  font-family: "TAY Birdie";
+  text-transform: uppercase;
+  margin: 0 0 1.2rem;
 }
 
 .product-form__buttons {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .product-form__submit {
-    margin-bottom: 1rem;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    background: #ffc069;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: .8px;
-    text-transform: uppercase;
-    font-family: FFBlurProMedium;
-    padding: 20.4px 20px 18px;
-    min-height: auto;
-    min-width: auto;
-    box-shadow: inherit;
-    color: #000;
-    transition: all 0.35s ease 0s;
+  margin-bottom: 1rem;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background: #ffc069;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-family: FFBlurProMedium;
+  padding: 20.4px 20px 18px;
+  min-height: auto;
+  min-width: auto;
+  box-shadow: inherit;
+  color: #000;
+  transition: all 0.35s ease 0s;
 }
 
 .product-form__submit:hover {
-    background: #000000;
-    color: #fff9ef;
+  background: #000000;
+  color: #fff9ef;
 }
 
-.product-form__submit::after, .product-form__submit::before {
-  display:none;
+.product-form__submit::after,
+.product-form__submit::before {
+  display: none;
 }
 
 .nutritional--info {
-    margin: 4rem 0 0;
+  margin: 4rem 0 0;
 }
 
 .nutritional--info--heading {
-    margin: 0 0 16px;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: -0.16px;
-    color: #000000;
-    font-family: 'TAY Birdie';
-    font-weight: 400;
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.16px;
+  color: #000000;
+  font-family: "TAY Birdie";
+  font-weight: 400;
 }
 
 .nutritional--info--content {
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: 0;
-    color: #000000;
-    margin-top: 0;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #000000;
+  margin-top: 0;
 }
 
 .pdp--promo--banner {
-    margin: 0 0 3.2rem;
+  margin: 0 0 3.2rem;
 }
 
 a.pdp--promo--banner_link {
-    background: rgba(102, 28, 28, 0.15);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    text-decoration: none;
-    padding: 12px;
+  background: rgba(102, 28, 28, 0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-decoration: none;
+  padding: 12px;
 }
 
 a.pdp--promo--banner_link p {
-    margin: 0;
-    color: #000000;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.16px;
+  margin: 0;
+  color: #000000;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.16px;
 }
 
 a.pdp--promo--banner_link p strong {
-    color: #661D1D;
-    font-weight: 500;
+  color: #661d1d;
+  font-weight: 500;
 }
 
 span.opinew-star-plugin-inside {
-    display: flex;
-    gap: 4px;
+  display: flex;
+  gap: 4px;
 }
-
-
 
 @media screen and (min-width: 990px) {
   .product--main .product--main--grid {
     flex-direction: row;
-}
-.product--main .product--main--grid .product__media-wrapper {
+  }
+  .product--main .product--main--grid .product__media-wrapper {
     width: 52.007%;
     max-width: 52.007%;
     position: sticky;
     top: 120px;
-}
-.product--main .product--main--grid .product__info-wrapper {
+  }
+  .product--main .product--main--grid .product__info-wrapper {
     width: calc(47.993px - 8.4rem);
     padding: 0;
-}
-.product__info-container {
+  }
+  .product__info-container {
     max-width: 490px;
-}
+  }
 }
