@@ -221,6 +221,15 @@
 }
 
 /* ---------- Gallery: square rounded beige card ---------- */
+  .pdp-gallery media-gallery {
+    display: block;
+    position: relative;
+    padding: 2.4rem;
+    background: #661d1d;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  
 .pdp-gallery {
   position: relative;
 }
