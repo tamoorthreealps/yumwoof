@@ -394,6 +394,10 @@
   top:0;
 }
 
+.product__title {
+  margin:0;
+}
+
 .product__title h1,
 .product__title h2,
 .product__title h3,
