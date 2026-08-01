@@ -251,7 +251,7 @@
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 990px) {
   .pdp-gallery media-gallery {
     display: block;
     position: relative;
