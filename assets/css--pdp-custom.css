@@ -391,7 +391,7 @@
     right:24px;
 }
 .pdp-gallery .yw-gallery-btn:disabled {
-  opacity:.35;
+  opacity:.25;
     pointer-events:none;
 }
 
