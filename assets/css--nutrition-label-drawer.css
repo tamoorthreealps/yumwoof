@@ -153,13 +153,13 @@
 	background: rgba(0, 0, 0, 0.15);
 }
 .nldrawer__foot {
-	margin: 1.4rem 0 0;
-	font-family: 'Matter', sans-serif;
-	font-weight: 500;
-	font-size: 1.15rem;
-	line-height: 1.55;
-	color: #7a6c63;
-	letter-spacing: 0;
+    margin: 1.4rem 0 0;
+    font-family: 'Matter';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.5);
+    letter-spacing: 0;
 }
 .nldrawer__section {
     margin: 2.2rem 0 0;
