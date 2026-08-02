@@ -78,7 +78,7 @@
           {%- assign recipe = variant.title -%}
           {%- if recipe == 'Default Title' -%}{%- assign recipe = product.title -%}{%- endif -%}
           {%- assign eyebrow = brand | append: ' · ' | append: recipe -%}
-          <div class="nldrawer__variant" data-nldrawer-variant="{{ variant.id }}" hidden>
+          <div class="nldrawer__variant" data-nldrawer-variant="{{ variant.id }}" data-head-color="{{ variant.metafields.custom.nutrition_head_color }}" hidden>
             {%- comment -%} Ingredients {%- endcomment -%}
             <section
               class="nldrawer__panel"
