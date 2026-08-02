@@ -1,20 +1,17 @@
 /*
- * Nutrition label drawer (PDP)
+ * Nutrition label drawer (PDP) [redesign]
  * ---------------------------------------------------------------------------
- * <nutrition-label> wraps the "Know what you're feeding" buttons + the drawer.
- * Buttons open the drawer on a given tab; the drawer shows the SELECTED
- * variant's data for per-variant tabs (ingredients/analysis/calories/full) and
- * shared data for feeding/transition.
- *
- * The Feeding tab is computed from the same feeding_table bands + the shopper's
- * saved dog (localStorage) that the quantity calculator uses.
+ * <nutrition-label> wraps the "Know what you're feeding" buttons + the popup.
+ * Each button opens the popup showing ONE table (no in-popup tabs):
+ *   analysis / full  -> the SELECTED variant's data
+ *   feeding          -> computed from feeding_table bands (cups / kg / grams)
+ *   transition       -> shared
+ * The header band takes the selected recipe's colour (data-color).
  */
 (function () {
   var SHARED = { feeding: 1, transition: 1 };
-  var STORE_PREFIX = 'yumwoof_qcalc_p';
-  var MAX_AGE = 7 * 24 * 60 * 60 * 1000;
+  var LB_TO_KG = 0.453592;
 
-  /* daily cups for a weight, interpolated within the feeding band (matches qcalc) */
   function cupsPerDay(weight, bands) {
     if (!bands || !bands.length) return 0;
     for (var i = 0; i < bands.length; i++) {
@@ -29,70 +26,37 @@
     return last ? last.maxC : 0;
   }
 
-  function round1(c) { return Math.round(c * 10) / 10; }
-  function tableCups(c) { return round1(c).toFixed(1) + ' cups'; }
-  function calloutCups(c) { var r = round1(c); return r + ' ' + (r === 1 ? 'cup' : 'cups'); }
-
-  function readDog(pid) {
-    try {
-      var raw = localStorage.getItem(STORE_PREFIX + pid);
-      if (!raw) return null;
-      var o = JSON.parse(raw);
-      if (!o || !o.dogs || !o.dogs.length) return null;
-      if (o.ts && Date.now() - o.ts > MAX_AGE) return null;
-      var d = o.dogs[0];
-      return { name: d.name || 'Your dog', weight: Number(d.weight) || 0, puppy: d.stage === 'puppy' };
-    } catch (e) { return null; }
-  }
-
-  function nearest(weights, w) {
-    var best = weights[0], bd = Infinity;
-    weights.forEach(function (x) { var d = Math.abs(x - w); if (d < bd) { bd = d; best = x; } });
-    return best;
-  }
-
   class NutritionLabel extends HTMLElement {
     connectedCallback() {
       this.section = this.closest('.shopify-section') || document;
-      this.productId = this.dataset.product;
       this.drawer = this.querySelector('[data-nldrawer]');
       if (!this.drawer) return;
 
-      // Move the fixed overlay to <body> so ancestor transforms don't trap it.
-      document.body.appendChild(this.drawer);
+      document.body.appendChild(this.drawer); // escape ancestor transforms
 
       this.card = this.drawer.querySelector('.nldrawer__card');
       this.eyebrowEl = this.drawer.querySelector('[data-nldrawer-eyebrow]');
       this.headingEl = this.drawer.querySelector('[data-nldrawer-heading]');
-      this.tabs = Array.prototype.slice.call(this.drawer.querySelectorAll('[data-nldrawer-tab]'));
       this.panels = Array.prototype.slice.call(this.drawer.querySelectorAll('[data-nldrawer-panel]'));
       this.variantEls = Array.prototype.slice.call(this.drawer.querySelectorAll('[data-nldrawer-variant]'));
       this.bodyEl = this.drawer.querySelector('[data-nldrawer-body]');
-      this.activeTab = null;
+      this.activePanel = null;
       this.lastFocus = null;
 
-      // Open buttons
       this.querySelectorAll('[data-nlabel-open]').forEach(function (btn) {
         btn.addEventListener('click', function () { this.open(btn.dataset.nlabelOpen); }.bind(this));
       }, this);
 
-      // Tab switching
-      this.tabs.forEach(function (t) {
-        t.addEventListener('click', function () { this.showTab(t.dataset.nldrawerTab); }.bind(this));
-      }, this);
-
-      // Close interactions
       this.drawer.querySelectorAll('[data-nldrawer-close]').forEach(function (el) {
         el.addEventListener('click', this.close.bind(this));
       }, this);
       this._onKey = function (e) { if (e.key === 'Escape') this.close(); }.bind(this);
 
-      // Re-render when the shopper changes variant
       this.section.addEventListener('change', function () {
         var id = this.currentVariantId();
         if (id && id !== this._variantId) {
           this._variantId = id;
-          if (this.isOpen && this.activeTab && !SHARED[this.activeTab]) this.showTab(this.activeTab);
+          if (this.isOpen && this.activePanel) this.show(this.activePanel);
         }
       }.bind(this));
     }
@@ -106,16 +70,19 @@
       return this.drawer.querySelector('[data-nldrawer-variant="' + id + '"]');
     }
 
-    open(tab) {
+    activeVariantEl() {
+      return this.variantEl(this._variantId) || this.variantEls[0] || null;
+    }
+
+    open(panel) {
       this.lastFocus = document.activeElement;
       this._variantId = this.currentVariantId();
       this.drawer.hidden = false;
       this.isOpen = true;
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', this._onKey);
-      // next frame so the transition runs
       requestAnimationFrame(function () { this.drawer.classList.add('is-open'); }.bind(this));
-      this.showTab(tab);
+      this.show(panel);
       if (this.card) this.card.focus();
     }
 
@@ -130,31 +97,31 @@
       if (this.lastFocus && this.lastFocus.focus) this.lastFocus.focus();
     }
 
-    showTab(tab) {
-      this.activeTab = tab;
-      this.tabs.forEach(function (b) { b.classList.toggle('is-active', b.dataset.nldrawerTab === tab); });
+    show(panel) {
+      this.activePanel = panel;
       this.panels.forEach(function (p) { p.hidden = true; });
       this.variantEls.forEach(function (v) { v.hidden = true; });
 
-      var panel = null;
-      if (SHARED[tab]) {
-        panel = this.drawer.querySelector('.nldrawer__panel--shared[data-nldrawer-panel="' + tab + '"]');
-      } else {
-        var vEl = this.variantEl(this._variantId) || this.variantEls[0];
-        if (vEl) {
-            vEl.hidden = false;
-            const headColor = vEl.dataset.headColor;
-            if (headColor) {
-                this.drawer.style.setProperty('--nutrition-head-color', headColor);
-            }
-            panel = vEl.querySelector('[data-nldrawer-panel="' + tab + '"]');
-        }
+      var vEl = this.activeVariantEl();
+      var color = vEl ? vEl.getAttribute('data-color') : null;
+      var el = null;
+      var eyebrow = '';
+
+      if (SHARED[panel]) {
+        el = this.drawer.querySelector('.nldrawer__panel--shared[data-nldrawer-panel="' + panel + '"]');
+        if (el) eyebrow = el.getAttribute('data-eyebrow') || '';
+      } else if (vEl) {
+        vEl.hidden = false;
+        el = vEl.querySelector('[data-nldrawer-panel="' + panel + '"]');
+        eyebrow = vEl.getAttribute('data-eyebrow') || '';
       }
-      if (panel) {
-        panel.hidden = false;
-        this.eyebrowEl.textContent = panel.getAttribute('data-eyebrow') || '';
-        this.headingEl.textContent = panel.getAttribute('data-title') || '';
-        if (tab === 'feeding') this.renderFeeding(panel);
+
+      if (color && this.card) this.card.style.setProperty('--nl-header', color);
+      if (el) {
+        el.hidden = false;
+        this.headingEl.textContent = el.getAttribute('data-title') || '';
+        this.eyebrowEl.textContent = eyebrow;
+        if (panel === 'feeding') this.renderFeeding(el);
       }
       if (this.bodyEl) this.bodyEl.scrollTop = 0;
     }
@@ -162,35 +129,24 @@
     renderFeeding(panel) {
       var cfgEl = panel.querySelector('[data-nldrawer-feeding-config]');
       var rowsEl = panel.querySelector('[data-nldrawer-feeding-rows]');
-      if (!cfgEl || !rowsEl) return;
+      if (!cfgEl || !rowsEl || rowsEl.childElementCount) return; // build once
       var cfg;
       try { cfg = JSON.parse(cfgEl.textContent); } catch (e) { return; }
       var bands = (cfg.bands || []).map(function (b) {
         return { minW: +b.minW, maxW: +b.maxW, minC: +b.minC, maxC: +b.maxC };
       });
       var gpc = cfg.gramsPerCup || 160;
-      var dog = readDog(cfg.productId);
-      var match = dog ? nearest(cfg.weights, dog.weight) : null;
 
       rowsEl.innerHTML = cfg.weights.map(function (w) {
         var cups = cupsPerDay(w, bands);
+        var kg = Math.round(w * LB_TO_KG);
         var grams = Math.round(cups * gpc);
-        return '<tr class="' + (w === match ? 'is-match' : '') + '">' +
-          '<td>' + w + ' lbs</td>' +
-          '<td class="nldrawer__ta-r">' + tableCups(cups) + '</td>' +
-          '<td class="nldrawer__ta-r nldrawer__grams">' + grams + ' g</td>' +
-          '</tr>';
+        var cupsDisp = (Math.round(cups * 10) / 10).toFixed(1);
+        return '<div class="nldrawer__feed-row">' +
+          '<span>' + w + ' lbs (' + kg + 'kg)</span>' +
+          '<span class="nldrawer__ta-r">' + cupsDisp + ' cups (' + grams + 'g)</span>' +
+          '</div>';
       }).join('');
-
-      var callout = panel.querySelector('[data-nldrawer-feeding-callout]');
-      var caltitle = panel.querySelector('[data-nldrawer-feeding-caltitle]');
-      if (dog && callout && caltitle) {
-        var daily = cupsPerDay(dog.weight, bands) * (dog.puppy ? 2 : 1);
-        caltitle.textContent = dog.name + ' · ' + calloutCups(daily) + ' a day';
-        callout.hidden = false;
-      } else if (callout) {
-        callout.hidden = true;
-      }
     }
   }
 
