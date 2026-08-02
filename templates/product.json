@@ -19,7 +19,7 @@
         "vendor": {
           "type": "text",
           "settings": {
-            "text": "{{ product.vendor }}",
+            "text": "AIR DRIED DOG FOOD - LAND & SEA",
             "text_style": "uppercase"
           }
         },
