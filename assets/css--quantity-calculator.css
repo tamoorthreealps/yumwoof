@@ -203,10 +203,12 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease, visibility .3s ease;
 }
-.qz-scrim[hidden] {
-  display: none;
-}
+
 .qz-modal {
     background: #fff9efe6;
     -webkit-backdrop-filter: blur(10px);
@@ -220,6 +222,20 @@
     min-height: 696px;
     display: flex;
     flex-direction: column;
+    transform: translateY(30px) scale(.96);
+  opacity: 0;
+  transition: transform .35s cubic-bezier(.22,1,.36,1),
+              opacity .35s ease;
+}
+.qz-scrim.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.qz-scrim.is-open .qz-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
 @keyframes qz-rise {
   from {
