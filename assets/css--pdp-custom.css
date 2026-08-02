@@ -697,9 +697,26 @@ a.pdp--promo--banner_link svg {
     width: 8px;
 }
 
-span.opinew-star-plugin-inside {
+.rating-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    align-items: center;
+    line-height: 0;
+    gap: 11px;
+}
+
+.opinew-star-plugin-inside {
   display: flex;
   gap: 4px;
+}
+
+.rating-summary {
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    letter-spacing: 0;
+    font-family: 'Matter';
 }
 
 @media screen and (min-width: 990px) {
