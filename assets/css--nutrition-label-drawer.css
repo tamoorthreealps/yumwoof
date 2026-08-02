@@ -124,7 +124,7 @@
 	flex: 1 1 auto;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
-	padding: 2.6rem;
+	padding: 2.4rem;
 }
 .nldrawer__panel { display: block; }
 .nldrawer__panel[hidden] { display: none; }
@@ -179,9 +179,6 @@
 	border-collapse: collapse;
 	font-family: 'Matter', sans-serif;
 }
-.nldrawer__table thead {
-    display: none;
-}
 .nldrawer__table th {
 	padding: 0 0 0.9rem;
 	font-family: FFBlurProMedium, sans-serif;
@@ -197,12 +194,12 @@
 	text-align: left;
 }
 .nldrawer__table td {
-    padding: 1.21rem 0;
+    padding: 0 0 8px;
     font-weight: 500;
-    font-size: 1.3rem;
-    line-height: 100%;
-    color: #000;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    border-bottom: 0;
     vertical-align: baseline;
     letter-spacing: 0;
 }
@@ -210,12 +207,13 @@
 .nldrawer__ta-r { text-align: right; }
 .nldrawer__c-name { width: 40%; }
 .nldrawer__table .nldrawer__c-qual {
-    font-family: FFBlurProMedium, sans-serif;
+    font-family: 'Matter';
     font-weight: 400;
-    font-size: 1rem;
-    letter-spacing: 2px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
     text-transform: uppercase;
-    color: #7A6C63 !important;
+    color: rgba(0, 0, 0, 0.5) !important;
 }
 .nldrawer__c-val { color: #7a6c63; }
 
