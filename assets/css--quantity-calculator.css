@@ -433,37 +433,41 @@
 .qz-opts {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .qz-opt {
-  background: #fff;
-  border: 1px solid var(--qc-hair);
-  border-radius: 9px;
-  padding: 16px 17px;
-  text-align: left;
-  cursor: pointer;
-  transition: 0.15s;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 9px;
+    padding: 13px 16px 17.4px;
+    text-align: left;
+    cursor: pointer;
+    transition: .15s;
 }
 .qz-opt:hover {
   border-color: var(--qc-hair-s);
 }
 .qz-opt.on {
-  background: var(--qc-greige);
-  border-color: var(--qc-hair-s);
+    background: rgba(0, 0, 0, 0.1);
+    border-color: #000000;
 }
 .qz-opt b {
-  display: block;
-  font-family: "Matter", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--qc-ink);
+    display: block;
+    font-family: 'Matter';
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #000000;
+    font-weight: 500;
 }
 .qz-opt small {
-  display: block;
-  font-family: "Matter", sans-serif;
-  font-size: 1.3rem;
-  color: var(--qc-mute);
-  margin-top: 2px;
+    display: block;
+    font-family: 'Matter';
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 4px;
 }
 
 /* step 3 — name */
