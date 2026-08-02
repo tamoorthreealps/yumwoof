@@ -258,7 +258,7 @@
 .qz-logo-mark svg {
     display: block;
     max-width: 100%;
-    height: auto;
+    height: 100%;
 }
 .qz-dots {
     display: flex;
@@ -649,17 +649,73 @@
 }
 
 @media screen and (max-width: 520px) {
-  .qz-scrim {
-    padding: 0;
-    align-items: flex-end;
-  }
+      .qz-scrim {
+        padding: 8px;
+    }
   .qz-modal {
-    max-width: none;
-    border-radius: 14px 14px 0 0;
-  }
-  .qz-body h2 {
-    font-size: 2.6rem;
-  }
+        max-width: 376px;
+        padding: 0;
+    }
+  .qz-head {
+    padding: 14px 20px 9.2px;
+}
+.qz-logo-mark {
+    width: 42px;
+    height: 36px;
+}
+.qz-body {
+    padding: 24px 20px 16px;
+    min-height: 340px;
+}
+.qz-dots {
+    margin: 0 0 20px;
+}
+    .qz-body h2 {
+        font-size: 32px;
+        line-height: 36px;
+        letter-spacing: -0.32px;
+        max-width: 225px;
+    }
+    .qz-sub {
+    font-size: 14px;
+    margin: 0 auto 28px;
+    line-height: 20px;
+    max-width: 304px;
+}
+.qz-wbig {
+    font-size: 64px;
+    line-height: 56px;
+}
+.qz-wbig span {
+    font-size: 16px;
+    line-height: 20px;
+}
+.qz-range {
+    margin: 24px 0 12px;
+}
+.qz-scale {
+    font-size: 14px;
+    line-height: 20px;
+}
+.qz-presets {
+    gap: 5.33px;
+    margin-top: 24px;
+}
+.qz-presets button {
+    border-radius: 8px;
+    padding: 5.2px;
+}
+.qz-foot {
+    margin: auto -20px 0;
+    padding: 16px 16px 0;
+    border-top:1px solid rgba(0, 0, 0, 0.1);
+}
+.qz-next {
+    padding: 15.2px 16px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: .64px;
+}
 }
 
 /* ---------- quantity box with coverage (once a dog is added: 4079-222 / 4244-218) ---------- */
