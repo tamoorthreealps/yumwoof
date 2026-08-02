@@ -490,6 +490,7 @@
         updateRangeFill();
       } else if (n === 1) {
         this.body.innerHTML =
+        '<div class="qz-content-hold">' +
           '<div class="qz-step">Step 2 of 3</div>' +
           '<h2>How old is your dog?</h2>' +
           '<p class="qz-sub">Dogs under a year are still growing — they eat about double the adult serving.</p>' +
@@ -500,6 +501,7 @@
               '<b>' + t + '</b><small>' + s + '</small></button>'
           ).join('') +
           '</div>' +
+          '</div>'+
           '<div class="qz-foot"><button type="button" class="qz-next" data-next>Continue</button></div>';
         this.body.querySelectorAll('.qz-opt').forEach((b) =>
           b.addEventListener('click', () => {
