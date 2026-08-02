@@ -631,18 +631,19 @@
   cursor: not-allowed;
 }
 .qz-add {
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-family: "Matter", sans-serif;
-  font-size: 1.3rem;
-  color: var(--qc-mute);
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-top: 14px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: 'Matter';
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+    color: rgba(0, 0, 0, 0.5);
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 16px;
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 520px) {
