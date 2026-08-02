@@ -308,7 +308,8 @@
     color: #000000;
     max-width: 320px;
 }
-.qz-body .qz-content.qz-step-2 h2 {
+.qz-body .qz-content.qz-step-2 h2,
+.qz-body .qz-content.qz-step-3 h2 {
     max-width: 400px;
 }
 .qz-sub {
@@ -318,6 +319,11 @@
     line-height: 24px;
     letter-spacing: 0;
     max-width: 355px;
+}
+
+.qz-body .qz-content.qz-step-2 .qz-sub,
+.qz-body .qz-content.qz-step-3 .qz-sub {
+  margin: 0 auto 24px;
 }
 
 /* step 1 — weight */
