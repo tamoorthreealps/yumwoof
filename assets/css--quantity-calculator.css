@@ -202,7 +202,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 24px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -218,8 +218,7 @@
     max-width: 524px;
     overflow: hidden;
     padding: 18px;
-    max-height: calc(100vh - 48px);
-  min-height: auto;
+    min-height: 696px;
     display: flex;
     flex-direction: column;
     transform: translateY(30px) scale(.96);
@@ -306,8 +305,6 @@
     flex-direction: column;
     text-align: center;
     flex: 1;
-  overflow-y: auto;
-  min-height: 0;
 }
 
 .qz-content, .qz-content-hold {
