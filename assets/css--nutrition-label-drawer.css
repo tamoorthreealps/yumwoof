@@ -49,7 +49,7 @@
 /* Header */
 .nldrawer__head {
     padding: 3.2rem 2.4rem 2.8rem;
-    background: var(--nutrition-head-color, #661D1D);
+    background: rgba(225, 82, 61, 0.9);
     position: relative;
 	border-bottom:1px solid #000000;
 }
@@ -125,6 +125,24 @@
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	padding: 2.4rem;
+	scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(0,0,0,.35) transparent;
+}
+.nldrawer__body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nldrawer__body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.nldrawer__body::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.35);
+    border-radius: 999px;
+}
+
+.nldrawer__body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,.55);
 }
 .nldrawer__panel { display: block; }
 .nldrawer__panel[hidden] { display: none; }
