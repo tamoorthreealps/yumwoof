@@ -49,7 +49,7 @@
 /* Header */
 .nldrawer__head {
     padding: 3.2rem 2.4rem 2.8rem;
-    background: rgba(225, 82, 61, 0.9);
+    background: var(--nutrition-head-color, #661D1D);
     position: relative;
 	border-bottom:1px solid #000000;
 }
