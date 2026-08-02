@@ -481,9 +481,9 @@
 }
 
 /* step 3 — name */
-.qz-name {
+/* .qz-name {
   margin-top: 6px;
-}
+} */
 .qz-name input {
     width: 100%;
     background: #fff;
@@ -715,6 +715,46 @@
     font-size: 16px;
     line-height: 24px;
     letter-spacing: .64px;
+}
+.qz-body .qz-content.qz-step-2 .qz-sub, .qz-body .qz-content.qz-step-3 .qz-sub {
+    font-size: 16px;
+    line-height: 24px;
+}
+.qz-name input {
+    padding: 9px 16px 10px;
+    min-height: 48px;
+}
+.qz-plan {
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -.40px;
+}
+.qz-plan em {
+    font-size: 14px;
+}
+.qz-grid {
+    border-radius: 12px;
+}
+.qz-know {
+    margin-top: 28px;
+    gap: 12px;
+}
+.qz-know-icon img {
+    width: 96px;
+    height: 96px;
+}
+.qz-know-lab {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.qz-know p {
+    font-size: 14px;
+}
+.qz-add {
+    font-size: 14px;
+    letter-spacing: -.14px;
+    margin-top: 12px;
+    margin-bottom: 4px;
 }
 }
 
