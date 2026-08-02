@@ -442,6 +442,7 @@
     }
 
     drawStep() {
+      this.body.className = `qz-content qz-step-${this.step + 1}`;
       var d = this.draft;
       var n = this.step;
       var LAST = 3; // 3 input steps (0,1,2) then the result (3)
