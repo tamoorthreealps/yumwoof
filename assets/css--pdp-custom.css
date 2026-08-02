@@ -889,4 +889,13 @@ a.pdp--promo--banner_link svg {
   line-height: 24px;
 }
 
+.rating-wrap {
+    gap: 8px;
+}
+
+.rating-summary {
+    font-size: 13px;
+    line-height: 16px;
+}
+
 }
