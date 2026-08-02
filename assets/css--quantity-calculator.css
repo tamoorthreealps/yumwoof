@@ -485,19 +485,20 @@
   margin-top: 6px;
 }
 .qz-name input {
-  width: 100%;
-  background: #fff;
-  border: 1px solid var(--qc-hair);
-  border-radius: 9px;
-  padding: 15px 16px;
-  font-family: "Matter", sans-serif;
-  font-size: 1.6rem;
-  color: var(--qc-ink);
+    width: 100%;
+    background: #fff;
+    border: 1px solid #000000;
+    border-radius: 9px;
+    padding: 15px 16px;
+    font-family: 'Matter';
+    font-size: 1.6rem;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: #000000;
+    min-height: 56px;
+    outline: none;
 }
-.qz-name input:focus {
-  outline: none;
-  border-color: var(--qc-hair-s);
-}
+
 
 /* result */
 .qz-result {
