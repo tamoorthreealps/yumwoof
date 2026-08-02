@@ -29,11 +29,12 @@
 .yw-butcher-quality {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 22px;
+    margin: 20px 0 0;
 }
 
 .yw-butcher-quality__image {
-    flex: 0 0 78px;
+    flex: 0 0 128px;
 }
 
 .yw-butcher-quality__image img {
@@ -59,17 +60,18 @@
 
 .yw-butcher-quality__description,
 .yw-butcher-quality__description p {
-    margin: 0;
-    font-family: "Matter";
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: .3px;
+margin: 0;
+    font-family: 'TAY Birdie';
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0;
     color: #661D1D;
 }
 
-@media (max-width:749px){
+@media (max-width:990px){
 
-    .yw-butcher-quality{
+    .yw-butcher-quality {
+        display:none;
         gap:16px;
         align-items:flex-start;
     }
