@@ -395,7 +395,7 @@
 }
 .qz-presets {
     display: flex;
-    gap: 5px;
+    gap: 5.6px;
     margin-top: 28px;
     flex-wrap: wrap;
     justify-content: center;
