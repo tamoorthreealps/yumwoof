@@ -576,11 +576,11 @@
                       -%}
                     </div>
                   {%- when 'nutritional-information' -%}
-                    {% if section.settings.nutritional_heading != blank %}
+                    {% if block.settings.nutritional_heading != blank %}
                     <div class="nutritional--info">
-                      <h4 class="nutritional--info--heading">{{ section.settings.nutritional_heading }}</h4>
+                      <h4 class="nutritional--info--heading">{{ block.settings.nutritional_heading }}</h4>
                       <p class="nutritional--info--content">
-                        {{ section.settings.nutritional_content }}
+                        {{ block.settings.nutritional_content }}
                       </p>
                     </div>
                   {% endif %}
