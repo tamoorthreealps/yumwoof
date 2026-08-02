@@ -455,6 +455,7 @@
 
       if (n === 0) {
         this.body.innerHTML =
+        '<div class="qz-content-hold">' +
           '<div class="qz-step">Step 1 of 3</div>' +
           '<h2>How much does your dog weigh?</h2>' +
           '<p class="qz-sub">This is the number that decides everything else — bag size, quantity, and how often we ship.</p>' +
@@ -463,6 +464,7 @@
           '<div class="qz-scale"><span>3 lbs</span><span>130 lbs</span></div>' +
           '<div class="qz-presets">' +
           WEIGHT_PRESETS.map((w) => '<button type="button" data-w="' + w + '">' + w + ' lbs</button>').join('') +
+          '</div>' +
           '</div>' +
           '<div class="qz-foot"><button type="button" class="qz-next" data-next>Continue</button></div>';
         var wbig = this.body.querySelector('[data-wbig]');
