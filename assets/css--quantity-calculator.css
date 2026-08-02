@@ -568,6 +568,9 @@
     margin-top: auto;
     padding-top: 56px;
 }
+.qz-content.qz-step-2 .qz-foot {
+  padding-top: 72px;
+}
 .qz-next {
     width: 100%;
     background: var(--qc-amber);
