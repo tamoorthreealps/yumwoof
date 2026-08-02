@@ -517,6 +517,16 @@
     flex-direction: column;
     gap: 4px;
 }
+.qz-content.qz-step-4 .qz-step {
+    font-family: 'TAY Birdie';
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 1.68px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 12px;
+    display: block;
+}
 .qz-plan em {
     font-style: normal;
     color: #000000;
