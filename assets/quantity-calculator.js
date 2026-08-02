@@ -486,6 +486,7 @@
         this.body.querySelectorAll('[data-w]').forEach((b) =>
           b.addEventListener('click', () => set(+b.dataset.w))
         );
+        updateRangeFill();
       } else if (n === 1) {
         this.body.innerHTML =
           '<div class="qz-step">Step 2 of 3</div>' +
