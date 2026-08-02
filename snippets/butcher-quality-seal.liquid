@@ -1,6 +1,6 @@
-<div class="ek-butcher-quality">
+<div class="yw-butcher-quality">
   {% if section.settings.seal_image != blank %}
-    <div class="ek-butcher-quality__image">
+    <div class="yw-butcher-quality__image">
       {{
         section.settings.seal_image
         | image_url: width: 220
@@ -9,17 +9,85 @@
     </div>
   {% endif %}
 
-  <div class="ek-butcher-quality__content">
-    {% if section.settings.heading != blank %}
-      <h3 class="ek-butcher-quality__heading">
-        {{ section.settings.heading }}
+  <div class="yw-butcher-quality__content">
+    {% if section.settings.bq_heading != blank %}
+      <h3 class="yw-butcher-quality__heading">
+        {{ section.settings.bq_heading }}
       </h3>
     {% endif %}
 
-    {% if section.settings.description != blank %}
-      <div class="ek-butcher-quality__description">
-        {{ section.settings.description }}
+    {% if section.settings.bq_description != blank %}
+      <div class="yw-butcher-quality__description">
+        {{ section.settings.bq_description }}
       </div>
     {% endif %}
   </div>
 </div>
+
+
+<style>
+.yw-butcher-quality {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.yw-butcher-quality__image {
+    flex: 0 0 78px;
+}
+
+.yw-butcher-quality__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.yw-butcher-quality__content {
+    flex: 1;
+}
+
+.yw-butcher-quality__heading {
+    margin: 0 0 8px;
+    font-family: "TAY Birdie";
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #661D1D;
+    font-weight: 400;
+}
+
+.yw-butcher-quality__description,
+.yw-butcher-quality__description p {
+    margin: 0;
+    font-family: "Matter";
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .3px;
+    color: #661D1D;
+}
+
+@media (max-width:749px){
+
+    .yw-butcher-quality{
+        gap:16px;
+        align-items:flex-start;
+    }
+
+    .yw-butcher-quality__image{
+        flex:0 0 64px;
+    }
+
+    .yw-butcher-quality__heading{
+        font-size:13px;
+        letter-spacing:1.5px;
+    }
+
+    .yw-butcher-quality__description,
+    .yw-butcher-quality__description p{
+        font-size:13px;
+        line-height:19px;
+    }
+
+}
+</style>
