@@ -427,18 +427,40 @@
     /* ---------- quiz ---------- */
     openQuiz(idx) {
       this.editIdx = idx == null ? null : idx;
+
       this.draft =
         this.editIdx != null
           ? Object.assign({}, this.dogs[this.editIdx])
-          : { id: uid(), weight: 40, stage: 'adult', name: '' };
+          : {
+              id: uid(),
+              weight: 40,
+              stage: 'adult',
+              name: ''
+            };
+
       this.step = 0;
+
       this.scrim.hidden = false;
+
+      requestAnimationFrame(() => {
+        this.scrim.classList.add('is-open');
+      });
+
       document.documentElement.style.overflow = 'hidden';
+
       this.drawStep();
     }
     closeQuiz() {
-      this.scrim.hidden = true;
-      document.documentElement.style.overflow = '';
+      this.scrim.classList.remove('is-open');
+
+      this.scrim.addEventListener(
+        'transitionend',
+        () => {
+          this.scrim.hidden = true;
+          document.documentElement.style.overflow = '';
+        },
+        { once: true }
+      );
     }
 
     drawStep() {
