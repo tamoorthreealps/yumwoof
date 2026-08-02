@@ -142,8 +142,12 @@
       } else {
         var vEl = this.variantEl(this._variantId) || this.variantEls[0];
         if (vEl) {
-          vEl.hidden = false;
-          panel = vEl.querySelector('[data-nldrawer-panel="' + tab + '"]');
+            vEl.hidden = false;
+            const headColor = vEl.dataset.headColor;
+            if (headColor) {
+                this.drawer.style.setProperty('--nutrition-head-color', headColor);
+            }
+            panel = vEl.querySelector('[data-nldrawer-panel="' + tab + '"]');
         }
       }
       if (panel) {
