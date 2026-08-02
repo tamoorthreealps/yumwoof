@@ -1,0 +1,25 @@
+<div class="ek-butcher-quality">
+  {% if section.settings.seal_image != blank %}
+    <div class="ek-butcher-quality__image">
+      {{
+        section.settings.seal_image
+        | image_url: width: 220
+        | image_tag: loading: 'lazy', widths: '110,220', alt: section.settings.heading
+      }}
+    </div>
+  {% endif %}
+
+  <div class="ek-butcher-quality__content">
+    {% if section.settings.heading != blank %}
+      <h3 class="ek-butcher-quality__heading">
+        {{ section.settings.heading }}
+      </h3>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="ek-butcher-quality__description">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+  </div>
+</div>
