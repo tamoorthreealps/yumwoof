@@ -206,7 +206,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity .3s ease, visibility .3s ease;
+  transition: opacity .55s ease, visibility .55s ease;
 }
 
 .qz-modal {
@@ -223,8 +223,8 @@
     flex-direction: column;
     transform: translateY(30px) scale(.96);
   opacity: 0;
-  transition: transform .35s cubic-bezier(.22,1,.36,1),
-              opacity .35s ease;
+  transition: transform .55s cubic-bezier(.22,1,.36,1),
+              opacity .55s ease;
 }
 .qz-scrim.is-open {
   opacity: 1;
