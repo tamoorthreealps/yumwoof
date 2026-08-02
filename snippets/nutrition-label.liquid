@@ -8,9 +8,9 @@
   are wired with the tab keys it will read.
 
   Data sources (must be set for a button to appear):
-  - analysis / calories / full  -> variant  custom.nutrition_label  (metaobject)
-  - feeding                     -> product  custom.feeding_table     (metaobject)
-  - transition                  -> product  custom.transition_plan   (metaobject)
+  - analysis / full  -> variant  custom.nutrition_label  (metaobject)
+  - feeding          -> product  custom.feeding_table     (metaobject)
+  - transition       -> product  custom.transition_plan   (metaobject)
 
   Accepts:
   - product    : {Object} product
@@ -41,10 +41,6 @@
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="analysis">
           <span class="nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Guaranteed Analysis</span>
-        </button>
-        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="calories">
-          <span class="nlabel__plus" aria-hidden="true">+</span>
-          <span class="nlabel__label">Calorie Content</span>
         </button>
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="full">
           <span class="nlabel__plus" aria-hidden="true">+</span>

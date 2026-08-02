@@ -1,25 +1,20 @@
 {% comment %}
-  Nutrition label — drawer/popup (PDP)
+  Nutrition label — drawer/popup (PDP)  [redesign]
   ---------------------------------------------------------------------------
-  The popup opened by the "Know what you're feeding" buttons. Six tabs:
-    ingredients / analysis / calories / full   -> per variant (custom.nutrition_label)
-    feeding                                     -> product custom.feeding_table (JS-computed)
-    transition                                  -> product custom.transition_plan
+  Each launcher button opens this popup showing ONE table (no in-popup tabs):
+    analysis / full  -> per variant (custom.nutrition_label)
+    feeding          -> product custom.feeding_table   (cups/kg/grams computed in JS)
+    transition       -> product custom.transition_plan
 
-  Repeating rows are stored as pipe text-tables on the metaobject and parsed
-  into real tables here (split on newlines, then "|"; "#" = section header).
+  The header band takes the SELECTED recipe's colour (custom.nutrition_label →
+  header_color; falls back to a coral/blue/gold palette by variant order).
 
-  Assumed metaobject field API keys (change the assigns below if your handles
-  differ):
-    nutrition_label : ingredients_heading, ingredients, ingredients_footnote,
-                      kcal_per_kg, kcal_per_cup, calorie_note_title, calorie_note,
-                      guaranteed_analysis, guaranteed_analysis_footnote, full_data
+  Metaobject field API keys used:
+    nutrition_label : guaranteed_analysis, guaranteed_analysis_footnote,
+                      kcal_per_kg, kcal_per_cup, full_data, header_color (NEW, color)
     transition_plan : intro, steps, note_title, note
 
-  Accepts:
-  - product     : {Object}
-  - section_id  : {String}
-  - brand_label : {String} eyebrow prefix (e.g. "Ancestral Blend")
+  Accepts: product, section_id, brand_label
 {% endcomment %}
 
 {%- liquid
@@ -28,7 +23,11 @@
   assign ft = product.metafields.custom.feeding_table.value
   assign gpc = product.metafields.custom.feeding_grams_per_cup | default: 160
   assign all_recipes_eyebrow = brand | append: ' · All Recipes'
-  assign sel_nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
+  assign palette = '#E1523D,#83A6D6,#C6912F' | split: ','
+  assign dial25 = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Ratio_Dial_25.png?v=1785701384'
+  assign dial50 = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Ratio_Dial_50.png?v=1785701384'
+  assign dial75 = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Ratio_Dial_75.png?v=1785701384'
+  assign dial100 = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Ratio_Dial_100.png?v=1785701384'
 -%}
 
 <div class="nldrawer" data-nldrawer hidden>
@@ -41,136 +40,67 @@
     aria-labelledby="nldrawer-title-{{ section_id }}"
     tabindex="-1"
   >
-    <div class="nldrawer__head">
+    <div class="nldrawer__head" data-nldrawer-head>
       <div class="nldrawer__head-text">
         <p class="nldrawer__title" id="nldrawer-title-{{ section_id }}" data-nldrawer-heading></p>
         <p class="nldrawer__eyebrow" data-nldrawer-eyebrow></p>
       </div>
-      <button type="button" class="nldrawer__close" data-nldrawer-close aria-label="Close">
-        <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.32 5.288C4.32 5.544 4.064 5.608 3.744 5.832C3.36 6.12 3.04 6.568 3.04 7.336C3.04 9.672 3.008 9.96 2.752 10.376C2.56 10.696 2.272 11.016 2.272 11.4C2.272 11.656 2.4 11.912 2.656 12.232C3.008 12.68 3.04 13.128 3.04 13.544V15.432C3.04 16.968 4.32 17.032 4.32 17.48C4.32 17.768 4.16 17.864 3.712 17.864C2.464 17.864 1.696 17.128 1.696 15.688V13.96C1.696 13.544 1.6 12.968 1.44 12.712C1.312 12.52 1.12 12.296 0.8 12.072C0.512 11.88 0.224 11.688 0.224 11.4C0.224 11.08 0.416 10.92 0.992 10.536C1.536 10.184 1.696 9.32 1.696 9.096V7.112C1.696 5.768 2.432 4.936 3.552 4.936C4.256 4.936 4.32 5.064 4.32 5.288Z" fill="black"/>
-          <path d="M9.544 14.024L8.232 16.072C7.752 16.808 7.4 17 6.824 17H5.896C5.448 17 5.128 16.68 5.288 16.36C5.384 16.168 5.384 16.2 5.512 16.008L8.232 12.168C8.488 11.816 8.648 11.432 8.648 11.144C8.648 10.824 8.456 10.472 8.36 10.312L6.152 7.208C5.736 6.696 5.832 6.152 6.44 6.152H7.496C8.008 6.152 8.424 6.408 8.712 6.888L9.576 8.296C9.832 8.712 10.152 8.968 10.504 8.968C10.792 8.968 11.08 8.776 11.304 8.392L12.168 7.016C12.552 6.376 12.904 6.152 13.608 6.152H14.376C15.112 6.152 15.08 6.696 14.856 7.016L12.744 9.992C12.424 10.472 12.264 10.792 12.264 11.112C12.264 11.368 12.328 11.688 12.744 12.264L14.952 15.368C15.688 16.424 15.624 16.36 15.624 16.552C15.624 16.84 15.4 17 14.952 17H13.992C13.512 17 13.064 16.744 12.744 16.264L11.336 14.024C10.984 13.512 10.76 13.352 10.472 13.352C10.088 13.352 9.8 13.608 9.544 14.024Z" fill="black"/>
-          <path d="M16.68 5.288C16.68 5.544 16.936 5.608 17.256 5.832C17.64 6.12 17.96 6.568 17.96 7.336C17.96 9.672 17.992 9.96 18.248 10.376C18.44 10.696 18.728 11.016 18.728 11.4C18.728 11.656 18.6 11.912 18.344 12.232C17.992 12.68 17.96 13.128 17.96 13.544V15.432C17.96 16.968 16.68 17.032 16.68 17.48C16.68 17.768 16.84 17.864 17.288 17.864C18.536 17.864 19.304 17.128 19.304 15.688V13.96C19.304 13.544 19.4 12.968 19.56 12.712C19.688 12.52 19.88 12.296 20.2 12.072C20.488 11.88 20.776 11.688 20.776 11.4C20.776 11.08 20.584 10.92 20.008 10.536C19.464 10.184 19.304 9.32 19.304 9.096V7.112C19.304 5.768 18.568 4.936 17.448 4.936C16.744 4.936 16.68 5.064 16.68 5.288Z" fill="black"/>
-        </svg>
-      </button>
+      <button type="button" class="nldrawer__close" data-nldrawer-close aria-label="Close">{ X }</button>
     </div>
-
-    <nav class="nldrawer__tabs" data-nldrawer-tabs aria-label="Nutrition sections">
-      {%- if sel_nl -%}
-        <button type="button" class="nldrawer__tab" data-nldrawer-tab="ingredients">Ingredients</button>
-        <button type="button" class="nldrawer__tab" data-nldrawer-tab="analysis">Analysis</button>
-        <button type="button" class="nldrawer__tab" data-nldrawer-tab="calories">Calories</button>
-        <button type="button" class="nldrawer__tab" data-nldrawer-tab="full">Full Data</button>
-      {%- endif -%}
-      {%- if ft -%}
-        <button type="button" class="nldrawer__tab" data-nldrawer-tab="feeding">Feeding</button>
-      {%- endif -%}
-      {%- if tp -%}
-        <button type="button" class="nldrawer__tab" data-nldrawer-tab="transition">Transition</button>
-      {%- endif -%}
-    </nav>
 
     <div class="nldrawer__body" data-nldrawer-body>
       {%- comment -%} ---------- per-variant panels ---------- {%- endcomment -%}
+      {%- assign vi = 0 -%}
       {%- for variant in product.variants -%}
         {%- assign nl = variant.metafields.custom.nutrition_label.value -%}
         {%- if nl -%}
           {%- assign recipe = variant.title -%}
           {%- if recipe == 'Default Title' -%}{%- assign recipe = product.title -%}{%- endif -%}
-          {%- assign eyebrow = brand | append: ' · ' | append: recipe -%}
-          <div class="nldrawer__variant" data-nldrawer-variant="{{ variant.id }}" data-head-color="{{ variant.metafields.custom.nutrition_head_color }}" hidden>
-            {%- comment -%} Ingredients {%- endcomment -%}
-            <section
-              class="nldrawer__panel"
-              data-nldrawer-panel="ingredients"
-              data-title="Ingredients"
-              data-eyebrow="{{ eyebrow | escape }}"
-              hidden
-            >
-              {%- if nl.ingredients_heading != blank -%}
-                <p class="nldrawer__kicker">{{ nl.ingredients_heading }}</p>
-              {%- endif -%}
-              <p class="nldrawer__prose">{{ nl.ingredients }}</p>
-              {%- if nl.ingredients_footnote != blank -%}
-                <hr class="nldrawer__hr">
-                <p class="nldrawer__foot">{{ nl.ingredients_footnote }}</p>
-              {%- endif -%}
-            </section>
+          {%- assign palette_idx = vi | modulo: 3 -%}
+          {%- assign vcolor = nl.header_color | default: palette[palette_idx] -%}
+          {%- assign vi = vi | plus: 1 -%}
+          <div class="nldrawer__variant"
+            data-nldrawer-variant="{{ variant.id }}"
+            data-color="{{ vcolor }}"
+            data-eyebrow="{{ recipe | append: ' Recipe' | escape }}"
+            hidden>
 
-            {%- comment -%} Guaranteed Analysis {%- endcomment -%}
-            <section
-              class="nldrawer__panel"
-              data-nldrawer-panel="analysis"
-              data-title="Guaranteed Analysis"
-              data-eyebrow="{{ eyebrow | escape }}"
-              hidden
-            >
+            {%- comment -%} Guaranteed Analysis (+ calorie content) {%- endcomment -%}
+            <section class="nldrawer__panel" data-nldrawer-panel="analysis" data-title="Guaranteed Analysis" hidden>
               {%- assign ga_rows = nl.guaranteed_analysis | strip | newline_to_br | strip_newlines | split: '<br />' -%}
-              <table class="nldrawer__table nldrawer__table--ga">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col" class="nldrawer__ta-r">Dry Matter</th>
-                    <th scope="col" class="nldrawer__ta-r">As Packaged</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {%- for line in ga_rows -%}
-                    {%- assign row = line | strip -%}
-                    {%- if row == blank -%}{%- continue -%}{%- endif -%}
-                    {%- assign c = row | split: '|' -%}
-                    <tr>
-                      <td class="nldrawer__c-name">{{ c[0] | strip }}</td>
-                      <td class="nldrawer__c-qual">{{ c[1] | strip }}</td>
-                      <td class="nldrawer__ta-r">{{ c[2] | strip }}</td>
-                      <td class="nldrawer__ta-r">{{ c[3] | strip }}</td>
-                    </tr>
-                  {%- endfor -%}
-                </tbody>
-              </table>
+              <div class="nldrawer__ga">
+                {%- for line in ga_rows -%}
+                  {%- assign row = line | strip -%}
+                  {%- if row == blank -%}{%- continue -%}{%- endif -%}
+                  {%- assign c = row | split: '|' -%}
+                  <div class="nldrawer__ga-row">
+                    <span class="nldrawer__ga-label">
+                      <span class="nldrawer__ga-name">{{ c[0] | strip }}</span>
+                      <span class="nldrawer__ga-qual">{{ c[1] | strip }}</span>
+                    </span>
+                    <span class="nldrawer__ga-val">{{ c[3] | strip }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              <div class="nldrawer__calorie">
+                <p class="nldrawer__calorie-title">Calorie content:</p>
+                {%- assign kk = nl.kcal_per_kg | append: '' -%}
+                {%- if kk.size == 4 -%}
+                  {%- assign kk_first = kk | slice: 0 -%}
+                  {%- assign kk_rest = kk | slice: 1, 3 -%}
+                  {%- assign kk = kk_first | append: ',' | append: kk_rest -%}
+                {%- endif -%}
+                <p class="nldrawer__calorie-line">ME= {{ kk }} kcal/kg, {{ nl.kcal_per_cup }} kcal/cup</p>
+              </div>
+
               {%- if nl.guaranteed_analysis_footnote != blank -%}
                 <p class="nldrawer__foot">{{ nl.guaranteed_analysis_footnote }}</p>
               {%- endif -%}
             </section>
 
-            {%- comment -%} Calorie Content {%- endcomment -%}
-            <section
-              class="nldrawer__panel"
-              data-nldrawer-panel="calories"
-              data-title="Calorie Content"
-              data-eyebrow="{{ eyebrow | escape }}"
-              hidden
-            >
-              <p class="nldrawer__kicker nldrawer__kicker--gold">Metabolizable Energy (Calculated)</p>
-              <p class="nldrawer__kcal">
-                {{ nl.kcal_per_kg }}
-                <span class="nldrawer__kcal-unit">Kcal/kg</span>
-              </p>
-              <p class="nldrawer__kcal nldrawer__kcal--accent">
-                {{ nl.kcal_per_cup }}
-                <span class="nldrawer__kcal-unit">Kcal/cup</span>
-              </p>
-              {%- if nl.calorie_note != blank -%}
-                <div class="nldrawer__callout__main">
-                  <div class="nldrawer__callout">
-                    {%- if nl.calorie_note_title != blank -%}
-                      <p class="nldrawer__callout-label">{{ nl.calorie_note_title }}</p>
-                    {%- endif -%}
-                    <p class="nldrawer__callout-body">{{ nl.calorie_note }}</p>
-                  </div>
-                </div>
-              {%- endif -%}
-            </section>
-
             {%- comment -%} Full Nutritional Data {%- endcomment -%}
-            <section
-              class="nldrawer__panel"
-              data-nldrawer-panel="full"
-              data-title="Full Nutritional Data"
-              data-eyebrow="{{ eyebrow | escape }}"
-              hidden
-            >
+            <section class="nldrawer__panel" data-nldrawer-panel="full" data-title="Full Nutritional Data" hidden>
               {%- assign fd_rows = nl.full_data | strip | newline_to_br | strip_newlines | split: '<br />' -%}
               {%- assign open = false -%}
               {%- for line in fd_rows -%}
@@ -178,64 +108,50 @@
                 {%- if row == blank -%}{%- continue -%}{%- endif -%}
                 {%- assign first = row | slice: 0 -%}
                 {%- if first == '#' -%}
-                  {%- if open -%}
-                    </tbody>
-                    </table>
-                  {%- endif -%}
+                  {%- if open -%}</div>{%- endif -%}
                   <p class="nldrawer__section">{{ row | remove_first: '#' | strip }}</p>
-                  <table class="nldrawer__table nldrawer__table--full">
-                    <tbody>
-                      {%- assign open = true -%}
+                  <div class="nldrawer__full">
+                  {%- assign open = true -%}
                 {%- else -%}
                   {%- assign c = row | split: '|' -%}
-                  <tr>
-                    <td class="nldrawer__c-name">{{ c[0] | strip }}</td>
-                    <td class="nldrawer__ta-r nldrawer__c-val">{{ c[1] | strip }}</td>
-                  </tr>
+                  <div class="nldrawer__full-row">
+                    <span class="nldrawer__full-name">{{ c[0] | strip }}</span>
+                    <span class="nldrawer__full-val">{{ c[1] | strip }}</span>
+                  </div>
                 {%- endif -%}
               {%- endfor -%}
-              {%- if open -%}
-                </tbody>
-                </table>
-              {%- endif -%}
+              {%- if open -%}</div>{%- endif -%}
             </section>
+
           </div>
         {%- endif -%}
       {%- endfor -%}
 
       {%- comment -%} ---------- shared: Feeding (JS-computed) ---------- {%- endcomment -%}
       {%- if ft -%}
-        <section
-          class="nldrawer__panel nldrawer__panel--shared"
-          data-nldrawer-panel="feeding"
-          data-title="Feeding Guidelines"
-          data-eyebrow="{{ all_recipes_eyebrow | escape }}"
-          hidden
-        >
-          <div class="nldrawer__callout" data-nldrawer-feeding-callout hidden>
-            <p class="nldrawer__callout-label" data-nldrawer-feeding-caltitle></p>
-            <p class="nldrawer__callout-body">
-              Pulled from the plan you built above — the serving already accounts for weight and age.
-            </p>
+        <section class="nldrawer__panel nldrawer__panel--shared" data-nldrawer-panel="feeding"
+          data-title="Feeding Guidelines" data-eyebrow="{{ all_recipes_eyebrow | escape }}" hidden>
+          <div class="nldrawer__feed">
+            <div class="nldrawer__feed-head">
+              <span>Dog Weight</span>
+              <span class="nldrawer__ta-r">Daily Serving</span>
+            </div>
+            <div class="nldrawer__feed-rows" data-nldrawer-feeding-rows></div>
           </div>
-          <table class="nldrawer__table nldrawer__table--feeding">
-            <thead>
-              <tr>
-                <th scope="col">Dog Weight</th>
-                <th scope="col" class="nldrawer__ta-r">Daily Serving</th>
-                <th scope="col" class="nldrawer__ta-r">Grams</th>
-              </tr>
-            </thead>
-            <tbody data-nldrawer-feeding-rows></tbody>
-          </table>
-          <p class="nldrawer__foot">
-            Guidelines only — needs vary by age, breed, activity, and metabolism. Puppies need about 2× these amounts;
-            seniors often need less; pregnant or nursing dogs may free feed. Consult your veterinarian.
-          </p>
+
+          <div class="nldrawer__2x">
+            <svg class="nldrawer__2x-cup" xmlns="http://www.w3.org/2000/svg" width="46" height="36" viewBox="53 -1 46 36" fill="none" aria-hidden="true">
+              <path d="M89.596 13.842C88.6397 13.842 87.8109 14.5182 87.6197 15.4691L84.8995 29.606C84.7507 30.3245 84.262 31.212 83.5394 31.9305C82.8169 32.649 81.9881 33.0716 81.223 33.0716L62.3944 33.1984C60.4605 32.7335 58.8029 31.3599 58.3779 29.5004L58.3354 29.3102L55.0627 10.7146C54.9352 9.93269 55.509 9.23535 56.3165 9.23535H91.2749C94.5901 9.23535 97.289 11.919 97.289 15.2155V21.9987C97.289 23.3511 96.1839 24.45 94.8239 24.45C93.4638 24.45 92.3587 23.3511 92.3587 21.9987V16.6102C92.3587 15.0888 91.1261 13.8631 89.596 13.8631V13.842Z" stroke="#2D2926" stroke-width="0.75" stroke-miterlimit="10"/>
+              <path d="M54.9348 7.54454C54.8711 7.31209 54.8711 7.01625 54.8711 6.78381C54.8711 4.67067 56.2949 3.00128 58.1013 3.00128C58.6963 3.00128 59.2701 3.23373 59.7801 3.61409C60.0989 3.84654 60.5027 3.90993 60.8215 3.76201C61.1402 3.61409 61.459 3.38165 61.5865 2.93789C62.0965 1.58548 63.2654 0.740223 64.4979 0.740223C65.3905 0.740223 66.2405 1.18398 66.8993 1.94471C67.1543 2.32508 67.5369 2.473 67.9406 2.38847C68.3444 2.30395 68.7057 2.09263 68.9182 1.71227C69.5132 0.592303 70.5333 -0.0205078 71.6384 -0.0205078C72.7434 -0.0205078 73.7848 0.655697 74.3585 1.71227C74.5498 2.09263 74.9536 2.32508 75.3361 2.38847C75.7186 2.38847 76.1011 2.24055 76.3774 1.94471C77.0149 1.18398 77.865 0.740223 78.7788 0.740223C80.0114 0.740223 81.1802 1.56435 81.6902 2.93789C81.8177 3.31825 82.1365 3.61409 82.4553 3.76201C82.774 3.90993 83.1778 3.84654 83.4966 3.61409C84.0066 3.23373 84.6017 3.00128 85.1754 3.00128C86.9818 3.00128 88.4056 4.67067 88.4056 6.78381C88.4056 7.01625 88.4056 7.31209 88.3419 7.54454H54.9136H54.9348Z" fill="#2D2926"/>
+            </svg>
+            <p class="nldrawer__2x-line1">Up to <b>2x</b> calories per cup</p>
+            <p class="nldrawer__2x-line2">vs. dry kibble †</p>
+          </div>
+
+          <p class="nldrawer__feed-note">Our food is calorie-dense, so you may feed less compared to other food. These suggested daily servings are only guidelines. Individual requirements may vary depending on age, breed, weight, activity level and metabolism. Puppies require more calories, so serve 2x more than the amounts shown. Senior dogs may require fewer calories. Pregnant or nursing dogs may require free feeding. Please consult your veterinarian.</p>
 
           <script type="application/json" data-nldrawer-feeding-config>
             {
-              "productId": {{ product.id | json }},
               "gramsPerCup": {{ gpc | times: 1.0 }},
               "weights": [10, 20, 30, 40, 60, 80, 100],
               "bands": [
@@ -255,28 +171,41 @@
 
       {%- comment -%} ---------- shared: Transition ---------- {%- endcomment -%}
       {%- if tp -%}
-        <section
-          class="nldrawer__panel nldrawer__panel--shared"
-          data-nldrawer-panel="transition"
-          data-title="How to Transition"
-          data-eyebrow="{{ all_recipes_eyebrow | escape }}"
-          hidden
-        >
+        <section class="nldrawer__panel nldrawer__panel--shared" data-nldrawer-panel="transition"
+          data-title="How to Transition" data-eyebrow="{{ all_recipes_eyebrow | escape }}" hidden>
           {%- if tp.intro != blank -%}
             <p class="nldrawer__prose">{{ tp.intro }}</p>
           {%- endif -%}
+
           {%- assign step_rows = tp.steps | strip | newline_to_br | strip_newlines | split: '<br />' -%}
           <div class="nldrawer__steps">
             {%- for line in step_rows -%}
               {%- assign row = line | strip -%}
               {%- if row == blank -%}{%- continue -%}{%- endif -%}
               {%- assign c = row | split: '|' -%}
+              {%- assign step_label = c[0] | strip -%}
+              {%- assign step_val = c[1] | strip -%}
+              {%- assign pct = step_val | split: '%' | first | strip -%}
+              {%- if pct == '25' -%}{%- assign dial = dial25 -%}
+              {%- elsif pct == '50' -%}{%- assign dial = dial50 -%}
+              {%- elsif pct == '75' -%}{%- assign dial = dial75 -%}
+              {%- else -%}{%- assign dial = dial100 -%}{%- endif -%}
+              {%- assign parts = step_val | split: ' · ' -%}
               <div class="nldrawer__step">
-                <span class="nldrawer__step-label">{{ c[0] | strip }}</span>
-                <span class="nldrawer__step-val">{{ c[1] | strip }}</span>
+                <img class="nldrawer__dial" src="{{ dial }}" width="56" height="56" loading="lazy" alt="">
+                <div class="nldrawer__step-text">
+                  <span class="nldrawer__step-label">{{ step_label }}</span>
+                  <span class="nldrawer__step-val">
+                    <b>{{ parts[0] | strip }}</b>
+                    {%- if parts.size > 1 -%}
+                      <span class="nldrawer__step-muted"> · {{ parts[1] | strip }}</span>
+                    {%- endif -%}
+                  </span>
+                </div>
               </div>
             {%- endfor -%}
           </div>
+
           {%- if tp.note != blank -%}
             <div class="nldrawer__callout">
               {%- if tp.note_title != blank -%}
