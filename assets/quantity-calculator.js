@@ -516,9 +516,9 @@
           '<p class="qz-sub">We\'ll label the plan with their name so every delivery is sized to the right dog.</p>' +
           '<div class="qz-name"><input type="text" data-name maxlength="16" placeholder="e.g. Bella" value="' +
           esc(d.name || '') + '" autocomplete="off"></div>' +
+          '</div>'+
           '<div class="qz-foot"><button type="button" class="qz-next" data-next ' +
           (d.name ? '' : 'disabled') + '>See my plan</button></div>';
-          '</div>';
         var ni = this.body.querySelector('[data-name]');
         var next = this.body.querySelector('[data-next]');
         ni.addEventListener('input', (e) => {
