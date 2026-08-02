@@ -819,7 +819,7 @@ a.pdp--promo--banner_link svg {
 
   .recipe-swatches {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 11px;
   }
 
   .recipe-swatch__label {
