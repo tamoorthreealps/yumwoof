@@ -340,10 +340,50 @@
     margin: 0;
 }
 .qz-range {
-    width: 100%;
-    accent-color: #000000;
-    margin: 20px 0 0px;
-    height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin:20px 0 0;
+}
+
+/* Track */
+.qz-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Thumb */
+.qz-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #000;
+  border: none;
+  margin-top: -8px; /* Centers the 20px thumb on the 4px track */
+  cursor: pointer;
+}
+
+/* Firefox */
+.qz-range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.qz-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: #000;
+  cursor: pointer;
 }
 .qz-scale {
     display: flex;
