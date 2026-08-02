@@ -736,8 +736,10 @@
     border-radius: 12px;
 }
 .qz-know {
-    margin-top: 28px;
-    gap: 12px;
+        margin-top: 28px;
+        gap: 12px;
+        flex-direction: column;
+        text-align: center;
 }
 .qz-know-icon img {
     width: 96px;
