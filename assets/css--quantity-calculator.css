@@ -206,7 +206,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity .55s ease, visibility .55s ease;
+  transition: opacity .3s ease, visibility .3s ease;
 }
 
 .qz-modal {
