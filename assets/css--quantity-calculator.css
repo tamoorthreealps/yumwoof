@@ -207,8 +207,6 @@
   visibility: hidden;
   pointer-events: none;
   transition: opacity .3s ease, visibility .3s ease;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .qz-modal {
