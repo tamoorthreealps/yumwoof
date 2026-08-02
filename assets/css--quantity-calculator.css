@@ -639,8 +639,9 @@
 
 /* footer buttons */
 .qz-foot {
-    margin-top: auto;
     padding-top: 26px;
+    flex-shrink: 0;
+    margin-top: 0;
 }
 
 .qz-next {
