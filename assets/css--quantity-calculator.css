@@ -207,6 +207,8 @@
   visibility: hidden;
   pointer-events: none;
   transition: opacity .3s ease, visibility .3s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .qz-modal {
@@ -218,7 +220,8 @@
     max-width: 524px;
     overflow: hidden;
     padding: 18px;
-    min-height: 696px;
+    max-height: calc(100vh - 48px);
+  min-height: auto;
     display: flex;
     flex-direction: column;
     transform: translateY(30px) scale(.96);
@@ -305,6 +308,8 @@
     flex-direction: column;
     text-align: center;
     flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .qz-content, .qz-content-hold {
