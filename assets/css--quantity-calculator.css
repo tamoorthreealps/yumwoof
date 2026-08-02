@@ -290,12 +290,32 @@
     flex-direction: column;
     text-align: center;
     flex: 1;
+    min-height: 0;
 }
 
-.qz-content, .qz-content-hold {
+.qz-content {
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 0;
+}
+
+.qz-content-hold {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 4px;
+}
+
+/* optional scrollbar */
+.qz-content-hold::-webkit-scrollbar {
+    width: 4px;
+}
+
+.qz-content-hold::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.2);
+    border-radius: 10px;
 }
 
 .qz-step {
@@ -608,6 +628,7 @@
 .qz-foot {
     margin-top: auto;
     padding-top: 26px;
+    flex-shrink: 0;
 }
 
 .qz-next {
