@@ -139,10 +139,11 @@
                       {%- endif -%}
                     </div>
                   {%- when 'short_description' -%}
-                    <p class="product--short--info">
-                      Guided by nature. Air-dried dog food crafted with locally sourced USDA proteins, nutrient-rich
-                      organ meats, and no synthetic vitamins or seed oils.
-                    </p>
+                  {%- if product.metafields.custom.short_description != blank -%}
+                    <div class="product--short--info">
+                      {{ product.metafields.custom.short_description }}
+                    </div>
+                  {%- endif -%}
                   {%- when 'price' -%}
                     <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                       {%- render 'price',
