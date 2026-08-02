@@ -506,46 +506,53 @@
   text-align: center;
 }
 .qz-plan {
-  font-family: "TAYRosemary", var(--font-heading-family, serif);
-  font-size: 2.8rem;
-  text-transform: uppercase;
-  line-height: 1.1;
-  margin: 14px 0 6px;
-  color: var(--qc-ink);
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-size: 48px;
+    line-height: 48px;
+    letter-spacing: -0.48px;
+    text-transform: uppercase;
+    margin: 12px 0 4px;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 .qz-plan em {
-  font-style: normal;
-  color: var(--qc-burg);
+    font-style: normal;
+    color: #000000;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.32px;
 }
 .qz-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 22px;
-  border-top: 1px solid var(--qc-hair-s);
-  border-bottom: 1px solid var(--qc-hair-s);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 24px;
+    background: #661D1D;
+    border-radius: 16px;
 }
 .qz-grid div {
-  padding: 17px 6px;
-  border-right: 1px solid var(--qc-hair);
+    padding: 16px 6px 20px;
 }
-.qz-grid div:last-child {
-  border-right: none;
-}
+
 .qz-grid b {
-  display: block;
-  font-family: "Matter", sans-serif;
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: var(--qc-ink);
+    display: block;
+    font-size: 2rem;
+    line-height: 2.8rem;
+    letter-spacing: 0;
+    color: #FFF9EF;
+    font-family: 'Matter';
+    font-weight: 500;
 }
 .qz-grid small {
-  display: block;
-  font-family: "FFBlurProMedium", sans-serif;
-  font-size: 1.05rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--qc-mute);
-  margin-top: 5px;
+    display: block;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -0.24px;
+    text-transform: uppercase;
+    color: #FFF9EF;
+    margin-top: 0;
+    font-family: "TAY Birdie";
 }
 .qz-know {
   margin-top: 20px;
