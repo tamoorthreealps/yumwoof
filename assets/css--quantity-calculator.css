@@ -292,7 +292,7 @@
     flex: 1;
 }
 
-.qz-content {
+.qz-content, .qz-content-hold {
     display: flex;
     flex-direction: column;
     flex: 1;
