@@ -565,7 +565,10 @@
         '<div><b>' + fmtCups(daily) + '</b><small>' + (peers.length ? 'needed daily, together' : 'needed daily') + '</small></div>' +
         '<div><b>' + (daysPerBag || '—') + '</b><small>days per bag</small></div>' +
         '</div>' +
-        '<div class="qz-know"><span class="qz-know-lab">Did you know?</span>' +
+        '<div class="qz-know"><div class="qz-know-icon">' +
+        '<img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Calorie_Badge.svg?v=1785666303" alt="Did you know">' +
+        '</div>' 
+        '+<span class="qz-know-lab">Did you know?</span>' +
         '<p>Air-dried food packs up to <b>2× the calories per cup</b> of dry kibble. Where kibble would take around ' +
         fmtCups(kibbleCups) + ' a day, ' + esc(d.name || 'your dog') + ' needs just <b>' + fmtCups(dailyCups(d, bands)) +
         '</b>' + (peers.length ? ' alongside the rest of the pack' : '') + ' — every bag goes about twice as far as it looks.</p></div>' +
