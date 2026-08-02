@@ -466,10 +466,21 @@
           '<div class="qz-foot"><button type="button" class="qz-next" data-next>Continue</button></div>';
         var wbig = this.body.querySelector('[data-wbig]');
         var range = this.body.querySelector('[data-wrange]');
+        const updateRangeFill = () => {
+        const percent = ((range.value - range.min) / (range.max - range.min)) * 100;
+        range.style.background = `linear-gradient(
+          to right,
+          #000 0%,
+          #000 ${percent}%,
+          rgba(0,0,0,.1) ${percent}%,
+          rgba(0,0,0,.1) 100%
+        )`;
+      };
         var set = (v) => {
           d.weight = v;
           range.value = v;
           wbig.innerHTML = v + '<span>lbs</span>';
+          updateRangeFill();
         };
         range.addEventListener('input', (e) => set(+e.target.value));
         this.body.querySelectorAll('[data-w]').forEach((b) =>
