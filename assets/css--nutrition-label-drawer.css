@@ -84,7 +84,7 @@
 
 /* Tabs */
 .nldrawer__tabs {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     column-gap: 2rem;
     row-gap: .8rem;
