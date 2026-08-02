@@ -703,7 +703,7 @@ a.pdp--promo--banner_link svg {
     margin: 0;
     align-items: center;
     line-height: 0;
-    gap: 11px;
+    gap: 8px;
 }
 
 .opinew-star-plugin-inside {
@@ -712,8 +712,8 @@ a.pdp--promo--banner_link svg {
 }
 
 .rating-summary {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 13px;
+    line-height: 16px;
     color: #000000;
     letter-spacing: 0;
     font-family: 'Matter';
@@ -890,12 +890,12 @@ a.pdp--promo--banner_link svg {
 }
 
 .rating-wrap {
-    gap: 8px;
+    gap: 11px;
 }
 
 .rating-summary {
-    font-size: 13px;
-    line-height: 16px;
+  font-size: 14px;
+    line-height: 20px;
 }
 
 }
