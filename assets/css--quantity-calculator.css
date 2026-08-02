@@ -497,6 +497,7 @@
     color: #000000;
     min-height: 56px;
     outline: none;
+    box-shadow: inherit;
 }
 
 
