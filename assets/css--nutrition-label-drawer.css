@@ -179,6 +179,9 @@
 	border-collapse: collapse;
 	font-family: 'Matter', sans-serif;
 }
+.nldrawer__table thead {
+    display: none;
+}
 .nldrawer__table th {
 	padding: 0 0 0.9rem;
 	font-family: FFBlurProMedium, sans-serif;
