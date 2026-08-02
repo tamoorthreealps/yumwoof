@@ -510,6 +510,7 @@
         );
       } else if (n === 2) {
         this.body.innerHTML =
+          '<div class="qz-content-hold">' +
           '<div class="qz-step">Step 3 of 3</div>' +
           '<h2>And who are we feeding?</h2>' +
           '<p class="qz-sub">We\'ll label the plan with their name so every delivery is sized to the right dog.</p>' +
@@ -517,6 +518,7 @@
           esc(d.name || '') + '" autocomplete="off"></div>' +
           '<div class="qz-foot"><button type="button" class="qz-next" data-next ' +
           (d.name ? '' : 'disabled') + '>See my plan</button></div>';
+          '</div>';
         var ni = this.body.querySelector('[data-name]');
         var next = this.body.querySelector('[data-next]');
         ni.addEventListener('input', (e) => {
