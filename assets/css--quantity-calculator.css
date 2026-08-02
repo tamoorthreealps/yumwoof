@@ -208,14 +208,15 @@
   display: none;
 }
 .qz-modal {
-  background: rgba(255, 249, 239, 0.9);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  width: 100%;
-  max-width: 524px;
-  overflow: hidden;
-  animation: qz-rise 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+    background: #fff9efe6;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 524px;
+    overflow: hidden;
+    animation: qz-rise .28s cubic-bezier(.2, .8, .3, 1);
+    padding: 18px;
 }
 @keyframes qz-rise {
   from {
@@ -228,123 +229,150 @@
   }
 }
 .qz-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 22px;
-  border-bottom: 1px solid var(--qc-hair);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 2px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .qz-back {
-  font-family: "Matter", sans-serif;
-  font-size: 1.3rem;
-  color: var(--qc-mute);
-  background: none;
-  border: none;
-  cursor: pointer;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 10px;
 }
 .qz-back[hidden] {
   visibility: hidden;
   display: inline-block;
 }
+.qz-logo-mark {
+    width: 48px;
+    height: 40px;
+}
+.qz-logo-mark svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
 .qz-dots {
-  display: flex;
-  gap: 7px;
+    display: flex;
+    gap: 7px;
+    justify-content: center;
+    margin: 0 0 24px;
 }
 .qz-dots i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--qc-hair-s);
-  display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: block;
+    border: 1px solid #000000;
 }
 .qz-dots i.on {
-  background: var(--qc-burg);
+    background: #000000;
 }
 .qz-close {
-  font-size: 2.2rem;
-  line-height: 1;
-  color: var(--qc-mute);
-  background: none;
-  border: none;
-  cursor: pointer;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 .qz-body {
-  padding: 32px 28px 28px;
-  min-height: 340px;
-  display: flex;
-  flex-direction: column;
+    padding: 32px 26px 22px;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 .qz-step {
-  font-family: "FFBlurProMedium", sans-serif;
-  font-size: 1.1rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--qc-mute);
-  margin-bottom: 12px;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--qc-mute);
+    margin-bottom: 12px;
+    display: none;
 }
 .qz-body h2 {
-  font-family: "TAYRosemary", var(--font-heading-family, serif);
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size: 3rem;
-  line-height: 1.04;
-  margin: 0 0 9px;
-  color: var(--qc-ink);
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 48px;
+    line-height: 48px;
+    letter-spacing: -0.48px;
+    margin: 0 auto 8px;
+    color: #000000;
+    max-width: 320px;
 }
 .qz-sub {
-  font-family: "Matter", sans-serif;
-  font-size: 1.4rem;
-  color: var(--qc-mute);
-  margin: 0 0 26px;
-  line-height: 1.5;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.75);
+    margin: 0 auto 32px;
+    line-height: 24px;
+    letter-spacing: 0;
+    max-width: 355px;
 }
 
 /* step 1 — weight */
 .qz-wbig {
-  font-family: "TAYRosemary", var(--font-heading-family, serif);
-  font-size: 6.4rem;
-  line-height: 1;
-  text-align: center;
-  color: var(--qc-ink);
+    font-family: "TAYRosemary", var(--font-heading-family, serif);
+    font-size: 88px;
+    line-height: 72px;
+    text-align: center;
+    color: #000000;
+    letter-spacing: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: -4px 0 0;
 }
 .qz-wbig span {
-  font-family: "FFBlurProMedium", sans-serif;
-  font-size: 1.5rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--qc-mute);
-  margin-left: 6px;
+    font-family: 'TAY Birdie';
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
 }
 .qz-range {
-  width: 100%;
-  accent-color: var(--qc-burg);
-  margin: 22px 0 6px;
-  height: 20px;
+    width: 100%;
+    accent-color: #000000;
+    margin: 20px 0 0px;
+    height: 20px;
 }
 .qz-scale {
-  display: flex;
-  justify-content: space-between;
-  font-family: "Matter", sans-serif;
-  font-size: 1.2rem;
-  color: var(--qc-mute);
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.5);
+    letter-spacing: 0;
 }
 .qz-presets {
-  display: flex;
-  gap: 8px;
-  margin-top: 22px;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex;
+    gap: 5px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .qz-presets button {
-  background: #fff;
-  border: 1px solid var(--qc-hair);
-  border-radius: 7px;
-  padding: 8px 14px;
-  font-family: "Matter", sans-serif;
-  font-size: 1.3rem;
-  color: var(--qc-mute);
-  cursor: pointer;
-  transition: 0.15s;
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    padding: 5.2px 14px;
+    font-family: Matter, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    cursor: pointer;
+    transition: .15s;
+    white-space: nowrap;
 }
 .qz-presets button:hover {
   border-color: var(--qc-hair-s);
@@ -483,22 +511,23 @@
 
 /* footer buttons */
 .qz-foot {
-  margin-top: auto;
-  padding-top: 26px;
+    margin-top: auto;
+    padding-top: 56px;
 }
 .qz-next {
-  width: 100%;
-  background: var(--qc-amber);
-  color: var(--qc-ink);
-  border: 1px solid var(--qc-ink);
-  border-radius: 9px;
-  padding: 16px;
-  font-family: "FFBlurProMedium", sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: filter 0.15s ease;
+    width: 100%;
+    background: var(--qc-amber);
+    color: #000000;
+    border: 1.25px solid #000000;
+    border-radius: 12px;
+    padding: 15.2px 16px;
+    font-family: FFBlurProMedium, sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.72px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: filter .15s ease;
 }
 .qz-next:hover {
   filter: brightness(0.97);
