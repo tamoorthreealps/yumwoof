@@ -530,6 +530,17 @@
     margin-top: 24px;
     background: #661D1D;
     border-radius: 16px;
+    position: relative;
+}
+.qz-grid::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 48px;
+  background: #FFF9EF;
 }
 .qz-grid div {
     padding: 16px 6px 20px;
