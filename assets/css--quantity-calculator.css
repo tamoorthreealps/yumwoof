@@ -13,65 +13,66 @@
 }
 
 /* ---------------- styled Dawn quantity selector (block: quantity_selector) --------------- */
-.product-form__quantity .quantity__label, .product-form__quantity .quantity__label span {
-    font-family: 'TAY Birdie';
-    font-size: 1.4rem;
-    line-height: 20px;
-    letter-spacing: -.56px;
-    text-transform: uppercase;
-    color: #000;
-    margin: 0 0 12px;
+.product-form__quantity .quantity__label,
+.product-form__quantity .quantity__label span {
+  font-family: "TAY Birdie";
+  font-size: 1.4rem;
+  line-height: 20px;
+  letter-spacing: -0.56px;
+  text-transform: uppercase;
+  color: #000;
+  margin: 0 0 12px;
 }
 
 .price-per-item__container {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 8px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .product-form__quantity quantity-input.quantity {
-    border: 1px solid #000000;
-    border-radius: 8px;
-    outline: none;
-    box-shadow: inherit;
-    width: 100%;
-    flex: 0 0 100%;
-    min-height: 40px;
-    background: #fff;
-    gap: 6px;
-    padding: 0 16px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  outline: none;
+  box-shadow: inherit;
+  width: 100%;
+  flex: 0 0 100%;
+  min-height: 40px;
+  background: #fff;
+  gap: 6px;
+  padding: 0 16px;
 }
 .product-form__quantity .quantity__button {
-    color: #000;
-    opacity: 1 !important;
-    width: 10.6px;
-    margin: 0 !important;
-    height: auto;
-    border: 0;
-    background: transparent !important;
+  color: #000;
+  opacity: 1 !important;
+  width: 10.6px;
+  margin: 0 !important;
+  height: auto;
+  border: 0;
+  background: transparent !important;
 }
 .product-form__quantity .quantity__button:hover {
   color: var(--qc-ink);
 }
 .product-form__quantity .quantity__input {
-    padding: 0;
-    font-size: 18px;
-    line-height: 24px;
-    color: #000;
-    font-family: Matter;
-    letter-spacing: 0;
-    font-weight: 500;
-    opacity: 1;
-    outline: none;
-    box-shadow: inherit;
-    border: 0;
-    background: transparent;
+  padding: 0;
+  font-size: 18px;
+  line-height: 24px;
+  color: #000;
+  font-family: Matter;
+  letter-spacing: 0;
+  font-weight: 500;
+  opacity: 1;
+  outline: none;
+  box-shadow: inherit;
+  border: 0;
+  background: transparent;
 }
 
 /* ---------------- calculator block ---------------- */
 .component--quantity-calculator {
-    width: 100%;
-    flex:1;
+  width: 100%;
+  flex: 1;
 }
 
 .qcalc {
@@ -80,37 +81,37 @@
 
 /* CTA bar */
 .qcalc__cta {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.4rem;
-    background: #7aa5dd40;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 20px 12px 16px;
-    cursor: pointer;
-    text-align: left;
-    transition: filter .15s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  background: #7aa5dd40;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px 12px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: filter 0.15s ease;
 }
 
 .qcalc__cta:hover {
   filter: brightness(0.97);
 }
 .qcalc__cta-text {
-    font-size: 14px;
-    line-height: 24px;
-    font-family: 'Matter';
-    letter-spacing: 0;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: "Matter";
+  letter-spacing: 0;
 }
 .qcalc__cta-text u {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    display: block;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
 }
 .qcalc__cta-arrow {
   font-size: 1.8rem;
@@ -136,7 +137,7 @@
   gap: 1.2rem;
 }
 .qcalc__dog-top b {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
 }
@@ -146,7 +147,7 @@
   flex: none;
 }
 .qcalc__dog-acts button {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   color: var(--qc-burg);
   background: none;
@@ -156,7 +157,7 @@
   text-underline-offset: 2px;
 }
 .qcalc__dog-eat {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.35rem;
   color: var(--qc-mute);
   margin-top: 0.4rem;
@@ -173,7 +174,7 @@
   margin-top: 1.2rem;
   padding-top: 1.1rem;
   border-top: 1px solid var(--qc-hair);
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.35rem;
   color: var(--qc-mute);
 }
@@ -207,17 +208,24 @@
   display: none;
 }
 .qz-modal {
-  background: var(--qc-cream);
-  border-radius: 14px;
+  background: rgba(255, 249, 239, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   width: 100%;
-  max-width: 472px;
+  max-width: 524px;
   overflow: hidden;
-  box-shadow: 0 24px 70px rgba(26, 26, 26, 0.3);
   animation: qz-rise 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 @keyframes qz-rise {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .qz-head {
   display: flex;
@@ -227,7 +235,7 @@
   border-bottom: 1px solid var(--qc-hair);
 }
 .qz-back {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   color: var(--qc-mute);
   background: none;
@@ -267,7 +275,7 @@
   flex-direction: column;
 }
 .qz-step {
-  font-family: 'FFBlurProMedium', sans-serif;
+  font-family: "FFBlurProMedium", sans-serif;
   font-size: 1.1rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -275,7 +283,7 @@
   margin-bottom: 12px;
 }
 .qz-body h2 {
-  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-family: "TAYRosemary", var(--font-heading-family, serif);
   font-weight: 400;
   text-transform: uppercase;
   font-size: 3rem;
@@ -284,7 +292,7 @@
   color: var(--qc-ink);
 }
 .qz-sub {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.4rem;
   color: var(--qc-mute);
   margin: 0 0 26px;
@@ -293,14 +301,14 @@
 
 /* step 1 — weight */
 .qz-wbig {
-  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-family: "TAYRosemary", var(--font-heading-family, serif);
   font-size: 6.4rem;
   line-height: 1;
   text-align: center;
   color: var(--qc-ink);
 }
 .qz-wbig span {
-  font-family: 'FFBlurProMedium', sans-serif;
+  font-family: "FFBlurProMedium", sans-serif;
   font-size: 1.5rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -316,7 +324,7 @@
 .qz-scale {
   display: flex;
   justify-content: space-between;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.2rem;
   color: var(--qc-mute);
 }
@@ -332,7 +340,7 @@
   border: 1px solid var(--qc-hair);
   border-radius: 7px;
   padding: 8px 14px;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   color: var(--qc-mute);
   cursor: pointer;
@@ -367,14 +375,14 @@
 }
 .qz-opt b {
   display: block;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--qc-ink);
 }
 .qz-opt small {
   display: block;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   color: var(--qc-mute);
   margin-top: 2px;
@@ -390,7 +398,7 @@
   border: 1px solid var(--qc-hair);
   border-radius: 9px;
   padding: 15px 16px;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.6rem;
   color: var(--qc-ink);
 }
@@ -404,7 +412,7 @@
   text-align: center;
 }
 .qz-plan {
-  font-family: 'TAYRosemary', var(--font-heading-family, serif);
+  font-family: "TAYRosemary", var(--font-heading-family, serif);
   font-size: 2.8rem;
   text-transform: uppercase;
   line-height: 1.1;
@@ -431,14 +439,14 @@
 }
 .qz-grid b {
   display: block;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 2.1rem;
   font-weight: 700;
   color: var(--qc-ink);
 }
 .qz-grid small {
   display: block;
-  font-family: 'FFBlurProMedium', sans-serif;
+  font-family: "FFBlurProMedium", sans-serif;
   font-size: 1.05rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -455,7 +463,7 @@
 }
 .qz-know-lab {
   display: block;
-  font-family: 'FFBlurProMedium', sans-serif;
+  font-family: "FFBlurProMedium", sans-serif;
   font-size: 1rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -464,7 +472,7 @@
 }
 .qz-know p {
   margin: 0;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   line-height: 1.6;
   color: #4a4234;
@@ -485,7 +493,7 @@
   border: 1px solid var(--qc-ink);
   border-radius: 9px;
   padding: 16px;
-  font-family: 'FFBlurProMedium', sans-serif;
+  font-family: "FFBlurProMedium", sans-serif;
   font-size: 1.4rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -503,7 +511,7 @@
   display: block;
   width: 100%;
   text-align: center;
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   color: var(--qc-mute);
   background: none;
@@ -555,7 +563,7 @@
   padding: 1.1rem 1.6rem;
 }
 .qcalc-qty__lead {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.5rem;
   line-height: 1.35;
   color: var(--qc-mute);
@@ -565,7 +573,7 @@
   font-weight: 600;
 }
 .qcalc-qty__cover {
-  font-family: 'Matter', sans-serif;
+  font-family: "Matter", sans-serif;
   font-size: 1.3rem;
   line-height: 1.4;
   color: #3b6b4a;
@@ -583,35 +591,34 @@
   text-underline-offset: 2px;
 }
 
-
-@media screen and (min-width: 990px) { 
-.product-form__quantity .quantity__label,
-.product-form__quantity .quantity__label span {
+@media screen and (min-width: 990px) {
+  .product-form__quantity .quantity__label,
+  .product-form__quantity .quantity__label span {
     font-size: 1.6rem;
     letter-spacing: -0.64px;
-}
-.price-per-item__container {
+  }
+  .price-per-item__container {
     flex-wrap: nowrap;
     align-items: flex-start;
     gap: 10px;
-}
-.product-form__quantity quantity-input.quantity {
+  }
+  .product-form__quantity quantity-input.quantity {
     width: 140px;
     flex: 0 0 140px;
     min-height: 64px;
     gap: 6px;
     padding: 0 16px;
-}
-.product-form__quantity .quantity__input {
+  }
+  .product-form__quantity .quantity__input {
     font-size: 20px;
-}
-.qcalc__cta {
-  padding: 7px 20px 9px 16px;
-}
-.qcalc__cta-text {
+  }
+  .qcalc__cta {
+    padding: 7px 20px 9px 16px;
+  }
+  .qcalc__cta-text {
     font-size: 16px;
-}
-.qcalc__cta-text u {
+  }
+  .qcalc__cta-text u {
     line-height: 24px;
-}
+  }
 }
