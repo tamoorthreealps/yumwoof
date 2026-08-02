@@ -219,6 +219,7 @@
     overflow: hidden;
     padding: 18px;
     min-height: 696px;
+    max-height: 696px;
     display: flex;
     flex-direction: column;
     transform: translateY(30px) scale(.96);
@@ -300,17 +301,34 @@
 }
 .qz-body {
     padding: 32px 26px 22px;
-    min-height: 340px;
     display: flex;
     flex-direction: column;
-    text-align: center;
     flex: 1;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .qz-content, .qz-content-hold {
     display: flex;
     flex-direction: column;
     flex: 1;
+}
+
+.qz-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.qz-content-hold {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* optional */
+    padding-right: 4px;
 }
 
 .qz-step {
