@@ -249,7 +249,7 @@
         // Sirf jab section viewport me ho
         if (rect.top < window.innerHeight && rect.bottom > 0) {
             const diff = window.scrollY - lastScroll;
-            rotation += diff * 0.1; // speed adjust kar lo
+            rotation += diff * 0.35; // speed adjust kar lo
             badge.style.transform = `rotate(${rotation}deg)`;
         }
 
