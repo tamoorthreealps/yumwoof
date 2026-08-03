@@ -237,13 +237,24 @@
     });
   })();
 
-  const badge = document.querySelector('.heritage__badge');
-let rotation = 0;
+    const section = document.querySelector('.heritage');
+    const badge = document.querySelector('.heritage__badge');
 
-window.addEventListener('scroll', () => {
-    rotation = window.scrollY * 0.2;
-    badge.style.transform = `rotate(${rotation}deg)`;
-});
+    let rotation = 0;
+    let lastScroll = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        const rect = section.getBoundingClientRect();
+
+        // Sirf jab section viewport me ho
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const diff = window.scrollY - lastScroll;
+            rotation += diff * 0.5; // speed adjust kar lo
+            badge.style.transform = `rotate(${rotation}deg)`;
+        }
+
+        lastScroll = window.scrollY;
+    });
 </script>
 
 {% schema %}
