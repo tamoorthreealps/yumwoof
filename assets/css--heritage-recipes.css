@@ -120,6 +120,7 @@
 	right:0;
     transform-origin: unset;
     will-change: auto;
+	animation: none;
 }
 
 @keyframes bowlRotate {
