@@ -25,6 +25,7 @@
       background-repeat: no-repeat;
       background-color: #fff9ef;
       padding:120px 0 96px;
+      overflow: hidden;
   }
   .reviews-section__container {
       max-width: 1244px;
@@ -113,6 +114,7 @@ img.review-card__bone.review-card__bone--right {
   }
   .opw-gap-2.opw-flex.lg\:opw-justify-start.opw-flex-grow.opw-flex-wrap.opw-justify-center {
       gap: 12px !important;
+          justify-content: flex-start !important;
   }
   a.opw-bg-dark-grey.opw-relative.opw-box-border.opw-cursor-pointer.opw-square-thumb.opw-cornerRadius-sm {
       width: 108px;
@@ -186,6 +188,7 @@ img.review-card__bone.review-card__bone--right {
   }
   a.opw-bg-dark-grey.opw-relative.opw-box-border.opw-cursor-pointer.opw-square-thumb.opw-cornerRadius-sm img {
       border-radius: 12px !important;
+          background-color: transparent !important;
   }
   .opw-tab-container:after {
       display:none;
@@ -207,6 +210,43 @@ img.review-card__bone.review-card__bone--right {
   .opw-flex.opw-w-full.opw-justify-between.opw-flex-wrap.opw-gap-4 {
       align-items: flex-end;
   }
+
+
+@media screen and (max-width: 768px) {
+    .reviews-section {
+    background-image: inherit;
+    background-color: #7BA6DD;
+    padding: 64px 0 56px;
+}
+.summary-card-container.opw-whitespace-nowrap {
+    border: 1px solid #000000;
+    padding: 24px 24px 28px;
+    margin: 0 0 76px !important;
+}
+.opw-flex.opw-justify-center.opw-gap-2.opw-mt-8 {
+    gap: 16px !important;
+}
+.opw-font-bold.opw-navbarTextColor.opw-font7Xl {
+    font-size: 64px !important;
+    line-height: 64px !important;
+    letter-spacing: -0.64px !important;
+}
+span.opw-m-0.opw-p-0.opw-star {
+    font-size: 16px;
+}
+.opw-text-left.opw-fontLg.opw-textColor {
+    font-size: 16px !important;
+    line-height: 20px !important;
+    letter-spacing: -0.64px;
+}
+.opw-gap-2.opw-flex.lg\:opw-justify-start.opw-flex-grow.opw-flex-wrap.opw-justify-center {
+    gap: 8px !important;
+}
+a.opw-bg-dark-grey.opw-relative.opw-box-border.opw-cursor-pointer.opw-square-thumb.opw-cornerRadius-sm {
+    width: 68px;
+    height: 68px;
+}
+}
 </style>
 
 {% schema %}
