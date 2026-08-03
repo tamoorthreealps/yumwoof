@@ -51,7 +51,9 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {}
+          "settings": {
+            "show_quantity_calculator": true
+          }
         },
         "quantity_calculator_HFLFAL": {
           "type": "quantity-calculator",
@@ -66,6 +68,13 @@
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false
+          }
+        },
+        "nutrition_label_wNAeEB": {
+          "type": "nutrition-label",
+          "settings": {
+            "heading": "Know what you're feeding",
+            "brand_label": "Ancestral Blend"
           }
         },
         "description": {
@@ -93,12 +102,17 @@
         "quantity_calculator_HFLFAL",
         "appstle_subscription_qkkVmJ",
         "buy_buttons",
+        "nutrition_label_wNAeEB",
         "description",
         "share"
       ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
+        "promo_banner_content": "",
+        "promo_banner_link": "",
+        "bq_heading": "THE BUTCHER QUALITY SEAL",
+        "bq_description": "",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
