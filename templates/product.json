@@ -150,141 +150,6 @@
         "enable_video_looping": false
       }
     },
-    "disclosures": {
-      "type": "disclosures",
-      "settings": {
-        "heading": "Disclosures",
-        "heading_size": "h2",
-        "open_by_default": false,
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 0
-      }
-    },
-    "heritage_recipes_76xVan": {
-      "type": "heritage-recipes",
-      "name": "Heritage recipes",
-      "settings": {
-        "heading": "Heritage recipes guided by nature.",
-        "uppercase_heading": true,
-        "subheading": "Inspired by the original canine diet and backed by rigorous sourcing, nutrition, and testing standards.",
-        "button_label": "See our standards →",
-        "button_label_mobile": "See our standards →",
-        "button_link": "",
-        "bowl_image": "shopify://shop_images/heritage_bowl_img.png",
-        "badge_image": "shopify://shop_images/Vector_2_aa1a1e31-e489-4d7e-8291-24cbbbab223d.svg",
-        "hexagon_image": "shopify://shop_images/hexagone_img.svg",
-        "hexagon_bg_mobile": "shopify://shop_images/USP_Shape.svg",
-        "ingredient_1_image": "shopify://shop_images/f1.png",
-        "ingredient_1_title": "Premium protein",
-        "ingredient_1_text": "Wild-caught fish, locally sourced, non-GMO",
-        "ingredient_2_image": "shopify://shop_images/f2.png",
-        "ingredient_2_title": "Cocomega superfats",
-        "ingredient_2_text": "Healthy fats to support microbiome and gut health",
-        "ingredient_3_image": "shopify://shop_images/f3.png",
-        "ingredient_3_title": "Gently air-dried",
-        "ingredient_3_text": "Low-temp drying helps preserve nutrients + flavor",
-        "ingredient_4_image": "shopify://shop_images/f4.png",
-        "ingredient_4_title": "Ancestral nutrition",
-        "ingredient_4_text": "Packed with organs rich in bioavailable nutrients",
-        "nono_heading": "The no-no list",
-        "nono_subheading": "Every recipe. Every batch. Every bag.",
-        "nono_items": "No GMO Ingredients, No Fillers, No Seed Oils, No Natural Flavors, No Synthetics, No Added Sugar, No Meat Meals, No Preservatives, No By-Products, No Carrageenan, No Glycerin, No Rosemary Extract, No Hot Extrusion, No Peas or Legumes",
-        "marquee_speed": 20,
-        "background_color": "#fff9ef",
-        "mobile_background_color": "#fff9ef",
-        "background_image": "shopify://shop_images/BG.png",
-        "background_image_mobile": "shopify://shop_images/BG_1.png",
-        "text_color": "#000000",
-        "card_background": "#000000",
-        "card_border": "#000000",
-        "kibble_image_1": "shopify://shop_images/Group_79.png",
-        "kibble_image_2": "shopify://shop_images/Group_80.png",
-        "kibble_image_3": "shopify://shop_images/Group_81.png"
-      }
-    },
-    "comparison_section": {
-      "type": "comparison-section",
-      "blocks": {
-        "row-1": {
-          "type": "row",
-          "settings": {
-            "label": "Seed Oil Free",
-            "brand_value": "check",
-            "comp1_value": "cross",
-            "comp2_value": "check",
-            "comp3_value": "check"
-          }
-        },
-        "row-2": {
-          "type": "row",
-          "settings": {
-            "label": "Minimally Processed",
-            "brand_value": "check",
-            "comp1_value": "check",
-            "comp2_value": "cross",
-            "comp3_value": "cross"
-          }
-        },
-        "row-3": {
-          "type": "row",
-          "settings": {
-            "label": "Non-GMO",
-            "brand_value": "check",
-            "comp1_value": "cross",
-            "comp2_value": "cross",
-            "comp3_value": "cross"
-          }
-        },
-        "row-4": {
-          "type": "row",
-          "settings": {
-            "label": "Fridge Free",
-            "brand_value": "check",
-            "comp1_value": "cross",
-            "comp2_value": "cross",
-            "comp3_value": "check"
-          }
-        },
-        "row-5": {
-          "type": "row",
-          "settings": {
-            "label": "Daily Cost",
-            "brand_value": "$$",
-            "comp1_value": "$",
-            "comp2_value": "$$$",
-            "comp3_value": "$$$"
-          }
-        }
-      },
-      "block_order": [
-        "row-1",
-        "row-2",
-        "row-3",
-        "row-4",
-        "row-5"
-      ],
-      "settings": {
-        "eyebrow": "How we stack up",
-        "heading": "Air-dried because your dog nose the difference",
-        "uppercase_heading": true,
-        "subheading": "Cooked at low temperatures to preserve whole food nutrition and flavor.",
-        "brand_label": "Air-Dried",
-        "brand_logo": "shopify://shop_images/Vector_fa5da844-5036-4856-abce-b6c4664c862b.svg",
-        "brand_logo_mobile": "shopify://shop_images/Vector_1_492cafd2-9169-421b-906b-b2060c2a3c2f.svg",
-        "brand_icon": "shopify://shop_images/table__yumwoof_icon_33ab7e7a-133c-4d59-9a2d-348d5bc3f511.png",
-        "comp1_label": "Dry Kibble",
-        "comp1_icon": "shopify://shop_images/dry-kibble.png",
-        "comp2_label": "Raw",
-        "comp2_icon": "shopify://shop_images/raw.png",
-        "comp3_label": "Fresh",
-        "comp3_icon": "shopify://shop_images/fresh.png",
-        "background_color": "#fff9ef",
-        "text_color": "#000000",
-        "highlight_color": "#7ba6dd",
-        "accent_color": "#000000"
-      }
-    },
     "faqs_section_B64F3M": {
       "type": "faqs-section",
       "blocks": {
@@ -381,25 +246,6 @@
         "padding_bottom": 28
       }
     },
-    "1785625977638f9fd2": {
-      "type": "apps",
-      "blocks": {
-        "opinew_reviews_product_widget_69CPFT": {
-          "type": "shopify://apps/opinew-reviews/blocks/product-widget/e1d8e0dc-17ff-4e4a-8a8a-1e73c8ef8676",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "opinew_reviews_product_widget_69CPFT"
-      ],
-      "disabled": true,
-      "custom_css": [
-        "{background: #000; padding-bottom: 100px; padding-top: 50px;}"
-      ],
-      "settings": {
-        "include_margins": true
-      }
-    },
     "custom_reviews_DQxkJb": {
       "type": "custom-reviews",
       "blocks": {
@@ -423,12 +269,8 @@
   },
   "order": [
     "main",
-    "disclosures",
-    "heritage_recipes_76xVan",
-    "comparison_section",
     "faqs_section_B64F3M",
     "related-products",
-    "1785625977638f9fd2",
     "custom_reviews_DQxkJb"
   ]
 }
