@@ -118,7 +118,6 @@
     position: absolute;
     top: 4px;
 	right:0;
-	animation: badgeRotate 35s linear infinite;
     transform-origin: unset;
     will-change: auto;
 }
@@ -133,16 +132,6 @@
 	}
 }
 
-
-@keyframes badgeRotate {
-	from {
-		transform: rotate(360deg);
-	}
-
-	to {
-		transform: rotate(0deg);
-	}
-}
 
 /* --------------------------------------------------------------------------
    Ingredient card
