@@ -226,37 +226,40 @@
     font-family: 'TAY Birdie';
     text-transform: uppercase;
 }
+.ingredients-popup__tabs_main {
+    padding: 24px 24px 32px;
+}
+ .ingredients-popup__tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+}
 
-  .ingredients-popup__tabs {
-  	display: flex;
-  	gap: 40px;
-  	border-bottom: 2px solid transparent;
-  	margin-bottom: 32px;
-  }
+.ingredients-popup__tabs button {
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: 'Matter';
+    text-transform: capitalize;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+    flex: 1;
+}
 
-  .ingredients-popup__tabs button {
-  	padding: 0 0 8px;
-  	border: none;
-  	background: none;
-  	cursor: pointer;
-  	font-size: 16px;
-  	line-height: 24px;
-  	letter-spacing: 0.64px;
-  	font-weight: 500;
-  	text-transform: uppercase;
-  	color: rgba(0, 0, 0, 0.5);
-  	border-bottom: 2px solid transparent;
-  	font-family: "FFBlurProMedium";
-  }
-
-  .ingredients-popup__tabs button.active {
-  	color: #661D1D;
-  	border-color: #661D1D;
-  }
+ .ingredients-popup__tabs button.active {
+    color: #000;
+    border-color: #000000;
+    background: rgba(0, 0, 0, 0.1);
+}
 
   .ingredients-popup__content {
   	display: none;
-  	max-width: 640px;
+  	max-width: 100%;
   }
 
   .ingredients-popup__content.active {
@@ -264,12 +267,12 @@
   }
 
   .ingredients-popup__content p {
-  	font-size: 20px;
-  	line-height: 28px;
-  	margin: 0;
-  	letter-spacing: 0;
-  	color: #000000;
-  }
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+    letter-spacing: 0;
+    color: #000000;
+}
 
   .ingredients-popup__content_btn {
   	background: url(https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
