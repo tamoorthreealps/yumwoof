@@ -25,6 +25,7 @@
     </div>
     <div class="ingredients-popup__tabs_main">
       <div class="ingredients-popup__tabs">
+        {% if popup.tab_1_title != blank %}
         <button class="active" data-tab="1" data-bg="{{ popup.tab_1_header_color }}">
           {% if popup.tab_1_icon %}
             {{ popup.tab_1_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_1_title }}
@@ -32,22 +33,23 @@
 
           <span>{{ popup.tab_1_title }}</span>
         </button>
-
+        {% endif %}
+        {% if popup.tab_2_title != blank %}
         <button data-tab="2" data-bg="{{ popup.tab_2_header_color }}">
           {% if popup.tab_2_icon %}
             {{ popup.tab_2_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_2_title }}
           {% endif %}
-
           <span>{{ popup.tab_2_title }}</span>
         </button>
-
+        {% endif %}
+        {% if popup.tab_3_title != blank %}
         <button data-tab="3" data-bg="{{ popup.tab_3_header_color }}">
           {% if popup.tab_3_icon %}
             {{ popup.tab_3_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_3_title }}
           {% endif %}
-
           <span>{{ popup.tab_3_title }}</span>
         </button>
+        {% endif %}
       </div>
 
       <div class="ingredients-popup__content active" data-content="1">
