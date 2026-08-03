@@ -486,3 +486,38 @@
     padding: 1.6rem 2rem 2rem;
   }
 }
+
+/* Generic pdp_drawer body — table rows (paragraphs reuse .nldrawer__prose) */
+.nldrawer__rows {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+}
+.nldrawer__row {
+	display: flex;
+	align-items: baseline;
+	gap: 0.8rem;
+	font-family: 'Matter', sans-serif;
+	font-weight: 500;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	color: #000;
+}
+.nldrawer__row--head {
+	padding-bottom: 0.8rem;
+	margin-bottom: 0.4rem;
+	border-bottom: 1px solid #000;
+	font-family: 'TAY Birdie', sans-serif;
+	font-size: 1.3rem;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, 0.6);
+}
+.nldrawer__cell--last {
+	margin-left: auto;
+	text-align: right;
+	white-space: nowrap;
+}
+.nldrawer__row .nldrawer__cell:not(.nldrawer__cell--first):not(.nldrawer__cell--last) {
+	color: rgba(0, 0, 0, 0.5);
+}
