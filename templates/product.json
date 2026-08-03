@@ -415,7 +415,9 @@
       "settings": {
         "bg_image_desktop": "shopify://shop_images/BG.png",
         "bg_color_desktop": "#fff9ef",
-        "bg_color_mobile": "#7ba6dd"
+        "bg_color_mobile": "#7ba6dd",
+        "left_bone": "shopify://shop_images/Group_80.png",
+        "right_bone": "shopify://shop_images/Group_79.png"
       }
     }
   },
