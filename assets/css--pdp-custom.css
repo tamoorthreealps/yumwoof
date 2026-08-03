@@ -833,6 +833,8 @@ a.pdp--promo--banner_link svg {
 
   .recipe-swatch__img {
     width: 56px;
+    height: 56px;
+    object-fit: cover;
     border-radius: 8px;
   }
 
