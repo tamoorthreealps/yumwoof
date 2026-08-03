@@ -392,12 +392,27 @@
       "block_order": [
         "opinew_reviews_product_widget_69CPFT"
       ],
+      "disabled": true,
       "custom_css": [
         "{background: #000; padding-bottom: 100px; padding-top: 50px;}"
       ],
       "settings": {
         "include_margins": true
       }
+    },
+    "custom_reviews_DQxkJb": {
+      "type": "custom-reviews",
+      "blocks": {
+        "opinew_reviews_product_widget_eVJnJ8": {
+          "type": "shopify://apps/opinew-reviews/blocks/product-widget/e1d8e0dc-17ff-4e4a-8a8a-1e73c8ef8676",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "opinew_reviews_product_widget_eVJnJ8"
+      ],
+      "name": "Custom Reviews",
+      "settings": {}
     }
   },
   "order": [
@@ -407,6 +422,7 @@
     "comparison_section",
     "faqs_section_B64F3M",
     "related-products",
-    "1785625977638f9fd2"
+    "1785625977638f9fd2",
+    "custom_reviews_DQxkJb"
   ]
 }
