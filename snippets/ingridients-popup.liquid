@@ -4,7 +4,6 @@
 
   <div class="ingredients-popup__panel">
     <div class="ingredients-popup__panel_head" style="background: {{ popup.tab_1_header_color }};">
-		<span>{{ popup.tab_1_header_background }}</span>
       <button class="ingredients-popup__close">
         <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4.32 5.288C4.32 5.544 4.064 5.608 3.744 5.832C3.36 6.12 3.04 6.568 3.04 7.336C3.04 9.672 3.008 9.96 2.752 10.376C2.56 10.696 2.272 11.016 2.272 11.4C2.272 11.656 2.4 11.912 2.656 12.232C3.008 12.68 3.04 13.128 3.04 13.544V15.432C3.04 16.968 4.32 17.032 4.32 17.48C4.32 17.768 4.16 17.864 3.712 17.864C2.464 17.864 1.696 17.128 1.696 15.688V13.96C1.696 13.544 1.6 12.968 1.44 12.712C1.312 12.52 1.12 12.296 0.8 12.072C0.512 11.88 0.224 11.688 0.224 11.4C0.224 11.08 0.416 10.92 0.992 10.536C1.536 10.184 1.696 9.32 1.696 9.096V7.112C1.696 5.768 2.432 4.936 3.552 4.936C4.256 4.936 4.32 5.064 4.32 5.288Z" fill="black"/>
@@ -26,7 +25,7 @@
     </div>
     <div class="ingredients-popup__tabs_main">
       <div class="ingredients-popup__tabs">
-        <button class="active" data-tab="1" data-bg="{{ popup.tab_1_header_background }}">
+        <button class="active" data-tab="1" data-bg="{{ popup.tab_1_header_color }}">
           {% if popup.tab_1_icon %}
             {{ popup.tab_1_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_1_title }}
           {% endif %}
@@ -34,7 +33,7 @@
           <span>{{ popup.tab_1_title }}</span>
         </button>
 
-        <button data-tab="2" data-bg="{{ popup.tab_2_header_background }}">
+        <button data-tab="2" data-bg="{{ popup.tab_2_header_color }}">
           {% if popup.tab_2_icon %}
             {{ popup.tab_2_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_2_title }}
           {% endif %}
@@ -42,7 +41,7 @@
           <span>{{ popup.tab_2_title }}</span>
         </button>
 
-        <button data-tab="3" data-bg="{{ popup.tab_3_header_background }}">
+        <button data-tab="3" data-bg="{{ popup.tab_3_header_color }}">
           {% if popup.tab_3_icon %}
             {{ popup.tab_3_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_3_title }}
           {% endif %}
