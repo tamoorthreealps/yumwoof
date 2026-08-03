@@ -412,7 +412,11 @@
         "opinew_reviews_product_widget_eVJnJ8"
       ],
       "name": "Custom Reviews",
-      "settings": {}
+      "settings": {
+        "bg_image_desktop": "shopify://shop_images/BG.png",
+        "bg_color_desktop": "#fff9ef",
+        "bg_color_mobile": "#7ba6dd"
+      }
     }
   },
   "order": [
