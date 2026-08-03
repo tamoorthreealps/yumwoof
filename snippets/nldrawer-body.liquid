@@ -17,9 +17,11 @@
 {%- for _raw in _lines -%}
   {%- assign _line = _raw | strip -%}
   {%- if _line == blank -%}{%- continue -%}{%- endif -%}
+  {%- assign _c1 = _line | slice: 0 -%}
+  {%- assign _c2 = _line | slice: 0, 2 -%}
   {%- if _line contains '|' -%}
     {%- assign _head = false -%}
-    {%- if _line | slice: 0 == '=' -%}
+    {%- if _c1 == '=' -%}
       {%- assign _head = true -%}
       {%- assign _line = _line | remove_first: '=' | strip -%}
     {%- endif -%}
@@ -32,11 +34,11 @@
     </div>
   {%- else -%}
     {%- if _intable -%}</div>{%- assign _intable = false -%}{%- endif -%}
-    {%- if _line | slice: 0, 2 == '##' -%}
+    {%- if _c2 == '##' -%}
       <p class="nldrawer__calorie-title">{{ _line | remove_first: '##' | strip }}</p>
-    {%- elsif _line | slice: 0 == '#' -%}
+    {%- elsif _c1 == '#' -%}
       <p class="nldrawer__section">{{ _line | remove_first: '#' | strip }}</p>
-    {%- elsif _line | slice: 0 == '>' -%}
+    {%- elsif _c1 == '>' -%}
       <p class="nldrawer__foot">{{ _line | remove_first: '>' | strip }}</p>
     {%- else -%}
       <p class="nldrawer__prose">{{ _line }}</p>
