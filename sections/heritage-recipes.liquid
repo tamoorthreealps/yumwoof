@@ -48,6 +48,13 @@
           | image_url: width: 900
           | image_tag: widths: '300, 500, 700, 900', alt: bowl_alt, loading: 'lazy'
         }}
+        {%- if section.settings.badge_image != blank -%}
+          {{
+            section.settings.badge_image
+            | image_url: width: 180
+            | image_tag: class: 'heritage__badge', loading: 'lazy'
+          }}
+        {%- endif -%}
       </div>
     {%- endif -%}
     <div class="heritage__intro">
@@ -280,6 +287,11 @@
       "type": "image_picker",
       "id": "bowl_image",
       "label": "Bowl image"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge Image"
     },
     {
       "type": "header",

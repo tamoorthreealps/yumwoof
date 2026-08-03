@@ -99,6 +99,7 @@
 	margin: 0 auto;
 }
 
+
 .heritage__bowl img {
 	display: block;
 	width: 100%;
@@ -110,6 +111,18 @@
 	will-change: transform;
 }
 
+.heritage__bowl .heritage__badge {
+    display: block;
+    height: 80px;
+    width: 80px;
+    position: absolute;
+    top: 4px;
+	right:0;
+	animation: badgeRotate 35s linear infinite;
+    transform-origin: unset;
+    will-change: auto;
+}
+
 @keyframes bowlRotate {
 	from {
 		transform: rotate(0deg);
@@ -117,6 +130,17 @@
 
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+
+@keyframes badgeRotate {
+	from {
+		transform: rotate(360deg);
+	}
+
+	to {
+		transform: rotate(0deg);
 	}
 }
 
@@ -459,6 +483,13 @@
         width: 570px;
         left: 58px;
         right: auto;
+	}
+
+	.heritage__bowl .heritage__badge {
+		height: 104px;
+		width: 104px;
+		top: 80px;
+		right:auto;
 	}
 
 	.heritage__card-wrap {
