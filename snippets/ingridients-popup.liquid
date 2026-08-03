@@ -244,7 +244,20 @@
        .ingredients-popup__content {
        	display: none;
        	max-width: 100%;
+        overflow-y: auto;
        }
+       .ingredients-popup__content::-webkit-scrollbar {
+          width: 4px;
+      }
+
+      .ingredients-popup__content::-webkit-scrollbar-track {
+          background: transparent;
+      }
+
+      .ingredients-popup__content::-webkit-scrollbar-thumb {
+          background: #999;
+          border-radius: 10px;
+      }
 
        .ingredients-popup__content.active {
        	display: block;
