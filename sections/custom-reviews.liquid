@@ -32,19 +32,42 @@
       padding: 0 2.4rem;
       position: relative;
   }
-  img.review-card__bone.review-card__bone--left {
+img.review-card__bone.review-card__bone--left {
     width: 128px;
     position: absolute;
     top: -60px;
     left: -55px;
     z-index: 1;
+    animation: boneRotateLeft 8s linear infinite;
+    transform-origin: center;
 }
+
 img.review-card__bone.review-card__bone--right {
     width: 126px;
     position: absolute;
     right: -55px;
     top: 120px;
     z-index: 1;
+    animation: boneRotateRight 8s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes boneRotateLeft {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes boneRotateRight {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
   .summary-card-container.opw-whitespace-nowrap {
       background: #FFF9EF;
