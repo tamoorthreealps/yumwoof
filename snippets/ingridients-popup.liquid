@@ -21,385 +21,355 @@
       <div class="ingredients-popup__left">
         <h2 class="ingredients-popup__title">{{ popup.title }}</h2>
 
-        <p class="ingredients-popup__subtitle">
-          {{ popup.subtitle }}
-        </p>
+        <p class="ingredients-popup__subtitle">{{ popup.title }} - {{ popup.display_name | upcase }}</p>
       </div>
     </div>
     <div class="ingredients-popup__tabs_main">
       <div class="ingredients-popup__tabs">
-        <button class="active" data-tab="1">{{ popup.tab_1_title }}</button>
-        <button data-tab="2">{{ popup.tab_2_title }}</button>
-        <button data-tab="3">{{ popup.tab_3_title }}</button>
+        <button class="active" data-tab="1">
+          {% if popup.tab_1_icon %}
+            {{ popup.tab_1_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_1_title }}
+          {% endif %}
+
+          <span>{{ popup.tab_1_title }}</span>
+        </button>
+
+        <button data-tab="2">
+          {% if popup.tab_2_icon %}
+            {{ popup.tab_2_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_2_title }}
+          {% endif %}
+
+          <span>{{ popup.tab_2_title }}</span>
+        </button>
+
+        <button data-tab="3">
+          {% if popup.tab_3_icon %}
+            {{ popup.tab_3_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_3_title }}
+          {% endif %}
+
+          <span>{{ popup.tab_3_title }}</span>
+        </button>
       </div>
 
       <div class="ingredients-popup__content active" data-content="1">
-        <p>{{ popup.tab_1_description }}</p>
-
-        {% comment %}
-          <a href="{{ popup.tab_1_button_url }}" class="ingredients-popup__content_btn">
-            {{ popup.tab_1_button_text }}
-          </a>
-        {% endcomment %}
+        {{ popup.tab_1_description }}
       </div>
 
       <div class="ingredients-popup__content" data-content="2">
-        <p>{{ popup.tab_2_description }}</p>
-
-        {% comment %}
-          <a href="{{ popup.tab_2_button_url }}" class="ingredients-popup__content_btn">
-            {{ popup.tab_2_button_text }}
-          </a>
-        {% endcomment %}
+        {{ popup.tab_2_description }}
       </div>
 
       <div class="ingredients-popup__content" data-content="3">
-        <p>{{ popup.tab_3_description }}</p>
-
-        {% comment %}
-          <a href="{{ popup.tab_3_button_url }}" class="ingredients-popup__content_btn">
-            {{ popup.tab_3_button_text }}
-          </a>
-        {% endcomment %}
+        {{ popup.tab_3_description }}
       </div>
     </div>
-
-    {% comment %}
-      <div class="ingredients-popup__right">
-        <div class="ingredients-popup__right_img">
-          {% if popup.main_image %}
-            {{
-              popup.main_image
-              | image_url: width: 900
-              | image_tag:
-                alt: popup.title,
-                widths: '352,832,900',
-                loading: 'lazy'
-            }}
-          {% endif %}
-        </div>
-
-        <div class="ingredients-popup__right_img_bowl">
-          {% if popup.bowl_image %}
-            {{
-              popup.bowl_image
-              | image_url: width: 900
-              | image_tag:
-                alt: popup.title,
-                widths: '352,832,900',
-                loading: 'lazy'
-            }}
-          {% endif %}
-        </div>
-      </div>
-    {% endcomment %}
   </div>
 </div>
 </div>
 <style>
-  	/*----- popup--css--code -----*/
-  .ingredients-popup {
-  	position: fixed;
-  	inset: 0;
-  	z-index: 9999;
-  	visibility: hidden;
-  	opacity: 0;
-  	transition: .35s;
+    	/*----- popup--css--code -----*/
+    .ingredients-popup {
+    	position: fixed;
+    	inset: 0;
+    	z-index: 9999;
+    	visibility: hidden;
+    	opacity: 0;
+    	transition: .35s;
+    }
+
+    .ingredients-popup.active {
+    	visibility: visible;
+    	opacity: 1;
+    }
+
+    .ingredients-popup__overlay {
+    	position: absolute;
+    	inset: 0;
+    	background: rgba(0, 0, 0, .45);
+    	display: block !important;
+    }
+
+  .ingredients-popup__panel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -110%);
+      transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+      width: 100%;
+      max-width: 464px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
   }
 
-  .ingredients-popup.active {
-  	visibility: visible;
-  	opacity: 1;
+    .ingredients-popup.active .ingredients-popup__panel {
+    	transform: translate(-50%, -50%);
+    }
+  .ingredients-popup__panel_head {
+      background-color: rgba(132, 149, 75, 0.9);
+      border-radius: 23px 23px 0 0;
+      border-bottom: 1px solid #000000;
+      padding: 32px 24px 28px;
+  }
+    .ingredients-popup__left {
+    	width: 100%;
+    }
+
+    .ingredients-popup__right {
+    	width: 50%;
+    	display: flex;
+    	align-items: center;
+    	justify-content: center;
+    }
+
+    .ingredients-popup__right_img {
+    	height: 400px;
+    	width: 100%;
+    	margin: 0 0 -30px;
+    }
+
+    .ingredients-popup__right img {
+    	max-width: 100%;
+    	max-height: 100%;
+    	width: auto;
+    	height: auto;
+    	object-fit: contain;
+    }
+
+    .ingredients-popup__right_img_bowl {
+    	position: absolute;
+    	right: -135px;
+    	height: 436px;
+    	width: auto;
+    	bottom: 30px;
+    }
+
+    .ingredients-popup__right_img_bowl img {
+    	margin: 0;
+    	height: 100%;
+    	width: 100%;
+    	object-fit: contain;
+    	animation: bowlRotatepop 150s linear infinite;
+    	transform-origin: center center;
+    	will-change: transform;
+    }
+
+    @keyframes bowlRotatepop {
+    	from {
+    		transform: rotate(0deg);
+    	}
+
+    	to {
+    		transform: rotate(360deg);
+    	}
+    }
+
+  .ingredients-popup__close {
+      position: absolute;
+      right: 29px;
+      top: 16px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      background: transparent;
+      padding: 0;
+      margin: 0;
   }
 
-  .ingredients-popup__overlay {
-  	position: absolute;
-  	inset: 0;
-  	background: rgba(0, 0, 0, .45);
-  	display: block !important;
+  .ingredients-popup__title {
+      margin: 0;
+      font-size: 44px;
+      line-height: 48px;
+      font-family: TAYRosemary;
+      letter-spacing: -0.44px;
+      font-weight: 400;
+      color: #000000;
   }
 
-.ingredients-popup__panel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -110%);
-    transition: transform .6s cubic-bezier(.22, 1, .36, 1);
-    width: 100%;
-    max-width: 464px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-}
-
-  .ingredients-popup.active .ingredients-popup__panel {
-  	transform: translate(-50%, -50%);
+  .ingredients-popup__subtitle {
+      margin: 0;
+      font-size: 16px;
+      line-height: 20px;
+      color: #000000;
+      letter-spacing: -0.16px;
+      font-weight: 500;
+      font-family: 'TAY Birdie';
+      text-transform: uppercase;
   }
-.ingredients-popup__panel_head {
-    background-color: rgba(132, 149, 75, 0.9);
-    border-radius: 23px 23px 0 0;
-    border-bottom: 1px solid #000000;
-    padding: 32px 24px 28px;
-}
-  .ingredients-popup__left {
-  	width: 100%;
+  .ingredients-popup__tabs_main {
+      padding: 24px 24px 32px;
+  }
+   .ingredients-popup__tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
   }
 
-  .ingredients-popup__right {
-  	width: 50%;
-  	display: flex;
-  	align-items: center;
-  	justify-content: center;
+  .ingredients-popup__tabs button {
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.5);
+      font-family: 'Matter';
+      text-transform: capitalize;
+      border: 1px solid rgba(0, 0, 0, .1);
+      border-radius: 8px;
+      flex: 1;
   }
 
-  .ingredients-popup__right_img {
-  	height: 400px;
-  	width: 100%;
-  	margin: 0 0 -30px;
+   .ingredients-popup__tabs button.active {
+      color: #000;
+      border-color: #000000;
+      background: rgba(0, 0, 0, 0.1);
   }
 
-  .ingredients-popup__right img {
-  	max-width: 100%;
-  	max-height: 100%;
-  	width: auto;
-  	height: auto;
-  	object-fit: contain;
+    .ingredients-popup__content {
+    	display: none;
+    	max-width: 100%;
+    }
+
+    .ingredients-popup__content.active {
+    	display: block;
+    }
+
+    .ingredients-popup__content p {
+      font-size: 16px;
+      line-height: 24px;
+      margin: 0;
+      letter-spacing: 0;
+      color: #000000;
   }
 
-  .ingredients-popup__right_img_bowl {
-  	position: absolute;
-  	right: -135px;
-  	height: 436px;
-  	width: auto;
-  	bottom: 30px;
-  }
+    .ingredients-popup__content_btn {
+    	background: url(https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
+    	color: #000;
+    	text-decoration: none;
+    	font-size: 16px;
+    	line-height: 24px;
+    	letter-spacing: 0.64px;
+    	width: 164px;
+    	height: 72px;
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	font-family: "FFBlurProMedium";
+    	margin: 48px 0 0;
+    }
 
-  .ingredients-popup__right_img_bowl img {
-  	margin: 0;
-  	height: 100%;
-  	width: 100%;
-  	object-fit: contain;
-  	animation: bowlRotatepop 150s linear infinite;
-  	transform-origin: center center;
-  	will-change: transform;
-  }
+    @media(max-width:991px) {
+    	.ingredients-popup__panel {
+    		padding: 40px 28px 26px;
+    		width: 96vw;
+    		gap: 28px;
+    	}
 
-  @keyframes bowlRotatepop {
-  	from {
-  		transform: rotate(0deg);
-  	}
+    	.ingredients-popup__right_img_bowl {
+    		height: 330px;
+    		bottom: 45px;
+    	}
+    }
 
-  	to {
-  		transform: rotate(360deg);
-  	}
-  }
+    @media(max-width:768px) {
 
-.ingredients-popup__close {
-    position: absolute;
-    right: 29px;
-    top: 16px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-}
+    	.ingredients-popup__panel {
+    		overflow-y: auto;
+    		padding: 40px 28px 26px;
+    		width: 96vw;
+    		max-width: 376px;
+    		flex-direction: column;
+    		gap: 28px;
+    		border-radius: 20px;
+    	}
 
-.ingredients-popup__title {
-    margin: 0;
-    font-size: 44px;
-    line-height: 48px;
-    font-family: TAYRosemary;
-    letter-spacing: -0.44px;
-    font-weight: 400;
-    color: #000000;
-}
+    	.ingredients-popup__left,
+    	.ingredients-popup__right {
+    		width: 100%;
+    	}
 
-.ingredients-popup__subtitle {
-    margin: 0;
-    font-size: 16px;
-    line-height: 20px;
-    color: #000000;
-    letter-spacing: -0.16px;
-    font-weight: 500;
-    font-family: 'TAY Birdie';
-    text-transform: uppercase;
-}
-.ingredients-popup__tabs_main {
-    padding: 24px 24px 32px;
-}
- .ingredients-popup__tabs {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 32px;
-}
+    	.ingredients-popup__title {
+    		margin: 0 0 4px;
+    		font-size: 32px;
+    		line-height: 32px;
+    		letter-spacing: -0.32px;
+    		font-family: TAYRosemary;
+    		font-weight: 400;
+    		color: #000;
+    	}
 
-.ingredients-popup__tabs button {
-    padding: 0;
-    background: none;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.5);
-    font-family: 'Matter';
-    text-transform: capitalize;
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 8px;
-    flex: 1;
-}
+    	.ingredients-popup__subtitle {
+    		margin: 0 0 16px;
+    		font-size: 14px;
+    		line-height: 20px;
+    		color: #000;
+    		letter-spacing: 0;
+    		font-weight: 500;
+    	}
 
- .ingredients-popup__tabs button.active {
-    color: #000;
-    border-color: #000000;
-    background: rgba(0, 0, 0, 0.1);
-}
+    	.ingredients-popup__tabs {
+    		display: flex;
+    		gap: 24px;
+    		border-bottom: 2px solid transparent;
+    		margin-bottom: 24px;
+    	}
 
-  .ingredients-popup__content {
-  	display: none;
-  	max-width: 100%;
-  }
+    	.ingredients-popup__tabs button {
+    		padding: 0 0 4px;
+    		font-size: 12px;
+    		line-height: 16px;
+    		letter-spacing: .48px;
+    		border-bottom: 1px solid transparent;
+    	}
 
-  .ingredients-popup__content.active {
-  	display: block;
-  }
+    	.ingredients-popup__content p {
+    		font-size: 14px;
+    		line-height: 20px;
+    	}
 
-  .ingredients-popup__content p {
-    font-size: 16px;
-    line-height: 24px;
-    margin: 0;
-    letter-spacing: 0;
-    color: #000000;
-}
+    	.ingredients-popup__content_btn {
+    		font-size: 12px;
+    		line-height: 18px;
+    		letter-spacing: .96px;
+    		width: 120px;
+    		height: 50px;
+    		margin: 24px 0 0;
+    	}
 
-  .ingredients-popup__content_btn {
-  	background: url(https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
-  	color: #000;
-  	text-decoration: none;
-  	font-size: 16px;
-  	line-height: 24px;
-  	letter-spacing: 0.64px;
-  	width: 164px;
-  	height: 72px;
-  	display: flex;
-  	justify-content: center;
-  	align-items: center;
-  	font-family: "FFBlurProMedium";
-  	margin: 48px 0 0;
-  }
+    	.ingredients-popup__right {
+    		justify-content: flex-end;
+    	}
 
-  @media(max-width:991px) {
-  	.ingredients-popup__panel {
-  		padding: 40px 28px 26px;
-  		width: 96vw;
-  		gap: 28px;
-  	}
+    	.ingredients-popup__right_img {
+    		height: 194px;
+    		width: 244px;
+    		margin: 0;
+    	}
 
-  	.ingredients-popup__right_img_bowl {
-  		height: 330px;
-  		bottom: 45px;
-  	}
-  }
+    	.ingredients-popup__right_img_bowl {
+    		right: -100px;
+    		height: 220px;
+    		width: auto;
+    		bottom: 18px;
+    	}
 
-  @media(max-width:768px) {
+    	.ingredients-popup__close {
+    		right: 16px;
+    		top: 16px;
+    		width: 24px;
+    		height: 20px;
+    	}
 
-  	.ingredients-popup__panel {
-  		overflow-y: auto;
-  		padding: 40px 28px 26px;
-  		width: 96vw;
-  		max-width: 376px;
-  		flex-direction: column;
-  		gap: 28px;
-  		border-radius: 20px;
-  	}
+    	.ingredients-popup__close svg {
+    		display: block;
+    		max-width: 100%;
+    		height: auto;
+    	}
 
-  	.ingredients-popup__left,
-  	.ingredients-popup__right {
-  		width: 100%;
-  	}
-
-  	.ingredients-popup__title {
-  		margin: 0 0 4px;
-  		font-size: 32px;
-  		line-height: 32px;
-  		letter-spacing: -0.32px;
-  		font-family: TAYRosemary;
-  		font-weight: 400;
-  		color: #000;
-  	}
-
-  	.ingredients-popup__subtitle {
-  		margin: 0 0 16px;
-  		font-size: 14px;
-  		line-height: 20px;
-  		color: #000;
-  		letter-spacing: 0;
-  		font-weight: 500;
-  	}
-
-  	.ingredients-popup__tabs {
-  		display: flex;
-  		gap: 24px;
-  		border-bottom: 2px solid transparent;
-  		margin-bottom: 24px;
-  	}
-
-  	.ingredients-popup__tabs button {
-  		padding: 0 0 4px;
-  		font-size: 12px;
-  		line-height: 16px;
-  		letter-spacing: .48px;
-  		border-bottom: 1px solid transparent;
-  	}
-
-  	.ingredients-popup__content p {
-  		font-size: 14px;
-  		line-height: 20px;
-  	}
-
-  	.ingredients-popup__content_btn {
-  		font-size: 12px;
-  		line-height: 18px;
-  		letter-spacing: .96px;
-  		width: 120px;
-  		height: 50px;
-  		margin: 24px 0 0;
-  	}
-
-  	.ingredients-popup__right {
-  		justify-content: flex-end;
-  	}
-
-  	.ingredients-popup__right_img {
-  		height: 194px;
-  		width: 244px;
-  		margin: 0;
-  	}
-
-  	.ingredients-popup__right_img_bowl {
-  		right: -100px;
-  		height: 220px;
-  		width: auto;
-  		bottom: 18px;
-  	}
-
-  	.ingredients-popup__close {
-  		right: 16px;
-  		top: 16px;
-  		width: 24px;
-  		height: 20px;
-  	}
-
-  	.ingredients-popup__close svg {
-  		display: block;
-  		max-width: 100%;
-  		height: auto;
-  	}
-
-  }
+    }
 </style>
 
 {% comment %} required--js--code {% endcomment %}
