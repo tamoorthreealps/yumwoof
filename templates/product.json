@@ -195,7 +195,7 @@
         "background_image": "shopify://shop_images/BG.png",
         "background_image_mobile": "shopify://shop_images/BG_1.png",
         "text_color": "#000000",
-        "card_background": "#ffffff",
+        "card_background": "#000000",
         "card_border": "#000000",
         "kibble_image_1": "shopify://shop_images/Group_79.png",
         "kibble_image_2": "shopify://shop_images/Group_80.png",
@@ -269,8 +269,8 @@
         "uppercase_heading": true,
         "subheading": "Cooked at low temperatures to preserve whole food nutrition and flavor.",
         "brand_label": "Air-Dried",
-        "brand_logo": "shopify://shop_images/Vector_1.svg",
-        "brand_logo_mobile": "shopify://shop_images/Vector_2.svg",
+        "brand_logo": "shopify://shop_images/Vector_fa5da844-5036-4856-abce-b6c4664c862b.svg",
+        "brand_logo_mobile": "shopify://shop_images/Vector_1_492cafd2-9169-421b-906b-b2060c2a3c2f.svg",
         "brand_icon": "shopify://shop_images/table__yumwoof_icon_33ab7e7a-133c-4d59-9a2d-348d5bc3f511.png",
         "comp1_label": "Dry Kibble",
         "comp1_icon": "shopify://shop_images/dry-kibble.png",
@@ -280,8 +280,8 @@
         "comp3_icon": "shopify://shop_images/fresh.png",
         "background_color": "#fff9ef",
         "text_color": "#000000",
-        "highlight_color": "#c8912a",
-        "accent_color": "#661d1d"
+        "highlight_color": "#7BA6DD",
+        "accent_color": "#000000"
       }
     },
     "faqs_section_B64F3M": {
