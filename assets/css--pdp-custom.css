@@ -509,7 +509,7 @@
 }
 
 .product-form__input.product-form__quantity {
-  margin: 0 0 1.2rem;
+  margin: 0 0 2rem;
 }
 
 .product-form__quantity .form__label {
@@ -848,7 +848,7 @@ a.pdp--promo--banner_link svg {
     letter-spacing: -0.52px;
   }
 
-  .product-form__input {
+  .product-form__input, .product-form__input.product-form__quantity {
     margin: 0 0 2.4rem;
   }
 
