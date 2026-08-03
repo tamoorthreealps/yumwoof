@@ -202,6 +202,88 @@
         "kibble_image_3": "shopify://shop_images/Group_81.png"
       }
     },
+    "comparison_section": {
+      "type": "comparison-section",
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "label": "Seed Oil Free",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "check",
+            "comp3_value": "check"
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "label": "Minimally Processed",
+            "brand_value": "check",
+            "comp1_value": "check",
+            "comp2_value": "cross",
+            "comp3_value": "cross"
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "label": "Non-GMO",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "cross",
+            "comp3_value": "cross"
+          }
+        },
+        "row-4": {
+          "type": "row",
+          "settings": {
+            "label": "Fridge Free",
+            "brand_value": "check",
+            "comp1_value": "cross",
+            "comp2_value": "cross",
+            "comp3_value": "check"
+          }
+        },
+        "row-5": {
+          "type": "row",
+          "settings": {
+            "label": "Daily Cost",
+            "brand_value": "$$",
+            "comp1_value": "$",
+            "comp2_value": "$$$",
+            "comp3_value": "$$$"
+          }
+        }
+      },
+      "block_order": [
+        "row-1",
+        "row-2",
+        "row-3",
+        "row-4",
+        "row-5"
+      ],
+      "settings": {
+        "eyebrow": "How we stack up",
+        "heading": "Air-dried because your dog nose the difference",
+        "uppercase_heading": true,
+        "subheading": "Cooked at low temperatures to preserve whole food nutrition and flavor.",
+        "brand_label": "Air-Dried",
+        "brand_logo": "shopify://shop_images/Vector_1.svg",
+        "brand_logo_mobile": "shopify://shop_images/Vector_2.svg",
+        "brand_icon": "shopify://shop_images/table__yumwoof_icon_33ab7e7a-133c-4d59-9a2d-348d5bc3f511.png",
+        "comp1_label": "Dry Kibble",
+        "comp1_icon": "shopify://shop_images/dry-kibble.png",
+        "comp2_label": "Raw",
+        "comp2_icon": "shopify://shop_images/raw.png",
+        "comp3_label": "Fresh",
+        "comp3_icon": "shopify://shop_images/fresh.png",
+        "background_color": "#fff9ef",
+        "text_color": "#000000",
+        "highlight_color": "#c8912a",
+        "accent_color": "#661d1d"
+      }
+    },
     "faqs_section_B64F3M": {
       "type": "faqs-section",
       "blocks": {
@@ -296,6 +378,7 @@
     "main",
     "disclosures",
     "heritage_recipes_76xVan",
+    "comparison_section",
     "faqs_section_B64F3M",
     "related-products",
     "1785625977638f9fd2"
