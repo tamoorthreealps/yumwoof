@@ -1,0 +1,9 @@
+{% comment %}
+  One generic pdp_drawer panel section. Renders nothing if heading is blank.
+  Accepts: i (index), heading, body
+{% endcomment %}
+{%- if heading != blank -%}
+  <section class="nldrawer__panel" data-nldrawer-panel="{{ i }}" data-title="{{ heading | escape }}" hidden>
+    {%- render 'nldrawer-body', body: body -%}
+  </section>
+{%- endif -%}

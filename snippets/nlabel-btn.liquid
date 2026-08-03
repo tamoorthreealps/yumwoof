@@ -1,0 +1,10 @@
+{% comment %}
+  One "Know what you're feeding" launcher button for a generic pdp_drawer panel.
+  Renders nothing if heading is blank. Accepts: i (panel index), heading
+{% endcomment %}
+{%- if heading != blank -%}
+  <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="{{ i }}">
+    <span class="nlabel__plus" aria-hidden="true">+</span>
+    <span class="nlabel__label">{{ heading }}</span>
+  </button>
+{%- endif -%}

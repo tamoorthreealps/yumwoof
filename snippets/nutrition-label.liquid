@@ -22,10 +22,37 @@
   assign nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
   assign tp = product.metafields.custom.transition_plan.value
   assign ft = product.metafields.custom.feeding_table.value
+  assign dp = product.metafields.custom.pdp_drawer.value
   assign title = heading | default: "Know what you're feeding"
 -%}
 
-{%- if nl or tp or ft -%}
+{%- comment -%}
+  Two paths:
+  A) Generic (non-food / single-variant): product metafield custom.pdp_drawer.
+  B) Structured (food): variant custom.nutrition_label + product feeding_table / transition_plan.
+{%- endcomment -%}
+
+{%- if dp -%}
+  {{ 'css--nutrition-label.css' | asset_url | stylesheet_tag }}
+  {{ 'css--nutrition-label-drawer.css' | asset_url | stylesheet_tag }}
+
+  <nutrition-label class="nlabel" data-section="{{ section_id }}" data-product="{{ product.id }}">
+    <p class="nlabel__title">{{ title }}</p>
+    <div class="nlabel__grid" role="list">
+      {%- render 'nlabel-btn', i: 1, heading: dp.panel_1_heading -%}
+      {%- render 'nlabel-btn', i: 2, heading: dp.panel_2_heading -%}
+      {%- render 'nlabel-btn', i: 3, heading: dp.panel_3_heading -%}
+      {%- render 'nlabel-btn', i: 4, heading: dp.panel_4_heading -%}
+      {%- render 'nlabel-btn', i: 5, heading: dp.panel_5_heading -%}
+      {%- render 'nlabel-btn', i: 6, heading: dp.panel_6_heading -%}
+    </div>
+
+    {%- render 'nutrition-label-drawer-generic', product: product, section_id: section_id, dp: dp -%}
+  </nutrition-label>
+
+  <script src="{{ 'nutrition-label.js' | asset_url }}" defer="defer"></script>
+
+{%- elsif nl or tp or ft -%}
   {{ 'css--nutrition-label.css' | asset_url | stylesheet_tag }}
   {{ 'css--nutrition-label-drawer.css' | asset_url | stylesheet_tag }}
 

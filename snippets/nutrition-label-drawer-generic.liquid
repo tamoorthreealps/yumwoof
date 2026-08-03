@@ -1,0 +1,50 @@
+{% comment %}
+  Generic PDP drawer (non-food / single-variant products).
+  Renders the product-level custom.pdp_drawer metaobject: up to 6 panels
+  (heading / subheading / body markup). Header colour from the entry's
+  header_color field. Reuses the same JS + CSS chrome as the food drawer.
+
+  Accepts: product, section_id, dp (pdp_drawer metaobject value)
+{% endcomment %}
+{%- assign vid = product.selected_or_first_available_variant.id -%}
+
+<div class="nldrawer" data-nldrawer hidden>
+  <div class="nldrawer__scrim" data-nldrawer-close></div>
+
+  <div
+    class="nldrawer__card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="nldrawer-title-{{ section_id }}"
+    tabindex="-1"
+  >
+    <div class="nldrawer__head" data-nldrawer-head>
+      <div class="nldrawer__head-text">
+        <p class="nldrawer__title" id="nldrawer-title-{{ section_id }}" data-nldrawer-heading></p>
+        <p class="nldrawer__eyebrow" data-nldrawer-eyebrow></p>
+      </div>
+      <button type="button" class="nldrawer__close" data-nldrawer-close aria-label="Close">
+        <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.32 5.288C4.32 5.544 4.064 5.608 3.744 5.832C3.36 6.12 3.04 6.568 3.04 7.336C3.04 9.672 3.008 9.96 2.752 10.376C2.56 10.696 2.272 11.016 2.272 11.4C2.272 11.656 2.4 11.912 2.656 12.232C3.008 12.68 3.04 13.128 3.04 13.544V15.432C3.04 16.968 4.32 17.032 4.32 17.48C4.32 17.768 4.16 17.864 3.712 17.864C2.464 17.864 1.696 17.128 1.696 15.688V13.96C1.696 13.544 1.6 12.968 1.44 12.712C1.312 12.52 1.12 12.296 0.8 12.072C0.512 11.88 0.224 11.688 0.224 11.4C0.224 11.08 0.416 10.92 0.992 10.536C1.536 10.184 1.696 9.32 1.696 9.096V7.112C1.696 5.768 2.432 4.936 3.552 4.936C4.256 4.936 4.32 5.064 4.32 5.288Z" fill="black"/>
+          <path d="M9.544 14.024L8.232 16.072C7.752 16.808 7.4 17 6.824 17H5.896C5.448 17 5.128 16.68 5.288 16.36C5.384 16.168 5.384 16.2 5.512 16.008L8.232 12.168C8.488 11.816 8.648 11.432 8.648 11.144C8.648 10.824 8.456 10.472 8.36 10.312L6.152 7.208C5.736 6.696 5.832 6.152 6.44 6.152H7.496C8.008 6.152 8.424 6.408 8.712 6.888L9.576 8.296C9.832 8.712 10.152 8.968 10.504 8.968C10.792 8.968 11.08 8.776 11.304 8.392L12.168 7.016C12.552 6.376 12.904 6.152 13.608 6.152H14.376C15.112 6.152 15.08 6.696 14.856 7.016L12.744 9.992C12.424 10.472 12.264 10.792 12.264 11.112C12.264 11.368 12.328 11.688 12.744 12.264L14.952 15.368C15.688 16.424 15.624 16.36 15.624 16.552C15.624 16.84 15.4 17 14.952 17H13.992C13.512 17 13.064 16.744 12.744 16.264L11.336 14.024C10.984 13.512 10.76 13.352 10.472 13.352C10.088 13.352 9.8 13.608 9.544 14.024Z" fill="black"/>
+          <path d="M16.68 5.288C16.68 5.544 16.936 5.608 17.256 5.832C17.64 6.12 17.96 6.568 17.96 7.336C17.96 9.672 17.992 9.96 18.248 10.376C18.44 10.696 18.728 11.016 18.728 11.4C18.728 11.656 18.6 11.912 18.344 12.232C17.992 12.68 17.96 13.128 17.96 13.544V15.432C17.96 16.968 16.68 17.032 16.68 17.48C16.68 17.768 16.84 17.864 17.288 17.864C18.536 17.864 19.304 17.128 19.304 15.688V13.96C19.304 13.544 19.4 12.968 19.56 12.712C19.688 12.52 19.88 12.296 20.2 12.072C20.488 11.88 20.776 11.688 20.776 11.4C20.776 11.08 20.584 10.92 20.008 10.536C19.464 10.184 19.304 9.32 19.304 9.096V7.112C19.304 5.768 18.568 4.936 17.448 4.936C16.744 4.936 16.68 5.064 16.68 5.288Z" fill="black"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="nldrawer__body" data-nldrawer-body>
+      <div class="nldrawer__variant"
+        data-nldrawer-variant="{{ vid }}"
+        data-color="{{ dp.header_color | default: '#E1523D' }}"
+        data-eyebrow="{{ dp.panel_1_subheading | escape }}"
+        hidden>
+        {%- render 'nldrawer-panel', i: 1, heading: dp.panel_1_heading, body: dp.panel_1_body -%}
+        {%- render 'nldrawer-panel', i: 2, heading: dp.panel_2_heading, body: dp.panel_2_body -%}
+        {%- render 'nldrawer-panel', i: 3, heading: dp.panel_3_heading, body: dp.panel_3_body -%}
+        {%- render 'nldrawer-panel', i: 4, heading: dp.panel_4_heading, body: dp.panel_4_body -%}
+        {%- render 'nldrawer-panel', i: 5, heading: dp.panel_5_heading, body: dp.panel_5_body -%}
+        {%- render 'nldrawer-panel', i: 6, heading: dp.panel_6_heading, body: dp.panel_6_body -%}
+      </div>
+    </div>
+  </div>
+</div>
