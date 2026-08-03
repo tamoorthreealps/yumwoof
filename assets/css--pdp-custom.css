@@ -104,6 +104,7 @@
 .recipe-swatches {
     display: flex;
     flex-wrap: nowrap;
+    align-items: stretch;
     gap: 10px;
     margin: .8rem 0 0;
     padding: 0;
@@ -129,9 +130,9 @@
     flex-direction: column-reverse;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 12px;
+    gap: 0;
     width: 100%;
-    height: 120px;
+    height: 100%;
     padding-right: 0;
     border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 10px;
