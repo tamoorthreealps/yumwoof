@@ -594,7 +594,7 @@ quantity-input.quantity::before {
 }
 
 .qty.freq {
-  margin: 2rem 0 0;
+  margin: 0 0 2rem;
 }
 
 .qty.freq h2.selector-title {
@@ -862,7 +862,7 @@ a.pdp--promo--banner_link svg {
   }
 
   .qty.freq {
-   margin: 2.4rem 0 0;
+   margin: 0 0 2.4rem;
   }
 
   .qty.freq h2.selector-title {
