@@ -33,25 +33,25 @@
       <div class="ingredients-popup__content active" data-content="1">
         <p>{{ popup.tab_1_description }}</p>
 
-        <a href="{{ popup.tab_1_button_url }}" class="ingredients-popup__content_btn">
+        {% comment %} <a href="{{ popup.tab_1_button_url }}" class="ingredients-popup__content_btn">
           {{ popup.tab_1_button_text }}
-        </a>
+        </a> {% endcomment %}
       </div>
 
       <div class="ingredients-popup__content" data-content="2">
         <p>{{ popup.tab_2_description }}</p>
 
-        <a href="{{ popup.tab_2_button_url }}" class="ingredients-popup__content_btn">
+        {% comment %} <a href="{{ popup.tab_2_button_url }}" class="ingredients-popup__content_btn">
           {{ popup.tab_2_button_text }}
-        </a>
+        </a> {% endcomment %}
       </div>
 
       <div class="ingredients-popup__content" data-content="3">
         <p>{{ popup.tab_3_description }}</p>
 
-        <a href="{{ popup.tab_3_button_url }}" class="ingredients-popup__content_btn">
+        {% comment %} <a href="{{ popup.tab_3_button_url }}" class="ingredients-popup__content_btn">
           {{ popup.tab_3_button_text }}
-        </a>
+        </a> {% endcomment %}
       </div>
     </div>
 
@@ -130,7 +130,7 @@
   }
 
   .ingredients-popup__left {
-  	width: 71.17%;
+  	width: 100%;
   }
 
   .ingredients-popup__right {
