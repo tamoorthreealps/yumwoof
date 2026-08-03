@@ -7,14 +7,14 @@
     transition       -> product custom.transition_plan
 
   The header band takes the SELECTED recipe's colour from the VARIANT metafield
-  custom.header_color (reused elsewhere on the PDP); falls back to a
+  custom.nutrition_head_color (reused elsewhere on the PDP); falls back to a
   coral/blue/gold palette by variant order.
 
   Metaobject field API keys used:
     nutrition_label : guaranteed_analysis, guaranteed_analysis_footnote,
                       kcal_per_kg, kcal_per_cup, full_data
     transition_plan : intro, steps, note_title, note
-  Variant metafield: custom.header_color (color)
+  Variant metafield: custom.nutrition_head_color (color)
 
   Accepts: product, section_id, brand_label
 {% endcomment %}
@@ -66,7 +66,7 @@
           {%- if recipe == 'Default Title' -%}{%- assign recipe = product.title -%}{%- endif -%}
           {%- assign palette_idx = vi | modulo: 3 -%}
           {%- comment -%} header colour is a VARIANT metafield (reused elsewhere) {%- endcomment -%}
-          {%- assign vcolor = variant.metafields.custom.header_color.value | default: palette[palette_idx] -%}
+          {%- assign vcolor = variant.metafields.custom.nutrition_head_color.value | default: palette[palette_idx] -%}
           {%- assign vi = vi | plus: 1 -%}
           <div
             class="nldrawer__variant"
