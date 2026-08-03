@@ -6,13 +6,15 @@
     feeding          -> product custom.feeding_table   (cups/kg/grams computed in JS)
     transition       -> product custom.transition_plan
 
-  The header band takes the SELECTED recipe's colour (custom.nutrition_label →
-  header_color; falls back to a coral/blue/gold palette by variant order).
+  The header band takes the SELECTED recipe's colour from the VARIANT metafield
+  custom.header_color (reused elsewhere on the PDP); falls back to a
+  coral/blue/gold palette by variant order.
 
   Metaobject field API keys used:
     nutrition_label : guaranteed_analysis, guaranteed_analysis_footnote,
-                      kcal_per_kg, kcal_per_cup, full_data, header_color (NEW, color)
+                      kcal_per_kg, kcal_per_cup, full_data
     transition_plan : intro, steps, note_title, note
+  Variant metafield: custom.header_color (color)
 
   Accepts: product, section_id, brand_label
 {% endcomment %}
@@ -63,7 +65,8 @@
           {%- assign recipe = variant.title -%}
           {%- if recipe == 'Default Title' -%}{%- assign recipe = product.title -%}{%- endif -%}
           {%- assign palette_idx = vi | modulo: 3 -%}
-          {%- assign vcolor = nl.header_color | default: palette[palette_idx] -%}
+          {%- comment -%} header colour is a VARIANT metafield (reused elsewhere) {%- endcomment -%}
+          {%- assign vcolor = variant.metafields.custom.header_color.value | default: palette[palette_idx] -%}
           {%- assign vi = vi | plus: 1 -%}
           <div
             class="nldrawer__variant"
@@ -72,6 +75,20 @@
             data-eyebrow="{{ recipe | append: ' Recipe' | escape }}"
             hidden
           >
+
+            {%- comment -%} Ingredients {%- endcomment -%}
+            {%- if nl.ingredients != blank -%}
+              <section class="nldrawer__panel" data-nldrawer-panel="ingredients" data-title="Ingredients" hidden>
+                {%- if nl.ingredients_heading != blank -%}
+                  <p class="nldrawer__kicker nldrawer__kicker--gold">{{ nl.ingredients_heading }}</p>
+                {%- endif -%}
+                <p class="nldrawer__prose">{{ nl.ingredients }}</p>
+                {%- if nl.ingredients_footnote != blank -%}
+                  <p class="nldrawer__foot">{{ nl.ingredients_footnote }}</p>
+                {%- endif -%}
+              </section>
+            {%- endif -%}
+
             {%- comment -%} Guaranteed Analysis (+ calorie content) {%- endcomment -%}
             <section class="nldrawer__panel" data-nldrawer-panel="analysis" data-title="Guaranteed Analysis" hidden>
               {%- assign ga_rows = nl.guaranteed_analysis | strip | newline_to_br | strip_newlines | split: '<br />' -%}
@@ -106,7 +123,8 @@
               {%- endif -%}
             </section>
 
-            {%- comment -%} Full Nutritional Data {%- endcomment -%}
+            {%- comment -%} Full Nutritional Data (only when the variant has it) {%- endcomment -%}
+            {%- if nl.full_data != blank -%}
             <section class="nldrawer__panel" data-nldrawer-panel="full" data-title="Full Nutritional Data" hidden>
               {%- assign fd_rows = nl.full_data | strip | newline_to_br | strip_newlines | split: '<br />' -%}
               {%- assign open = false -%}
@@ -129,6 +147,8 @@
               {%- endfor -%}
               {%- if open -%}</div>{%- endif -%}
             </section>
+            {%- endif -%}
+
           </div>
         {%- endif -%}
       {%- endfor -%}
