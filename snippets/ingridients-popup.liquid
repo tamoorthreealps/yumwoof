@@ -88,8 +88,9 @@
       left: 50%;
       transform: translate(-50%, -110%);
       transition: transform .6s cubic-bezier(.22, 1, .36, 1);
-      width: 100%;
-      min-width: 464px;
+      width: fit-content;
+	min-width: 464px;
+	max-width: min(90vw, 900px);
       background: rgba(255, 255, 255, 0.9);
       border-radius: 24px;
       -webkit-backdrop-filter: blur(10px);
