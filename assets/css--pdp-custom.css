@@ -154,8 +154,8 @@
 
 .recipe-swatch__img {
   flex: 0 0 auto;
-  width: 56px;
-  height: 56px;
+  width: auto;
+  height: 80px;
   object-fit: contain;
 }
 
