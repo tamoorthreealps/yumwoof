@@ -52,19 +52,18 @@
       </div>
 
       <div class="ingredients-popup__content active" data-content="1">
-        {{ popup.tab_1_description }}
+        {{ popup.tab_1_description | metafield_tag }}
       </div>
 
       <div class="ingredients-popup__content" data-content="2">
-        {{ popup.tab_2_description }}
+        {{ popup.tab_2_description | metafield_tag }}
       </div>
 
       <div class="ingredients-popup__content" data-content="3">
-        {{ popup.tab_3_description }}
+        {{ popup.tab_4_description | metafield_tag }}
       </div>
     </div>
   </div>
-</div>
 </div>
 <style>
     	/*----- popup--css--code -----*/
