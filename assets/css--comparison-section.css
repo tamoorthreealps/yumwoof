@@ -166,7 +166,10 @@
   width: 56px;
   height: 56px;
   object-fit: contain;
-	animation: bowlRotate 100s linear infinite;
+}
+
+.cmp__col--brand .cmp__col-icon {
+  	animation: bowlRotate 100s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
 }
