@@ -236,6 +236,14 @@
       init(event.target);
     });
   })();
+
+  const badge = document.querySelector('.heritage__badge');
+let rotation = 0;
+
+window.addEventListener('scroll', () => {
+    rotation = window.scrollY * 0.2;
+    badge.style.transform = `rotate(${rotation}deg)`;
+});
 </script>
 
 {% schema %}
