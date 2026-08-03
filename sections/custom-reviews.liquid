@@ -1,0 +1,23 @@
+<section class="reviews-section">
+  <div class="reviews-section__container">
+    {% content_for 'blocks' %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Reviews",
+  "tag": "section",
+  "class": "section-custom-reviews",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Reviews"
+    }
+  ]
+}
+{% endschema %}
