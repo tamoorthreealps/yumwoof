@@ -37,11 +37,21 @@
     <p class="nlabel__title">{{ title }}</p>
 
     <div class="nlabel__grid" role="list">
-      {%- if nl -%}
+      {%- if nl.ingredients != blank -%}
+        <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="ingredients">
+          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__label">Ingredients</span>
+        </button>
+      {%- endif -%}
+
+      {%- if nl.guaranteed_analysis != blank -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="analysis">
           <span class="nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Guaranteed Analysis</span>
         </button>
+      {%- endif -%}
+
+      {%- if nl.full_data != blank -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="full">
           <span class="nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Full Nutritional Data</span>
