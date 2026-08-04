@@ -780,23 +780,27 @@ a.pdp--promo--banner_link svg {
     opacity: 0.25;
 }
 .mobile-gallery-dots{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
+display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-.mobile-gallery-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    border:none;
-    padding:0;
-    background:#8c8c8c;
+.mobile-gallery-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    padding: 0;
+    background: transparent;
+    border: 1px solid #FFF9EF;
 }
 
-.mobile-gallery-dot.is-active{
-    background:#fff9ef;
+.mobile-gallery-dot.is-active {
+    background: #FFF9EF;
 }
 @media screen and (min-width: 990px) {
   .product--main--info {
