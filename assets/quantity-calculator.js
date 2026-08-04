@@ -387,7 +387,11 @@
       if (!cov) {
         // unwrap: put the stepper back where it was and drop the box
         if (box) {
-          box.parentNode.insertBefore(qi, box);
+          var oldParent = box.parentNode;
+          if (oldParent) {
+            oldParent.insertBefore(qi, box);
+            oldParent.classList.remove('qcalc-qtybox-parent');
+          }
           box.remove();
         }
         block.classList.remove('qcalc-qty--lead');
@@ -403,6 +407,8 @@
         infoNew.className = 'qcalc-qty__info';
         box.appendChild(infoNew);
       }
+      // mark the box's parent (e.g. .price-per-item__container) while active
+      if (box.parentNode) box.parentNode.classList.add('qcalc-qtybox-parent');
       var info = box.querySelector('.qcalc-qty__info');
       info.innerHTML =
         '<span class="qcalc-qty__lead"><b>' + cov.days + ' days</b> of food' +
