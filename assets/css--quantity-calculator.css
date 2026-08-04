@@ -804,6 +804,7 @@
     background: transparent;
     overflow: hidden;
     gap: 8px;
+        flex-direction: column;
 }
 
 .qcalc-qty__info {
