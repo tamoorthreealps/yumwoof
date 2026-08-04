@@ -80,7 +80,7 @@
 }
 
 /* CTA bar */
-.qcalc__cta {
+.qcalc__cta, .qcalc-qty__info {
   width: 100%;
   display: flex;
   align-items: center;
@@ -797,24 +797,14 @@
 
 /* ---------- quantity box with coverage (once a dog is added: 4079-222 / 4244-218) ---------- */
 .qcalc-qtybox {
-  display: flex;
-  align-items: stretch;
-  width: 100%;
-  background: #fff;
-  border: 1px solid var(--qc-hair-s);
-  border-radius: 1rem;
-  overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    background: transparent;
+    overflow: hidden;
+    gap: 8px;
 }
 
-.qcalc-qty__info {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.3rem;
-  padding: 1.1rem 1.6rem;
-}
 .qcalc-qty__lead {
   font-family: "Matter", sans-serif;
   font-size: 1.5rem;
@@ -867,7 +857,7 @@
   .product-form__quantity .quantity__input {
     font-size: 20px;
   }
-  .qcalc__cta {
+  .qcalc__cta, .qcalc-qty__info {
     padding: 7px 20px 9px 16px;
   }
   .qcalc__cta-text {
