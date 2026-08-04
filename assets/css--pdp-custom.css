@@ -771,10 +771,10 @@ a.pdp--promo--banner_link svg {
 
   .slider-button .icon,
   .slider-button svg {
-    width: 18px;
-    height: 18px;
+    width: 16;
+    height: 8px;
   }
-  .slider-button[disabled] .icon {
+  .slider-button[disabled] {
     color: inherit;
     cursor: not-allowed;
     opacity: 0.25;
