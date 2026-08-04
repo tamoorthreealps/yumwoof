@@ -1458,3 +1458,37 @@ class CartPerformance {
     );
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.innerWidth >= 990) return;
+
+  document.querySelectorAll('slider-component').forEach((slider) => {
+    const counter = slider.querySelector('.slider-counter');
+    if (!counter) return;
+
+    const total = parseInt(
+      slider.querySelector('.slider-counter--total').textContent
+    );
+
+    const dots = document.createElement('div');
+    dots.className = 'mobile-gallery-dots';
+
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'mobile-gallery-dot';
+      if (i === 0) dot.classList.add('is-active');
+      dots.appendChild(dot);
+    }
+
+    counter.replaceWith(dots);
+
+    slider.addEventListener('slideChanged', (e) => {
+      dots.querySelectorAll('.mobile-gallery-dot').forEach((dot, index) => {
+        dot.classList.toggle(
+          'is-active',
+          index === e.detail.currentPage - 1
+        );
+      });
+    });
+  });
+});
