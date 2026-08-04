@@ -78,6 +78,7 @@
         {%- break -%}
       {%- endif -%}
     {%- endfor -%}
+    {% unless value == 'Healthy Grains (Original)' %}
     <div class="recipe-swatch">
       <input
         type="radio"
@@ -102,6 +103,7 @@
         <span class="recipe-swatch__badge">{{ swatch_badge }}</span>
       {%- endif -%}
     </div>
+  {% endunless %}
   {%- elsif picker_type == 'swatch' -%}
     {%- capture help_text -%}
       <span class="visually-hidden">{{ escaped_value }}</span>
