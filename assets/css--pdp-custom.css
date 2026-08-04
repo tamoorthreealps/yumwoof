@@ -721,6 +721,59 @@ a.pdp--promo--banner_link svg {
         text-decoration: underline;
 }
 
+
+.slider-component {
+    position: relative;
+  }
+
+  .slider-buttons {
+    position: absolute;
+    inset: 0;
+    display: block;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .35);
+    color: #fff;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slider-button--prev {
+    left: 16px;
+  }
+
+  .slider-button--next {
+    right: 16px;
+  }
+
+  .slider-counter {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    background: rgba(0, 0, 0, .35);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .slider-button .icon,
+  .slider-button svg {
+    width: 18px;
+    height: 18px;
+  }
 @media screen and (min-width: 990px) {
   .product--main--info {
     padding: 156px 0 120px;
