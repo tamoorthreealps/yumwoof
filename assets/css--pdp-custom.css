@@ -254,7 +254,8 @@
   animation: rotateBadge 25s linear infinite;
   transform-origin: center;
 }
-  .product-media-container.media-type-image {
+  .product-media-container.media-type-image,
+  .product-media-container.media-type-video {
     width: 100% !important;
     height: 100%;
     background: transparent;
