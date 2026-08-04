@@ -259,6 +259,9 @@
     height: 100%;
     background: transparent;
 }
+.product-media-container.constrain-height .media {
+    padding-top: 376px;
+}
 .slider.slider--mobile {
     margin: 0 !important;
     gap: 0 !important;
