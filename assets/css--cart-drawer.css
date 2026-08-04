@@ -361,6 +361,10 @@ cart-drawer.active .cd__inner {
 	gap: 1.2rem;
 }
 
+.cd-item__titles {
+    text-align: left;
+}
+
 .cd-item__name {
 	display: block;
 	font-family: 'TAYRosemary';
@@ -378,6 +382,7 @@ cart-drawer.active .cd__inner {
 	line-height: 20px;
 	letter-spacing: -0.56px;
 	text-transform: uppercase;
+	font-family: 'TAY Birdie';
 }
 
 .cd-item__note {
@@ -755,6 +760,7 @@ cart-drawer.active .cd__inner {
 	display: flex;
 	gap: 16px;
 	position: relative;
+	height: 100%;
 }
 
 .cd-rec-card__media {
