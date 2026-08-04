@@ -362,16 +362,35 @@
       if (!daily || !vc) return null;
       var days = Math.round((qty * vc) / daily);
       var fitQty = Math.max(1, Math.ceil((daily * cadence) / vc));
-      var gap = days - cadence;
-      var base = { days: days, names: this.dogNames(), fixQty: fitQty };
-      if (gap < -0.5)
-        return Object.assign(base, { warn: true, mark: '! ', text: 'Runs out ' + Math.round(-gap) + ' days before the next delivery' });
-      if (gap > cadence * 0.6)
-        return Object.assign(base, { warn: false, mark: '✓ ', text: Math.round(gap) + ' days spare every cycle — it’ll pile up' });
+      var gap = Math.round(days - cadence);
+      // single dog -> "for Bella"; multiple dogs -> "for your pack"
+      var forWhom = this.dogs.length > 1 ? 'your pack' : this.dogNames();
+      var base = { days: days, forWhom: forWhom, fixQty: fitQty };
+      var dw = function (n) { return Math.abs(n) === 1 ? 'day' : 'days'; };
+      var bagWord = function (n) { return n === 1 ? 'a bag' : n + ' bags'; };
+      // too little — supply runs out before the next delivery; fix adds bags
+      if (gap < 0) {
+        return Object.assign(base, {
+          warn: true,
+          line2: 'Runs out ' + -gap + ' ' + dw(gap) + ' early',
+          action: 'Add ' + bagWord(Math.max(1, fitQty - qty)),
+        });
+      }
+      // too much — 60%+ of the cycle sits spare; fix removes bags
+      if (gap > cadence * 0.6) {
+        return Object.assign(base, {
+          warn: false,
+          line2: gap + ' extra ' + dw(gap) + ' each delivery',
+          action: 'Remove ' + bagWord(Math.max(1, qty - fitQty)),
+        });
+      }
+      // fits
       return Object.assign(base, {
         warn: false,
-        mark: '✓ ',
-        text: 'Covers your ' + Math.round(cadence / 7) + '-week cycle' + (gap > 1 ? ', ' + Math.round(gap) + ' days spare' : ''),
+        line2: gap === 0
+          ? 'Lands right on your next delivery'
+          : 'Lasts ' + gap + ' ' + dw(gap) + ' past your next delivery',
+        action: '',
       });
     }
 
@@ -410,14 +429,14 @@
       // mark the box's parent (e.g. .price-per-item__container) while active
       if (box.parentNode) box.parentNode.classList.add('qcalc-qtybox-parent');
       var info = box.querySelector('.qcalc-qty__info');
+      var dayWord = cov.days === 1 ? 'day' : 'days';
       info.innerHTML =
-        '<span class="qcalc-qty__lead"><b>' + cov.days + ' days</b> of food' +
-        (cov.names ? ' for ' + esc(cov.names) : '') + '</span>' +
+        '<span class="qcalc-qty__lead"><b>' + cov.days + ' ' + dayWord + '</b> of food' +
+        (cov.forWhom ? ' for ' + esc(cov.forWhom) : '') + '</span>' +
         '<span class="qcalc-qty__cover' + (cov.warn ? ' warn' : '') + '">' +
-        cov.mark +
-        esc(cov.text) +
-        (cov.fixQty && cov.fixQty !== this.qtyInputValue()
-          ? ' · <button type="button" data-fix="' + cov.fixQty + '">Send ' + cov.fixQty + '</button>'
+        esc(cov.line2) +
+        (cov.action && cov.fixQty !== this.qtyInputValue()
+          ? ' · <button type="button" data-fix="' + cov.fixQty + '">' + esc(cov.action) + '</button>'
           : '') +
         '</span>';
       var fix = info.querySelector('[data-fix]');
