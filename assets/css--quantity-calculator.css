@@ -835,9 +835,9 @@
     line-height: 24px;
     color: #000000;
 }
-.qcalc-qty__cover.warn {
+/* .qcalc-qty__cover.warn {
   color: var(--qc-burg);
-}
+} */
 .qcalc-qty__cover button {
     background: none;
     border: none;
