@@ -259,6 +259,16 @@
     height: 100%;
     background: transparent;
 }
+.slider.slider--mobile {
+    margin: 0 !important;
+    gap: 0 !important;
+    padding: 0 !important;
+}
+.slider.slider--mobile .slider__slide {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
 @keyframes rotateBadge {
   from {
     transform: rotate(0deg);
