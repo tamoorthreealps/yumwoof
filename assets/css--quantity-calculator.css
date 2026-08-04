@@ -831,7 +831,9 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-
+.price-per-item__container.qcalc-qtybox-parent{
+  flex-wrap:wrap;
+}
 @media screen and (min-width: 990px) {
   .product-form__quantity .quantity__label,
   .product-form__quantity .quantity__label span {
