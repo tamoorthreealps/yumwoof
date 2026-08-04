@@ -788,8 +788,7 @@ a.pdp--promo--banner_link svg {
   .slider-counter {
     position: absolute;
     bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 16px;
     color: #fff;
     background: rgba(0, 0, 0, .35);
     padding: 4px 10px;
