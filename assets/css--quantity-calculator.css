@@ -861,7 +861,7 @@
   .price-per-item__container {
     flex-wrap: nowrap;
     align-items: flex-start;
-    gap: 10px;
+    gap: 12px;
   }
   .product-form__quantity quantity-input.quantity {
     width: 140px;
