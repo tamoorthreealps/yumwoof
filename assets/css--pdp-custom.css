@@ -779,6 +779,25 @@ a.pdp--promo--banner_link svg {
     cursor: not-allowed;
     opacity: 0.25;
 }
+.mobile-gallery-dots{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.mobile-gallery-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    border:none;
+    padding:0;
+    background:#8c8c8c;
+}
+
+.mobile-gallery-dot.is-active{
+    background:#fff9ef;
+}
 @media screen and (min-width: 990px) {
   .product--main--info {
     padding: 156px 0 120px;
