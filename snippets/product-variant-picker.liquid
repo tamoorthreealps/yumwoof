@@ -9,6 +9,7 @@
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
 {% assign popup = product.metafields.custom.ingredient_popup.value %}
+{{ 'css--swatch-subtitle.css' | asset_url | stylesheet_tag }}
 {%- unless product.has_only_default_variant -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"

@@ -121,6 +121,22 @@
       additional_props: input_dataset
     %}
   {%- elsif picker_type == 'button' -%}
+    {%- comment -%}
+      Optional per-value subtitle (e.g. bag size "Everyday feeding" / "Trial or topper"),
+      read from the matching variant's custom.swatch_subtitle metafield.
+    {%- endcomment -%}
+    {%- assign swatch_subtitle = '' -%}
+    {%- assign value_name = value | strip -%}
+    {%- assign opt_idx = option.position | minus: 1 -%}
+    {%- for v in product.variants -%}
+      {%- if v.options[opt_idx] == value_name -%}
+        {%- assign vs = v.metafields.custom.swatch_subtitle.value -%}
+        {%- if vs != blank -%}
+          {%- assign swatch_subtitle = vs -%}
+        {%- endif -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
     <input
       type="radio"
       id="{{ input_id }}"
@@ -135,8 +151,13 @@
       {% endif %}
       {{ input_dataset }}
     >
-    <label for="{{ input_id }}">
-      {{ value -}}
+    <label for="{{ input_id }}"{% if swatch_subtitle != blank %} class="has-subtitle"{% endif %}>
+      {%- if swatch_subtitle != blank -%}
+        <span class="pill__title">{{ value }}</span>
+        <span class="pill__subtitle">{{ swatch_subtitle }}</span>
+      {%- else -%}
+        {{ value -}}
+      {%- endif -%}
       {{ label_unavailable }}
     </label>
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
