@@ -59,16 +59,17 @@
     if (newBubble && curBubble) curBubble.innerHTML = newBubble.innerHTML;
   }
 
-  // Remove a line, then re-add the variant with (or without) a selling plan.
-  async function removeAndAdd(lineIndex, variantId, quantity, sellingPlanId) {
-    var removeRes = await post('/cart/change.js', { line: lineIndex, quantity: 0 });
-    if (!removeRes.ok) throw new Error('remove failed');
-
-    var addBody = { id: variantId, quantity: quantity };
-    if (sellingPlanId) addBody.selling_plan = sellingPlanId;
-    var addRes = await post('/cart/add.js', addBody);
-    if (!addRes.ok) throw new Error('add failed');
-
+  // Change (or clear) a line's selling plan IN PLACE — one request, atomic, and
+  // it keeps the line's quantity + properties. selling_plan: <id> subscribes,
+  // null converts to one-time. (Old path did remove + re-add = 2 extra requests
+  // and could drop the line if the re-add failed.)
+  async function changePlan(lineIndex, quantity, sellingPlanId) {
+    var res = await post('/cart/change.js', {
+      line: lineIndex,
+      quantity: quantity,
+      selling_plan: sellingPlanId || null,
+    });
+    if (!res.ok) throw new Error('change failed');
     await refreshDrawer();
   }
 
@@ -83,16 +84,22 @@
     }
     async _onToggle() {
       if (this.classList.contains('cd-busy')) return;
-      this.classList.add('cd-busy');
       var line = parseInt(this.dataset.lineIndex, 10);
-      var variant = parseInt(this.dataset.variantId, 10);
       var qty = parseInt(this.dataset.quantity, 10) || 1;
       var turningOn = !this.classList.contains('is-on');
       var plan = turningOn ? parseInt(this.dataset.planId, 10) : null;
+      // Optimistic: flip the switch + spinner immediately so it feels instant;
+      // the drawer re-render reconciles price/frequency after the request lands.
+      this.classList.add('cd-busy');
+      this.classList.toggle('is-on', turningOn);
+      if (this._btn) this._btn.setAttribute('aria-checked', turningOn ? 'true' : 'false');
       try {
-        await removeAndAdd(line, variant, qty, plan || null);
+        await changePlan(line, qty, plan || null);
       } catch (e) {
         console.error('[cart] subscription toggle failed:', e);
+        // revert the optimistic flip
+        this.classList.toggle('is-on', !turningOn);
+        if (this._btn) this._btn.setAttribute('aria-checked', !turningOn ? 'true' : 'false');
         this.classList.remove('cd-busy');
       }
     }
@@ -109,15 +116,16 @@
     }
     async _onChange(event) {
       var line = parseInt(this.dataset.lineIndex, 10);
-      var variant = parseInt(this.dataset.variantId, 10);
       var qty = parseInt(this.dataset.quantity, 10) || 1;
       var plan = parseInt(event.target.value, 10);
       this._select.disabled = true;
+      this.classList.add('cd-busy');
       try {
-        await removeAndAdd(line, variant, qty, plan);
+        await changePlan(line, qty, plan);
       } catch (e) {
         console.error('[cart] frequency change failed:', e);
         this._select.disabled = false;
+        this.classList.remove('cd-busy');
       }
     }
   }
