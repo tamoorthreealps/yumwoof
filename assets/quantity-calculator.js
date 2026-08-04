@@ -307,7 +307,7 @@
             '</span></div>' +
             // per-dog intake only helps when there's more than one dog; a single
             // dog's intake lives in the foot (matches the design)
-            (many ? '<div class="qcalc__dog-eat">Eats <b>' + fmtCups(dailyCups(d, bands)) + '</b> a day</div>' : '') +
+            (many ? '<div class="qcalc__dog-eat">Eats <b>' + fmtCups(dailyCups(d, bands)) + ' a day</b></div>' : '') +
             '</div>'
           );
         })
