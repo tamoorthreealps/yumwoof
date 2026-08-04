@@ -73,6 +73,7 @@
 .component--quantity-calculator {
   width: 100%;
   flex: 1;
+  margin: 2px 0 0;
 }
 
 .qcalc {
