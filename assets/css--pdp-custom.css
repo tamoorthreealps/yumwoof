@@ -254,7 +254,11 @@
   animation: rotateBadge 25s linear infinite;
   transform-origin: center;
 }
-
+  .product-media-container.media-type-image {
+    width: 100% !important;
+    height: 100%;
+    background: transparent;
+}
 @keyframes rotateBadge {
   from {
     transform: rotate(0deg);
@@ -309,11 +313,7 @@
     width: 100%;
     padding-top: 100%;
   }
-  .product-media-container.media-type-image {
-    width: 100% !important;
-    height: 100%;
-    background: transparent;
-}
+
   .pdp-gallery .product__media-item img {
     max-width: 100%;
     max-height: 100%;
