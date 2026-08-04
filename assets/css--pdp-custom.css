@@ -281,7 +281,9 @@
     transform: rotate(360deg);
   }
 }
-
+.product__media-wrapper slider-component:not(.thumbnail-slider--no-slide) {
+  margin:0;
+}
 @media screen and (min-width: 990px) {
   .pdp-gallery media-gallery {
     display: block;
