@@ -805,13 +805,7 @@
   border-radius: 1rem;
   overflow: hidden;
 }
-.qcalc-qtybox quantity-input.quantity {
-  border: none;
-  border-radius: 0;
-  border-right: 1px solid var(--qc-hair);
-  min-width: auto;
-  flex: 0 0 auto;
-}
+
 .qcalc-qty__info {
   flex: 1 1 auto;
   min-width: 0;
