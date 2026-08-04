@@ -839,13 +839,17 @@
   color: var(--qc-burg);
 }
 .qcalc-qty__cover button {
-  font: inherit;
-  color: var(--qc-burg);
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 1px;
+    padding: 0;
+    color: #661D1D;
+    font-size: 13px;
+    line-height: 24px;
+    letter-spacing: 0;
+    font-family: 'Matter';
 }
 .price-per-item__container.qcalc-qtybox-parent{
   flex-wrap:wrap;
