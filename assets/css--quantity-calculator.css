@@ -174,8 +174,8 @@
   margin-top: 0.4rem;
 }
 .qcalc__dog-eat b {
-  color: var(--qc-ink);
-  font-weight: 600;
+    color: #000;
+    font-weight: 500;
 }
 .qcalc__summary-foot {
     display: flex;
