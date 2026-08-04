@@ -289,7 +289,9 @@
     border-radius: 24px;
     overflow: hidden;
   }
-
+.product-media-container.constrain-height .media {
+    padding-top: 100%;
+}
   /* One image at a time: stack all media and show only the active one.
      (Dawn's slider-component blocks native scroll on desktop, so the arrows
      switch the active image by toggling .is-active — see pdp-gallery.js.) */
