@@ -273,6 +273,10 @@
   /* One image at a time: stack all media and show only the active one.
      (Dawn's slider-component blocks native scroll on desktop, so the arrows
      switch the active image by toggling .is-active — see pdp-gallery.js.) */
+         .product__media-list {
+        flex-wrap: nowrap;
+        margin: 0;
+    }
   .pdp-gallery .product__media-list {
     position: relative;
     display: block;
