@@ -774,7 +774,7 @@ a.pdp--promo--banner_link svg {
     width: 18px;
     height: 18px;
   }
-  .slider-button[disabled] .icon {
+  .slider-button[disabled] {
     color: inherit;
     cursor: not-allowed;
     opacity: 0.25;
