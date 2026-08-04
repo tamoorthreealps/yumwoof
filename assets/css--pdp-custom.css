@@ -778,11 +778,11 @@ a.pdp--promo--banner_link svg {
 }
 
   .slider-button--prev {
-    left: 24px;
+    left: 16px;
   }
 
   .slider-button--next {
-    right: 24px;
+    right: 16px;
   }
 
   .slider-counter {
