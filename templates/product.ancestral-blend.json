@@ -135,7 +135,7 @@
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
         "promo_banner_content": "<p>New to Yumwoof? <strong>Get a Personalized Meal Plan + 30% off</strong></p>",
-        "promo_banner_link": "#",
+        "promo_banner_link": "https://my.yumwoof.com/",
         "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
         "bq_heading": "",
         "bq_description": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>",
