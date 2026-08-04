@@ -773,11 +773,11 @@ a.pdp--promo--banner_link svg {
 }
 
   .slider-button--prev {
-    left: 16px;
+    left: 24px;
   }
 
   .slider-button--next {
-    right: 16px;
+    right: 24px;
   }
 
   .slider-counter {
