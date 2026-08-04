@@ -168,10 +168,12 @@
     color: rgba(0, 0, 0, 0.5);
 }
 .qcalc__dog-eat {
-  font-family: "Matter", sans-serif;
-  font-size: 1.35rem;
-  color: var(--qc-mute);
-  margin-top: 0.4rem;
+    font-family: Matter, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.14px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: .4rem;
 }
 .qcalc__dog-eat b {
     color: #000;
