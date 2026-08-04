@@ -854,6 +854,9 @@
     font-size: 1.6rem;
     letter-spacing: -0.64px;
   }
+  .qcalc-qtybox {
+    flex-direction: row;
+}
   .price-per-item__container {
     flex-wrap: nowrap;
     align-items: flex-start;
