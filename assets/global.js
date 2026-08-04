@@ -1492,3 +1492,21 @@ class CartPerformance {
 //     });
 //   });
 // });
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.opinew-stars-plugin-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const target = document.querySelector(this.getAttribute('href'));
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+
+        history.replaceState(null, null, this.getAttribute('href'));
+      }
+    });
+  });
+});
