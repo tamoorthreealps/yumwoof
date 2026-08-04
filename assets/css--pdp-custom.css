@@ -226,7 +226,7 @@
     display: block;
     position: relative;
     padding: 0;
-    background: #661d1d;
+    background: transparent;
     border-radius: 16px;
     overflow: hidden;
   }
@@ -265,7 +265,7 @@
   .pdp-gallery media-gallery {
     display: block;
     position: relative;
-    background: #661d1d;
+    background: transparent;
     border-radius: 24px;
     overflow: hidden;
   }
