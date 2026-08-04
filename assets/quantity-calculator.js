@@ -321,7 +321,7 @@
         (this.dogs.length > 1 ? 'Together they eat ' : 'Eats ') +
         '<b>' +
         fmtCups(p.daily) +
-        '</b> a day</span>' +
+        ' a day</b></span>' +
         '<button type="button" data-add>+ Add another dog</button>' +
         '</div></div>';
 
