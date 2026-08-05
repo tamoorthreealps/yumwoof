@@ -78,8 +78,6 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	-webkit-overflow-scrolling: touch;
-	scroll-snap-type: x mandatory;   /* ← add */
-	overscroll-behavior-x: contain;  /* ← add */
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	padding-bottom: 4rem;
@@ -101,10 +99,10 @@
 	list-style: none;
 }
 
-/* .fp__track::after {
+.fp__track::after {
 	content: "";
 	flex: 0 0 64px;
-} */
+}
 
 /* --------------------------------------------------------------------------
    Card
