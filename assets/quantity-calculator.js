@@ -105,6 +105,22 @@
     return String(title || '').trim();
   }
 
+  /* days in a delivery interval, parsed from a frequency label like
+     "Every 4 Weeks" / "Every 2 Months" / "Every 30 Days". 0 if unknown. */
+  function parseIntervalDays(s) {
+    s = String(s || '').toLowerCase();
+    var m = s.match(/(\d+)\s*(day|week|month)/);
+    if (m) {
+      var n = parseInt(m[1], 10);
+      if (m[2] === 'day') return n;
+      if (m[2] === 'week') return n * 7;
+      if (m[2] === 'month') return n * 30;
+    }
+    if (/month/.test(s)) return 30;
+    if (/week/.test(s)) return 7;
+    return 0;
+  }
+
   class QuantityCalculator extends HTMLElement {
     connectedCallback() {
       if (this._init) return;
@@ -166,6 +182,18 @@
       // recompute the coverage line when the shopper nudges the quantity stepper
       this.container.addEventListener('change', (e) => {
         if (e.target.closest('.product-form__quantity')) this.renderCoverage();
+      });
+
+      // re-suggest the bag count when the shopper switches one-time <-> subscribe
+      // or changes the delivery frequency — the cadence (and so the count) changes.
+      this.container.addEventListener('change', (e) => {
+        if (
+          e.target.closest('[data-asw-freq]') ||
+          e.target.closest('input[name^="asw_plan_"]') ||
+          e.target.closest('#selling-plan-input')
+        ) {
+          if (this.dogs.length) this.renderSlot(true);
+        }
       });
 
       // re-sync when the shopper changes the recipe/size. Dawn updates [name="id"]
@@ -231,12 +259,37 @@
       var bands = this.cfg.table.bands;
       return this.dogs.reduce((a, d) => a + dailyCups(d, bands), 0);
     }
+    /* Delivery cadence in days. If the shopper has a subscription selected, use
+       the SELECTED frequency's interval (so 8-weekly needs ~2× the bags of
+       4-weekly); one-time falls back to the config default. */
+    cadenceDays() {
+      var def = (this.cfg && this.cfg.cadenceDays) || 28;
+      var root = this.container && this.container.querySelector ? this.container : document;
+      // subscription vs one-time
+      var isSub;
+      var radio = root.querySelector('input[name^="asw_plan_"]:checked');
+      if (radio) {
+        isSub = radio.value !== 'onetime';
+      } else {
+        var planInput = root.querySelector('#selling-plan-input') || document.getElementById('selling-plan-input');
+        isSub = !!(planInput && planInput.value);
+      }
+      if (!isSub) return def;
+      // interval of the selected delivery frequency (option text e.g. "Every 4 Weeks")
+      var freq = root.querySelector('[data-asw-freq]');
+      if (freq && freq.options && freq.options[freq.selectedIndex]) {
+        var days = parseIntervalDays(freq.options[freq.selectedIndex].text);
+        if (days) return days;
+      }
+      return def;
+    }
+
     /* the recommended plan for the current variant + saved dogs */
     plan() {
       var v = this.currentVariant();
       var vc = this.variantCups(v);
       var daily = this.totalDailyCups();
-      var cadence = this.cfg.cadenceDays || 28;
+      var cadence = this.cadenceDays();
       var qty = vc > 0 && daily > 0 ? Math.max(1, Math.ceil((daily * cadence) / vc)) : 1;
       var daysPerBag = vc > 0 && daily > 0 ? Math.round(vc / daily) : 0;
       var p = { variant: v, variantCups: vc, daily: daily, qty: qty, daysPerBag: daysPerBag, cadence: cadence };
@@ -358,7 +411,7 @@
       var v = this.currentVariant();
       var vc = this.variantCups(v);
       var daily = this.totalDailyCups();
-      var cadence = this.cfg.cadenceDays || 28;
+      var cadence = this.cadenceDays();
       if (!daily || !vc) return null;
       var days = Math.round((qty * vc) / daily);
       var fitQty = Math.max(1, Math.ceil((daily * cadence) / vc));
@@ -603,7 +656,7 @@
       var daily = peers.reduce((a, x) => a + dailyCups(x, bands), 0) + dailyCups(d, bands);
       var v = this.currentVariant();
       var vc = this.variantCups(v);
-      var cadence = this.cfg.cadenceDays || 28;
+      var cadence = this.cadenceDays();
       var qty = vc > 0 && daily > 0 ? Math.max(1, Math.ceil((daily * cadence) / vc)) : 1;
       var daysPerBag = vc > 0 && daily > 0 ? Math.round(vc / daily) : 0;
       var kibbleCups = cupsPerDay(d.weight, bands) * 2 * (d.stage === 'puppy' ? 2 : 1);
