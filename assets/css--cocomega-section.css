@@ -60,6 +60,7 @@
     line-height: 0;
 }
 
+
 .cocomega__badge img {
   display: block;
   width: 100%;
@@ -67,7 +68,7 @@
 }
 
 .cocomega__badge img{
-    animation: badgeRotate 30s linear infinite;
+    animation: badgeRotate 50s linear infinite;
     transform-origin: center;
 }
 
@@ -189,6 +190,12 @@
         left: -6rem;
         right:auto;
         width: 120px;
+  }
+
+  .cocomega--image-left .cocomega__badge {
+            top: 48px;
+            left:auto;
+        right: -6rem;
   }
 
   .cocomega__heading {
