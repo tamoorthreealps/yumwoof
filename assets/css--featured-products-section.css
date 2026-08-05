@@ -269,10 +269,10 @@
 
 
 .fp__shop-label {
-	font-size: 12.75px;
-	line-height: 20.4px;
+	font-size: 13px;
+	line-height: 20px;
 	font-weight: 500;
-	letter-spacing: .08em;
+	letter-spacing: .52;
 	text-transform: uppercase;
 	font-family: "FFBlurProMedium";
 }
@@ -466,7 +466,7 @@
 	.fp__shop-label {
 		font-size: 16px;
 		line-height: 24px;
-		letter-spacing: 1.28px;
+		letter-spacing: 0.64px;
 	}
 
 	.fp__nav,
