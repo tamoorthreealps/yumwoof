@@ -79,6 +79,19 @@
 </section>
 
 
+<script>
+const badge = document.querySelector(".founder__badge img");
+
+if (badge) {
+    const initialRotation = -14;
+
+    window.addEventListener("scroll", () => {
+        const rotation = initialRotation + Math.min(window.scrollY * 0.01, 6);
+        badge.style.transform = `rotate(${rotation}deg)`;
+    });
+}
+</script>
+
 {% schema %}
 {
   "name": "Founder section",

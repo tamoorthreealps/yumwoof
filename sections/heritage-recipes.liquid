@@ -237,6 +237,7 @@
     });
   })();
 
+  {%- if section.settings.badge_image != blank -%}
     const section = document.querySelector('.heritage');
     const badge = document.querySelector('.heritage__badge');
 
@@ -255,6 +256,7 @@
 
         lastScroll = window.scrollY;
     });
+  {% endif %}
 </script>
 
 {% schema %}
