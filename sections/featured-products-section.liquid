@@ -259,8 +259,15 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
- (function () {
-  var MOBILE_MQ = '(max-width: 749px)';
+(function () {
+  /* Must match the CSS breakpoint. CSS switches to desktop at min-width:990px,
+     so mobile mode is everything below that. */
+  var MOBILE_MQ = '(max-width: 989px)';
+
+  /* Card scaling and scroll-snap fight each other: snap positions are computed
+     from the transformed box, so a scaling card drags its own snap point around.
+     Leave this false to keep snapping crisp. */
+  var ENABLE_SCALE = false;
 
   function initCarousel(section) {
     var viewport = section.querySelector('[data-fp-viewport]');
@@ -275,12 +282,25 @@
     var dotsWrap = section.querySelector('[data-fp-dots]');
     var mq = window.matchMedia(MOBILE_MQ);
 
-    var slides = realSlides;   // all slides currently in the DOM (incl. clones)
+    var slides = realSlides;   // all slides in the DOM (incl. clones)
     var dots = [];
     var looping = false;
     var setWidth = 0;          // width of one full set of real slides
     var animId = null;
     var ticking = false;
+    var isAnimating = false;   // suppress normalize/update churn mid-animation
+
+    /* ---------- snap control ---------- */
+
+    // Release snap so programmatic scrolling isn't fought by the browser.
+    function releaseSnap() {
+      viewport.style.scrollSnapType = 'none';
+    }
+
+    // Hand control back to CSS.
+    function restoreSnap() {
+      viewport.style.scrollSnapType = '';
+    }
 
     /* ---------- helpers ---------- */
 
@@ -289,23 +309,40 @@
         cancelAnimationFrame(animId);
         animId = null;
       }
+      isAnimating = false;
     }
 
     function smoothScrollTo(target, duration) {
       cancelAnim();
       duration = duration || 650;
+
       var start = viewport.scrollLeft;
       var change = target - start;
+      if (Math.abs(change) < 1) {
+        viewport.scrollLeft = target;
+        update();
+        return;
+      }
+
       var startTime = performance.now();
+      isAnimating = true;
+      releaseSnap();
 
       function animate(now) {
         var progress = Math.min((now - startTime) / duration, 1);
         var ease = 1 - Math.pow(1 - progress, 3);
         viewport.scrollLeft = start + change * ease;
+
         if (progress < 1) {
           animId = requestAnimationFrame(animate);
         } else {
           animId = null;
+          isAnimating = false;
+          // Settle exactly on target, then let snap take over again.
+          viewport.scrollLeft = target;
+          restoreSnap();
+          normalize();
+          update();
         }
       }
       animId = requestAnimationFrame(animate);
@@ -313,15 +350,13 @@
 
     // Jump without animation and without letting scroll-snap fight us.
     function jumpBy(delta) {
-      var snap = viewport.style.scrollSnapType;
       var behavior = viewport.style.scrollBehavior;
-      viewport.style.scrollSnapType = 'none';
+      releaseSnap();
       viewport.style.scrollBehavior = 'auto';
       viewport.scrollLeft += delta;
-      // force reflow before restoring
-      void viewport.offsetWidth;
-      viewport.style.scrollSnapType = snap;
+      void viewport.offsetWidth; // force reflow before restoring
       viewport.style.scrollBehavior = behavior;
+      if (!isAnimating) restoreSnap();
     }
 
     function centerOffsetOf(slide) {
@@ -342,7 +377,6 @@
       return best;
     }
 
-    // Map a DOM index to the index within the real set.
     function realIndex(i) {
       var n = realSlides.length;
       return ((i % n) + n) % n;
@@ -355,15 +389,19 @@
 
       var before = document.createDocumentFragment();
       var after = document.createDocumentFragment();
+
       realSlides.forEach(function (slide) {
         var a = slide.cloneNode(true);
         var b = slide.cloneNode(true);
         [a, b].forEach(function (c) {
           c.dataset.fpClone = 'true';
           c.setAttribute('aria-hidden', 'true');
-          // keep clones out of the tab order
+          // Clones must not duplicate popup targets or steal focus.
           c.querySelectorAll('a, button').forEach(function (el) {
             el.setAttribute('tabindex', '-1');
+          });
+          c.querySelectorAll('[id]').forEach(function (el) {
+            el.removeAttribute('id');
           });
         });
         before.appendChild(a);
@@ -377,8 +415,11 @@
       looping = true;
 
       measure();
-      // start on the first real slide (middle set)
+      // Start on the first real slide (middle set), snap off for the jump.
+      releaseSnap();
       viewport.scrollLeft = centerOffsetOf(realSlides[0]);
+      void viewport.offsetWidth;
+      restoreSnap();
       update();
     }
 
@@ -389,6 +430,8 @@
       });
       slides = realSlides;
       looping = false;
+      // Desktop clears transforms so cards sit in their static row.
+      slides.forEach(function (s) { s.style.transform = ''; });
       viewport.scrollLeft = centerOffsetOf(realSlides[0]);
       update();
     }
@@ -402,7 +445,7 @@
 
     // Keep the viewport inside the middle set.
     function normalize() {
-      if (!looping || !setWidth) return;
+      if (!looping || !setWidth || isAnimating) return;
       var pos = viewport.scrollLeft;
       var lower = centerOffsetOf(realSlides[0]) - setWidth / 2;
       var upper = lower + setWidth;
@@ -413,7 +456,7 @@
       }
     }
 
-    /* ---------- dots (always one per real slide) ---------- */
+    /* ---------- dots ---------- */
 
     if (dotsWrap) {
       dotsWrap.innerHTML = '';
@@ -442,14 +485,13 @@
       smoothScrollTo(centerOffsetOf(slide), 650);
     }
 
-    // Pick whichever copy of the target slide is nearest, so we never scroll far.
+    // Pick whichever copy of the target slide is nearest.
     function goToReal(target) {
       if (!looping) {
         scrollToDomIndex(target);
         return;
       }
       var from = currentIndex();
-      var n = realSlides.length;
       var best = null;
       var bestDist = Infinity;
       slides.forEach(function (slide, i) {
@@ -461,7 +503,6 @@
         }
       });
       if (best !== null) scrollToDomIndex(best);
-      void n;
     }
 
     function step(dir) {
@@ -479,6 +520,7 @@
     /* ---------- render state ---------- */
 
     function updateScale() {
+      if (!ENABLE_SCALE || !mq.matches) return;
       var viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
       var maxDistance = viewport.clientWidth / 2;
       slides.forEach(function (slide) {
@@ -509,7 +551,7 @@
     viewport.addEventListener(
       'scroll',
       function () {
-        if (ticking) return;
+        if (ticking || isAnimating) return;
         ticking = true;
         window.requestAnimationFrame(function () {
           normalize();
@@ -524,6 +566,7 @@
 
     function applyMode() {
       cancelAnim();
+      restoreSnap();
       if (mq.matches) {
         buildClones();
       } else {
@@ -568,67 +611,60 @@
 })();
 
 
-      {% comment %} popup--js--code {% endcomment %}
-  document.querySelectorAll(".fp__recipes").forEach(function(button){
+/* ---------- popup ---------- */
+(function () {
+  function initPopups(root) {
+    // Delegated so cloned cards work too, and so re-init doesn't double-bind.
+    if (document.body.dataset.fpPopupReady) return;
+    document.body.dataset.fpPopupReady = 'true';
 
-      button.addEventListener("click",function(e){
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest('.fp__recipes');
+      if (trigger && trigger.dataset.popup) {
+        e.preventDefault();
+        var popup = document.getElementById(trigger.dataset.popup);
+        if (popup) popup.classList.add('active');
+        return;
+      }
 
-          e.preventDefault();
+      if (e.target.closest('.fp-popup__close') || e.target.closest('.fp-popup__overlay')) {
+        var open = e.target.closest('.fp-popup');
+        if (open) open.classList.remove('active');
+        return;
+      }
 
-          const popup=document.getElementById(this.dataset.popup);
+      var tab = e.target.closest('.fp-popup__tabs button');
+      if (tab) {
+        var panel = tab.closest('.fp-popup');
+        if (!panel) return;
+        panel.querySelectorAll('.fp-popup__tabs button').forEach(function (b) {
+          b.classList.remove('active');
+        });
+        panel.querySelectorAll('.fp-popup__content').forEach(function (c) {
+          c.classList.remove('active');
+        });
+        tab.classList.add('active');
+        var target = panel.querySelector('[data-content="' + tab.dataset.tab + '"]');
+        if (target) target.classList.add('active');
+      }
+    });
 
-          if(popup){
-              popup.classList.add("active");
-          }
-
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.fp-popup.active').forEach(function (p) {
+        p.classList.remove('active');
       });
+    });
+  }
 
-  });
-
-  document.querySelectorAll(".fp-popup").forEach(function(popup){
-
-      popup.querySelector(".fp-popup__close").addEventListener("click",function(){
-
-          popup.classList.remove("active");
-
-      });
-
-      popup.querySelector(".fp-popup__overlay").addEventListener("click",function(){
-
-          popup.classList.remove("active");
-
-      });
-
-  });
-
-  document.querySelectorAll(".fp-popup").forEach(function(popup){
-
-      const tabs = popup.querySelectorAll(".fp-popup__tabs button");
-      const contents = popup.querySelectorAll(".fp-popup__content");
-
-      tabs.forEach(function(tab){
-
-          tab.addEventListener("click",function(){
-
-              tabs.forEach(function(btn){
-                  btn.classList.remove("active");
-              });
-
-              contents.forEach(function(content){
-                  content.classList.remove("active");
-              });
-
-              tab.classList.add("active");
-
-              popup
-                  .querySelector('[data-content="'+tab.dataset.tab+'"]')
-                  .classList.add("active");
-
-          });
-
-      });
-
-  });
+  if (document.readyState !== 'loading') {
+    initPopups(document);
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      initPopups(document);
+    });
+  }
+})();
 </script>
 
 {% schema %}
