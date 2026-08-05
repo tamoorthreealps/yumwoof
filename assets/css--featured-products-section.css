@@ -247,6 +247,7 @@
 	text-decoration: none;
 	font-family: "FFBlurProMedium";
 	text-decoration: underline;
+	text-transform: uppercase;
 }
 
 /* Amber hexagon SHOP button overlapping the card's bottom edge */
