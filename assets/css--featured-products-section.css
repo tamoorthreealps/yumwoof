@@ -714,19 +714,24 @@
 }
 
 .fp-popup__content_btn {
-	background: url(https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
-	color: #000;
-	text-decoration: none;
-	font-size: 16px;
-	line-height: 24px;
-	letter-spacing: 0.64px;
-	width: 164px;
-	height: 72px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: "FFBlurProMedium";
-	margin: 48px 0 0;
+    background: #fec068;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .56px;
+    font-family: FFBlurProMedium;
+    margin: 48px 0 0;
+    border-radius: 100px;
+    border: 1.5px solid #000000;
+    display: inline-block;
+    padding: 13.2px 23.47px;
+	    transition: all .25s ease;
+}
+
+.fp-popup__content_btn:hover {
+    background: #000;
+    color: #fff9ef;
 }
 
 @media(max-width:991px) {
