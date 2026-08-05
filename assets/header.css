@@ -398,7 +398,8 @@
   justify-content: center;
   margin-top: 2rem;
   padding: 2rem 4rem;
-  background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
+  /* background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat; */
+  background: #FFC069;
   color: var(--yw-cta-text);
   font-size: 1.6rem;
   line-height: 2.4rem;
