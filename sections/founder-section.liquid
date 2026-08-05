@@ -15,22 +15,23 @@
     {%- endif -%}
     <div class="founder__media">
       {%- if section.settings.image != blank -%}
-        {%- assign founder_alt = section.settings.image.alt | default: section.settings.heading -%}
-        {{
-          section.settings.image
-          | image_url: width: 1200
-          | image_tag:
-            class: 'founder__image',
-            widths: '400, 600, 800, 1200',
-            sizes: '(min-width: 990px) 50vw, 100vw',
-            alt: founder_alt
-        }}
+        <div class="founder__image-wrap">
+          {%- assign founder_alt = section.settings.image.alt | default: section.settings.heading -%}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              class: 'founder__image',
+              widths: '400, 600, 800, 1200',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              alt: founder_alt
+          }}
       {%- else -%}
         <div class="founder__image founder__image--placeholder">
           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
       {%- endif -%}
-
+      </div>
       {%- if section.settings.badge_image != blank -%}
         <span class="founder__badge">
           {{
@@ -40,6 +41,7 @@
           }}
         </span>
       {%- endif -%}
+
     </div>
 
     <div class="founder__content">
@@ -78,41 +80,34 @@
   </div>
 </section>
 
-
 <script>
-const founderSection = document.querySelector(".founder");
+  const founderSection = document.querySelector('.founder');
 
-const badge = founderSection?.querySelector(".founder__badge img");
-const image = founderSection?.querySelector(".founder__image");
+  const badge = founderSection?.querySelector('.founder__badge img');
+  const image = founderSection?.querySelector('.founder__image');
 
-if (founderSection) {
-
+  if (founderSection) {
     function animateFounder() {
+      const rect = founderSection.getBoundingClientRect();
 
-        const rect = founderSection.getBoundingClientRect();
+      let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
 
-        let progress =
-            (window.innerHeight - rect.top) /
-            (window.innerHeight + rect.height);
+      progress = Math.max(0, Math.min(progress, 1));
 
-        progress = Math.max(0, Math.min(progress, 1));
+      if (badge) {
+        badge.style.animation = 'none';
+        badge.style.transform = `rotate(${progress * 12}deg)`;
+      }
 
-        if (badge) {
-            badge.style.animation = "none";
-            badge.style.transform = `rotate(${progress * 12}deg)`;
-        }
-
-        if (image) {
-            image.style.transform = `scale(${1 + progress * 0.08})`;
-        }
-
+      if (image) {
+        image.style.transform = `scale(${1 + progress * 0.08})`;
+      }
     }
 
-    window.addEventListener("scroll", animateFounder, { passive: true });
+    window.addEventListener('scroll', animateFounder, { passive: true });
 
     animateFounder();
-
-}
+  }
 </script>
 
 {% schema %}
