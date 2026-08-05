@@ -130,7 +130,7 @@
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    transition: .4s;
+    transition: all 0.35s ease;
     font-family: FFBlurProMedium;
     color: var(--hb-btn-text);
     background: #FEC068;
