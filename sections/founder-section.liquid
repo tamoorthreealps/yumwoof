@@ -83,12 +83,18 @@
 const badge = document.querySelector(".founder__badge img");
 
 if (badge) {
-    const initialRotation = -14;
+  const startRotation = -14; // Figma ke approx angle se start
 
-    window.addEventListener("scroll", () => {
-        const rotation = initialRotation + Math.min(window.scrollY * 0.01, 6);
-        badge.style.transform = `rotate(${rotation}deg)`;
-    });
+  function rotateBadge() {
+    const scroll = window.scrollY;
+    const rotation = startRotation + Math.min(scroll * 0.015, 8);
+
+    badge.style.transform = `rotate(${rotation}deg)`;
+  }
+
+  rotateBadge();
+
+  window.addEventListener("scroll", rotateBadge, { passive: true });
 }
 </script>
 
