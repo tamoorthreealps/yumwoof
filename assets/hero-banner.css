@@ -139,7 +139,7 @@
 
 .hero-banner__cta:hover {
 	background: #000;
-	color: #FEC068;
+	color: var(--hb-text);
 }
 
 
