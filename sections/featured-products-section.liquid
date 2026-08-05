@@ -162,21 +162,10 @@
 </section>
 
 {% comment %} popup--html--code {% endcomment %}
-{% comment %} popup--html--code {% endcomment %}
 {% if products.size > 0 %}
   {% for product in products %}
-    {%- assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] -%}
-
-    {%- comment -%} Collect the tab blocks that belong to this product {%- endcomment -%}
-    {%- assign tab_blocks = section.blocks | where: 'type', 'tab' -%}
-    {%- assign product_tabs = '' -%}
-    {%- for b in tab_blocks -%}
-      {%- if b.settings.product != blank and b.settings.product.id == product.id -%}
-        {%- assign product_tabs = product_tabs | append: b.id | append: ',' -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {%- assign product_tab_ids = product_tabs | split: ',' -%}
-
+    {% assign popup = section.blocks[forloop.index0] %}
+    {% assign desc_mf = product.metafields[desc_parts[0]][desc_parts[1]] %}
     <div class="fp-popup" id="popup-{{ forloop.index }}">
       <div class="fp-popup__overlay"></div>
       <div class="fp-popup__panel">
@@ -187,91 +176,76 @@
             <path d="M26.6 8.36C26.6 8.68 26.92 8.76 27.32 9.04C27.8 9.4 28.2 9.96 28.2 10.92C28.2 13.84 28.24 14.2 28.56 14.72C28.8 15.12 29.16 15.52 29.16 16C29.16 16.32 29 16.64 28.68 17.04C28.24 17.6 28.2 18.16 28.2 18.68V21.04C28.2 22.96 26.6 23.04 26.6 23.6C26.6 23.96 26.8 24.08 27.36 24.08C28.92 24.08 29.88 23.16 29.88 21.36V19.2C29.88 18.68 30 17.96 30.2 17.64C30.36 17.4 30.6 17.12 31 16.84C31.36 16.6 31.72 16.36 31.72 16C31.72 15.6 31.48 15.4 30.76 14.92C30.08 14.48 29.88 13.4 29.88 13.12V10.64C29.88 8.96 28.96 7.92 27.56 7.92C26.68 7.92 26.6 8.08 26.6 8.36Z" fill="black"/>
           </svg>
         </button>
-
         <div class="fp-popup__left">
-          {%- comment -%} Per-tab titles / subtitles {%- endcomment -%}
-          {%- assign t = 0 -%}
-          {%- for block in tab_blocks -%}
-            {%- if block.settings.product == blank or block.settings.product.id != product.id -%}
-              {%- continue -%}
-            {%- endif -%}
-            {%- assign t = t | plus: 1 -%}
-            <h2
-              class="fp-popup__title"
-              data-pane="{{ t }}"
-              {% unless t == 1 %}style="display:none"{% endunless %}
-              {{ block.shopify_attributes }}
-            >
-              {{- block.settings.tab_heading | default: product.title -}}
-            </h2>
-            <p
-              class="fp-popup__subtitle"
-              data-pane="{{ t }}"
-              {% unless t == 1 %}style="display:none"{% endunless %}
-            >
-              {{- block.settings.tab_subheading | default: desc_mf.value -}}
-            </p>
-          {%- endfor -%}
+          <h2 class="fp-popup__title">{{ popup.settings.popup_title | default: product.title }}</h2>
+          <p class="fp-popup__subtitle">{{ popup.settings.popup_subtitle | default: desc_mf.value }}</p>
+          <div class="fp-popup__tabs">
+            {% if popup.settings.tab_1_title != blank %}
+              <button class="active" data-tab="1">{{ popup.settings.tab_1_title }}</button>
+            {% endif %}
 
-          {%- if product_tab_ids.size > 0 -%}
-            <div class="fp-popup__tabs">
-              {%- assign t = 0 -%}
-              {%- for block in tab_blocks -%}
-                {%- if block.settings.product == blank or block.settings.product.id != product.id -%}
-                  {%- continue -%}
-                {%- endif -%}
-                {%- assign t = t | plus: 1 -%}
-                <button
-                  type="button"
-                  class="{% if t == 1 %}active{% endif %}"
-                  data-tab="{{ t }}"
+            {% if popup.settings.tab_2_title != blank %}
+              <button data-tab="2">{{ popup.settings.tab_2_title }}</button>
+            {% endif %}
+
+            {% if popup.settings.tab_3_title != blank %}
+              <button data-tab="3">{{ popup.settings.tab_3_title }}</button>
+            {% endif %}
+          </div>
+
+          {% if popup.settings.tab_1_content != blank %}
+            <div class="fp-popup__content active" data-content="1">
+              <p>{{ popup.settings.tab_1_content }}</p>
+
+              {% if popup.settings.tab_1_button_label != blank %}
+                <a
+                  href="{{ popup.settings.tab_1_button_link | default: '#' }}"
+                  class="fp-popup__content_btn"
                 >
-                  {{- block.settings.tab_title -}}
-                </button>
-              {%- endfor -%}
+                  {{ popup.settings.tab_1_button_label }}
+                </a>
+              {% endif %}
             </div>
+          {% endif %}
 
-            {%- assign t = 0 -%}
-            {%- for block in tab_blocks -%}
-              {%- if block.settings.product == blank or block.settings.product.id != product.id -%}
-                {%- continue -%}
-              {%- endif -%}
-              {%- assign t = t | plus: 1 -%}
-              <div class="fp-popup__content{% if t == 1 %} active{% endif %}" data-content="{{ t }}">
-                <p>{{ block.settings.tab_content }}</p>
-                {%- if block.settings.tab_button_label != blank -%}
-                  
-                    href="{{ block.settings.tab_button_link | default: product.url }}"
-                    class="fp-popup__content_btn"
-                  >
-                    {{ block.settings.tab_button_label }}
-                  </a>
-                {%- endif -%}
-              </div>
-            {%- endfor -%}
-          {%- endif -%}
+          {% if popup.settings.tab_2_content != blank %}
+            <div class="fp-popup__content" data-content="2">
+              <p>{{ popup.settings.tab_2_content }}</p>
+
+              {% if popup.settings.tab_2_button_label != blank %}
+                <a
+                  href="{{ popup.settings.tab_2_button_link | default: '#' }}"
+                  class="fp-popup__content_btn"
+                >
+                  {{ popup.settings.tab_2_button_label }}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if popup.settings.tab_3_content != blank %}
+            <div class="fp-popup__content" data-content="3">
+              <p>{{ popup.settings.tab_3_content }}</p>
+
+              {% if popup.settings.tab_3_button_label != blank %}
+                <a
+                  href="{{ popup.settings.tab_3_button_link | default: '#' }}"
+                  class="fp-popup__content_btn"
+                >
+                  {{ popup.settings.tab_3_button_label }}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
-
         <div class="fp-popup__right">
-          {%- assign t = 0 -%}
-          {%- for block in tab_blocks -%}
-            {%- if block.settings.product == blank or block.settings.product.id != product.id -%}
-              {%- continue -%}
-            {%- endif -%}
-            {%- assign t = t | plus: 1 -%}
-            <div
-              class="fp-popup__right_img"
-              data-pane="{{ t }}"
-              {% unless t == 1 %}style="display:none"{% endunless %}
-            >
-              {%- if block.settings.tab_image != blank -%}
-                <img src="{{ block.settings.tab_image | image_url: width: 900 }}" alt="{{ block.settings.tab_title | escape }}">
-              {%- else -%}
-                {{ product.featured_image | image_url: width: 900 | image_tag }}
-              {%- endif -%}
-            </div>
-          {%- endfor -%}
-
+          <div class="fp-popup__right_img">
+            {% if popup.settings.popup_image != blank %}
+              <img src="{{ popup.settings.popup_image | image_url: width:900 }}">
+            {% else %}
+              {{ product.featured_image | image_url: width: 900 | image_tag }}
+            {% endif %}
+          </div>
           <div class="fp-popup__right_img_bowl">
             <img
               src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.png?v=1784716789"
@@ -627,29 +601,34 @@
 
   });
 
-document.querySelectorAll(".fp-popup").forEach(function (popup) {
-  var tabs = popup.querySelectorAll(".fp-popup__tabs button");
-  var contents = popup.querySelectorAll(".fp-popup__content");
-  var panes = popup.querySelectorAll("[data-pane]");
+  document.querySelectorAll(".fp-popup").forEach(function(popup){
 
-  function activate(index) {
-    tabs.forEach(function (btn) {
-      btn.classList.toggle("active", btn.dataset.tab === index);
-    });
-    contents.forEach(function (content) {
-      content.classList.toggle("active", content.dataset.content === index);
-    });
-    panes.forEach(function (pane) {
-      pane.style.display = pane.dataset.pane === index ? "" : "none";
-    });
-  }
+      const tabs = popup.querySelectorAll(".fp-popup__tabs button");
+      const contents = popup.querySelectorAll(".fp-popup__content");
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener("click", function () {
-      activate(tab.dataset.tab);
-    });
+      tabs.forEach(function(tab){
+
+          tab.addEventListener("click",function(){
+
+              tabs.forEach(function(btn){
+                  btn.classList.remove("active");
+              });
+
+              contents.forEach(function(content){
+                  content.classList.remove("active");
+              });
+
+              tab.classList.add("active");
+
+              popup
+                  .querySelector('[data-content="'+tab.dataset.tab+'"]')
+                  .classList.add("active");
+
+          });
+
+      });
+
   });
-});
 </script>
 
 {% schema %}
@@ -760,64 +739,102 @@ document.querySelectorAll(".fp-popup").forEach(function (popup) {
     }
   ],
   "blocks": [
-  {
-    "type": "tab",
-    "name": "Ingredient tab",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "Each block is one tab inside that product's popup. Tabs appear in the order the blocks are arranged."
-      },
-      {
-        "type": "product",
-        "id": "product",
-        "label": "Belongs to product",
-        "info": "Must match a product selected in the Products list above."
-      },
-      {
-        "type": "text",
-        "id": "tab_title",
-        "label": "Tab label",
-        "default": "LAND & SEA"
-      },
-      {
-        "type": "text",
-        "id": "tab_heading",
-        "label": "Heading",
-        "info": "Defaults to the product title."
-      },
-      {
-        "type": "textarea",
-        "id": "tab_subheading",
-        "label": "Subheading",
-        "info": "Defaults to the product's short description metafield."
-      },
-      {
-        "type": "textarea",
-        "id": "tab_content",
-        "label": "Description"
-      },
-      {
-        "type": "image_picker",
-        "id": "tab_image",
-        "label": "Right-side image",
-        "info": "Defaults to the product's featured image."
-      },
-      {
-        "type": "text",
-        "id": "tab_button_label",
-        "label": "Button label",
-        "default": "SHOP NOW"
-      },
-      {
-        "type": "url",
-        "id": "tab_button_link",
-        "label": "Button link"
-      }
-    ]
-  }
-],
-"max_blocks": 30,
+    {
+      "type": "popup",
+      "name": "Popup",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "By default, this popup uses content from the Product. You can optionally override the fields below."
+        },
+        {
+          "type": "text",
+          "id": "popup_title",
+          "label": "Popup Title"
+        },
+        {
+          "type": "textarea",
+          "id": "popup_subtitle",
+          "label": "Popup Subtitle"
+        },
+        {
+          "type": "image_picker",
+          "id": "popup_image",
+          "label": "Popup Right Image"
+        },
+        {
+          "type": "header",
+          "content": "Popup Tabs"
+        },
+        {
+          "type": "text",
+          "id": "tab_1_title",
+          "label": "Tab 1 Title",
+          "default": "LAND & SEA"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_1_content",
+          "label": "Tab 1 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_1_button_label",
+          "label": "Tab 1 Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "tab_1_button_link",
+          "label": "Tab 1 Button Link"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_title",
+          "label": "Tab 2 Title",
+          "default": "TURKEY"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_2_content",
+          "label": "Tab 2 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_2_button_label",
+          "label": "Tab 2 Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "tab_2_button_link",
+          "label": "Tab 2 Button Link"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_title",
+          "label": "Tab 3 Title",
+          "default": "WILD CAUGHT FISH"
+        },
+        {
+          "type": "textarea",
+          "id": "tab_3_content",
+          "label": "Tab 3 Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_3_button_label",
+          "label": "Tab 3 Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "tab_3_button_link",
+          "label": "Tab 3 Button Link"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "Featured products"
