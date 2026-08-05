@@ -374,11 +374,21 @@
 
           if (prev)
             prev.addEventListener('click', function () {
-              scrollToSlide(Math.max(0, currentIndex() - 1));
+              let index = currentIndex() - 1;
+
+              if (index < 0)
+                  index = slides.length - 1;
+
+              scrollToSlide(index);
             });
           if (next)
             next.addEventListener('click', function () {
-              scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1));
+              let index = currentIndex() + 1;
+
+              if (index >= slides.length)
+                  index = 0;
+
+              scrollToSlide(index);
             });
           let ticking = false;
 
@@ -388,6 +398,15 @@
               if (!ticking) {
                 window.requestAnimationFrame(function () {
                   update();
+                  const max = viewport.scrollWidth - viewport.clientWidth;
+
+                  if (viewport.scrollLeft >= max - 2) {
+                      viewport.scrollLeft = 0;
+                  }
+
+                  if (viewport.scrollLeft <= 1) {
+                      viewport.scrollLeft = max;
+                  }
                   ticking = false;
                 });
                 ticking = true;
