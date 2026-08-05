@@ -83,25 +83,16 @@
 const badge = document.querySelector(".founder__badge img");
 
 if (badge) {
+  badge.style.animation = "none";
 
-    badge.style.animation = "none";
-
-    const startRotation = -14;
-
-    function updateRotation() {
-
-        const rect = badge.closest(".founder").getBoundingClientRect();
-
-        const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
-
-        const rotation = startRotation + (progress * 8);
-
-        badge.style.transform = `rotate(${rotation}deg)`;
-
-        requestAnimationFrame(updateRotation);
-    }
-
-    updateRotation();
+  window.addEventListener(
+    "scroll",
+    () => {
+      const rotation = Math.min(window.scrollY * 0.02, 8);
+      badge.style.transform = `rotate(${rotation}deg)`;
+    },
+    { passive: true }
+  );
 }
 </script>
 
