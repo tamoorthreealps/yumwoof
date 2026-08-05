@@ -81,18 +81,28 @@
 
 <script>
 const badge = document.querySelector(".founder__badge img");
+const section = document.querySelector(".founder");
 
-if (badge) {
+if (badge && section) {
   badge.style.animation = "none";
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      const rotation = Math.min(window.scrollY * 0.02, 8);
-      badge.style.transform = `rotate(${rotation}deg)`;
-    },
-    { passive: true }
-  );
+  function rotateBadge() {
+    const rect = section.getBoundingClientRect();
+
+    // Progress: 0 = section viewport me enter hui
+    // 1 = section viewport cross kar gayi
+    let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+    progress = Math.max(0, Math.min(progress, 1));
+
+    // 0° se max 10° tak rotate
+    const rotation = progress * 10;
+
+    badge.style.transform = `rotate(${rotation}deg)`;
+  }
+
+  window.addEventListener("scroll", rotateBadge, { passive: true });
+  rotateBadge();
 }
 </script>
 
