@@ -348,7 +348,6 @@ body.is-open .yw-nav {
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
-
   transition:
     opacity .35s ease,
     transform .35s ease,
