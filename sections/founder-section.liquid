@@ -104,6 +104,31 @@ if (badge && section) {
   window.addEventListener("scroll", rotateBadge, { passive: true });
   rotateBadge();
 }
+
+
+const section = document.querySelector(".founder");
+const image = document.querySelector(".founder__image");
+
+if (section && image) {
+
+    function zoomImage() {
+
+        const rect = section.getBoundingClientRect();
+
+        let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+        progress = Math.max(0, Math.min(progress, 1));
+
+        const scale = 1 + (progress * 0.08);
+
+        image.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener("scroll", zoomImage, { passive: true });
+
+    zoomImage();
+
+}
 </script>
 
 {% schema %}
