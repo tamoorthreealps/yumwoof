@@ -393,24 +393,24 @@
 }
 
 .yw-mega__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  padding: 2rem 4rem;
   /* background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat; */
-  background: #FFC069;
-  border:1px solid #000;
-  color: var(--yw-cta-text);
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  font-weight: 500;
-  border-radius:100px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-family: "FFBlurProMedium";
-  transition:transform .15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.4rem;
+    padding: 13.2px 25.37px;
+    background: #ffc069;
+    border: 1px solid #000;
+    color: var(--yw-cta-text);
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 500;
+    border-radius: 100px;
+    letter-spacing: 0.60px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: FFBlurProMedium;
+    transition: transform .15s ease;
 }
 
 .yw-mega__button:hover {
