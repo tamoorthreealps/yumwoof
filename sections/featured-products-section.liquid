@@ -760,102 +760,64 @@ document.querySelectorAll(".fp-popup").forEach(function (popup) {
     }
   ],
   "blocks": [
-    {
-      "type": "popup",
-      "name": "Popup",
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "By default, this popup uses content from the Product. You can optionally override the fields below."
-        },
-        {
-          "type": "text",
-          "id": "popup_title",
-          "label": "Popup Title"
-        },
-        {
-          "type": "textarea",
-          "id": "popup_subtitle",
-          "label": "Popup Subtitle"
-        },
-        {
-          "type": "image_picker",
-          "id": "popup_image",
-          "label": "Popup Right Image"
-        },
-        {
-          "type": "header",
-          "content": "Popup Tabs"
-        },
-        {
-          "type": "text",
-          "id": "tab_1_title",
-          "label": "Tab 1 Title",
-          "default": "LAND & SEA"
-        },
-        {
-          "type": "textarea",
-          "id": "tab_1_content",
-          "label": "Tab 1 Content"
-        },
-        {
-          "type": "text",
-          "id": "tab_1_button_label",
-          "label": "Tab 1 Button Label",
-          "default": "SHOP NOW"
-        },
-        {
-          "type": "url",
-          "id": "tab_1_button_link",
-          "label": "Tab 1 Button Link"
-        },
-        {
-          "type": "text",
-          "id": "tab_2_title",
-          "label": "Tab 2 Title",
-          "default": "TURKEY"
-        },
-        {
-          "type": "textarea",
-          "id": "tab_2_content",
-          "label": "Tab 2 Content"
-        },
-        {
-          "type": "text",
-          "id": "tab_2_button_label",
-          "label": "Tab 2 Button Label",
-          "default": "SHOP NOW"
-        },
-        {
-          "type": "url",
-          "id": "tab_2_button_link",
-          "label": "Tab 2 Button Link"
-        },
-        {
-          "type": "text",
-          "id": "tab_3_title",
-          "label": "Tab 3 Title",
-          "default": "WILD CAUGHT FISH"
-        },
-        {
-          "type": "textarea",
-          "id": "tab_3_content",
-          "label": "Tab 3 Content"
-        },
-        {
-          "type": "text",
-          "id": "tab_3_button_label",
-          "label": "Tab 3 Button Label",
-          "default": "SHOP NOW"
-        },
-        {
-          "type": "url",
-          "id": "tab_3_button_link",
-          "label": "Tab 3 Button Link"
-        }
-      ]
-    }
-  ],
+  {
+    "type": "tab",
+    "name": "Ingredient tab",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Each block is one tab inside that product's popup. Tabs appear in the order the blocks are arranged."
+      },
+      {
+        "type": "product",
+        "id": "product",
+        "label": "Belongs to product",
+        "info": "Must match a product selected in the Products list above."
+      },
+      {
+        "type": "text",
+        "id": "tab_title",
+        "label": "Tab label",
+        "default": "LAND & SEA"
+      },
+      {
+        "type": "text",
+        "id": "tab_heading",
+        "label": "Heading",
+        "info": "Defaults to the product title."
+      },
+      {
+        "type": "textarea",
+        "id": "tab_subheading",
+        "label": "Subheading",
+        "info": "Defaults to the product's short description metafield."
+      },
+      {
+        "type": "textarea",
+        "id": "tab_content",
+        "label": "Description"
+      },
+      {
+        "type": "image_picker",
+        "id": "tab_image",
+        "label": "Right-side image",
+        "info": "Defaults to the product's featured image."
+      },
+      {
+        "type": "text",
+        "id": "tab_button_label",
+        "label": "Button label",
+        "default": "SHOP NOW"
+      },
+      {
+        "type": "url",
+        "id": "tab_button_link",
+        "label": "Button link"
+      }
+    ]
+  }
+],
+"max_blocks": 30,
   "presets": [
     {
       "name": "Featured products"
