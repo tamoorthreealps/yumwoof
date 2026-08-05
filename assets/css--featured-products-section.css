@@ -78,9 +78,6 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	-webkit-overflow-scrolling: touch;
-	scroll-snap-type: x mandatory;   /* add */
-	scroll-padding-inline: 64px;     /* add — matches padding-inline */
-	overscroll-behavior-x: contain;  /* add — stops page-level bounce */
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	padding-bottom: 4rem;
