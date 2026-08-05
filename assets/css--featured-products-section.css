@@ -540,7 +540,7 @@
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -110%);
+	transform: translate(-50%, -150%);
 	transition: transform .6s cubic-bezier(.22, 1, .36, 1);
 	width: min(1392px, 90vw);
 	background: #ffffffe6;
