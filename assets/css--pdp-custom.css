@@ -758,7 +758,7 @@ a.pdp--promo--banner_link svg {
     inset: 0;
     display: block;
     pointer-events: none;
-    z-index: 5;
+    z-index: 1;
   }
 
 .slider-button {
