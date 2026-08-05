@@ -186,6 +186,10 @@
 	list-style: none;
 }
 
+.fp__label:not(:first-child) {
+		display: none;
+	}
+
 .fp__label {
 	padding: 4px 8.44px 3px;
 	border: 1px solid var(--fp-label);
@@ -442,6 +446,10 @@
 	.fp__labels {
 		gap: 8px;
 		margin: 0 0 4rem;
+	}
+
+	.fp__label:not(:first-child) {
+		display: inherit;
 	}
 
 	.fp__label {
