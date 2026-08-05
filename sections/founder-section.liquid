@@ -80,53 +80,37 @@
 
 
 <script>
-const badge = document.querySelector(".founder__badge img");
-const section = document.querySelector(".founder");
+const founderSection = document.querySelector(".founder");
 
-if (badge && section) {
-  badge.style.animation = "none";
+const badge = founderSection?.querySelector(".founder__badge img");
+const image = founderSection?.querySelector(".founder__image");
 
-  function rotateBadge() {
-    const rect = section.getBoundingClientRect();
+if (founderSection) {
 
-    // Progress: 0 = section viewport me enter hui
-    // 1 = section viewport cross kar gayi
-    let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+    function animateFounder() {
 
-    progress = Math.max(0, Math.min(progress, 1));
+        const rect = founderSection.getBoundingClientRect();
 
-    // 0° se max 10° tak rotate
-    const rotation = progress * 20;
-
-    badge.style.transform = `rotate(${rotation}deg)`;
-  }
-
-  window.addEventListener("scroll", rotateBadge, { passive: true });
-  rotateBadge();
-}
-
-
-const section = document.querySelector(".founder");
-const image = document.querySelector(".founder__image");
-
-if (section && image) {
-
-    function zoomImage() {
-
-        const rect = section.getBoundingClientRect();
-
-        let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        let progress =
+            (window.innerHeight - rect.top) /
+            (window.innerHeight + rect.height);
 
         progress = Math.max(0, Math.min(progress, 1));
 
-        const scale = 1 + (progress * 0.08);
+        if (badge) {
+            badge.style.animation = "none";
+            badge.style.transform = `rotate(${progress * 12}deg)`;
+        }
 
-        image.style.transform = `scale(${scale})`;
+        if (image) {
+            image.style.transform = `scale(${1 + progress * 0.08})`;
+        }
+
     }
 
-    window.addEventListener("scroll", zoomImage, { passive: true });
+    window.addEventListener("scroll", animateFounder, { passive: true });
 
-    zoomImage();
+    animateFounder();
 
 }
 </script>
