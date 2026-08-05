@@ -260,14 +260,16 @@
 {% comment %} required--js--code {% endcomment %}
 <script>
 (function () {
-  /* Must match the CSS breakpoint. CSS switches to desktop at min-width:990px,
-     so mobile mode is everything below that. */
+  /* Must match the CSS desktop breakpoint (min-width: 990px). */
   var MOBILE_MQ = '(max-width: 989px)';
 
-  /* Card scaling and scroll-snap fight each other: snap positions are computed
-     from the transformed box, so a scaling card drags its own snap point around.
-     Leave this false to keep snapping crisp. */
-  var ENABLE_SCALE = false;
+  /* true  = continuous distance-based scale (JS writes inline transforms)
+     false = binary active/inactive scale via CSS .is-active
+     Safe either way: the transform lands on .fp__card, snapping on .fp__slide. */
+  var ENABLE_SCALE = true;
+
+  var MIN_SCALE = 0.88;
+  var MAX_SCALE = 1;
 
   function initCarousel(section) {
     var viewport = section.querySelector('[data-fp-viewport]');
@@ -282,27 +284,29 @@
     var dotsWrap = section.querySelector('[data-fp-dots]');
     var mq = window.matchMedia(MOBILE_MQ);
 
-    var slides = realSlides;   // all slides in the DOM (incl. clones)
+    var slides = realSlides;
     var dots = [];
     var looping = false;
-    var setWidth = 0;          // width of one full set of real slides
+    var setWidth = 0;
     var animId = null;
     var ticking = false;
-    var isAnimating = false;   // suppress normalize/update churn mid-animation
+    var isAnimating = false;
 
     /* ---------- snap control ---------- */
 
-    // Release snap so programmatic scrolling isn't fought by the browser.
     function releaseSnap() {
       viewport.style.scrollSnapType = 'none';
     }
 
-    // Hand control back to CSS.
     function restoreSnap() {
       viewport.style.scrollSnapType = '';
     }
 
     /* ---------- helpers ---------- */
+
+    function cardOf(slide) {
+      return slide.querySelector('.fp__card');
+    }
 
     function cancelAnim() {
       if (animId) {
@@ -318,6 +322,7 @@
 
       var start = viewport.scrollLeft;
       var change = target - start;
+
       if (Math.abs(change) < 1) {
         viewport.scrollLeft = target;
         update();
@@ -332,13 +337,13 @@
         var progress = Math.min((now - startTime) / duration, 1);
         var ease = 1 - Math.pow(1 - progress, 3);
         viewport.scrollLeft = start + change * ease;
+        updateScale();
 
         if (progress < 1) {
           animId = requestAnimationFrame(animate);
         } else {
           animId = null;
           isAnimating = false;
-          // Settle exactly on target, then let snap take over again.
           viewport.scrollLeft = target;
           restoreSnap();
           normalize();
@@ -348,13 +353,12 @@
       animId = requestAnimationFrame(animate);
     }
 
-    // Jump without animation and without letting scroll-snap fight us.
     function jumpBy(delta) {
       var behavior = viewport.style.scrollBehavior;
       releaseSnap();
       viewport.style.scrollBehavior = 'auto';
       viewport.scrollLeft += delta;
-      void viewport.offsetWidth; // force reflow before restoring
+      void viewport.offsetWidth;
       viewport.style.scrollBehavior = behavior;
       if (!isAnimating) restoreSnap();
     }
@@ -396,10 +400,10 @@
         [a, b].forEach(function (c) {
           c.dataset.fpClone = 'true';
           c.setAttribute('aria-hidden', 'true');
-          // Clones must not duplicate popup targets or steal focus.
           c.querySelectorAll('a, button').forEach(function (el) {
             el.setAttribute('tabindex', '-1');
           });
+          // Never duplicate ids into the document.
           c.querySelectorAll('[id]').forEach(function (el) {
             el.removeAttribute('id');
           });
@@ -415,7 +419,6 @@
       looping = true;
 
       measure();
-      // Start on the first real slide (middle set), snap off for the jump.
       releaseSnap();
       viewport.scrollLeft = centerOffsetOf(realSlides[0]);
       void viewport.offsetWidth;
@@ -430,8 +433,7 @@
       });
       slides = realSlides;
       looping = false;
-      // Desktop clears transforms so cards sit in their static row.
-      slides.forEach(function (s) { s.style.transform = ''; });
+      clearScale();
       viewport.scrollLeft = centerOffsetOf(realSlides[0]);
       update();
     }
@@ -443,7 +445,6 @@
       setWidth = last.offsetLeft + last.offsetWidth - first.offsetLeft;
     }
 
-    // Keep the viewport inside the middle set.
     function normalize() {
       if (!looping || !setWidth || isAnimating) return;
       var pos = viewport.scrollLeft;
@@ -485,7 +486,6 @@
       smoothScrollTo(centerOffsetOf(slide), 650);
     }
 
-    // Pick whichever copy of the target slide is nearest.
     function goToReal(target) {
       if (!looping) {
         scrollToDomIndex(target);
@@ -519,14 +519,29 @@
 
     /* ---------- render state ---------- */
 
+    function clearScale() {
+      slides.forEach(function (slide) {
+        var card = cardOf(slide);
+        if (card) card.style.transform = '';
+      });
+    }
+
     function updateScale() {
-      if (!ENABLE_SCALE || !mq.matches) return;
+      if (!ENABLE_SCALE) return;
+      if (!mq.matches) {
+        clearScale();
+        return;
+      }
       var viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
       var maxDistance = viewport.clientWidth / 2;
+      var range = MAX_SCALE - MIN_SCALE;
+
       slides.forEach(function (slide) {
+        var card = cardOf(slide);
+        if (!card) return;
         var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
         var progress = Math.max(0, 1 - Math.abs(viewportCenter - slideCenter) / maxDistance);
-        slide.style.transform = 'scale(' + (0.85 + progress * 0.15) + ')';
+        card.style.transform = 'scale(' + (MIN_SCALE + progress * range) + ')';
       });
     }
 
@@ -605,6 +620,7 @@
       init(document);
     });
   }
+
   document.addEventListener('shopify:section:load', function (event) {
     init(event.target);
   });
@@ -613,8 +629,8 @@
 
 /* ---------- popup ---------- */
 (function () {
-  function initPopups(root) {
-    // Delegated so cloned cards work too, and so re-init doesn't double-bind.
+  function initPopups() {
+    // Delegated: works for cloned cards, and safe against editor re-inits.
     if (document.body.dataset.fpPopupReady) return;
     document.body.dataset.fpPopupReady = 'true';
 
@@ -658,11 +674,9 @@
   }
 
   if (document.readyState !== 'loading') {
-    initPopups(document);
+    initPopups();
   } else {
-    document.addEventListener('DOMContentLoaded', function () {
-      initPopups(document);
-    });
+    document.addEventListener('DOMContentLoaded', initPopups);
   }
 })();
 </script>
