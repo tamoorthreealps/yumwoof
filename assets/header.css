@@ -505,6 +505,17 @@ body.is-open .yw-mega-overlay {
   pointer-events: auto;
 }
 
+body.is-open:after {
+    position: fixed;
+    content: '';
+    background: #000;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
 
 @media screen and (max-width: 1349px){
   .yw-mega__inner {
