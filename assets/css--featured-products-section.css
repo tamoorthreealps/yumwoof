@@ -804,13 +804,12 @@
 	}
 
 	.fp-popup__content_btn {
-		font-size: 12px;
-		line-height: 18px;
-		letter-spacing: .96px;
-		width: 120px;
-		height: 50px;
-		margin: 24px 0 0;
-	}
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: .60px;
+        margin: 24px 0 0;
+        padding: 9.2px 24.67px;
+    }
 
 	.fp-popup__right {
 		justify-content: flex-end;
