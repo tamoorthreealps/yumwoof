@@ -277,7 +277,7 @@ body.is-open .yw-nav {
    it survives AJAX cart updates. */
 .yw-nav__icon .cart-count-bubble {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     bottom: 0;
     transform: translate(-50%, -50%);
