@@ -488,14 +488,25 @@ font-size: 16px;
   z-index: 4;
 }
 
-body.is-open:after {
+body::after {
+  content: '';
   position: fixed;
-  content:'';
   inset: 0;
   background: rgba(0, 0, 0, .25);
-  pointer-events: none;
-  transition: opacity .3s ease;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: opacity .3s ease, visibility 0s linear .3s;
+
   z-index: 2;
+  pointer-events: none;
+}
+
+body.is-open::after {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 
