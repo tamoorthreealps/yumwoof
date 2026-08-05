@@ -146,8 +146,8 @@
         "button_link": "shopify://collections/all",
         "products": [
           "ancestral-blend",
-          "elevated-harvest",
-          "big-breed"
+          "big-breed",
+          "elevated-harvest"
         ],
         "metafield_labels": "custom.labels",
         "metafield_description": "custom.product_card_short_description",
