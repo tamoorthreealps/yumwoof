@@ -192,7 +192,10 @@
         "background_image_mobile": "shopify://shop_images/BG_1.png",
         "text_color": "#000000",
         "card_background": "#ffffff",
-        "card_border": "#000000"
+        "card_border": "#000000",
+        "kibble_image_1": "shopify://shop_images/Group_79.png",
+        "kibble_image_2": "shopify://shop_images/Group_80.png",
+        "kibble_image_3": "shopify://shop_images/Group_81.png"
       }
     },
     "founder_section": {
