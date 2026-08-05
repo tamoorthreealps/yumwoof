@@ -411,11 +411,12 @@
     text-transform: uppercase;
     text-decoration: none;
     font-family: FFBlurProMedium;
-    transition: transform .15s ease;
+    transition: all .25s ease;
 }
 
 .yw-mega__button:hover {
-  transform: scale(1.03);
+  background: #000;
+    color: #FFF9EF;
 }
 
 .yw-mega__cards {
