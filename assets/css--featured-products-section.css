@@ -246,7 +246,7 @@
 }
 
 /* Amber hexagon SHOP button overlapping the card's bottom edge */
-.fp__shop {
+/* .fp__shop {
 	position: absolute;
 	left: 50%;
 	bottom: 0;
@@ -265,8 +265,23 @@
 .fp__card__hover:hover .fp__shop {
 	background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button.svg?v=1784734468") center / 100% 100% no-repeat;
 	color: #FFF9EF;
-}
+} */
 
+.fp__shop {
+    color: #000;
+    text-decoration: none;
+    background: #FEC068;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 100px;
+	transition: all .25s ease;
+}
+.fp__shop:hover {
+    background: #000;
+    color: #FFF9EF;
+}
 
 .fp__shop-label {
 	font-size: 13px;
@@ -457,11 +472,17 @@
 		text-transform: uppercase;
 	}
 
-	.fp__shop {
+	/* .fp__shop {
 		width: 164px;
 		height: 72px;
 		background: url("https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684") center / 100% 100% no-repeat;
-	}
+	} */
+
+	    .fp__shop {
+        border: 1.5px solid #000;
+        padding: 12px 35px;
+        margin: 24px 0 0;
+    }
 
 	.fp__shop-label {
 		font-size: 16px;
