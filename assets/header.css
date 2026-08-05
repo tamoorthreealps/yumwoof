@@ -131,7 +131,7 @@
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 1.5px solid var(--yw-nav-border);
-  border-radius: 8px;
+  border-radius: 16px;
 }
 
 /* body.is-open .yw-nav {
