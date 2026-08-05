@@ -480,6 +480,31 @@ font-size: 16px;
     color: var(--yw-nav-text);
 }
 
+.yw-mega-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .25);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 2;
+}
+
+.yw-mega {
+  z-index: 3;
+}
+
+.yw-header {
+  z-index: 4;
+}
+
+.yw-mega-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 
 @media screen and (max-width: 1349px){
   .yw-mega__inner {
