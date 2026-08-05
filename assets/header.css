@@ -331,16 +331,28 @@ body.is-open .yw-nav {
   top: 100%;
   z-index: -1;
   padding:16px 0 0;
-  transform: translateY(-150%);
-  transition: transform .6s cubic-bezier(.22,.61,.36,1),
-              visibility 0s linear .35s;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  pointer-events: none;
+  transition:
+    opacity .35s ease,
+    transform .35s ease,
+    visibility 0s linear .35s;
 }
 
 .yw-nav__item--mega:hover .yw-mega,
 .yw-nav__item--mega:focus-within .yw-mega,
 .yw-nav__item--mega.is-open .yw-mega {
+  opacity: 1;
+  visibility: visible;
   transform: translateY(0);
-  transition-delay: 0s;
+  pointer-events: auto;
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease,
+    visibility 0s;
 }
 
 .yw-mega__inner {
