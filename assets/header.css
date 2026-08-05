@@ -184,7 +184,7 @@
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform .15s ease;
+  transition: all .25s ease;
   background: #FEC068;
   border: 1.5px solid var(--yw-nav-border);
   border-radius: 100px;
