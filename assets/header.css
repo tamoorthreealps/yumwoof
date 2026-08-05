@@ -499,7 +499,7 @@ font-size: 16px;
   z-index: 4;
 }
 
-.yw-mega-overlay.is-active {
+body.is-open .yw-mega-overlay {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
