@@ -83,8 +83,6 @@
 	padding-bottom: 4rem;
 	padding-inline: 64px;
 	box-sizing: border-box;
-	scroll-snap-type: x proximity;  /* was: mandatory */
-	scroll-behavior: smooth;
 }
 
 .fp__viewport::-webkit-scrollbar {
