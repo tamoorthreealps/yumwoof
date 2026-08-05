@@ -862,6 +862,7 @@ display: flex;
 
   .yw-nav__icon .cart-count-bubble {
     font-size:13px;
+    top:58%;
   }
 }
 
