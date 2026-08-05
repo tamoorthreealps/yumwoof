@@ -873,6 +873,7 @@ display: flex;
   .yw-nav {
     grid-template-columns: auto 1fr auto;
     padding: 6.4px 16px 4px;
+    border-radius: 8px;
   }
 
   .yw-nav__toggle {
