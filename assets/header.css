@@ -480,14 +480,11 @@ font-size: 16px;
     color: var(--yw-nav-text);
 }
 
-.yw-mega {
-  z-index: 3;
-}
 
-.yw-header {
-  z-index: 4;
-}
 
+
+
+@media screen and (max-width: 990px){
 body::after {
   content: '';
   position: fixed;
@@ -502,11 +499,18 @@ body::after {
   z-index: 2;
   pointer-events: none;
 }
+.yw-mega {
+  z-index: 3;
+}
 
+.yw-header {
+  z-index: 4;
+}
 body.is-open::after {
   opacity: 1;
   visibility: visible;
   transition-delay: 0s;
+}
 }
 
 
