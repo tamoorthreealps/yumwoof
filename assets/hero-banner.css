@@ -155,10 +155,13 @@
 /* --------------------------------------------------------------------------
    Mobile
    -------------------------------------------------------------------------- */
-@media screen and (max-width: 749px) {
-	.hero-banner {
+@media screen and (max-width: 990px) {
+.hero-banner {
 		margin-top: 32px;
 	}
+}
+@media screen and (max-width: 749px) {
+	
 
 	.hero-banner__inner {
 		min-height: var(--hb-min-height-mobile, 480px);
