@@ -2,6 +2,10 @@
    Yumwoof featured products ("Explore our air dried food")
    Design: Figma "Yumwoof (Copy)" nodes 863-1596 (desktop card) & 1260-111 (mobile)
    Colors driven by CSS variables set inline from section settings.
+
+   Structure note: .fp__slide is the snap item (layout + snap, never
+   transformed). .fp__card is the visual card (border, background, scale).
+   Keeping transform off the snap item is what makes snapping feel locked.
    ========================================================================== */
 
 .fp {
@@ -42,7 +46,6 @@
 	max-width: 208px;
 }
 
-
 .fp--uppercase .fp__heading,
 .fp--uppercase .fp__title {
 	text-transform: uppercase;
@@ -78,9 +81,9 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	-webkit-overflow-scrolling: touch;
-	scroll-snap-type: x mandatory;   /* add */
-	scroll-padding-inline: 64px;     /* add — matches padding-inline */
-	overscroll-behavior-x: contain;  /* add — stops page-level bounce */
+	scroll-snap-type: x mandatory;
+	scroll-padding-inline: 64px;
+	overscroll-behavior-x: contain;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	padding-bottom: 4rem;
@@ -102,19 +105,26 @@
 	list-style: none;
 }
 
-.fp__track::after {
-	content: "";
-	flex: 0 0 64px;
+/* --------------------------------------------------------------------------
+   Slide (snap item)
+   -------------------------------------------------------------------------- */
+.fp__slide {
+	flex: 0 0 100%;
+	width: 100%;
+	display: flex;
+	padding: 0 8px;
+	box-sizing: border-box;
+	list-style: none;
+	scroll-snap-align: center;
+	scroll-snap-stop: always;
 }
 
 /* --------------------------------------------------------------------------
-   Card
+   Card (visual)
    -------------------------------------------------------------------------- */
 .fp__card {
 	position: relative;
-	flex: 0 0 100%;
-	width: 100%;
-	scroll-snap-align: center;
+	flex: 1 1 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -123,12 +133,15 @@
 	border: 1.28px solid var(--fp-card-border);
 	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem;
-	scroll-snap-stop: always;
+	transform: scale(0.88);
+	transform-origin: center center;
+	transition: transform .35s cubic-bezier(.22, 1, .36, 1);
+	will-change: transform;
 }
 
-/* .fp__card.is-active {
+.fp__slide.is-active .fp__card {
 	transform: scale(1);
-} */
+}
 
 .fp__hover-media {
 	position: absolute !important;
@@ -190,8 +203,8 @@
 }
 
 .fp__label:not(:first-child) {
-		display: none;
-	}
+	display: none;
+}
 
 .fp__label {
 	padding: 4px 8.44px 3px;
@@ -224,12 +237,6 @@
 	transition: .45s;
 }
 
-/* .fp__card:hover .fp__img {
-
-	transform: scale(1.08);
-
-} */
-
 .fp__desc {
 	margin: 0 0 1.2rem;
 	max-width: 20rem;
@@ -246,51 +253,28 @@
 	font-size: 11px;
 	line-height: 16px;
 	letter-spacing: 0.44px;
-	text-transform: capitalize;
-	text-decoration: none;
-	font-family: "FFBlurProMedium";
 	text-decoration: underline;
 	text-transform: uppercase;
+	font-family: "FFBlurProMedium";
 }
-
-/* Amber hexagon SHOP button overlapping the card's bottom edge */
-/* .fp__shop {
-	position: absolute;
-	left: 50%;
-	bottom: 0;
-	transform: translate(-50%, 50%);
-	width: 120px;
-	height: 48px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/featured--cards--mb--btn.svg?v=1784731933") center / 100% 100% no-repeat;
-	color: #000000;
-	text-decoration: none;
-}
-
-
-.fp__card__hover:hover .fp__shop {
-	background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button.svg?v=1784734468") center / 100% 100% no-repeat;
-	color: #FFF9EF;
-} */
 
 .fp__shop {
-    color: #000;
-    text-decoration: none;
-    background: #FEC068;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #000;
-    border-radius: 100px;
-	transition: all .25s ease;
+	color: #000;
+	text-decoration: none;
+	background: #FEC068;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #000;
+	border-radius: 100px;
+	transition: background-color .25s ease, color .25s ease;
 	padding: 10px 22px 8.4px;
-    margin: 24px 0 -64px;
+	margin: 24px 0 -64px;
 }
+
 .fp__shop:hover {
-    background: #000;
-    color: #FFF9EF;
+	background: #000;
+	color: #FFF9EF;
 }
 
 .fp__shop-label {
@@ -344,7 +328,6 @@
 	width: 8px;
 	height: 8px;
 	padding: 0;
-	border: 0;
 	border-radius: 50%;
 	background: transparent;
 	cursor: pointer;
@@ -355,9 +338,7 @@
 	background: var(--fp-text);
 }
 
-
 .mobile_fp__button {
-	display: block;
 	display: block;
 	text-align: center;
 	padding: 0 24px;
@@ -403,6 +384,7 @@
 	.fp__viewport {
 		overflow: visible;
 		scroll-snap-type: none;
+		scroll-padding-inline: 0;
 		padding-bottom: 0;
 		padding-inline: 0;
 	}
@@ -413,33 +395,31 @@
 		padding: 0;
 	}
 
-	.fp__track::after {
-		display: none;
+	.fp__slide {
+		width: 32.221%;
+		flex: 0 0 auto;
+		padding: 0;
+		scroll-snap-align: none;
+		scroll-snap-stop: normal;
 	}
 
 	.fp__card {
-		width: 32.221%;
-		flex: 0 0 auto;
+		width: 100%;
 		max-width: 100%;
-		scroll-snap-align: none;
-		padding: 3.9rem 3.2rem 3.1rem;
-		transform: inherit !important;
+		transform: none;
 		transition: .45s;
+		padding: 3.9rem 3.2rem 3.1rem;
 		border-radius: 24px;
 		border: 1.5px solid var(--fp-card-border);
+	}
+
+	.fp__slide.is-active .fp__card {
+		transform: none;
 	}
 
 	.fp__hover-media img {
 		border-radius: 24px;
 	}
-
-	/* .fp__card:hover {
-
-		transform: translateY(-12px);
-
-		box-shadow: 0 30px 70px rgba(0, 0, 0, .12);
-
-	} */
 
 	.fp__title {
 		font-size: 3.6rem;
@@ -486,17 +466,11 @@
 		text-transform: uppercase;
 	}
 
-	/* .fp__shop {
-		width: 164px;
-		height: 72px;
-		background: url("https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684") center / 100% 100% no-repeat;
-	} */
-
-	    .fp__shop {
-        border: 1.5px solid #000;
-        padding: 12px 35px;
-        margin: 24px 0 0;
-    }
+	.fp__shop {
+		border: 1.5px solid #000;
+		padding: 12px 35px;
+		margin: 24px 0 0;
+	}
 
 	.fp__shop-label {
 		font-size: 16px;
@@ -514,6 +488,14 @@
 	}
 }
 
+/* --------------------------------------------------------------------------
+   Reduced motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.fp__card {
+		transition: none;
+	}
+}
 
 /*----- popup--css--code -----*/
 .fp-popup {
@@ -719,7 +701,6 @@
 }
 
 @media(max-width:768px) {
-
 	.fp-popup__panel {
 		overflow-y: auto;
 		padding: 40px 28px 26px;
@@ -812,5 +793,4 @@
 		max-width: 100%;
 		height: auto;
 	}
-
 }
