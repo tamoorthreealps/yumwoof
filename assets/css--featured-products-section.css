@@ -573,6 +573,31 @@
 	height: 400px;
 	width: 100%;
 	margin: 0 0 -30px;
+	position: relative;
+}
+
+.fp-popup__tab-img {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity .35s ease;
+}
+
+.fp-popup__tab-img.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.fp-popup__tab-img img {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain;
 }
 
 .fp-popup__right img {
