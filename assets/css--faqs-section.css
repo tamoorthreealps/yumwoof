@@ -233,7 +233,7 @@ font-size: 16px;
 .faqs__inner__media .faqs__head {
   margin-bottom: 1.6rem;
 }
-  .faqs__image--desktop {
+ .faqs__right .faqs__image--desktop {
     display: none;
   }
 @media screen and (min-width: 990px) {
@@ -272,11 +272,11 @@ font-size: 16px;
   .faqs__inner__media .faqs__answer-inner {
     padding: 0 0 24px;
   }
-    .faqs__image--desktop {
+  .faqs__right  .faqs__image--desktop {
     display: block;
   }
 
-  .faqs__image--mobile {
+  .faqs__right .faqs__image--mobile {
     display: none;
   }
 }
