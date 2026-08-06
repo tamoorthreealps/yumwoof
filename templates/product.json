@@ -42,6 +42,12 @@
             "scroll_seconds": 25
           }
         },
+        "product_selectors_x34MRL": {
+          "type": "product-selectors",
+          "settings": {
+            "heading": "Recipe"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -119,6 +125,7 @@
         "short_description_HghaRg",
         "price",
         "usps_wWfcV4",
+        "product_selectors_x34MRL",
         "variant_picker",
         "quantity_selector",
         "quantity_calculator_HFLFAL",
