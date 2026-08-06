@@ -133,16 +133,20 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const section = document.querySelector('.faqs');
-  const image = section?.querySelector('.faqs__image');
+  const images = section?.querySelectorAll('.faqs__image');
 
-  if (!section || !image) return;
+  if (!section || !images.length) return;
 
   let currentScale = 1;
   let targetScale = 1;
 
   function updateScale() {
     currentScale += (targetScale - currentScale) * 0.08;
-    image.style.transform = `scale(${currentScale})`;
+
+    images.forEach((image) => {
+      image.style.transform = `scale(${currentScale})`;
+    });
+
     requestAnimationFrame(updateScale);
   }
 
