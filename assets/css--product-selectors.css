@@ -14,9 +14,10 @@
 }
 
 .psel__row {
-    gap: 1.1rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 1.1rem;
 }
 
 .psel__item {
@@ -63,9 +64,8 @@
 
 @media screen and (max-width: 749px) {
 	.psel__row {
-		        gap: .9rem;
-        flex-wrap: nowrap;
-        display: flex;
+		gap: 0.9rem;
+		flex-wrap: nowrap;
 	}
 	.psel__item {
         width: 100%;
