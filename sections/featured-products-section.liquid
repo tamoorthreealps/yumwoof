@@ -293,9 +293,12 @@
       var animId = null;
       var ticking = false;
 
-      // shared animation state so loop jumps can shift it mid-flight
       var animStart = 0;
       var animTarget = 0;
+
+      var idleTimer = null;
+      var SCROLL_IDLE_MS = 140;
+      var hasScrollEnd = 'onscrollend' in window;
 
       /* ---------- helpers ---------- */
 
@@ -320,7 +323,6 @@
         function animate(now) {
           var progress = Math.min((now - startTime) / duration, 1);
           var ease = 1 - Math.pow(1 - progress, 3);
-          // read animStart/animTarget fresh each frame — jumpBy may have shifted them
           viewport.scrollLeft = animStart + (animTarget - animStart) * ease;
           if (progress < 1) {
             animId = requestAnimationFrame(animate);
@@ -334,16 +336,14 @@
       }
 
       function jumpBy(delta) {
-        var snap = viewport.style.scrollSnapType;
         var behavior = viewport.style.scrollBehavior;
         viewport.style.scrollSnapType = 'none';
         viewport.style.scrollBehavior = 'auto';
         viewport.scrollLeft += delta;
         void viewport.offsetWidth;
-        viewport.style.scrollSnapType = snap;
         viewport.style.scrollBehavior = behavior;
+        viewport.style.scrollSnapType = animId ? 'none' : '';
 
-        // keep an in-flight animation aligned with the jump
         if (animId) {
           animStart += delta;
           animTarget += delta;
@@ -385,7 +385,8 @@
           var b = slide.cloneNode(true);
           [a, b].forEach(function (c) {
             c.dataset.fpClone = 'true';
-            c.setAttribute('aria-hidden', 'true');
+            // NOTE: no aria-hidden here — it would hide focusable popup
+            // triggers from assistive tech while they remain clickable.
             c.querySelectorAll('a, button').forEach(function (el) {
               el.setAttribute('tabindex', '-1');
             });
@@ -425,12 +426,12 @@
 
       function normalize() {
         if (!looping || !setWidth) return;
+        if (animId) return;
         var pos = viewport.scrollLeft;
-        var lower = centerOffsetOf(realSlides[0]) - setWidth / 2;
-        var upper = lower + setWidth;
-        if (pos < lower) {
+        var base = centerOffsetOf(realSlides[0]);
+        if (pos < base - setWidth * 0.75) {
           jumpBy(setWidth);
-        } else if (pos >= upper) {
+        } else if (pos > base + setWidth * 0.75) {
           jumpBy(-setWidth);
         }
       }
@@ -535,19 +536,32 @@
         updateScale();
       }
 
+      function onScrollIdle() {
+        normalize();
+        update();
+      }
+
       viewport.addEventListener(
         'scroll',
         function () {
-          if (ticking) return;
-          ticking = true;
-          window.requestAnimationFrame(function () {
-            normalize();
-            update();
-            ticking = false;
-          });
+          if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(function () {
+              update();
+              ticking = false;
+            });
+          }
+          if (!hasScrollEnd) {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(onScrollIdle, SCROLL_IDLE_MS);
+          }
         },
         { passive: true }
       );
+
+      if (hasScrollEnd) {
+        viewport.addEventListener('scrollend', onScrollIdle);
+      }
 
       /* ---------- breakpoint handling ---------- */
 
@@ -584,59 +598,76 @@
       root.querySelectorAll('.fp').forEach(initCarousel);
     }
 
-    if (document.readyState !== 'loading') {
-      init(document);
-    } else {
-      document.addEventListener('DOMContentLoaded', function () {
-        init(document);
+    /* ---------- popups (delegated — works for cloned cards too) ---------- */
+
+    function initPopups() {
+      if (document.body.dataset.fpPopupsReady) return;
+      document.body.dataset.fpPopupsReady = 'true';
+
+      document.addEventListener('click', function (e) {
+        // open
+        var trigger = e.target.closest('.fp__recipes[data-popup]');
+        if (trigger) {
+          e.preventDefault();
+          var popup = document.getElementById(trigger.dataset.popup);
+          if (popup) popup.classList.add('active');
+          return;
+        }
+
+        // close
+        var closer = e.target.closest('.fp-popup__close, .fp-popup__overlay');
+        if (closer) {
+          var openPopup = closer.closest('.fp-popup');
+          if (openPopup) openPopup.classList.remove('active');
+          return;
+        }
+
+        // tabs
+        var tab = e.target.closest('.fp-popup__tabs button');
+        if (tab) {
+          var panel = tab.closest('.fp-popup');
+          if (!panel) return;
+          panel.querySelectorAll('.fp-popup__tabs button').forEach(function (b) {
+            b.classList.remove('active');
+          });
+          panel.querySelectorAll('.fp-popup__content').forEach(function (c) {
+            c.classList.remove('active');
+          });
+          panel.querySelectorAll('.fp-popup__tab-img').forEach(function (i) {
+            i.classList.remove('active');
+          });
+
+          tab.classList.add('active');
+          var content = panel.querySelector('[data-content="' + tab.dataset.tab + '"]');
+          if (content) content.classList.add('active');
+          var image = panel.querySelector('[data-image="' + tab.dataset.tab + '"]');
+          if (image) image.classList.add('active');
+        }
       });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.fp-popup.active').forEach(function (p) {
+          p.classList.remove('active');
+        });
+      });
+    }
+
+    function boot() {
+      init(document);
+      initPopups();
+    }
+
+    if (document.readyState !== 'loading') {
+      boot();
+    } else {
+      document.addEventListener('DOMContentLoaded', boot);
     }
     document.addEventListener('shopify:section:load', function (event) {
       init(event.target);
+      initPopups();
     });
   })();
-
-  {% comment %} popup--js--code {% endcomment %}
-  document.querySelectorAll(".fp__recipes").forEach(function (button) {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
-      const popup = document.getElementById(this.dataset.popup);
-      if (popup) {
-        popup.classList.add("active");
-      }
-    });
-  });
-
-  document.querySelectorAll(".fp-popup").forEach(function (popup) {
-    popup.querySelector(".fp-popup__close").addEventListener("click", function () {
-      popup.classList.remove("active");
-    });
-    popup.querySelector(".fp-popup__overlay").addEventListener("click", function () {
-      popup.classList.remove("active");
-    });
-  });
-
-  document.querySelectorAll(".fp-popup").forEach(function (popup) {
-    const tabs = popup.querySelectorAll(".fp-popup__tabs button");
-    const contents = popup.querySelectorAll(".fp-popup__content");
-    const images = popup.querySelectorAll(".fp-popup__tab-img");
-
-    tabs.forEach(function (tab) {
-      tab.addEventListener("click", function () {
-        tabs.forEach(function (btn) { btn.classList.remove("active"); });
-        contents.forEach(function (content) { content.classList.remove("active"); });
-        images.forEach(function (img) { img.classList.remove("active"); });
-
-        tab.classList.add("active");
-
-        const content = popup.querySelector('[data-content="' + tab.dataset.tab + '"]');
-        if (content) content.classList.add("active");
-
-        const image = popup.querySelector('[data-image="' + tab.dataset.tab + '"]');
-        if (image) image.classList.add("active");
-      });
-    });
-  });
 </script>
 
 {% schema %}
