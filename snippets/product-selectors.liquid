@@ -24,7 +24,7 @@
 
     <div class="psel__row" role="list">
       {%- for sel in selectors -%}
-        {%- assign sp = sel.product -%}
+        {%- assign sp = sel.product.value -%}
         {%- if sp == blank -%}{%- continue -%}{%- endif -%}
         {%- assign is_active = false -%}
         {%- if sp.handle == product.handle -%}{%- assign is_active = true -%}{%- endif -%}
