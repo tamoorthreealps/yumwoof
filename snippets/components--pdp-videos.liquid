@@ -165,6 +165,9 @@
   {{ thumb | image_url: width: 300 | image_tag }}
 {% endfor %} {% endcomment %}
           {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
+          First thumbnail:
+
+{{ thumbnails.first | image_url: width: 300 | image_tag }}
           {% for media in product.metafields.custom.review_videos.value %}
             {% assign thumb = thumbnails[forloop.index0] %}
             <div class="splide__slide yumw-video-card" data-video="https:{{ media.sources.first.url }}">
