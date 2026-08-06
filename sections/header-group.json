@@ -65,6 +65,7 @@
         },
         "mobile_linklist_aMBdzj": {
           "type": "mobile_linklist",
+          "disabled": true,
           "settings": {
             "title": "",
             "menu": "main-new-menu"
