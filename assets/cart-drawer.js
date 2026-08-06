@@ -89,16 +89,8 @@ class CartDrawer extends HTMLElement {
       if (section.id === 'cart-icon-bubble') {
         const newBubble = this.getSectionDOM(parsedState.sections[section.id], '.shopify-section');
 
-        const newCount = newBubble.querySelectorAll('.cart-count-bubble');
-
         document.querySelectorAll('#cart-icon-bubble').forEach((bubble) => {
-          const oldCount = bubble.querySelectorAll('.cart-count-bubble');
-
-          oldCount.forEach((el, index) => {
-            if (newCount[index]) {
-              el.innerHTML = newCount[index].innerHTML;
-            }
-          });
+          bubble.innerHTML = newBubble.innerHTML;
         });
 
         return;
