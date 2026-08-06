@@ -73,30 +73,19 @@
 </section>
 <script>
   const founderSection = document.querySelector('.cocomega');
-
-  const badge = founderSection?.querySelector('.cocomega__badge img');
   const image = founderSection?.querySelector('.cocomega__image');
 
-  if (founderSection) {
+  if (founderSection && image) {
     function animateFounder() {
       const rect = founderSection.getBoundingClientRect();
 
       let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-
       progress = Math.max(0, Math.min(progress, 1));
 
-      if (badge) {
-        badge.style.animation = 'none';
-        badge.style.transform = `rotate(${progress * 12}deg)`;
-      }
-
-      if (image) {
-        image.style.transform = `scale(${1 + progress * 0.08})`;
-      }
+      image.style.transform = `scale(${1 + progress * 0.08})`;
     }
 
     window.addEventListener('scroll', animateFounder, { passive: true });
-
     animateFounder();
   }
 </script>
