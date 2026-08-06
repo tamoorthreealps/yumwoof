@@ -27,6 +27,7 @@
    -------------------------------------------------------------------------- */
 .cocomega__media {
   position: relative;
+  overflow: hidden;
 }
 
 .cocomega__image {
@@ -37,6 +38,8 @@
   object-fit: cover;
   border-radius: 24px;
   background-color: #000000;
+  transition: transform 0.1s linear;
+  will-change: transform;
 }
 
 .cocomega__image--placeholder {
