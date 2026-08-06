@@ -1,16 +1,16 @@
 /* Product selectors — anchor chips that switch between related products (PDP) */
 .psel {
-	margin: 2.4rem 0 0;
+    margin: 0 0 2.4rem;
 }
 
 .psel__legend {
-	margin: 0 0 1.2rem;
-	font-family: 'TAY Birdie', sans-serif;
-	font-size: 1.6rem;
-	line-height: 2rem;
-	letter-spacing: -0.64px;
-	text-transform: uppercase;
-	color: #000;
+    margin: 0 0 1.2rem;
+    font-family: TAY Birdie, sans-serif;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -.64px;
 }
 
 .psel__row {
@@ -47,13 +47,13 @@
 
 /* Product image sits at the left and pops slightly above the chip. */
 .psel__img {
-	position: absolute;
-	left: -0.2rem;
-	bottom: 0;
-	width: 6.4rem;
-	height: 6.4rem;
-	object-fit: contain;
-	pointer-events: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 5.6rem;
+    height: 5.6rem;
+    object-fit: cover;
+    pointer-events: none;
 }
 
 .psel__title {
