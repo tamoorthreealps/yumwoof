@@ -116,14 +116,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 28px;
+    margin-top: 24px;
     border-radius: 100px;
     color: var(--yw-ink);
     text-decoration: none;
     transition: background-color .2s ease, color .2s ease;
     background: #FEC068;
     border: 1px solid #000;
-    padding: 12px 31.13px 10.4px;
+    padding: 14px 24.88px 12.4px;
     transition: all .25s ease;
 }
 
@@ -194,7 +194,8 @@
   }
 
   .yw-404__button {
-
+    margin-top: 28px;
+    padding: 12px 31.13px 10.4px;
   }
 
   .yw-404__button-label {
