@@ -29,12 +29,13 @@
 .founder__media {
 	position: relative;
 	width: 100%;
-	height: 396px;
+
 }
 
 .founder__image-wrap {
 		border-radius: 20px;
 		overflow:hidden;
+		height: 396px;
 	}
 
 .founder__image {
@@ -180,6 +181,7 @@
 
 	.founder__image-wrap {
 		border-radius: var(--fs-radius);
+		height:100%;
 	}
 
 	.founder__image {
