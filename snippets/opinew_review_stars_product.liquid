@@ -1,5 +1,7 @@
 <style>
     .rating-wrap .opinew-no-reviews-stars-plugin { display: none; }
+    .rating-summary {transition: opacity 0.3s ease;}
+    .rating-wrap:hover .rating-summary {opacity: .5;}
 </style>
 {%- liquid
   assign rating = product.metafields.opinew_metafields.reviews_average
