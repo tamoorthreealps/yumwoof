@@ -39,7 +39,7 @@
         "usps_wWfcV4": {
           "type": "usps",
           "settings": {
-            "scroll_seconds": 25
+            "scroll_seconds": 50
           }
         },
         "variant_picker": {
