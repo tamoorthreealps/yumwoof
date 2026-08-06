@@ -270,7 +270,7 @@
 {% endif %}
 {% comment %} required--js--code {% endcomment %}
 <script>
-   (function () {
+  (function () {
     var MOBILE_MQ = '(max-width: 749px)';
 
     function initCarousel(section) {
@@ -286,58 +286,68 @@
       var dotsWrap = section.querySelector('[data-fp-dots]');
       var mq = window.matchMedia(MOBILE_MQ);
 
-      var slides = realSlides;   // all slides currently in the DOM (incl. clones)
+      var slides = realSlides;
       var dots = [];
       var looping = false;
-      var setWidth = 0;          // width of one full set of real slides
+      var setWidth = 0;
       var animId = null;
       var ticking = false;
+
+      // shared animation state so loop jumps can shift it mid-flight
+      var animStart = 0;
+      var animTarget = 0;
 
       /* ---------- helpers ---------- */
 
       function cancelAnim() {
-      if (animId) {
-        cancelAnimationFrame(animId);
-        animId = null;
-        viewport.style.scrollSnapType = '';
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = null;
+          viewport.style.scrollSnapType = '';
+        }
       }
-    }
 
       function smoothScrollTo(target, duration) {
         cancelAnim();
         duration = duration || 650;
-        var start = viewport.scrollLeft;
-        var change = target - start;
+
+        animStart = viewport.scrollLeft;
+        animTarget = target;
         var startTime = performance.now();
-        var prevSnap = viewport.style.scrollSnapType;
 
         viewport.style.scrollSnapType = 'none';
 
         function animate(now) {
           var progress = Math.min((now - startTime) / duration, 1);
           var ease = 1 - Math.pow(1 - progress, 3);
-          viewport.scrollLeft = start + change * ease;
+          // read animStart/animTarget fresh each frame — jumpBy may have shifted them
+          viewport.scrollLeft = animStart + (animTarget - animStart) * ease;
           if (progress < 1) {
             animId = requestAnimationFrame(animate);
           } else {
+            viewport.scrollLeft = Math.round(animTarget);
             animId = null;
-            viewport.style.scrollSnapType = prevSnap;  // restore
+            viewport.style.scrollSnapType = '';
           }
         }
         animId = requestAnimationFrame(animate);
       }
 
-      // Jump without animation and without letting scroll-snap fight us.
       function jumpBy(delta) {
         var snap = viewport.style.scrollSnapType;
         var behavior = viewport.style.scrollBehavior;
         viewport.style.scrollSnapType = 'none';
         viewport.style.scrollBehavior = 'auto';
         viewport.scrollLeft += delta;
-        // force reflow before restoring
         void viewport.offsetWidth;
         viewport.style.scrollSnapType = snap;
         viewport.style.scrollBehavior = behavior;
+
+        // keep an in-flight animation aligned with the jump
+        if (animId) {
+          animStart += delta;
+          animTarget += delta;
+        }
       }
 
       function centerOffsetOf(slide) {
@@ -358,7 +368,6 @@
         return best;
       }
 
-      // Map a DOM index to the index within the real set.
       function realIndex(i) {
         var n = realSlides.length;
         return ((i % n) + n) % n;
@@ -377,7 +386,6 @@
           [a, b].forEach(function (c) {
             c.dataset.fpClone = 'true';
             c.setAttribute('aria-hidden', 'true');
-            // keep clones out of the tab order
             c.querySelectorAll('a, button').forEach(function (el) {
               el.setAttribute('tabindex', '-1');
             });
@@ -393,7 +401,6 @@
         looping = true;
 
         measure();
-        // start on the first real slide (middle set)
         viewport.scrollLeft = centerOffsetOf(realSlides[0]);
         update();
       }
@@ -416,7 +423,6 @@
         setWidth = last.offsetLeft + last.offsetWidth - first.offsetLeft;
       }
 
-      // Keep the viewport inside the middle set.
       function normalize() {
         if (!looping || !setWidth) return;
         var pos = viewport.scrollLeft;
@@ -429,7 +435,7 @@
         }
       }
 
-      /* ---------- dots (always one per real slide) ---------- */
+      /* ---------- dots ---------- */
 
       if (dotsWrap) {
         dotsWrap.innerHTML = '';
@@ -458,14 +464,12 @@
         smoothScrollTo(centerOffsetOf(slide), 650);
       }
 
-      // Pick whichever copy of the target slide is nearest, so we never scroll far.
       function goToReal(target) {
         if (!looping) {
           scrollToDomIndex(target);
           return;
         }
         var from = currentIndex();
-        var n = realSlides.length;
         var best = null;
         var bestDist = Infinity;
         slides.forEach(function (slide, i) {
@@ -477,7 +481,6 @@
           }
         });
         if (best !== null) scrollToDomIndex(best);
-        void n;
       }
 
       function step(dir) {
@@ -497,13 +500,12 @@
       function updateScale() {
         var viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
         var maxDistance = viewport.clientWidth / 2;
-        var settling = !animId;   // true once the smooth-scroll animation is done
+        var settling = !animId;
 
         slides.forEach(function (slide) {
           var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
           var distance = Math.abs(viewportCenter - slideCenter);
 
-          // Anything within a couple px of centre is *the* active card — pin it.
           if (settling && distance < 3) {
             slide.style.transform = 'scale(1)';
             return;
@@ -594,61 +596,47 @@
     });
   })();
 
-
-        {% comment %} popup--js--code {% endcomment %}
-    document.querySelectorAll(".fp__recipes").forEach(function(button){
-
-        button.addEventListener("click",function(e){
-
-            e.preventDefault();
-
-            const popup=document.getElementById(this.dataset.popup);
-
-            if(popup){
-                popup.classList.add("active");
-            }
-
-        });
-
-    });
-
-    document.querySelectorAll(".fp-popup").forEach(function(popup){
-
-        popup.querySelector(".fp-popup__close").addEventListener("click",function(){
-
-            popup.classList.remove("active");
-
-        });
-
-        popup.querySelector(".fp-popup__overlay").addEventListener("click",function(){
-
-            popup.classList.remove("active");
-
-        });
-
-    });
-
-document.querySelectorAll(".fp-popup").forEach(function (popup) {
-  const tabs = popup.querySelectorAll(".fp-popup__tabs button");
-  const contents = popup.querySelectorAll(".fp-popup__content");
-  const images = popup.querySelectorAll(".fp-popup__tab-img");
-
-  tabs.forEach(function (tab) {
-    tab.addEventListener("click", function () {
-      tabs.forEach(function (btn) { btn.classList.remove("active"); });
-      contents.forEach(function (content) { content.classList.remove("active"); });
-      images.forEach(function (img) { img.classList.remove("active"); });
-
-      tab.classList.add("active");
-
-      const content = popup.querySelector('[data-content="' + tab.dataset.tab + '"]');
-      if (content) content.classList.add("active");
-
-      const image = popup.querySelector('[data-image="' + tab.dataset.tab + '"]');
-      if (image) image.classList.add("active");
+  {% comment %} popup--js--code {% endcomment %}
+  document.querySelectorAll(".fp__recipes").forEach(function (button) {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+      const popup = document.getElementById(this.dataset.popup);
+      if (popup) {
+        popup.classList.add("active");
+      }
     });
   });
-});
+
+  document.querySelectorAll(".fp-popup").forEach(function (popup) {
+    popup.querySelector(".fp-popup__close").addEventListener("click", function () {
+      popup.classList.remove("active");
+    });
+    popup.querySelector(".fp-popup__overlay").addEventListener("click", function () {
+      popup.classList.remove("active");
+    });
+  });
+
+  document.querySelectorAll(".fp-popup").forEach(function (popup) {
+    const tabs = popup.querySelectorAll(".fp-popup__tabs button");
+    const contents = popup.querySelectorAll(".fp-popup__content");
+    const images = popup.querySelectorAll(".fp-popup__tab-img");
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        tabs.forEach(function (btn) { btn.classList.remove("active"); });
+        contents.forEach(function (content) { content.classList.remove("active"); });
+        images.forEach(function (img) { img.classList.remove("active"); });
+
+        tab.classList.add("active");
+
+        const content = popup.querySelector('[data-content="' + tab.dataset.tab + '"]');
+        if (content) content.classList.add("active");
+
+        const image = popup.querySelector('[data-image="' + tab.dataset.tab + '"]');
+        if (image) image.classList.add("active");
+      });
+    });
+  });
 </script>
 
 {% schema %}
