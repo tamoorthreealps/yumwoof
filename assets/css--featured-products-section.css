@@ -122,7 +122,6 @@
 	border: 1.28px solid var(--fp-card-border);
 	border-radius: 20px;
 	padding: 2.4rem 2rem 4.4rem;
-	scroll-snap-stop: always;
 	will-change: transform;
 	backface-visibility: hidden;
 }
