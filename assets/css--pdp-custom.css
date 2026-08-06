@@ -93,7 +93,7 @@
   text-decoration: none;
 }
 
-.view-ingredients::after {
+.recipe-view-ingredients::after {
   content: "";
   position: absolute;
   left: 0;
@@ -107,12 +107,12 @@
   transition: transform .35s ease;
 }
 
-.view-ingredients:hover::after {
+.recipe-view-ingredients:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.view-ingredients:not(:hover)::after {
+.recipe-view-ingredients:not(:hover)::after {
   transform: scaleX(0);
   transform-origin: right;
 }
