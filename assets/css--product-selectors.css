@@ -33,7 +33,7 @@
     text-decoration: none;
     color: #000;
     box-sizing: border-box;
-    transition: background .15s ease, border-color .15s ease;
+        transition: all .35s ease;
 }
 
 
