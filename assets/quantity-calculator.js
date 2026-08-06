@@ -333,7 +333,7 @@
           '<button type="button" class="qcalc__cta" data-open>' +
           '<span class="qcalc__cta-text">Not sure how much to order?' +
           ' <u>Let us help decide</u></span>' +
-          '<span class="qcalc__cta-arrow" aria-hidden="true">&rarr;</span>' +
+          '<span class="qcalc__cta-arrow" aria-hidden="true"><svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25982 6.58508C8.49624 6.04086 8.74175 5.56013 8.99636 5.14289C9.25097 4.70752 9.50558 4.33563 9.7602 4.02724H0V2.55784H9.7602C9.50558 2.23131 9.25097 1.85942 8.99636 1.44219C8.74175 1.00681 8.49624 0.526081 8.25982 0H9.54196C10.6877 1.32427 11.8971 2.30387 13.1702 2.9388V3.64628C11.8971 4.26307 10.6877 5.24267 9.54196 6.58508H8.25982Z" fill="black"/></svg></span>' +
           '</button>';
         this.slotEl.querySelector('[data-open]').addEventListener('click', () => this.openQuiz(null));
         this.renderCoverage();
