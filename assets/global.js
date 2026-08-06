@@ -1493,11 +1493,16 @@ class CartPerformance {
 //   });
 // });
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.opinew-stars-plugin-link').forEach(link => {
-    link.addEventListener('click', function (e) {
+  document.querySelectorAll('.rating-wrap').forEach(function (wrap) {
+    wrap.style.cursor = 'pointer';
+
+    wrap.addEventListener('click', function (e) {
       e.preventDefault();
 
-      const target = document.querySelector(this.getAttribute('href'));
+      const link = this.querySelector('.opinew-stars-plugin-link');
+      if (!link) return;
+
+      const target = document.querySelector(link.getAttribute('href'));
 
       if (target) {
         target.scrollIntoView({
@@ -1505,7 +1510,7 @@ document.addEventListener('DOMContentLoaded', function () {
           block: 'start'
         });
 
-        history.replaceState(null, null, this.getAttribute('href'));
+        history.replaceState(null, null, link.getAttribute('href'));
       }
     });
   });
