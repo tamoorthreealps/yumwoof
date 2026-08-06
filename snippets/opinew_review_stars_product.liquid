@@ -2,6 +2,13 @@
     .rating-wrap .opinew-no-reviews-stars-plugin { display: none; }
     .rating-summary {transition: opacity 0.3s ease;}
     .rating-wrap:hover .rating-summary {opacity: .5;}
+    .opw-noci-star-full::before {
+      content: "";
+      display: inline-block;
+      width: 17px;
+      height: 17px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' viewBox='0 0 17 17'%3E%3Cpath d='M7.42969 1.11719C7.77063 0.294223 8.9364 0.29422 9.27734 1.11719L10.9902 5.25684L15.3057 5.69531C16.1609 5.78215 16.5158 6.83609 15.8867 7.42188L12.6055 10.4756L13.5469 14.9463C13.7281 15.8068 12.7898 16.4654 12.042 16.0029L8.35352 13.7197L4.66504 16.0029C3.91721 16.4654 2.97895 15.8068 3.16016 14.9463L4.10156 10.4756L0.820312 7.42188C0.19125 6.83609 0.546113 5.78215 1.40137 5.69531L5.7168 5.25684L7.42969 1.11719Z' fill='%23CB8900' stroke='black'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
 </style>
 {%- liquid
   assign rating = product.metafields.opinew_metafields.reviews_average
