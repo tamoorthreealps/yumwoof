@@ -166,6 +166,14 @@
 {% endfor %} {% endcomment %}
           {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
           {% for media in product.metafields.custom.review_videos.value %}
+            Video Index: {{ forloop.index0 }}<br>
+Thumb Exists:
+{% if thumbnails[forloop.index0] %}
+  YES
+{% else %}
+  NO
+{% endif %}
+<br><br>
             {% assign thumb = thumbnails[forloop.index0] %}
             <div class="splide__slide yumw-video-card" data-video="https:{{ media.sources.first.url }}">
               {% if thumb %}
