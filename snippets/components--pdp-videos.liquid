@@ -251,21 +251,4 @@
       },
     }).mount();
   }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.yumw-video-card').forEach((card) => {
-      const video = card.querySelector('video');
-      const thumb = card.querySelector('.yumw-video-thumb');
-
-      if (!video || !thumb) return;
-
-      if (video.autoplay) {
-        thumb.style.display = 'none';
-        video.style.display = 'block';
-      } else {
-        video.style.display = 'none';
-        thumb.style.display = 'block';
-      }
-    });
-  });
 </script>
