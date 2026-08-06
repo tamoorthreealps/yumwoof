@@ -1,0 +1,53 @@
+{% comment %}
+  Product selectors (PDP)
+  ---------------------------------------------------------------------------
+  Renders a row of anchor "chips" that switch between related products (they
+  look like variant swatches but are links). The chip whose product is the
+  CURRENT product is marked active (by handle).
+
+  Data: product metafield custom.product_selectors -> list of `product_selectors`
+  metaobjects, each with: display_name, image (file), title, product (ref).
+
+  Accepts:
+  - product : {Object} current product
+  - heading : {String} optional legend label (e.g. "Recipe" / "Formula")
+{% endcomment %}
+{%- assign selectors = product.metafields.custom.product_selectors.value -%}
+
+{%- if selectors and selectors.size > 0 -%}
+  {{ 'css--product-selectors.css' | asset_url | stylesheet_tag }}
+
+  <div class="psel">
+    {%- if heading != blank -%}
+      <p class="psel__legend">{{ heading }}</p>
+    {%- endif -%}
+
+    <div class="psel__row" role="list">
+      {%- for sel in selectors -%}
+        {%- assign sp = sel.product -%}
+        {%- if sp == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign is_active = false -%}
+        {%- if sp.handle == product.handle -%}{%- assign is_active = true -%}{%- endif -%}
+        {%- assign sel_title = sel.title | default: sel.display_name -%}
+        <a
+          class="psel__item{% if is_active %} is-active{% endif %}"
+          href="{{ sp.url }}"
+          role="listitem"
+          {% if is_active %}aria-current="true"{% endif %}
+        >
+          {%- if sel.image != blank -%}
+            <img
+              class="psel__img"
+              src="{{ sel.image | image_url: width: 144 }}"
+              alt="{{ sel_title | escape }}"
+              width="72"
+              height="72"
+              loading="lazy"
+            >
+          {%- endif -%}
+          <span class="psel__title">{{ sel_title }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

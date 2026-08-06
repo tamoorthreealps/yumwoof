@@ -1,0 +1,76 @@
+/* Product selectors — anchor chips that switch between related products (PDP) */
+.psel {
+	margin: 2.4rem 0 0;
+}
+
+.psel__legend {
+	margin: 0 0 1.2rem;
+	font-family: 'TAY Birdie', sans-serif;
+	font-size: 1.6rem;
+	line-height: 2rem;
+	letter-spacing: -0.64px;
+	text-transform: uppercase;
+	color: #000;
+}
+
+.psel__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 1.1rem;
+}
+
+.psel__item {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 15.6rem;
+	min-height: 5.6rem;
+	padding: 0.8rem 1.2rem 0.8rem 6rem;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 0.8rem;
+	background: transparent;
+	text-decoration: none;
+	color: #000;
+	box-sizing: border-box;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.psel__item:hover {
+	border-color: rgba(0, 0, 0, 0.35);
+}
+
+.psel__item.is-active {
+	background: rgba(0, 0, 0, 0.1);
+	border-color: #000;
+}
+
+/* Product image sits at the left and pops slightly above the chip. */
+.psel__img {
+	position: absolute;
+	left: -0.2rem;
+	bottom: 0;
+	width: 6.4rem;
+	height: 6.4rem;
+	object-fit: contain;
+	pointer-events: none;
+}
+
+.psel__title {
+	font-family: 'Matter', sans-serif;
+	font-weight: 500;
+	font-size: 1.4rem;
+	line-height: 2rem;
+	letter-spacing: 0;
+	color: #000;
+}
+
+@media screen and (max-width: 749px) {
+	.psel__row {
+		gap: 0.8rem;
+	}
+	.psel__item {
+		width: 100%;
+		max-width: 15.6rem;
+	}
+}
