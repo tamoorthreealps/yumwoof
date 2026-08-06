@@ -74,22 +74,35 @@
   </div>
 </section>
 <script>
-  const founderSection = document.querySelector('.cocomega');
-  const image = founderSection?.querySelector('.cocomega__image');
+document.addEventListener('DOMContentLoaded', () => {
 
-  if (founderSection && image) {
-    function animateFounder() {
-      const rect = founderSection.getBoundingClientRect();
+  const image = document.querySelector('.cocomega__image');
+  const section = document.querySelector('.cocomega');
 
-      let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-      progress = Math.max(0, Math.min(progress, 1));
+  if (!image || !section) return;
 
-      image.style.transform = `scale(${1 + progress * 0.08})`;
-    }
+  function zoomImage() {
 
-    window.addEventListener('scroll', animateFounder, { passive: true });
-    animateFounder();
+    const rect = section.getBoundingClientRect();
+
+    const progress = Math.max(
+      0,
+      Math.min(
+        1,
+        (window.innerHeight - rect.top) / window.innerHeight
+      )
+    );
+
+    const scale = 1 + progress * 0.15;
+
+    image.style.transform = `scale(${scale})`;
+
+    requestAnimationFrame(zoomImage);
   }
+
+  zoomImage();
+
+});
 </script>
 {% schema %}
 {
