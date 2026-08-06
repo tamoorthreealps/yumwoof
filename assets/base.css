@@ -135,7 +135,8 @@ body {
 #gorgias-chat-container {
     z-index: 1 !important;
 }
-.opw-font4Xl.opw-flex.opw-items-start.opw-justify-center {
+.opw-font4Xl.opw-flex.opw-items-start.opw-justify-center,
+.opw-fontBase.opw-flex.opw-items-center.opw-mr-2 {
   display:flex;
   gap:4px;
 }
