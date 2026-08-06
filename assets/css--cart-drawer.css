@@ -1448,11 +1448,11 @@ cart-drawer.active .cd__inner {
 		line-height: 16px;
 	}
 
-	.cd-shop-card__btn {
+	/* .cd-shop-card__btn {
 		font-size: 12px;
 		line-height: 16px;
 		letter-spacing: 0.96px;
-	}
+	} */
 }
 
 /* Desktop ------------------------------------------------------------------*/
