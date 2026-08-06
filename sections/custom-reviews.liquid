@@ -253,6 +253,7 @@
     border-radius: 100%;
     margin: 0 !important;
     padding: 0 !important;
+        font-weight: 500 !important;
 }
 
 .opw-paginator-li {
@@ -309,6 +310,27 @@ span.opw-paginator-li.disabled {
     .opw-nocin-star-empty:after {
         background-image: url("https://cdn.shopify.com/s/files/1/0317/2827/1419/files/emptry-star.svg?v=1786034405");
     }
+
+    .opw-arrow {
+    width: 18px !important;
+    height: 18px !important;
+    border: 0 !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Left Arrow */
+.opw-prev .opw-arrow {
+    background-image: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/reviews--arrow-left.svg?v=1786055339');
+    transform: none !important;
+}
+
+/* Right Arrow */
+.opw-next .opw-arrow {
+    background-image: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/reviews--arrow--right.svg?v=1786055338');
+    transform: rotate(180deg) !important;
+}
   @media screen and (max-width: 768px) {
     .reviews-section .opw-noci-star-full::before,
    .reviews-section .opw-noci-star-half::before,
