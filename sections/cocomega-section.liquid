@@ -75,33 +75,36 @@
 </section>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-
-  const image = document.querySelector('.cocomega__image');
   const section = document.querySelector('.cocomega');
+  const image = section?.querySelector('.cocomega__image');
 
-  if (!image || !section) return;
+  if (!section || !image) return;
 
-  function zoomImage() {
+  let currentScale = 1;
+  let targetScale = 1;
 
-    const rect = section.getBoundingClientRect();
-
-    const progress = Math.max(
-      0,
-      Math.min(
-        1,
-        (window.innerHeight - rect.top) / window.innerHeight
-      )
-    );
-
-    const scale = 1 + progress * 0.15;
-
-    image.style.transform = `scale(${scale})`;
-
-    requestAnimationFrame(zoomImage);
+  function updateScale() {
+    currentScale += (targetScale - currentScale) * 0.08;
+    image.style.transform = `scale(${currentScale})`;
+    requestAnimationFrame(updateScale);
   }
 
-  zoomImage();
+  function onScroll() {
+    const rect = section.getBoundingClientRect();
 
+    let progress =
+      (window.innerHeight - rect.top) /
+      (window.innerHeight + rect.height);
+
+    progress = Math.max(0, Math.min(progress, 1));
+
+    targetScale = 1 + progress * 0.08;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  onScroll();
+  updateScale();
 });
 </script>
 {% schema %}
