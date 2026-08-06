@@ -63,8 +63,9 @@
 
 @media screen and (max-width: 749px) {
 	.psel__row {
-		gap: 0.9rem;
-		flex-wrap: nowrap;
+		        gap: .9rem;
+        flex-wrap: nowrap;
+        display: flex;
 	}
 	.psel__item {
         width: 100%;
