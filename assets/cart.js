@@ -222,9 +222,23 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
           if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle('is-empty', parsedState.item_count === 0);
 
           sectionsToRender.forEach((section) => {
+            if (section.id === 'cart-icon-bubble') {
+              const html = this.getSectionInnerHTML(
+                parsedState.sections[section.section],
+                section.selector
+              );
+
+              document.querySelectorAll('#cart-icon-bubble').forEach((icon) => {
+                icon.innerHTML = html;
+              });
+
+              return;
+            }
+
             const elementToReplace =
               document.getElementById(section.id).querySelector(section.selector) ||
               document.getElementById(section.id);
+
             elementToReplace.innerHTML = this.getSectionInnerHTML(
               parsedState.sections[section.section],
               section.selector
