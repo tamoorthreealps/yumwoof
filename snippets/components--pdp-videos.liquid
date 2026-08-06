@@ -151,7 +151,7 @@
     <div class="yumw-video-grid splide">
       <div class="splide__track">
         <div class="splide__list">
-          {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
+          {% comment %} {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
 
 <p>Thumbnail count:
   {% if thumbnails %}
@@ -163,7 +163,7 @@
 
 {% for thumb in thumbnails %}
   {{ thumb | image_url: width: 300 | image_tag }}
-{% endfor %}
+{% endfor %} {% endcomment %}
           {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
           {% for media in product.metafields.custom.review_videos.value %}
             {% assign thumb = thumbnails[forloop.index0] %}
