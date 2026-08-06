@@ -88,6 +88,9 @@
   line-height: 16px;
   letter-spacing: 0;
   cursor: pointer;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
 }
 
 /* ---------- Recipe image swatches ---------- */
