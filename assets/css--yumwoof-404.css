@@ -124,12 +124,13 @@
     background: #FEC068;
     border: 1px solid #000;
     padding: 12px 31.13px 10.4px;
+    transition: all .25s ease;
 }
 
-/* .yw-404__button:hover {
-  background: var(--yw-ink);
-  color: var(--yw-bg);
-} */
+.yw-404__button:hover {
+    color:#fff9ef;
+    background:#000000;
+}
 
 /* .yw-404__button:focus-visible {
   outline: 2px solid var(--yw-maroon);
