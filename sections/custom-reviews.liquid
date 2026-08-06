@@ -25,7 +25,7 @@
       margin: 0 !important;
       width: 100% !important;
   }
-    .reviews-section{
+    .reviews-section {
         background-color:{{ section.settings.bg_color_desktop }};
         {% if section.settings.bg_image_desktop != blank %}
             background-image:url('{{ section.settings.bg_image_desktop | image_url: width: 2500 }}');
@@ -260,8 +260,15 @@ span.opw-paginator-li.disabled {
     color: #fff9ef !important;
     border-color: #000 !important;
 }
-
+.reviews-section .opw-noci-star-full:before, .reviews-section .opw-noci-star-half:before, .reviews-section .opw-noci-star-empty:before {
+    width: 24px;
+    height: 24px;
+}
   @media screen and (max-width: 768px) {
+    .reviews-section .opw-noci-star-full:before, .reviews-section .opw-noci-star-half:before, .reviews-section .opw-noci-star-empty:before {
+    width: 20px;
+    height: 20px;
+}
       .reviews-section {
        background-color:{{ section.settings.bg_color_mobile }};
 
