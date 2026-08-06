@@ -242,14 +242,14 @@
     border: 1px solid #000 !important;
     opacity: 1 !important;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 24px !important;
     letter-spacing: 0.64px;
     font-family: 'FFBlurProMedium';
     width: 40px;
     height: 40px;
-    display: flex;
+    display: flex !important;
     justify-content: center;
-    align-items: center;
+    align-items: center !important;
     border-radius: 100%;
     margin: 0 !important;
     padding: 0 !important;
@@ -260,6 +260,7 @@
     line-height: 24px;
     letter-spacing: 0.64px;
     font-family: 'FFBlurProMedium';
+    padding: 0 !important;
 }
 
 .opw-arrow.opw-paginationArrowsButtonColor {
@@ -409,6 +410,18 @@ span.opw-paginator-li.disabled {
       width: 80px;
       height: 80px;
   }
+  .opw-pagination-container a, .opw-pagination-container button {
+    font-size: 14px;
+    line-height: 20px !important;
+    letter-spacing: 0.56px;
+    width: 36px;
+    height: 36px;
+}
+.opw-paginator-li {
+    font-size: 14px;
+    line-height: 20px !important;
+    letter-spacing: 0.56px;
+}
   }
 </style>
 
