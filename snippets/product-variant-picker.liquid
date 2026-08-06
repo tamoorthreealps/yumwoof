@@ -44,7 +44,7 @@
       -%}
       {%- if picker_type == 'recipe_image' -%}
         <fieldset class="js product-form__input product-form__input--recipe">
-          <div class="recipe-heading  {%- if swatch_badge == blank -%} recipe-heading_nobadge{%- endif -%}">
+          <div class="recipe-heading  {% if swatch_badge == blank %} recipe-heading_nobadge{% endif %} ">
             <legend class="form__label form__label--numbered">{{ option.name }}</legend>
             {% if popup %}
               <button
