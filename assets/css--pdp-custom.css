@@ -62,6 +62,10 @@
   margin: 0 0 24px;
 }
 
+.recipe-heading.recipe-heading_nobadge {
+  margin-bottom:12px;
+}
+
 .product-form__input .form__label.form__label--numbered {
     font-family: "TAY Birdie", var(--font-body-family, sans-serif);
     font-size: 14px;
