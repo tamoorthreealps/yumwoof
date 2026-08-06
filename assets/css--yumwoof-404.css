@@ -54,7 +54,7 @@
   /* Height runs from the top of the numerals to the bottom of the dog, so the
      gap below is measured off the artwork rather than the 156px line box. */
   height: 177px;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
   overflow: visible;
   line-height: 0;
 }
@@ -113,18 +113,17 @@
 /* --- Sticker button ------------------------------------------------------ */
 
 .yw-404__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 168px;
-  height: 72px;
-  margin-top: 24px;
-  border-radius: 50%;
-  color: var(--yw-ink);
-  text-decoration: none;
-  transition: background-color 200ms ease, color 200ms ease;
-  background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Sticker.svg?v=1785017194") center / contain no-repeat;
-  border: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    border-radius: 100px;
+    color: var(--yw-ink);
+    text-decoration: none;
+    transition: background-color .2s ease, color .2s ease;
+    background: #FEC068;
+    border: 1px solid #000;
+    padding: 12px 31.13px 10.4px;
 }
 
 /* .yw-404__button:hover {
