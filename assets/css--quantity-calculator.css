@@ -119,6 +119,11 @@
   flex: none;
 }
 
+.qcalc__cta-arrow svg {
+  width:14px;
+  height:7px;
+}
+
 /* saved-dogs summary card */
 .qcalc__summary {
     background: transparent;
@@ -795,6 +800,10 @@
     letter-spacing: -.14px;
     margin-top: 12px;
     margin-bottom: 4px;
+}
+.qcalc__cta-arrow svg {
+  width:12px;
+  height:6px;
 }
 }
 
