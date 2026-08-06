@@ -14,10 +14,9 @@
 }
 
 .psel__row {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: flex-end;
-	gap: 1.1rem;
+    gap: 1.1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .psel__item {
