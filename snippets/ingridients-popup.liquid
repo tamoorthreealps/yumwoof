@@ -75,7 +75,6 @@
        	visibility: hidden;
        	opacity: 0;
        	transition: .35s;
-        padding: 12px;
        }
 
        .ingredients-popup.active {
@@ -92,13 +91,13 @@
 
      .ingredients-popup__panel {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 12px;
+      right: 12px;
       left: auto;
       width: max-content;
       min-width: 464px;
       max-width: min-content;
-      height: 100vh;
+      height: calc(100vh - 24px);
       transform: translateX(110%);
       transition: transform .7s cubic-bezier(.22, 1, .36, 1);
        background: rgba(255, 255, 255, 0.9);
@@ -296,9 +295,7 @@
        }
 
        @media(max-width:768px) {
-.ingredients-popup {
-        padding: 8px;
-       }
+
        	    .ingredients-popup__panel {
         overflow-y: auto;
         min-width: 100%;
