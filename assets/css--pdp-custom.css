@@ -888,6 +888,7 @@ a.pdp--promo--banner_link svg {
     line-height: 56px;
     letter-spacing: -0.48px;
     margin: 0;
+    transform: translateY(-4px);
   }
 
   .product__title + .product__text.caption-with-letter-spacing {
