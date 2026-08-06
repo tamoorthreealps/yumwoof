@@ -118,7 +118,7 @@
         "cta_link": "",
         "cta_bg_color": "#ffc069",
         "cta_text_color": "#000000",
-        "membership_text": "Membership",
+        "membership_text": "",
         "membership_link": ""
       }
     }
