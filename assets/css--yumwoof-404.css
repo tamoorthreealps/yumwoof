@@ -110,6 +110,10 @@
   letter-spacing:0;
 }
 
+.yw-404__text p {
+  margin:0;
+}
+
 /* --- Sticker button ------------------------------------------------------ */
 
 .yw-404__button {
