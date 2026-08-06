@@ -27,7 +27,11 @@
    -------------------------------------------------------------------------- */
 .cocomega__media {
   position: relative;
+}
+
+.cocomega__media_wrapper {
   overflow: hidden;
+  border-radius: 24px;
 }
 
 .cocomega__image {
