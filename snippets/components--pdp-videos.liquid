@@ -151,30 +151,21 @@
     <div class="yumw-video-grid splide">
       <div class="splide__track">
         <div class="splide__list">
-          {% comment %} {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
+{% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
 
-<p>Thumbnail count:
-  {% if thumbnails %}
-    {{ thumbnails.size }}
-  {% else %}
-    No thumbnails
-  {% endif %}
-</p>
+{% for media in product.metafields.custom.review_videos.value %}
+  {% assign current_index = forloop.index %}
 
-{% for thumb in thumbnails %}
-  {{ thumb | image_url: width: 300 | image_tag }}
-{% endfor %} {% endcomment %}
+  <div
+    class="splide__slide yumw-video-card"
+    data-video="https:{{ media.sources.first.url }}"
+  >
 
-          {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
-          
-          {% for media in product.metafields.custom.review_videos.value %}
-            {% assign thumb = thumbnails | slice: forloop.index0, 1 | first %}
-            <div class="splide__slide yumw-video-card" data-video="https:{{ media.sources.first.url }}">
-              {% if thumb %}
-                {{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
-              {% else %}
-                {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
-              {% endif %}
+    {% for thumb in thumbnails %}
+      {% if forloop.index == current_index %}
+        {{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
+      {% endif %}
+    {% endfor %}
               <button class="yumw-video-play" type="button">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/>
