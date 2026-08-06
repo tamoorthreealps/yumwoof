@@ -296,11 +296,12 @@
       /* ---------- helpers ---------- */
 
       function cancelAnim() {
-        if (animId) {
-          cancelAnimationFrame(animId);
-          animId = null;
-        }
+      if (animId) {
+        cancelAnimationFrame(animId);
+        animId = null;
+        viewport.style.scrollSnapType = '';
       }
+    }
 
       function smoothScrollTo(target, duration) {
         cancelAnim();
@@ -308,6 +309,9 @@
         var start = viewport.scrollLeft;
         var change = target - start;
         var startTime = performance.now();
+        var prevSnap = viewport.style.scrollSnapType;
+
+        viewport.style.scrollSnapType = 'none';
 
         function animate(now) {
           var progress = Math.min((now - startTime) / duration, 1);
@@ -317,6 +321,7 @@
             animId = requestAnimationFrame(animate);
           } else {
             animId = null;
+            viewport.style.scrollSnapType = prevSnap;  // restore
           }
         }
         animId = requestAnimationFrame(animate);
