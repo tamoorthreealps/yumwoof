@@ -495,14 +495,25 @@
       /* ---------- render state ---------- */
 
       function updateScale() {
-        var viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
-        var maxDistance = viewport.clientWidth / 2;
-        slides.forEach(function (slide) {
-          var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-          var progress = Math.max(0, 1 - Math.abs(viewportCenter - slideCenter) / maxDistance);
-          slide.style.transform = 'scale(' + (0.85 + progress * 0.15) + ')';
-        });
-      }
+  var viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2;
+  var maxDistance = viewport.clientWidth / 2;
+  var settling = !animId;   // true once the smooth-scroll animation is done
+
+  slides.forEach(function (slide) {
+    var slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+    var distance = Math.abs(viewportCenter - slideCenter);
+
+    // Anything within a couple px of centre is *the* active card — pin it.
+    if (settling && distance < 3) {
+      slide.style.transform = 'scale(1)';
+      return;
+    }
+
+    var progress = Math.max(0, 1 - distance / maxDistance);
+    var scale = 0.85 + progress * 0.15;
+    slide.style.transform = 'scale(' + scale.toFixed(4) + ')';
+  });
+}
 
       function update() {
         var idx = currentIndex();
