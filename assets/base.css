@@ -135,6 +135,10 @@ body {
 #gorgias-chat-container {
     z-index: 1 !important;
 }
+.opw-font4Xl.opw-flex.opw-items-start.opw-justify-center {
+  display:flex;
+  gap:4px;
+}
     .rating-summary {transition: opacity 0.3s ease;}
     .rating-wrap:hover .rating-summary {opacity: .5;}
     .opw-noci-star-full::before,
