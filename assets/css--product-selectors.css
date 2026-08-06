@@ -36,11 +36,8 @@
     transition: background .15s ease, border-color .15s ease;
 }
 
-.psel__item:hover {
-	border-color: rgba(0, 0, 0, 0.35);
-}
 
-.psel__item.is-active {
+.psel__item.is-active, .psel__item:hover {
 	background: rgba(0, 0, 0, 0.1);
 	border-color: #000;
 }
