@@ -155,13 +155,13 @@
 
           {% for media in product.metafields.custom.review_videos.value %}
             {% assign thumb = thumbnails[forloop.index0] %}
-
+{{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
             <div class="splide__slide yumw-video-card" data-video="https:{{ media.sources.first.url }}">
               {% if section.settings.show_video %}
                 {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
               {% else %}
                 {% if thumb %}
-                 {{ thumb | json }}
+                  {{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
                 {% else %}
                   {{ media.preview_image | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
                 {% endif %}
