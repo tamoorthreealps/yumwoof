@@ -566,6 +566,13 @@
                     <div {{ block.shopify_attributes }}>
                       {%- render 'quantity-calculator', product: product, section_id: section.id -%}
                     </div>
+                  {%- when 'product-selectors' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- render 'product-selectors',
+                        product: product,
+                        heading: block.settings.heading
+                      -%}
+                    </div>
                   {%- when 'nutrition-label' -%}
                     <div class="component--nutrition--btns" {{ block.shopify_attributes }}>
                       {%- render 'nutrition-label',
@@ -1032,6 +1039,23 @@
         {
           "type": "paragraph",
           "content": "Shows a 'Not sure how much to order?' quiz that sizes the order to the shopper's dog(s). Only appears on products that have a Feeding table set in custom.feeding_table."
+        }
+      ]
+    },
+    {
+      "type": "product-selectors",
+      "name": "Product selectors",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Row of clickable product 'chips' that switch between related products (like variants, but links). Reads the product metafield custom.product_selectors (list of Product Selectors metaobjects). The chip matching the current product is highlighted."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Recipe"
         }
       ]
     },
