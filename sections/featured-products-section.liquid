@@ -42,57 +42,69 @@
             {%- assign recipes_mf = product.metafields[recipes_parts[0]][recipes_parts[1]] -%}
             {%- assign recipes_url = recipes_mf.value | default: product.url -%}
 
-            {%- comment -%}
-              One card per RECIPE VARIANT — a variant becomes a card when it has a
-              custom.variant_image metafield. The recipe (variant title) replaces the
-              old labels pill; hover shows custom.variant_image_hover.
-            {%- endcomment -%}
-            {%- assign variant_cards = 0 -%}
-            {%- for v in product.variants -%}
-              {%- assign v_image = v.metafields.custom.variant_image.value -%}
-              {%- if v_image == blank -%}{%- continue -%}{%- endif -%}
-              {%- assign variant_cards = variant_cards | plus: 1 -%}
-              {%- assign v_hover = v.metafields.custom.variant_image_hover.value -%}
-              <li class="fp__card{% if v_hover != blank %} fp__card__hover{% endif %}" data-fp-slide>
-                <div class="fp__hover-media">
-                  {%- if v_hover != blank -%}
-                    {{ v_hover | image_url: width: 1200 | image_tag: class: 'fp__hover-image', alt: '' }}
-                  {%- endif -%}
-                </div>
-                <h3 class="fp__title">{{ product.title }}</h3>
-
-                {%- unless v.title == 'Default Title' or v.title == blank -%}
-                  <ul class="fp__labels" role="list">
-                    <li class="fp__label">{{ v.title }}</li>
-                  </ul>
-                {%- endunless -%}
-
-                <a class="fp__media" href="{{ v.url }}" tabindex="-1" aria-hidden="true">
-                  {{
-                    v_image
-                    | image_url: width: 600
-                    | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: v.title, loading: 'lazy'
-                  }}
-                </a>
-
-                {%- if desc_mf.value != blank -%}
-                  <p class="fp__desc">{{ desc_mf.value }}</p>
-                {%- endif -%}
-
-                {%- if section.settings.recipes_label != blank -%}
-                  <a class="fp__recipes" href="#" data-popup="popup-{{ p_index }}">
-                    {{- section.settings.recipes_label -}}
-                  </a>
-                {%- endif -%}
-
-                <a class="fp__shop" href="{{ v.url }}">
-                  <span class="fp__shop-label">{{ section.settings.shop_label }}</span>
-                </a>
-              </li>
+            {%- comment -%} Locate the "Recipe" option so cards can be split by recipe (ignoring Size etc.). {%- endcomment -%}
+            {%- assign recipe_pos = 0 -%}
+            {%- for opt in product.options_with_values -%}
+              {%- assign opt_name_dc = opt.name | downcase -%}
+              {%- if opt_name_dc == 'recipe' -%}{%- assign recipe_pos = forloop.index -%}{%- endif -%}
             {%- endfor -%}
 
-            {%- comment -%} Fallback for products with no variant images: the original product card. {%- endcomment -%}
-            {%- if variant_cards == 0 -%}
+            {%- if section.settings.split_by_recipe and recipe_pos > 0 -%}
+              {%- comment -%}
+                One card per RECIPE value. We walk the variants and render the first
+                variant of each recipe, reading its custom.variant_image /
+                custom.variant_image_hover metafields (falling back to the product image).
+              {%- endcomment -%}
+              {%- assign recipe_index0 = recipe_pos | minus: 1 -%}
+              {%- assign seen_recipes = '|' -%}
+              {%- for v in product.variants -%}
+                {%- assign recipe_val = v.options[recipe_index0] -%}
+                {%- assign recipe_key = '|' | append: recipe_val | append: '|' -%}
+                {%- if seen_recipes contains recipe_key -%}{%- continue -%}{%- endif -%}
+                {%- assign seen_recipes = seen_recipes | append: recipe_val | append: '|' -%}
+                {%- assign v_hover = v.metafields.custom.variant_image_hover.value -%}
+                {%- assign card_img = v.metafields.custom.variant_image.value | default: product.featured_image -%}
+                <li class="fp__card{% if v_hover != blank %} fp__card__hover{% endif %}" data-fp-slide>
+                  <div class="fp__hover-media">
+                    {%- if v_hover != blank -%}
+                      {{ v_hover | image_url: width: 1200 | image_tag: class: 'fp__hover-image', alt: '' }}
+                    {%- endif -%}
+                  </div>
+                  <h3 class="fp__title">{{ product.title }}</h3>
+
+                  <ul class="fp__labels" role="list">
+                    <li class="fp__label">{{ recipe_val }}</li>
+                  </ul>
+
+                  <a class="fp__media" href="{{ v.url }}" tabindex="-1" aria-hidden="true">
+                    {%- if card_img != blank -%}
+                      {{
+                        card_img
+                        | image_url: width: 600
+                        | image_tag: class: 'fp__img', widths: '200, 300, 460, 600', alt: recipe_val, loading: 'lazy'
+                      }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}
+                    {%- endif -%}
+                  </a>
+
+                  {%- if desc_mf.value != blank -%}
+                    <p class="fp__desc">{{ desc_mf.value }}</p>
+                  {%- endif -%}
+
+                  {%- if section.settings.recipes_label != blank -%}
+                    <a class="fp__recipes" href="#" data-popup="popup-{{ p_index }}">
+                      {{- section.settings.recipes_label -}}
+                    </a>
+                  {%- endif -%}
+
+                  <a class="fp__shop" href="{{ v.url }}">
+                    <span class="fp__shop-label">{{ section.settings.shop_label }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%} Simple product card (toggle off, or no Recipe option). {%- endcomment -%}
               {%- assign labels_mf = product.metafields[labels_parts[0]][labels_parts[1]] -%}
               {%- if labels_mf.type contains 'list' -%}
                 {%- assign labels_list = labels_mf.value -%}
@@ -757,6 +769,13 @@
       "id": "products",
       "label": "Products",
       "limit": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "split_by_recipe",
+      "label": "Split into a card per recipe",
+      "info": "On: one card per recipe (using the variant image / hover metafields). Off: one simple product card per product.",
+      "default": true
     },
     {
       "type": "header",
