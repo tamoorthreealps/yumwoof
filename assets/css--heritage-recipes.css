@@ -82,6 +82,7 @@
 	z-index: 1;
 	position: relative;
 	margin: 32px 0 0;
+	width:100%;
 }
 
 .heritage__button:hover {
@@ -455,6 +456,7 @@
 		font-size: 16px;
 		letter-spacing: .64px;
 		margin: 0;
+		width:auto;
 	}
 
 	.heritage__heading {
