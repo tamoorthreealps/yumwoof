@@ -398,6 +398,10 @@
   .nldrawer__card {
     width: 100%;
     height: 100%;
+    transform: translate3d(0, 100%, 0);
+  }
+  .nldrawer.is-open .nldrawer__card {
+    transform: translate3d(0, 0, 0);
   }
   .nldrawer__head {
     min-height: 10.8rem;
