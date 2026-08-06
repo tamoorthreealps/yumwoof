@@ -156,10 +156,10 @@
             {% assign thumb = thumbnails[forloop.index0] %}
             <div class="splide__slide yumw-video-card" data-video="https:{{ media.sources.first.url }}">
               {% if thumb %}
-                {{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb', loading: 'lazy' }}
-              {% else %}
-                {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
-              {% endif %}
+  <img src="{{ thumb | file_url }}" class="yumw-video-thumb" alt="" loading="lazy">
+{% else %}
+  {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+{% endif %}
               <button class="yumw-video-play" type="button">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/>
