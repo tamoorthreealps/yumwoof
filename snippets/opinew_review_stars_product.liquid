@@ -1,35 +1,5 @@
 <style>
     .rating-wrap .opinew-no-reviews-stars-plugin { display: none; }
-    .rating-summary {transition: opacity 0.3s ease;}
-    .rating-wrap:hover .rating-summary {opacity: .5;}
-    .opw-noci-star-full::before,
-    .opw-noci-star-half::before,
-    .opw-noci-star-empty:before {
-        content: "";
-        display: inline-block;
-        width: 17px;
-        height: 17px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-    .opw-noci-star-full::after,
-    .opw-noci-star-half::after,
-    .opw-nocin-star-empty::after {
-      display:none;
-    }
-
-    .opw-noci-star-full::before {
-        background-image: url("https://cdn.shopify.com/s/files/1/0317/2827/1419/files/full-star.svg?v=1786034114");
-    }
-
-    .opw-noci-star-half::before {
-        background-image: url("https://cdn.shopify.com/s/files/1/0317/2827/1419/files/half-star.svg?v=1786034115");
-    }
-
-    .opw-noci-star-empty:before {
-        background-image: url("https://cdn.shopify.com/s/files/1/0317/2827/1419/files/emptry-star.svg?v=1786034405");
-    }
 </style>
 {%- liquid
   assign rating = product.metafields.opinew_metafields.reviews_average
