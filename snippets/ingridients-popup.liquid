@@ -75,6 +75,7 @@
        	visibility: hidden;
        	opacity: 0;
        	transition: .35s;
+        padding: 12px;
        }
 
        .ingredients-popup.active {
@@ -295,7 +296,9 @@
        }
 
        @media(max-width:768px) {
-
+.ingredients-popup {
+        padding: 8px;
+       }
        	    .ingredients-popup__panel {
         overflow-y: auto;
         min-width: 100%;
