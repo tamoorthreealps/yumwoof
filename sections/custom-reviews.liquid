@@ -402,6 +402,43 @@ span.opw-paginator-li.disabled {
   }
 </style>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+  function expandReviews(root = document) {
+    root.querySelectorAll('.show-more').forEach((btn) => {
+      if (!btn.dataset.expanded) {
+        btn.dataset.expanded = 'true';
+        btn.click();
+      }
+    });
+  }
+
+  // Initial load
+  expandReviews();
+
+  // Watch for new reviews (lazy load / pagination)
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) return;
+
+        if (node.matches?.('.show-more')) {
+          expandReviews(node.parentNode);
+        } else {
+          expandReviews(node);
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+});
+</script>
+
 {% schema %}
 {
   "name": "Custom Reviews",
