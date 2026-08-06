@@ -77,10 +77,30 @@
         </div>
       {%- endif -%}
     </div>
-    {% if section.settings.faq_image != blank %}
+    {% if section.settings.faq_image != blank or section.settings.faq_image_mobile != blank %}
       <div class="faqs__right">
         <div class="faqs__right_img">
-          {{ section.settings.faq_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'faqs__image' }}
+          {% if section.settings.faq_image != blank %}
+            {{
+              section.settings.faq_image
+              | image_url: width: 900
+              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--desktop'
+            }}
+          {% endif %}
+
+          {% if section.settings.faq_image_mobile != blank %}
+            {{
+              section.settings.faq_image_mobile
+              | image_url: width: 700
+              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
+            }}
+          {% elsif section.settings.faq_image != blank %}
+            {{
+              section.settings.faq_image
+              | image_url: width: 700
+              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
+            }}
+          {% endif %}
         </div>
       </div>
     {% endif %}
@@ -133,6 +153,11 @@
       "type": "image_picker",
       "id": "faq_image",
       "label": "FAQ Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "faq_image_mobile",
+      "label": "FAQ Image (Mobile)"
     },
     {
       "type": "checkbox",
