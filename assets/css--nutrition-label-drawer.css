@@ -393,7 +393,7 @@
 /* Mobile — full-width side drawer */
 @media screen and (max-width: 749px) {
   .nldrawer {
-    padding: 4px 4px 0;
+    padding: 4px;
     align-items: flex-end;
   }
   .nldrawer__card {
@@ -403,7 +403,7 @@
     max-height: 90vh;
     transform: translateY(100%);
     opacity: 1;
-    border-radius: 24px 24px 0 0;
+    border-radius: 20px;
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .nldrawer.is-open .nldrawer__card {
