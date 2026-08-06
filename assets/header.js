@@ -84,16 +84,14 @@ class YwHeader extends HTMLElement {
 
     const current = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (current <= 0) {
+    if (current < 400) {
       this.classList.remove('yw-header--hidden');
       this.lastScroll = current;
       return;
     }
 
-    if (current > this.lastScroll && current > this.offsetHeight) {
+    if (current > this.lastScroll) {
       this.classList.add('yw-header--hidden');
-    } else {
-      this.classList.remove('yw-header--hidden');
     }
 
     this.lastScroll = current;
