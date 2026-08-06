@@ -193,14 +193,12 @@
   }
 
   .yw-404__button {
-    width: 212px;
-    height: 80px;
-    background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button_5aa6fb69-b240-4be3-85f5-47b3d5e90004.svg?v=1785017111") center / contain no-repeat;
+
   }
 
   .yw-404__button-label {
     font-size: 16px;
-    letter-spacing: 1.28px;
+    letter-spacing: 0.64px;
   }
 }
 
