@@ -164,6 +164,15 @@
 {% for thumb in thumbnails %}
   {{ thumb | image_url: width: 300 | image_tag }}
 {% endfor %} {% endcomment %}
+ {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
+
+{% for media in product.metafields.custom.review_videos.value %}
+  {% for thumb in thumbnails %}
+    {% if forloop.index0 == parentloop.index0 %}
+      {{ thumb | image_url: width: 500 | image_tag }}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
           {% assign thumbnails = product.metafields.custom.review_videos_thumbnails.value %}
           
           {% for media in product.metafields.custom.review_videos.value %}
