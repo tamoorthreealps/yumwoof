@@ -129,6 +129,40 @@
       }
     });
   });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const section = document.querySelector('.faqs');
+  const image = section?.querySelector('.faqs__image');
+
+  if (!section || !image) return;
+
+  let currentScale = 1;
+  let targetScale = 1;
+
+  function updateScale() {
+    currentScale += (targetScale - currentScale) * 0.08;
+    image.style.transform = `scale(${currentScale})`;
+    requestAnimationFrame(updateScale);
+  }
+
+  function onScroll() {
+    const rect = section.getBoundingClientRect();
+
+    let progress =
+      (window.innerHeight - rect.top) /
+      (window.innerHeight + rect.height);
+
+    progress = Math.max(0, Math.min(progress, 1));
+
+    targetScale = 1 + progress * 0.08;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  onScroll();
+  updateScale();
+});
 </script>
 
 {% schema %}
