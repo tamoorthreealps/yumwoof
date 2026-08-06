@@ -393,7 +393,8 @@
 /* Mobile — full-width side drawer */
 @media screen and (max-width: 749px) {
   .nldrawer {
-    padding: 4px;
+    padding: 4px 4px 0;
+    align-items: flex-end;
   }
   .nldrawer__card {
     width: 100%;
