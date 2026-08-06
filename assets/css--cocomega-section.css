@@ -187,6 +187,10 @@
     order: 2;
   }
 
+  .cocomega__media_wrapper {
+    border-radius: var(--co-radius);
+  }
+
   .cocomega__image {
     aspect-ratio: 726 / 588;
     border-radius: var(--co-radius);
