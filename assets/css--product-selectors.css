@@ -65,10 +65,13 @@
 @media screen and (max-width: 749px) {
 	.psel__row {
 		gap: 0.9rem;
+		flex-wrap: nowrap;
 	}
 	.psel__item {
-		width: 100%;
-	}
+        width: 100%;
+        padding: 12px 16px 76px;
+        text-align: center;
+    }
 	.psel__title {
 		line-height: 1.6rem;
 		letter-spacing: 0.28px;
