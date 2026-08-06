@@ -359,6 +359,7 @@
     margin: 0 auto 8px;
     color: #000000;
     max-width: 320px;
+    text-align: center;
 }
 .qz-body .qz-content.qz-step-2 h2,
 .qz-body .qz-content.qz-step-3 h2 {
@@ -371,6 +372,7 @@
     line-height: 24px;
     letter-spacing: 0;
     max-width: 355px;
+    text-align: center;
 }
 
 .qz-body .qz-content.qz-step-2 .qz-sub,
