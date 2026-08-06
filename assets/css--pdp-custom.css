@@ -959,8 +959,6 @@ a.pdp--promo--banner_link svg {
   .recipe-swatches {
     flex-wrap: wrap;
     gap: 11px;
-            display: grid;
-        grid-template-columns: repeat(3, 1fr);
   }
 
   .recipe-swatch__label {
