@@ -14,22 +14,24 @@
       <h2 class="cocomega__heading cocomega__heading_mobile">{{ section.settings.heading }}</h2>
     {%- endif -%}
     <div class="cocomega__media">
-      {%- if section.settings.image != blank -%}
-        {%- assign co_alt = section.settings.image.alt | default: section.settings.heading -%}
-        {{
-          section.settings.image
-          | image_url: width: 1400
-          | image_tag:
-            class: 'cocomega__image',
-            widths: '400, 700, 1000, 1400',
-            sizes: '(min-width: 990px) 55vw, 100vw',
-            alt: co_alt
-        }}
-      {%- else -%}
-        <div class="cocomega__image cocomega__image--placeholder">
-          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-        </div>
-      {%- endif -%}
+      <div class="cocomega__media_wrapper">
+        {%- if section.settings.image != blank -%}
+          {%- assign co_alt = section.settings.image.alt | default: section.settings.heading -%}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'cocomega__image',
+              widths: '400, 700, 1000, 1400',
+              sizes: '(min-width: 990px) 55vw, 100vw',
+              alt: co_alt
+          }}
+        {%- else -%}
+          <div class="cocomega__image cocomega__image--placeholder">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
 
       {%- if section.settings.badge_image != blank -%}
         <span class="cocomega__badge">
