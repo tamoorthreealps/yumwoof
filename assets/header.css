@@ -383,6 +383,7 @@
   color: var(--yw-nav-text);
   font-family: TAYRosemary;
   letter-spacing: 0;
+  transform: translateY(-0.08em);
 }
 
 .yw-mega__subheading {
@@ -653,6 +654,7 @@ body.is-open::after {
   font-size: 3rem;
   line-height: 1.1;
   color: var(--yw-nav-text);
+  transform: inherit;
 }
 
 .yw-mobile-mega .yw-mega__subheading {
