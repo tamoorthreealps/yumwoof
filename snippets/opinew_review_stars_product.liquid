@@ -7,14 +7,14 @@
 -%}
 
 {% if product.metafields.opinew_metafields['stars_product'] != blank %}
-  <span class="rating-wrap sda">
+  <a href="#opinew-plugin" class="rating-wrap">
     {{ product.metafields.opinew_metafields['stars_product'] }}
     {% if rating_count > 0 %}
       <span class="rating-summary">
         {{ rating | times: 1.0 | round: 1 }} ({{ rating_count }})
       </span>
     {% endif %}
-  </span>
+  </a>
 {% else %}
   <a role="button" class="opinew-stars-plugin-link opinew-product-page-stars-disable" aria-label="Product reviews" href="#opinew-plugin" style="text-decoration:none;color:inherit;">
     <span class="opinew-star-plugin-inside" aria-label="product star rating">
