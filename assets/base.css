@@ -140,7 +140,7 @@ body {
     .opw-noci-star-full::before,
     .opw-noci-star-half::before,
     .opw-noci-star-empty:before {
-        content: "";
+        content: "" !important;
         display: inline-block;
         width: 17px;
         height: 17px;
