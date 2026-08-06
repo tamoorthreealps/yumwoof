@@ -66,7 +66,9 @@
       {%- endif -%}
 
       {%- if section.settings.text != blank -%}
-        <p class="yw-404__text">{{ section.settings.text }}</p>
+        <div class="yw-404__text">
+          {{ section.settings.text }}
+        </div>
       {%- endif -%}
     </div>
 
