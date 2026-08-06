@@ -31,18 +31,16 @@
           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
       {%- endif -%}
-      </div>
-      {%- if section.settings.badge_image != blank -%}
-        <span class="founder__badge">
-          {{
-            section.settings.badge_image
-            | image_url: width: 320
-            | image_tag: alt: '', widths: '160, 240, 320', loading: 'lazy'
-          }}
-        </span>
-      {%- endif -%}
-
     </div>
+    {%- if section.settings.badge_image != blank -%}
+      <span class="founder__badge">
+        {{
+          section.settings.badge_image
+          | image_url: width: 320
+          | image_tag: alt: '', widths: '160, 240, 320', loading: 'lazy'
+        }}
+      </span>
+    {%- endif -%}
 
     <div class="founder__content">
       {%- if section.settings.heading != blank -%}
