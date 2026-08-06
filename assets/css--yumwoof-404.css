@@ -114,6 +114,10 @@
   margin:0;
 }
 
+.yw-404__text br{
+    display:none;
+  }
+
 /* --- Sticker button ------------------------------------------------------ */
 
 .yw-404__button {
@@ -195,6 +199,10 @@
     max-width: 492px;
     font-size: 18px;
     line-height: 28px;
+  }
+
+  .yw-404__text br{
+    display:block;
   }
 
   .yw-404__button {
