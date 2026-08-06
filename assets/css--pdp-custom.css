@@ -549,6 +549,7 @@
     min-height: 56px;
     display: flex;
     align-items: center;
+    transition: all .35s ease;
 }
 
 .product-form__input--pill
