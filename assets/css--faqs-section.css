@@ -233,7 +233,9 @@ font-size: 16px;
 .faqs__inner__media .faqs__head {
   margin-bottom: 1.6rem;
 }
-
+  .faqs__image--desktop {
+    display: none;
+  }
 @media screen and (min-width: 990px) {
   .faqs__inner__media {
     grid-template-columns: 488px minmax(0, 1fr);
@@ -269,5 +271,12 @@ font-size: 16px;
   }
   .faqs__inner__media .faqs__answer-inner {
     padding: 0 0 24px;
+  }
+    .faqs__image--desktop {
+    display: block;
+  }
+
+  .faqs__image--mobile {
+    display: none;
   }
 }
