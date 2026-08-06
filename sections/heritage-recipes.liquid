@@ -238,24 +238,27 @@
   })();
 
   {%- if section.settings.badge_image != blank -%}
-    const section = document.querySelector('.heritage');
-    const badge = document.querySelector('.heritage__badge');
+const section = document.querySelector('.heritage');
+const badge = document.querySelector('.heritage__badge');
 
-    let rotation = 0;
-    let lastScroll = window.scrollY;
+let rotation = 0;
+let lastScroll = window.scrollY;
+const maxRotation = 15; // max 15deg either direction
 
-    window.addEventListener('scroll', () => {
-        const rect = section.getBoundingClientRect();
+window.addEventListener('scroll', () => {
+  const rect = section.getBoundingClientRect();
 
-        // Sirf jab section viewport me ho
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            const diff = window.scrollY - lastScroll;
-            rotation += diff * 0.35; // speed adjust kar lo
-            badge.style.transform = `rotate(${rotation}deg)`;
-        }
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+    const diff = window.scrollY - lastScroll;
 
-        lastScroll = window.scrollY;
-    });
+    rotation += diff * 0.15;
+    rotation = Math.max(-maxRotation, Math.min(maxRotation, rotation));
+
+    badge.style.transform = `rotate(${rotation}deg)`;
+  }
+
+  lastScroll = window.scrollY;
+});
   {% endif %}
 </script>
 
