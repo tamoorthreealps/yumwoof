@@ -90,16 +90,14 @@
        }
 
      .ingredients-popup__panel {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      left: auto;
+       position: absolute;
+       top: 50%;
+       left: 50%;
+         transform: translate(-50%, -110%);
+        transition: transform .6s cubic-bezier(.22, 1, .36, 1);
       width: max-content;
       min-width: 464px;
       max-width: min-content;
-      height: calc(100vh - 24px);
-      transform: translateX(110%);
-      transition: transform .7s cubic-bezier(.22, 1, .36, 1);
        background: rgba(255, 255, 255, 0.9);
        border-radius: 24px;
        -webkit-backdrop-filter: blur(10px);
@@ -107,8 +105,8 @@
    }
 
        .ingredients-popup.active .ingredients-popup__panel {
-  transform: translateX(0);
-}
+       	transform: translate(-50%, -50%);
+       }
      .ingredients-popup__panel_head {
          background-color: rgba(132, 149, 75, 0.9);
          border-radius: 23px 23px 0 0;
