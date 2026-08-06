@@ -147,10 +147,10 @@
 
 .heritage__card {
 	position: relative;
-	min-height: 0;
+	min-height: 528px;
 	max-width: 344px;
 	margin: 0 auto;
-	padding: 0;
+	padding: 48px 26px 64px;
 	width: 100%;
 	display: flex;
     align-items: center;
@@ -418,10 +418,8 @@
 	display: block;
 	position: absolute;
 	inset: 0;
-	height: auto;
+	height: 100%;
 	width: 100%;
-	object-fit: contain;   /* or: cover */
-	object-position: center;
 }
 
 /* --------------------------------------------------------------------------
@@ -503,11 +501,13 @@
 	}
 
 	.heritage__ingredients {
+		grid-template-columns: 1fr 1fr;
+		gap: 2.4rem 2.2rem;
+		max-width: 480px;
 		position: absolute;
-	inset: 0;
-	padding: 48px 26px 64px;
-	align-content: center;
-	z-index: 1;
+		top: 50%;
+		left: 75px;
+		transform: translate(0, -50%);
 	}
 
 	/* Desktop cells stack the image above the text */
