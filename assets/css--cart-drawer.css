@@ -267,10 +267,9 @@ cart-drawer.active .cd__inner {
 
 /* Banner -------------------------------------------------------------------*/
 .cd-banner {
-	margin: 2.4rem 2rem 3.6rem;
-	border-radius: 16px;
-	overflow: hidden;
-	line-height: 0;
+    margin: 2.4rem 2rem 3.6rem;
+    border-radius: 16px;
+    line-height: 0;
 }
 
 .cd-banner__link {
@@ -279,14 +278,18 @@ cart-drawer.active .cd__inner {
 
 .cd-banner__content {
     display: flex;
-    background: rgba(200, 145, 42, 0.75);
+    background: #c8912abf;
     border-radius: 16px;
+    gap: 20px;
+    text-align: left;
+    padding: 0 24px 0 0;
 }
 .cd-banner__image {
     width: 100%;
     min-width: 132px;
     max-width: min-content;
     border-radius: 16px;
+    margin-top: -8px;
 }
 .cd-banner__image img {
     display: block;
@@ -294,6 +297,12 @@ cart-drawer.active .cd__inner {
     height: 100%;
     width: 100%;
     object-fit: contain;
+}
+.cd-banner__text {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
 }
 h3.cd-banner__title {
     font-size: 28px;
@@ -311,6 +320,18 @@ p.cd-banner__description {
     letter-spacing: 0;
     font-family: 'Matter';
     margin: 0;
+}
+.cd-banner .cd-banner__btn {
+    width: auto;
+    font-size: 13px;
+    line-height: 20px;
+    letter-spacing: 0.54px;
+    font-family: 'FFBlurProMedium';
+    white-space: nowrap;
+    background: #7BA6DD;
+    border: 1px solid #000000;
+    border-radius: 100px;
+    padding: 5.2px 16.4px;
 }
 /* Membership banner is a clickable add-to-cart button that shows only the image */
 .cd-banner__btn {
