@@ -1198,6 +1198,7 @@ background: #000;
 	max-height: 100%;
 	width: auto;
 	object-fit: contain;
+	    border-radius: 12px;
 }
 
 .cd-shop-card__type {
