@@ -341,7 +341,7 @@ p.cd-banner__description {
 
 }
 .yumclub--mobile--img {
-	display:none;
+	display:none !important;
 }
 @media screen and (max-width: 750px) {
 	.cd-banner__content {
@@ -367,10 +367,10 @@ p.cd-banner__description {
     padding: 6.2px 17.53px 4.2px;
 }
 .cd__desktop-text, .yumclub--desktop--img {
-	display:none;
+	display:none !important;
 }
 .yumclub--mobile--img {
-	display:block;
+	display:block !important;
 }
 }
 /* Membership banner is a clickable add-to-cart button that shows only the image */
