@@ -441,7 +441,7 @@ function initEmptyCartSlider() {
 
 const splide = new Splide(slider, {
   type: "slide",
-  perPage: 1.6,
+  perPage: 2,
   perMove: 1,
   gap: "12px",
   pagination: false,
