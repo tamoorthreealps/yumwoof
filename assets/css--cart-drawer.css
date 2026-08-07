@@ -517,7 +517,8 @@ cart-drawer.active .cd__inner {
 }
 
 .cd-item__remove:hover svg path {
-	fill: #b00;
+	fill: red;
+    fill-opacity: 1;
 }
 
 .cart-item__error {
