@@ -476,10 +476,12 @@
     cursor: pointer;
     transition: .15s;
     white-space: nowrap;
+    transition: all .35s ease;
 }
 .qz-presets button:hover {
-  border-color: var(--qc-hair-s);
-  color: var(--qc-ink);
+    background: #0000001a;
+    border-color: #000;
+    
 }
 
 /* step 2 — age options */
