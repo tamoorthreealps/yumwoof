@@ -447,11 +447,12 @@
                       <div class="cd-item__main">
                         <div class="cd-item__top">
                           <div class="cd-item__titles">
+                            {% assign variant_parts = item.variant.title | split: ' / ' %}
                             <a href="{{ item.url }}" class="cd-item__name">{{ item.product.title | escape }}</a>
                             {%- unless item.product.has_only_default_variant -%}
-                              <p class="cd-item__recipe">{{ item.variant.title | escape }}</p>
+                              <p class="cd-item__recipe">{{ variant_parts[0] | escape }}</p>
                             {%- endunless -%}
-                            <p class="cd-item__note">{{ sub_note }}</p>
+                            <p class="cd-item__note">{{ sub_note }} · {{ variant_parts[1] | escape }}</p>
                           </div>
                           <div class="cd-item__price">
                             {%- if item_compare_unit > item.final_price -%}
