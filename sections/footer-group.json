@@ -42,6 +42,7 @@
         "show_social": true,
         "social_heading": "Follow us",
         "legal_heading": "Legal",
+        "legal_menu": "footer-menu-legal",
         "show_policy": true,
         "site_credit_label": "Site Credit",
         "site_credit_url": "",
