@@ -54,176 +54,181 @@
 
   <div class="yf__main yf__page">
     {%- comment -%} ===== SIGNUP (Klaviyo renders the eyebrow + heading + quiz + email) ===== {%- endcomment -%}
-  <div class="yf__main__left">
-    <div class="yf__signup">
-      {%- if klaviyo_form_class != blank -%}
-        <div class="yf__signup-form">
-          <div class="{{ klaviyo_form_class }}"></div>
+    <div class="yf__main__left">
+      <div class="yf__signup">
+        {%- if klaviyo_form_class != blank -%}
+          <div class="yf__signup-form">
+            <div class="{{ klaviyo_form_class }}"></div>
+          </div>
+        {%- endif -%}
+        <p class="yf__signup__footer_content">
+          By signing up to receive emails from Yumwoof, you agree to our
+          <a href="/policies/privacy-policy">Privacy Policy</a>. We treat your info responsibly.
+        </p>
+      </div>
+
+      {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
+      {%- if marquee_text != blank -%}
+        <div class="yf__marquee mobile--yf__marquee" data-yf-marquee aria-hidden="true">
+          <div class="yf__marquee-row" data-speed="{{ section.settings.marquee_speed | default: 60 }}">
+            <div class="yf__marquee-track">
+              {%- for i in (1..4) -%}
+                <span class="yf__marquee-item">{{ marquee_text }}</span>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      {%- comment -%} ===== BADGE ===== {%- endcomment -%}
+      {%- if section.settings.badge_image != blank -%}
+        <div class="yf__badge" style="--yf-badge-w: {{ section.settings.badge_width | default: 220 }}px;">
+          {%- assign badge_alt = section.settings.badge_image.alt | default: shop.name | escape -%}
+          {{
+            section.settings.badge_image
+            | image_url: width: 640
+            | image_tag: widths: '220, 320, 440, 640', alt: badge_alt, loading: 'lazy'
+          }}
         </div>
       {%- endif -%}
     </div>
 
-    {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
-    {%- if marquee_text != blank -%}
-      <div class="yf__marquee mobile--yf__marquee" data-yf-marquee aria-hidden="true">
-        <div class="yf__marquee-row" data-speed="{{ section.settings.marquee_speed | default: 60 }}">
-          <div class="yf__marquee-track">
-            {%- for i in (1..4) -%}
-              <span class="yf__marquee-item">{{ marquee_text }}</span>
+    <div class="yf__main__right">
+      {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
+      <details class="yf-disc yf__col--shop" open>
+        <summary class="yf-disc__summary">
+          <span class="yf__heading">{{ section.settings.shop_heading | default: 'Shop' }}</span>
+          <span class="yf-disc__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="yf-disc__panel">
+          {%- if section.settings.shop_menu != blank -%}
+            <ul class="yf__list" role="list">
+              {%- for link in section.settings.shop_menu.links -%}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </details>
+
+      {%- comment -%} ===== EXPLORE ===== {%- endcomment -%}
+      <details class="yf-disc yf__col--explore" open data-collapse-mobile>
+        <summary class="yf-disc__summary">
+          <span class="yf__heading">{{ section.settings.explore_heading | default: 'Explore' }}</span>
+          <span class="yf-disc__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="yf-disc__panel">
+          {%- if section.settings.explore_menu != blank -%}
+            <ul class="yf__list" role="list">
+              {%- for link in section.settings.explore_menu.links -%}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title | escape }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </details>
+
+      {%- comment -%} ===== LEGAL (mobile-only accordion; desktop shows policies in the bottom bar) ===== {%- endcomment -%}
+      <details class="yf-disc yf__col--legal" open data-collapse-mobile>
+        <summary class="yf-disc__summary">
+          <span class="yf__heading">{{ section.settings.legal_heading | default: 'Legal' }}</span>
+          <span class="yf-disc__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="yf-disc__panel">
+          <ul class="yf__list" role="list">
+            {%- for policy in shop.policies -%}
+              {%- if policy != blank -%}
+                <li>
+                  <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+                </li>
+              {%- endif -%}
             {%- endfor -%}
-          </div>
+          </ul>
+        </div>
+      </details>
+
+      {%- comment -%} ===== DOGQUARTERS (addresses) ===== {%- endcomment -%}
+      <div class="yf__dogquarters">
+        <h2 class="yf__heading">{{ section.settings.dogquarters_heading | default: 'Dogquarters' }}</h2>
+        <div class="yf__addresses">
+          {%- if section.settings.address_1 != blank -%}
+            <div>
+              {%- if section.settings.address_1_label != blank -%}
+                <p class="yf__address-label">{{ section.settings.address_1_label }}</p>
+              {%- endif -%}
+              <div class="yf__address rte">{{ section.settings.address_1 }}</div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.address_2 != blank -%}
+            <div>
+              {%- if section.settings.address_2_label != blank -%}
+                <p class="yf__address-label">{{ section.settings.address_2_label }}</p>
+              {%- endif -%}
+              <div class="yf__address rte">{{ section.settings.address_2 }}</div>
+            </div>
+          {%- endif -%}
         </div>
       </div>
-    {%- endif -%}
-          {%- comment -%} ===== BADGE ===== {%- endcomment -%}
-    {%- if section.settings.badge_image != blank -%}
-      <div class="yf__badge" style="--yf-badge-w: {{ section.settings.badge_width | default: 220 }}px;">
-        {%- assign badge_alt = section.settings.badge_image.alt | default: shop.name | escape -%}
-        {{
-          section.settings.badge_image
-          | image_url: width: 640
-          | image_tag: widths: '220, 320, 440, 640', alt: badge_alt, loading: 'lazy'
-        }}
-      </div>
-    {%- endif -%}
-    </div>
 
-    <div class="yf__main__right">
-    {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
-    <details class="yf-disc yf__col--shop" open>
-      <summary class="yf-disc__summary">
-        <span class="yf__heading">{{ section.settings.shop_heading | default: 'Shop' }}</span>
-        <span class="yf-disc__icon" aria-hidden="true"></span>
-      </summary>
-      <div class="yf-disc__panel">
-        {%- if section.settings.shop_menu != blank -%}
-          <ul class="yf__list" role="list">
-            {%- for link in section.settings.shop_menu.links -%}
-              <li>
-                <a href="{{ link.url }}">{{ link.title | escape }}</a>
-              </li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-      </div>
-    </details>
-
-    {%- comment -%} ===== EXPLORE ===== {%- endcomment -%}
-    <details class="yf-disc yf__col--explore" open data-collapse-mobile>
-      <summary class="yf-disc__summary">
-        <span class="yf__heading">{{ section.settings.explore_heading | default: 'Explore' }}</span>
-        <span class="yf-disc__icon" aria-hidden="true"></span>
-      </summary>
-      <div class="yf-disc__panel">
-        {%- if section.settings.explore_menu != blank -%}
-          <ul class="yf__list" role="list">
-            {%- for link in section.settings.explore_menu.links -%}
-              <li>
-                <a href="{{ link.url }}">{{ link.title | escape }}</a>
-              </li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-      </div>
-    </details>
-
-    {%- comment -%} ===== LEGAL (mobile-only accordion; desktop shows policies in the bottom bar) ===== {%- endcomment -%}
-    <details class="yf-disc yf__col--legal" open data-collapse-mobile>
-      <summary class="yf-disc__summary">
-        <span class="yf__heading">{{ section.settings.legal_heading | default: 'Legal' }}</span>
-        <span class="yf-disc__icon" aria-hidden="true"></span>
-      </summary>
-      <div class="yf-disc__panel">
-        <ul class="yf__list" role="list">
-          {%- for policy in shop.policies -%}
-            {%- if policy != blank -%}
-              <li>
-                <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
+      {%- comment -%} ===== QUESTIONS ===== {%- endcomment -%}
+      <div class="yf__questions">
+        <h2 class="yf__heading">{{ section.settings.questions_heading | default: 'Questions?' }}</h2>
+        <ul class="yf__questions-list" role="list">
+          {%- if section.settings.live_chat_label != blank -%}
+            <li>
+              <a class="yf__questions-link" href="{{ section.settings.live_chat_url | default: '#' }}">
+                {{- section.settings.live_chat_label }} &rarr;
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.contact_email != blank -%}
+            <li>
+              <a class="yf__questions-link" href="mailto:{{ section.settings.contact_email }}">
+                {{- section.settings.contact_email -}}
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.phone_label != blank -%}
+            {%- assign tel = section.settings.phone_url | default: section.settings.phone_label -%}
+            <li>
+              <a
+                class="yf__questions-link"
+                href="tel:{{ tel | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}"
+              >
+                {{- section.settings.phone_label -}}
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if section.settings.hours != blank -%}
+            <li class="yf__muted">{{ section.settings.hours }}</li>
+          {%- endif -%}
         </ul>
       </div>
-    </details>
 
-    {%- comment -%} ===== DOGQUARTERS (addresses) ===== {%- endcomment -%}
-    <div class="yf__dogquarters">
-      <h2 class="yf__heading">{{ section.settings.dogquarters_heading | default: 'Dogquarters' }}</h2>
-      <div class="yf__addresses">
-        {%- if section.settings.address_1 != blank -%}
-          <div>
-            {%- if section.settings.address_1_label != blank -%}
-              <p class="yf__address-label">{{ section.settings.address_1_label }}</p>
-            {%- endif -%}
-            <div class="yf__address rte">{{ section.settings.address_1 }}</div>
-          </div>
-        {%- endif -%}
-        {%- if section.settings.address_2 != blank -%}
-          <div>
-            {%- if section.settings.address_2_label != blank -%}
-              <p class="yf__address-label">{{ section.settings.address_2_label }}</p>
-            {%- endif -%}
-            <div class="yf__address rte">{{ section.settings.address_2 }}</div>
-          </div>
-        {%- endif -%}
-      </div>
+      {%- comment -%} ===== SOCIAL ===== {%- endcomment -%}
+      {%- if section.settings.show_social -%}
+        <div class="yf__social">
+          {%- if section.settings.social_heading != blank -%}
+            <h2 class="yf__heading">{{ section.settings.social_heading }}</h2>
+          {%- endif -%}
+          {%- render 'social-icons' -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} ===== CURRENCY ===== {%- endcomment -%}
+      {%- if show_currency -%}
+        <div class="yf__currency">
+          <localization-form>
+            {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
+              {%- render 'country-localization', localPosition: 'FooterCountry' -%}
+            {%- endform -%}
+          </localization-form>
+        </div>
+      {%- endif -%}
     </div>
-
-    {%- comment -%} ===== QUESTIONS ===== {%- endcomment -%}
-    <div class="yf__questions">
-      <h2 class="yf__heading">{{ section.settings.questions_heading | default: 'Questions?' }}</h2>
-      <ul class="yf__questions-list" role="list">
-        {%- if section.settings.live_chat_label != blank -%}
-          <li>
-            <a class="yf__questions-link" href="{{ section.settings.live_chat_url | default: '#' }}">
-              {{- section.settings.live_chat_label }} &rarr;
-            </a>
-          </li>
-        {%- endif -%}
-        {%- if section.settings.contact_email != blank -%}
-          <li>
-            <a class="yf__questions-link" href="mailto:{{ section.settings.contact_email }}">
-              {{- section.settings.contact_email -}}
-            </a>
-          </li>
-        {%- endif -%}
-        {%- if section.settings.phone_label != blank -%}
-          {%- assign tel = section.settings.phone_url | default: section.settings.phone_label -%}
-          <li>
-            <a class="yf__questions-link" href="tel:{{ tel | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}">
-              {{- section.settings.phone_label -}}
-            </a>
-          </li>
-        {%- endif -%}
-        {%- if section.settings.hours != blank -%}
-          <li class="yf__muted">{{ section.settings.hours }}</li>
-        {%- endif -%}
-      </ul>
-    </div>
-
-    {%- comment -%} ===== SOCIAL ===== {%- endcomment -%}
-    {%- if section.settings.show_social -%}
-      <div class="yf__social">
-        {%- if section.settings.social_heading != blank -%}
-          <h2 class="yf__heading">{{ section.settings.social_heading }}</h2>
-        {%- endif -%}
-        {%- render 'social-icons' -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} ===== CURRENCY ===== {%- endcomment -%}
-    {%- if show_currency -%}
-      <div class="yf__currency">
-        <localization-form>
-          {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
-            {%- render 'country-localization', localPosition: 'FooterCountry' -%}
-          {%- endform -%}
-        </localization-form>
-      </div>
-    {%- endif -%}
-
-    
-  </div>
   </div>
   {%- comment -%} ===== BOTTOM BAR ===== {%- endcomment -%}
   <div class="yf__bottom">
