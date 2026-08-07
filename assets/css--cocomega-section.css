@@ -102,9 +102,10 @@
     font-size: 40px;
     line-height: 40px;
     letter-spacing: -.40px;
-    padding-right: 105px;
+    padding-right: 0;
     color: var(--co-text);
     font-family: TAYRosemary;
+    max-width: 240px;
 }
 
 .cocomega--uppercase .cocomega__heading {
@@ -215,6 +216,7 @@
         letter-spacing: -0.56px;
         margin-bottom: 8px;
         padding-right: 40px;
+        max-width:100%;
   }
 
   .cocomega__body {
