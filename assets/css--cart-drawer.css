@@ -332,6 +332,12 @@ p.cd-banner__description {
     border: 1px solid #000000;
     border-radius: 100px;
     padding: 5.2px 16.4px;
+	    transition: all .3s ease;
+}
+.cd-banner .cd-banner__btn:hover {
+	background:#000;
+	color: #fff9ef;
+
 }
 /* Membership banner is a clickable add-to-cart button that shows only the image */
 .cd-banner__btn {
