@@ -316,6 +316,24 @@
     color: #000000;
     font-family: 'Matter';
 }
+
+.go4033861592.go4033861592.go4033861592 {
+    pointer-events: auto;
+    border: 1.5px solid #000000;
+    background: #FFC069;
+    color: #000000;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.64px;
+    font-family: 'FFBlurProMedium';
+    margin: 12px 0 0;
+	    transition: all .25s ease;
+}
+
+.go4033861592.go4033861592.go4033861592:hover {
+    background: #000;
+    color: #fff9ef;
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
