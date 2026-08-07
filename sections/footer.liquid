@@ -54,12 +54,25 @@
 
   <div class="yf__main yf__page">
     {%- comment -%} ===== SIGNUP (Klaviyo renders the eyebrow + heading + quiz + email) ===== {%- endcomment -%}
+  <div class="yf__main__left">
     <div class="yf__signup">
       {%- if klaviyo_form_class != blank -%}
         <div class="yf__signup-form">
           <div class="{{ klaviyo_form_class }}"></div>
         </div>
       {%- endif -%}
+
+      {%- comment -%} ===== BADGE ===== {%- endcomment -%}
+    {%- if section.settings.badge_image != blank -%}
+      <div class="yf__badge" style="--yf-badge-w: {{ section.settings.badge_width | default: 220 }}px;">
+        {%- assign badge_alt = section.settings.badge_image.alt | default: shop.name | escape -%}
+        {{
+          section.settings.badge_image
+          | image_url: width: 640
+          | image_tag: widths: '220, 320, 440, 640', alt: badge_alt, loading: 'lazy'
+        }}
+      </div>
+    {%- endif -%}
     </div>
 
     {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
@@ -74,7 +87,9 @@
         </div>
       </div>
     {%- endif -%}
+    </div>
 
+    <div class="yf__main__right">
     {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
     <details class="yf-disc yf__col--shop" open>
       <summary class="yf-disc__summary">
@@ -208,19 +223,9 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} ===== BADGE ===== {%- endcomment -%}
-    {%- if section.settings.badge_image != blank -%}
-      <div class="yf__badge" style="--yf-badge-w: {{ section.settings.badge_width | default: 220 }}px;">
-        {%- assign badge_alt = section.settings.badge_image.alt | default: shop.name | escape -%}
-        {{
-          section.settings.badge_image
-          | image_url: width: 640
-          | image_tag: widths: '220, 320, 440, 640', alt: badge_alt, loading: 'lazy'
-        }}
-      </div>
-    {%- endif -%}
+    
   </div>
-
+  </div>
   {%- comment -%} ===== BOTTOM BAR ===== {%- endcomment -%}
   <div class="yf__bottom">
     <div class="yf__page yf__bottom-inner">
