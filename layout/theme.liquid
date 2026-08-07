@@ -562,6 +562,21 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <script>
+  !function(w, d, s, u) {
+    if (w.oaiq) return;
+    var q = function() { q.q.push(arguments); };
+    q.q = [];
+    w.oaiq = q;
+    var j = d.createElement(s);
+    j.async = 1;
+    j.src = u;
+    var f = d.getElementsByTagName(s)[0];
+    f.parentNode.insertBefore(j, f);
+  }(window, document, 'script', 'https://cdn.openai.com/ads/oaiq.js');
+  oaiq('init', 'TeQ6wbNgBfSLAUECcnegb2');
+  oaiq('track', 'page_viewed');
+</script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
