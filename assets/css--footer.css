@@ -478,6 +478,21 @@ a.yf__questions-link.live-chat {
     padding: 0;
     margin: 0;
     display: block;
+	transition: all .25s ease;
+}
+
+.yf__social .list-social__link svg circle,
+.yf__social .list-social__link svg path {
+  transition: all .25s ease;
+}
+
+.yf__social .list-social__link:hover svg circle {
+  fill: #FFF9EF;
+  stroke: #FFF9EF;
+}
+
+.yf__social .list-social__link:hover svg path {
+  fill: #000;
 }
 
 .yf__social .list-social__link .svg-wrapper,
