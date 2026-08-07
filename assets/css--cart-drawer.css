@@ -1341,7 +1341,7 @@ background: #000;
 	}
 
 	.cd-item__top {
-		gap: 1.2rem;
+		gap: .5rem;
 	}
 
 	.cd-item__name {
@@ -1423,6 +1423,7 @@ background: #000;
 		font-size: 12px;
 		line-height: 16px;
 		max-width: 104px;
+		min-width: auto;
 	}
 
 	.cd-freq:after {
@@ -1442,7 +1443,7 @@ background: #000;
 	}
 
 	.cd-rec-card__media {
-		height: 106px;
+		height: 104px;
 		width: 88px;
 		border-radius: 8px;
 		padding: 11px;
