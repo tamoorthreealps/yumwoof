@@ -470,6 +470,7 @@ cart-drawer.active .cd__inner {
 	border: 1px solid #000;
 	border-radius: 200px;
 	padding: .32rem 1.02rem;
+	background: #fff;
 }
 
 .cd-qty__btn {
