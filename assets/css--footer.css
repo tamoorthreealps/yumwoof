@@ -123,6 +123,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+	align-items: flex-start;
 	    gap: 143px;
 }
 
@@ -138,6 +139,11 @@
     grid-template-columns: repeat(2, 1fr);
 	 flex: 1;
   min-width: 0;
+  row-gap: 33px;
+}
+
+.yf__questions, .yf__dogquarters {
+    margin: 27px 0 0;
 }
 
 /* .yf__signup {
