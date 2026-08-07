@@ -587,7 +587,7 @@ p.cd-banner__description {
     opacity: 1 !important;
     width: 8px;
     margin: 0 !important;
-    height: auto;
+    height: 8px;
     border: 0;
     background: transparent !important;
 }
