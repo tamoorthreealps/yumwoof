@@ -61,18 +61,6 @@
           <div class="{{ klaviyo_form_class }}"></div>
         </div>
       {%- endif -%}
-
-      {%- comment -%} ===== BADGE ===== {%- endcomment -%}
-    {%- if section.settings.badge_image != blank -%}
-      <div class="yf__badge" style="--yf-badge-w: {{ section.settings.badge_width | default: 220 }}px;">
-        {%- assign badge_alt = section.settings.badge_image.alt | default: shop.name | escape -%}
-        {{
-          section.settings.badge_image
-          | image_url: width: 640
-          | image_tag: widths: '220, 320, 440, 640', alt: badge_alt, loading: 'lazy'
-        }}
-      </div>
-    {%- endif -%}
     </div>
 
     {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
@@ -85,6 +73,17 @@
             {%- endfor -%}
           </div>
         </div>
+      </div>
+    {%- endif -%}
+          {%- comment -%} ===== BADGE ===== {%- endcomment -%}
+    {%- if section.settings.badge_image != blank -%}
+      <div class="yf__badge" style="--yf-badge-w: {{ section.settings.badge_width | default: 220 }}px;">
+        {%- assign badge_alt = section.settings.badge_image.alt | default: shop.name | escape -%}
+        {{
+          section.settings.badge_image
+          | image_url: width: 640
+          | image_tag: widths: '220, 320, 440, 640', alt: badge_alt, loading: 'lazy'
+        }}
       </div>
     {%- endif -%}
     </div>
