@@ -212,16 +212,16 @@
 .yf__link:hover {
 	opacity: 0.65;
 } */
-.yf__list li {
+.yf__list li, .yf__questions-list li {
     line-height: 20px;
 }
-.yf__list li a {
+.yf__list li a, .yf__questions-list li a {
   position: relative;
   display: inline-block;
   text-decoration: none;
 }
 
-.yf__list li a::after {
+.yf__list li a::after, .yf__questions-list li a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -234,7 +234,7 @@
   transition: transform .35s ease;
 }
 
-.yf__list li a:hover::after {
+.yf__list li a:hover::after, .yf__questions-list li:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
