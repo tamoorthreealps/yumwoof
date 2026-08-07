@@ -96,11 +96,11 @@
 
     <div class="yf__main__right">
       {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
-      <details class="yf-disc yf__col--shop" open>
-        <summary class="yf-disc__summary">
+      <div class="yf-disc yf__col--shop" open>
+        <div class="yf-disc__div">
           <span class="yf__heading">{{ section.settings.shop_heading | default: 'Shop' }}</span>
           <span class="yf-disc__icon" aria-hidden="true"></span>
-        </summary>
+        </div>
         <div class="yf-disc__panel">
           {%- if section.settings.shop_menu != blank -%}
             <ul class="yf__list" role="list">
@@ -112,14 +112,14 @@
             </ul>
           {%- endif -%}
         </div>
-      </details>
+      </div>
 
       {%- comment -%} ===== EXPLORE ===== {%- endcomment -%}
-      <details class="yf-disc yf__col--explore" open data-collapse-mobile>
-        <summary class="yf-disc__summary">
+      <div class="yf-disc yf__col--explore" open data-collapse-mobile>
+        <div class="yf-disc__div">
           <span class="yf__heading">{{ section.settings.explore_heading | default: 'Explore' }}</span>
           <span class="yf-disc__icon" aria-hidden="true"></span>
-        </summary>
+        </div>
         <div class="yf-disc__panel">
           {%- if section.settings.explore_menu != blank -%}
             <ul class="yf__list" role="list">
@@ -131,14 +131,14 @@
             </ul>
           {%- endif -%}
         </div>
-      </details>
+      </div>
 
       {%- comment -%} ===== LEGAL (mobile-only accordion; desktop shows policies in the bottom bar) ===== {%- endcomment -%}
-      <details class="yf-disc yf__col--legal" open data-collapse-mobile>
-        <summary class="yf-disc__summary">
+      <div class="yf-disc yf__col--legal" open data-collapse-mobile>
+        <div class="yf-disc__div">
           <span class="yf__heading">{{ section.settings.legal_heading | default: 'Legal' }}</span>
           <span class="yf-disc__icon" aria-hidden="true"></span>
-        </summary>
+        </div>
         <div class="yf-disc__panel">
           <ul class="yf__list" role="list">
             {%- for policy in shop.policies -%}
@@ -150,7 +150,7 @@
             {%- endfor -%}
           </ul>
         </div>
-      </details>
+      </div>
       {%- comment -%} ===== QUESTIONS ===== {%- endcomment -%}
       <div class="yf__questions">
         <h2 class="yf__heading">{{ section.settings.questions_heading | default: 'Questions?' }}</h2>
@@ -281,7 +281,7 @@
     }
 
     // Accordions: expanded columns on desktop, collapsed (except Shop) on mobile.
-    // Desktop can't toggle (summary is pointer-events:none in CSS), so we just
+    // Desktop can't toggle (div is pointer-events:none in CSS), so we just
     // force the [data-collapse-mobile] ones open on desktop and closed on mobile.
     var mqMobile = window.matchMedia('(max-width: 989px)');
     function syncDisc() {
