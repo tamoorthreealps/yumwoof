@@ -452,7 +452,7 @@
                             {%- unless item.product.has_only_default_variant -%}
                               <p class="cd-item__recipe">{{ variant_parts[0] | escape }}</p>
                             {%- endunless -%}
-                            <p class="cd-item__note">{{ sub_note }} · {{ variant_parts[1] | escape }}</p>
+                            <p class="cd-item__note">{{ variant_parts[1] | escape }} · {{ sub_note }}</p>
                           </div>
                           <div class="cd-item__price">
                             {%- if item_compare_unit > item.final_price -%}
