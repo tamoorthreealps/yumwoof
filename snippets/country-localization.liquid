@@ -157,15 +157,27 @@
 
 
 
+{%- comment -%}
+  Renders the country picker for the localization form
+
+  Accepts:
+    - localPosition: pass in the position in which the form is coming up to create specific IDs
+
+  Shows a fixed whitelist only: US, UK, European Union, Switzerland.
+  "European Union" is backed by a single representative country (DE) — change
+  the ISO code in `allowed` below if your EU market resolves to a different one.
+{%- endcomment -%}
+
 {%- liquid
+  # iso_code | display label | flagcdn code
   assign allowed = 'US|United States|us,GB|United Kingdom|gb,DE|European Union|eu,CH|Switzerland|ch'
   assign allowed_rows = allowed | split: ','
 %}
 
-<div class="disclosure country-pill">
+<div class="country-pill" data-country-pill>
   <button
     type="button"
-    class="disclosure__button country-pill__button"
+    class="country-pill__button"
     aria-expanded="false"
     aria-controls="{{ localPosition }}-country-results"
     aria-describedby="{{ localPosition }}Label"
@@ -173,31 +185,48 @@
     {%- for row in allowed_rows -%}
       {%- assign parts = row | split: '|' -%}
       {%- if parts[0] == localization.country.iso_code -%}
-        <img class="country-pill__flag" src="https://flagcdn.com/w40/{{ parts[2] }}.png" alt="{{ parts[1] }}" width="22" height="22" loading="lazy">
+        <img
+          class="country-pill__flag"
+          src="https://flagcdn.com/w40/{{ parts[2] }}.png"
+          alt="{{ parts[1] }}"
+          width="22"
+          height="22"
+          loading="lazy"
+        >
       {%- endif -%}
     {%- endfor -%}
     <span class="country-pill__code">[{{ localization.country.currency.iso_code }}]</span>
-    <span class="country-pill__caret">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+    <span class="country-pill__caret" aria-hidden="true">
+      <svg viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
   </button>
 
-  <div class="disclosure__list-wrapper country-pill__panel" hidden>
-    <ul role="list" class="list-unstyled country-pill__list" id="{{ localPosition }}-country-results">
+  <div class="country-pill__panel" id="{{ localPosition }}-country-results" hidden>
+    <ul role="list" class="country-pill__list">
       {%- for country in localization.available_countries -%}
         {%- for row in allowed_rows -%}
           {%- assign parts = row | split: '|' -%}
           {%- if parts[0] == country.iso_code -%}
-            <li class="disclosure__item" tabindex="-1">
-              
-                class="disclosure__link country-pill__row{% if country.iso_code == localization.country.iso_code %} country-pill__row--active{% endif %}"
-                href="#"
-                {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %}
+            <li class="country-pill__item">
+              <button
+                type="button"
+                class="country-pill__row{% if country.iso_code == localization.country.iso_code %} country-pill__row--active{% endif %}"
                 data-value="{{ country.iso_code }}"
-                id="{{ country.name }}"
+                {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %}
               >
-                <img class="country-pill__flag" src="https://flagcdn.com/w40/{{ parts[2] }}.png" alt="" width="24" height="24" loading="lazy">
+                <img
+                  class="country-pill__flag"
+                  src="https://flagcdn.com/w40/{{ parts[2] }}.png"
+                  alt=""
+                  width="24"
+                  height="24"
+                  loading="lazy"
+                >
                 <span class="country-pill__name">{{ parts[1] }}</span>
                 <span class="country-pill__currency">[{{ country.currency.iso_code }}]</span>
-              </a>
+              </button>
             </li>
           {%- endif -%}
         {%- endfor -%}
@@ -205,4 +234,191 @@
     </ul>
   </div>
 </div>
+
 <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+
+{% style %}
+  .country-pill {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* --- Closed --- */
+  .country-pill__button {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 999px;
+    background: transparent;
+    color: currentColor;
+    cursor: pointer;
+    font: inherit;
+    line-height: 1;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  }
+
+  /* --- Hover / focus / open --- */
+  .country-pill__button:hover,
+  .country-pill__button:focus-visible,
+  .country-pill__button[aria-expanded='true'] {
+    background: #fff;
+    border-color: #fff;
+    color: #1a1a1a;
+  }
+
+  .country-pill__code {
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+  }
+
+  .country-pill__caret {
+    display: flex;
+    align-items: center;
+  }
+
+  .country-pill__caret svg {
+    width: 1rem;
+    height: 0.6rem;
+    transition: transform 0.18s ease;
+  }
+
+  .country-pill__button[aria-expanded='true'] .country-pill__caret svg {
+    transform: rotate(180deg);
+  }
+
+  .country-pill__flag {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* --- Open panel (upward) --- */
+  .country-pill__panel {
+    display: block;
+    position: absolute;
+    bottom: calc(100% + 0.8rem);
+    left: 0;
+    min-width: 32rem;
+    padding: 0.6rem;
+    background: #f4efe6;
+    border-radius: 0.8rem;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+  }
+
+  .country-pill__panel[hidden] {
+    display: none;
+  }
+
+  .country-pill__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .country-pill__item + .country-pill__item {
+    margin-top: 0.2rem;
+  }
+
+  .country-pill__row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: #1a1a1a;
+    font: inherit;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .country-pill__row:hover,
+  .country-pill__row:focus-visible {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .country-pill__row--active,
+  .country-pill__row--active:hover {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .country-pill__name {
+    flex: 1;
+  }
+
+  .country-pill__currency {
+    opacity: 0.85;
+  }
+
+  @media screen and (max-width: 749px) {
+    .country-pill__panel {
+      min-width: 28rem;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-country-pill]').forEach(function (pill) {
+      if (pill.dataset.countryPillInit === 'true') return;
+      pill.dataset.countryPillInit = 'true';
+
+      var button = pill.querySelector('.country-pill__button');
+      var panel = pill.querySelector('.country-pill__panel');
+      if (!button || !panel) return;
+
+      function close() {
+        button.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+      }
+
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        var isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!isOpen));
+        panel.hidden = isOpen;
+      });
+
+      pill.querySelectorAll('.country-pill__row').forEach(function (row) {
+        row.addEventListener('click', function (event) {
+          event.preventDefault();
+
+          var form = pill.closest('form');
+          if (!form) return;
+
+          var input = form.querySelector('input[name="country_code"]');
+          if (!input) return;
+
+          input.value = row.dataset.value;
+          close();
+
+          if (typeof form.requestSubmit === 'function') {
+            form.requestSubmit();
+          } else {
+            form.submit();
+          }
+        });
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!pill.contains(event.target)) close();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') close();
+      });
+    });
+  })();
+</script>
