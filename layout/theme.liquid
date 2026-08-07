@@ -291,6 +291,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
 
   `{% render 'gsf-conversion-pixels' %}
+  <!-- CPG Pixel -->
+    <script type="text/javascript">
+      var AddShoppersWidgetOptions = { loadCss: false, pushResponse: false };
+      !(function () {
+        var t = document.createElement('script');
+        (t.type = 'text/javascript'),
+          (t.async = !0),
+          (t.id = 'AddShoppers'),
+          (t.src = 'https://shop.pe/widget/widget_async.js#658153ee3ef6663bfe5b2cff'),
+          document.getElementsByTagName('head')[0].appendChild(t);
+      })();
+    </script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
