@@ -18,18 +18,20 @@
   {{ 'css--product-selectors.css' | asset_url | stylesheet_tag }}
 
   <div class="psel">
-    {%- if heading != blank -%}
-      <p class="psel__legend">{{ heading }}</p>
-    {%- endif -%}
-    {% if popup %}
-      <button
-        class="recipe-view-ingredients"
-        data-popup="ingredients-popup-1"
-        type="button"
-      >
-        + View Ingredients
-      </button>
-    {% endif %}
+    <div class="psel__legend_head">
+      {%- if heading != blank -%}
+        <p class="psel__legend">{{ heading }}</p>
+      {%- endif -%}
+      {% if popup %}
+        <button
+          class="recipe-view-ingredients"
+          data-popup="ingredients-popup-1"
+          type="button"
+        >
+          + View Ingredients
+        </button>
+      {% endif %}
+    </div>
 
     <div class="psel__row" role="list">
       {%- for sel in selectors -%}
