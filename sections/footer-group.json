@@ -14,19 +14,23 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "footer_bg": "#661D1D",
-        "footer_text": "#FFF9EF",
+        "footer_bg": "#661d1d",
+        "footer_text": "#fff9ef",
         "marquee_text": "Gorgeous dogs eat Yumwoof. Gorgeous, gorgeous dogs eat Yumwoof.",
         "marquee_speed": 60,
         "klaviyo_form_class": "klaviyo-form-Ry6Yff",
-        "badge_width": 220,
+        "badge_image": "shopify://shop_images/Yumwoof_Heritage_Sticker_2_1.svg",
+        "badge_width": 320,
         "shop_heading": "Shop",
         "shop_menu": "footer",
         "explore_heading": "Explore",
+        "explore_menu": "",
         "questions_heading": "Questions?",
         "live_chat_label": "Live Chat",
+        "live_chat_url": "",
         "contact_email": "woof@yumwoof.com",
         "phone_label": "(775) DOG-FOOD",
+        "phone_url": "",
         "hours": "Mon–Fri, 10–4 CT",
         "dogquarters_heading": "Dogquarters",
         "address_1_label": "USA",
@@ -38,6 +42,7 @@
         "legal_heading": "Legal",
         "show_policy": true,
         "site_credit_label": "Site Credit",
+        "site_credit_url": "",
         "enable_country_selector": true
       }
     }
