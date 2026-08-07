@@ -90,55 +90,61 @@
 
     <div class="yf__main__right">
     {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
-    <div class="yf-disc yf__col--shop is-open" data-disc>
-  <div class="yf-disc__summary" data-disc-toggle role="button" tabindex="0" aria-expanded="true" aria-controls="yf-disc-shop">
-    <span class="yf__heading">{{ section.settings.shop_heading | default: 'Shop' }}</span>
-    <span class="yf-disc__icon" aria-hidden="true"></span>
-  </div>
-  <div class="yf-disc__panel" id="yf-disc-shop">
-    {%- if section.settings.shop_menu != blank -%}
-      <ul class="yf__list" role="list">
-        {%- for link in section.settings.shop_menu.links -%}
-          <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-  </div>
-</div>
+    <details class="yf-disc yf__col--shop" open>
+      <summary class="yf-disc__summary">
+        <span class="yf__heading">{{ section.settings.shop_heading | default: 'Shop' }}</span>
+        <span class="yf-disc__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="yf-disc__panel">
+        {%- if section.settings.shop_menu != blank -%}
+          <ul class="yf__list" role="list">
+            {%- for link in section.settings.shop_menu.links -%}
+              <li>
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </details>
 
     {%- comment -%} ===== EXPLORE ===== {%- endcomment -%}
-   <div class="yf-disc yf__col--explore is-open" data-disc data-collapse-mobile>
-  <div class="yf-disc__summary" data-disc-toggle role="button" tabindex="0" aria-expanded="true" aria-controls="yf-disc-explore">
-    <span class="yf__heading">{{ section.settings.explore_heading | default: 'Explore' }}</span>
-    <span class="yf-disc__icon" aria-hidden="true"></span>
-  </div>
-  <div class="yf-disc__panel" id="yf-disc-explore">
-    {%- if section.settings.explore_menu != blank -%}
-      <ul class="yf__list" role="list">
-        {%- for link in section.settings.explore_menu.links -%}
-          <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-  </div>
-</div>
+    <details class="yf-disc yf__col--explore" open data-collapse-mobile>
+      <summary class="yf-disc__summary">
+        <span class="yf__heading">{{ section.settings.explore_heading | default: 'Explore' }}</span>
+        <span class="yf-disc__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="yf-disc__panel">
+        {%- if section.settings.explore_menu != blank -%}
+          <ul class="yf__list" role="list">
+            {%- for link in section.settings.explore_menu.links -%}
+              <li>
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </details>
 
     {%- comment -%} ===== LEGAL (mobile-only accordion; desktop shows policies in the bottom bar) ===== {%- endcomment -%}
-    <div class="yf-disc yf__col--legal is-open" data-disc data-collapse-mobile>
-  <div class="yf-disc__summary" data-disc-toggle role="button" tabindex="0" aria-expanded="true" aria-controls="yf-disc-legal">
-    <span class="yf__heading">{{ section.settings.legal_heading | default: 'Legal' }}</span>
-    <span class="yf-disc__icon" aria-hidden="true"></span>
-  </div>
-  <div class="yf-disc__panel" id="yf-disc-legal">
-    <ul class="yf__list" role="list">
-      {%- for policy in shop.policies -%}
-        {%- if policy != blank -%}
-          <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
-  </div>
-</div>
+    <details class="yf-disc yf__col--legal" open data-collapse-mobile>
+      <summary class="yf-disc__summary">
+        <span class="yf__heading">{{ section.settings.legal_heading | default: 'Legal' }}</span>
+        <span class="yf-disc__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="yf-disc__panel">
+        <ul class="yf__list" role="list">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <li>
+                <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </details>
 
     {%- comment -%} ===== DOGQUARTERS (addresses) ===== {%- endcomment -%}
     <div class="yf__dogquarters">
@@ -249,9 +255,7 @@
 <script>
   (function () {
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var mqMobile = window.matchMedia('(max-width: 989px)');
 
-    /* ---------- Marquee ---------- */
     function initMarquee(row) {
       var track = row.querySelector('.yf__marquee-track');
       if (!track || row.dataset.marqueeReady) return;
@@ -271,50 +275,19 @@
       root.querySelectorAll('.yf__marquee-row').forEach(initMarquee);
     }
 
-    /* ---------- Accordions (div-based) ----------
-       Open state lives in the .is-open class. Desktop keeps every column
-       expanded and the summary is pointer-events:none in CSS, so toggling
-       is guarded to mobile only. On mobile the [data-collapse-mobile]
-       columns (Explore / Legal) start closed; Shop starts open. */
-    function setDisc(disc, open) {
-      disc.classList.toggle('is-open', open);
-      var summary = disc.querySelector('[data-disc-toggle]');
-      if (summary) summary.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
+    // Accordions: expanded columns on desktop, collapsed (except Shop) on mobile.
+    // Desktop can't toggle (summary is pointer-events:none in CSS), so we just
+    // force the [data-collapse-mobile] ones open on desktop and closed on mobile.
+    var mqMobile = window.matchMedia('(max-width: 989px)');
     function syncDisc() {
       var mobile = mqMobile.matches;
       document.querySelectorAll('.yf-disc[data-collapse-mobile]').forEach(function (d) {
-        setDisc(d, !mobile);
+        d.open = !mobile;
       });
     }
 
-    function bindDisc(root) {
-      root.querySelectorAll('[data-disc-toggle]').forEach(function (summary) {
-        if (summary.dataset.discBound) return;
-        summary.dataset.discBound = 'true';
-
-        function toggle() {
-          if (!mqMobile.matches) return; // desktop columns stay static
-          var disc = summary.closest('[data-disc]');
-          if (!disc) return;
-          setDisc(disc, !disc.classList.contains('is-open'));
-        }
-
-        summary.addEventListener('click', toggle);
-        summary.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-            e.preventDefault();
-            toggle();
-          }
-        });
-      });
-    }
-
-    /* ---------- Boot ---------- */
     function init(root) {
       initMarqueeRoot(root);
-      bindDisc(root);
       syncDisc();
     }
 
@@ -325,13 +298,11 @@
         init(document);
       });
     }
-
     if (mqMobile.addEventListener) {
       mqMobile.addEventListener('change', syncDisc);
     } else if (mqMobile.addListener) {
       mqMobile.addListener(syncDisc);
     }
-
     document.addEventListener('shopify:section:load', function (event) {
       init(event.target);
     });
