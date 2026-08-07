@@ -219,6 +219,33 @@
     document.addEventListener('DOMContentLoaded', overrideDrawerRender);
   }
 
+  /* ---------- Perf: one render per drawer quantity / remove ----------
+     Dawn's CartDrawerItems.updateQuantity posts /cart/change.js WITH a `sections`
+     list and paints .drawer__inner from that ISOLATED section render. Because the
+     drawer lives in a section group, that render uses SCHEMA DEFAULTS — so it
+     briefly paints the wrong banner/reward tiers, and then our cart:update
+     full-page refresh immediately repaints the correct markup. That's two server
+     renders + a visible flicker on every +/- or remove click.
+
+     Returning an empty section list makes Dawn's request a pure mutation (the
+     server skips rendering, the response is just the cart JSON, and Dawn's paint
+     loop is a no-op); our single coalesced full-page refreshDrawer() then does the
+     one correct repaint. Halves the server work and removes the flash. Only the
+     drawer subclass is touched — the main cart page (CartItems) is unchanged. */
+  function overrideDrawerItemsRender() {
+    if (!window.customElements) return;
+    var CDI = customElements.get('cart-drawer-items');
+    if (!CDI || CDI.prototype.__ywNoIsolatedRender) return;
+    CDI.prototype.__ywNoIsolatedRender = true;
+    CDI.prototype.getSectionsToRender = function () {
+      return [];
+    };
+  }
+  overrideDrawerItemsRender();
+  if (window.customElements && customElements.whenDefined) {
+    customElements.whenDefined('cart-drawer-items').then(overrideDrawerItemsRender);
+  }
+
   /* ---------- Keep banner + thresholds correct after Dawn cart mutations ----------
      Dawn's quantity/remove path (cart.js) replaces the whole .drawer__inner from an
      isolated section render (schema defaults), dropping the membership banner and
