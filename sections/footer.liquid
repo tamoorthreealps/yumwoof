@@ -39,17 +39,7 @@
 -%}
 
 <footer class="yf" data-yf>
-  <div class="yf__main yf__page">
-    {%- comment -%} ===== SIGNUP (Klaviyo renders the eyebrow + heading + quiz + email) ===== {%- endcomment -%}
-    <div class="yf__signup">
-      {%- if klaviyo_form_class != blank -%}
-        <div class="yf__signup-form">
-          <div class="{{ klaviyo_form_class }}"></div>
-        </div>
-      {%- endif -%}
-    </div>
-
-    {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
+      {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
     {%- if marquee_text != blank -%}
       <div class="yf__marquee" data-yf-marquee aria-hidden="true">
         <div class="yf__marquee-row" data-speed="{{ section.settings.marquee_speed | default: 60 }}">
@@ -61,6 +51,15 @@
         </div>
       </div>
     {%- endif -%}
+  <div class="yf__main yf__page">
+    {%- comment -%} ===== SIGNUP (Klaviyo renders the eyebrow + heading + quiz + email) ===== {%- endcomment -%}
+    <div class="yf__signup">
+      {%- if klaviyo_form_class != blank -%}
+        <div class="yf__signup-form">
+          <div class="{{ klaviyo_form_class }}"></div>
+        </div>
+      {%- endif -%}
+    </div>
 
     {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
     <details class="yf-disc yf__col--shop" open>
