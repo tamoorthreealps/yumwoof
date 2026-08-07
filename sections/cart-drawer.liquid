@@ -738,19 +738,18 @@
                     <div class="cd-banner__text">
                       <h3 class="cd-banner__title">EXTRA 25% OFF!</h3>
                       <p class="cd-banner__description">when you become a Yum Club member.</p>
+                      <button
+                        type="button"
+                        class="cd-banner__btn"
+                        data-cd-add
+                        data-variant-id="{{ banner_variant_id }}"
+                        data-selling-plan="{{ banner_selling_plan_id }}"
+                        aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
+                      >
+                        <span>ADD</span>
+                        <span>- $29/QTR</span>
+                      </button>
                     </div>
-
-                    <button
-                      type="button"
-                      class="cd-banner__btn"
-                      data-cd-add
-                      data-variant-id="{{ banner_variant_id }}"
-                      data-selling-plan="{{ banner_selling_plan_id }}"
-                      aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
-                    >
-                      <span>ADD</span>
-                      <span>- $29/QTR</span>
-                    </button>
                   </div>
                 </div>
               {%- endif -%}
