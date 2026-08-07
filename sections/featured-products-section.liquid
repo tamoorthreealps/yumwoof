@@ -64,6 +64,9 @@
                 {%- assign seen_recipes = seen_recipes | append: recipe_val | append: '|' -%}
                 {%- assign v_hover = v.metafields.custom.variant_image_hover.value -%}
                 {%- assign card_img = v.metafields.custom.variant_image.value | default: product.featured_image -%}
+                {%- comment -%} Variant-level cards read the SAME namespace.key on the variant; fall back to the product value if unset. {%- endcomment -%}
+                {%- assign v_desc_mf = v.metafields[desc_parts[0]][desc_parts[1]] -%}
+                {%- assign v_desc = v_desc_mf.value | default: desc_mf.value -%}
                 <li class="fp__card{% if v_hover != blank %} fp__card__hover{% endif %}" data-fp-slide>
                   <div class="fp__hover-media">
                     {%- if v_hover != blank -%}
@@ -88,8 +91,8 @@
                     {%- endif -%}
                   </a>
 
-                  {%- if desc_mf.value != blank -%}
-                    <p class="fp__desc">{{ desc_mf.value }}</p>
+                  {%- if v_desc != blank -%}
+                    <p class="fp__desc">{{ v_desc }}</p>
                   {%- endif -%}
 
                   {%- if section.settings.recipes_label != blank -%}
