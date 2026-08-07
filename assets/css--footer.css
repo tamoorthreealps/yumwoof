@@ -140,6 +140,7 @@
 	 flex: 1;
   min-width: 0;
   row-gap: 33px;
+      margin-top: 24px;
 }
 
 .yf__questions, .yf__dogquarters {
