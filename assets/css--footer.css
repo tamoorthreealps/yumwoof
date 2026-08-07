@@ -216,6 +216,23 @@
 .yf__signup-form {
 	width: 100%;
 }
+.yf__signup {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+p.yf__signup__footer_content {
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFF9EF;
+    margin: 0;
+    letter-spacing: 0;
+    font-family: 'Matter';
+    max-width: 370px;
+}
+p.yf__signup__footer_content a {
+    text-decoration: underline;
+}
 .klaviyo-form.klaviyo-form.klaviyo-form {
     -webkit-overflow-scrolling: touch;
     max-width: 100% !important;
