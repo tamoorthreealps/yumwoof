@@ -770,9 +770,9 @@
                           aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
                         >
                           {{ section.settings.banner_button_text }}
-                          <span class="cd__desktop-text">- {{ banner_variant.price | money }}/QTR</span>
+                          <span class="cd__desktop-text">- {{ banner_variant.price | money_without_trailing_zeros }}/QTR</span>
                         </button>
-                        <span class="cd__mobile-text">{{ banner_variant.price | money }}/QTR</span>
+                        <span class="cd__mobile-text">{{ banner_variant.price | money_without_trailing_zeros }}/QTR</span>
                       </div>
                     </div>
                   </div>
