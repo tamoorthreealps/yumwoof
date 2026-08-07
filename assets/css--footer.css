@@ -120,19 +120,6 @@
    Main grid
    -------------------------------------------------------------------------- */
 .yf__main {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 3.2rem 2.4rem;
-	grid-template-areas:
-		'signup   signup'
-		'marquee  marquee'
-		'shop     shop'
-		'explore  explore'
-		'legal    legal'
-		'dog      questions'
-		'social   social'
-		'currency currency'
-		'badge    badge';
 }
 
 .yf__signup {
@@ -422,14 +409,6 @@
 	}
 
 	.yf__main {
-		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 1fr);
-		gap: 4.8rem 4rem;
-		align-items: start;
-		grid-template-areas:
-			'marquee  marquee    marquee'
-			'signup   shop       explore'
-			'signup   questions  dog'
-			'badge    social     currency';
 	}
 
 	/* Legal accordion hidden on desktop — policies show in the bottom bar. */
@@ -466,23 +445,5 @@
 
 	.yf__signup {
 		max-width: 47rem;
-	}
-}
-
-/* Small phones: stack the dog/questions pair too. */
-@media screen and (max-width: 559px) {
-	.yf__main {
-		grid-template-columns: 1fr;
-		grid-template-areas:
-			'signup'
-			'marquee'
-			'shop'
-			'explore'
-			'legal'
-			'dog'
-			'questions'
-			'social'
-			'currency'
-			'badge';
 	}
 }
