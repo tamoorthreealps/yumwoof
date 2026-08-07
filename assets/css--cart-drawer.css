@@ -785,8 +785,9 @@ p.cd-banner__description {
 /* Recommendations ----------------------------------------------------------*/
 .cd-recommend {
 	display: block;
-	padding: 4rem 2rem;
+	padding: 4rem 2rem 0;
 	overflow: hidden;
+	margin-bottom:4rem;
 }
 
 .cd-recommend.cd-recommend--has-banner {
@@ -1472,7 +1473,8 @@ background: #000;
 	}
 
 	.cd-recommend {
-		padding: 3.2rem 1.6rem 2.4rem;
+		padding: 3.2rem 1.6rem 0;
+		margin-bottom:2.4rem;
 	}
 
 	.cd-banner {
