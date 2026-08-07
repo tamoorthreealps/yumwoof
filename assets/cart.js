@@ -534,15 +534,15 @@ function initRecommendSlider() {
   // Show next card preview only when more than one slide exists
   if (totalSlides > 1) {
     options.padding = {
-      right: "0",
+      right: "64px",
     };
 
     options.breakpoints[1024].padding = {
-      right: "0",
+      right: "64px",
     };
 
     options.breakpoints[768].padding = {
-      right: "0",
+      right: "16px",
     };
   }
 
