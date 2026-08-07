@@ -128,11 +128,14 @@
 .yf__main__left {
     display: flex;
     flex-direction: column;
+	flex: 0 0 470px;
 }
 
 .yf__main__right {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+	 flex: 1;
+  min-width: 0;
 }
 
 /* .yf__signup {
