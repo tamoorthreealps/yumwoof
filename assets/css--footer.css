@@ -554,6 +554,17 @@ display: block;
 	gap: 0.8rem;
 }
 
+.localization-form__flag-label,
+.country-selector__list .disclosure__link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.localization-form__flag {
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
 /* --------------------------------------------------------------------------
    Badge
    -------------------------------------------------------------------------- */
