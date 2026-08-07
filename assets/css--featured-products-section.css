@@ -157,7 +157,7 @@
 	transition: transform .5s ease;
 }
 .fp__card__hover:hover .fp__hover-media img {
-	transform: scale(1.015);
+	transform: scale(1.01);
 }
 .fp__card>* {
 	position: relative;
