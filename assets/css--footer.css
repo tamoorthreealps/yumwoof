@@ -571,34 +571,50 @@ display: block;
    Bottom bar
    -------------------------------------------------------------------------- */
 .yf__bottom {
-	border-top: 1px solid var(--yf-line);
-	margin-top: 3.2rem;
-	padding-top: 2rem;
+    margin-top: 12px;
+    padding-top: 0;
 }
 .yf__bottom-inner {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 1.2rem 2.4rem;
-	font-family: FFBlurProMedium, sans-serif;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	font-size: 1.1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem 2.4rem;
+    justify-content: space-between;
+}
+small.yf__copyright {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #FFF9EF;
+    font-family: 'TAY Birdie';
 }
 .yf__bottom-policies {
 	list-style: none;
 	/* Mobile: policies live in the Legal accordion, so keep the bar minimal. */
 	display: none;
 	flex-wrap: wrap;
-	gap: 1.2rem 2.4rem;
+	gap: 1.2rem 6rem;
 	margin: 0;
 	padding: 0;
+}
+.yf__bottom-policies li a {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #FFF9EF;
 }
 .yf__bottom-policies a:hover {
 	opacity: 0.65;
 }
-.yf__site-credit {
-	margin-left: auto;
+a.yf__site-credit {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: #FFF9EF;
+    font-family: 'TAY Birdie';
 }
 .yf__site-credit:hover {
 	opacity: 0.65;
