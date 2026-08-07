@@ -208,9 +208,32 @@
     display: block;
 }
 
-.yf__list a:hover,
+/* .yf__list a:hover,
 .yf__link:hover {
 	opacity: 0.65;
+} */
+
+.yf__list li a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.yf__list li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+
+.yf__list li a:hover::after {
+  transform: scaleX(1);
 }
 
 /* --------------------------------------------------------------------------
