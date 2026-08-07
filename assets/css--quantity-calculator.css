@@ -666,10 +666,11 @@
     letter-spacing: 0.72px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: filter .15s ease;
+    transition: all .35s ease;
 }
 .qz-next:hover {
-  filter: brightness(0.97);
+  background: #000000;
+  color:#FFF9EF;
 }
 .qz-next:disabled {
   opacity: 0.4;
