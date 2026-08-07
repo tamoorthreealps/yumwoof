@@ -686,9 +686,9 @@
               <div class="cd-recommend__head">
                 <p class="cd-recommend__title">
                   {{ section.settings.recommend_title }}
-                  {%- if extra_percent > 0 -%}
+                  {% comment %} {%- if extra_percent > 0 -%}
                     <span class="cd-recommend__extra">(EXTRA {{ extra_percent }}%)</span>
-                  {%- endif -%}
+                  {%- endif -%} {% endcomment %}
                 </p>
                 <div class="cd-carousel__nav">
                   <button type="button" class="cd-carousel__arrow" data-cd-prev aria-label="Previous">
