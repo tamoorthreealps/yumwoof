@@ -467,7 +467,7 @@
                               {% endfor %}
 
                               {%- unless item.product.has_only_default_variant -%}
-                                <p class="cd-item__recipe">{{ recipe_name }}: {{ recipe_value | escape }}</p>
+                                <p class="cd-item__recipe">{{ recipe_value | escape }} {{ recipe_name }}</p>
                               {%- endunless -%}
                               <p class="cd-item__note">{{ variant_parts[1] | escape }} · {{ sub_note }}</p>
                             </div>
