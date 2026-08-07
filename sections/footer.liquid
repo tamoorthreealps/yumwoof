@@ -157,7 +157,7 @@
         <ul class="yf__questions-list" role="list">
           {%- if section.settings.live_chat_label != blank -%}
             <li>
-              <a class="yf__questions-link" href="{{ section.settings.live_chat_url | default: '#' }}">
+              <a class="yf__questions-link live-chat" href="{{ section.settings.live_chat_url | default: '#' }}">
                 {{- section.settings.live_chat_label }} &rarr;
               </a>
             </li>
