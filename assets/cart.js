@@ -527,6 +527,10 @@ function initRecommendSlider() {
       768: {
         perPage: 1.1,
         gap: "8px",
+        drag: true,
+    omitEnd: true,
+    trimSpace: true,
+    focus: 0,
       },
     },
   };
