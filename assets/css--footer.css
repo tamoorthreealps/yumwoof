@@ -1,0 +1,477 @@
+/* ==========================================================================
+   Yumwoof custom footer
+   - Full-bleed running marquee (heritage-style clone loop)
+   - Klaviyo signup embed (left)
+   - Link columns (Shop / Explore), Questions, Dogquarters, socials, currency
+   - Desktop: 3-column grid-areas. Mobile: stacked with Shop/Explore/Legal
+     collapsible accordions.
+   Brand: maroon #661D1D bg, cream #FFF9EF text. rem base = 10px.
+   ========================================================================== */
+.yf {
+	--yf-bg: #661d1d;
+	--yf-text: #fff9ef;
+	--yf-line: rgba(255, 249, 239, 0.22);
+	--yf-muted: rgba(255, 249, 239, 0.72);
+	background: var(--yf-bg);
+	color: var(--yf-text);
+	overflow: hidden;
+	padding-bottom: 2.4rem;
+}
+
+.yf a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.yf__page {
+	max-width: var(--page-width, 145rem);
+	margin-inline: auto;
+	padding-inline: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+	.yf__page {
+		padding-inline: 5rem;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Marquee (full-bleed running text)
+   -------------------------------------------------------------------------- */
+.yf__marquee {
+	grid-area: marquee;
+	/* Bleed over the container padding (edge-to-edge of the page-width box)
+	   without disturbing the grid's fr track sizing. */
+	margin-inline: -2rem;
+	overflow: hidden;
+	padding-block: 2.4rem 3.2rem;
+}
+
+@media screen and (min-width: 750px) {
+	.yf__marquee {
+		margin-inline: -5rem;
+	}
+}
+
+.yf__marquee-row {
+	display: flex;
+	width: max-content;
+	will-change: transform;
+}
+
+.yf__marquee-row[data-marquee-ready] {
+	animation: yf-marquee var(--yf-marquee-duration, 30s) linear infinite;
+}
+
+.yf__marquee:hover .yf__marquee-row[data-marquee-ready] {
+	animation-play-state: paused;
+}
+
+.yf__marquee-track {
+	display: flex;
+	flex: none;
+}
+
+.yf__marquee-item {
+	font-family: FFBlurProMedium, sans-serif;
+	text-transform: uppercase;
+	font-size: 4.4rem;
+	line-height: 1;
+	white-space: nowrap;
+	padding-inline: 0.5em;
+	letter-spacing: 0.01em;
+}
+
+@media screen and (min-width: 750px) {
+	.yf__marquee-item {
+		font-size: 6.4rem;
+	}
+}
+
+@keyframes yf-marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.yf__marquee-row[data-marquee-ready] {
+		animation: none;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Main grid
+   -------------------------------------------------------------------------- */
+.yf__main {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3.2rem 2.4rem;
+	grid-template-areas:
+		'signup   signup'
+		'marquee  marquee'
+		'shop     shop'
+		'explore  explore'
+		'legal    legal'
+		'dog      questions'
+		'social   social'
+		'currency currency'
+		'badge    badge';
+	padding-top: 0.8rem;
+}
+
+.yf__signup {
+	grid-area: signup;
+}
+.yf__col--shop {
+	grid-area: shop;
+}
+.yf__col--explore {
+	grid-area: explore;
+}
+.yf__col--legal {
+	grid-area: legal;
+}
+.yf__dogquarters {
+	grid-area: dog;
+}
+.yf__questions {
+	grid-area: questions;
+}
+.yf__social {
+	grid-area: social;
+}
+.yf__currency {
+	grid-area: currency;
+}
+.yf__badge {
+	grid-area: badge;
+}
+
+/* --------------------------------------------------------------------------
+   Shared type
+   -------------------------------------------------------------------------- */
+.yf__eyebrow,
+.yf__heading {
+	font-family: FFBlurProMedium, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	margin: 0;
+}
+
+.yf__eyebrow {
+	font-size: 1.1rem;
+	color: var(--yf-muted);
+}
+
+.yf__heading {
+	font-size: 1.3rem;
+	margin-bottom: 1.6rem;
+}
+
+.yf__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1.1rem;
+}
+
+.yf__list a,
+.yf__link {
+	font-family: 'Matter', sans-serif;
+	font-size: 1.4rem;
+	color: var(--yf-text);
+	transition: opacity 0.15s ease;
+}
+
+.yf__list a:hover,
+.yf__link:hover {
+	opacity: 0.65;
+}
+
+/* --------------------------------------------------------------------------
+   Signup (Klaviyo)
+   -------------------------------------------------------------------------- */
+.yf__signup-form {
+	width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Accordions (Shop / Explore / Legal)
+   -------------------------------------------------------------------------- */
+.yf-disc {
+	border-top: 1px solid var(--yf-line);
+	padding-block: 1.6rem;
+}
+
+.yf-disc__summary {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	gap: 1rem;
+}
+
+.yf-disc__summary::-webkit-details-marker {
+	display: none;
+}
+
+.yf-disc__icon {
+	position: relative;
+	width: 1.4rem;
+	height: 1.4rem;
+	flex: none;
+}
+.yf-disc__icon::before,
+.yf-disc__icon::after {
+	content: '';
+	position: absolute;
+	background: var(--yf-text);
+	inset: 0;
+	margin: auto;
+}
+.yf-disc__icon::before {
+	width: 100%;
+	height: 1.5px;
+}
+.yf-disc__icon::after {
+	width: 1.5px;
+	height: 100%;
+	transition: transform 0.2s ease;
+}
+.yf-disc[open] .yf-disc__icon::after {
+	transform: scaleY(0);
+}
+
+.yf-disc__panel {
+	padding-top: 1.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   Questions / Dogquarters
+   -------------------------------------------------------------------------- */
+.yf__questions-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	font-family: 'Matter', sans-serif;
+	font-size: 1.4rem;
+}
+
+.yf__questions-link {
+	text-decoration: none;
+}
+.yf__questions-link:hover {
+	opacity: 0.65;
+}
+.yf__muted {
+	color: var(--yf-muted);
+}
+
+.yf__addresses {
+	display: flex;
+	flex-direction: column;
+	gap: 1.6rem;
+}
+.yf__address-label {
+	font-family: FFBlurProMedium, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-size: 1rem;
+	color: var(--yf-muted);
+	margin: 0 0 0.4rem;
+}
+.yf__address {
+	font-family: 'Matter', sans-serif;
+	font-size: 1.4rem;
+	line-height: 1.45;
+	margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Social + currency
+   -------------------------------------------------------------------------- */
+.yf__social .list-social {
+	display: flex;
+	gap: 1rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.yf__social .list-social__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 3.4rem;
+	height: 3.4rem;
+	border: 1px solid var(--yf-line);
+	border-radius: 50%;
+	color: var(--yf-text);
+	transition: background 0.15s ease, color 0.15s ease;
+}
+.yf__social .list-social__link:hover {
+	background: var(--yf-text);
+	color: var(--yf-bg);
+}
+.yf__social .list-social__link .svg-wrapper,
+.yf__social .list-social__link svg {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.yf__currency .localization-form__select {
+	background: transparent;
+	color: var(--yf-text);
+	border: 1px solid var(--yf-line);
+	border-radius: 999px;
+	padding: 0.8rem 1.4rem;
+	font-family: 'Matter', sans-serif;
+}
+.yf__currency .localization-selector.link {
+	color: var(--yf-text);
+	border: 1px solid var(--yf-line);
+	border-radius: 999px;
+	padding: 0.8rem 1.4rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   Badge
+   -------------------------------------------------------------------------- */
+.yf__badge {
+	display: flex;
+}
+.yf__badge img {
+	display: block;
+	width: 100%;
+	height: auto;
+	max-width: var(--yf-badge-w, 22rem);
+}
+
+/* --------------------------------------------------------------------------
+   Bottom bar
+   -------------------------------------------------------------------------- */
+.yf__bottom {
+	border-top: 1px solid var(--yf-line);
+	margin-top: 3.2rem;
+	padding-top: 2rem;
+}
+.yf__bottom-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.2rem 2.4rem;
+	font-family: FFBlurProMedium, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-size: 1.1rem;
+}
+.yf__bottom-policies {
+	list-style: none;
+	/* Mobile: policies live in the Legal accordion, so keep the bar minimal. */
+	display: none;
+	flex-wrap: wrap;
+	gap: 1.2rem 2.4rem;
+	margin: 0;
+	padding: 0;
+}
+.yf__bottom-policies a:hover {
+	opacity: 0.65;
+}
+.yf__site-credit {
+	margin-left: auto;
+}
+.yf__site-credit:hover {
+	opacity: 0.65;
+}
+
+/* Legal accordion is mobile-only; policies live in the bottom bar on desktop. */
+.yf__col--legal {
+	display: block;
+}
+
+/* ==========================================================================
+   Desktop
+   ========================================================================== */
+@media screen and (min-width: 990px) {
+	.yf {
+		padding-bottom: 3.2rem;
+	}
+
+	.yf__main {
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 1fr);
+		gap: 4.8rem 4rem;
+		align-items: start;
+		grid-template-areas:
+			'marquee  marquee    marquee'
+			'signup   shop       explore'
+			'signup   questions  dog'
+			'badge    social     currency';
+		padding-top: 1.6rem;
+	}
+
+	/* Legal accordion hidden on desktop — policies show in the bottom bar. */
+	.yf__col--legal {
+		display: none;
+	}
+	.yf__bottom-policies {
+		display: flex;
+	}
+
+	.yf__badge {
+		align-self: end;
+	}
+
+	/* Accordions become static columns: always expanded, no toggle. */
+	.yf-disc {
+		border-top: 0;
+		padding-block: 0;
+	}
+	.yf-disc__summary {
+		cursor: default;
+		pointer-events: none;
+		margin-bottom: 1.6rem;
+	}
+	.yf-disc__icon {
+		display: none;
+	}
+	.yf-disc > .yf-disc__panel {
+		padding-top: 0;
+	}
+	.yf-disc__summary .yf__heading {
+		margin-bottom: 0;
+	}
+
+	.yf__signup {
+		max-width: 42rem;
+	}
+}
+
+/* Small phones: stack the dog/questions pair too. */
+@media screen and (max-width: 559px) {
+	.yf__main {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			'signup'
+			'marquee'
+			'shop'
+			'explore'
+			'legal'
+			'dog'
+			'questions'
+			'social'
+			'currency'
+			'badge';
+	}
+}
