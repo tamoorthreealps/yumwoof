@@ -13,6 +13,25 @@
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
     {%- liquid
+      # ----- Market availability (Coming Soon) -----
+      # A product can be withheld from purchase in specific markets via the
+      # custom.unavailable_markets metafield (list of single line text). Each entry
+      # is matched, case-insensitively, against the visitor's current market HANDLE
+      # (localization.market.handle) or their country code (localization.country.iso_code).
+      # Spaces become hyphens so "United Kingdom" also matches the "united-kingdom" handle.
+      assign is_market_unavailable = false
+      assign unavailable_markets = product.metafields.custom.unavailable_markets.value
+      if unavailable_markets != blank
+        assign cur_market_handle = localization.market.handle | downcase | strip
+        assign cur_country_code = localization.country.iso_code | downcase | strip
+        for um in unavailable_markets
+          assign um_key = um | downcase | strip | replace: ' ', '-'
+          if um_key == cur_market_handle or um_key == cur_country_code
+            assign is_market_unavailable = true
+          endif
+        endfor
+      endif
+
       assign gift_card_recipient_feature_active = false
       if block.settings.show_gift_card_recipient and product.gift_card?
         assign gift_card_recipient_feature_active = true
@@ -24,6 +43,31 @@
       endif
     -%}
 
+    {%- if is_market_unavailable -%}
+      {%- comment -%} Not for sale in this market: Coming Soon + Klaviyo email signup, no add-to-cart. {%- endcomment -%}
+      {%- assign klaviyo_form_class = block.settings.klaviyo_form_class | default: 'klaviyo-form-Ry6Yff' | strip -%}
+      {%- assign coming_soon_heading = block.settings.coming_soon_heading | default: 'Coming Soon' -%}
+      {% style %}
+        .coming-soon { display: flex; flex-direction: column; gap: 1.2rem; }
+        .coming-soon__heading { margin: 0; font-size: 2rem; font-weight: 600; line-height: 1.2; }
+        .coming-soon__text > :first-child { margin-top: 0; }
+        .coming-soon__text > :last-child { margin-bottom: 0; }
+        .coming-soon__form { width: 100%; }
+      {% endstyle %}
+      <div class="product-form product-form--coming-soon">
+        <div class="coming-soon">
+          <p class="coming-soon__heading">{{ coming_soon_heading }}</p>
+          {%- if block.settings.coming_soon_text != blank -%}
+            <div class="coming-soon__text rte">{{ block.settings.coming_soon_text }}</div>
+          {%- endif -%}
+          {%- if klaviyo_form_class != blank -%}
+            <div class="coming-soon__form">
+              <div class="{{ klaviyo_form_class }}"></div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- else -%}
     <product-form
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
@@ -104,6 +148,7 @@
         </div>
       {%- endform -%}
     </product-form>
+    {%- endif -%}
   {%- else -%}
     <div class="product-form">
       <div class="product-form__buttons form">
