@@ -1,0 +1,80 @@
+{% comment %}
+  QCK Schema — Product
+  Client: Yumwoof Natural Pet Food (yumwoof.com)
+  Version: 1.0
+  Rendered via: layout/theme.liquid on request.page_type == 'product'
+  Notes:
+    - AggregateRating omitted in v1.0: Opinew exposes reviews via client-side JS widget only,
+      no Liquid metafields detected. Reintroduce in v1.1 if Opinew metafields are confirmed
+      (likely under product.metafields.opinew.* or product.metafields.opinew_reviews.*).
+    - 21-day money-back return policy. Customer pays return shipping (per Yumwoof policy).
+    - shippingDetails omitted in v1.0: Yumwoof advertises free shipping on continental USA
+      orders >= $80 but the standard rate below threshold is not published. To add shippingDetails
+      in v1.1, confirm the flat rate for sub-$80 orders, or confirm that all products individually
+      meet the threshold (in which case shippingRate "0.00" can be applied unconditionally).
+{% endcomment %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "{{ request.origin }}{{ product.url }}#product",
+  "name": {{ product.title | json }},
+  "url": "{{ request.origin }}{{ product.url }}",
+  {%- if product.featured_media -%}
+  "image": [
+    {{ product.featured_media | image_url: width: 1920 | prepend: "https:" | json }}
+  ],
+  {%- elsif product.images.size > 0 -%}
+  "image": [
+    {%- for img in product.images limit: 5 -%}
+      {{ img | image_url: width: 1920 | prepend: "https:" | json }}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  {%- endif -%}
+  "description": {{ product.description | strip_html | json }},
+  {%- if current_variant.sku != blank -%}
+  "sku": {{ current_variant.sku | json }},
+  {%- endif -%}
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  "offers": [
+    {%- for variant in product.variants -%}
+    {
+      "@type": "Offer",
+      {%- if variant.sku != blank -%}
+      "sku": {{ variant.sku | json }},
+      {%- endif -%}
+      {%- if variant.barcode.size == 12 -%}
+      "gtin12": {{ variant.barcode | json }},
+      {%- endif -%}
+      {%- if variant.barcode.size == 13 -%}
+      "gtin13": {{ variant.barcode | json }},
+      {%- endif -%}
+      {%- if variant.barcode.size == 14 -%}
+      "gtin14": {{ variant.barcode | json }},
+      {%- endif -%}
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "price": {{ variant.price | divided_by: 100.00 | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "url": "{{ request.origin }}{{ variant.url }}",
+      "seller": {
+        "@id": "https://yumwoof.com/#organization"
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": "US",
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 21,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/ReturnShippingFees",
+        "refundType": "https://schema.org/FullRefund"
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
