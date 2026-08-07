@@ -323,12 +323,12 @@ p.cd-banner__description {
 	padding-right: 16px;
 }
 .cd-banner .cd-banner__btn {
-    width: auto;
+    width: 100%;
+	min-width:132px;
     font-size: 13px;
     line-height: 20px;
     letter-spacing: 0.54px;
     font-family: 'FFBlurProMedium';
-    white-space: nowrap;
     background: #7BA6DD;
     border: 1px solid #000000;
     border-radius: 100px;
@@ -377,6 +377,7 @@ p.cd-banner__description {
 }
 .cd-banner .cd-banner__btn {
     padding: 6.2px 17.53px 4.2px;
+	min-width:64px;
 }
 .cd-banner__btn_hold {
     display: flex;
