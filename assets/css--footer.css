@@ -296,6 +296,17 @@
 .go1822718113.go1822718113.go1822718113 {
     width: 100%;
 }
+
+.go90847487.go90847487.go90847487 {
+    border: 1px solid #000000;
+    height: 56px;
+    border-radius: 100px;
+    padding: 10px 30px;
+    font-size: 18px;
+    line-height: 28px;
+    color: #000000;
+    font-family: 'Matter';
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
