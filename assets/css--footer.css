@@ -216,7 +216,21 @@
 .yf__signup-form {
 	width: 100%;
 }
+.go3038250217.go3038250217.go3038250217 {
+    padding: 0;
+}
 
+.go3176171171 p {
+    text-align: left !important;
+}
+
+.go3176171171 span {
+    color: #FFF9EF;
+    font-size: 16px !important;
+    line-height: 24px;
+    letter-spacing: -0.64px;
+    font-family: 'TAY Birdie';
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
