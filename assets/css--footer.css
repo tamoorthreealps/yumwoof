@@ -412,14 +412,17 @@ p.yf__signup__footer_content a {
    Questions / Dogquarters
    -------------------------------------------------------------------------- */
 .yf__questions-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 0.9rem;
-	font-family: 'Matter', sans-serif;
-	font-size: 1.4rem;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    font-family: Matter, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFF9EF;
 }
 
 .yf__questions-link {
