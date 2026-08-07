@@ -1,0 +1,90 @@
+{% comment %}
+  QCK Schema — BreadcrumbList
+  Client: Yumwoof Natural Pet Food (yumwoof.com)
+  Version: 1.0
+  Rendered via: layout/theme.liquid for product, collection, and article pages.
+  Trail logic:
+    - Product:    Home > Collection (if available) > Product
+    - Collection: Home > Collection
+    - Article:    Home > Blog > Article
+{% endcomment %}
+{%- assign origin = 'https://yumwoof.com' -%}
+{%- assign breadcrumbs = '' -%}
+
+{%- if request.page_type == 'product' and product -%}
+  {%- capture breadcrumbs -%}
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ origin }}/"
+    }
+    {%- if product.collections.first -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ product.collections.first.title | json }},
+      "item": "{{ origin }}{{ product.collections.first.url }}"
+    },{
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ product.title | json }},
+      "item": "{{ origin }}{{ product.url }}"
+    }
+    {%- else -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ product.title | json }},
+      "item": "{{ origin }}{{ product.url }}"
+    }
+    {%- endif -%}
+  {%- endcapture -%}
+
+{%- elsif request.page_type == 'collection' and collection -%}
+  {%- capture breadcrumbs -%}
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ origin }}/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ collection.title | json }},
+      "item": "{{ origin }}{{ collection.url }}"
+    }
+  {%- endcapture -%}
+
+{%- elsif request.page_type == 'article' and article -%}
+  {%- capture breadcrumbs -%}
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ origin }}/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": "{{ origin }}{{ blog.url }}"
+    },{
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ article.title | json }},
+      "item": "{{ origin }}{{ article.url }}"
+    }
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if breadcrumbs != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {{ breadcrumbs }}
+  ]
+}
+</script>
+{%- endif -%}
