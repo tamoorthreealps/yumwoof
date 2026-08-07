@@ -3,8 +3,16 @@
     margin: 0 0 2.4rem;
 }
 
+.psel__legend_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0 0 12px;
+}
+
 .psel__legend {
-    margin: 0 0 1.2rem;
+    margin: 0;
     font-family: TAY Birdie, sans-serif;
     text-transform: uppercase;
     color: #000;
