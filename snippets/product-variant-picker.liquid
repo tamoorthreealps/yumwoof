@@ -23,6 +23,14 @@
     {% # theme-check-enable %}
     {{ block.shopify_attributes }}
   >
+    {% assign has_swatch_badge = false %}
+
+{% for v in product.variants %}
+  {% if v.metafields.custom.swatch_badge.value != blank %}
+    {% assign has_swatch_badge = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
     {%- for option in product.options_with_values -%}
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
@@ -44,7 +52,7 @@
       -%}
       {%- if picker_type == 'recipe_image' -%}
         <fieldset class="js product-form__input product-form__input--recipe">
-          <div class="recipe-heading  {% if swatch_badge == blank %} recipe-heading_nobadge{% endif %} ">
+          <div class="recipe-heading  {% unless has_swatch_badge %} recipe-heading_nobadge{% endunless %} ">
             <legend class="form__label form__label--numbered">{{ option.name }}</legend>
             {% if popup %}
               <button
