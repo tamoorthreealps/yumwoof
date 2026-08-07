@@ -444,18 +444,21 @@ a.yf__questions-link.live-chat {
 	gap: 1.6rem;
 }
 .yf__address-label {
-	font-family: FFBlurProMedium, sans-serif;
-	text-transform: uppercase;
-	letter-spacing: 0.1em;
-	font-size: 1rem;
-	color: var(--yf-muted);
-	margin: 0 0 0.4rem;
+    font-family: 'TAY Birdie';
+    text-transform: uppercase;
+    letter-spacing: 0.28px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFF9EF;
+    margin: 0 0 .4rem;
 }
 .yf__address {
-	font-family: 'Matter', sans-serif;
-	font-size: 1.4rem;
-	line-height: 1.45;
-	margin: 0;
+    font-family: Matter, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    margin: 0;
+    color: rgba(255, 249, 239, 0.75);
 }
 
 /* --------------------------------------------------------------------------
