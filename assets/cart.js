@@ -514,7 +514,7 @@ function initRecommendSlider() {
 
   const options = {
     type: "slide",
-    perPage: 1.2,
+    perPage: 1.1,
     perMove: 1,
     gap: "16px",
     pagination: false,
