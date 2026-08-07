@@ -686,9 +686,11 @@
               <div class="cd-recommend__head">
                 <p class="cd-recommend__title">
                   {{ section.settings.recommend_title }}
-                  {% comment %} {%- if extra_percent > 0 -%}
-                    <span class="cd-recommend__extra">(EXTRA {{ extra_percent }}%)</span>
-                  {%- endif -%} {% endcomment %}
+                  {% comment %}
+                    {%- if extra_percent > 0 -%}
+                      <span class="cd-recommend__extra">(EXTRA {{ extra_percent }}%)</span>
+                    {%- endif -%}
+                  {% endcomment %}
                 </p>
                 <div class="cd-carousel__nav">
                   <button type="button" class="cd-carousel__arrow" data-cd-prev aria-label="Previous">
@@ -724,16 +726,35 @@
               {%- if membership_img != blank and banner_variant_id != blank -%}
                 {%- assign banner_add_label = banner_product.title | escape -%}
                 <div class="cd-banner cd-banner--membership">
-                  <button
-                    type="button"
-                    class="cd-banner__btn"
-                    data-cd-add
-                    data-variant-id="{{ banner_variant_id }}"
-                    data-selling-plan="{{ banner_selling_plan_id }}"
-                    aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_add_label }}"
-                  >
-                    {{ membership_img }}
-                  </button>
+                  <div class="cd-banner__content">
+                    <div class="cd-banner__image">
+                      <img
+                        src="{{ 'yum-club-dog.png' | asset_url }}"
+                        alt="Yum Club"
+                        loading="lazy"
+                      >
+                    </div>
+
+                    <div class="cd-banner__text">
+                      <h3>EXTRA 25% OFF!</h3>
+                      <p>
+                        when you become a
+                        <strong>Yum Club member.</strong>
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      class="cd-banner__btn"
+                      data-cd-add
+                      data-variant-id="{{ banner_variant_id }}"
+                      data-selling-plan="{{ banner_selling_plan_id }}"
+                      aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
+                    >
+                      <span>ADD</span>
+                      <span>- $29/QTR</span>
+                    </button>
+                  </div>
                 </div>
               {%- endif -%}
             {%- elsif show_congrats_banner -%}
