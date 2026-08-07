@@ -569,34 +569,34 @@ display: block;
   }
 
   /* --- Closed --- */
-  .country-pill__button {
+.country-pill__button {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 0.8rem 1.4rem;
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    gap: .8rem;
+    padding: .8rem 1.6rem .8rem .8rem;
+    border: 1px solid #FFF9EF;
     border-radius: 999px;
     background: transparent;
     color: currentColor;
     cursor: pointer;
     font: inherit;
     line-height: 1;
-    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
-  }
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
 
   /* --- Hover / focus / open --- */
-  .country-pill__button:hover,
-  .country-pill__button:focus-visible,
-  .country-pill__button[aria-expanded='true'] {
-    background: #fff;
-    border-color: #fff;
-    color: #1a1a1a;
-  }
+.country-pill__button:hover, .country-pill__button:focus-visible, .country-pill__button[aria-expanded=true] {
+    background: #FFF9EF;
+    border-color: #FFF9EF;
+    color: #000;
+}
 
   .country-pill__code {
-    font-size: 1.4rem;
-    letter-spacing: 0.06em;
-  }
+    font-size: 16px;
+    letter-spacing: -0.32px;
+    line-height: 24px;
+    font-family: 'TAY Birdie';
+}
 
   .country-pill__caret {
     display: flex;
@@ -614,8 +614,8 @@ display: block;
   }
 
   .country-pill__flag {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.4rem;
+    height: 2.4rem;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
