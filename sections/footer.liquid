@@ -145,30 +145,6 @@
         </ul>
       </div>
     </details>
-
-    {%- comment -%} ===== DOGQUARTERS (addresses) ===== {%- endcomment -%}
-    <div class="yf__dogquarters">
-      <h2 class="yf__heading">{{ section.settings.dogquarters_heading | default: 'Dogquarters' }}</h2>
-      <div class="yf__addresses">
-        {%- if section.settings.address_1 != blank -%}
-          <div>
-            {%- if section.settings.address_1_label != blank -%}
-              <p class="yf__address-label">{{ section.settings.address_1_label }}</p>
-            {%- endif -%}
-            <div class="yf__address rte">{{ section.settings.address_1 }}</div>
-          </div>
-        {%- endif -%}
-        {%- if section.settings.address_2 != blank -%}
-          <div>
-            {%- if section.settings.address_2_label != blank -%}
-              <p class="yf__address-label">{{ section.settings.address_2_label }}</p>
-            {%- endif -%}
-            <div class="yf__address rte">{{ section.settings.address_2 }}</div>
-          </div>
-        {%- endif -%}
-      </div>
-    </div>
-
     {%- comment -%} ===== QUESTIONS ===== {%- endcomment -%}
     <div class="yf__questions">
       <h2 class="yf__heading">{{ section.settings.questions_heading | default: 'Questions?' }}</h2>
@@ -200,6 +176,30 @@
         {%- endif -%}
       </ul>
     </div>
+    {%- comment -%} ===== DOGQUARTERS (addresses) ===== {%- endcomment -%}
+    <div class="yf__dogquarters">
+      <h2 class="yf__heading">{{ section.settings.dogquarters_heading | default: 'Dogquarters' }}</h2>
+      <div class="yf__addresses">
+        {%- if section.settings.address_1 != blank -%}
+          <div>
+            {%- if section.settings.address_1_label != blank -%}
+              <p class="yf__address-label">{{ section.settings.address_1_label }}</p>
+            {%- endif -%}
+            <div class="yf__address rte">{{ section.settings.address_1 }}</div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.address_2 != blank -%}
+          <div>
+            {%- if section.settings.address_2_label != blank -%}
+              <p class="yf__address-label">{{ section.settings.address_2_label }}</p>
+            {%- endif -%}
+            <div class="yf__address rte">{{ section.settings.address_2 }}</div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+
 
     {%- comment -%} ===== SOCIAL ===== {%- endcomment -%}
     {%- if section.settings.show_social -%}
