@@ -278,6 +278,7 @@
     color: #FFF9EF;
     font-weight: 500;
     margin: 0;
+	text-transform: capitalize;
 }
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
