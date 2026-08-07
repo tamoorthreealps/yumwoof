@@ -228,12 +228,13 @@
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .3s ease;
+  transform-origin: right;
+  transition: transform .35s ease;
 }
 
 .yf__list li a:hover::after {
   transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* --------------------------------------------------------------------------
