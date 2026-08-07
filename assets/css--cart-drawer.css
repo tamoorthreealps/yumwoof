@@ -551,6 +551,12 @@ cart-drawer.active .cd__inner {
 	flex-wrap: wrap;
 }
 
+/* Subscription-only lines (membership) drop the toggle — keep the lone
+   frequency selector right-aligned, matching the other cards. */
+.cd-item__sub-row--no-toggle {
+	justify-content: flex-end;
+}
+
 .cd-toggle {
 	display: inline-flex;
 	align-items: center;
