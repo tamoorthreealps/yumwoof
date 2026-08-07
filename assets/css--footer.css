@@ -26,7 +26,7 @@
 .yf__page {
 	max-width: 1156px;
 	margin-inline: auto;
-	padding-inline: 2.4rem;
+	padding: 0 2.4rem;
 }
 
 @media screen and (min-width: 750px) {
