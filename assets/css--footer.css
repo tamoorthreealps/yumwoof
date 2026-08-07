@@ -280,6 +280,10 @@
     margin: 0;
 	text-transform: capitalize;
 }
+
+.go2365489600.go2365489600.go2365489600 circle {
+	fill: #661D1D;
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
