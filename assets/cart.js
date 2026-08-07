@@ -523,16 +523,6 @@ function initRecommendSlider() {
     omitEnd: true,
     trimSpace: true,
     focus: 0,
-    breakpoints: {
-      768: {
-        perPage: 1.1,
-        gap: "8px",
-        drag: true,
-    omitEnd: true,
-    trimSpace: true,
-    focus: 0,
-      },
-    },
   };
 
   // Show next card preview only when more than one slide exists
