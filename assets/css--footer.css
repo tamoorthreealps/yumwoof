@@ -42,14 +42,13 @@
 	grid-area: marquee;
 	/* Bleed over the container padding (edge-to-edge of the page-width box)
 	   without disturbing the grid's fr track sizing. */
-	margin-inline: -2rem;
 	overflow: hidden;
 	padding-block: 2.4rem 3.2rem;
 }
 
 @media screen and (min-width: 750px) {
 	.yf__marquee {
-		margin-inline: -5rem;
+		padding: 94px 0 102px;
 	}
 }
 
