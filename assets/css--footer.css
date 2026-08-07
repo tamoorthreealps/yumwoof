@@ -46,9 +46,21 @@
 	padding-block: 2.4rem 3.2rem;
 }
 
+.desktop--yf__marquee {
+		display:none;
+	}
+
 @media screen and (min-width: 750px) {
 	.yf__marquee {
 		padding: 94px 0 102px;
+	}
+
+	.mobile--yf__marquee {
+		display:none;
+	}
+
+	.desktop--yf__marquee {
+		display:block;
 	}
 }
 

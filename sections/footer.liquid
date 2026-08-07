@@ -39,18 +39,19 @@
 -%}
 
 <footer class="yf" data-yf>
-      {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
-    {%- if marquee_text != blank -%}
-      <div class="yf__marquee" data-yf-marquee aria-hidden="true">
-        <div class="yf__marquee-row" data-speed="{{ section.settings.marquee_speed | default: 60 }}">
-          <div class="yf__marquee-track">
-            {%- for i in (1..4) -%}
-              <span class="yf__marquee-item">{{ marquee_text }}</span>
-            {%- endfor -%}
-          </div>
+  {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
+  {%- if marquee_text != blank -%}
+    <div class="yf__marquee desktop--yf__marquee" data-yf-marquee aria-hidden="true">
+      <div class="yf__marquee-row" data-speed="{{ section.settings.marquee_speed | default: 60 }}">
+        <div class="yf__marquee-track">
+          {%- for i in (1..4) -%}
+            <span class="yf__marquee-item">{{ marquee_text }}</span>
+          {%- endfor -%}
         </div>
       </div>
-    {%- endif -%}
+    </div>
+  {%- endif -%}
+
   <div class="yf__main yf__page">
     {%- comment -%} ===== SIGNUP (Klaviyo renders the eyebrow + heading + quiz + email) ===== {%- endcomment -%}
     <div class="yf__signup">
@@ -60,6 +61,19 @@
         </div>
       {%- endif -%}
     </div>
+
+    {%- comment -%} ===== MARQUEE (full-bleed running text) ===== {%- endcomment -%}
+    {%- if marquee_text != blank -%}
+      <div class="yf__marquee mobile--yf__marquee" data-yf-marquee aria-hidden="true">
+        <div class="yf__marquee-row" data-speed="{{ section.settings.marquee_speed | default: 60 }}">
+          <div class="yf__marquee-track">
+            {%- for i in (1..4) -%}
+              <span class="yf__marquee-item">{{ marquee_text }}</span>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
 
     {%- comment -%} ===== SHOP (accordion on mobile, column on desktop) ===== {%- endcomment -%}
     <details class="yf-disc yf__col--shop" open>
