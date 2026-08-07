@@ -426,7 +426,7 @@
                     endif
                   -%}
 
-                  <div id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cd-item" role="row">
+                  <div id="CartDrawer-Item-{{ item.index | plus: 1 }}" class="cd-item handle-{{ item.handle }}" role="row">
                     <div class="cd-item_hold">
                       <div class="cd-item__media">
                         {%- if item.image -%}

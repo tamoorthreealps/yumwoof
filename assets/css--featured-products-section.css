@@ -222,7 +222,6 @@
 	width: auto;
 	height: auto;
 	object-fit: contain;
-	transition: .45s;
 }
 
 /* .fp__card:hover .fp__img {
