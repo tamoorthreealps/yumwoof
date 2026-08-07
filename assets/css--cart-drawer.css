@@ -561,13 +561,6 @@ p.cd-banner__description {
 	line-height: 16px;
 }
 
-.cd-item__discount-title {
-	font-weight: 600;
-}
-
-.cd-item__discount-amount {
-	font-weight: 600;
-}
 
 .cd-item__bottom {
 	display: flex;
