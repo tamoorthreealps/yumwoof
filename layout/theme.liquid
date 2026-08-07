@@ -405,5 +405,17 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    {%- render 'qck-schema-organization' -%}
+{%- if request.page_type == 'index' -%}
+  {%- render 'qck-schema-homepage' -%}
+{%- elsif request.page_type == 'product' -%}
+  {%- render 'qck-schema-product', product: product -%}
+  {%- render 'qck-schema-breadcrumbs', product: product -%}
+{%- elsif request.page_type == 'collection' -%}
+  {%- render 'qck-schema-breadcrumbs', collection: collection -%}
+{%- elsif request.page_type == 'article' -%}
+  {%- render 'qck-schema-article', article: article -%}
+  {%- render 'qck-schema-breadcrumbs', article: article, blog: blog -%}
+{%- endif -%}
   </body>
 </html>
