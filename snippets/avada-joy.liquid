@@ -1,0 +1,26 @@
+<script>
+      window.AVADA_JOY = window.AVADA_JOY || {};
+      window.AVADA_JOY.shopId = 'nNzdzl4AqyrJCuR4J0ea';
+      window.AVADA_JOY.status = true;
+      window.AVADA_JOY.account_enabled = {{ shop.customer_accounts_enabled }};
+      window.AVADA_JOY.login_url = {{ routes.account_login_url | json }};
+      window.AVADA_JOY.register_url = {{ routes.account_register_url | json }};
+      window.AVADA_JOY.customer = {
+        id: {{ customer.id | json }},
+        email: {{ customer.email | json }},
+        first_name: {{ customer.first_name | json }},
+        last_name: {{ customer.last_name | json }},
+        point: {{ customer.metafields.avada_joy.point | json }}
+      };
+      window.AVADA_JOY.placeOrder = window.AVADA_JOY.placeOrder || {};
+      window.AVADA_JOY.placeOrder = {"enableCardPage":false,"status":true,"statusProductPointsCalculator":false,"productPointsCalculator":{"type":"congratulation","fontSize":14,"font":"Noto+Sans","color":"#8F00C1"},"earnPoint":10,"rateMoney":100,"earnBy":"price","statusUseCondition":false,"typeProductMatch":"all","typeCondition":"all","conditions":[{"field":"title","typeMatch":"contains","content":""}],"excludeProducts":[],"includeProducts":[]};
+      window.AVADA_JOY.product = {{product|json}};
+      window.AVADA_JOY.page = {{request.page_type|json}};
+      {% if product %}
+        window.AVADA_JOY.product.selected_variant_id = {{ product.selected_or_first_available_variant.id }};
+        window.AVADA_JOY.product.collections = [];
+        {% for collection in product.collections %}
+          window.AVADA_JOY.product.collections.push(`{{ collection.title | replace: "$", "\$" }}`);
+        {% endfor %}
+      {% endif %}
+    </script>
