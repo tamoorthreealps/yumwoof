@@ -172,13 +172,14 @@
    Shared type
    -------------------------------------------------------------------------- */
 .yf__eyebrow, .yf__heading {
-    font-family: 'TAY Birdie';
+    font-family: TAY Birdie;
     text-transform: uppercase;
-    margin: 0;
+    margin: 0 0 12px;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0.64px;
-    color: #FFF9EF;
+    letter-spacing: .64px;
+    color: #fff9ef;
+    display: block;
 }
 
 .yf__list {
