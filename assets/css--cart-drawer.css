@@ -729,6 +729,7 @@ p.cd-banner__description {
 	line-height: 24px;
 	cursor: pointer;
 	max-width: 156px;
+	min-width: 156px;
 	letter-spacing: 0;
 	font-family: 'Matter';
 	font-weight: 500;
