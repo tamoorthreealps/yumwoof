@@ -798,6 +798,7 @@ p.cd-banner__description {
 
 .cd-recommend .splide__track {
 	overflow: visible;
+	    padding: 0 !important;
 }
 
 .cd-shop__head {
