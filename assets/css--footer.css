@@ -73,18 +73,20 @@
 }
 
 .yf__marquee-item {
-	font-family: FFBlurProMedium, sans-serif;
-	text-transform: uppercase;
-	font-size: 4.4rem;
-	line-height: 1;
-	white-space: nowrap;
-	padding-inline: 0.5em;
-	letter-spacing: 0.01em;
+    text-transform: uppercase;
+    font-size: 64px;
+    line-height: 64px;
+    white-space: nowrap;
+    padding-inline: 0;
+    letter-spacing: -1.28px;
+    font-family: TAYRosemary;
 }
 
 @media screen and (min-width: 750px) {
 	.yf__marquee-item {
-		font-size: 6.4rem;
+		font-size: 96px;
+        line-height: 72px;
+        letter-spacing: -1.92px;
 	}
 }
 
