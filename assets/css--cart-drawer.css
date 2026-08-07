@@ -340,6 +340,14 @@ p.cd-banner__description {
 	color: #fff9ef;
 
 }
+span.cd__mobile-text {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.48px;
+    color: #000;
+    font-family: 'FFBlurProMedium';
+    text-align: center;
+}
 .yumclub--mobile--img, .cd__mobile-text {
 	display:none !important;
 }
