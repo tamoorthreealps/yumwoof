@@ -1331,12 +1331,13 @@ background: #000;
 	}
 
 	.cd-item_hold {
-		gap: 4px;
+		gap: 10px;
 	}
 
 	.cd-item__media {
 		width: 72px;
 		height: 72px;
+		margin-left: -4px;
 	}
 
 	.cd-item__top {
@@ -1347,6 +1348,13 @@ background: #000;
 		font-size: 18px;
 		line-height: 24px;
 		letter-spacing: 0;
+		transform: none;
+	}
+
+	.cd-item__recipe {
+		font-size: 11px;
+		line-height: 12px;
+		letter-spacing: -.22px;
 	}
 
 	.cd-item__note {
@@ -1366,6 +1374,7 @@ background: #000;
 		font-size: 11px;
 		line-height: 12px;
 		letter-spacing: -0.22px;
+		margin:4px 0 0;
 	}
 
 	.cd-item__bottom {
