@@ -1603,12 +1603,14 @@ background: #000;
 
 	.cd-banner__img--desktop {
 		display: block;
+		border-radius: 16px;
 	}
 }
 
 @media screen and (max-width: 749px) {
 	.cd-banner__img--desktop {
 		display: none;
+		border-radius: 12px;
 	}
 
 	.cd-banner__img--mobile {
