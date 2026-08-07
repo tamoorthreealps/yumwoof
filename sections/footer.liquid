@@ -245,9 +245,9 @@
   {%- comment -%} ===== BOTTOM BAR ===== {%- endcomment -%}
   <div class="yf__bottom">
     <div class="yf__page yf__bottom-inner">
-      <small class="yf__copyright"
-        >&copy; {{ 'now' | date: '%Y' }}
-        {{ shop.name | escape -}}
+      <small class="yf__copyright">
+        &copy; {{ 'now' | date: '%Y' }}
+        {{ section.settings.copyright_name | default: shop.name | escape }}
       </small>
       {%- if section.settings.show_policy -%}
         <ul class="yf__bottom-policies" role="list">
@@ -551,6 +551,12 @@
       "id": "legal_menu",
       "label": "Legal menu",
       "info": "Leave empty to fall back to your store policies."
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "Copyright Name",
+      "info": "Leave this field empty to use the shop name."
     },
     {
       "type": "checkbox",
