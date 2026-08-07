@@ -1310,6 +1310,11 @@
         "placeholder": "t:settings_schema.social-media.settings.social_facebook_link.info"
       },
       {
+        "type": "url",
+        "id": "social_spotify_link",
+        "label": "Spotify"
+      },
+      {
         "type": "text",
         "id": "social_instagram_link",
         "label": "t:settings_schema.social-media.settings.social_instagram_link.label",
