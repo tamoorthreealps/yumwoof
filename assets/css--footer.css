@@ -306,6 +306,8 @@
     line-height: 28px;
     color: #000000;
     font-family: 'Matter';
+	outline: none !important;
+    text-transform: capitalize;
 }
 
 .go90847487.go90847487.go90847487::placeholder {
