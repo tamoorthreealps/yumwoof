@@ -157,7 +157,7 @@
         <ul class="yf__questions-list" role="list">
           {%- if section.settings.live_chat_label != blank -%}
             <li>
-              <a class="yf__questions-link live-chat" href="{{ section.settings.live_chat_url | default: '#' }}" onclick="GorgiasChat.open()">
+              <a class="yf__questions-link live-chat" href="{{ section.settings.live_chat_url | default: 'javascript:void(0);' }}" onclick="GorgiasChat.open()">
                 {{- section.settings.live_chat_label }} &rarr;
               </a>
             </li>
