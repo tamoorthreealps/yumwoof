@@ -467,9 +467,17 @@
                               {% endfor %}
 
                               {%- unless item.product.has_only_default_variant -%}
-                                <p class="cd-item__recipe">{{ recipe_value | escape }} {{ recipe_name }}</p>
+                                <p class="cd-item__recipe">
+                                  {{ recipe_value | escape }}
+                                  {{ recipe_name }}
+                                </p>
                               {%- endunless -%}
-                              <p class="cd-item__note">{{ variant_parts[1] | escape }} · {{ sub_note }}</p>
+                              <p class="cd-item__note">
+                                {% if variant_parts[1] != blank %}
+                                  {{ variant_parts[1] | escape }} ·
+                                {% endif %}
+                                {{ sub_note }}
+                              </p>
                             </div>
                             <div class="cd-item__price">
                               {%- if item_compare_unit > item.final_price -%}
