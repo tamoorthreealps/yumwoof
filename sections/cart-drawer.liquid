@@ -770,9 +770,13 @@
                           aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
                         >
                           {{ section.settings.banner_button_text }}
-                          <span class="cd__desktop-text">- {{ banner_variant.price | money_without_trailing_zeros }}/QTR</span>
+                          <span class="cd__desktop-text"
+                            >- {{ banner_variant.price | money_without_trailing_zeros }}/QTR</span
+                          >
                         </button>
-                        <span class="cd__mobile-text">{{ banner_variant.price | money_without_trailing_zeros }}/QTR</span>
+                        <span class="cd__mobile-text">
+                          {{- banner_variant.price | money_without_trailing_zeros }}/QTR</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -825,17 +829,17 @@
                   <span class="cd-totals__label">Subtotal</span>
                   <span class="cd-totals__value">
                     {%- if before_savings > cart.total_price -%}
-                      <s class="cd-totals__was">{{ before_savings | money }}</s> 
+                      <s class="cd-totals__was">{{ before_savings | money }}</s>
                     {% endif -%}
                     {{ cart.total_price | money }}
                   </span>
                 </div>
-                {%- if savings > 0 -%}
-                  <div class="cd-totals__row cd-totals__row--savings">
-                    <span>Total Savings!</span>
-                    <span>{{ savings | money }}</span>
-                  </div>
-                {%- endif -%}
+                {%- if total_savings > 0 -%}
+  <div class="cd-totals__row cd-totals__row--savings">
+    <span>Total Savings!</span>
+    <span>{{ total_savings | money }}</span>
+  </div>
+{%- endif -%}
               </div>
 
               <button type="submit" id="CartDrawer-Checkout" class="cd-checkout" name="checkout" form="CartDrawer-Form">
