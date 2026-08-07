@@ -424,7 +424,9 @@ p.yf__signup__footer_content a {
     line-height: 20px;
     color: #FFF9EF;
 }
-
+a.yf__questions-link.live-chat {
+    color: #7BA6DD;
+}
 .yf__questions-link {
 	text-decoration: none;
 }
@@ -432,7 +434,7 @@ p.yf__signup__footer_content a {
 	opacity: 0.65;
 }
 .yf__muted {
-	color: var(--yf-muted);
+    color: rgba(255, 249, 239, 0.6);
 }
 
 .yf__addresses {
