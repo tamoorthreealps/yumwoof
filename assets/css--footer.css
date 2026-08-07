@@ -183,20 +183,22 @@
 }
 
 .yf__list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 1.1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.yf__list a,
-.yf__link {
-	font-family: 'Matter', sans-serif;
-	font-size: 1.4rem;
-	color: var(--yf-text);
-	transition: opacity 0.15s ease;
+.yf__list a, .yf__link {
+    font-family: Matter, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 20px;
+    color: var(--yf-text);
+    transition: opacity .15s ease;
+    display: block;
 }
 
 .yf__list a:hover,
