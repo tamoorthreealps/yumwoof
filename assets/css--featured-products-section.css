@@ -157,7 +157,7 @@
 	transition: transform .5s ease;
 }
 .fp__card__hover:hover .fp__hover-media img {
-	transform: scale(1.1); /* 1.05, 1.1 ya 1.15 apni preference ke hisab se */
+	transform: scale(0.4);
 }
 .fp__card>* {
 	position: relative;
