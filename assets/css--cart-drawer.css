@@ -980,6 +980,9 @@ background: #000;
 	    visibility: hidden;
     pointer-events: none;
 }
+.handle-the-yum-club-membership .cd-item__sub{
+	display:none;
+}
 /* Empty state --------------------------------------------------------------*/
 .cd-empty {
 	text-align: center;
