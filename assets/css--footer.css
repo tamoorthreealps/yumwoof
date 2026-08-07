@@ -554,7 +554,15 @@ display: block;
 	gap: 0.8rem;
 }
 
-/* new--css */
+/* -----------------new--css --------------*/
+.yf__currency {
+    display: flex;
+    align-items: flex-end;
+}
+    .localization-form:only-child {
+        margin: 0;
+        padding: 0;
+    }
   .country-pill {
     position: relative;
     display: inline-block;
