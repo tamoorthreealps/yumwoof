@@ -787,6 +787,7 @@ cart-drawer.active .cd__inner {
 	gap: 16px;
 	position: relative;
 	height: 100%;
+	min-height: 160px;
 }
 
 .cd-rec-card__media {
@@ -1316,6 +1317,7 @@ background: #000;
 	.cd-rec-card {
 		border-radius: 12px;
 		gap: 12px;
+		min-height: 120px;
 	}
 
 	.cd-rec-card__media {
