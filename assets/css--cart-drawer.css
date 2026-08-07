@@ -340,7 +340,7 @@ p.cd-banner__description {
 	color: #fff9ef;
 
 }
-.yumclub--mobile--img {
+.yumclub--mobile--img, .cd__mobile-text {
 	display:none !important;
 }
 @media screen and (max-width: 750px) {
@@ -373,7 +373,7 @@ p.cd-banner__description {
 .cd__desktop-text, .yumclub--desktop--img {
 	display:none !important;
 }
-.yumclub--mobile--img {
+.yumclub--mobile--img, .cd__mobile-text {
 	display:block !important;
 }
 }
