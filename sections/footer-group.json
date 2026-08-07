@@ -14,9 +14,31 @@
     "footer": {
       "type": "footer",
       "settings": {
+        "footer_bg": "#661D1D",
+        "footer_text": "#FFF9EF",
+        "marquee_text": "Gorgeous dogs eat Yumwoof. Gorgeous, gorgeous dogs eat Yumwoof.",
+        "marquee_speed": 60,
+        "klaviyo_form_class": "klaviyo-form-Ry6Yff",
+        "badge_width": 220,
+        "shop_heading": "Shop",
+        "shop_menu": "footer",
+        "explore_heading": "Explore",
+        "questions_heading": "Questions?",
+        "live_chat_label": "Live Chat",
+        "contact_email": "woof@yumwoof.com",
+        "phone_label": "(775) DOG-FOOD",
+        "hours": "Mon–Fri, 10–4 CT",
+        "dogquarters_heading": "Dogquarters",
+        "address_1_label": "USA",
+        "address_1": "<p>1401 Lavaca Street Austin, TX 78701</p>",
+        "address_2_label": "Europe",
+        "address_2": "<p>207 Regent Street London, W1B 3HH</p>",
         "show_social": true,
-        "enable_country_selector": true,
-        "show_policy": true
+        "social_heading": "Follow us",
+        "legal_heading": "Legal",
+        "show_policy": true,
+        "site_credit_label": "Site Credit",
+        "enable_country_selector": true
       }
     }
   },
