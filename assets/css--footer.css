@@ -24,7 +24,7 @@
 }
 
 .yf__page {
-	max-width: var(--page-width, 145rem);
+	max-width: 1156px;
 	margin-inline: auto;
 	padding-inline: 2.4rem;
 }
