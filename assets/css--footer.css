@@ -435,6 +435,7 @@ a.yf__questions-link.live-chat {
 }
 .yf__muted {
     color: rgba(255, 249, 239, 0.6);
+	margin-top:8px;
 }
 
 .yf__addresses {
