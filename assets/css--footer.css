@@ -232,6 +232,17 @@
     font-family: 'TAY Birdie';
 	display: block;
 }
+
+.go1838617735.go1838617735.go1838617735 {
+    padding: 0;
+    margin: 0 0 22px;
+    color: #FFF9EF;
+    font-family: 'TAYRosemary';
+    font-size: 40px;
+    line-height: 44px;
+    font-weight: 400;
+    letter-spacing: -0.80px;
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
