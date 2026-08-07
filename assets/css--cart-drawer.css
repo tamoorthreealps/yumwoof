@@ -881,13 +881,18 @@ cart-drawer.active .cd__inner {
     border: 1px solid #000;
     border-radius: 100px;
     padding: 10px 22.3px 8.4px;
+	transition: all .3s ease;
 }
 
 .cd-rec-card__add {
-	flex: none;
-	min-width: 64px;
-	height: 48px;
-	background: url(https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Vector_3_e8483195-886b-476a-81c5-6cdb2d8df1ea.svg?v=1784554539) center / 100% 100% no-repeat;
+    flex: none;
+    padding: 6px 17.57px 4.4px;
+	transition: all .3s ease;
+}
+
+.cd-rec-card__add:hover, .cd-hex-btn:hover {
+background: #000;
+    color: #fff9ef;
 }
 
 .cd-rec-card__add--disabled {
