@@ -514,9 +514,9 @@ function initRecommendSlider() {
 
   const options = {
     type: "slide",
-    perPage: 2,
+    perPage: 1,
     perMove: 1,
-    gap: "12px",
+    gap: "16px",
     pagination: false,
     arrows: false,
     drag: true,
@@ -524,16 +524,15 @@ function initRecommendSlider() {
     trimSpace: true,
     focus: 0,
     breakpoints: {
-      750: {
-        perPage: 1.6,
-        gap: "12px",
-        omitEnd: true,
-        trimSpace: true,
-        focus: 0,
+      1024: {
+        perPage: 1,
+      },
+      768: {
+        perPage: 1,
+        gap: "8px",
       },
     },
   };
-
 
   // Show next card preview only when more than one slide exists
   if (totalSlides > 1) {
