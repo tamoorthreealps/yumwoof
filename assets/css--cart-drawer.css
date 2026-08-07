@@ -1615,5 +1615,6 @@ background: #000;
 
 	.cd-banner__img--mobile {
 		display: block;
+		border-radius: 12px;
 	}
 }
