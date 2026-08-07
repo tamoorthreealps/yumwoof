@@ -1,0 +1,26 @@
+{% comment %}
+  QCK Schema — WebSite + SearchAction
+  Client: Yumwoof Natural Pet Food (yumwoof.com)
+  Version: 1.0
+  Rendered via: layout/theme.liquid on request.page_type == 'index'
+{% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://yumwoof.com/#website",
+  "name": "Yumwoof Natural Pet Food",
+  "url": "https://yumwoof.com",
+  "publisher": {
+    "@id": "https://yumwoof.com/#organization"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://yumwoof.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
