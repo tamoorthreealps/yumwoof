@@ -45,27 +45,62 @@
 
     {%- if is_market_unavailable -%}
       {%- comment -%}
-        Not for sale in this market: the add-to-cart is replaced by the Klaviyo
-        email-signup form shown directly inline (no button, no popup).
+        Not for sale in this market: the add-to-cart is replaced by a "Coming Soon"
+        button (styled exactly like add-to-cart) that opens a popup containing the
+        Klaviyo email-signup form.
       {%- endcomment -%}
       {%- assign klaviyo_form_class = block.settings.klaviyo_form_class | default: 'klaviyo-form-Ry6Yff' | strip -%}
+      {%- assign coming_soon_heading = block.settings.coming_soon_heading | default: 'Coming Soon' -%}
+      {%- assign cs_id = 'ComingSoon-' | append: section_id | append: '-' | append: product.id -%}
       {% style %}
-        .coming-soon { display: flex; flex-direction: column; gap: 1.2rem; }
-        .coming-soon__text > :first-child { margin-top: 0; }
-        .coming-soon__text > :last-child { margin-bottom: 0; }
-        .coming-soon__form { width: 100%; }
+        .coming-soon-modal[hidden] { display: none; }
+        .coming-soon-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem;
+        }
+        .coming-soon-modal__overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+        }
+        .coming-soon-modal__dialog {
+          position: relative;
+          background: #fff9ef;
+          color: #1a1a1a;
+          width: 100%;
+          max-width: 48rem;
+          max-height: 90vh;
+          overflow: auto;
+          border-radius: 12px;
+          padding: 3.6rem 2.4rem 2.4rem;
+        }
+        .coming-soon-modal__close {
+          position: absolute;
+          top: 0.8rem;
+          right: 1rem;
+          background: none;
+          border: 0;
+          font-size: 2.8rem;
+          line-height: 1;
+          cursor: pointer;
+          color: inherit;
+        }
+        .coming-soon-modal__heading { margin: 0 0 0.8rem; font-size: 2rem; font-weight: 600; line-height: 1.2; }
+        .coming-soon-modal__text > :first-child { margin-top: 0; }
+        .coming-soon-modal__text { margin-bottom: 1.6rem; }
       {% endstyle %}
       <div class="product-form product-form--coming-soon">
-        <div class="coming-soon">
-          {%- if block.settings.coming_soon_text != blank -%}
-            <div class="coming-soon__text rte">{{ block.settings.coming_soon_text }}</div>
+        {%- if block.settings.coming_soon_text != blank -%}
+            <div class="coming-soon-modal__text rte">{{ block.settings.coming_soon_text }}</div>
           {%- endif -%}
           {%- if klaviyo_form_class != blank -%}
-            <div class="coming-soon__form">
-              <div class="{{ klaviyo_form_class }}"></div>
-            </div>
+            <div class="{{ klaviyo_form_class }}"></div>
           {%- endif -%}
-        </div>
       </div>
     {%- else -%}
     <product-form
