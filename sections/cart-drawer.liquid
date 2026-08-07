@@ -728,38 +728,52 @@
                 <div class="cd-banner cd-banner--membership">
                   <div class="cd-banner__content">
                     <div class="cd-banner__image">
-                      <img
-                        class="yumclub--desktop--img"
-                        src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/YumClub_IMG.png?v=1786116118"
-                        alt="Yum Club"
-                        loading="lazy"
-                      >
-                        <img
-                        class="yumclub--mobile--img"
-                        src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/YumClub-mobile.png?v=1786117874"
-                        alt="Yum Club"
-                        loading="lazy"
-                      >
+                      {% if section.settings.banner_image_desktop != blank %}
+                        {{
+                          section.settings.banner_image_desktop
+                          | image_url: width: 1200
+                          | image_tag:
+                            class: 'cd-banner__img cd-banner__img--desktop',
+                            loading: 'lazy',
+                            alt: section.settings.banner_heading
+                        }}
+                      {% endif %}
+
+                      {% if section.settings.banner_image_mobile != blank %}
+                        {{
+                          section.settings.banner_image_mobile
+                          | image_url: width: 600
+                          | image_tag:
+                            class: 'cd-banner__img cd-banner__img--mobile',
+                            loading: 'lazy',
+                            alt: section.settings.banner_heading
+                        }}
+                      {% endif %}
                     </div>
 
                     <div class="cd-banner__text">
                       <div class="cd-banner__text_inner">
-                      <h3 class="cd-banner__title">EXTRA 25% OFF!</h3>
-                      <p class="cd-banner__description">when you become a Yum Club member.</p>
+                        {% if section.settings.banner_heading != blank %}
+                          <h3 class="cd-banner__title">{{ section.settings.banner_heading }}</h3>
+                        {% endif %}
+                        {% if section.settings.banner_text != blank %}
+                          <p class="cd-banner__description">{{ section.settings.banner_text }}</p>
+                        {% endif %}
                       </div>
                       <div class="cd-banner__btn_hold">
-                      <button
-                        type="button"
-                        class="cd-banner__btn"
-                        data-cd-add
-                        data-variant-id="{{ banner_variant_id }}"
-                        data-selling-plan="{{ banner_selling_plan_id }}"
-                        aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
-                      > ADD
-                        <span class="cd__desktop-text">- $29/QTR</span>
-                      </button>
-                      <span class="cd__mobile-text">$29/QTR</span>
-                    </div>
+                        <button
+                          type="button"
+                          class="cd-banner__btn"
+                          data-cd-add
+                          data-variant-id="{{ banner_variant_id }}"
+                          data-selling-plan="{{ banner_selling_plan_id }}"
+                          aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
+                        >
+                          {{ section.settings.banner_button_text }}
+                          <span class="cd__desktop-text">- {{ banner_variant.price | money }}/QTR</span>
+                        </button>
+                        <span class="cd__mobile-text">{{ banner_variant.price | money }}/QTR</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -956,8 +970,34 @@
     },
     { "type": "checkbox", "id": "banner_enable", "label": "Show banner", "default": true },
     { "type": "product", "id": "banner_product", "label": "Product to add on click" },
-    { "type": "image_picker", "id": "banner_image_desktop", "label": "Banner image (desktop)" },
-    { "type": "image_picker", "id": "banner_image_mobile", "label": "Banner image (mobile)" },
+    {
+      "type": "image_picker",
+      "id": "banner_image_desktop",
+      "label": "Banner Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_mobile",
+      "label": "Banner Image (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "Banner Heading",
+      "default": "EXTRA 25% OFF!"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_text",
+      "label": "Banner Text",
+      "default": "when you become a Yum Club member."
+    },
+    {
+      "type": "text",
+      "id": "banner_button_text",
+      "label": "Button Text",
+      "default": "ADD"
+    },
     { "type": "header", "content": "Congrats banner (product already in cart)" },
     { "type": "image_picker", "id": "banner_congrats_image_desktop", "label": "Congrats image (desktop)" },
     { "type": "image_picker", "id": "banner_congrats_image_mobile", "label": "Congrats image (mobile)" },
