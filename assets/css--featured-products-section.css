@@ -137,6 +137,8 @@
 	opacity: 0;
 	transition: .35s ease;
 	z-index: 0;
+	overflow: hidden;
+	border-radius: 20px;
 }
 
 .fp__hover-image,
@@ -147,9 +149,16 @@
 }
 
 .fp__hover-media img {
+		width: 100%;
+	height: 100%;
+	object-fit: cover;
 	border-radius: 20px;
+	transform: scale(1);
+	transition: transform .5s ease;
 }
-
+.fp__card__hover:hover .fp__hover-media img {
+	transform: scale(1.1); /* 1.05, 1.1 ya 1.15 apni preference ke hisab se */
+}
 .fp__card>* {
 	position: relative;
 	z-index: 2;

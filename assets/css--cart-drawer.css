@@ -976,7 +976,10 @@ background: #000;
 	letter-spacing: -.64px;
 	font-family: 'TAY Birdie';
 }
-
+.handle-the-yum-club-membership .cd-qty{
+	    visibility: hidden;
+    pointer-events: none;
+}
 /* Empty state --------------------------------------------------------------*/
 .cd-empty {
 	text-align: center;
