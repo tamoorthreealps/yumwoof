@@ -1598,6 +1598,10 @@ background: #000;
 		width: 100%;
 	}
 
+	.drawer__inner.cd__inner.is-empty .drawer__inner_container {
+		max-width: 524px;
+	}
+
 	.cd-banner__img--desktop {
 		display: block;
 		border-radius: 16px;
