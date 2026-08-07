@@ -825,7 +825,7 @@
                   <span class="cd-totals__label">Subtotal</span>
                   <span class="cd-totals__value">
                     {%- if before_savings > cart.total_price -%}
-                      <s class="cd-totals__was">{{ before_savings | money }}</s>
+                      <s class="cd-totals__was">{{ before_savings | money }}</s> {{ total_savings | money }}
                     {% endif -%}
                     {{ cart.total_price | money }}
                   </span>
