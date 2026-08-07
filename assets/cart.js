@@ -512,27 +512,28 @@ function initRecommendSlider() {
 
   slider.classList.add("is-initialized");
 
-  const options = new Splide(slider, {
-    type: "slide",
-    perPage: 2,
-    perMove: 1,
-    gap: "12px",
-    pagination: false,
-    arrows: false,
-    drag: true,
-    omitEnd: true,
-    trimSpace: true,
-    focus: 0,
-    breakpoints: {
-      750: {
-        perPage: 1.6,
-        gap: "12px",
-        omitEnd: true,
-        trimSpace: true,
-        focus: 0,
-      },
+  const options = {
+  type: "slide",
+  perPage: 2,
+  perMove: 1,
+  gap: "12px",
+  pagination: false,
+  arrows: false,
+  drag: true,
+  omitEnd: true,
+  trimSpace: true,
+  focus: 0,
+  breakpoints: {
+    750: {
+      perPage: 1.6,
+      gap: "12px",
+      omitEnd: true,
+      trimSpace: true,
+      focus: 0,
     },
-  });
+  },
+  };
+
 
   // Show next card preview only when more than one slide exists
   if (totalSlides > 1) {
