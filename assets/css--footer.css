@@ -265,6 +265,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
+	transition: all .25s ease;
+}
+.go1674680339.go1674680339.go1674680339:hover {
+	border-color:#fff9ef;
 }
 .go1708406129.go1708406129.go1708406129 {
     width: 20px;
