@@ -525,10 +525,10 @@ function initRecommendSlider() {
     focus: 0,
     breakpoints: {
       1024: {
-        perPage: 1.18,
+        perPage: 1.28,
       },
       768: {
-        perPage: 1.18,
+        perPage: 1.28,
         gap: "8px",
       },
     },
