@@ -649,7 +649,27 @@
         countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
       };
     </script>
-
+<script>
+      document.addEventListener('DOMContentLoaded', function () {
+        window.klaviyo.isIdentified().then((rsp) => {
+          if (rsp) {
+            console.log('TRUE');
+            let removeattn = setInterval(function () {
+              let a = $('script[src="https://cdn.attn.tv/yumwoof/dtag.js?shop=yumwoof.myshopify.com"]').length;
+              console.log('###', a);
+              if (a > 0) {
+                $('script[src="https://cdn.attn.tv/yumwoof/dtag.js?shop=yumwoof.myshopify.com"]').remove();
+                $('script[src="https://cdn.attn.tv/yumwoof/dtag.js?source=app-embed"]').remove();
+                $('script[src="https://cdn.attn.tv/tag/4-latest/unified-tag.js?v=4-latest_33ae067b5c"]').remove();
+                $('script[src="https://cdn.attn.tv/growth-tag-assets/client-configs/SEN.js"]').remove();
+              } else {
+                clearInterval(removeattn);
+              }
+            }, 1000);
+          }
+        });
+      });
+    </script>
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
