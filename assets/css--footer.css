@@ -488,7 +488,7 @@ a.yf__questions-link.live-chat {
 
 .yf__social .list-social__link:hover svg circle {
   fill: #FFF9EF;
-  stroke: #FFF9EF;
+  stroke: #000000;
 }
 
 .yf__social .list-social__link:hover svg path {
