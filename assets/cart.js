@@ -514,7 +514,7 @@ function initRecommendSlider() {
 
   const options = {
     type: "slide",
-    perPage: 1.17,
+    perPage: 1.18,
     perMove: 1,
     gap: "16px",
     pagination: false,
@@ -524,11 +524,8 @@ function initRecommendSlider() {
     trimSpace: true,
     focus: 0,
     breakpoints: {
-      1024: {
-        perPage: 1,
-      },
       768: {
-        perPage: 1,
+        perPage: 1.1,
         gap: "8px",
       },
     },
