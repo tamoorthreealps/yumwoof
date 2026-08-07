@@ -62,10 +62,10 @@
           </div>
         {%- endif -%}
         <div class="yf__signup__footer">
-        <p class="yf__signup__footer_content">
-          By signing up to receive emails from Yumwoof, you agree to our
-          <a href="/pages/privacy-policy" target="_blank">Privacy Policy</a>. We treat your info responsibly.
-        </p>
+          <p class="yf__signup__footer_content">
+            By signing up to receive emails from Yumwoof, you agree to our
+            <a href="/pages/privacy-policy" target="_blank">Privacy Policy</a>. We treat your info responsibly.
+          </p>
         </div>
       </div>
 
@@ -141,13 +141,21 @@
         </div>
         <div class="yf-disc__panel">
           <ul class="yf__list" role="list">
-            {%- for policy in shop.policies -%}
-              {%- if policy != blank -%}
+            {%- if section.settings.legal_menu != blank -%}
+              {%- for link in section.settings.legal_menu.links -%}
                 <li>
-                  <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+                  <a href="{{ link.url }}">{{ link.title | escape }}</a>
                 </li>
-              {%- endif -%}
-            {%- endfor -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- for policy in shop.policies -%}
+                {%- if policy != blank -%}
+                  <li>
+                    <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
           </ul>
         </div>
       </div>
@@ -157,7 +165,11 @@
         <ul class="yf__questions-list" role="list">
           {%- if section.settings.live_chat_label != blank -%}
             <li>
-              <a class="yf__questions-link live-chat" href="{{ section.settings.live_chat_url | default: 'javascript:void(0);' }}" onclick="GorgiasChat.open()">
+              <a
+                class="yf__questions-link live-chat"
+                href="{{ section.settings.live_chat_url | default: 'javascript:void(0);' }}"
+                onclick="GorgiasChat.open()"
+              >
                 {{- section.settings.live_chat_label }} &rarr;
               </a>
             </li>
@@ -239,13 +251,21 @@
       </small>
       {%- if section.settings.show_policy -%}
         <ul class="yf__bottom-policies" role="list">
-          {%- for policy in shop.policies -%}
-            {%- if policy != blank -%}
+          {%- if section.settings.legal_menu != blank -%}
+            {%- for link in section.settings.legal_menu.links -%}
               <li>
-                <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
               </li>
-            {%- endif -%}
-          {%- endfor -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for policy in shop.policies -%}
+              {%- if policy != blank -%}
+                <li>
+                  <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
         </ul>
       {%- endif -%}
       {%- if section.settings.site_credit_label != blank -%}
@@ -525,6 +545,12 @@
       "id": "legal_heading",
       "label": "Legal heading (mobile)",
       "default": "Legal"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal menu",
+      "info": "Leave empty to fall back to your store policies."
     },
     {
       "type": "checkbox",
