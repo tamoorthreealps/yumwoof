@@ -378,6 +378,11 @@ p.cd-banner__description {
 .cd-banner .cd-banner__btn {
     padding: 6.2px 17.53px 4.2px;
 }
+.cd-banner__btn_hold {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
 .cd__desktop-text, .yumclub--desktop--img {
 	display:none !important;
 }
