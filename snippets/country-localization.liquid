@@ -157,79 +157,52 @@
 
 
 
-{%- comment -%}
-  Renders the country picker for the localization form
-  Accepts:
-    - localPosition: pass in the position in which the form is coming up to create specific IDs
-{%- endcomment -%}
-
 {%- liquid
-  # iso_code | display label | flag code (flagcdn)
-  assign allowed = 'US|United States|us,GB|United Kingdom|gb,DE|Europe|eu,CH|Switzerland|ch'
+  assign allowed = 'US|United States|us,GB|United Kingdom|gb,DE|European Union|eu,CH|Switzerland|ch'
   assign allowed_rows = allowed | split: ','
 %}
 
-<div class="disclosure">
+<div class="disclosure country-pill">
   <button
     type="button"
-    class="disclosure__button localization-form__select localization-selector link link--text caption-large"
+    class="disclosure__button country-pill__button"
     aria-expanded="false"
     aria-controls="{{ localPosition }}-country-results"
     aria-describedby="{{ localPosition }}Label"
   >
-    <span class="localization-form__flag-label">
-      {%- for row in allowed_rows -%}
-        {%- assign parts = row | split: '|' -%}
-        {%- if parts[0] == localization.country.iso_code -%}
-          <img
-            src="https://flagcdn.com/w40/{{ parts[2] }}.png"
-            alt=""
-            width="20"
-            height="15"
-            loading="lazy"
-          >
-          <span>{{ parts[1] }} ({{ localization.country.currency.symbol }})</span>
-        {%- endif -%}
-      {%- endfor -%}
-    </span>
-    {{ 'icon-caret.svg' | inline_asset_content }}
+    {%- for row in allowed_rows -%}
+      {%- assign parts = row | split: '|' -%}
+      {%- if parts[0] == localization.country.iso_code -%}
+        <img class="country-pill__flag" src="https://flagcdn.com/w40/{{ parts[2] }}.png" alt="{{ parts[1] }}" width="22" height="22" loading="lazy">
+      {%- endif -%}
+    {%- endfor -%}
+    <span class="country-pill__code">[{{ localization.country.currency.iso_code }}]</span>
+    <span class="country-pill__caret">{{ 'icon-caret.svg' | inline_asset_content }}</span>
   </button>
 
-  <div class="disclosure__list-wrapper country-selector" hidden>
-    <div class="disclosure__list country-selector__list" id="{{ localPosition }}-country-results">
-      <ul role="list" class="list-unstyled countries">
-        {%- for country in localization.available_countries -%}
-          {%- for row in allowed_rows -%}
-            {%- assign parts = row | split: '|' -%}
-            {%- if parts[0] == country.iso_code -%}
-              <li class="disclosure__item" tabindex="-1">
-                
-                  class="link link--text disclosure__link caption-large focus-inset"
-                  href="#"
-                  {% if country.iso_code == localization.country.iso_code %}
-                    aria-current="true"
-                  {% endif %}
-                  data-value="{{ country.iso_code }}"
-                  id="{{ country.name }}"
-                >
-                  <img
-                    class="localization-form__flag"
-                    src="https://flagcdn.com/w40/{{ parts[2] }}.png"
-                    alt=""
-                    width="24"
-                    height="18"
-                    loading="lazy"
-                  >
-                  <span class="country">{{ parts[1] }}</span>
-                  <span class="localization-form__currency">({{ country.currency.symbol }})</span>
-                </a>
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
+  <div class="disclosure__list-wrapper country-pill__panel" hidden>
+    <ul role="list" class="list-unstyled country-pill__list" id="{{ localPosition }}-country-results">
+      {%- for country in localization.available_countries -%}
+        {%- for row in allowed_rows -%}
+          {%- assign parts = row | split: '|' -%}
+          {%- if parts[0] == country.iso_code -%}
+            <li class="disclosure__item" tabindex="-1">
+              
+                class="disclosure__link country-pill__row{% if country.iso_code == localization.country.iso_code %} country-pill__row--active{% endif %}"
+                href="#"
+                {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %}
+                data-value="{{ country.iso_code }}"
+                id="{{ country.name }}"
+              >
+                <img class="country-pill__flag" src="https://flagcdn.com/w40/{{ parts[2] }}.png" alt="" width="24" height="24" loading="lazy">
+                <span class="country-pill__name">{{ parts[1] }}</span>
+                <span class="country-pill__currency">[{{ country.currency.iso_code }}]</span>
+              </a>
+            </li>
+          {%- endif -%}
         {%- endfor -%}
-      </ul>
-    </div>
+      {%- endfor -%}
+    </ul>
   </div>
-  <div class="country-selector__overlay"></div>
 </div>
 <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
