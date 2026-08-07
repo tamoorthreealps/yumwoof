@@ -484,11 +484,12 @@ p.cd-banner__description {
 	display: block;
 	font-family: 'TAYRosemary';
 	font-size: 24px;
-	line-height: 28px;
+	line-height: 32px;
 	letter-spacing: 0;
 	text-transform: uppercase;
 	color: #000;
 	text-decoration: none;
+	transform: translateY(-4px);
 }
 
 .cd-item__recipe {
@@ -572,26 +573,23 @@ p.cd-banner__description {
 }
 
 .cd-qty {
-	display: inline-flex;
-	align-items: center;
-	gap: .6rem;
-	border: 1px solid #000;
-	border-radius: 200px;
-	padding: .32rem 1.02rem;
-	background: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #000;
+    border-radius: 200px;
+    padding: 0.32rem 1.12rem;
+    background: #fff;
 }
 
-.cd-qty__btn {
-	width: 12px;
-	height: 12px;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	border: 0;
-	background: none;
-	cursor: pointer;
-	font-size: 1.6rem;
-	line-height: 1;
+.cd-qty .cd-qty__btn {
+    color: #000;
+    opacity: 1 !important;
+    width: 8px;
+    margin: 0 !important;
+    height: auto;
+    border: 0;
+    background: transparent !important;
 }
 
 .cd-qty__input {
