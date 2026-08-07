@@ -251,6 +251,34 @@
     font-weight: 400;
     letter-spacing: -0.80px;
 }
+.go146281457.go146281457.go146281457 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 14px;
+}
+.go1674680339.go1674680339.go1674680339 {
+    border: 1px solid rgba(255, 249, 239, 0.1);
+    border-radius: 12px;
+    min-height: 38.4px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.go1708406129.go1708406129.go1708406129 {
+    width: 20px;
+    height: 20px;
+    margin-right: 0;
+}
+.go3053659193.go3053659193.go3053659193 {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0;
+    font-family: 'Matter';
+    color: #FFF9EF;
+    font-weight: 500;
+    margin: 0;
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
