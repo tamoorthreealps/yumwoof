@@ -531,19 +531,19 @@ function initRecommendSlider() {
     },
   };
 
-  // // Show next card preview only when more than one slide exists
-  // if (totalSlides > 1) {
-  //   options.padding = {
-  //     right: "64px",
-  //   };
+  // Show next card preview only when more than one slide exists
+  if (totalSlides > 1) {
+    options.padding = {
+      right: "0",
+    };
 
-  //   options.breakpoints[1024].padding = {
-  //     right: "64px",
-  //   };
+    options.breakpoints[1024].padding = {
+      right: "0",
+    };
 
-  //   options.breakpoints[768].padding = {
-  //     right: "16px",
-  //   };
+    options.breakpoints[768].padding = {
+      right: "0",
+    };
   }
 
   const splide = new Splide(slider, options);
