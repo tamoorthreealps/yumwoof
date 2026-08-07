@@ -497,12 +497,10 @@
     padding: 13px 16px 17.4px;
     text-align: left;
     cursor: pointer;
-    transition: .15s;
+    transition: all .35s ease;
 }
-.qz-opt:hover {
-  border-color: var(--qc-hair-s);
-}
-.qz-opt.on {
+
+.qz-opt.on, .qz-opt:hover {
     background: rgba(0, 0, 0, 0.1);
     border-color: #000000;
 }
