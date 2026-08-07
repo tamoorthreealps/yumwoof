@@ -340,6 +340,34 @@ p.cd-banner__description {
 	color: #fff9ef;
 
 }
+
+@media screen and (max-width: 750px) {
+	.cd-banner__content {
+    border-radius: 12px;
+    gap: 5px;
+    padding: 0 20px 0 0;
+}
+.cd-banner__image {
+    min-width: 100px;
+    border-radius: 12px;
+    margin-top: 0;
+}
+h3.cd-banner__title {
+    font-size: 20px;
+    line-height: 28px;
+}
+p.cd-banner__description {
+    font-size: 11px;
+    line-height: 14px;
+    padding-right: 0px;
+}
+.cd-banner .cd-banner__btn {
+    padding: 6.2px 17.53px 4.2px;
+}
+.cd__desktop-text {
+	display:none;
+}
+}
 /* Membership banner is a clickable add-to-cart button that shows only the image */
 .cd-banner__btn {
 	display: block;
