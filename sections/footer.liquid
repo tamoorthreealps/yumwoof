@@ -6,6 +6,26 @@
   #shopify-section-{{ section.id }} .yf {
     --yf-bg: {{ section.settings.footer_bg | default: '#661D1D' }};
     --yf-text: {{ section.settings.footer_text | default: '#FFF9EF' }};
+
+    {% if section.settings.footer_bg_image_desktop != blank %}
+      background-image: url({{ section.settings.footer_bg_image_desktop | image_url: width: 2400 }});
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 989px) {
+    #shopify-section-{{ section.id }} .yf {
+      {% if section.settings.footer_bg_image_mobile != blank %}
+        background-image: url({{ section.settings.footer_bg_image_mobile | image_url: width: 1200 }});
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      {% elsif section.settings.footer_bg_image_desktop != blank %}
+        background-image: url({{ section.settings.footer_bg_image_desktop | image_url: width: 1200 }});
+      {% endif %}
+    }
   }
 {%- endstyle -%}
 
@@ -52,7 +72,9 @@
         {%- if section.settings.shop_menu != blank -%}
           <ul class="yf__list" role="list">
             {%- for link in section.settings.shop_menu.links -%}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              <li>
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
             {%- endfor -%}
           </ul>
         {%- endif -%}
@@ -69,7 +91,9 @@
         {%- if section.settings.explore_menu != blank -%}
           <ul class="yf__list" role="list">
             {%- for link in section.settings.explore_menu.links -%}
-              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              <li>
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
             {%- endfor -%}
           </ul>
         {%- endif -%}
@@ -86,7 +110,9 @@
         <ul class="yf__list" role="list">
           {%- for policy in shop.policies -%}
             {%- if policy != blank -%}
-              <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
+              <li>
+                <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+              </li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
@@ -128,11 +154,19 @@
           </li>
         {%- endif -%}
         {%- if section.settings.contact_email != blank -%}
-          <li><a class="yf__questions-link" href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a></li>
+          <li>
+            <a class="yf__questions-link" href="mailto:{{ section.settings.contact_email }}">
+              {{- section.settings.contact_email -}}
+            </a>
+          </li>
         {%- endif -%}
         {%- if section.settings.phone_label != blank -%}
           {%- assign tel = section.settings.phone_url | default: section.settings.phone_label -%}
-          <li><a class="yf__questions-link" href="tel:{{ tel | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}">{{ section.settings.phone_label }}</a></li>
+          <li>
+            <a class="yf__questions-link" href="tel:{{ tel | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}">
+              {{- section.settings.phone_label -}}
+            </a>
+          </li>
         {%- endif -%}
         {%- if section.settings.hours != blank -%}
           <li class="yf__muted">{{ section.settings.hours }}</li>
@@ -177,12 +211,17 @@
   {%- comment -%} ===== BOTTOM BAR ===== {%- endcomment -%}
   <div class="yf__bottom">
     <div class="yf__page yf__bottom-inner">
-      <small class="yf__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</small>
+      <small class="yf__copyright"
+        >&copy; {{ 'now' | date: '%Y' }}
+        {{ shop.name | escape -}}
+      </small>
       {%- if section.settings.show_policy -%}
         <ul class="yf__bottom-policies" role="list">
           {%- for policy in shop.policies -%}
             {%- if policy != blank -%}
-              <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
+              <li>
+                <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+              </li>
             {%- endif -%}
           {%- endfor -%}
         </ul>
@@ -257,6 +296,16 @@
 {
   "name": "t:sections.footer.name",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_bg_image_desktop",
+      "label": "Background Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_bg_image_mobile",
+      "label": "Background Image (Mobile)"
+    },
     {
       "type": "header",
       "content": "Colors"
