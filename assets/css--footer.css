@@ -212,7 +212,9 @@
 .yf__link:hover {
 	opacity: 0.65;
 } */
-
+.yf__list li {
+    line-height: 20px;
+}
 .yf__list li a {
   position: relative;
   display: inline-block;
