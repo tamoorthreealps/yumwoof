@@ -120,6 +120,19 @@
    Main grid
    -------------------------------------------------------------------------- */
 .yf__main {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.yf__main__left {
+    display: flex;
+    flex-direction: column;
+}
+
+.yf__main__right {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 /* .yf__signup {
