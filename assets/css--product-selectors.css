@@ -51,6 +51,7 @@
     height: 5.6rem;
     object-fit: cover;
     pointer-events: none;
+    border-radius: 7px;
 }
 
 .psel__title {
