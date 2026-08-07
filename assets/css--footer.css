@@ -463,9 +463,9 @@ a.yf__questions-link.live-chat {
 .yf__questions-link {
 	text-decoration: none;
 }
-.yf__questions-link:hover {
+/* .yf__questions-link:hover {
 	opacity: 0.65;
-}
+} */
 .yf__muted {
     color: rgba(255, 249, 239, 0.6);
 	margin-top:8px;
