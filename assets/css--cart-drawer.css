@@ -85,7 +85,7 @@ cart-drawer.active .cd__inner {
 	align-items: center;
 	justify-content: space-between;
 	gap: 1.6rem;
-	padding: 10px 20px 10px 24px;
+	padding: 11px 20px 9px 24px;
 	background: var(--cd-header-bg);
 	color: var(--cd-header-text);
 	border-radius: 19px 19px 0 0;
