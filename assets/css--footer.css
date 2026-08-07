@@ -216,6 +216,14 @@
 .yf__signup-form {
 	width: 100%;
 }
+.klaviyo-form.klaviyo-form.klaviyo-form {
+    -webkit-overflow-scrolling: touch;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent;
+}
+
 .go3038250217.go3038250217.go3038250217 {
     padding: 0;
 }
