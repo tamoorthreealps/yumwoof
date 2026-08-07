@@ -13,7 +13,7 @@
   - heading : {String} optional legend label (e.g. "Recipe" / "Formula")
 {% endcomment %}
 {%- assign selectors = product.metafields.custom.product_selectors.value -%}
-
+{% assign popup = product.metafields.custom.ingredient_popup.value %}
 {%- if selectors and selectors.size > 0 -%}
   {{ 'css--product-selectors.css' | asset_url | stylesheet_tag }}
 
@@ -21,6 +21,15 @@
     {%- if heading != blank -%}
       <p class="psel__legend">{{ heading }}</p>
     {%- endif -%}
+    {% if popup %}
+      <button
+        class="recipe-view-ingredients"
+        data-popup="ingredients-popup-1"
+        type="button"
+      >
+        + View Ingredients
+      </button>
+    {% endif %}
 
     <div class="psel__row" role="list">
       {%- for sel in selectors -%}
@@ -33,7 +42,9 @@
           class="psel__item{% if is_active %} is-active{% endif %}"
           href="{{ sp.url }}"
           role="listitem"
-          {% if is_active %}aria-current="true"{% endif %}
+          {% if is_active %}
+            aria-current="true"
+          {% endif %}
         >
           {%- if sel.image != blank -%}
             <img
