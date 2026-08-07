@@ -580,7 +580,6 @@ p.yf__signup__footer_content a {
 	}
 
 	.yf__badge {
-		align-self: end;
 	}
 
 	/* Accordions become static columns: always expanded, no toggle. */
