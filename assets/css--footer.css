@@ -288,6 +288,10 @@
 .go1674680339.go1674680339.go1674680339:hover svg {
     stroke: #FFF9EF !important;
 }
+
+.go1822718113.go1822718113.go1822718113 {
+    width: 100%;
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
