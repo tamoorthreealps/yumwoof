@@ -14,7 +14,10 @@
     <li class="list-social__item">
       <a href="{{ settings.social_facebook_link }}" class="link list-social__link">
         <span class="svg-wrapper">
-          {{- 'icon-facebook.svg' | inline_asset_content -}}
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="19.5" stroke="#FFF9EF"/>
+            <path d="M25 17H21.4812V15C21.4812 13.9681 21.5651 13.3181 23.0415 13.3181H24.9062V10.1381C23.9988 10.0441 23.0864 9.99806 22.173 10.0001C19.4648 10.0001 17.4883 11.6571 17.4883 14.699V17H15V21L17.4883 20.999V30H21.4812V20.997L24.5418 20.996L25 17Z" fill="#FFF9EF"/>
+          </svg>
         </span>
         <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
       </a>
