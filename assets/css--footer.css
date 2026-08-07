@@ -307,6 +307,13 @@
     color: #000000;
     font-family: 'Matter';
 }
+
+.go90847487.go90847487.go90847487::placeholder {
+    font-size: 18px;
+    line-height: 28px;
+    color: #000000;
+    font-family: 'Matter';
+}
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
    Div-based: open state is the .is-open class, set by JS.
