@@ -895,6 +895,7 @@ a.yf__site-credit {
 @media screen and (max-width: 989px) {
 	.yf {
 		padding-bottom: 32px;
+		padding-top:64px;
 	}
 
 	/* Flatten the two wrappers so every block is a direct grid item. */
