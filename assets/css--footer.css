@@ -262,124 +262,130 @@ p.yf__signup__footer_content {
 p.yf__signup__footer_content a {
     text-decoration: underline;
 }
-.klaviyo-form.klaviyo-form.klaviyo-form {
-    -webkit-overflow-scrolling: touch;
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent;
+.yf__signup-form .klaviyo-form.klaviyo-form.klaviyo-form {
+  -webkit-overflow-scrolling: touch;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent;
 }
 
-.go310894487.go310894487.go310894487,
-.go3038250217.go3038250217.go3038250217 {
-    padding: 0;
+.yf__signup-form .go310894487.go310894487.go310894487,
+.yf__signup-form .go3038250217.go3038250217.go3038250217 {
+  padding: 0;
 }
 
-.go3176171171 p {
-    text-align: left !important;
+.yf__signup-form .go3176171171 p {
+  text-align: left !important;
 }
 
-.go3176171171 span {
-    color: #FFF9EF;
-    font-size: 16px !important;
-    line-height: 24px;
-    letter-spacing: -0.64px;
-    font-family: 'TAY Birdie';
-	display: block;
+.yf__signup-form .go3176171171 span {
+  color: #FFF9EF;
+  font-size: 16px !important;
+  line-height: 24px;
+  letter-spacing: -0.64px;
+  font-family: 'TAY Birdie';
+  display: block;
 }
 
-.go1838617735.go1838617735.go1838617735 {
-    padding: 0;
-    margin: 0 0 22px;
-    color: #FFF9EF;
-    font-family: 'TAYRosemary';
-    font-size: 40px;
-    line-height: 44px;
-    font-weight: 400;
-    letter-spacing: -0.80px;
-}
-.go146281457.go146281457.go146281457 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px 14px;
-}
-.go1674680339.go1674680339.go1674680339 {
-    border: 1px solid rgba(255, 249, 239, 0.1);
-    border-radius: 12px;
-    min-height: 38.4px;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-	transition: all .25s ease;
-}
-.go1674680339.go1674680339.go1674680339:hover {
-	border-color:#fff9ef;
-}
-.go1708406129.go1708406129.go1708406129 {
-    width: 20px;
-    height: 20px;
-    margin-right: 0;
-}
-.go3053659193.go3053659193.go3053659193 {
-    font-size: 18px;
-    line-height: 28px;
-    letter-spacing: 0;
-    font-family: 'Matter';
-    color: #FFF9EF;
-    font-weight: 500;
-    margin: 0;
-	text-transform: capitalize;
+.yf__signup-form .go1838617735.go1838617735.go1838617735 {
+  padding: 0;
+  margin: 0 0 22px;
+  color: #FFF9EF;
+  font-family: 'TAYRosemary';
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 400;
+  letter-spacing: -0.80px;
 }
 
-.go2365489600.go2365489600.go2365489600 circle {
-	fill: #661D1D;
-}
-.go1674680339.go1674680339.go1674680339:hover svg {
-    stroke: #FFF9EF !important;
-}
-
-.go1822718113.go1822718113.go1822718113 {
-    width: 100%;
+.yf__signup-form .go146281457.go146281457.go146281457 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 14px;
 }
 
-.go90847487.go90847487.go90847487 {
-    border: 1px solid #000000;
-    height: 56px;
-    border-radius: 100px;
-    padding: 10px 30px;
-    font-size: 18px;
-    line-height: 28px;
-    color: #000000;
-    font-family: 'Matter';
-	outline: none !important;
-    text-transform: capitalize;
-	margin: 25px 0 0;
+.yf__signup-form .go1674680339.go1674680339.go1674680339 {
+  border: 1px solid rgba(255, 249, 239, 0.1);
+  border-radius: 12px;
+  min-height: 38.4px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all .25s ease;
 }
 
-.go90847487.go90847487.go90847487::placeholder {
-    font-size: 18px;
-    line-height: 28px;
-    color: #000000;
-    font-family: 'Matter';
+.yf__signup-form .go1674680339.go1674680339.go1674680339:hover {
+  border-color: #fff9ef;
 }
 
-.go4033861592.go4033861592.go4033861592 {
-    pointer-events: auto;
-    border: 1.5px solid #000000;
-    background: #FFC069;
-    color: #000000;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.64px;
-    font-family: 'FFBlurProMedium';
-    margin: 12px 0 0;
-	    transition: all .25s ease;
+.yf__signup-form .go1708406129.go1708406129.go1708406129 {
+  width: 20px;
+  height: 20px;
+  margin-right: 0;
 }
 
-.go4033861592.go4033861592.go4033861592:hover {
-    background: #000;
-    color: #fff9ef;
+.yf__signup-form .go3053659193.go3053659193.go3053659193 {
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-family: 'Matter';
+  color: #FFF9EF;
+  font-weight: 500;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.yf__signup-form .go2365489600.go2365489600.go2365489600 circle {
+  fill: #661D1D;
+}
+
+.yf__signup-form .go1674680339.go1674680339.go1674680339:hover svg {
+  stroke: #FFF9EF !important;
+}
+
+.yf__signup-form .go1822718113.go1822718113.go1822718113 {
+  width: 100%;
+}
+
+.yf__signup-form .go90847487.go90847487.go90847487 {
+  border: 1px solid #000;
+  height: 56px;
+  border-radius: 100px;
+  padding: 10px 30px;
+  font-size: 18px;
+  line-height: 28px;
+  color: #000;
+  font-family: 'Matter';
+  outline: none !important;
+  text-transform: capitalize;
+  margin: 25px 0 0;
+}
+
+.yf__signup-form .go90847487.go90847487.go90847487::placeholder {
+  font-size: 18px;
+  line-height: 28px;
+  color: #000;
+  font-family: 'Matter';
+}
+
+.yf__signup-form .go4033861592.go4033861592.go4033861592 {
+  pointer-events: auto;
+  border: 1.5px solid #000;
+  background: #FFC069;
+  color: #000;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  font-family: 'FFBlurProMedium';
+  margin: 12px 0 0;
+  transition: all .25s ease;
+}
+
+.yf__signup-form .go4033861592.go4033861592.go4033861592:hover {
+  background: #000;
+  color: #fff9ef;
 }
 /* --------------------------------------------------------------------------
    Accordions (Shop / Explore / Legal)
