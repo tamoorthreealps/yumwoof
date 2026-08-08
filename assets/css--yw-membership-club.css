@@ -152,7 +152,6 @@
   margin: 14px 0 0;
   border: 0;
   border-top: 1px solid var(--ywmc-border);
-  opacity: 0.5;
 }
 
 .ywmc__benefits {
@@ -161,7 +160,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 6px;
 }
 
 .ywmc__benefit {
@@ -239,6 +238,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  letter-spacing: 0;
 }
 
 /* --------------------------------- Button --------------------------------- */
