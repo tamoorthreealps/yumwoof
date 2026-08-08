@@ -904,7 +904,9 @@ a.yf__site-credit {
 
   .yf__main {
   }
-
+.yf__currency, .yf__social {
+  margin-top:15px;
+}
   /* Legal accordion hidden on desktop — policies show in the bottom bar. */
   .yf__col--legal {
     display: none;
