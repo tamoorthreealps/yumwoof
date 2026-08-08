@@ -69,7 +69,13 @@
 <section
   class="ywmf"
   id="ywmf-{{ uid }}"
-  {% if s.heading != blank %}aria-labelledby="ywmf-heading-{{ uid }}"{% endif %}
+  data-yum-parallax
+  data-yum-parallax-target=".ywmf__bg"
+  data-yum-parallax-range="{{ s.parallax_range | default: 80 }}"
+  data-yum-parallax-range-mobile="{{ s.parallax_range_mobile | default: 36 }}"
+  {% if s.heading != blank %}
+    aria-labelledby="ywmf-heading-{{ uid }}"
+  {% endif %}
   style="
     --ywmf-bg: {{ s.color_bg }};
     --ywmf-heading: {{ s.color_heading }};
@@ -118,7 +124,8 @@
               widths: '208, 287, 430, 574',
               sizes: '(max-width: 749px) 208px, 287px',
               class: 'ywmf__signature-image',
-              alt: s.signature.alt | default: ''
+              alt: s.signature.alt
+            | default: ''
           }}
         </div>
       {%- endif -%}
@@ -135,14 +142,89 @@
     </div>
   </div>
 </section>
+{%- comment -%} snippets/yum-parallax.liquid — shared scroll parallax {%- endcomment -%}
+<script>
+(function () {
+  if (window.YumParallax) { window.YumParallax.refresh(); return; }
 
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var mobile = window.matchMedia('(max-width: 749px)');
+  var items = [];
+  var ticking = false;
 
+  function range(el) {
+    var d = parseFloat(el.getAttribute('data-yum-parallax-range')) || 0;
+    var m = el.getAttribute('data-yum-parallax-range-mobile');
+    m = m === null ? d * 0.45 : parseFloat(m) || 0;
+    return mobile.matches ? m : d;
+  }
+
+  function measure() {
+    items.forEach(function (it) {
+      it.range = range(it.host);
+      it.host.style.setProperty('--yum-parallax-overscan', it.range + 'px');
+      if (reduce.matches) it.target.style.transform = '';
+    });
+  }
+
+  function render() {
+    ticking = false;
+    if (reduce.matches) return;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+
+    items.forEach(function (it) {
+      var r = it.host.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      // 0 when the section is entering the bottom, 1 when it has fully left the top
+      var p = (vh - r.top) / (vh + r.height);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      var y = (0.5 - p) * 2 * it.range;
+      it.target.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
+    });
+  }
+
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(render); }
+  }
+
+  function collect() {
+    items = [];
+    document.querySelectorAll('[data-yum-parallax]').forEach(function (host) {
+      var sel = host.getAttribute('data-yum-parallax-target');
+      var target = sel ? host.querySelector(sel) : host.firstElementChild;
+      if (target) items.push({ host: host, target: target, range: 0 });
+    });
+    measure();
+    render();
+  }
+
+  window.YumParallax = { refresh: collect };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
+  (reduce.addEventListener ? reduce.addEventListener('change', measure) : reduce.addListener(measure));
+  (mobile.addEventListener ? mobile.addEventListener('change', measure) : mobile.addListener(measure));
+
+  // Theme Editor: sections are re-injected on load/select/reorder
+  ['shopify:section:load', 'shopify:section:unload', 'shopify:section:reorder'].forEach(function (evt) {
+    document.addEventListener(evt, collect);
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', collect);
+  } else {
+    collect();
+  }
+})();
+</script>
 {% schema %}
 {
   "name": "Yum Club Family",
   "tag": "section",
   "class": "yw-membership-family-section",
   "settings": [
+    { "type": "range", "id": "parallax_range", "label": "Parallax range (desktop)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "parallax_range_mobile", "label": "Parallax range (mobile)", "min": 0, "max": 80, "step": 2, "unit": "px", "default": 36 },
     { "type": "header", "content": "Content" },
     {
       "type": "richtext",
@@ -166,9 +248,23 @@
     },
 
     { "type": "header", "content": "Button (optional)" },
-    { "type": "text", "id": "button_text", "label": "Button text", "info": "Leave empty to hide the button — the reference design has none." },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "info": "Leave empty to hide the button — the reference design has none."
+    },
     { "type": "url", "id": "button_url", "label": "Button link" },
-    { "type": "range", "id": "button_radius", "label": "Button corner radius", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 160 },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
 
     { "type": "header", "content": "Background" },
     { "type": "color", "id": "color_bg", "label": "Background color", "default": "#3a2b21" },
@@ -184,9 +280,25 @@
       "label": "Background image (mobile)",
       "info": "Falls back to the desktop image. Never shown on desktop."
     },
-    { "type": "text", "id": "focal_desktop", "label": "Desktop focal point", "default": "center center", "info": "CSS background-position, e.g. 'center center' or '60% 40%'." },
+    {
+      "type": "text",
+      "id": "focal_desktop",
+      "label": "Desktop focal point",
+      "default": "center center",
+      "info": "CSS background-position, e.g. 'center center' or '60% 40%'."
+    },
     { "type": "text", "id": "focal_mobile", "label": "Mobile focal point", "default": "62% center" },
-    { "type": "range", "id": "scrim_opacity", "label": "Scrim strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100, "info": "Darkens the image so the light text stays legible." },
+    {
+      "type": "range",
+      "id": "scrim_opacity",
+      "label": "Scrim strength",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "Darkens the image so the light text stays legible."
+    },
 
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "color_heading", "label": "Heading color", "default": "#ffffff" },
@@ -202,21 +314,57 @@
 
     { "type": "header", "content": "Layout" },
     {
-    "type": "text",
-    "id": "height_desktop",
-    "label": "Height (desktop)",
-    "default": "720px"
+      "type": "text",
+      "id": "height_desktop",
+      "label": "Height (desktop)",
+      "default": "720px"
     },
     {
-    "type": "text",
-    "id": "height_mobile",
-    "label": "Height (mobile)",
-    "default": "609px"
+      "type": "text",
+      "id": "height_mobile",
+      "label": "Height (mobile)",
+      "default": "609px"
     },
-    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 104 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 76 },
-    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 34 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 22 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 104
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 76
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    }
   ],
   "presets": [{ "name": "Yum Club Family" }]
 }
