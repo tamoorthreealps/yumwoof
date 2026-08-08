@@ -99,15 +99,15 @@
 }
 
 .ywmc__eyebrow {
-  margin: 0;
-  padding-top: 10px;
-  color: var(--ywmc-heading);
-  font-family: var(--ywmc-font-display);
-  font-weight: 400;
-  font-size: 18px;
-  line-height: normal;
-  letter-spacing: 6.12px;
-  text-transform: uppercase;
+    margin: -24px 0 0;
+    color: var(--ywmc-heading);
+    font-family: var(--ywmc-font-display);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+    letter-spacing: 6.12px;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .ywmc__description {
@@ -117,6 +117,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 28px;
+  letter-spacing: 0;
 }
 
 .ywmc__description p {
