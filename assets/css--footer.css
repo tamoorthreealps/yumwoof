@@ -786,6 +786,7 @@ a.yf__questions-link.live-chat {
    -------------------------------------------------------------------------- */
 .yf__badge {
   display: flex;
+  transform: translateX(-22px);
 }
 .yf__badge-inner {
   width: 100%;
