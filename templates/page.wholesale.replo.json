@@ -53,6 +53,8 @@
         "title": "Create a wholesale account",
         "description": "<p>Apply for your wholesale account on yumwoof.com by completing the form below. Once approved, your stores will have access to our distributor pricing.</p>",
         "klaviyo_form_id": "RAPfgV",
+        "bg_image_desktop": "shopify://shop_images/Application_Band_Background.png",
+        "bg_image_mobile": "shopify://shop_images/Application_Band_Background_1.png",
         "bg_color": "#661d1d",
         "text_color": "#f3e6d3",
         "accent_color": "#e8a33d",
