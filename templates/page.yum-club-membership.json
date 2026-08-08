@@ -15,9 +15,106 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "membership_banner_YRPTab": {
+      "type": "membership--banner",
+      "blocks": {
+        "perk_UtVTAy": {
+          "type": "perk",
+          "settings": {
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "perk_yU8AMd": {
+          "type": "perk",
+          "settings": {
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "perk_DJr7nf": {
+          "type": "perk",
+          "settings": {
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "perk_FmyD66": {
+          "type": "perk",
+          "settings": {
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "faq_fGJEBQ": {
+          "type": "faq",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal.</p>"
+          }
+        },
+        "faq_BpGKen": {
+          "type": "faq",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal.</p>"
+          }
+        },
+        "faq_eUcKci": {
+          "type": "faq",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal.</p>"
+          }
+        },
+        "faq_K4geeg": {
+          "type": "faq",
+          "settings": {
+            "question": "Why doesn't Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "perk_UtVTAy",
+        "perk_yU8AMd",
+        "perk_DJr7nf",
+        "perk_FmyD66",
+        "faq_fGJEBQ",
+        "faq_BpGKen",
+        "faq_eUcKci",
+        "faq_K4geeg"
+      ],
+      "name": "Yum Club Membership",
+      "settings": {
+        "hero_line_1": "WELL-FED DOGS",
+        "hero_line_2": "pay less for it.",
+        "hero_parallax_range": 100,
+        "club_eyebrow": "MEMBERSHIP",
+        "club_body": "<p>We built Yumwoof because good dog food cost too much and did too little. YumClub is the rest of that answer. Pay in once a quarter and the whole counter drops by 25%, so feeding a dog properly stops being the expensive option.</p>",
+        "perks_title": "Here's what you get:",
+        "club_cta_text": "JOIN YUMCLUB · $29/QTR",
+        "club_cta_url": "",
+        "club_fine_print": "$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in",
+        "quote_text": "“Good food shouldn't be a luxury. The club is how we make ours cost less.”",
+        "quote_attribution": "Jaron & Ana, Founders",
+        "quote_parallax_range": 80,
+        "faq_heading": "Any Questions?",
+        "faq_subheading": "<p>Every dog is different. Find the recipe that's right for yours.</p>",
+        "faq_open_first": true,
+        "faq_cta_text": "JOIN YUMCLUB · $29/QTR",
+        "faq_cta_url": "",
+        "faq_fine_print": "$9.66/mo, billed quarterly. Cancel anytime.\nAlready a member? Log in",
+        "closing_heading": "Feed your dog better for less, starting with the next order you place.",
+        "closing_cta_text": "JOIN YUMCLUB · $29/QTR",
+        "closing_cta_url": "",
+        "closing_parallax_range": 80
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "membership_banner_YRPTab"
   ]
 }
