@@ -19,12 +19,47 @@
     },
     "wholesale_form_fBNjBR": {
       "type": "wholesale--form",
+      "blocks": {
+        "feature_JyxQFt": {
+          "type": "feature",
+          "settings": {
+            "label": "Distributor pricing",
+            "text": "No markup. The same price we sell at, direct."
+          }
+        },
+        "feature_nGYRqC": {
+          "type": "feature",
+          "settings": {
+            "label": "Low MOQ plans",
+            "text": "Sized for single-store independents."
+          }
+        },
+        "feature_mBr9rr": {
+          "type": "feature",
+          "settings": {
+            "label": "Merchandising support",
+            "text": "Shelf talkers, samples and product decks."
+          }
+        }
+      },
+      "block_order": [
+        "feature_JyxQFt",
+        "feature_nGYRqC",
+        "feature_mBr9rr"
+      ],
       "name": "Wholesale account form",
       "settings": {
+        "eyebrow": "Apply",
         "title": "Create a wholesale account",
         "description": "<p>Apply for your wholesale account on yumwoof.com by completing the form below. Once approved, your stores will have access to our distributor pricing.</p>",
         "klaviyo_form_id": "RAPfgV",
-        "bg_color": "#661D1D"
+        "bg_color": "#661d1d",
+        "text_color": "#f3e6d3",
+        "accent_color": "#e8a33d",
+        "field_bg_color": "#fdf3e3",
+        "button_bg_color": "#f5c46b",
+        "button_text_color": "#3a2318",
+        "edge_color": "#fdf3e3"
       }
     }
   },
