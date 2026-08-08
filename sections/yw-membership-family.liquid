@@ -1,0 +1,223 @@
+{{ 'css--yw-membership-family.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+
+  comment
+    Background images are emitted as CSS background-image, never as markup.
+    Desktop rule is written ONLY when a desktop image exists, so the mobile
+    image can never surface at desktop widths.
+  endcomment
+
+  assign has_desktop_bg = false
+  if s.bg_image != blank
+    assign has_desktop_bg = true
+  endif
+
+  assign mobile_bg = s.bg_image_mobile | default: s.bg_image
+-%}
+
+{%- style -%}
+  {%- if has_desktop_bg -%}
+    @media (min-width: 750px) {
+      #ywmf-{{ uid }} .ywmf__bg {
+        background-image: image-set(
+          url("{{ s.bg_image | image_url: width: 1600 }}") 1x,
+          url("{{ s.bg_image | image_url: width: 2400 }}") 1.5x
+        );
+        background-image: -webkit-image-set(
+          url("{{ s.bg_image | image_url: width: 1600 }}") 1x,
+          url("{{ s.bg_image | image_url: width: 2400 }}") 1.5x
+        );
+      }
+    }
+    @supports not (background-image: image-set(url("x") 1x)) {
+      @media (min-width: 750px) {
+        #ywmf-{{ uid }} .ywmf__bg {
+          background-image: url("{{ s.bg_image | image_url: width: 2000 }}");
+        }
+      }
+    }
+  {%- endif -%}
+
+  {%- if mobile_bg != blank -%}
+    @media (max-width: 749px) {
+      #ywmf-{{ uid }} .ywmf__bg {
+        background-image: image-set(
+          url("{{ mobile_bg | image_url: width: 800 }}") 1x,
+          url("{{ mobile_bg | image_url: width: 1200 }}") 1.5x,
+          url("{{ mobile_bg | image_url: width: 1600 }}") 2x
+        );
+        background-image: -webkit-image-set(
+          url("{{ mobile_bg | image_url: width: 800 }}") 1x,
+          url("{{ mobile_bg | image_url: width: 1200 }}") 1.5x,
+          url("{{ mobile_bg | image_url: width: 1600 }}") 2x
+        );
+      }
+    }
+    @supports not (background-image: image-set(url("x") 1x)) {
+      @media (max-width: 749px) {
+        #ywmf-{{ uid }} .ywmf__bg {
+          background-image: url("{{ mobile_bg | image_url: width: 1200 }}");
+        }
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section
+  class="ywmf"
+  id="ywmf-{{ uid }}"
+  {% if s.heading != blank %}aria-labelledby="ywmf-heading-{{ uid }}"{% endif %}
+  style="
+    --ywmf-bg: {{ s.color_bg }};
+    --ywmf-heading: {{ s.color_heading }};
+    --ywmf-text: {{ s.color_text }};
+    --ywmf-accent: {{ s.color_accent }};
+    --ywmf-button-bg: {{ s.color_button_bg }};
+    --ywmf-button-text: {{ s.color_button_text }};
+    --ywmf-button-hover-bg: {{ s.color_button_hover_bg }};
+    --ywmf-button-hover-text: {{ s.color_button_hover_text }};
+    --ywmf-border: {{ s.color_border }};
+    --ywmf-button-radius: {{ s.button_radius }}px;
+    --ywmf-height: {{ s.height_desktop }}px;
+    --ywmf-height-mobile: {{ s.height_mobile }}px;
+    --ywmf-pad-top: {{ s.padding_top }}px;
+    --ywmf-pad-bottom: {{ s.padding_bottom }}px;
+    --ywmf-pad-top-mobile: {{ s.padding_top_mobile }}px;
+    --ywmf-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+    --ywmf-focal: {{ s.focal_desktop | default: 'center center' }};
+    --ywmf-focal-mobile: {{ s.focal_mobile | default: 'center center' }};
+    --ywmf-scrim: {{ s.scrim_opacity | divided_by: 100.0 }};
+  "
+>
+  {%- comment -%} Decorative: CSS background only, no markup image, no alt. {%- endcomment -%}
+  <div class="ywmf__bg" aria-hidden="true"></div>
+  <div class="ywmf__scrim" aria-hidden="true"></div>
+
+  <div class="ywmf__container ywmf__content ywmf__content--{{ s.text_position }}">
+    <div class="ywmf__top">
+      {%- if s.heading != blank -%}
+        <blockquote class="ywmf__heading" id="ywmf-heading-{{ uid }}">{{ s.heading }}</blockquote>
+      {%- endif -%}
+
+      {%- if s.description != blank -%}
+        <div class="ywmf__description">{{ s.description }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="ywmf__bottom">
+      {%- if s.signature != blank -%}
+        <div class="ywmf__signature">
+          {{
+            s.signature
+            | image_url: width: 574
+            | image_tag:
+              loading: 'lazy',
+              widths: '208, 287, 430, 574',
+              sizes: '(max-width: 749px) 208px, 287px',
+              class: 'ywmf__signature-image',
+              alt: s.signature.alt | default: ''
+          }}
+        </div>
+      {%- endif -%}
+
+      {%- if s.attribution != blank -%}
+        <p class="ywmf__attribution">{{ s.attribution | escape }}</p>
+      {%- endif -%}
+
+      {%- if s.button_text != blank -%}
+        <a class="ywmf__button" href="{{ s.button_url | default: '#' }}">
+          <span>{{ s.button_text | escape }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Yum Club Family",
+  "tag": "section",
+  "class": "yw-membership-family-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Quote",
+      "default": "<p>“Good food shouldn't be a luxury. The club is how we make ours cost less.”</p>"
+    },
+    { "type": "richtext", "id": "description", "label": "Supporting text" },
+    { "type": "image_picker", "id": "signature", "label": "Signature image" },
+    { "type": "text", "id": "attribution", "label": "Attribution", "default": "Jaron & Ana, Founders" },
+    {
+      "type": "select",
+      "id": "text_position",
+      "label": "Text position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+
+    { "type": "header", "content": "Button (optional)" },
+    { "type": "text", "id": "button_text", "label": "Button text", "info": "Leave empty to hide the button — the reference design has none." },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "range", "id": "button_radius", "label": "Button corner radius", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 160 },
+
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "color_bg", "label": "Background color", "default": "#3a2b21" },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "info": "Applied as a CSS background. Leave empty to show the background color on desktop."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "info": "Falls back to the desktop image. Never shown on desktop."
+    },
+    { "type": "text", "id": "focal_desktop", "label": "Desktop focal point", "default": "center center", "info": "CSS background-position, e.g. 'center center' or '60% 40%'." },
+    { "type": "text", "id": "focal_mobile", "label": "Mobile focal point", "default": "62% center" },
+    { "type": "range", "id": "scrim_opacity", "label": "Scrim strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100, "info": "Darkens the image so the light text stays legible." },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_heading", "label": "Heading color", "default": "#ffffff" },
+    { "type": "color", "id": "color_text", "label": "Body text color", "default": "#fff9ef" },
+    { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#fff9ef" },
+    { "type": "color", "id": "color_border", "label": "Border color", "default": "#000000" },
+
+    { "type": "header", "content": "Button colors" },
+    { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#7ba6dd" },
+    { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#000000" },
+    { "type": "color", "id": "color_button_hover_bg", "label": "Button background (hover)", "default": "#fff9ef" },
+    { "type": "color", "id": "color_button_hover_text", "label": "Button text (hover)", "default": "#000000" },
+
+    { "type": "header", "content": "Layout" },
+    {
+    "type": "text",
+    "id": "height_desktop",
+    "label": "Height (desktop)",
+    "default": "720px"
+    },
+    {
+    "type": "text",
+    "id": "height_mobile",
+    "label": "Height (mobile)",
+    "default": "609px"
+    },
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 104 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 76 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 22 }
+  ],
+  "presets": [{ "name": "Yum Club Family" }]
+}
+{% endschema %}
