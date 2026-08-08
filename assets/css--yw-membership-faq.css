@@ -236,7 +236,7 @@
 
 .ywfaq__cta {
   margin-top: 44px;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -380,6 +380,7 @@
   }
 
   .ywfaq__cta {
+    display: flex;
     margin-top: 30px;
     gap: 16px;
   }
