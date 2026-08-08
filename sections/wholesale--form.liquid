@@ -9,44 +9,69 @@
 {%- endcomment -%}
 
 <div class="create_wholesale_act" id="create-wholesale-act-{{ section.id }}">
-  {%- if section.settings.title != blank -%}
-    <div class="wholesale_act_title">
-      <span>{{ section.settings.title }}</span>
-    </div>
-  {%- endif -%}
+  <div class="wholesale_act_inner">
 
-  {%- if section.settings.description != blank -%}
-    <div class="wholesale_act_dsc">
-      <span>{{ section.settings.description }}</span>
-    </div>
-  {%- endif -%}
+    <div class="wholesale_act_left">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="wholesale_act_eyebrow">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
 
-  {%- if section.settings.klaviyo_form_id != blank -%}
-    <div class="wholesale_act_klaviyo">
-      <div class="klaviyo-form-{{ section.settings.klaviyo_form_id }}"></div>
+      {%- if section.settings.title != blank -%}
+        <div class="wholesale_act_title">
+          <span>{{ section.settings.title }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="wholesale_act_dsc">
+          <span>{{ section.settings.description }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="wholesale_act_features">
+          {%- for block in section.blocks -%}
+            <div class="wholesale_act_feature" {{ block.shopify_attributes }}>
+              {%- if block.settings.label != blank -%}
+                <div class="wholesale_act_feature_label">{{ block.settings.label }}</div>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="wholesale_act_feature_text">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
-  {%- endif -%}
+
+    {%- if section.settings.klaviyo_form_id != blank -%}
+      <div class="wholesale_act_right">
+        <div class="wholesale_act_klaviyo">
+          <div class="klaviyo-form-{{ section.settings.klaviyo_form_id }}"></div>
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
 </div>
 
 <style>
   #create-wholesale-act-{{ section.id }} {
-    color: {{ section.settings.text_color }};
-    display: flex;
-    row-gap: 20px;
-    column-gap: 20px;
+    --wa-bg: {{ section.settings.bg_color }};
+    --wa-text: {{ section.settings.text_color }};
+    --wa-accent: {{ section.settings.accent_color }};
+    --wa-field-bg: {{ section.settings.field_bg_color }};
+    --wa-btn-bg: {{ section.settings.button_bg_color }};
+    --wa-btn-text: {{ section.settings.button_text_color }};
+    --wa-tear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 20' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0 H1200 V9 L1160 13 L1120 7 L1080 12 L1040 6 L1000 11 L960 8 L920 14 L880 7 L840 12 L800 6 L760 13 L720 8 L680 11 L640 6 L600 12 L560 9 L520 14 L480 7 L440 12 L400 6 L360 13 L320 8 L280 11 L240 7 L200 12 L160 6 L120 13 L80 8 L40 11 L0 7 Z'/%3E%3C/svg%3E");
+
+    color: var(--wa-text);
     position: relative;
+    display: block;
     max-width: 100%;
-    min-width: auto;
-    align-self: stretch;
-    flex-basis: auto;
-    min-height: auto;
-    align-items: center;
-    flex-shrink: 0;
     font-family: Montserrat, sans-serif;
-    padding: 70px 60px;
-    flex-direction: column;
-    justify-content: center;
-    background-color: {{ section.settings.bg_color }};
+    padding: 80px 60px;
+    background-color: var(--wa-bg);
     isolation: isolate;
   }
 
@@ -65,69 +90,90 @@
     mask-repeat: repeat-x;
     -webkit-mask-size: 1200px 20px;
     mask-size: 1200px 20px;
-    -webkit-mask-image: var(--wa-tear-{{ section.id }});
-    mask-image: var(--wa-tear-{{ section.id }});
+    -webkit-mask-image: var(--wa-tear);
+    mask-image: var(--wa-tear);
   }
 
-  #create-wholesale-act-{{ section.id }} {
-    --wa-tear-{{ section.id }}: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 20' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0 H1200 V9 L1160 13 L1120 7 L1080 12 L1040 6 L1000 11 L960 8 L920 14 L880 7 L840 12 L800 6 L760 13 L720 8 L680 11 L640 6 L600 12 L560 9 L520 14 L480 7 L440 12 L400 6 L360 13 L320 8 L280 11 L240 7 L200 12 L160 6 L120 13 L80 8 L40 11 L0 7 Z'/%3E%3C/svg%3E");
-  }
+  #create-wholesale-act-{{ section.id }}::before { top: 0; }
+  #create-wholesale-act-{{ section.id }}::after { bottom: 0; transform: scaleY(-1); }
 
-  #create-wholesale-act-{{ section.id }}::before {
-    top: 0;
-  }
+  #create-wholesale-act-{{ section.id }} p { margin: 0; }
 
-  #create-wholesale-act-{{ section.id }}::after {
-    bottom: 0;
-    transform: scaleY(-1);
-  }
-
-  #create-wholesale-act-{{ section.id }} span {
-    width: 100%;
-    font-family: inherit;
+  /* --- layout --- */
+  #create-wholesale-act-{{ section.id }} .wholesale_act_inner {
     position: relative;
     z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 80px;
+    row-gap: 40px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  #create-wholesale-act-{{ section.id }} p {
-    margin: 0;
+  /* --- left column --- */
+  #create-wholesale-act-{{ section.id }} .wholesale_act_eyebrow {
+    font-family: Montserrat, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--wa-accent);
+    margin-bottom: 12px;
   }
 
   #create-wholesale-act-{{ section.id }} .wholesale_act_title {
-    font-size: 50px;
-    align-self: stretch;
-    flex-basis: auto;
-    text-align: center;
-    flex-shrink: 0;
+    font-size: 40px;
     font-family: GalanoGrotesque, sans-serif;
     font-weight: 600;
-    line-height: 56px;
+    line-height: 44px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     overflow-wrap: break-word;
-    letter-spacing: -1px;
-    text-align-last: center;
   }
 
   #create-wholesale-act-{{ section.id }} .wholesale_act_dsc {
-    font-size: 20px;
-    max-width: 700px;
-    flex-basis: auto;
-    text-align: center;
-    flex-shrink: 0;
-    font-family: GalanoGrotesque, sans-serif;
-    font-weight: 700;
-    line-height: 27px;
-    margin-bottom: -20px;
+    font-size: 15px;
+    max-width: 420px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 400;
+    line-height: 22px;
+    margin-top: 32px;
     overflow-wrap: break-word;
-    text-align-last: center;
   }
 
+  #create-wholesale-act-{{ section.id }} .wholesale_act_features {
+    margin-top: 32px;
+    max-width: 420px;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_feature {
+    padding: 16px 0;
+    border-top: 1px solid rgba(243, 230, 211, 0.25);
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_feature:last-child {
+    border-bottom: 1px solid rgba(243, 230, 211, 0.25);
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_feature_label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--wa-accent);
+    margin-bottom: 6px;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_feature_text {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  /* --- right column / Klaviyo --- */
   #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo {
-    max-width: 600px;
     width: 100%;
-    flex-basis: auto;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 2;
   }
 
   #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo img {
@@ -137,15 +183,52 @@
     min-height: auto;
   }
 
-  @media (max-width: 640px) {
+  /* Klaviyo embed overrides — scoped to this section only */
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo input[type="text"],
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo input[type="email"],
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo input[type="tel"],
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo input[type="url"],
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo select {
+    width: 100%;
+    box-sizing: border-box;
+    height: 46px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 8px;
+    background-color: var(--wa-field-bg);
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    color: #3A2318;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo input::placeholder {
+    color: rgba(58, 35, 24, 0.6);
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo button,
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo button[type="submit"] {
+    width: 100%;
+    height: 52px;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--wa-btn-bg);
+    color: var(--wa-btn-text);
+    font-family: GalanoGrotesque, Montserrat, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    #create-wholesale-act-{{ section.id }} .wholesale_act_inner {
+      column-gap: 40px;
+    }
+  }
+
+  @media (max-width: 749px) {
     #create-wholesale-act-{{ section.id }} {
-      row-gap: 20px;
-      column-gap: 20px;
-      position: relative;
-      min-width: auto;
-      flex-basis: auto;
-      min-height: auto;
-      flex-shrink: 0;
       padding: 56px 20px;
     }
 
@@ -156,31 +239,26 @@
       mask-size: 600px 14px;
     }
 
+    #create-wholesale-act-{{ section.id }} .wholesale_act_inner {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 36px;
+    }
+
     #create-wholesale-act-{{ section.id }} .wholesale_act_title {
-      width: auto;
-      height: auto;
-      flex-grow: 1;
-      font-size: 37px;
-      align-self: stretch;
-      flex-basis: auto;
-      flex-shrink: 1;
-      line-height: 39px;
-      text-align-last: center;
+      font-size: 28px;
+      line-height: 32px;
     }
 
     #create-wholesale-act-{{ section.id }} .wholesale_act_dsc {
-      font-size: 16px;
-      flex-basis: auto;
-      text-align: center;
-      flex-shrink: 0;
+      font-size: 14px;
       line-height: 20px;
-      text-align-last: center;
+      margin-top: 20px;
+      max-width: none;
     }
 
-    #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo {
-      max-width: 400px;
-      flex-basis: auto;
-      flex-shrink: 0;
+    #create-wholesale-act-{{ section.id }} .wholesale_act_features {
+      max-width: none;
+      margin-top: 24px;
     }
   }
 </style>
@@ -193,6 +271,12 @@
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Apply"
+    },
+    {
+      "type": "text",
       "id": "title",
       "label": "Heading",
       "default": "Create a wholesale account"
@@ -201,7 +285,7 @@
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Apply for your wholesale account on yumwoof.com by completing the form below. Once approved, your stores will have access to our distributor pricing.</p>"
+      "default": "<p>Apply on yumwoof.com by completing the form. Once approved, your stores get access to our distributor pricing.</p>"
     },
     {
       "type": "text",
@@ -209,6 +293,10 @@
       "label": "Klaviyo form ID",
       "info": "The ID only, e.g. RAPfgV — renders as .klaviyo-form-RAPfgV",
       "default": "RAPfgV"
+    },
+    {
+      "type": "header",
+      "content": "Colours"
     },
     {
       "type": "color",
@@ -224,15 +312,65 @@
     },
     {
       "type": "color",
+      "id": "accent_color",
+      "label": "Accent (eyebrow and labels)",
+      "default": "#E8A33D"
+    },
+    {
+      "type": "color",
+      "id": "field_bg_color",
+      "label": "Form field background",
+      "default": "#FDF3E3"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#F5C46B"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#3A2318"
+    },
+    {
+      "type": "color",
       "id": "edge_color",
       "label": "Torn edge colour",
       "info": "Should match the page background directly above and below this section.",
-      "default": "#FFFFFF"
+      "default": "#FDF3E3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Distributor pricing"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "No markup. The same price we sell at, direct."
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Wholesale account form"
+      "name": "Wholesale account form",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
+      ]
     }
   ]
 }
