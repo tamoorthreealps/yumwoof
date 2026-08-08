@@ -1027,7 +1027,7 @@ a.yf__site-credit {
 
 	/* Bottom bar: copyright left, site credit right */
 	.yf__bottom {
-		margin-top: 0;
+		margin-top: 12px;
 	}
 	.yf__bottom-inner {
 		align-items: center;
