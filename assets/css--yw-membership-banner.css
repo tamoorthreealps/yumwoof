@@ -182,7 +182,7 @@
 
 @media (max-width: 749px) {
   .ywmb {
-    --ywmb-height: var(--ywmb-height-mobile, 455px);
+      height: var(--ywmb-height-mobile, 455px);
     --ywmb-size-1: 42px;
     --ywmb-size-2: 31px;
     --ywmb-leading: 44px;
