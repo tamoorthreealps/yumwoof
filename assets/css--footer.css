@@ -49,7 +49,7 @@
 		display:none;
 	}
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 989px) {
 	.yf__marquee {
 		padding: 94px 0 102px;
 		margin:0;
