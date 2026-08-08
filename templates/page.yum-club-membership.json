@@ -39,6 +39,7 @@
         "benefit_Ai74UP": {
           "type": "benefit",
           "settings": {
+            "icon": "shopify://shop_images/Group_156.svg",
             "icon_style": "filled",
             "title": "25% off every order",
             "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
@@ -47,25 +48,28 @@
         "benefit_NTDbza": {
           "type": "benefit",
           "settings": {
+            "icon": "shopify://shop_images/Group_156.svg",
             "icon_style": "filled",
-            "title": "25% off every order",
-            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+            "title": "Prices locked",
+            "description": "Today's prices stay yours for the next twelve months, whatever the shelf does."
           }
         },
         "benefit_YhgqEC": {
           "type": "benefit",
           "settings": {
+            "icon": "shopify://shop_images/Group_156.svg",
             "icon_style": "filled",
-            "title": "25% off every order",
-            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+            "title": "The Cocomega book, free",
+            "description": "The Canine Cocomega Effect, digital edition. $24 on its own, included when you join."
           }
         },
         "benefit_HfwWww": {
           "type": "benefit",
           "settings": {
+            "icon": "shopify://shop_images/Group_156.svg",
             "icon_style": "filled",
-            "title": "25% off every order",
-            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+            "title": "Priority support",
+            "description": "Member messages get answered first. Feeding plans, swaps, deliveries, anything."
           }
         }
       },
@@ -86,7 +90,7 @@
         "button_url": "",
         "button_radius": 160,
         "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
-        "color_bg": "#CB8900",
+        "color_bg": "#cb8900",
         "bg_image": "shopify://shop_images/Club_Intro_Band_Background.png",
         "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.png",
         "color_heading": "#661d1d",
