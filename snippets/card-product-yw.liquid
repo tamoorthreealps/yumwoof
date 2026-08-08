@@ -121,7 +121,6 @@
       {%- if recipe_label != blank -%}
         <p class="yw-pcard__recipe">{{ recipe_label }}</p>
       {%- endif -%}
-      {% render 'opinew_review_stars_product' %}
 
       {%- if rating != blank -%}
         {%- assign rating_val = rating.value | default: rating | times: 1.0 -%}
