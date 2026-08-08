@@ -462,7 +462,7 @@ p.yf__signup__footer_content a {
 	overflow: hidden;
 	min-height: 0;
 	/* padding moves here so it doesn't show while collapsed */
-	padding-top: 1.6rem;
+	padding-top: 0;
 }
 
 .yf-disc.is-open > .yf-disc__panel {
@@ -925,7 +925,7 @@ a.yf__site-credit {
 		border-bottom: 1px solid var(--yf-line);
 	}
 	.yf-disc__panel {
-		padding-top: 14px;
+		padding-top: 0;
 	}
 
 	/* Dogquarters / Questions two-up */
