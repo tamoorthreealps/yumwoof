@@ -359,11 +359,11 @@
         line-height: 24px;
     }
 
-  .ywfaq__icon {
-    flex-basis: 13px;
-    width: 13px;
-    height: 13px;
-  }
+     .ywfaq__icon {
+        flex: 0 0 13px;
+        width: 13px;
+        height: 13px;
+    }
 
   .ywfaq__icon-bar--horizontal,
   .ywfaq__icon-bar--vertical {
