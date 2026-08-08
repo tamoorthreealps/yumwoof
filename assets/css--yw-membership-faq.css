@@ -1,0 +1,407 @@
+/* css--yw-membership-faq.css
+   Yum Club FAQ. All styles scoped under .ywfaq.
+   Colors come from Theme Editor settings via --ywfaq-* set inline on the
+   section element; the values here are fallbacks only.
+
+   Desktop measured from Figma node 5965:1824 (1196px container, 2px rules).
+   Mobile measured from the mobile reference (~390px frame, 1px rules). */
+
+.ywfaq {
+  --ywfaq-bg: #fff9ef;
+  --ywfaq-heading: #000;
+  --ywfaq-question: #000;
+  --ywfaq-answer: #000;
+  --ywfaq-border: #000;
+  --ywfaq-icon: #000;
+  --ywfaq-accent: #661d1d;
+  --ywfaq-button-bg: #7ba6dd;
+  --ywfaq-button-text: #000;
+  --ywfaq-button-border: #000;
+  --ywfaq-button-hover-bg: #661d1d;
+  --ywfaq-button-hover-text: #fff9ef;
+  --ywfaq-button-radius: 160px;
+
+  --ywfaq-border-width: 2px;
+  --ywfaq-max-width: 1196px;
+  --ywfaq-pad-top: 108px;
+  --ywfaq-pad-bottom: 112px;
+
+  --ywfaq-font-display: 'TAYRosemary', var(--font-heading-family, serif);
+  --ywfaq-font-body: 'Matter', var(--font-body-family, sans-serif);
+  --ywfaq-font-ui: 'Blur', var(--font-body-family, sans-serif);
+
+  background-color: var(--ywfaq-bg);
+  padding-block: var(--ywfaq-pad-top) var(--ywfaq-pad-bottom);
+}
+
+.ywfaq *,
+.ywfaq *::before,
+.ywfaq *::after {
+  box-sizing: border-box;
+}
+
+.ywfaq__container {
+  width: min(var(--ywfaq-max-width), calc(100% - 64px));
+  margin-inline: auto;
+}
+
+/* --------------------------------- Intro --------------------------------- */
+
+.ywfaq__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ywfaq__heading {
+  margin: 0;
+  color: var(--ywfaq-heading);
+  font-family: var(--ywfaq-font-display);
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 64px;
+  letter-spacing: -0.56px;
+}
+
+.ywfaq__subheading {
+  color: var(--ywfaq-answer);
+  font-family: var(--ywfaq-font-body);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.ywfaq__subheading p {
+  margin: 0;
+}
+
+.ywfaq__subheading a {
+  color: var(--ywfaq-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------------------------------- List ---------------------------------- */
+
+.ywfaq__list {
+  margin-top: 39px;
+  border-bottom: var(--ywfaq-border-width) solid var(--ywfaq-border);
+}
+
+.ywfaq__item {
+  border-top: var(--ywfaq-border-width) solid var(--ywfaq-border);
+}
+
+.ywfaq__question {
+  margin: 0;
+}
+
+.ywfaq__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  margin: 0;
+  padding: 18px 0 20px;
+  border: 0;
+  background: none;
+  color: var(--ywfaq-question);
+  font-family: var(--ywfaq-font-body);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ywfaq__trigger:focus-visible {
+  outline: 3px solid var(--ywfaq-accent);
+  outline-offset: 2px;
+}
+
+.ywfaq__question-text {
+  flex: 1 1 auto;
+  word-break: break-word;
+}
+
+/* ---------------------------------- Icon ----------------------------------
+   Plus that becomes a minus: the vertical bar scales to zero and fades. */
+
+.ywfaq__icon {
+  position: relative;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--ywfaq-icon);
+}
+
+.ywfaq__icon-bar {
+  position: absolute;
+  background: currentColor;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.ywfaq__icon-bar--horizontal {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.ywfaq__icon-bar--vertical {
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%) scaleY(1);
+  transform-origin: center;
+}
+
+.ywfaq__item.is-open .ywfaq__icon-bar--vertical {
+  transform: translateX(-50%) scaleY(0);
+  opacity: 0;
+}
+
+/* ---------------------------------- Panel ----------------------------------
+   grid-template-rows 0fr -> 1fr animates to the answer's natural height, so
+   answers of any length work with no max-height ceiling and no JS measuring. */
+
+.ywfaq__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ywfaq__item.is-open .ywfaq__panel {
+  grid-template-rows: 1fr;
+}
+
+.ywfaq__panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.ywfaq__answer {
+  max-width: 1132px;
+  padding-bottom: 30px;
+  color: var(--ywfaq-answer);
+  font-family: var(--ywfaq-font-body);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  /* Fades slightly behind the height change so the text doesn't pop. */
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.ywfaq__item.is-open .ywfaq__answer {
+  opacity: 1;
+  transition: opacity 0.3s ease 0.1s;
+}
+
+.ywfaq__answer p {
+  margin: 0 0 1em;
+}
+
+.ywfaq__answer p:last-child {
+  margin-bottom: 0;
+}
+
+.ywfaq__answer a {
+  color: var(--ywfaq-accent);
+}
+
+/* Browsers without animatable grid rows still open and close correctly. */
+@supports not (grid-template-rows: 0fr) {
+  .ywfaq__panel {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.36s ease;
+  }
+
+  .ywfaq__item.is-open .ywfaq__panel {
+    height: auto;
+  }
+}
+
+/* ----------------------------------- CTA ----------------------------------- */
+
+.ywfaq__cta {
+  margin-top: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.ywfaq__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 340px;
+  max-width: 100%;
+  height: 56px;
+  padding: 18px 44px;
+  border: 2px solid var(--ywfaq-button-border);
+  border-radius: var(--ywfaq-button-radius);
+  background: var(--ywfaq-button-bg);
+  color: var(--ywfaq-button-text);
+  font-family: var(--ywfaq-font-ui);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 1.28px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.ywfaq__button:hover,
+.ywfaq__button:focus-visible {
+  background: var(--ywfaq-button-hover-bg);
+  color: var(--ywfaq-button-hover-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--ywfaq-button-border);
+}
+
+.ywfaq__button:focus-visible {
+  outline: 3px solid var(--ywfaq-accent);
+  outline-offset: 3px;
+}
+
+.ywfaq__button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.ywfaq__fine-print {
+  color: var(--ywfaq-answer);
+  font-family: var(--ywfaq-font-body);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.ywfaq__fine-print p {
+  margin: 0;
+}
+
+.ywfaq__fine-print a {
+  color: inherit;
+}
+
+/* ================================= TABLET ================================= */
+
+@media (max-width: 1279px) {
+  .ywfaq__heading {
+    font-size: 48px;
+    line-height: 54px;
+  }
+
+  .ywfaq__trigger {
+    font-size: 21px;
+    line-height: 29px;
+  }
+}
+
+/* ================================= MOBILE =================================
+   Per the mobile reference: tighter rules (1px), a much smaller heading, and
+   compact question/answer type. Tap targets stay generous via row padding. */
+
+@media (max-width: 749px) {
+  .ywfaq {
+    --ywfaq-border-width: var(--ywfaq-border-width-mobile, 1px);
+    padding-block: var(--ywfaq-pad-top-mobile, 46px) var(--ywfaq-pad-bottom-mobile, 40px);
+  }
+
+  .ywfaq__container {
+    width: 100%;
+    padding-inline: 20px;
+  }
+
+  .ywfaq__intro {
+    gap: 6px;
+  }
+
+  .ywfaq__heading {
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -0.32px;
+  }
+
+  .ywfaq__subheading {
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .ywfaq__list {
+    margin-top: 26px;
+  }
+
+  .ywfaq__trigger {
+    gap: 16px;
+    /* 14/15px padding on a 22px line keeps the row above the 44px tap target. */
+    padding: 14px 0 15px;
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .ywfaq__icon {
+    flex-basis: 13px;
+    width: 13px;
+    height: 13px;
+  }
+
+  .ywfaq__icon-bar--horizontal,
+  .ywfaq__icon-bar--vertical {
+    height: 1.5px;
+  }
+
+  .ywfaq__icon-bar--vertical {
+    width: 1.5px;
+    height: 100%;
+  }
+
+  .ywfaq__answer {
+    padding-bottom: 18px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .ywfaq__cta {
+    margin-top: 30px;
+    gap: 16px;
+  }
+
+  .ywfaq__button {
+    width: 100%;
+    height: 48px;
+    padding: 14px 24px;
+    font-size: 14px;
+    letter-spacing: 1.1px;
+  }
+}
+
+/* ============================= Reduced motion ============================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ywfaq__panel,
+  .ywfaq__answer,
+  .ywfaq__icon-bar,
+  .ywfaq__button {
+    transition: none;
+  }
+
+  .ywfaq__button:hover,
+  .ywfaq__button:focus-visible {
+    transform: none;
+  }
+}
