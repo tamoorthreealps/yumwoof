@@ -158,6 +158,7 @@
     --ywmb-size-1: 80px;
     --ywmb-size-2: 68px;
     --ywmb-leading: 78px;
+    margin: 32px 0 0;
   }
 
   .ywmb__inner {
