@@ -110,19 +110,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 0 16px;
+    margin: 0;
+    position: absolute;
+    top: -12px;
 }
 
 .yw-pcard__tag {
-    background: transparent;
-    border: 1px solid #661D1D;
-    color: #661D1D;
+background: #FFF9EF;
+    border: 1px solid #000000;
+    color: #000000;
     font-family: FFBlurProMedium, sans-serif;
     font-size: 1.2rem;
     letter-spacing: .96px;
     text-transform: uppercase;
     line-height: 1;
-    padding: 5.2px 13.02px;
+    padding: 5.4px 13.02px 5px;
     border-radius: 10rem;
     white-space: nowrap;
 }
