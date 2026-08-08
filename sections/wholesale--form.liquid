@@ -10,7 +10,6 @@
 
 <div class="create_wholesale_act" id="create-wholesale-act-{{ section.id }}">
   <div class="wholesale_act_inner">
-
     <div class="wholesale_act_left">
       {%- if section.settings.eyebrow != blank -%}
         <div class="wholesale_act_eyebrow">{{ section.settings.eyebrow }}</div>
@@ -51,7 +50,6 @@
         </div>
       </div>
     {%- endif -%}
-
   </div>
 </div>
 
@@ -71,6 +69,7 @@
     font-family: Montserrat, sans-serif;
     padding: 80px 60px;
     background-color: var(--wa-bg);
+    {% if section.settings.bg_image_desktop != blank %} background-image: url('{{ section.settings.bg_image_desktop | image_url: width: 2400 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% endif %}
     isolation: isolate;
   }
 
@@ -226,10 +225,12 @@
     }
   }
 
-  @media (max-width: 749px) {
+  @media (max-width: 768px) {
     #create-wholesale-act-{{ section.id }} {
       padding: 56px 20px;
     }
+
+    {% if section.settings.bg_image_mobile != blank %} background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% elsif section.settings.bg_image_desktop != blank %} background-image: url('{{ section.settings.bg_image_desktop | image_url: width: 1200 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% endif %}
 
     #create-wholesale-act-{{ section.id }}::before,
     #create-wholesale-act-{{ section.id }}::after {
@@ -364,12 +365,7 @@
   "presets": [
     {
       "name": "Wholesale account form",
-      "blocks": [
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" },
-        { "type": "feature" }
-      ]
+      "blocks": [{ "type": "feature" }, { "type": "feature" }, { "type": "feature" }, { "type": "feature" }]
     }
   ]
 }
