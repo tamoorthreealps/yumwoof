@@ -9,14 +9,12 @@
 
 <section
   class="ywmb"
-  id="ywmb-{{ section.id }}"
-  aria-labelledby="ywmb-heading-{{ section.id }}"
   style="
-    --ywmb-height: {{ s.height_desktop }}px;
-    --ywmb-height-mobile: {{ s.height_mobile }}px;
+    --ywmb-height: {{ s.height_desktop | default: '812px' }};
+    --ywmb-height-mobile: {{ s.height_mobile | default: '455px' }};
     --ywmb-focal: {{ focal_d }};
     --ywmb-focal-mobile: {{ focal_m }};
-    --ywmb-scrim-opacity: {{ s.scrim_opacity | divided_by: 100.0 }};
+    --ywmb-scrim-opacity: {{ s.scrim_opacity | default: 100 | divided_by: 100.0 }};
   "
 >
   <div class="ywmb__media">
