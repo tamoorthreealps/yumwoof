@@ -255,15 +255,16 @@
 
   .ywmf__container {
     width: 100%;
-    padding-inline: 20px;
+    padding-inline: 24px;
     padding-block: var(--ywmf-pad-top-mobile, 34px) var(--ywmf-pad-bottom-mobile, 22px);
   }
 
-  .ywmf__heading {
-    width: 100%;
-    font-size: 29px;
-    line-height: 34px;
-  }
+    .ywmf__heading {
+        width: 100%;
+        font-size: 40px;
+        line-height: 40px;
+        max-width: 324px;
+    }
 
   .ywmf__description {
     width: 100%;
@@ -273,23 +274,23 @@
   }
 
   .ywmf__bottom {
-    gap: 4px;
+    gap: 8px;
   }
 
   .ywmf__signature {
-    width: 208px;
-    height: 58px;
+    width: 229px;
+        height: 64px;
   }
 
   .ywmf .ywmf__signature-image {
-    width: 208px;
-    height: 58px;
+    width: 229px;
+        height: 64px;
   }
 
-  .ywmf__attribution {
-    font-size: 13px;
-    line-height: 18px;
-  }
+      .ywmf__attribution {
+        font-size: 14px;
+        line-height: 20px;
+    }
 
   .ywmf__button {
     width: 100%;
@@ -298,14 +299,6 @@
     padding: 14px 24px;
     font-size: 14px;
     letter-spacing: 1.1px;
-  }
-}
-
-/* Narrow phones. */
-@media (max-width: 359px) {
-  .ywmf__heading {
-    font-size: 26px;
-    line-height: 31px;
   }
 }
 
