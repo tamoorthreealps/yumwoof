@@ -306,11 +306,11 @@ background: #FFF9EF;
     letter-spacing: .8px;
     padding: 3px 7.2px;
 }
-.yw-pcard__tag {
-    font-size: 1rem;
-    letter-spacing: .80px;
-    padding: 2.2px 7.38px;
-}
+    .yw-pcard__tag {
+        font-size: 1rem;
+        letter-spacing: .8px;
+        padding: 3px 7.38px 1.4px;
+    }
       .yw-pcard__title {
         font-size: 2rem;
         line-height: 2.4rem;
