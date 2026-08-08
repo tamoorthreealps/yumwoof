@@ -333,7 +333,8 @@ p.cd-banner__description {
     border: 1px solid #000000;
     border-radius: 100px;
     padding: 5.2px 16.4px;
-	    transition: all .3s ease;
+	transition: all .3s ease;
+	white-space: nowrap;
 }
 .cd-banner .cd-banner__btn:hover {
 	background:#000;
@@ -378,6 +379,7 @@ p.cd-banner__description {
 .cd-banner .cd-banner__btn {
     padding: 6.2px 17.53px 4.2px;
 	min-width:64px;
+	white-space: normal;
 }
 .cd-banner__btn_hold {
     display: flex;
