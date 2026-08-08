@@ -797,7 +797,7 @@ small.yf__copyright {
   display: inline-block;
   text-decoration: none;
 }
-.yf__bottom-policies li a::after {
+.yf__bottom-policies li a::after, a.yf__site-credit::after {
   content: "";
   position: absolute;
   left: 0;
@@ -810,7 +810,7 @@ small.yf__copyright {
   transition: transform .35s ease;
 }
 
-.yf__bottom-policies li a:hover::after {
+.yf__bottom-policies li a:hover::after, a.yf__site-credit:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -822,10 +822,11 @@ a.yf__site-credit {
     text-transform: uppercase;
     color: #FFF9EF;
     font-family: 'TAY Birdie';
+          position: relative;
+  display: inline-block;
+  text-decoration: none;
 }
-.yf__site-credit:hover {
-	opacity: 0.65;
-}
+
 
 /* Legal accordion is mobile-only; policies live in the bottom bar on desktop. */
 .yf__col--legal {
