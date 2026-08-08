@@ -826,7 +826,102 @@ a.yf__site-credit {
   display: inline-block;
   text-decoration: none;
 }
+.yf__credit-wrap {
+  position: relative;
+  display: inline-block;
+}
 
+/* invisible bridge across the gap so the tooltip survives the cursor traveling up */
+.yf__credit-wrap::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 100%;
+  min-width: 200px;
+  height: 14px;
+  pointer-events: none;
+}
+.yf__credit-wrap:hover::before,
+.yf__credit-wrap:focus-within::before {
+  pointer-events: auto;
+}
+
+.yf__credit-tip {
+  --ta-green: #c9f24d;
+  --ta-ink: #10100f;
+
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ta-green);
+  color: var(--ta-ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(201, 242, 77, 0.4), 0 0 6px rgba(201, 242, 77, 0.55);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s, box-shadow 0.18s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.yf__credit-tip:hover {
+  color: var(--ta-ink);
+  box-shadow: 0 0 26px rgba(201, 242, 77, 0.6), 0 0 8px rgba(201, 242, 77, 0.7);
+}
+
+.yf__credit-tip-mark {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+
+.yf__credit-tip-brand {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.yf__credit-wrap:hover .yf__credit-tip,
+.yf__credit-wrap:focus-within .yf__credit-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media screen and (max-width: 989px) {
+  .yf__credit-tip {
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, 4px);
+    font-size: 14px;
+  }
+  .yf__credit-wrap:hover .yf__credit-tip,
+  .yf__credit-wrap:focus-within .yf__credit-tip {
+    transform: translate(-50%, 0);
+  }
+  .yf__credit-wrap::before {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yf__credit-tip { transition: none; }
+}
 
 /* Legal accordion is mobile-only; policies live in the bottom bar on desktop. */
 .yf__col--legal {

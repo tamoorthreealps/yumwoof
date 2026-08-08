@@ -269,9 +269,19 @@
         </ul>
       {%- endif -%}
       {%- if section.settings.site_credit_label != blank -%}
-        <a class="yf__site-credit" href="{{ section.settings.site_credit_url | default: '#' }}">
-          {{- section.settings.site_credit_label -}}
-        </a>
+        {%- assign credit_url = section.settings.site_credit_url | default: 'https://threealps.com' -%}
+        <div class="yf__credit-wrap" data-yf-credit>
+          <a class="yf__site-credit" href="{{ credit_url }}" target="_blank" rel="noopener">
+            {{- section.settings.site_credit_label -}}
+          </a>
+
+          <a class="yf__credit-tip" href="{{ credit_url }}" target="_blank" rel="noopener" tabindex="-1">
+            <svg class="yf__credit-tip-mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 2.5 22 20.5H2L12 2.5Zm0 5.6L7.1 17h9.8L12 8.1Z" fill="currentColor" fill-rule="evenodd"/>
+            </svg>
+            <span class="yf__credit-tip-text">Built by <span class="yf__credit-tip-brand">ThreeAlps</span></span>
+          </a>
+        </div>
       {%- endif -%}
     </div>
   </div>
