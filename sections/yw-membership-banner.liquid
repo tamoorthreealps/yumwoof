@@ -1,0 +1,211 @@
+{{ 'css--yw-membership-banner.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'yum-parallax.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign s = section.settings
+
+  assign focal_d = s.focal_desktop | default: 'center center'
+  assign focal_m = s.focal_mobile | default: 'center 60%'
+
+  assign range_d = s.parallax_range
+  assign range_m = s.parallax_range_mobile
+-%}
+
+<section
+  class="ywmb yum-parallax"
+  id="ywmb-{{ section.id }}"
+  data-yum-parallax
+  data-parallax-range="{{ range_d }}"
+  data-parallax-mobile-range="{{ range_m }}"
+  aria-labelledby="ywmb-heading-{{ section.id }}"
+  style="
+    --ywmb-height: {{ s.height_desktop }}px;
+    --ywmb-height-mobile: {{ s.height_mobile }}px;
+    --ywmb-focal: {{ focal_d }};
+    --ywmb-focal-mobile: {{ focal_m }};
+    --ywmb-scrim-opacity: {{ s.scrim_opacity | divided_by: 100.0 }};
+  "
+>
+  <div class="yum-parallax__media" data-parallax-layer>
+    {%- if s.image != blank or s.image_mobile != blank -%}
+      {%- if s.image_mobile != blank and s.image != blank -%}
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ s.image_mobile | image_url: width: 640 }} 640w,
+              {{ s.image_mobile | image_url: width: 880 }} 880w,
+              {{ s.image_mobile | image_url: width: 1200 }} 1200w
+            "
+            sizes="100vw"
+          >
+          {{
+            s.image
+            | image_url: width: 2400
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '900, 1200, 1512, 1800, 2400',
+              sizes: '100vw',
+              class: 'ywmb__image',
+              alt: s.image.alt | default: ''
+          }}
+        </picture>
+      {%- else -%}
+        {%- assign single = s.image | default: s.image_mobile -%}
+        {{
+          single
+          | image_url: width: 2400
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '900, 1200, 1512, 1800, 2400',
+            sizes: '100vw',
+            class: 'ywmb__image',
+            alt: single.alt | default: ''
+        }}
+      {%- endif -%}
+    {%- else -%}
+      <div class="ywmb__placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'ywmb__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="yum-parallax__overlay ywmb__scrim" aria-hidden="true"></div>
+
+  <div class="yum-parallax__content ywmb__content">
+    <div class="ywmb__inner">
+      {%- if s.heading_line_1 != blank or s.heading_line_2 != blank -%}
+        <h1 class="ywmb__heading" id="ywmb-heading-{{ section.id }}">
+          {%- if s.heading_line_1 != blank -%}
+            <span class="ywmb__line ywmb__line--1">{{ s.heading_line_1 | escape }}</span>
+          {%- endif -%}
+          {%- if s.heading_line_2 != blank -%}
+            <span class="ywmb__line ywmb__line--2">{{ s.heading_line_2 | escape }}</span>
+          {%- endif -%}
+        </h1>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if s.badge != blank -%}
+    <div class="ywmb__badge">
+      {{
+        s.badge
+        | image_url: width: 512
+        | image_tag:
+          loading: 'eager',
+          widths: '176, 256, 356, 512',
+          sizes: '(max-width: 749px) 88px, 178px',
+          alt: s.badge.alt | default: ''
+      }}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Membership banner",
+  "tag": "section",
+  "class": "yw-membership-banner-section",
+  "settings": [
+    { "type": "header", "content": "Background image" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Background image (mobile)",
+      "info": "Falls back to the desktop image if left empty."
+    },
+    {
+      "type": "text",
+      "id": "focal_desktop",
+      "label": "Desktop focal point",
+      "default": "center center",
+      "info": "CSS object-position, e.g. 'center center' or '60% 40%'."
+    },
+    {
+      "type": "text",
+      "id": "focal_mobile",
+      "label": "Mobile focal point",
+      "default": "center 60%",
+      "info": "The mobile crop sits lower so the bowl stays in frame."
+    },
+
+    { "type": "header", "content": "Heading" },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Line 1",
+      "default": "WELL-FED DOGS"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Line 2",
+      "default": "PAY LESS FOR IT."
+    },
+
+    { "type": "header", "content": "Badge" },
+    {
+      "type": "image_picker",
+      "id": "badge",
+      "label": "Badge / sticker",
+      "info": "The 'EXTRA 25% OFF' sticker. Decorative — leave the alt text empty in the media library unless it carries meaning."
+    },
+
+    { "type": "header", "content": "Layout" },
+    {
+    "type": "text",
+    "id": "height_desktop",
+    "label": "Height (desktop)",
+    "default": "812px"
+    },
+    {
+    "type": "text",
+    "id": "height_mobile",
+    "label": "Height (mobile)",
+    "default": "455px"
+    },
+    {
+      "type": "range",
+      "id": "scrim_opacity",
+      "label": "Scrim strength",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "Darkens the top of the image so the cream heading stays legible."
+    },
+
+    { "type": "header", "content": "Parallax" },
+    {
+      "type": "range",
+      "id": "parallax_range",
+      "label": "Parallax range (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "parallax_range_mobile",
+      "label": "Parallax range (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 35
+    }
+  ],
+  "presets": [{ "name": "YW-Membership banner" }]
+}
+{% endschema %}
