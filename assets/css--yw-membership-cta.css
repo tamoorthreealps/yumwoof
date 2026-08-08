@@ -234,17 +234,16 @@ margin: 0;
         height: 100%;
     }
 
-  .ywcta__heading {
-    font-size: 13px;
-    line-height: 21px;
-    letter-spacing: 1px;
-  }
 
       .ywcta__heading {
         font-size: 20px;
         line-height: 24px;
         letter-spacing: 0;
     }
+
+     .ywcta__heading br {
+        display:none;
+     }
 
   /* Badge before the button on mobile. */
      .ywcta__badge {
