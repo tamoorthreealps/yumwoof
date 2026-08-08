@@ -97,7 +97,7 @@
         "color_button_bg": "#7ba6dd",
         "color_button_text": "#000000",
         "color_button_border": "#000000",
-        "color_button_hover_bg": "#661d1d",
+        "color_button_hover_bg": "#000000",
         "color_button_hover_text": "#fff9ef",
         "padding_top": 72,
         "padding_bottom": 32,
