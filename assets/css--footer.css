@@ -362,7 +362,7 @@ p.yf__signup__footer_content a {
   fill: transparent;
 }
 
-.klaviyo-form.klaviyo-form.klaviyo-form input[type=radio]:checked+label .go2365489600.go2365489600.go2365489600 circle, .klaviyo-form.klaviyo-form.klaviyo-form input[type=checkbox]:checked+label .go2365489600.go2365489600.go2365489600 circle {
+.klaviyo-form.klaviyo-form.klaviyo-form input[type=radio]:checked+label svg.go1708406129 circle, .klaviyo-form.klaviyo-form.klaviyo-form input[type=checkbox]:checked+label svg.go1708406129 circle {
   fill: #FFF9EF;
 }
 
