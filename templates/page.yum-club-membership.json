@@ -86,7 +86,8 @@
         "button_url": "",
         "button_radius": 160,
         "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
-        "color_bg": "#cb8900",
+        "color_bg": "#CB8900",
+        "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.png",
         "color_heading": "#661d1d",
         "color_text": "#661d1d",
         "color_accent": "#661d1d",
@@ -98,9 +99,9 @@
         "color_button_hover_bg": "#661d1d",
         "color_button_hover_text": "#fff9ef",
         "padding_top": 72,
-        "padding_bottom": 84,
-        "padding_top_mobile": 44,
-        "padding_bottom_mobile": 40
+        "padding_bottom": 32,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 64
       }
     }
   },
