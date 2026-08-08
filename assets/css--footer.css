@@ -362,7 +362,7 @@ p.yf__signup__footer_content a {
   fill: transparent;
 }
 
-.klaviyo-form.klaviyo-form.klaviyo-form input[type=radio]:checked+label>*, .klaviyo-form.klaviyo-form.klaviyo-form input[type=checkbox]:checked+label>* {
+.klaviyo-form.klaviyo-form.klaviyo-form input[type=radio]:checked+label svg circle, .klaviyo-form.klaviyo-form.klaviyo-form input[type=checkbox]:checked+label svg circle {
   fill: #661D1D;
 }
 
