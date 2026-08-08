@@ -229,7 +229,7 @@
 
 @media (max-width: 749px) {
   .ywmf {
-    --ywmf-height: var(--ywmf-height-mobile, 609px);
+    height: var(--ywmf-height-mobile);
   }
 
   .ywmf__bg {
