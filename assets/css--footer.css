@@ -1072,6 +1072,7 @@ a.yf__site-credit {
   .yf__badge {
     justify-content: center;
     margin-top: 0;
+            transform: translate(0px);
   }
   .yf__badge img {
     margin-inline: auto;
