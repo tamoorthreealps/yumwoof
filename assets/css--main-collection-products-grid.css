@@ -3,7 +3,7 @@
 .mcg {
     max-width: 1244px;
     margin: 0 auto;
-    padding: 0 24px 196px;
+    padding: 0 24px 148px;
 }
 
 .mcg__group {
@@ -267,7 +267,7 @@
 
 @media screen and (max-width: 749px) {
   .mcg {
-    padding: 0 24px 88px;
+    padding: 0 24px 80px;
 }
   .mcg__group-heading {
     font-size: 32px;
