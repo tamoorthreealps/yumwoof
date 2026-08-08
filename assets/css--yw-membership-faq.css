@@ -69,6 +69,7 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 28px;
+  letter-spacing: 0;
 }
 
 .ywfaq__subheading p {
@@ -103,7 +104,8 @@
   gap: 24px;
   width: 100%;
   margin: 0;
-  padding: 18px 0 20px;
+  padding: 20px 0 22px;
+  letter-spacing: 0;
   border: 0;
   background: none;
   color: var(--ywfaq-question);
@@ -193,6 +195,7 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 28px;
+  letter-spacing: 0;
   /* Fades slightly behind the height change so the text doesn't pop. */
   opacity: 0;
   transition: opacity 0.24s ease;
