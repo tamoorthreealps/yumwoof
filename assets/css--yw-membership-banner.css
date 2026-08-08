@@ -5,17 +5,11 @@
 
 .ywmb {
   --ywmb-cream: #fff9ef;
-
   --ywmb-font-display: 'TAYRosemary', var(--font-heading-family, serif);
 
-  /* Desktop type, from the reference. */
   --ywmb-size-1: 128px;
   --ywmb-size-2: 112px;
   --ywmb-leading: 116px;
-
-  --ywmb-height: 812px;
-  --ywmb-focal: center center;
-  --ywmb-scrim-opacity: 1;
 
   position: relative;
   height: var(--ywmb-height);
