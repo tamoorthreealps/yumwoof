@@ -11,13 +11,25 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "wholesale_form_fBNjBR": {
+      "type": "wholesale--form",
+      "name": "Wholesale account form",
+      "settings": {
+        "title": "Create a wholesale account",
+        "description": "<p>Apply for your wholesale account on yumwoof.com by completing the form below. Once approved, your stores will have access to our distributor pricing.</p>",
+        "klaviyo_form_id": "RAPfgV",
+        "bg_color": "#661D1D"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "wholesale_form_fBNjBR"
   ]
 }
