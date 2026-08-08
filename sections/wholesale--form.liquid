@@ -69,7 +69,7 @@
     font-family: Montserrat, sans-serif;
     padding: 80px 60px;
     background-color: var(--wa-bg);
-    {% if section.settings.bg_image_desktop != blank %} background-image: url('{{ section.settings.bg_image_desktop | image_url: width: 2400 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% endif %}
+    {% if section.settings.bg_image_desktop != blank %} background-image: url('{{ section.settings.bg_image_desktop | image_url: width: 2400 }}'); background-repeat: no-repeat; background-position: center; background-size: 100% 100%; {% endif %}
     isolation: isolate;
   }
 
@@ -230,7 +230,7 @@
       padding: 56px 20px;
     }
 
-    {% if section.settings.bg_image_mobile != blank %} background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% elsif section.settings.bg_image_desktop != blank %} background-image: url('{{ section.settings.bg_image_desktop | image_url: width: 1200 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% endif %}
+    {% if section.settings.bg_image_mobile != blank %} background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}'); background-repeat: no-repeat; background-position: center; background-size: 100% 100%; {% elsif section.settings.bg_image_desktop != blank %} background-image: url('{{ section.settings.bg_image_desktop | image_url: width: 1200 }}'); background-repeat: no-repeat; background-position: center; background-size: cover; {% endif %}
 
     #create-wholesale-act-{{ section.id }}::before,
     #create-wholesale-act-{{ section.id }}::after {
