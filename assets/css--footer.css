@@ -633,16 +633,18 @@ display: block;
 
   /* --- Open panel (upward) --- */
   .country-pill__panel {
-    display: block;
+display: block;
     position: absolute;
-    bottom: calc(100% + 0.8rem);
+    bottom: calc(100% + .8rem);
     left: 0;
-    min-width: 32rem;
-    padding: 0.6rem;
-    background: #f4efe6;
-    border-radius: 0.8rem;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    min-width: 28.8rem;
+    padding: 4px;
+    background: rgba(255, 249, 239, 0.9);
+    border-radius: 8px;
     z-index: 20;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid #1D1D1B;
   }
 
   .country-pill__panel[hidden] {
@@ -659,24 +661,26 @@ display: block;
     margin-top: 0.2rem;
   }
 
-  .country-pill__row {
+.country-pill__row {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: .8rem;
     width: 100%;
     padding: 1rem 1.2rem;
     border: 0;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     background: transparent;
-    color: #1a1a1a;
+    color: #1D1D1B;
     font: inherit;
-    font-size: 1.4rem;
-    letter-spacing: 0.06em;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.32px;
+    font-family: 'TAY Birdie';
     text-transform: uppercase;
     text-align: left;
     cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
+    transition: background-color .15s ease, color .15s ease;
+}
 
   .country-pill__row:hover,
   .country-pill__row:focus-visible {
@@ -691,10 +695,6 @@ display: block;
 
   .country-pill__name {
     flex: 1;
-  }
-
-  .country-pill__currency {
-    opacity: 0.85;
   }
 
   @media screen and (max-width: 749px) {
