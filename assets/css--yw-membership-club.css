@@ -348,8 +348,8 @@ display: inline-flex;
 
   .ywmc__container {
     width: 100%;
-    padding-inline: 20px;
-    row-gap: 34px;
+    padding-inline: 24px;
+    row-gap: 44px;
   }
 
   .ywmc__brand {
@@ -357,53 +357,55 @@ display: inline-flex;
   }
 
   .ywmc__logo {
-    width: 266px;
-    height: 132px;
-    margin-inline: auto;
+width: 240px;
+        height: 120px;
+        margin-inline: auto;
   }
 
   .ywmc .ywmc__logo-image {
     object-position: center;
   }
 
-  .ywmc__eyebrow {
-    padding-top: 4px;
-    font-size: 14px;
-    letter-spacing: 4.5px;
-  }
+      .ywmc__eyebrow {
+        font-size: 16px;
+        letter-spacing: -0.32px;
+        line-height: 24px;
+        margin: -16px 0 0;
+    }
 
-  .ywmc__description {
-    margin-top: 22px;
-    font-size: 15px;
-    line-height: 24px;
-  }
+      .ywmc__description {
+        font-size: 14px;
+        line-height: 20px;
+        max-width: 320px;
+        margin: 20px auto 0;
+    }
 
   /* The benefits title reads as a small caps label on mobile. */
-  .ywmc__benefits-title {
-    font-size: 15px;
-    line-height: 22px;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-  }
+      .ywmc__benefits-title {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.32px;
+        text-transform: uppercase;
+    }
 
   .ywmc__rule {
-    margin-top: 10px;
+    margin-top: 12px;
   }
 
-  .ywmc__benefits {
-    margin-top: 22px;
-    gap: 22px;
-  }
+     .ywmc__benefits {
+        margin-top: 20px;
+        gap: 20px;
+    }
 
   .ywmc__benefit {
-    gap: 14px;
-  }
+        gap: 16px;
+    }
 
-  .ywmc__benefit-icon {
-    flex-basis: 28px;
-    width: 28px;
-    height: 28px;
-  }
+      .ywmc__benefit-icon {
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+    }
 
   .ywmc__check {
     width: 17px;
@@ -411,52 +413,43 @@ display: inline-flex;
   }
 
   .ywmc .ywmc__benefit-icon-image {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 
   .ywmc__benefit-text {
-    gap: 6px;
+    gap: 8px;
   }
 
-  .ywmc__benefit-title {
-    font-size: 16px;
-    line-height: 22px;
-    letter-spacing: 1.2px;
-  }
+      .ywmc__benefit-title {
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: -0.38px;
+    }
 
   .ywmc__benefit-desc {
     font-size: 14px;
-    line-height: 21px;
+    line-height: 20px;
   }
 
-  .ywmc__button {
-    width: 100%;
-    height: 48px;
-    margin-top: 30px;
-    padding: 14px 24px;
-    font-size: 14px;
-    letter-spacing: 1.1px;
-  }
+    .ywmc__button {
+        width: 100%;
+        height: 48px;
+        padding: 14px 24px;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 1.28px;
+        max-width: 298px;
+        margin: 32px auto 0;
+        display: flex;
+    }
 
-  .ywmc__fine-print {
-    width: 100%;
-    margin-top: 18px;
-    text-align: center;
-  }
-}
-
-/* Narrow phones. */
-@media (max-width: 359px) {
-  .ywmc__logo {
-    width: 230px;
-    height: 114px;
-  }
-
-  .ywmc__button {
-    font-size: 13px;
-    letter-spacing: 0.8px;
-  }
+     .ywmc__fine-print {
+        text-align: center;
+        width: 100%;
+        max-width: 270px;
+        margin: 16px auto 0;
+    }
 }
 
 /* ------------------------------ Reduced motion ------------------------------ */
