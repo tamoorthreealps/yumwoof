@@ -1,22 +1,15 @@
 {{ 'css--yw-membership-banner.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'yum-parallax.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign s = section.settings
 
   assign focal_d = s.focal_desktop | default: 'center center'
   assign focal_m = s.focal_mobile | default: 'center 60%'
-
-  assign range_d = s.parallax_range
-  assign range_m = s.parallax_range_mobile
 -%}
 
 <section
-  class="ywmb yum-parallax"
+  class="ywmb"
   id="ywmb-{{ section.id }}"
-  data-yum-parallax
-  data-parallax-range="{{ range_d }}"
-  data-parallax-mobile-range="{{ range_m }}"
   aria-labelledby="ywmb-heading-{{ section.id }}"
   style="
     --ywmb-height: {{ s.height_desktop }}px;
@@ -26,7 +19,7 @@
     --ywmb-scrim-opacity: {{ s.scrim_opacity | divided_by: 100.0 }};
   "
 >
-  <div class="yum-parallax__media" data-parallax-layer>
+  <div class="ywmb__media">
     {%- if s.image != blank or s.image_mobile != blank -%}
       {%- if s.image_mobile != blank and s.image != blank -%}
         <picture>
@@ -72,9 +65,9 @@
     {%- endif -%}
   </div>
 
-  <div class="yum-parallax__overlay ywmb__scrim" aria-hidden="true"></div>
+  <div class="ywmb__scrim" aria-hidden="true"></div>
 
-  <div class="yum-parallax__content ywmb__content">
+  <div class="ywmb__content">
     <div class="ywmb__inner">
       {%- if s.heading_line_1 != blank or s.heading_line_2 != blank -%}
         <h1 class="ywmb__heading" id="ywmb-heading-{{ section.id }}">
@@ -161,16 +154,16 @@
 
     { "type": "header", "content": "Layout" },
     {
-    "type": "text",
-    "id": "height_desktop",
-    "label": "Height (desktop)",
-    "default": "812px"
+      "type": "text",
+      "id": "height_desktop",
+      "label": "Height (desktop)",
+      "default": "812px"
     },
     {
-    "type": "text",
-    "id": "height_mobile",
-    "label": "Height (mobile)",
-    "default": "455px"
+      "type": "text",
+      "id": "height_mobile",
+      "label": "Height (mobile)",
+      "default": "455px"
     },
     {
       "type": "range",
@@ -182,30 +175,8 @@
       "unit": "%",
       "default": 100,
       "info": "Darkens the top of the image so the cream heading stays legible."
-    },
-
-    { "type": "header", "content": "Parallax" },
-    {
-      "type": "range",
-      "id": "parallax_range",
-      "label": "Parallax range (desktop)",
-      "min": 0,
-      "max": 160,
-      "step": 10,
-      "unit": "px",
-      "default": 100
-    },
-    {
-      "type": "range",
-      "id": "parallax_range_mobile",
-      "label": "Parallax range (mobile)",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 35
     }
   ],
-  "presets": [{ "name": "YW-Membership banner" }]
+  "presets": [{ "name": "YM-Membership banner" }]
 }
 {% endschema %}
