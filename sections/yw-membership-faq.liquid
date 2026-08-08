@@ -1,0 +1,273 @@
+{{ 'css--yw-membership-faq.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+  assign faqs = section.blocks | where: 'type', 'faq'
+-%}
+
+<section
+  class="ywfaq"
+  id="ywfaq-{{ uid }}"
+  data-ywfaq
+  data-ywfaq-single="{{ s.single_open }}"
+  {% if s.heading != blank %}aria-labelledby="ywfaq-heading-{{ uid }}"{% endif %}
+  style="
+    --ywfaq-bg: {{ s.color_bg }};
+    --ywfaq-heading: {{ s.color_heading }};
+    --ywfaq-question: {{ s.color_question }};
+    --ywfaq-answer: {{ s.color_answer }};
+    --ywfaq-border: {{ s.color_border }};
+    --ywfaq-icon: {{ s.color_icon }};
+    --ywfaq-accent: {{ s.color_accent }};
+    --ywfaq-button-bg: {{ s.color_button_bg }};
+    --ywfaq-button-text: {{ s.color_button_text }};
+    --ywfaq-button-border: {{ s.color_button_border }};
+    --ywfaq-button-hover-bg: {{ s.color_button_hover_bg }};
+    --ywfaq-button-hover-text: {{ s.color_button_hover_text }};
+    --ywfaq-button-radius: {{ s.button_radius }}px;
+    --ywfaq-border-width: {{ s.border_width }}px;
+    --ywfaq-border-width-mobile: {{ s.border_width_mobile }}px;
+    --ywfaq-pad-top: {{ s.padding_top }}px;
+    --ywfaq-pad-bottom: {{ s.padding_bottom }}px;
+    --ywfaq-pad-top-mobile: {{ s.padding_top_mobile }}px;
+    --ywfaq-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+    --ywfaq-max-width: {{ s.content_width }}px;
+  "
+>
+  <div class="ywfaq__container">
+
+    <div class="ywfaq__intro">
+      {%- if s.heading != blank -%}
+        <h2 class="ywfaq__heading" id="ywfaq-heading-{{ uid }}">{{ s.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if s.subheading != blank -%}
+        <div class="ywfaq__subheading">{{ s.subheading }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if faqs.size > 0 -%}
+      <div class="ywfaq__list">
+        {%- for block in faqs -%}
+          {%- liquid
+            assign panel_id = 'ywfaq-panel-' | append: uid | append: '-' | append: block.id
+            assign button_id = 'ywfaq-button-' | append: uid | append: '-' | append: block.id
+
+            assign is_open = false
+            if block.settings.open_by_default
+              assign is_open = true
+            endif
+          -%}
+
+          <div
+            class="ywfaq__item{% if is_open %} is-open{% endif %}"
+            data-ywfaq-item
+            {{ block.shopify_attributes }}
+          >
+            <h3 class="ywfaq__question">
+              <button
+                class="ywfaq__trigger"
+                type="button"
+                id="{{ button_id }}"
+                aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+                aria-controls="{{ panel_id }}"
+                data-ywfaq-trigger
+              >
+                <span class="ywfaq__question-text">{{ block.settings.question | escape }}</span>
+                <span class="ywfaq__icon" aria-hidden="true">
+                  <span class="ywfaq__icon-bar ywfaq__icon-bar--horizontal"></span>
+                  <span class="ywfaq__icon-bar ywfaq__icon-bar--vertical"></span>
+                </span>
+              </button>
+            </h3>
+
+            <div
+              class="ywfaq__panel"
+              id="{{ panel_id }}"
+              role="region"
+              aria-labelledby="{{ button_id }}"
+              data-ywfaq-panel
+            >
+              <div class="ywfaq__panel-inner">
+                <div class="ywfaq__answer">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if s.button_text != blank or s.fine_print != blank -%}
+      <div class="ywfaq__cta">
+        {%- if s.button_text != blank -%}
+          <a class="ywfaq__button" href="{{ s.button_url | default: '#' }}">
+            <span>{{ s.button_text | escape }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if s.fine_print != blank -%}
+          <div class="ywfaq__fine-print">{{ s.fine_print }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  /* Scoped to [data-ywfaq] only — never touches other accordions on the site.
+     Animation is CSS (grid-template-rows 0fr -> 1fr), so answers of any
+     length expand to their natural height with no max-height ceiling. */
+  (function () {
+    function closeItem(item) {
+      var trigger = item.querySelector('[data-ywfaq-trigger]');
+      if (!trigger) return;
+      item.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    function openItem(item) {
+      var trigger = item.querySelector('[data-ywfaq-trigger]');
+      if (!trigger) return;
+      item.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    function handle(root, event) {
+      var trigger = event.target.closest('[data-ywfaq-trigger]');
+      if (!trigger || !root.contains(trigger)) return;
+
+      var item = trigger.closest('[data-ywfaq-item]');
+      if (!item) return;
+
+      var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      if (root.getAttribute('data-ywfaq-single') === 'true' && !isOpen) {
+        var open = root.querySelectorAll('[data-ywfaq-item].is-open');
+        for (var i = 0; i < open.length; i++) {
+          if (open[i] !== item) closeItem(open[i]);
+        }
+      }
+
+      if (isOpen) closeItem(item);
+      else openItem(item);
+    }
+
+    function init(scope) {
+      var roots = (scope || document).querySelectorAll('[data-ywfaq]');
+      Array.prototype.forEach.call(roots, function (root) {
+        if (root.dataset.ywfaqReady === 'true') return;
+        root.dataset.ywfaqReady = 'true';
+
+        root.addEventListener('click', function (event) {
+          handle(root, event);
+        });
+      });
+
+      /* Also catch a section root that IS the scope (Theme Editor load). */
+      if (scope && scope.matches && scope.matches('[data-ywfaq]') && scope.dataset.ywfaqReady !== 'true') {
+        scope.dataset.ywfaqReady = 'true';
+        scope.addEventListener('click', function (event) { handle(scope, event); });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { init(document); });
+    } else {
+      init(document);
+    }
+
+    document.addEventListener('shopify:section:load', function (event) { init(event.target); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yum Club FAQ",
+  "tag": "section",
+  "class": "yw-membership-faq-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Any Questions?" },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Supporting text",
+      "default": "<p>Every dog is different. Find the recipe that's right for yours.</p>"
+    },
+
+    { "type": "header", "content": "Behavior" },
+    {
+      "type": "checkbox",
+      "id": "single_open",
+      "label": "Only one answer open at a time",
+      "default": true,
+      "info": "Matches the reference, where a single answer is expanded."
+    },
+
+    { "type": "header", "content": "Call to action (optional)" },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "info": "Shown below the FAQ. The mobile reference includes this; leave empty to hide."
+    },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "richtext", "id": "fine_print", "label": "Fine print" },
+    { "type": "range", "id": "button_radius", "label": "Button corner radius", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 160 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_bg", "label": "Background color", "default": "#fff9ef" },
+    { "type": "color", "id": "color_heading", "label": "Heading color", "default": "#000000" },
+    { "type": "color", "id": "color_question", "label": "Question color", "default": "#000000" },
+    { "type": "color", "id": "color_answer", "label": "Answer color", "default": "#000000" },
+    { "type": "color", "id": "color_border", "label": "Divider color", "default": "#000000" },
+    { "type": "color", "id": "color_icon", "label": "Icon color", "default": "#000000" },
+    { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#661d1d", "info": "Used for links in the supporting text and focus outlines." },
+
+    { "type": "header", "content": "Button colors" },
+    { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#7ba6dd" },
+    { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#000000" },
+    { "type": "color", "id": "color_button_border", "label": "Button border", "default": "#000000" },
+    { "type": "color", "id": "color_button_hover_bg", "label": "Button background (hover)", "default": "#661d1d" },
+    { "type": "color", "id": "color_button_hover_text", "label": "Button text (hover)", "default": "#fff9ef" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_width", "label": "Content width", "min": 800, "max": 1400, "step": 12, "unit": "px", "default": 1196 },
+    { "type": "range", "id": "border_width", "label": "Divider width (desktop)", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 2 },
+    { "type": "range", "id": "border_width_mobile", "label": "Divider width (mobile)", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 108 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 112 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 160, "step": 2, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Why doesn't Yumwoof use seed oils?" },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>"
+        },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yum Club FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "open_by_default": true } },
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}
