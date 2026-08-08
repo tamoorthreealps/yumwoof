@@ -250,6 +250,39 @@
         "padding_top_mobile": 80,
         "padding_bottom_mobile": 80
       }
+    },
+    "yw_membership_cta_FLYwPC": {
+      "type": "yw-membership-cta",
+      "name": "Yum Club Final CTA",
+      "settings": {
+        "heading": "<p>Feed your dog better for less, starting with the next order you place.</p>",
+        "description": "",
+        "button_text": "JOIN YUMCLUB · $29/QTR",
+        "button_url": "",
+        "badge": "shopify://shop_images/Group_160.png",
+        "content_align": "center",
+        "bg_image": "shopify://shop_images/Group_162.jpg",
+        "bg_position": "center center",
+        "bg_position_mobile": "center center",
+        "color_overlay": "#000000",
+        "overlay_opacity": 0,
+        "color_bg": "#e35b45",
+        "color_heading": "#000000",
+        "color_text": "#000000",
+        "color_button_bg": "#7ba6dd",
+        "color_button_text": "#000000",
+        "color_button_border": "#000000",
+        "color_button_hover_bg": "#000000",
+        "color_button_hover_text": "#fff9ef",
+        "button_radius": "160px",
+        "height_desktop": "800px",
+        "height_mobile": "560px",
+        "padding_top": "120px",
+        "padding_top_mobile": "68px",
+        "content_width": "792px",
+        "parallax_range": 0,
+        "parallax_range_mobile": 0
+      }
     }
   },
   "order": [
@@ -257,6 +290,7 @@
     "yw_membership_banner_hepMCN",
     "yw_membership_club_nYLiBH",
     "yw_membership_family_dWgri4",
-    "yw_membership_faq_Ew9Uz8"
+    "yw_membership_faq_Ew9Uz8",
+    "yw_membership_cta_FLYwPC"
   ]
 }
