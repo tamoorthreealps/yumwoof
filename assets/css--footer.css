@@ -935,6 +935,7 @@ a.yf__site-credit {
   .yf-disc__panel > *,
   .yf-disc.is-open > .yf-disc__panel > * {
     padding-top: 0;
+    overflow: inherit;
   }
   .yf-disc__summary .yf__heading {
     margin-bottom: 0;
