@@ -245,29 +245,29 @@
 /* --------------------------------- Button --------------------------------- */
 
 .ywmc__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 340px;
-  max-width: 100%;
-  height: 56px;
-  margin-top: 46px;
-  padding: 18px 44px;
-  border: 2px solid var(--ywmc-button-border);
-  border-radius: var(--ywmc-button-radius);
-  background: var(--ywmc-button-bg);
-  color: var(--ywmc-button-text);
-  font-family: var(--ywmc-font-ui);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 1.28px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 340px;
+    max-width: 100%;
+    height: 56px;
+    margin-top: 32px;
+    padding: 18px 44px;
+    border: 2px solid var(--ywmc-button-border);
+    border-radius: var(--ywmc-button-radius);
+    background: var(--ywmc-button-bg);
+    color: var(--ywmc-button-text);
+    font-family: FFBlurProMedium;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 1.28px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
 }
 
 .ywmc__button:hover,
