@@ -336,10 +336,12 @@
     letter-spacing: 0;
     margin:0;
 }
-    .yw-pcard__btn {
-        min-width: 108px;
-        min-height: 48px;
-        bottom: -24px;
+        .yw-pcard__btn {
+        font-size: 13px;
+        line-height: 20px;
+        letter-spacing: 0.52px;
+        padding: 10.4px 23.15px 8px;
+        margin-top: 12px;
     }
 
     .yw-pcard__btn span {
