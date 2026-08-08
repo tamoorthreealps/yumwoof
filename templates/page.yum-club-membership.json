@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -105,7 +106,7 @@
         "faq_open_first": true,
         "faq_cta_text": "JOIN YUMCLUB · $29/QTR",
         "faq_cta_url": "",
-        "faq_fine_print": "$9.66/mo, billed quarterly. Cancel anytime.\nAlready a member? Log in",
+        "faq_fine_print": "$9.66/mo, billed quarterly. Cancel anytime.Already a member? Log in",
         "closing_heading": "Feed your dog better for less, starting with the next order you place.",
         "closing_cta_text": "JOIN YUMCLUB · $29/QTR",
         "closing_cta_url": "",
