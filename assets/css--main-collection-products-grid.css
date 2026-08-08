@@ -207,11 +207,11 @@
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: .5rem;
+    gap: .8rem;
     margin-top: 1.6rem;
     font-family: Matter, sans-serif;
     font-size: 1.8rem;
-    line-height: 100%;
+    line-height: 2.1rem;
     color: #000;
     letter-spacing: 0;
 }
@@ -224,9 +224,10 @@
 .yw-pcard__perday {
     margin: .7rem 0 0;
     font-family: Matter, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 16px;
-    color: #661D1D;
+    letter-spacing: 0;
+    color: #296900;
 }
 
 /* Shop now — amber lozenge button (Figma blob) */
