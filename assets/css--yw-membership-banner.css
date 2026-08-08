@@ -19,6 +19,7 @@
   overflow: hidden;
   isolation: isolate;
   background: #000;
+      margin: 40px 0 0;
 }
 
 .ywmb *,
