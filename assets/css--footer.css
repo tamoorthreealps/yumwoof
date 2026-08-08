@@ -362,6 +362,10 @@ p.yf__signup__footer_content a {
   fill: transparent;
 }
 
+.klaviyo-form.klaviyo-form.klaviyo-form input[type=radio]:checked+label>*, .klaviyo-form.klaviyo-form.klaviyo-form input[type=checkbox]:checked+label>* {
+  fill: #661D1D;
+}
+
 .yf__signup-form .go1822718113.go1822718113.go1822718113 {
   width: 100%;
   position: relative;          /* anchor for the inline button */
