@@ -274,8 +274,6 @@ display: inline-flex;
 .ywmc__button:focus-visible {
   background: var(--ywmc-button-hover-bg);
   color: var(--ywmc-button-hover-text);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 0 var(--ywmc-button-border);
 }
 
 .ywmc__button:focus-visible {
