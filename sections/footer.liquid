@@ -353,6 +353,60 @@
       init(event.target);
     });
   })();
+
+
+
+  (function () {
+  const badge = document.querySelector('[data-yf-badge]');
+  if (!badge) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const img = badge.querySelector('img');
+  const SHIFT = 60;   // px of travel, top→bottom of viewport
+  const TILT  = 8;    // degrees of rotation across that same range
+  let ticking = false;
+
+  // --- Reveal in from the bottom ---
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        badge.style.setProperty('--yf-badge-in', '1');
+        io.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+  );
+  io.observe(badge);
+
+  // --- Parallax + rotation ---
+  function update() {
+    ticking = false;
+    const rect = badge.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    // Skip work when off-screen.
+    if (rect.bottom < -200 || rect.top > vh + 200) return;
+
+    // progress: 1 when the badge centre is at the bottom of the viewport,
+    // -1 when it's at the top. 0 = dead centre.
+    const centre = rect.top + rect.height / 2;
+    const progress = Math.max(-1, Math.min(1, (centre - vh / 2) / (vh / 2)));
+
+    img.style.setProperty('--yf-badge-y', (progress * SHIFT).toFixed(2) + 'px');
+    img.style.setProperty('--yf-badge-rot', (progress * TILT).toFixed(2) + 'deg');
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+})();
 </script>
 
 {% schema %}
