@@ -217,7 +217,7 @@ margin: 0;
 
 @media (max-width: 749px) {
   .ywcta {
-    --ywcta-height: var(--ywcta-height-mobile, 343px);
+    --ywcta-height: var(--ywcta-height-mobile, 343px) !important;
     --ywcta-pad-top: var(--ywcta-pad-top-mobile, 34px);
     --ywcta-overscan: 45px;
   }
@@ -240,20 +240,21 @@ margin: 0;
     letter-spacing: 1px;
   }
 
-  .ywcta__description {
-    margin-top: 10px;
-    font-size: 14px;
-    line-height: 21px;
-  }
+      .ywcta__heading {
+        font-size: 20px;
+        line-height: 24px;
+        letter-spacing: 0;
+    }
 
   /* Badge before the button on mobile. */
-  .ywcta__badge { order: 3; margin-top: 16px; width: 62px; height: 65px; }
+     .ywcta__badge {
+        order: 3;
+        margin-top: 38px;
+        width: 109px;
+        height: 113px;
+    }
   .ywcta__button-wrap { order: 4; margin-top: 24px; width: 100%; }
 
-  .ywcta .ywcta__badge-image {
-    width: 62px;
-    height: 65px;
-  }
 
   .ywcta__button {
     width: 100%;
