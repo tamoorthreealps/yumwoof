@@ -364,6 +364,7 @@ p.yf__signup__footer_content a {
   outline: none !important;
   text-transform: capitalize;
   margin: 25px 0 0;
+  background: #FFF9EF;
 }
 
 .yf__signup-form .go90847487.go90847487.go90847487::placeholder {
@@ -849,7 +850,7 @@ a.yf__site-credit {
 		grid-template-rows: 1fr;
 		transition: none;
 	}
-	.yf-disc__panel > * {
+	.yf-disc__panel > *, .yf-disc.is-open > .yf-disc__panel > * {
 		padding-top: 0;
 	}
 	.yf-disc__summary .yf__heading {
