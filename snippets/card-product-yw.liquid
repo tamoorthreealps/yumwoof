@@ -106,7 +106,9 @@
       {%- if is_bestseller -%}
         <span class="yw-pcard__flag">BESTSELLER</span>
       {%- endif -%}
+    </a>
 
+    <div class="yw-pcard__body">
       {%- if extra_badges != blank -%}
         <span class="yw-pcard__tags">
           {%- for b in extra_badges -%}
@@ -114,9 +116,6 @@
           {%- endfor -%}
         </span>
       {%- endif -%}
-    </a>
-
-    <div class="yw-pcard__body">
       <a class="yw-pcard__title" href="{{ card_url }}">{{ product.title }}</a>
 
       {%- if recipe_label != blank -%}
@@ -130,7 +129,10 @@
             <span class="yw-pcard__stars-on">★★★★★</span>
             <span class="yw-pcard__stars-off">★★★★★</span>
           </span>
-          <span class="yw-pcard__rating-count">{{ rating_val }}{% if rating_count != blank %} ({{ rating_count }}){% endif %}</span>
+          <span class="yw-pcard__rating-count">
+            {{- rating_val -}}
+            {%- if rating_count != blank %} ({{ rating_count }}){% endif -%}
+          </span>
         </div>
       {%- endif -%}
 
@@ -139,7 +141,9 @@
       {%- endif -%}
 
       <div class="yw-pcard__price">
-        {%- if group_count > 1 -%}<span class="yw-pcard__price-from">From</span>{%- endif -%}
+        {%- if group_count > 1 -%}
+          <span class="yw-pcard__price-from">From</span>
+        {%- endif -%}
         <span class="yw-pcard__price-now">{{ group_min | money }}</span>
         {%- if rep_compare != blank and rep_compare > group_min -%}
           <s class="yw-pcard__price-was">{{ rep_compare | money }}</s>
