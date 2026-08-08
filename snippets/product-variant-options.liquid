@@ -109,7 +109,6 @@
       <span class="visually-hidden">{{ escaped_value }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
-    <h2>test</h2>
 {% unless value == '3.5 Pound Bag' %}
     {% render 'swatch-input',
       id: input_id,
@@ -141,6 +140,7 @@
         {%- break -%}
       {%- endif -%}
     {%- endfor -%}
+    {% unless value == '3.5 Pound Bag' %}
     <input
       type="radio"
       id="{{ input_id }}"
@@ -164,6 +164,7 @@
       {%- endif -%}
       {{ label_unavailable }}
     </label>
+    {% endunless %}
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
     <option
       id="{{ input_id }}"
