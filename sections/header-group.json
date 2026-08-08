@@ -119,8 +119,8 @@
         "cta_link": "",
         "cta_bg_color": "#ffc069",
         "cta_text_color": "#000000",
-        "membership_text": "",
-        "membership_link": ""
+        "membership_text": "MEMBERSHIP",
+        "membership_link": "shopify://pages/membership"
       }
     }
   },
