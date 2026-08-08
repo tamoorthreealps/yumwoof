@@ -255,7 +255,7 @@
       "type": "yw-membership-cta",
       "name": "Yum Club Final CTA",
       "settings": {
-        "heading": "<p>Feed your dog better for less,</p><p>starting with the next order you place.</p>",
+        "heading": "<p>Feed your dog better for less,<br/>starting with the next order you place.</p>",
         "description": "",
         "button_text": "JOIN YUMCLUB · $29/QTR",
         "button_url": "",
