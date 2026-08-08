@@ -481,6 +481,9 @@ p.yf__signup__footer_content a {
 /* --------------------------------------------------------------------------
    Questions / Dogquarters
    -------------------------------------------------------------------------- */
+  .yf__questions {
+    max-width: 155px;
+}
 .yf__questions-list {
 
     list-style: none;
