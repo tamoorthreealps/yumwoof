@@ -87,6 +87,7 @@
         "button_radius": 160,
         "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
         "color_bg": "#CB8900",
+        "bg_image": "shopify://shop_images/Club_Intro_Band_Background.png",
         "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.png",
         "color_heading": "#661d1d",
         "color_text": "#661d1d",
