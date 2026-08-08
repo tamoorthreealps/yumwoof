@@ -50,13 +50,17 @@
 
 .ywmf__bg {
   position: absolute;
-  inset: 0;
+  /* Overscan vertically so the transform never reveals an edge.
+     Horizontal inset stays 0 — no sideways overflow. */
+  inset: calc(var(--yum-parallax-overscan, 0px) * -1) 0;
   z-index: 0;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: var(--ywmf-focal);
   pointer-events: none;
-  display:block !important;
+  display: block !important;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .ywmf__scrim {
@@ -308,6 +312,9 @@
 @media (prefers-reduced-motion: reduce) {
   .ywmf__button {
     transition: none;
+  }
+  .ywmf__bg {
+    transform: none !important;
   }
 
   .ywmf__button:hover,
