@@ -197,7 +197,73 @@
     </div>
   </div>
 </section>
+<script>
+  (function () {
+    function initYwmcForm(root) {
+      root.querySelectorAll('[data-ywmc-form]').forEach(function (form) {
+        if (form.dataset.ywmcBound) return;
+        form.dataset.ywmcBound = 'true';
 
+        form.addEventListener('submit', function (event) {
+          var behavior = form.dataset.cartBehavior || 'drawer';
+          if (behavior === 'cart') return; // let it post normally
+
+          event.preventDefault();
+
+          var button = form.querySelector('.ywmc__button');
+          var errorEl = form.querySelector('[data-ywmc-error]');
+          if (errorEl) { errorEl.hidden = true; errorEl.textContent = ''; }
+          if (button) { button.setAttribute('aria-busy', 'true'); button.disabled = true; }
+
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              items: [{
+                id: Number(form.querySelector('input[name="id"]').value),
+                quantity: Number(form.querySelector('input[name="quantity"]').value || 1)
+              }]
+            })
+          })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+              if (data.status) throw new Error(data.description || data.message);
+
+              document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+              document.dispatchEvent(new CustomEvent('cart:build', { bubbles: true }));
+
+              if (behavior === 'drawer') {
+                var drawer =
+                  document.querySelector('cart-drawer') ||
+                  document.querySelector('#CartDrawer') ||
+                  document.querySelector('[data-cart-drawer]');
+                if (drawer && typeof drawer.open === 'function') {
+                  drawer.open();
+                } else if (drawer) {
+                  drawer.classList.add('active', 'is-open');
+                  document.body.classList.add('cart-drawer-open');
+                } else {
+                  window.location.href = window.Shopify.routes.root + 'cart';
+                }
+              }
+            })
+            .catch(function (err) {
+              if (errorEl) {
+                errorEl.textContent = err.message || 'Could not add to cart.';
+                errorEl.hidden = false;
+              }
+            })
+            .finally(function () {
+              if (button) { button.removeAttribute('aria-busy'); button.disabled = false; }
+            });
+        });
+      });
+    }
+
+    initYwmcForm(document);
+    document.addEventListener('shopify:section:load', function (e) { initYwmcForm(e.target); });
+  })();
+</script>
 {% schema %}
 {
   "name": "Yum Club Membership",
