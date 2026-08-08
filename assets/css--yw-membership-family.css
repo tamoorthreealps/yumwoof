@@ -103,6 +103,7 @@
   line-height: 64px;
   padding: 0;
     border: 0;
+    letter-spacing: 0;
 }
 
 .ywmf__heading p {
@@ -156,6 +157,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  letter-spacing: 0;
 }
 
 /* --------------------------- Button (optional) --------------------------- */
