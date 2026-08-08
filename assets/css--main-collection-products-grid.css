@@ -290,8 +290,12 @@
     border: 1px solid #000;
     border-radius: 1.2rem;
 }
+.yw-pcard__media {
+    aspect-ratio: 1 / 1;
+}
 .yw-pcard__imgwrap {
   border-radius:1.1rem 1.1rem 0 0;
+  height: 164px;
 }
     .yw-pcard__flag {
     top: .8rem;
