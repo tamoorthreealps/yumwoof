@@ -344,8 +344,9 @@ display: inline-flex;
 @media (max-width: 749px) {
   .ywmc {
     padding-block: var(--ywmc-pad-top-mobile, 44px) var(--ywmc-pad-bottom-mobile, 40px);
-    margin: -5px 0 0;
+    margin: -5px 0;
         background: transparent;
+        z-index: 1;
   }
 
   .ywmc__container {
