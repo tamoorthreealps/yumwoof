@@ -149,31 +149,55 @@
         "faq_Wt8X4b": {
           "type": "faq",
           "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "question": "How do I become a member?",
+            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
             "open_by_default": true
           }
         },
         "faq_33dFz7": {
           "type": "faq",
           "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "question": "Is the fee recurring?",
+            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
             "open_by_default": false
           }
         },
         "faq_abttEk": {
           "type": "faq",
           "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "question": "How do I get the 25% off?",
+            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
             "open_by_default": false
           }
         },
         "faq_6xwmxD": {
           "type": "faq",
           "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
+            "question": "Do I need an account?",
+            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_NRMgW3": {
+          "type": "faq",
+          "settings": {
+            "question": "My membership email isn't recognized.",
+            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_KxKgi4": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I buy more than one membership?",
+            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_wGXe7j": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I cancel?",
             "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
             "open_by_default": false
           }
@@ -183,7 +207,10 @@
         "faq_Wt8X4b",
         "faq_33dFz7",
         "faq_abttEk",
-        "faq_6xwmxD"
+        "faq_6xwmxD",
+        "faq_NRMgW3",
+        "faq_KxKgi4",
+        "faq_wGXe7j"
       ],
       "name": "Yum Club FAQ",
       "settings": {
