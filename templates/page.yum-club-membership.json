@@ -32,10 +32,81 @@
         "height_mobile": "560px",
         "scrim_opacity": 0
       }
+    },
+    "yw_membership_club_nYLiBH": {
+      "type": "yw-membership-club",
+      "blocks": {
+        "benefit_Ai74UP": {
+          "type": "benefit",
+          "settings": {
+            "icon_style": "filled",
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "benefit_NTDbza": {
+          "type": "benefit",
+          "settings": {
+            "icon_style": "filled",
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "benefit_YhgqEC": {
+          "type": "benefit",
+          "settings": {
+            "icon_style": "filled",
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        },
+        "benefit_HfwWww": {
+          "type": "benefit",
+          "settings": {
+            "icon_style": "filled",
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_Ai74UP",
+        "benefit_NTDbza",
+        "benefit_YhgqEC",
+        "benefit_HfwWww"
+      ],
+      "name": "Yum Club Membership",
+      "settings": {
+        "logo": "shopify://shop_images/YumClub_Logo.svg",
+        "eyebrow": "MEMBERSHIP",
+        "description": "<p>We built Yumwoof because good dog food cost too much and did too little. YumClub is the rest of that answer. Pay in once a quarter and the whole counter drops by 25%, so feeding a dog properly stops being the expensive option.</p>",
+        "benefits_title": "Here's what you get:",
+        "show_rule": true,
+        "button_text": "JOIN YUMCLUB · $29/QTR",
+        "button_url": "",
+        "button_radius": 160,
+        "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
+        "color_bg": "#cb8900",
+        "color_heading": "#661d1d",
+        "color_text": "#661d1d",
+        "color_accent": "#661d1d",
+        "color_icon": "#661d1d",
+        "color_border": "#661d1d",
+        "color_button_bg": "#7ba6dd",
+        "color_button_text": "#000000",
+        "color_button_border": "#000000",
+        "color_button_hover_bg": "#661d1d",
+        "color_button_hover_text": "#fff9ef",
+        "padding_top": 72,
+        "padding_bottom": 84,
+        "padding_top_mobile": 44,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
     "main",
-    "yw_membership_banner_hepMCN"
+    "yw_membership_banner_hepMCN",
+    "yw_membership_club_nYLiBH"
   ]
 }
