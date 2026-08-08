@@ -100,15 +100,15 @@
 }
 
 .ywcta__heading {
-  margin: 0;
-  color: var(--ywcta-heading);
-  font-family: var(--ywcta-font-display);
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 32px;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  text-wrap: balance;
+margin: 0;
+    color: var(--ywcta-heading);
+    font-family: var(--ywcta-font-display);
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 44px;
+    letter-spacing: -0.64px;
+    text-transform: uppercase;
+    text-wrap: balance;
 }
 
 .ywcta__heading p {
@@ -137,31 +137,31 @@
 /* --------------------------------- Button --------------------------------- */
 
 .ywcta__button-wrap {
-  margin-top: 22px;
+    margin-top: 27px;
 }
 
 .ywcta__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 240px;
-  max-width: 100%;
-  height: 44px;
-  padding: 12px 32px;
-  border: 2px solid var(--ywcta-button-border);
-  border-radius: var(--ywcta-button-radius);
-  background: var(--ywcta-button-bg);
-  color: var(--ywcta-button-text);
-  font-family: var(--ywcta-font-ui);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 1.12px;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 296px;
+    max-width: 100%;
+    height: 64px;
+    padding: 13px 32px 9px;
+    border: 2px solid var(--ywcta-button-border);
+    border-radius: var(--ywcta-button-radius);
+    background: var(--ywcta-button-bg);
+    color: var(--ywcta-button-text);
+    font-family: 'FFBlurProMedium';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 1.28px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
 }
 
 .ywcta__button:hover,
@@ -169,7 +169,6 @@
   background: var(--ywcta-button-hover-bg);
   color: var(--ywcta-button-hover-text);
   transform: translateY(-2px);
-  box-shadow: 0 4px 0 var(--ywcta-button-border);
 }
 
 .ywcta__button:focus-visible {
@@ -185,17 +184,17 @@
 /* --------------------------------- Badge --------------------------------- */
 
 .ywcta__badge {
-  margin-top: 28px;
-  width: 128px;
-  height: 133px;
-  pointer-events: none;
+    margin-top: 25px;
+    width: 154px;
+    height: 160px;
+    margin-left: auto;
 }
 
 .ywcta .ywcta__badge-image {
-  display: block;
-  width: 128px;
-  height: 133px;
-  object-fit: contain;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 /* ================================= TABLET ================================= */
