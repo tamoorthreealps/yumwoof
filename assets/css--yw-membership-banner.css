@@ -203,29 +203,28 @@
     );
   }
 
-  .ywmb__inner {
-    width: 100%;
-    padding-top: 111px;
-    padding-inline: 20px;
-    text-align: right;
-  }
+      .ywmb__inner {
+        width: 100%;
+        padding-top: 111px;
+        padding-inline: 20px;
+    }
 
   .ywmb__line--2 {
     line-height: 40px;
     letter-spacing: 0.5px;
   }
 
-  .ywmb__badge {
-    left: auto;
-    right: 42px;
-    top: 168px;
-    width: 88px;
-    height: 92px;
-  }
+    .ywmb__badge {
+        left: auto;
+        right: 22px;
+        top: 233px;
+        width: 109px;
+        height: 113px;
+    }
 
   .ywmb__badge img {
-    width: 88px;
-    height: 92px;
+    width: 109px;
+        height: 113px;
   }
 }
 
