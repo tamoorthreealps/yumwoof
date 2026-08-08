@@ -170,6 +170,14 @@
             "open_by_default": false
           }
         },
+        "faq_c4NNha": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I stack it with Subscribe & Save?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "open_by_default": false
+          }
+        },
         "faq_6xwmxD": {
           "type": "faq",
           "settings": {
@@ -207,6 +215,7 @@
         "faq_Wt8X4b",
         "faq_33dFz7",
         "faq_abttEk",
+        "faq_c4NNha",
         "faq_6xwmxD",
         "faq_NRMgW3",
         "faq_KxKgi4",
