@@ -167,6 +167,7 @@
   display: flex;
   gap: 20px;
   align-items: flex-start;
+  padding-right: 1px;
 }
 
 /* Built-in checkbox. Filled = solid swatch with a cut-out tick;
