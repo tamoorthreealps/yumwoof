@@ -894,16 +894,13 @@ a.yf__site-credit {
    ========================================================================== */
 @media screen and (max-width: 989px) {
 	.yf {
-		padding-bottom: 32px;
-		padding-top:64px;
+		padding-bottom: 24px;
 	}
 
-	/* Flatten the two wrappers so every block is a direct grid item. */
 	.yf__main {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		gap: 0;
-		column-gap: 24px;
 	}
 	.yf__main__left,
 	.yf__main__right {
@@ -914,7 +911,7 @@ a.yf__site-credit {
 	.mobile--yf__marquee { order: 2; grid-column: 1 / -1; }
 	.yf__col--shop    { order: 3; grid-column: 1 / -1; }
 	.yf__col--explore { order: 4; grid-column: 1 / -1; }
-	.yf__col--legal   { order: 5; grid-column: 1 / -1;     border-bottom: 1px solid var(--yf-line); }
+	.yf__col--legal   { order: 5; grid-column: 1 / -1; }
 	.yf__dogquarters  { order: 6; grid-column: 1; }
 	.yf__questions    { order: 7; grid-column: 2; }
 	.yf__social       { order: 8; grid-column: 1 / -1; }
@@ -922,45 +919,86 @@ a.yf__site-credit {
 	.yf__badge        { order: 10; grid-column: 1 / -1; }
 
 	.yf__marquee {
-		padding: 40px 0 32px;
+		padding: 48px 0 36px;
 	}
 
-	/* Accordion stack */
+	/* ---- Accordions: line above header, 12px gap, 20px between blocks ---- */
 	.yf-disc {
-		padding-block: 14px;
+		border-top: 1px solid var(--yf-line);
+		padding-block: 12px 0;
+		margin-bottom: 20px;
 	}
 	.yf-disc:last-of-type {
 		border-bottom: 1px solid var(--yf-line);
+		padding-bottom: 12px;
+		margin-bottom: 0;
+	}
+	.yf-disc__icon {
+		width: 20px;
+		height: 20px;
+	}
+	.yf-disc__panel > * {
+		padding-top: 16px;
+	}
+	.yf-disc.is-open > .yf-disc__panel > * {
+		padding-top: 16px;
 	}
 
-	/* Dogquarters / Questions two-up */
-	.yf__questions,
-	.yf__dogquarters {
-		margin: 32px 0 0;
+	/* ---- Dogquarters / Questions ---- */
+	.yf__dogquarters,
+	.yf__questions {
+		margin: 40px 0 0;
+		max-width: 160px;
+	}
+	.yf__dogquarters .yf__heading,
+	.yf__questions .yf__heading {
+		margin-bottom: 12px;
 	}
 	.yf__addresses {
-		gap: 2rem;
+		gap: 16px;
+	}
+	.yf__address-label {
+		margin-bottom: 4px;
+	}
+	.yf__questions-list {
+		gap: 8px;
+	}
+	.yf__questions-list li:not(:has(.yf__questions-link)) {
+		color: #fff9ef;
+	}
+	a.yf__questions-link:not(.live-chat) {
+		color: rgba(255, 249, 239, 0.9);
+	}
+	.yf__muted {
+		margin-top: 4px;
+		color: #fff9ef;
 	}
 
+	/* ---- Social / currency / badge ---- */
 	.yf__social {
 		margin-top: 32px;
+	}
+	.yf__social .yf__heading {
+		margin-bottom: 12px;
 	}
 	.yf__currency {
 		display: flex;
 		align-items: flex-start;
-		margin-top: 24px;
+		margin-top: 32px;
 	}
-
+	.country-pill__button {
+		border-radius: 39px;
+	}
 	.yf__badge {
 		justify-content: center;
 		margin-top: 40px;
 	}
 	.yf__badge img {
-		max-width: 200px;
+		max-width: 318px;
 		margin-inline: auto;
 	}
 
-	/* Bottom bar: copyright left, site credit right */
+	/* ---- Bottom bar ---- */
 	.yf__bottom {
 		margin-top: 32px;
 	}
@@ -971,56 +1009,73 @@ a.yf__site-credit {
 	}
 	small.yf__copyright,
 	a.yf__site-credit {
-		font-size: 12px;
-		line-height: 16px;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: -0.28px;
 	}
 
-	/* Klaviyo signup — centered eyebrow + heading, inline submit */
+	/* ---- Klaviyo signup ---- */
+	.yf__signup {
+		gap: 16px;
+	}
 	.yf__signup-form .go3176171171 p {
 		text-align: center !important;
 	}
+	.yf__signup-form .go3176171171 span {
+		font-size: 16px !important;
+		line-height: 24px;
+		letter-spacing: -0.64px;
+	}
 	.yf__signup-form .go1838617735.go1838617735.go1838617735 {
-		font-size: 32px;
-		line-height: 34px;
+		font-size: 40px;
+		line-height: 40px;
+		letter-spacing: -0.8px;
 		text-align: center;
-		margin-bottom: 18px;
+		margin: 0 0 24px;
+	}
+	.yf__signup-form .go146281457.go146281457.go146281457 {
+		gap: 12px 8px;
+	}
+	.yf__signup-form .go1674680339.go1674680339.go1674680339 {
+		border-radius: 35px;
+		min-height: 32px;
+		padding: 10px 8px;
+		gap: 8px;
+	}
+	.yf__signup-form .go1708406129.go1708406129.go1708406129 {
+		width: 16px;
+		height: 16px;
 	}
 	.yf__signup-form .go3053659193.go3053659193.go3053659193 {
 		font-size: 14px;
 		line-height: 20px;
 	}
-	.yf__signup-form .go146281457.go146281457.go146281457 {
-		gap: 10px;
-	}
 	.yf__signup-form .go90847487.go90847487.go90847487 {
 		height: 48px;
-		background: #fff9ef;
+		background: #fff;
 		font-size: 14px;
-		margin-top: 18px;
-		padding-right: 130px;
+		line-height: 24px;
+		padding: 0 128px 0 20px;
+		margin-top: 24px;
 	}
 	.yf__signup-form .go90847487.go90847487.go90847487::placeholder {
 		font-size: 14px;
-	}
-	.yf__signup-form .go1822718113.go1822718113.go1822718113 {
-		position: relative;
+		line-height: 24px;
 	}
 	.yf__signup-form .go4033861592.go4033861592.go4033861592 {
-		position: absolute;
-		right: 6px;
-		bottom: 6px;
-		width: auto;
-		height: 36px;
-		margin: 0;
-		padding: 0 22px;
-		border-radius: 100px;
-		font-size: 13px;
-		letter-spacing: 0.5px;
+		right: 4px;
+		bottom: 4px;
+		width: 116px;
+		height: 40px;
+		padding: 0;
+		font-size: 14px;
+		line-height: 20px;
+		letter-spacing: 0.56px;
 	}
 	p.yf__signup__footer_content {
 		text-align: center;
 		font-size: 12px;
-		line-height: 16px;
+		line-height: 20px;
 		max-width: 100%;
 	}
 }
