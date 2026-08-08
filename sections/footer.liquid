@@ -301,9 +301,8 @@
     }
 
     // Accordions: expanded columns on desktop, collapsed (except Shop) on mobile.
-    // Desktop can't toggle (div is pointer-events:none in CSS), so we just
-    // force the [data-collapse-mobile] ones open on desktop and closed on mobile.
-var mqMobile = window.matchMedia('(max-width: 989px)');
+    // Open state is the .is-open class; CSS animates grid-template-rows 0fr -> 1fr.
+    var mqMobile = window.matchMedia('(max-width: 989px)');
 
     function syncDisc() {
       var mobile = mqMobile.matches;
@@ -318,11 +317,17 @@ var mqMobile = window.matchMedia('(max-width: 989px)');
       });
     }
 
+    // One open at a time; tapping an open header collapses it.
     document.addEventListener('click', function (e) {
       if (!mqMobile.matches) return;
       var head = e.target.closest('.yf-disc__div');
       if (!head) return;
-      head.parentElement.classList.toggle('is-open');
+      var disc = head.parentElement;
+      var wasOpen = disc.classList.contains('is-open');
+      document.querySelectorAll('.yf-disc.is-open').forEach(function (d) {
+        d.classList.remove('is-open');
+      });
+      if (!wasOpen) disc.classList.add('is-open');
     });
 
     function init(root) {
