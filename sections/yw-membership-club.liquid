@@ -149,7 +149,9 @@
       {%- endif -%}
 
       {%- if s.fine_print != blank -%}
-        <p class="ywmc__fine-print">{{ s.fine_print }}</p>
+        <div class="ywmc__fine-print">
+            {{ s.fine_print }}
+        </div>
       {%- endif -%}
     </div>
 
