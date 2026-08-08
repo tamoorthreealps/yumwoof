@@ -103,29 +103,22 @@
 
 /* Category badge(s) — straddling the bottom edge of the image */
 .yw-pcard__tags {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 50%);
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.6rem;
-  width: max-content;
-  max-width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 16px;
 }
 
 .yw-pcard__tag {
-    background: #fff9ef;
-    border: 1px solid #000;
-    color: #000;
+    background: transparent;
+    border: 1px solid #661D1D;
+    color: #661D1D;
     font-family: FFBlurProMedium, sans-serif;
     font-size: 1.2rem;
-    letter-spacing: 0.96px;
+    letter-spacing: .96px;
     text-transform: uppercase;
     line-height: 1;
-    padding: 5.2px 12.02px;
+    padding: 5.2px 13.02px;
     border-radius: 10rem;
     white-space: nowrap;
 }
