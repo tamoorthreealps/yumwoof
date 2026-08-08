@@ -826,3 +826,171 @@ a.yf__site-credit {
 	.yf__signup {
 	}
 }
+
+
+
+
+/* ==========================================================================
+   Accordion head (markup uses .yf-disc__div, not __summary)
+   ========================================================================== */
+.yf-disc__div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	cursor: pointer;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+.yf-disc__div .yf__heading {
+	margin: 0;
+}
+
+@media screen and (min-width: 990px) {
+	.yf-disc__div {
+		cursor: default;
+		pointer-events: none;
+		margin-bottom: 1.6rem;
+	}
+	.yf-disc__div .yf-disc__icon {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   Mobile
+   ========================================================================== */
+@media screen and (max-width: 989px) {
+	.yf {
+		padding-bottom: 32px;
+	}
+
+	/* Flatten the two wrappers so every block is a direct grid item. */
+	.yf__main {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0;
+		column-gap: 24px;
+	}
+	.yf__main__left,
+	.yf__main__right {
+		display: contents;
+	}
+
+	.yf__signup       { order: 1; grid-column: 1 / -1; }
+	.mobile--yf__marquee { order: 2; grid-column: 1 / -1; }
+	.yf__col--shop    { order: 3; grid-column: 1 / -1; }
+	.yf__col--explore { order: 4; grid-column: 1 / -1; }
+	.yf__col--legal   { order: 5; grid-column: 1 / -1; }
+	.yf__dogquarters  { order: 6; grid-column: 1; }
+	.yf__questions    { order: 7; grid-column: 2; }
+	.yf__social       { order: 8; grid-column: 1 / -1; }
+	.yf__currency     { order: 9; grid-column: 1 / -1; }
+	.yf__badge        { order: 10; grid-column: 1 / -1; }
+
+	.yf__marquee {
+		padding: 40px 0 32px;
+	}
+
+	/* Accordion stack */
+	.yf-disc {
+		padding-block: 14px;
+	}
+	.yf-disc:last-of-type {
+		border-bottom: 1px solid var(--yf-line);
+	}
+	.yf-disc__panel {
+		padding-top: 14px;
+	}
+
+	/* Dogquarters / Questions two-up */
+	.yf__questions,
+	.yf__dogquarters {
+		margin: 32px 0 0;
+	}
+	.yf__addresses {
+		gap: 2rem;
+	}
+
+	.yf__social {
+		margin-top: 32px;
+	}
+	.yf__currency {
+		display: flex;
+		align-items: flex-start;
+		margin-top: 24px;
+	}
+
+	.yf__badge {
+		justify-content: center;
+		margin-top: 40px;
+	}
+	.yf__badge img {
+		max-width: 200px;
+		margin-inline: auto;
+	}
+
+	/* Bottom bar: copyright left, site credit right */
+	.yf__bottom {
+		margin-top: 32px;
+	}
+	.yf__bottom-inner {
+		align-items: center;
+		flex-wrap: nowrap;
+		gap: 1.2rem;
+	}
+	small.yf__copyright,
+	a.yf__site-credit {
+		font-size: 12px;
+		line-height: 16px;
+	}
+
+	/* Klaviyo signup — centered eyebrow + heading, inline submit */
+	.yf__signup-form .go3176171171 p {
+		text-align: center !important;
+	}
+	.yf__signup-form .go1838617735.go1838617735.go1838617735 {
+		font-size: 32px;
+		line-height: 34px;
+		text-align: center;
+		margin-bottom: 18px;
+	}
+	.yf__signup-form .go3053659193.go3053659193.go3053659193 {
+		font-size: 14px;
+		line-height: 20px;
+	}
+	.yf__signup-form .go146281457.go146281457.go146281457 {
+		gap: 10px;
+	}
+	.yf__signup-form .go90847487.go90847487.go90847487 {
+		height: 48px;
+		background: #fff9ef;
+		font-size: 14px;
+		margin-top: 18px;
+		padding-right: 130px;
+	}
+	.yf__signup-form .go90847487.go90847487.go90847487::placeholder {
+		font-size: 14px;
+	}
+	.yf__signup-form .go1822718113.go1822718113.go1822718113 {
+		position: relative;
+	}
+	.yf__signup-form .go4033861592.go4033861592.go4033861592 {
+		position: absolute;
+		right: 6px;
+		bottom: 6px;
+		width: auto;
+		height: 36px;
+		margin: 0;
+		padding: 0 22px;
+		border-radius: 100px;
+		font-size: 13px;
+		letter-spacing: 0.5px;
+	}
+	p.yf__signup__footer_content {
+		text-align: center;
+		font-size: 12px;
+		line-height: 16px;
+		max-width: 100%;
+	}
+}
