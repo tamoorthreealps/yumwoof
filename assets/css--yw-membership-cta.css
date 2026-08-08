@@ -226,10 +226,13 @@ margin: 0;
     background-position: var(--ywcta-position-mobile, center center);
   }
 
-  .ywcta__container {
-    width: 100%;
-    padding-inline: 20px;
-  }
+      .ywcta__container {
+        width: 100%;
+        padding-inline: 20px;
+        padding-top: 68px;
+        padding-bottom: 80px;
+        height: 100%;
+    }
 
   .ywcta__heading {
     font-size: 13px;
