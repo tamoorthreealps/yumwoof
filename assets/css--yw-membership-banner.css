@@ -1,0 +1,231 @@
+/* css--yw-membership-banner.css
+   Membership hero banner.
+   Desktop measured from Figma node 5965:1824 (1512px canvas).
+   Mobile measured from the mobile reference (~390px frame) as its own layout. */
+
+.ywmb {
+  --ywmb-cream: #fff9ef;
+
+  --ywmb-font-display: 'TAYRosemary', var(--font-heading-family, serif);
+
+  /* Desktop type, from the reference. */
+  --ywmb-size-1: 128px;
+  --ywmb-size-2: 112px;
+  --ywmb-leading: 116px;
+
+  --ywmb-height: 812px;
+  --ywmb-focal: center center;
+  --ywmb-scrim-opacity: 1;
+
+  position: relative;
+  height: var(--ywmb-height);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: #000;
+}
+
+.ywmb *,
+.ywmb *::before,
+.ywmb *::after {
+  box-sizing: border-box;
+}
+
+/* ------------------------------- Image ------------------------------- */
+
+.ywmb .ywmb__image,
+.ywmb picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ywmb .ywmb__image {
+  object-fit: cover;
+  object-position: var(--ywmb-focal);
+}
+
+.ywmb__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #2a2a2a;
+}
+
+.ywmb__placeholder-svg {
+  width: 100%;
+  height: 100%;
+  fill: rgba(255, 255, 255, 0.12);
+}
+
+/* Top-down scrim: the heading is cream on photography, so the top third
+   carries the weight and the bottom stays clean. */
+.ywmb__scrim {
+  opacity: var(--ywmb-scrim-opacity);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.28) 34%,
+    rgba(0, 0, 0, 0) 62%
+  );
+}
+
+/* ------------------------------ Content ------------------------------ */
+
+.ywmb__content {
+  width: 100%;
+  height: 100%;
+}
+
+.ywmb__inner {
+  width: min(1196px, calc(100% - 64px));
+  margin-inline: auto;
+  padding-top: 174px; /* heading block at y=214 on a hero starting at y=40 */
+  text-align: center;
+}
+
+.ywmb__heading {
+  margin: 0;
+  color: var(--ywmb-cream);
+  font-family: var(--ywmb-font-display);
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+.ywmb__line {
+  display: block;
+  line-height: var(--ywmb-leading);
+}
+
+.ywmb__line--1 {
+  font-size: var(--ywmb-size-1);
+}
+
+.ywmb__line--2 {
+  font-size: var(--ywmb-size-2);
+}
+
+/* ------------------------------- Badge ------------------------------- */
+
+.ywmb__badge {
+  position: absolute;
+  z-index: 3;
+  /* Figma: left 75% + 31px, y=513 on a hero starting at y=40. */
+  left: calc(75% + 31px);
+  top: 473px;
+  width: 178px;
+  height: 185px;
+  pointer-events: none;
+}
+
+.ywmb__badge img {
+  display: block;
+  width: 178px;
+  height: 185px;
+  object-fit: contain;
+}
+
+/* ============================== TABLET ==============================
+   Hand-off between the two references, not a third design. */
+
+@media (max-width: 1279px) {
+  .ywmb {
+    --ywmb-size-1: 104px;
+    --ywmb-size-2: 92px;
+    --ywmb-leading: 98px;
+  }
+
+  .ywmb__badge {
+    left: auto;
+    right: 6%;
+  }
+}
+
+@media (max-width: 989px) {
+  .ywmb {
+    --ywmb-height: 660px;
+    --ywmb-size-1: 80px;
+    --ywmb-size-2: 68px;
+    --ywmb-leading: 78px;
+  }
+
+  .ywmb__inner {
+    padding-top: 130px;
+  }
+
+  .ywmb__badge {
+    top: 400px;
+    width: 140px;
+    height: 146px;
+  }
+
+  .ywmb__badge img {
+    width: 140px;
+    height: 146px;
+  }
+}
+
+/* ============================== MOBILE ==============================
+   Built to the mobile reference: heading is RIGHT-aligned and sits high,
+   the badge drops below it on the right, and the crop shifts down so the
+   bowl stays in frame. Not a scaled-down desktop. */
+
+@media (max-width: 749px) {
+  .ywmb {
+    --ywmb-height: var(--ywmb-height-mobile, 455px);
+    --ywmb-size-1: 42px;
+    --ywmb-size-2: 31px;
+    --ywmb-leading: 44px;
+  }
+
+  .ywmb .ywmb__image {
+    object-position: var(--ywmb-focal-mobile, center 60%);
+  }
+
+  .ywmb__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.16) 30%,
+      rgba(0, 0, 0, 0) 52%
+    );
+  }
+
+  .ywmb__inner {
+    width: 100%;
+    padding-top: 24px;
+    padding-inline: 20px;
+    text-align: right;
+  }
+
+  .ywmb__line--2 {
+    line-height: 40px;
+    letter-spacing: 0.5px;
+  }
+
+  .ywmb__badge {
+    left: auto;
+    right: 42px;
+    top: 168px;
+    width: 88px;
+    height: 92px;
+  }
+
+  .ywmb__badge img {
+    width: 88px;
+    height: 92px;
+  }
+}
+
+/* Narrow phones — keep the headline on two lines. */
+@media (max-width: 359px) {
+  .ywmb {
+    --ywmb-size-1: 37px;
+    --ywmb-size-2: 27px;
+    --ywmb-leading: 40px;
+  }
+
+  .ywmb__badge {
+    right: 24px;
+    top: 152px;
+  }
+}
