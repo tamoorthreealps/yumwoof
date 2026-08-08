@@ -1047,9 +1047,10 @@ a.yf__site-credit {
     min-height: 30.4px;
     padding: 0 8px;
 }
-.yf__signup-form .go1708406129.go1708406129.go1708406129 {
+.yf__signup-form .go1708406129.go1708406129.go1708406129, .go2365489600.go2365489600.go2365489600 {
     width: 16px;
     height: 16px;
+    min-width: 16px;
 }
 
 
