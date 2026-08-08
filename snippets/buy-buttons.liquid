@@ -44,6 +44,11 @@
     -%}
 
     {%- if is_market_unavailable -%}
+      <style>
+        variant-selects{
+          dispay:none;
+        }
+      </style>
       {%- comment -%}
         Not for sale in this market: the add-to-cart is replaced by a "Coming Soon"
         button (styled exactly like add-to-cart) that opens a popup containing the
