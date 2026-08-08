@@ -1,0 +1,318 @@
+/* css--yw-membership-family.css
+   Yum Club Family (founder quote) band. All styles scoped under .ywmf.
+   Colors come from Theme Editor settings via --ywmf-* set inline on the
+   section element; the values here are fallbacks only.
+
+   The background image itself is emitted per-section in the Liquid <style>
+   block — this file only defines how that layer sits and crops.
+
+   Desktop measured from Figma node 5965:1824 (1512px canvas, 720px band).
+   Mobile measured from the mobile reference (~390px frame). */
+
+.ywmf {
+  --ywmf-bg: #3a2b21;
+  --ywmf-heading: #ffffff;
+  --ywmf-text: #fff9ef;
+  --ywmf-accent: #fff9ef;
+  --ywmf-button-bg: #7ba6dd;
+  --ywmf-button-text: #000;
+  --ywmf-button-hover-bg: #fff9ef;
+  --ywmf-button-hover-text: #000;
+  --ywmf-border: #000;
+  --ywmf-button-radius: 160px;
+
+  --ywmf-height: 720px;
+  --ywmf-pad-top: 104px;
+  --ywmf-pad-bottom: 76px;
+  --ywmf-focal: center center;
+  --ywmf-scrim: 1;
+
+  --ywmf-font-display: 'TAYRosemary', var(--font-heading-family, serif);
+  --ywmf-font-body: 'Matter', var(--font-body-family, sans-serif);
+  --ywmf-font-ui: 'Blur', var(--font-body-family, sans-serif);
+
+  position: relative;
+  height: var(--ywmf-height);
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--ywmf-bg);
+}
+
+.ywmf *,
+.ywmf *::before,
+.ywmf *::after {
+  box-sizing: border-box;
+}
+
+/* ------------------------- Background (CSS only) ------------------------- */
+
+.ywmf__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: var(--ywmf-focal);
+  pointer-events: none;
+}
+
+.ywmf__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--ywmf-scrim);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.12) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* -------------------------------- Content -------------------------------- */
+
+.ywmf__container {
+  position: relative;
+  z-index: 2;
+  width: min(1196px, calc(100% - 64px));
+  margin-inline: auto;
+  padding-block: var(--ywmf-pad-top) var(--ywmf-pad-bottom);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ywmf__content--center { text-align: center; }
+.ywmf__content--right { text-align: right; }
+
+.ywmf__content--center .ywmf__signature-image { margin-inline: auto; }
+.ywmf__content--right .ywmf__signature-image { margin-left: auto; }
+
+.ywmf__heading {
+  width: 520px;
+  max-width: 100%;
+  margin: 0;
+  color: var(--ywmf-heading);
+  font-family: var(--ywmf-font-display);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 64px;
+}
+
+.ywmf__heading p {
+  margin: 0;
+}
+
+.ywmf__description {
+  width: 520px;
+  max-width: 100%;
+  margin-top: 20px;
+  color: var(--ywmf-text);
+  font-family: var(--ywmf-font-body);
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.ywmf__description p { margin: 0 0 1em; }
+.ywmf__description p:last-child { margin-bottom: 0; }
+.ywmf__description a { color: inherit; }
+
+/* -------------------------- Signature / attribution -------------------------- */
+
+.ywmf__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.ywmf__content--center .ywmf__bottom { align-items: center; }
+.ywmf__content--right .ywmf__bottom { align-items: flex-end; }
+
+.ywmf__signature {
+  width: 287px;
+  height: 80px;
+}
+
+.ywmf .ywmf__signature-image {
+  display: block;
+  width: 287px;
+  height: 80px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.ywmf__attribution {
+  margin: 0;
+  color: var(--ywmf-accent);
+  font-family: var(--ywmf-font-body);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* --------------------------- Button (optional) --------------------------- */
+
+.ywmf__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 340px;
+  max-width: 100%;
+  height: 56px;
+  margin-top: 24px;
+  padding: 18px 44px;
+  border: 2px solid var(--ywmf-border);
+  border-radius: var(--ywmf-button-radius);
+  background: var(--ywmf-button-bg);
+  color: var(--ywmf-button-text);
+  font-family: var(--ywmf-font-ui);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 1.28px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.ywmf__button:hover,
+.ywmf__button:focus-visible {
+  background: var(--ywmf-button-hover-bg);
+  color: var(--ywmf-button-hover-text);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--ywmf-border);
+}
+
+.ywmf__button:focus-visible {
+  outline: 3px solid var(--ywmf-accent);
+  outline-offset: 3px;
+}
+
+.ywmf__button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ================================= TABLET ================================= */
+
+@media (max-width: 1279px) {
+  .ywmf__heading {
+    font-size: 52px;
+    line-height: 54px;
+  }
+}
+
+@media (max-width: 989px) {
+  .ywmf {
+    --ywmf-height: 620px;
+  }
+
+  .ywmf__heading {
+    width: 100%;
+    max-width: 560px;
+    font-size: 44px;
+    line-height: 46px;
+  }
+}
+
+/* ================================= MOBILE =================================
+   Per the mobile reference: the quote sits high on the band, the photo
+   occupies the lower portion, and the signature + attribution pin to the
+   bottom-left over the image. Its own type scale and crop, not a shrink. */
+
+@media (max-width: 749px) {
+  .ywmf {
+    --ywmf-height: var(--ywmf-height-mobile, 609px);
+  }
+
+  .ywmf__bg {
+    background-position: var(--ywmf-focal-mobile, 62% center);
+  }
+
+  /* Vertical scrim on mobile: darkens the top for the quote and the very
+     bottom for the signature, leaving the middle of the photo clear. */
+  .ywmf__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.3) 34%,
+      rgba(0, 0, 0, 0.05) 52%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+  }
+
+  .ywmf__container {
+    width: 100%;
+    padding-inline: 20px;
+    padding-block: var(--ywmf-pad-top-mobile, 34px) var(--ywmf-pad-bottom-mobile, 22px);
+  }
+
+  .ywmf__heading {
+    width: 100%;
+    font-size: 29px;
+    line-height: 34px;
+  }
+
+  .ywmf__description {
+    width: 100%;
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .ywmf__bottom {
+    gap: 4px;
+  }
+
+  .ywmf__signature {
+    width: 208px;
+    height: 58px;
+  }
+
+  .ywmf .ywmf__signature-image {
+    width: 208px;
+    height: 58px;
+  }
+
+  .ywmf__attribution {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .ywmf__button {
+    width: 100%;
+    height: 48px;
+    margin-top: 18px;
+    padding: 14px 24px;
+    font-size: 14px;
+    letter-spacing: 1.1px;
+  }
+}
+
+/* Narrow phones. */
+@media (max-width: 359px) {
+  .ywmf__heading {
+    font-size: 26px;
+    line-height: 31px;
+  }
+}
+
+/* ============================= Reduced motion ============================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ywmf__button {
+    transition: none;
+  }
+
+  .ywmf__button:hover,
+  .ywmf__button:focus-visible {
+    transform: none;
+  }
+}
