@@ -610,7 +610,7 @@ display: block;
 /* -----------------new--css --------------*/
 .yf__currency {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
 }
     .localization-form:only-child {
         margin: 0;
