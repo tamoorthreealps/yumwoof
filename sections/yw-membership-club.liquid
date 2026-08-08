@@ -1,0 +1,277 @@
+{{ 'css--yw-membership-club.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign benefits = section.blocks | where: 'type', 'benefit'
+-%}
+
+<section
+  class="ywmc{% if s.bg_image != blank or s.bg_image_mobile != blank %} ywmc--has-bg-image{% endif %}"
+  id="ywmc-{{ section.id }}"
+  aria-labelledby="ywmc-heading-{{ section.id }}"
+  style="
+    --ywmc-bg: {{ s.color_bg }};
+    --ywmc-heading: {{ s.color_heading }};
+    --ywmc-text: {{ s.color_text }};
+    --ywmc-accent: {{ s.color_accent }};
+    --ywmc-button-bg: {{ s.color_button_bg }};
+    --ywmc-button-text: {{ s.color_button_text }};
+    --ywmc-button-hover-bg: {{ s.color_button_hover_bg }};
+    --ywmc-button-hover-text: {{ s.color_button_hover_text }};
+    --ywmc-button-border: {{ s.color_button_border }};
+    --ywmc-icon: {{ s.color_icon }};
+    --ywmc-border: {{ s.color_border }};
+    --ywmc-button-radius: {{ s.button_radius }}px;
+    --ywmc-pad-top: {{ s.padding_top }}px;
+    --ywmc-pad-bottom: {{ s.padding_bottom }}px;
+    --ywmc-pad-top-mobile: {{ s.padding_top_mobile }}px;
+    --ywmc-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  {%- if s.bg_image != blank or s.bg_image_mobile != blank -%}
+    <div class="ywmc__bg" aria-hidden="true">
+      {%- if s.bg_image_mobile != blank and s.bg_image != blank -%}
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ s.bg_image_mobile | image_url: width: 640 }} 640w,
+              {{ s.bg_image_mobile | image_url: width: 880 }} 880w,
+              {{ s.bg_image_mobile | image_url: width: 1200 }} 1200w
+            "
+            sizes="100vw"
+          >
+          {{
+            s.bg_image
+            | image_url: width: 2400
+            | image_tag:
+              loading: 'lazy',
+              widths: '900, 1200, 1512, 1800, 2400',
+              sizes: '100vw',
+              class: 'ywmc__bg-image',
+              alt: ''
+          }}
+        </picture>
+      {%- else -%}
+        {%- assign bg_single = s.bg_image | default: s.bg_image_mobile -%}
+        {{
+          bg_single
+          | image_url: width: 2400
+          | image_tag:
+            loading: 'lazy',
+            widths: '900, 1200, 1512, 1800, 2400',
+            sizes: '100vw',
+            class: 'ywmc__bg-image',
+            alt: ''
+        }}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="ywmc__container">
+
+    {%- comment -%} ---------------- Left column: brand + intro ---------------- {%- endcomment -%}
+    <div class="ywmc__brand">
+      {%- if s.logo != blank -%}
+        <div class="ywmc__logo">
+          {{
+            s.logo
+            | image_url: width: 1040
+            | image_tag:
+              loading: 'lazy',
+              widths: '280, 520, 780, 1040',
+              sizes: '(max-width: 749px) 266px, 520px',
+              class: 'ywmc__logo-image',
+              alt: s.logo.alt | default: 'YumClub'
+          }}
+        </div>
+      {%- endif -%}
+
+      {%- if s.eyebrow != blank -%}
+        <h2 class="ywmc__eyebrow" id="ywmc-heading-{{ section.id }}">{{ s.eyebrow | escape }}</h2>
+      {%- endif -%}
+
+      {%- if s.description != blank -%}
+        <div class="ywmc__description">{{ s.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ---------------- Right column: benefits + CTA ---------------- {%- endcomment -%}
+    <div class="ywmc__panel">
+      {%- if s.benefits_title != blank -%}
+        <h3 class="ywmc__benefits-title">{{ s.benefits_title | escape }}</h3>
+      {%- endif -%}
+
+      {%- if s.show_rule -%}
+        <hr class="ywmc__rule">
+      {%- endif -%}
+
+      {%- if benefits.size > 0 -%}
+        <ul class="ywmc__benefits" role="list">
+          {%- for block in benefits -%}
+            <li class="ywmc__benefit" {{ block.shopify_attributes }}>
+              <span class="ywmc__benefit-icon ywmc__benefit-icon--{{ block.settings.icon_style }}" aria-hidden="true">
+                {%- if block.settings.icon != blank -%}
+                  {{
+                    block.settings.icon
+                    | image_url: width: 96
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '32, 64, 96',
+                      sizes: '(max-width: 749px) 28px, 32px',
+                      class: 'ywmc__benefit-icon-image',
+                      alt: ''
+                  }}
+                {%- else -%}
+                  <svg class="ywmc__check" viewBox="0 0 24 24" focusable="false" role="presentation">
+                    <path d="M5 12.5 10 17.5 19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {%- endif -%}
+              </span>
+
+              <span class="ywmc__benefit-text">
+                {%- if block.settings.title != blank -%}
+                  <h4 class="ywmc__benefit-title">{{ block.settings.title | escape }}</h4>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <span class="ywmc__benefit-desc">{{ block.settings.description | escape }}</span>
+                {%- endif -%}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.button_text != blank -%}
+        <a class="ywmc__button" href="{{ s.button_url | default: '#' }}">
+          <span class="ywmc__button-label">{{ s.button_text | escape }}</span>
+        </a>
+      {%- endif -%}
+
+      {%- if s.fine_print != blank -%}
+        <p class="ywmc__fine-print">{{ s.fine_print }}</p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yum Club Membership",
+  "tag": "section",
+  "class": "yw-membership-club-section",
+  "settings": [
+    { "type": "header", "content": "Branding" },
+    { "type": "image_picker", "id": "logo", "label": "YumClub logo" },
+    { "type": "text", "id": "eyebrow", "label": "Heading", "default": "MEMBERSHIP" },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>We built Yumwoof because good dog food cost too much and did too little. YumClub is the rest of that answer. Pay in once a quarter and the whole counter drops by 25%, so feeding a dog properly stops being the expensive option.</p>"
+    },
+
+    { "type": "header", "content": "Benefits panel" },
+    { "type": "text", "id": "benefits_title", "label": "Benefits title", "default": "Here's what you get:" },
+    { "type": "checkbox", "id": "show_rule", "label": "Show rule under the benefits title", "default": true },
+
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "richtext",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>"
+    },
+
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "color_bg", "label": "Background color", "default": "#cb8900" },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile, optional)",
+      "info": "Falls back to the desktop background image if left empty."
+    },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_heading", "label": "Heading color", "default": "#661d1d" },
+    { "type": "color", "id": "color_text", "label": "Body text color", "default": "#661d1d" },
+    { "type": "color", "id": "color_accent", "label": "Accent color", "default": "#661d1d" },
+    { "type": "color", "id": "color_icon", "label": "Benefit icon color", "default": "#661d1d" },
+    { "type": "color", "id": "color_border", "label": "Border / rule color", "default": "#661d1d" },
+
+    { "type": "header", "content": "Button colors" },
+    { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#7ba6dd" },
+    { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#000000" },
+    { "type": "color", "id": "color_button_border", "label": "Button border", "default": "#000000" },
+    { "type": "color", "id": "color_button_hover_bg", "label": "Button background (hover)", "default": "#661d1d" },
+    { "type": "color", "id": "color_button_hover_text", "label": "Button text (hover)", "default": "#fff9ef" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 84 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 44 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional)",
+          "info": "Leave empty to use the built-in checkbox, which follows the benefit icon color."
+        },
+        {
+          "type": "select",
+          "id": "icon_style",
+          "label": "Checkbox style",
+          "options": [
+            { "value": "filled", "label": "Filled" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "filled",
+          "info": "Only applies to the built-in checkbox."
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "25% off every order" },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yum Club Membership",
+      "blocks": [
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" },
+        { "type": "benefit" }
+      ]
+    }
+  ]
+}
+{% endschema %}
