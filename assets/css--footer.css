@@ -752,7 +752,6 @@ display: block;
 
   @media screen and (max-width: 749px) {
     .country-pill__panel {
-      min-width: 28rem;
     }
   }
 
