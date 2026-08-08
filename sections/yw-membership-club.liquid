@@ -72,6 +72,7 @@
     {%- comment -%} ---------------- Left column: brand + intro ---------------- {%- endcomment -%}
     <div class="ywmc__brand">
       {%- if s.logo != blank -%}
+        {%- assign logo_alt = s.logo.alt | default: 'YumClub' -%}
         <div class="ywmc__logo">
           {{
             s.logo
@@ -81,8 +82,7 @@
               widths: '280, 520, 780, 1040',
               sizes: '(max-width: 749px) 266px, 520px',
               class: 'ywmc__logo-image',
-              alt: s.logo.alt
-            | default: 'YumClub'
+              alt: logo_alt
           }}
         </div>
       {%- endif -%}
@@ -142,11 +142,39 @@
         </ul>
       {%- endif -%}
 
+      {%- comment -%} ---------------- Add to cart (subscription aware) ---------------- {%- endcomment -%}
       {%- liquid
         assign atc_product = s.product
         assign atc_variant = null
+        assign atc_selling_plan = null
+        assign atc_plan_required = false
+
         if atc_product != blank
           assign atc_variant = atc_product.selected_or_first_available_variant
+        endif
+
+        if atc_variant != blank
+          assign atc_plan_required = atc_variant.requires_selling_plan
+
+          if atc_variant.selling_plan_allocations.size > 0
+            if s.selling_plan_id != blank
+              for allocation in atc_variant.selling_plan_allocations
+                if allocation.selling_plan.id == s.selling_plan_id
+                  assign atc_selling_plan = allocation.selling_plan
+                  break
+                endif
+              endfor
+            endif
+
+            if atc_selling_plan == null
+              assign atc_selling_plan = atc_variant.selling_plan_allocations.first.selling_plan
+            endif
+          endif
+        endif
+
+        assign atc_blocked = false
+        if atc_plan_required and atc_selling_plan == null
+          assign atc_blocked = true
         endif
       -%}
 
@@ -162,22 +190,37 @@
           <input type="hidden" name="utf8" value="✓">
           <input type="hidden" name="id" value="{{ atc_variant.id }}">
           <input type="hidden" name="quantity" value="{{ s.quantity }}">
+          {%- if atc_selling_plan != null -%}
+            <input type="hidden" name="selling_plan" value="{{ atc_selling_plan.id }}" data-ywmc-selling-plan>
+          {%- endif -%}
+
+          {%- if atc_selling_plan != null and s.show_plan_name -%}
+            <p class="ywmc__plan-name">{{ atc_selling_plan.name | escape }}</p>
+          {%- endif -%}
 
           <button
             type="submit"
             class="ywmc__button"
-            {% unless atc_variant.available %}
+            {% if atc_variant.available == false or atc_blocked %}
               disabled
-            {% endunless %}
+            {% endif %}
           >
             <span class="ywmc__button-label">
-              {%- if atc_variant.available -%}
-                {{ s.button_text | default: 'ADD TO CART' | escape }}
-              {%- else -%}
+              {%- if atc_variant.available == false -%}
                 {{ s.sold_out_text | default: 'SOLD OUT' | escape }}
+              {%- else -%}
+                {{ s.button_text | default: 'ADD TO CART' | escape }}
               {%- endif -%}
             </span>
           </button>
+
+          {%- if atc_blocked -%}
+            <p class="ywmc__form-error">
+              {%- if request.design_mode -%}
+                This variant can only be purchased with a selling plan, but no plan is attached to it. Check the subscription app's plan group for this product.
+              {%- endif -%}
+            </p>
+          {%- endif -%}
 
           <p class="ywmc__form-error" data-ywmc-error hidden></p>
         </form>
@@ -197,6 +240,7 @@
     </div>
   </div>
 </section>
+
 <script>
   (function () {
     function initYwmcForm(root) {
@@ -215,15 +259,19 @@
           if (errorEl) { errorEl.hidden = true; errorEl.textContent = ''; }
           if (button) { button.setAttribute('aria-busy', 'true'); button.disabled = true; }
 
+          var planInput = form.querySelector('[data-ywmc-selling-plan]');
+          var item = {
+            id: Number(form.querySelector('input[name="id"]').value),
+            quantity: Number(form.querySelector('input[name="quantity"]').value || 1)
+          };
+          if (planInput && planInput.value) {
+            item.selling_plan = Number(planInput.value);
+          }
+
           fetch(window.Shopify.routes.root + 'cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({
-              items: [{
-                id: Number(form.querySelector('input[name="id"]').value),
-                quantity: Number(form.querySelector('input[name="quantity"]').value || 1)
-              }]
-            })
+            body: JSON.stringify({ items: [item] })
           })
             .then(function (res) { return res.json(); })
             .then(function (data) {
@@ -264,6 +312,7 @@
     document.addEventListener('shopify:section:load', function (e) { initYwmcForm(e.target); });
   })();
 </script>
+
 {% schema %}
 {
   "name": "Yum Club Membership",
@@ -286,8 +335,20 @@
 
     { "type": "header", "content": "Button" },
     { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
-    { "type": "url", "id": "button_url", "label": "Button link" },
-    { "type": "product", "id": "product", "label": "Product to add to cart", "info": "Leave empty to use the button as a normal link instead." },
+    { "type": "url", "id": "button_url", "label": "Button link", "info": "Only used when no product is selected below." },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product to add to cart",
+      "info": "Leave empty to use the button as a normal link instead."
+    },
+    {
+      "type": "number",
+      "id": "selling_plan_id",
+      "label": "Selling plan ID (optional)",
+      "info": "For subscription products. Leave empty to use the first available plan on the variant."
+    },
+    { "type": "checkbox", "id": "show_plan_name", "label": "Show selling plan name above the button", "default": false },
     { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
     { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
     {
