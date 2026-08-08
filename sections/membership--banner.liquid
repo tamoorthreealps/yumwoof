@@ -1,0 +1,422 @@
+{{ 'css--yum-club-membership.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'yum-parallax.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign s = section.settings
+  assign perk_blocks = section.blocks | where: 'type', 'perk'
+  assign faq_blocks = section.blocks | where: 'type', 'faq'
+-%}
+
+<div class="ycm" id="ycm-{{ section.id }}">
+
+  {%- comment -%} ------------------------------ HERO ------------------------------ {%- endcomment -%}
+  <section
+    class="ycm__hero yum-parallax"
+    data-yum-parallax
+    data-parallax-range="{{ s.hero_parallax_range }}"
+    data-parallax-mobile-range="{{ s.hero_parallax_range | times: 0.35 | round }}"
+    aria-labelledby="ycm-hero-heading-{{ section.id }}"
+  >
+    <div class="yum-parallax__media" data-parallax-layer>
+      {%- if s.hero_image_mobile != blank -%}
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ s.hero_image_mobile | image_url: width: 750 }} 750w, {{ s.hero_image_mobile | image_url: width: 1100 }} 1100w"
+            sizes="100vw"
+          >
+          {{
+            s.hero_image
+            | image_url: width: 2200
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '900, 1200, 1512, 1800, 2200',
+              sizes: '100vw',
+              alt: s.hero_image.alt | default: ''
+          }}
+        </picture>
+      {%- elsif s.hero_image != blank -%}
+        {{
+          s.hero_image
+          | image_url: width: 2200
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '900, 1200, 1512, 1800, 2200',
+            sizes: '100vw',
+            alt: s.hero_image.alt | default: ''
+        }}
+      {%- endif -%}
+    </div>
+    <div class="yum-parallax__overlay ycm__hero-scrim" aria-hidden="true"></div>
+
+    <div class="yum-parallax__content ycm__hero-content">
+      <h1 class="ycm__hero-heading" id="ycm-hero-heading-{{ section.id }}">
+        <span class="ycm__hero-line-1">{{ s.hero_line_1 }}</span>
+        <span class="ycm__hero-line-2">{{ s.hero_line_2 }}</span>
+      </h1>
+    </div>
+
+    {%- if s.hero_badge != blank -%}
+      <div class="ycm__badge ycm__badge--hero" aria-hidden="true">
+        {{ s.hero_badge | image_url: width: 400 | image_tag: loading: 'eager', widths: '180, 360, 400', sizes: '178px', alt: '' }}
+      </div>
+    {%- endif -%}
+  </section>
+
+  {%- comment -%} --------------------------- CLUB INTRO --------------------------- {%- endcomment -%}
+  <section class="ycm__club" aria-labelledby="ycm-club-heading-{{ section.id }}">
+    <div class="ycm__container ycm__club-grid">
+
+      <div class="ycm__club-left">
+        {%- if s.club_logo != blank -%}
+          <div class="ycm__club-logo">
+            {{ s.club_logo | image_url: width: 1040 | image_tag: loading: 'lazy', widths: '520, 780, 1040', sizes: '520px', alt: s.club_logo.alt | default: 'YumClub' }}
+          </div>
+        {%- endif -%}
+
+        <h2 class="ycm__club-eyebrow" id="ycm-club-heading-{{ section.id }}">{{ s.club_eyebrow }}</h2>
+
+        <div class="ycm__club-body rte">{{ s.club_body }}</div>
+      </div>
+
+      <div class="ycm__club-right">
+        <h3 class="ycm__perks-title">{{ s.perks_title }}</h3>
+        <hr class="ycm__perks-rule">
+
+        {%- if perk_blocks.size > 0 -%}
+          <ul class="ycm__perks" role="list">
+            {%- for block in perk_blocks -%}
+              <li class="ycm__perk" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != blank -%}
+                  <span class="ycm__perk-icon" aria-hidden="true">
+                    {{ block.settings.icon | image_url: width: 96 | image_tag: loading: 'lazy', widths: '32, 64, 96', sizes: '32px', alt: '' }}
+                  </span>
+                {%- endif -%}
+                <span class="ycm__perk-text">
+                  <span class="ycm__perk-title">{{ block.settings.title }}</span>
+                  <span class="ycm__perk-desc">{{ block.settings.description }}</span>
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if s.club_cta_text != blank -%}
+          <a class="ycm__button" href="{{ s.club_cta_url | default: '#' }}">
+            <span>{{ s.club_cta_text }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if s.club_fine_print != blank -%}
+          <p class="ycm__fine-print">{{ s.club_fine_print }}</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} --------------------------- FOUNDER QUOTE --------------------------- {%- endcomment -%}
+  <section
+    class="ycm__quote yum-parallax"
+    data-yum-parallax
+    data-parallax-range="{{ s.quote_parallax_range }}"
+    data-parallax-mobile-range="{{ s.quote_parallax_range | times: 0.35 | round }}"
+  >
+    <div class="yum-parallax__media" data-parallax-layer>
+      {%- if s.quote_image_mobile != blank -%}
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ s.quote_image_mobile | image_url: width: 750 }} 750w, {{ s.quote_image_mobile | image_url: width: 1100 }} 1100w"
+            sizes="100vw"
+          >
+          {{ s.quote_image | image_url: width: 2200 | image_tag: loading: 'lazy', widths: '900, 1200, 1512, 1800, 2200', sizes: '100vw', alt: s.quote_image.alt | default: '' }}
+        </picture>
+      {%- elsif s.quote_image != blank -%}
+        {{ s.quote_image | image_url: width: 2200 | image_tag: loading: 'lazy', widths: '900, 1200, 1512, 1800, 2200', sizes: '100vw', alt: s.quote_image.alt | default: '' }}
+      {%- endif -%}
+    </div>
+    <div class="yum-parallax__overlay ycm__quote-scrim" aria-hidden="true"></div>
+
+    <div class="yum-parallax__content ycm__container ycm__quote-content">
+      <blockquote class="ycm__quote-text">{{ s.quote_text }}</blockquote>
+      <figcaption class="ycm__quote-attrib">
+        {%- if s.signature_image != blank -%}
+          <span class="ycm__signature">
+            {{ s.signature_image | image_url: width: 574 | image_tag: loading: 'lazy', widths: '287, 430, 574', sizes: '287px', alt: '' }}
+          </span>
+        {%- endif -%}
+        <span class="ycm__quote-names">{{ s.quote_attribution }}</span>
+      </figcaption>
+    </div>
+  </section>
+
+  {%- comment -%} ------------------------------- FAQ ------------------------------- {%- endcomment -%}
+  {%- if faq_blocks.size > 0 -%}
+    <section class="ycm__faq" aria-labelledby="ycm-faq-heading-{{ section.id }}">
+      <div class="ycm__container">
+        <div class="ycm__faq-intro">
+          <h2 class="ycm__faq-heading" id="ycm-faq-heading-{{ section.id }}">{{ s.faq_heading }}</h2>
+          <div class="ycm__faq-sub rte">{{ s.faq_subheading }}</div>
+        </div>
+
+        <div class="ycm__faq-list" data-ycm-accordion>
+          {%- for block in faq_blocks -%}
+            {%- assign panel_id = 'ycm-faq-panel-' | append: section.id | append: '-' | append: forloop.index -%}
+            {%- assign btn_id = 'ycm-faq-btn-' | append: section.id | append: '-' | append: forloop.index -%}
+            {%- if forloop.first and s.faq_open_first -%}
+              {%- assign is_open = true -%}
+            {%- else -%}
+              {%- assign is_open = false -%}
+            {%- endif -%}
+
+            <div class="ycm__faq-item{% if is_open %} is-open{% endif %}" data-ycm-faq-item {{ block.shopify_attributes }}>
+              <h3 class="ycm__faq-q">
+                <button
+                  class="ycm__faq-trigger"
+                  type="button"
+                  id="{{ btn_id }}"
+                  aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+                  aria-controls="{{ panel_id }}"
+                  data-ycm-faq-trigger
+                >
+                  <span class="ycm__faq-q-text">{{ block.settings.question }}</span>
+                  <span class="ycm__faq-icon" aria-hidden="true">
+                    <span class="ycm__faq-icon-bar ycm__faq-icon-bar--h"></span>
+                    <span class="ycm__faq-icon-bar ycm__faq-icon-bar--v"></span>
+                  </span>
+                </button>
+              </h3>
+              <div
+                class="ycm__faq-panel"
+                id="{{ panel_id }}"
+                role="region"
+                aria-labelledby="{{ btn_id }}"
+                data-ycm-faq-panel
+                {% unless is_open %}hidden{% endunless %}
+              >
+                <div class="ycm__faq-a rte">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Mobile-only in the reference; hidden at desktop widths. {%- endcomment -%}
+        {%- if s.faq_cta_text != blank -%}
+          <div class="ycm__faq-cta">
+            <a class="ycm__button" href="{{ s.faq_cta_url | default: '#' }}">
+              <span>{{ s.faq_cta_text }}</span>
+            </a>
+            {%- if s.faq_fine_print != blank -%}
+              <p class="ycm__fine-print ycm__fine-print--center">{{ s.faq_fine_print }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} ---------------------------- CLOSING CTA ---------------------------- {%- endcomment -%}
+  <section
+    class="ycm__closing yum-parallax"
+    data-yum-parallax
+    data-parallax-range="{{ s.closing_parallax_range }}"
+    data-parallax-mobile-range="{{ s.closing_parallax_range | times: 0.35 | round }}"
+    aria-labelledby="ycm-closing-heading-{{ section.id }}"
+  >
+    <div class="yum-parallax__media" data-parallax-layer>
+      {%- if s.closing_image_mobile != blank -%}
+        <picture>
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ s.closing_image_mobile | image_url: width: 750 }} 750w, {{ s.closing_image_mobile | image_url: width: 1100 }} 1100w"
+            sizes="100vw"
+          >
+          {{ s.closing_image | image_url: width: 2200 | image_tag: loading: 'lazy', widths: '900, 1200, 1512, 1800, 2200', sizes: '100vw', alt: s.closing_image.alt | default: '' }}
+        </picture>
+      {%- elsif s.closing_image != blank -%}
+        {{ s.closing_image | image_url: width: 2200 | image_tag: loading: 'lazy', widths: '900, 1200, 1512, 1800, 2200', sizes: '100vw', alt: s.closing_image.alt | default: '' }}
+      {%- endif -%}
+    </div>
+    <div class="yum-parallax__overlay ycm__closing-scrim" aria-hidden="true"></div>
+
+    <div class="yum-parallax__content ycm__container ycm__closing-content">
+      <h2 class="ycm__closing-heading" id="ycm-closing-heading-{{ section.id }}">{{ s.closing_heading }}</h2>
+      {%- if s.closing_cta_text != blank -%}
+        <a class="ycm__button" href="{{ s.closing_cta_url | default: '#' }}">
+          <span>{{ s.closing_cta_text }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if s.closing_badge != blank -%}
+      <div class="ycm__badge ycm__badge--closing" aria-hidden="true">
+        {{ s.closing_badge | image_url: width: 400 | image_tag: loading: 'lazy', widths: '180, 360, 400', sizes: '178px', alt: '' }}
+      </div>
+    {%- endif -%}
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    function initAccordion(root) {
+      var groups = (root || document).querySelectorAll('[data-ycm-accordion]');
+      Array.prototype.forEach.call(groups, function (group) {
+        if (group.dataset.ycmReady === 'true') return;
+        group.dataset.ycmReady = 'true';
+
+        group.addEventListener('click', function (event) {
+          var trigger = event.target.closest('[data-ycm-faq-trigger]');
+          if (!trigger || !group.contains(trigger)) return;
+          toggle(trigger);
+        });
+      });
+    }
+
+    function toggle(trigger) {
+      var item = trigger.closest('[data-ycm-faq-item]');
+      var panel = item.querySelector('[data-ycm-faq-panel]');
+      var open = trigger.getAttribute('aria-expanded') === 'true';
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+
+      if (open) {
+        if (reduce) {
+          panel.hidden = true;
+          panel.style.height = '';
+          item.classList.remove('is-open');
+        } else {
+          panel.style.height = panel.scrollHeight + 'px';
+          requestAnimationFrame(function () {
+            item.classList.remove('is-open');
+            panel.style.height = '0px';
+          });
+        }
+      } else {
+        panel.hidden = false;
+        item.classList.add('is-open');
+        if (reduce) {
+          panel.style.height = '';
+        } else {
+          panel.style.height = '0px';
+          requestAnimationFrame(function () {
+            panel.style.height = panel.scrollHeight + 'px';
+          });
+        }
+      }
+
+      if (window.YumParallax) window.YumParallax.refresh();
+    }
+
+    document.addEventListener('transitionend', function (event) {
+      if (event.propertyName !== 'height') return;
+      var panel = event.target;
+      if (!panel.hasAttribute || !panel.hasAttribute('data-ycm-faq-panel')) return;
+      var item = panel.closest('[data-ycm-faq-item]');
+      if (item.classList.contains('is-open')) {
+        panel.style.height = 'auto';
+      } else {
+        panel.hidden = true;
+        panel.style.height = '';
+      }
+      if (window.YumParallax) window.YumParallax.refresh();
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { initAccordion(document); });
+    } else {
+      initAccordion(document);
+    }
+
+    document.addEventListener('shopify:section:load', function (event) { initAccordion(event.target); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yum Club Membership",
+  "tag": "div",
+  "class": "yum-club-membership-section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero background image (desktop)" },
+    { "type": "image_picker", "id": "hero_image_mobile", "label": "Hero background image (mobile)", "info": "Falls back to the desktop image if empty." },
+    { "type": "image_picker", "id": "hero_badge", "label": "Hero badge / sticker" },
+    { "type": "text", "id": "hero_line_1", "label": "Hero line 1", "default": "WELL-FED DOGS" },
+    { "type": "text", "id": "hero_line_2", "label": "Hero line 2", "default": "pay less for it." },
+    { "type": "range", "id": "hero_parallax_range", "label": "Hero parallax range", "min": 0, "max": 160, "step": 10, "unit": "px", "default": 100 },
+
+    { "type": "header", "content": "YumClub intro band" },
+    { "type": "image_picker", "id": "club_logo", "label": "YumClub logo" },
+    { "type": "text", "id": "club_eyebrow", "label": "Eyebrow", "default": "MEMBERSHIP" },
+    { "type": "richtext", "id": "club_body", "label": "Intro copy", "default": "<p>We built Yumwoof because good dog food cost too much and did too little. YumClub is the rest of that answer. Pay in once a quarter and the whole counter drops by 25%, so feeding a dog properly stops being the expensive option.</p>" },
+    { "type": "text", "id": "perks_title", "label": "Perks list title", "default": "Here's what you get:" },
+    { "type": "text", "id": "club_cta_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
+    { "type": "url", "id": "club_cta_url", "label": "Button link" },
+    { "type": "text", "id": "club_fine_print", "label": "Fine print", "default": "$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in" },
+
+    { "type": "header", "content": "Founder quote band" },
+    { "type": "image_picker", "id": "quote_image", "label": "Background image (desktop)" },
+    { "type": "image_picker", "id": "quote_image_mobile", "label": "Background image (mobile)", "info": "Falls back to the desktop image if empty." },
+    { "type": "textarea", "id": "quote_text", "label": "Quote", "default": "“Good food shouldn't be a luxury. The club is how we make ours cost less.”" },
+    { "type": "image_picker", "id": "signature_image", "label": "Signature image" },
+    { "type": "text", "id": "quote_attribution", "label": "Attribution", "default": "Jaron & Ana, Founders" },
+    { "type": "range", "id": "quote_parallax_range", "label": "Quote parallax range", "min": 0, "max": 160, "step": 10, "unit": "px", "default": 80 },
+
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_heading", "label": "Heading", "default": "Any Questions?" },
+    { "type": "richtext", "id": "faq_subheading", "label": "Supporting text", "default": "<p>Every dog is different. Find the recipe that's right for yours.</p>" },
+    { "type": "checkbox", "id": "faq_open_first", "label": "Open the first question by default", "default": true },
+    { "type": "text", "id": "faq_cta_text", "label": "Button text (mobile only)", "info": "Shown below the FAQ on mobile, per the mobile design. Leave empty to hide.", "default": "JOIN YUMCLUB · $29/QTR" },
+    { "type": "url", "id": "faq_cta_url", "label": "Button link (mobile only)" },
+    { "type": "text", "id": "faq_fine_print", "label": "Fine print (mobile only)", "default": "$9.66/mo, billed quarterly. Cancel anytime.\nAlready a member? Log in" },
+
+    { "type": "header", "content": "Closing CTA band" },
+    { "type": "image_picker", "id": "closing_image", "label": "Background image (desktop)" },
+    { "type": "image_picker", "id": "closing_image_mobile", "label": "Background image (mobile)", "info": "Falls back to the desktop image if empty." },
+    { "type": "image_picker", "id": "closing_badge", "label": "Badge / sticker" },
+    { "type": "textarea", "id": "closing_heading", "label": "Heading", "default": "Feed your dog better for less, starting with the next order you place." },
+    { "type": "text", "id": "closing_cta_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
+    { "type": "url", "id": "closing_cta_url", "label": "Button link" },
+    { "type": "range", "id": "closing_parallax_range", "label": "Closing parallax range", "min": 0, "max": 160, "step": 10, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk row",
+      "settings": [
+        { "type": "image_picker", "id": "icon", "label": "Icon" },
+        { "type": "text", "id": "title", "label": "Title", "default": "25% off every order" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale." }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Why doesn't Yumwoof use seed oils?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Not all fats are created equal.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yum Club Membership",
+      "blocks": [
+        { "type": "perk" },
+        { "type": "perk" },
+        { "type": "perk" },
+        { "type": "perk" },
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}
