@@ -57,6 +57,7 @@
   background-position: var(--ywmf-focal);
   pointer-events: none;
   display:block !important;
+  background-attachment: fixed;
 }
 
 .ywmf__scrim {
