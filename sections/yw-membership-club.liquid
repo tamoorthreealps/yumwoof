@@ -69,7 +69,6 @@
   {%- endif -%}
 
   <div class="ywmc__container">
-
     {%- comment -%} ---------------- Left column: brand + intro ---------------- {%- endcomment -%}
     <div class="ywmc__brand">
       {%- if s.logo != blank -%}
@@ -82,7 +81,8 @@
               widths: '280, 520, 780, 1040',
               sizes: '(max-width: 749px) 266px, 520px',
               class: 'ywmc__logo-image',
-              alt: s.logo.alt | default: 'YumClub'
+              alt: s.logo.alt
+            | default: 'YumClub'
           }}
         </div>
       {%- endif -%}
@@ -142,7 +142,48 @@
         </ul>
       {%- endif -%}
 
-      {%- if s.button_text != blank -%}
+      {%- liquid
+        assign atc_product = s.product
+        assign atc_variant = null
+        if atc_product != blank
+          assign atc_variant = atc_product.selected_or_first_available_variant
+        endif
+      -%}
+
+      {%- if atc_product != blank and atc_variant != blank -%}
+        <form
+          method="post"
+          action="{{ routes.cart_add_url }}"
+          class="ywmc__form"
+          data-ywmc-form
+          data-cart-behavior="{{ s.cart_behavior }}"
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ atc_variant.id }}">
+          <input type="hidden" name="quantity" value="{{ s.quantity }}">
+
+          <button
+            type="submit"
+            class="ywmc__button"
+            {% unless atc_variant.available %}
+              disabled
+            {% endunless %}
+          >
+            <span class="ywmc__button-label">
+              {%- if atc_variant.available -%}
+                {{ s.button_text | default: 'ADD TO CART' | escape }}
+              {%- else -%}
+                {{ s.sold_out_text | default: 'SOLD OUT' | escape }}
+              {%- endif -%}
+            </span>
+          </button>
+
+          <p class="ywmc__form-error" data-ywmc-error hidden></p>
+        </form>
+
+      {%- elsif s.button_text != blank -%}
+        {%- comment -%} No product selected — fall back to a plain link {%- endcomment -%}
         <a class="ywmc__button" href="{{ s.button_url | default: '#' }}">
           <span class="ywmc__button-label">{{ s.button_text | escape }}</span>
         </a>
@@ -150,11 +191,10 @@
 
       {%- if s.fine_print != blank -%}
         <div class="ywmc__fine-print">
-            {{ s.fine_print }}
+          {{ s.fine_print }}
         </div>
       {%- endif -%}
     </div>
-
   </div>
 </section>
 
@@ -181,6 +221,20 @@
     { "type": "header", "content": "Button" },
     { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
     { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "product", "id": "product", "label": "Product to add to cart", "info": "Leave empty to use the button as a normal link instead." },
+    { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+    {
+      "type": "select",
+      "id": "cart_behavior",
+      "label": "After adding to cart",
+      "options": [
+        { "value": "stay", "label": "Stay on page" },
+        { "value": "drawer", "label": "Open cart drawer" },
+        { "value": "cart", "label": "Go to cart page" }
+      ],
+      "default": "drawer"
+    },
     {
       "type": "range",
       "id": "button_radius",
@@ -227,10 +281,46 @@
     { "type": "color", "id": "color_button_hover_text", "label": "Button text (hover)", "default": "#fff9ef" },
 
     { "type": "header", "content": "Spacing" },
-    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 84 },
-    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 44 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 120, "step": 2, "unit": "px", "default": 40 }
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 84
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
   ],
   "blocks": [
     {
@@ -267,12 +357,7 @@
   "presets": [
     {
       "name": "Yum Club Membership",
-      "blocks": [
-        { "type": "benefit" },
-        { "type": "benefit" },
-        { "type": "benefit" },
-        { "type": "benefit" }
-      ]
+      "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }]
     }
   ]
 }
