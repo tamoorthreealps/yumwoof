@@ -1628,3 +1628,55 @@ background: #000;
 		border-radius: 12px;
 	}
 }
+/* Congrats banner — Yum Club membership added (gold status bar) ------------- */
+.cd-banner--congrats {
+	background: #c8912a;
+	border-radius: 12px;
+	overflow: hidden;
+	line-height: 0;
+}
+
+.cd-congrats {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	min-height: 56px;
+	padding: 8px 16px;
+	line-height: normal;
+}
+
+.cd-congrats__logo {
+	display: inline-flex;
+	line-height: 0;
+	flex: none;
+}
+
+.cd-congrats__logo-svg {
+	display: block;
+	width: 104px;
+	height: auto;
+}
+
+.cd-congrats__text {
+	margin: 0;
+	font-family: 'Matter';
+	font-size: 16px;
+	line-height: 16px;
+	letter-spacing: 0;
+	color: #000;
+}
+
+@media screen and (max-width: 750px) {
+	.cd-congrats {
+		gap: 12px;
+		min-height: 48px;
+	}
+	.cd-congrats__logo-svg {
+		width: 70px;
+	}
+	.cd-congrats__text {
+		font-size: 14px;
+		line-height: 16px;
+	}
+}
