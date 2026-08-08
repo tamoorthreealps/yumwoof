@@ -135,10 +135,10 @@
         "color_button_text": "#000000",
         "color_button_hover_bg": "#fff9ef",
         "color_button_hover_text": "#000000",
-        "height_desktop": "720",
+        "height_desktop": "804",
         "height_mobile": "614",
-        "padding_top": 104,
-        "padding_bottom": 100,
+        "padding_top": 120,
+        "padding_bottom": 132,
         "padding_top_mobile": 64,
         "padding_bottom_mobile": 64
       }
