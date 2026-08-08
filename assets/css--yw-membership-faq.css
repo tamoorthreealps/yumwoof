@@ -144,6 +144,7 @@
   position: absolute;
   background: currentColor;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  border-radius: 2px;
 }
 
 .ywfaq__icon-bar--horizontal {
