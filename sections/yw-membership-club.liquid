@@ -243,6 +243,15 @@
 
 <script>
   (function () {
+    function getDrawer() {
+      return document.querySelector('cart-drawer');
+    }
+
+    function getDrawerSectionId() {
+      var el = document.getElementById('CartDrawer-SectionId');
+      return el ? el.dataset.sectionId : 'cart-drawer';
+    }
+
     function initYwmcForm(root) {
       root.querySelectorAll('[data-ywmc-form]').forEach(function (form) {
         if (form.dataset.ywmcBound) return;
@@ -259,7 +268,9 @@
           if (errorEl) { errorEl.hidden = true; errorEl.textContent = ''; }
           if (button) { button.setAttribute('aria-busy', 'true'); button.disabled = true; }
 
+          var drawer = getDrawer();
           var planInput = form.querySelector('[data-ywmc-selling-plan]');
+
           var item = {
             id: Number(form.querySelector('input[name="id"]').value),
             quantity: Number(form.querySelector('input[name="quantity"]').value || 1)
@@ -268,31 +279,43 @@
             item.selling_plan = Number(planInput.value);
           }
 
+          var payload = { items: [item] };
+
+          // Ask Shopify to re-render the drawer sections in the same request,
+          // otherwise the drawer keeps its stale (empty) markup until a reload.
+          var sectionIds = [];
+          if (drawer && drawer.getSectionsToRender) {
+            sectionIds = drawer.getSectionsToRender().map(function (s) { return s.id; });
+          }
+          if (!sectionIds.length) {
+            sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
+          }
+
+          payload.sections = sectionIds.join(',');
+          payload.sections_url = window.location.pathname;
+
           fetch(window.Shopify.routes.root + 'cart/add.js', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({ items: [item] })
+            headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
+            body: JSON.stringify(payload)
           })
             .then(function (res) { return res.json(); })
             .then(function (data) {
               if (data.status) throw new Error(data.description || data.message);
 
-              document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
-              document.dispatchEvent(new CustomEvent('cart:build', { bubbles: true }));
-
-              if (behavior === 'drawer') {
-                var drawer =
-                  document.querySelector('cart-drawer') ||
-                  document.querySelector('#CartDrawer') ||
-                  document.querySelector('[data-cart-drawer]');
-                if (drawer && typeof drawer.open === 'function') {
-                  drawer.open();
-                } else if (drawer) {
-                  drawer.classList.add('active', 'is-open');
-                  document.body.classList.add('cart-drawer-open');
-                } else {
+              if (drawer && typeof drawer.renderContents === 'function') {
+                // Dawn's renderContents both repaints and opens the drawer.
+                drawer.renderContents(data);
+              } else {
+                document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+                if (behavior === 'drawer') {
                   window.location.href = window.Shopify.routes.root + 'cart';
                 }
+                return;
+              }
+
+              if (behavior === 'stay' && drawer.classList.contains('active')) {
+                if (typeof drawer.close === 'function') drawer.close();
               }
             })
             .catch(function (err) {
