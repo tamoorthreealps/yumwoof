@@ -109,7 +109,7 @@
       <span class="visually-hidden">{{ escaped_value }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
-
+{% unless value == 'Healthy Grains (Original)' %}
     {% render 'swatch-input',
       id: input_id,
       name: input_name,
@@ -122,6 +122,7 @@
       help_text: help_text,
       additional_props: input_dataset
     %}
+  {% endunless %}
   {%- elsif picker_type == 'button' -%}
     {%- comment -%}
       Optional per-value subtitle (e.g. bag size "Everyday feeding" / "Trial or topper"),
