@@ -614,7 +614,8 @@ display: block;
 	fill: #FFF9EF;
   }
 
-  .country-pill__button:hover svg path{
+  .country-pill__button:hover svg path,
+  .country-pill__button[aria-expanded=true] svg path{
 	fill: #000;
   }
 
