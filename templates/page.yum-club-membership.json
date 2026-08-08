@@ -92,7 +92,7 @@
         "show_plan_name": false,
         "sold_out_text": "SOLD OUT",
         "quantity": 1,
-        "cart_behavior": "cart",
+        "cart_behavior": "drawer",
         "button_radius": 160,
         "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
         "color_bg": "#fff9ef",
