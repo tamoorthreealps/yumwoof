@@ -347,6 +347,7 @@ p.yf__signup__footer_content a {
 
 .yf__signup-form .go1822718113.go1822718113.go1822718113 {
   width: 100%;
+  position: relative;          /* anchor for the inline button */
 }
 
 .yf__signup-form .go90847487.go90847487.go90847487 {
@@ -354,6 +355,7 @@ p.yf__signup__footer_content a {
   height: 56px;
   border-radius: 100px;
   padding: 10px 30px;
+  padding-right: 180px;        /* clear space for the button */
   font-size: 18px;
   line-height: 28px;
   color: #000;
@@ -371,6 +373,17 @@ p.yf__signup__footer_content a {
 }
 
 .yf__signup-form .go4033861592.go4033861592.go4033861592 {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: auto;
+  height: 44px;
+  margin: 0;
+  padding: 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
   pointer-events: auto;
   border: 1.5px solid #000;
   background: #FFC069;
@@ -379,7 +392,6 @@ p.yf__signup__footer_content a {
   line-height: 24px;
   letter-spacing: 0.64px;
   font-family: 'FFBlurProMedium';
-  margin: 12px 0 0;
   transition: all .25s ease;
 }
 
