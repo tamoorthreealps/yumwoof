@@ -613,6 +613,10 @@ display: block;
 	fill: #FFF9EF;
   }
 
+  .country-pill__button:hover svg path{
+	fill: #000;
+  }
+
   .country-pill__button[aria-expanded='true'] .country-pill__caret svg {
     transform: rotate(180deg);
   }
