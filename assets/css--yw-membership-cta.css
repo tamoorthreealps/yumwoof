@@ -255,23 +255,18 @@ margin: 0;
   .ywcta__button-wrap { order: 4; margin-top: 24px; width: 100%; }
 
 
-  .ywcta__button {
-    width: 100%;
-    min-width: 0;
-    height: 40px;
-    padding: 10px 20px;
-    font-size: 12px;
-    letter-spacing: 0.9px;
-  }
+    .ywcta__button {
+        width: 100%;
+        min-width: 0;
+        height: 48px;
+        padding: 10px 20px;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 1.28px;
+        max-width: 298px;
+    }
 }
 
-/* Narrow phones. */
-@media (max-width: 359px) {
-  .ywcta__heading {
-    font-size: 12px;
-    line-height: 19px;
-  }
-}
 
 /* ============================= Reduced motion ============================= */
 
