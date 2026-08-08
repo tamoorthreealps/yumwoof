@@ -90,7 +90,7 @@
         "button_url": "",
         "button_radius": 160,
         "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
-        "color_bg": "#FFF9EF",
+        "color_bg": "#fff9ef",
         "bg_image": "shopify://shop_images/Club_Intro_Band_Background.png",
         "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.png",
         "color_heading": "#661d1d",
@@ -108,11 +108,46 @@
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 64
       }
+    },
+    "yw_membership_family_dWgri4": {
+      "type": "yw-membership-family",
+      "name": "Yum Club Family",
+      "settings": {
+        "heading": "<p>“Good food shouldn't be a luxury. The club is how we make ours cost less.”</p>",
+        "description": "",
+        "signature": "shopify://shop_images/Vector_28f1afee-deaa-4039-93eb-4a15ba6a52d4.svg",
+        "attribution": "Jaron & Ana, Founders",
+        "text_position": "left",
+        "button_text": "",
+        "button_url": "",
+        "button_radius": 160,
+        "color_bg": "#3a2b21",
+        "bg_image": "shopify://shop_images/Hero_Image_Retail_Shelf_17314110-110a-4ce0-974a-2461dc0f890f.jpg",
+        "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf_1.jpg",
+        "focal_desktop": "center center",
+        "focal_mobile": "62% center",
+        "scrim_opacity": 0,
+        "color_heading": "#ffffff",
+        "color_text": "#fff9ef",
+        "color_accent": "#fff9ef",
+        "color_border": "#000000",
+        "color_button_bg": "#7ba6dd",
+        "color_button_text": "#000000",
+        "color_button_hover_bg": "#fff9ef",
+        "color_button_hover_text": "#000000",
+        "height_desktop": "720px",
+        "height_mobile": "609px",
+        "padding_top": 104,
+        "padding_bottom": 76,
+        "padding_top_mobile": 34,
+        "padding_bottom_mobile": 22
+      }
     }
   },
   "order": [
     "main",
     "yw_membership_banner_hepMCN",
-    "yw_membership_club_nYLiBH"
+    "yw_membership_club_nYLiBH",
+    "yw_membership_family_dWgri4"
   ]
 }
