@@ -589,6 +589,7 @@ display: block;
     background: #FFF9EF;
     border-color: #FFF9EF;
     color: #000;
+	fill: #FFF9EF;
 }
 
   .country-pill__code {
