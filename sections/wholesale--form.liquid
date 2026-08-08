@@ -76,7 +76,7 @@
     margin: 132px 0 0;
 }
   /* --- torn edges --- */
-  #create-wholesale-act-{{ section.id }}::before,
+  {% comment %} #create-wholesale-act-{{ section.id }}::before,
   #create-wholesale-act-{{ section.id }}::after {
     content: "";
     position: absolute;
@@ -92,7 +92,7 @@
     mask-size: 1200px 20px;
     -webkit-mask-image: var(--wa-tear);
     mask-image: var(--wa-tear);
-  }
+  } {% endcomment %}
 
   #create-wholesale-act-{{ section.id }}::before { top: 0; }
   #create-wholesale-act-{{ section.id }}::after { bottom: 0; transform: scaleY(-1); }
