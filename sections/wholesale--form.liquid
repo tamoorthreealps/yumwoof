@@ -1,0 +1,177 @@
+{%- comment -%}
+  Extracted from the wholesale page block (.create_wholesale_act).
+  Class names kept identical so the existing scroll-to script on
+  .wholesale_opt_btn still finds this element.
+{%- endcomment -%}
+
+<div class="create_wholesale_act" id="create-wholesale-act-{{ section.id }}">
+  {%- if section.settings.title != blank -%}
+    <div class="wholesale_act_title">
+      <span>{{ section.settings.title }}</span>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.description != blank -%}
+    <div class="wholesale_act_dsc">
+      <span>{{ section.settings.description }}</span>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.klaviyo_form_id != blank -%}
+    <div class="wholesale_act_klaviyo">
+      <div class="klaviyo-form-{{ section.settings.klaviyo_form_id }}"></div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  #create-wholesale-act-{{ section.id }} {
+    color: #f3e6d3;
+    display: flex;
+    row-gap: 20px;
+    column-gap: 20px;
+    position: relative;
+    max-width: 100%;
+    min-width: auto;
+    align-self: stretch;
+    flex-basis: auto;
+    min-height: auto;
+    align-items: center;
+    flex-shrink: 0;
+    font-family: Montserrat, sans-serif;
+    padding: 40px 60px;
+    flex-direction: column;
+    justify-content: center;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  #create-wholesale-act-{{ section.id }} span {
+    width: 100%;
+    font-family: inherit;
+  }
+
+  #create-wholesale-act-{{ section.id }} p {
+    margin: 0;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_title {
+    font-size: 50px;
+    align-self: stretch;
+    flex-basis: auto;
+    text-align: center;
+    flex-shrink: 0;
+    font-family: GalanoGrotesque, sans-serif;
+    font-weight: 600;
+    line-height: 56px;
+    overflow-wrap: break-word;
+    letter-spacing: -1px;
+    text-align-last: center;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_dsc {
+    font-size: 20px;
+    max-width: 700px;
+    flex-basis: auto;
+    text-align: center;
+    flex-shrink: 0;
+    font-family: GalanoGrotesque, sans-serif;
+    font-weight: 700;
+    line-height: 27px;
+    margin-bottom: -20px;
+    overflow-wrap: break-word;
+    text-align-last: center;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo {
+    max-width: 600px;
+    flex-basis: auto;
+    flex-shrink: 0;
+  }
+
+  #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo img {
+    object-fit: fill;
+    min-width: auto;
+    max-height: none;
+    min-height: auto;
+  }
+
+  @media (max-width: 640px) {
+    #create-wholesale-act-{{ section.id }} {
+      row-gap: 20px;
+      column-gap: 20px;
+      position: relative;
+      min-width: auto;
+      flex-basis: auto;
+      min-height: auto;
+      flex-shrink: 0;
+      padding: 40px 20px;
+    }
+
+    #create-wholesale-act-{{ section.id }} .wholesale_act_title {
+      width: auto;
+      height: auto;
+      flex-grow: 1;
+      font-size: 37px;
+      align-self: stretch;
+      flex-basis: auto;
+      flex-shrink: 1;
+      line-height: 39px;
+      text-align-last: center;
+    }
+
+    #create-wholesale-act-{{ section.id }} .wholesale_act_dsc {
+      font-size: 16px;
+      flex-basis: auto;
+      text-align: center;
+      flex-shrink: 0;
+      line-height: 20px;
+      text-align-last: center;
+    }
+
+    #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo {
+      max-width: 400px;
+      flex-basis: auto;
+      flex-shrink: 0;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Wholesale account form",
+  "tag": "section",
+  "class": "wholesale-create-account",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Create a wholesale account"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Apply for your wholesale account on yumwoof.com by completing the form below. Once approved, your stores will have access to our distributor pricing.</p>"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_form_id",
+      "label": "Klaviyo form ID",
+      "info": "The ID only, e.g. RAPfgV — renders as .klaviyo-form-RAPfgV",
+      "default": "RAPfgV"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#1C1F2B"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale account form"
+    }
+  ]
+}
+{% endschema %}
