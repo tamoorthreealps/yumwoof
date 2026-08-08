@@ -2,6 +2,10 @@
   Extracted from the wholesale page block (.create_wholesale_act).
   Class names kept identical so the existing scroll-to script on
   .wholesale_opt_btn still finds this element.
+
+  Torn top/bottom edges are drawn with CSS masks on ::before / ::after
+  so the "torn" colour can be matched to whatever sits above and below
+  the band in the theme editor.
 {%- endcomment -%}
 
 <div class="create_wholesale_act" id="create-wholesale-act-{{ section.id }}">
@@ -26,7 +30,7 @@
 
 <style>
   #create-wholesale-act-{{ section.id }} {
-    color: #f3e6d3;
+    color: {{ section.settings.text_color }};
     display: flex;
     row-gap: 20px;
     column-gap: 20px;
@@ -39,15 +43,50 @@
     align-items: center;
     flex-shrink: 0;
     font-family: Montserrat, sans-serif;
-    padding: 40px 60px;
+    padding: 70px 60px;
     flex-direction: column;
     justify-content: center;
     background-color: {{ section.settings.bg_color }};
+    isolation: isolate;
+  }
+
+  /* --- torn edges --- */
+  #create-wholesale-act-{{ section.id }}::before,
+  #create-wholesale-act-{{ section.id }}::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-color: {{ section.settings.edge_color }};
+    z-index: 1;
+    pointer-events: none;
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    -webkit-mask-size: 1200px 20px;
+    mask-size: 1200px 20px;
+    -webkit-mask-image: var(--wa-tear-{{ section.id }});
+    mask-image: var(--wa-tear-{{ section.id }});
+  }
+
+  #create-wholesale-act-{{ section.id }} {
+    --wa-tear-{{ section.id }}: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 20' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0 H1200 V9 L1160 13 L1120 7 L1080 12 L1040 6 L1000 11 L960 8 L920 14 L880 7 L840 12 L800 6 L760 13 L720 8 L680 11 L640 6 L600 12 L560 9 L520 14 L480 7 L440 12 L400 6 L360 13 L320 8 L280 11 L240 7 L200 12 L160 6 L120 13 L80 8 L40 11 L0 7 Z'/%3E%3C/svg%3E");
+  }
+
+  #create-wholesale-act-{{ section.id }}::before {
+    top: 0;
+  }
+
+  #create-wholesale-act-{{ section.id }}::after {
+    bottom: 0;
+    transform: scaleY(-1);
   }
 
   #create-wholesale-act-{{ section.id }} span {
     width: 100%;
     font-family: inherit;
+    position: relative;
+    z-index: 2;
   }
 
   #create-wholesale-act-{{ section.id }} p {
@@ -84,8 +123,11 @@
 
   #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo {
     max-width: 600px;
+    width: 100%;
     flex-basis: auto;
     flex-shrink: 0;
+    position: relative;
+    z-index: 2;
   }
 
   #create-wholesale-act-{{ section.id }} .wholesale_act_klaviyo img {
@@ -104,7 +146,14 @@
       flex-basis: auto;
       min-height: auto;
       flex-shrink: 0;
-      padding: 40px 20px;
+      padding: 56px 20px;
+    }
+
+    #create-wholesale-act-{{ section.id }}::before,
+    #create-wholesale-act-{{ section.id }}::after {
+      height: 14px;
+      -webkit-mask-size: 600px 14px;
+      mask-size: 600px 14px;
     }
 
     #create-wholesale-act-{{ section.id }} .wholesale_act_title {
@@ -165,7 +214,20 @@
       "type": "color",
       "id": "bg_color",
       "label": "Background",
-      "default": "#1C1F2B"
+      "default": "#6B2222"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#F3E6D3"
+    },
+    {
+      "type": "color",
+      "id": "edge_color",
+      "label": "Torn edge colour",
+      "info": "Should match the page background directly above and below this section.",
+      "default": "#FFFFFF"
     }
   ],
   "presets": [
