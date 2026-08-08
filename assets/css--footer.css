@@ -461,8 +461,15 @@ p.yf__signup__footer_content a {
 .yf-disc__panel > * {
 	overflow: hidden;
 	min-height: 0;
-	/* padding moves here so it doesn't show while collapsed */
+	padding-top: 0;
+	opacity: 0;
+	transition: padding-top .28s cubic-bezier(0.4, 0, 1, 1), opacity .25s ease;
+}
+
+.yf-disc.is-open > .yf-disc__panel > * {
 	padding-top: 14px;
+	opacity: 1;
+	transition: padding-top .4s cubic-bezier(0.16, 1, 0.3, 1), opacity .3s ease .1s;
 }
 
 .yf-disc.is-open > .yf-disc__panel {
