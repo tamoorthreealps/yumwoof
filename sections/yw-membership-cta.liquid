@@ -1,0 +1,400 @@
+{{ 'css--yw-membership-cta.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+
+  comment
+    Background images are emitted as CSS background-image only — never markup.
+    The desktop rule is written ONLY when a desktop image exists, so the
+    mobile image can never surface at desktop widths.
+  endcomment
+
+  assign has_desktop_bg = false
+  if s.bg_image != blank
+    assign has_desktop_bg = true
+  endif
+
+  assign mobile_bg = s.bg_image_mobile | default: s.bg_image
+-%}
+
+{%- style -%}
+  {%- if has_desktop_bg -%}
+    @media (min-width: 750px) {
+      #ywcta-{{ uid }} .ywcta__bg {
+        background-image: image-set(
+          url("{{ s.bg_image | image_url: width: 1600 }}") 1x,
+          url("{{ s.bg_image | image_url: width: 2400 }}") 1.5x
+        );
+        background-image: -webkit-image-set(
+          url("{{ s.bg_image | image_url: width: 1600 }}") 1x,
+          url("{{ s.bg_image | image_url: width: 2400 }}") 1.5x
+        );
+      }
+    }
+    @supports not (background-image: image-set(url("x") 1x)) {
+      @media (min-width: 750px) {
+        #ywcta-{{ uid }} .ywcta__bg {
+          background-image: url("{{ s.bg_image | image_url: width: 2000 }}");
+        }
+      }
+    }
+  {%- endif -%}
+
+  {%- if mobile_bg != blank -%}
+    @media (max-width: 749px) {
+      #ywcta-{{ uid }} .ywcta__bg {
+        background-image: image-set(
+          url("{{ mobile_bg | image_url: width: 800 }}") 1x,
+          url("{{ mobile_bg | image_url: width: 1200 }}") 1.5x,
+          url("{{ mobile_bg | image_url: width: 1600 }}") 2x
+        );
+        background-image: -webkit-image-set(
+          url("{{ mobile_bg | image_url: width: 800 }}") 1x,
+          url("{{ mobile_bg | image_url: width: 1200 }}") 1.5x,
+          url("{{ mobile_bg | image_url: width: 1600 }}") 2x
+        );
+      }
+    }
+    @supports not (background-image: image-set(url("x") 1x)) {
+      @media (max-width: 749px) {
+        #ywcta-{{ uid }} .ywcta__bg {
+          background-image: url("{{ mobile_bg | image_url: width: 1200 }}");
+        }
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section
+  class="ywcta"
+  id="ywcta-{{ uid }}"
+  data-yw-parallax
+  data-yw-parallax-range="{{ s.parallax_range }}"
+  data-yw-parallax-range-mobile="{{ s.parallax_range_mobile }}"
+  {% if s.heading != blank %}aria-labelledby="ywcta-heading-{{ uid }}"{% endif %}
+  style="
+    --ywcta-bg: {{ s.color_bg }};
+    --ywcta-heading: {{ s.color_heading }};
+    --ywcta-text: {{ s.color_text }};
+    --ywcta-button-bg: {{ s.color_button_bg }};
+    --ywcta-button-text: {{ s.color_button_text }};
+    --ywcta-button-hover-bg: {{ s.color_button_hover_bg }};
+    --ywcta-button-hover-text: {{ s.color_button_hover_text }};
+    --ywcta-button-border: {{ s.color_button_border }};
+    --ywcta-overlay: {{ s.color_overlay }};
+    --ywcta-overlay-opacity: {{ s.overlay_opacity | divided_by: 100.0 }};
+    --ywcta-button-radius: {{ s.button_radius }};
+    --ywcta-height: {{ s.height_desktop }};
+    --ywcta-height-mobile: {{ s.height_mobile }};
+    --ywcta-position: {{ s.bg_position }};
+    --ywcta-position-mobile: {{ s.bg_position_mobile }};
+    --ywcta-pad-top: {{ s.padding_top }};
+    --ywcta-pad-top-mobile: {{ s.padding_top_mobile }};
+    --ywcta-max-width: {{ s.content_width }};
+  "
+>
+  {%- comment -%} Decorative: CSS background only — no markup image, no alt. {%- endcomment -%}
+  <div class="ywcta__bg" data-yw-parallax-layer aria-hidden="true"></div>
+  <div class="ywcta__overlay" aria-hidden="true"></div>
+
+  <div class="ywcta__container ywcta__container--{{ s.content_align }}">
+
+    {%- if s.heading != blank -%}
+      <h2 class="ywcta__heading" id="ywcta-heading-{{ uid }}">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if s.description != blank -%}
+      <div class="ywcta__description">{{ s.description }}</div>
+    {%- endif -%}
+
+    {%- if s.button_text != blank -%}
+      <div class="ywcta__button-wrap">
+        <a class="ywcta__button" href="{{ s.button_url | default: '#' }}">
+          <span>{{ s.button_text | escape }}</span>
+        </a>
+      </div>
+    {%- endif -%}
+
+    {%- if s.badge != blank -%}
+      <div class="ywcta__badge">
+        {{
+          s.badge
+          | image_url: width: 512
+          | image_tag:
+            loading: 'lazy',
+            widths: '128, 180, 256, 360, 512',
+            sizes: '(max-width: 749px) 62px, 128px',
+            class: 'ywcta__badge-image',
+            alt: s.badge.alt | default: ''
+        }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  /* Scoped parallax. Defers to a shared theme system if one is present
+     (window.YwParallaxShared / window.YumParallax), otherwise runs this
+     lightweight rAF fallback. Only targets [data-yw-parallax]. */
+  (function () {
+    if (window.YumParallax && window.YumParallax.scan) { window.YumParallax.scan(document); return; }
+    if (window.YwmfParallax && window.YwmfParallax.scan) { window.YwmfParallax.scan(document); return; }
+    if (window.YwctaParallax) { window.YwctaParallax.scan(); return; }
+
+    var items = [];
+    var ticking = false;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var mobile = window.matchMedia('(max-width: 749px)');
+
+    function measure(item) {
+      var rect = item.el.getBoundingClientRect();
+      item.top = rect.top + window.pageYOffset;
+      item.height = rect.height;
+    }
+
+    function measureAll() {
+      for (var i = 0; i < items.length; i++) measure(items[i]);
+      update();
+    }
+
+    function update() {
+      ticking = false;
+      if (reduce.matches) return;
+
+      var vh = window.innerHeight;
+      var y = window.pageYOffset;
+
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        if (!item.visible) continue;
+
+        var range = mobile.matches ? item.rangeMobile : item.range;
+        if (!range) {
+          if (item.last !== 0) {
+            item.layer.style.transform = 'translate3d(0,0,0)';
+            item.last = 0;
+          }
+          continue;
+        }
+
+        var span = vh + item.height;
+        var progress = span > 0 ? (y + vh - item.top) / span : 0;
+        if (progress < 0) progress = 0;
+        if (progress > 1) progress = 1;
+
+        /* Rests mid-travel so the section matches the design when centred. */
+        var offset = Math.round((progress - 0.5) * range * -1 * 100) / 100;
+        if (offset !== item.last) {
+          item.layer.style.transform = 'translate3d(0,' + offset + 'px,0)';
+          item.last = offset;
+        }
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    var io = 'IntersectionObserver' in window
+      ? new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            var it = entries[i].target.__ywcta;
+            if (!it) continue;
+            it.visible = entries[i].isIntersecting;
+            if (it.visible) measure(it);
+          }
+          onScroll();
+        }, { rootMargin: '200px 0px' })
+      : null;
+
+    function register(el) {
+      if (el.__ywcta) return;
+      var layer = el.querySelector('[data-yw-parallax-layer]');
+      if (!layer) return;
+
+      var item = {
+        el: el,
+        layer: layer,
+        range: parseFloat(el.getAttribute('data-yw-parallax-range')) || 0,
+        rangeMobile: parseFloat(el.getAttribute('data-yw-parallax-range-mobile')) || 0,
+        visible: !io,
+        last: null
+      };
+      el.__ywcta = item;
+      items.push(item);
+      measure(item);
+      if (io) io.observe(el);
+    }
+
+    function scan(root) {
+      var nodes = (root || document).querySelectorAll('[data-yw-parallax]');
+      for (var i = 0; i < nodes.length; i++) register(nodes[i]);
+      onScroll();
+    }
+
+    function unregister(root) {
+      for (var i = items.length - 1; i >= 0; i--) {
+        if (root !== items[i].el && !root.contains(items[i].el)) continue;
+        if (io) io.unobserve(items[i].el);
+        items[i].layer.style.transform = '';
+        delete items[i].el.__ywcta;
+        items.splice(i, 1);
+      }
+    }
+
+    function debounce(fn, wait) {
+      var t;
+      return function () { clearTimeout(t); t = setTimeout(fn, wait); };
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', debounce(measureAll, 150), { passive: true });
+    window.addEventListener('orientationchange', debounce(measureAll, 150));
+    window.addEventListener('load', measureAll);
+
+    function onMedia(mq, fn) {
+      if (mq.addEventListener) mq.addEventListener('change', fn);
+      else if (mq.addListener) mq.addListener(fn);
+    }
+    onMedia(reduce, function (e) {
+      if (e.matches) {
+        for (var i = 0; i < items.length; i++) {
+          items[i].layer.style.transform = '';
+          items[i].last = null;
+        }
+      } else { measureAll(); }
+    });
+    onMedia(mobile, measureAll);
+
+    document.addEventListener('shopify:section:load', function (e) { scan(e.target); measureAll(); });
+    document.addEventListener('shopify:section:unload', function (e) { unregister(e.target); });
+    document.addEventListener('shopify:section:reorder', measureAll);
+
+    window.YwctaParallax = { scan: scan, refresh: measureAll };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { scan(); });
+    } else { scan(); }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yum Club Final CTA",
+  "tag": "section",
+  "class": "yw-membership-cta-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Feed your dog better for less, starting with the next order you place.</p>"
+    },
+    { "type": "richtext", "id": "description", "label": "Supporting text" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+    { "type": "image_picker", "id": "badge", "label": "Badge / sticker" },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+
+    { "type": "header", "content": "Background image" },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "info": "Applied as a CSS background. Leave empty to show the background color on desktop."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "info": "Falls back to the desktop image. Never shown on desktop."
+    },
+    {
+      "type": "text",
+      "id": "bg_position",
+      "label": "Background position (desktop)",
+      "default": "center center",
+      "info": "CSS background-position, e.g. 'center center', '50% 40%', '60% center'."
+    },
+    {
+      "type": "text",
+      "id": "bg_position_mobile",
+      "label": "Background position (mobile)",
+      "default": "center center"
+    },
+
+    { "type": "header", "content": "Overlay" },
+    { "type": "color", "id": "color_overlay", "label": "Overlay color", "default": "#000000" },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0,
+      "info": "Sits above the background image, below the content. Raise this when using a photo background."
+    },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_bg", "label": "Background color", "default": "#e35b45" },
+    { "type": "color", "id": "color_heading", "label": "Heading color", "default": "#661d1d" },
+    { "type": "color", "id": "color_text", "label": "Body text color", "default": "#661d1d" },
+
+    { "type": "header", "content": "Button" },
+    { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#7ba6dd" },
+    { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#000000" },
+    { "type": "color", "id": "color_button_border", "label": "Button border", "default": "#000000" },
+    { "type": "color", "id": "color_button_hover_bg", "label": "Button background (hover)", "default": "#661d1d" },
+    { "type": "color", "id": "color_button_hover_text", "label": "Button text (hover)", "default": "#fff9ef" },
+    { "type": "text", "id": "button_radius", "label": "Button corner radius", "default": "160px" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "text", "id": "height_desktop", "label": "Height (desktop)", "default": "617px" },
+    { "type": "text", "id": "height_mobile", "label": "Height (mobile)", "default": "343px" },
+    { "type": "text", "id": "padding_top", "label": "Content offset from top (desktop)", "default": "96px" },
+    { "type": "text", "id": "padding_top_mobile", "label": "Content offset from top (mobile)", "default": "34px" },
+    { "type": "text", "id": "content_width", "label": "Content width", "default": "700px" },
+
+    { "type": "header", "content": "Parallax" },
+    {
+      "type": "range",
+      "id": "parallax_range",
+      "label": "Parallax range (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "default": 80,
+      "info": "Set to 0 to disable. Only has a visible effect when a background image is set."
+    },
+    {
+      "type": "range",
+      "id": "parallax_range_mobile",
+      "label": "Parallax range (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    }
+  ],
+  "presets": [{ "name": "Yum Club Final CTA" }]
+}
+{% endschema %}
