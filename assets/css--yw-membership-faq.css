@@ -322,7 +322,7 @@
 
 @media (max-width: 749px) {
   .ywfaq {
-    --ywfaq-border-width: var(--ywfaq-border-width-mobile, 1px);
+    --ywfaq-border-width: var(--ywfaq-border-width-mobile, 1px) !important;
     padding-block: var(--ywfaq-pad-top-mobile, 46px) var(--ywfaq-pad-bottom-mobile, 40px);
   }
 
