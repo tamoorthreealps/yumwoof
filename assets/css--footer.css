@@ -236,7 +236,7 @@
   transition: transform .35s ease;
 }
 
-.yf__list li a:hover::after, .yf__questions-list li:hover::after {
+.yf__list li a:hover::after, .yf__questions-list li a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
