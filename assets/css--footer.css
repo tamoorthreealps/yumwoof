@@ -80,6 +80,7 @@
 .yf__marquee-track {
   display: flex;
   flex: none;
+  gap: 24px;
 }
 
 .yf__marquee-item {
