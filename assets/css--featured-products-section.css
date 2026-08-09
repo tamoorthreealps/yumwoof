@@ -141,7 +141,8 @@ position: absolute !important;
 }
 
 /* Anything that needs its own click target sits above the overlay */
-.fp__card .fp__recipes {
+.fp__card .fp__recipes,
+.fp__card .fp__shop {
   position: relative;
   z-index: 4;
 }
