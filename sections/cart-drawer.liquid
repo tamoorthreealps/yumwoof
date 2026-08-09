@@ -438,9 +438,13 @@
                       if item.selling_plan_allocation != null and item.selling_plan_allocation.compare_at_price > item.final_price
                         assign item_compare_unit = item.selling_plan_allocation.compare_at_price
                       endif
+
                       assign item_compare_line = item_compare_unit | times: item.quantity
                       assign discount_pct = 0
-                      if item_compare_unit > item.final_price
+
+                      if is_sub and cur_adj != null and cur_adj.value_type == 'percentage'
+                        assign discount_pct = cur_adj.value
+                      elsif item_compare_unit > item.final_price
                         assign saved_unit = item_compare_unit | minus: item.final_price
                         assign discount_pct = saved_unit | times: 100 | divided_by: item_compare_unit
                       endif
