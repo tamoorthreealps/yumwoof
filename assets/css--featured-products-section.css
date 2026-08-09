@@ -179,10 +179,10 @@ position: absolute !important;
 }
 
 
-.fp__card>* {
+/* .fp__card>* {
 	position: relative;
 	z-index: 2;
-}
+} */
 
 .fp__title {
 	margin: 0 0 8px;
