@@ -220,6 +220,23 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
 
           if (cartFooter) cartFooter.classList.toggle('is-empty', parsedState.item_count === 0);
           if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle('is-empty', parsedState.item_count === 0);
+          if (parsedState.item_count === 0) {
+            fetch(`${routes.cart_url}?section_id=cart-drawer`)
+              .then((response) => response.text())
+              .then((responseText) => {
+                const html = new DOMParser().parseFromString(responseText, 'text/html');
+                const sourceInner = html.querySelector('.drawer__inner');
+                const currentInner = document.querySelector('cart-drawer .drawer__inner');
+
+                if (sourceInner && currentInner) {
+                  currentInner.replaceWith(sourceInner);
+                  initEmptyCartSlider();
+                }
+              })
+              .catch((error) => {
+                console.error('Failed to refresh empty cart drawer:', error);
+              });
+          }
 
           sectionsToRender.forEach((section) => {
             if (section.id === 'cart-icon-bubble') {
