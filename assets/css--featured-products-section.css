@@ -128,22 +128,25 @@
 }
 
 .fp__card-link {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  /* keeps it invisible but clickable */
-  font-size: 0;
-  text-indent: -9999px;
+position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1 !important;
+    border-radius: inherit;
+    font-size: 0;
+    display: block !important;
+    cursor: pointer;
 }
 
 /* Anything that needs its own click target sits above the overlay */
-.fp__card .fp__recipes,
+/* .fp__card .fp__recipes,
 .fp__card .fp__shop,
 .fp__card .fp__media {
   position: relative;
   z-index: 2;
-}
+} */
 
 /* .fp__card.is-active {
 	transform: scale(1);
