@@ -29,7 +29,6 @@
   data-section-id="{{ section.id }}"
 >
   <div class="yw--wholesale--form__inner">
-
     {%- if s.kibble_left != blank -%}
       <img
         class="yw--wholesale--form__kibble yw--wholesale--form__kibble--left"
@@ -82,11 +81,20 @@
               <a
                 class="yw--wholesale--form__link"
                 href="{{ block.settings.url | default: '#' }}"
-                {% if block.settings.new_tab %}target="_blank" rel="noopener"{% endif %}
+                {% if block.settings.new_tab %}
+                  target="_blank" rel="noopener"
+                {% endif %}
               >
                 <span class="yw--wholesale--form__link-label">{{ block.settings.label }}</span>
-                <svg class="yw--wholesale--form__link-arrow" viewBox="0 0 16 12" fill="none" aria-hidden="true" focusable="false">
-                  <path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg
+                  class="yw--wholesale--form__link-arrow"
+                  width="12"
+                  height="6"
+                  viewBox="0 0 12 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M7.52594 6C7.74135 5.50413 7.96506 5.06612 8.19704 4.68595C8.42903 4.28926 8.66102 3.95041 8.89301 3.66942H0V2.33058H8.89301C8.66102 2.03306 8.42903 1.69421 8.19704 1.31405C7.96506 0.917356 7.74135 0.479339 7.52594 0H8.69416C9.73811 1.20661 10.8401 2.09917 12 2.67769V3.32231C10.8401 3.8843 9.73811 4.77686 8.69416 6H7.52594Z" fill="black"/>
                 </svg>
               </a>
             </li>
@@ -94,233 +102,232 @@
         </ul>
       </div>
     {%- endif -%}
-
   </div>
 </section>
 
 {%- style -%}
-  .yw--wholesale--form {
-    position: relative;
-    background-color: var(--ywf-bg);
-    padding: var(--ywf-pad-top-mob) 0 var(--ywf-pad-bottom-mob);
-    color: var(--ywf-text);
-    overflow: hidden;
-  }
-
-  .yw--wholesale--form__inner {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  /* ---------- decorative kibbles ---------- */
-  .yw--wholesale--form__kibble {
-    position: absolute;
-    width: var(--ywf-kibble-w-mob);
-    height: auto;
-    pointer-events: none;
-    user-select: none;
-    z-index: 0;
-  }
-  .yw--wholesale--form__kibble--left  { left: 0;  top: 110px; transform: rotate(-12deg); }
-  .yw--wholesale--form__kibble--right { right: 0; top: 300px; transform: rotate(14deg); }
-  .yw--wholesale--form--no-kibble-mob .yw--wholesale--form__kibble { display: none; }
-
-  /* ---------- heading ---------- */
-  .yw--wholesale--form__head {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    margin-bottom: 24px;
-  }
- .yw--wholesale--form__title {
-    margin: 0 0 8px;
-    color: var(--ywf-heading);
-    font-size: 40px;
-    line-height: 40px;
-    letter-spacing: -0.80px;
-    text-transform: uppercase;
-    font-family: 'TAYRosemary';
-}
-  .yw--wholesale--form__subtitle {
-    margin: 0 auto;
-    max-width: 34ch;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0;
-    font-family: 'Matter';
-}
-  .yw--wholesale--form__subtitle p { margin: 0; }
-
-  /* ---------- klaviyo wrapper ---------- */
-  .yw--wholesale--form__klaviyo {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: var(--ywf-form-width);
-    margin: 0 auto;
-  }
-
-  /* Klaviyo renders its own markup — these overrides re-skin it to the design. */
-  .yw--wholesale--form__klaviyo form,
-  .yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] {
-    background: transparent !important;
-  }
-
-  .yw--wholesale--form__klaviyo input[type="text"],
-  .yw--wholesale--form__klaviyo input[type="email"],
-  .yw--wholesale--form__klaviyo input[type="tel"],
-  .yw--wholesale--form__klaviyo input[type="number"],
-  .yw--wholesale--form__klaviyo input[type="url"],
-  .yw--wholesale--form__klaviyo select,
-  .yw--wholesale--form__klaviyo textarea {
-    background-color: var(--ywf-field-bg) !important;
-    border: 1px solid var(--ywf-field-border) !important;
-    border-radius: var(--ywf-field-radius) !important;
-    box-shadow: none !important;
-    color: var(--ywf-text) !important;
-    font-size: 14px !important;
-    min-height: 44px !important;
-    padding: 10px 16px !important;
-  }
-  .yw--wholesale--form__klaviyo input::placeholder,
-  .yw--wholesale--form__klaviyo textarea::placeholder {
-    color: color-mix(in srgb, var(--ywf-text) 55%, transparent) !important;
-    opacity: 1 !important;
-  }
-  .yw--wholesale--form__klaviyo input:focus,
-  .yw--wholesale--form__klaviyo select:focus,
-  .yw--wholesale--form__klaviyo textarea:focus {
-    outline: none !important;
-    border-color: var(--ywf-btn-bg) !important;
-  }
-
-  /* phone field (intl-tel-input) */
-  .yw--wholesale--form__klaviyo .iti,
-  .yw--wholesale--form__klaviyo .iti--allow-dropdown { width: 100% !important; }
-  .yw--wholesale--form__klaviyo .iti__flag-container { border-radius: var(--ywf-field-radius) 0 0 var(--ywf-field-radius); }
-
-  /* consent / disclaimer copy */
-  .yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] p,
-  .yw--wholesale--form__klaviyo [data-testid="form-component"] p {
-    font-size: 10px !important;
-    line-height: 1.4 !important;
-  }
-
-  /* submit button */
-  .yw--wholesale--form__klaviyo button,
-  .yw--wholesale--form__klaviyo [type="submit"] {
-    background-color: var(--ywf-btn-bg) !important;
-    border: 0 !important;
-    border-radius: 999px !important;
-    color: var(--ywf-btn-text) !important;
-    font-size: 14px !important;
-    letter-spacing: .06em !important;
-    min-height: 48px !important;
-    text-transform: uppercase !important;
-    transition: background-color .2s ease;
-    width: 100% !important;
-  }
-  .yw--wholesale--form__klaviyo button:hover,
-  .yw--wholesale--form__klaviyo [type="submit"]:hover {
-    background-color: var(--ywf-btn-bg-hover) !important;
-  }
-
-  /* ---------- quick links ---------- */
-  .yw--wholesale--form__links {
-        position: relative;
-    z-index: 1;
-    max-width: var(--ywf-form-width);
-    margin: 28px auto 0;
-    padding-top: 24px;
-    border-top: 1px solid var(--ywf-field-border);
-  }
- .yw--wholesale--form__links-title {
-    margin: 0 0 12px;
-    color: var(--ywf-heading);
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: -0.80px;
-    text-transform: uppercase;
-    font-family: 'TAY Birdie';
-}
-  .yw--wholesale--form__links-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-.yw--wholesale--form__link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    padding: 5.2px 25px 5.2px 12px;
-    border: 1px solid var(--ywf-field-border);
-    border-radius: 6px;
-    background-color: var(--ywf-field-bg);
-    color: var(--ywf-heading);
-    font-size: 14px;
-    letter-spacing: 0.56px;
-    line-height: 20px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background-color .2s ease, border-color .2s ease;
-}
-  .yw--wholesale--form__link:hover {
-    background-color: #000;
-    color: #FFF9EF;
-  }
-  .yw--wholesale--form__link-arrow {
-    flex: 0 0 auto;
-    width: 14px;
-    height: 10px;
-  }
-
-  /* ---------- desktop ---------- */
-  @media screen and (min-width: 768px) {
     .yw--wholesale--form {
-      padding: var(--ywf-pad-top) 0 var(--ywf-pad-bottom);
-    }
-    .yw--wholesale--form__kibble { width: var(--ywf-kibble-w); display:block !important; }
-    .yw--wholesale--form__kibble--left  { left: 6%;  top: 120px; }
-    .yw--wholesale--form__kibble--right { right: 6%; top: 220px; }
-
-        .yw--wholesale--form__title {
-        font-size: 56px;
-        line-height: 64px;
-        letter-spacing: -0.56px;
-        margin: 0;
-    }
-    .yw--wholesale--form__subtitle {
-        font-size: 18px;
-        line-height: 28px;
-        max-width: 400px;
-    }
-    .yw--wholesale--form__head { margin-bottom: 30px; }
-
-    /* two-up fields on desktop */
-    .yw--wholesale--form__klaviyo form [data-testid="form-row"] {
-      display: grid !important;
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 12px !important;
-    }
-    .yw--wholesale--form__klaviyo form [data-testid="form-row"] > * {
-      min-width: 0 !important;
+      position: relative;
+      background-color: var(--ywf-bg);
+      padding: var(--ywf-pad-top-mob) 0 var(--ywf-pad-bottom-mob);
+      color: var(--ywf-text);
+      overflow: hidden;
     }
 
-    .yw--wholesale--form__links-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+    .yw--wholesale--form__inner {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-        .yw--wholesale--form__links {
-        padding-top: 28px;
-        margin-top: 0;
+
+    /* ---------- decorative kibbles ---------- */
+    .yw--wholesale--form__kibble {
+      position: absolute;
+      width: var(--ywf-kibble-w-mob);
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
     }
+    .yw--wholesale--form__kibble--left  { left: 0;  top: 110px; transform: rotate(-12deg); }
+    .yw--wholesale--form__kibble--right { right: 0; top: 300px; transform: rotate(14deg); }
+    .yw--wholesale--form--no-kibble-mob .yw--wholesale--form__kibble { display: none; }
+
+    /* ---------- heading ---------- */
+    .yw--wholesale--form__head {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+   .yw--wholesale--form__title {
+      margin: 0 0 8px;
+      color: var(--ywf-heading);
+      font-size: 40px;
+      line-height: 40px;
+      letter-spacing: -0.80px;
+      text-transform: uppercase;
+      font-family: 'TAYRosemary';
   }
+    .yw--wholesale--form__subtitle {
+      margin: 0 auto;
+      max-width: 34ch;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0;
+      font-family: 'Matter';
+  }
+    .yw--wholesale--form__subtitle p { margin: 0; }
+
+    /* ---------- klaviyo wrapper ---------- */
+    .yw--wholesale--form__klaviyo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--ywf-form-width);
+      margin: 0 auto;
+    }
+
+    /* Klaviyo renders its own markup — these overrides re-skin it to the design. */
+    .yw--wholesale--form__klaviyo form,
+    .yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] {
+      background: transparent !important;
+    }
+
+    .yw--wholesale--form__klaviyo input[type="text"],
+    .yw--wholesale--form__klaviyo input[type="email"],
+    .yw--wholesale--form__klaviyo input[type="tel"],
+    .yw--wholesale--form__klaviyo input[type="number"],
+    .yw--wholesale--form__klaviyo input[type="url"],
+    .yw--wholesale--form__klaviyo select,
+    .yw--wholesale--form__klaviyo textarea {
+      background-color: var(--ywf-field-bg) !important;
+      border: 1px solid var(--ywf-field-border) !important;
+      border-radius: var(--ywf-field-radius) !important;
+      box-shadow: none !important;
+      color: var(--ywf-text) !important;
+      font-size: 14px !important;
+      min-height: 44px !important;
+      padding: 10px 16px !important;
+    }
+    .yw--wholesale--form__klaviyo input::placeholder,
+    .yw--wholesale--form__klaviyo textarea::placeholder {
+      color: color-mix(in srgb, var(--ywf-text) 55%, transparent) !important;
+      opacity: 1 !important;
+    }
+    .yw--wholesale--form__klaviyo input:focus,
+    .yw--wholesale--form__klaviyo select:focus,
+    .yw--wholesale--form__klaviyo textarea:focus {
+      outline: none !important;
+      border-color: var(--ywf-btn-bg) !important;
+    }
+
+    /* phone field (intl-tel-input) */
+    .yw--wholesale--form__klaviyo .iti,
+    .yw--wholesale--form__klaviyo .iti--allow-dropdown { width: 100% !important; }
+    .yw--wholesale--form__klaviyo .iti__flag-container { border-radius: var(--ywf-field-radius) 0 0 var(--ywf-field-radius); }
+
+    /* consent / disclaimer copy */
+    .yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] p,
+    .yw--wholesale--form__klaviyo [data-testid="form-component"] p {
+      font-size: 10px !important;
+      line-height: 1.4 !important;
+    }
+
+    /* submit button */
+    .yw--wholesale--form__klaviyo button,
+    .yw--wholesale--form__klaviyo [type="submit"] {
+      background-color: var(--ywf-btn-bg) !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      color: var(--ywf-btn-text) !important;
+      font-size: 14px !important;
+      letter-spacing: .06em !important;
+      min-height: 48px !important;
+      text-transform: uppercase !important;
+      transition: background-color .2s ease;
+      width: 100% !important;
+    }
+    .yw--wholesale--form__klaviyo button:hover,
+    .yw--wholesale--form__klaviyo [type="submit"]:hover {
+      background-color: var(--ywf-btn-bg-hover) !important;
+    }
+
+    /* ---------- quick links ---------- */
+    .yw--wholesale--form__links {
+          position: relative;
+      z-index: 1;
+      max-width: var(--ywf-form-width);
+      margin: 28px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--ywf-field-border);
+    }
+   .yw--wholesale--form__links-title {
+      margin: 0 0 12px;
+      color: var(--ywf-heading);
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: -0.80px;
+      text-transform: uppercase;
+      font-family: 'TAY Birdie';
+  }
+    .yw--wholesale--form__links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  .yw--wholesale--form__link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      padding: 5.2px 25px 5.2px 12px;
+      border: 1px solid var(--ywf-field-border);
+      border-radius: 6px;
+      background-color: var(--ywf-field-bg);
+      color: var(--ywf-heading);
+      font-size: 14px;
+      letter-spacing: 0.56px;
+      line-height: 20px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background-color .2s ease, border-color .2s ease;
+  }
+    .yw--wholesale--form__link:hover {
+      background-color: #000;
+      color: #FFF9EF;
+    }
+    .yw--wholesale--form__link-arrow {
+      flex: 0 0 auto;
+      width: 14px;
+      height: 10px;
+    }
+
+    /* ---------- desktop ---------- */
+    @media screen and (min-width: 768px) {
+      .yw--wholesale--form {
+        padding: var(--ywf-pad-top) 0 var(--ywf-pad-bottom);
+      }
+      .yw--wholesale--form__kibble { width: var(--ywf-kibble-w); display:block !important; }
+      .yw--wholesale--form__kibble--left  { left: 6%;  top: 120px; }
+      .yw--wholesale--form__kibble--right { right: 6%; top: 220px; }
+
+          .yw--wholesale--form__title {
+          font-size: 56px;
+          line-height: 64px;
+          letter-spacing: -0.56px;
+          margin: 0;
+      }
+      .yw--wholesale--form__subtitle {
+          font-size: 18px;
+          line-height: 28px;
+          max-width: 400px;
+      }
+      .yw--wholesale--form__head { margin-bottom: 30px; }
+
+      /* two-up fields on desktop */
+      .yw--wholesale--form__klaviyo form [data-testid="form-row"] {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+      }
+      .yw--wholesale--form__klaviyo form [data-testid="form-row"] > * {
+        min-width: 0 !important;
+      }
+
+      .yw--wholesale--form__links-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+          .yw--wholesale--form__links {
+          padding-top: 28px;
+          margin-top: 0;
+      }
+    }
 {%- endstyle -%}
 
 {% schema %}
