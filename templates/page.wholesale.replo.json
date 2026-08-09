@@ -237,19 +237,19 @@
         "kibble_width": "100px",
         "kibble_width_mobile": "46px",
         "hide_kibbles_mobile": true,
-        "bg_color": "#FDF6EB",
-        "text_color": "#3D3A34",
-        "heading_color": "#231F20",
-        "field_bg": "#FFFFFF",
+        "bg_color": "#fdf6eb",
+        "text_color": "#000000",
+        "heading_color": "#000000",
+        "field_bg": "#FFF9EF",
         "field_border": "#000000",
-        "btn_bg": "#F5B335",
+        "btn_bg": "#f5b335",
         "btn_bg_hover": "#000000",
         "btn_text_color": "#000000",
         "field_radius": "6",
-        "padding_top": "60px",
-        "padding_bottom": "70px",
-        "padding_top_mobile": "40px",
-        "padding_bottom_mobile": "48px"
+        "padding_top": "76px",
+        "padding_bottom": "112px",
+        "padding_top_mobile": "64px",
+        "padding_bottom_mobile": "80px"
       }
     }
   },
