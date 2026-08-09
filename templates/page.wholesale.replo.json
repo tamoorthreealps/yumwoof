@@ -23,6 +23,7 @@
         "card_NJncD8": {
           "type": "card",
           "settings": {
+            "shape_image": "shopify://shop_images/Hexagon_Desktop.svg",
             "logo": "shopify://shop_images/Navbar_Shape.svg",
             "logo_alt": "",
             "title": "The lowest price you'll find",
@@ -35,6 +36,7 @@
         "card_Nz3Wig": {
           "type": "card",
           "settings": {
+            "shape_image": "shopify://shop_images/Hexagon_Desktop.svg",
             "logo": "shopify://shop_images/Vector_91a84376-c8df-45ac-ac54-17c10619c0b9.svg",
             "logo_alt": "",
             "title": "Buy on terms you already have",
@@ -47,6 +49,7 @@
         "card_JWeQet": {
           "type": "card",
           "settings": {
+            "shape_image": "shopify://shop_images/Hexagon_Desktop.svg",
             "logo": "shopify://shop_images/Vector_1_2faa822f-472d-4ec3-a4d5-88660e135ef8.svg",
             "logo_alt": "",
             "title": "On your usual schedule.",
