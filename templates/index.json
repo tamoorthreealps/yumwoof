@@ -30,22 +30,22 @@
         "button_border_color": "#000000"
       }
     },
-    "membership_banner": {
-      "type": "membership-banner",
+    "membership_banner_reviews_Rn7HAM": {
+      "type": "membership-banner--reviews",
       "blocks": {
-        "review-1": {
+        "review_QDPVDb": {
           "type": "review",
           "settings": {
             "text": "“We love the fact that Yumwoof is clean with no additives.”"
           }
         },
-        "review-2": {
+        "review_qA9V3x": {
           "type": "review",
           "settings": {
             "text": "“It's real food that's actually healthy.”"
           }
         },
-        "review-3": {
+        "review_hrXVnK": {
           "type": "review",
           "settings": {
             "text": "“Not like other brands that ruin it with the seed oils.”"
@@ -53,17 +53,18 @@
         }
       },
       "block_order": [
-        "review-1",
-        "review-2",
-        "review-3"
+        "review_QDPVDb",
+        "review_qA9V3x",
+        "review_hrXVnK"
       ],
+      "name": "Reviews Membership bar",
       "settings": {
         "rating_text": "Over 2,500 5-star reviews",
         "enable_marquee": true,
         "marquee_speed": 35,
-        "background_color": "#661c1c",
-        "text_color": "#fff9ef",
-        "star_color": "#ffc069"
+        "background_color": "#661C1C",
+        "text_color": "#FFF9EF",
+        "star_color": "#FFC069"
       }
     },
     "featured_products": {
@@ -147,6 +148,7 @@
         "products": [
           "ancestral-blend"
         ],
+        "split_by_recipe": true,
         "metafield_labels": "custom.labels",
         "metafield_description": "custom.product_card_short_description",
         "metafield_recipes_link": "custom.recipes_link",
@@ -501,7 +503,7 @@
   },
   "order": [
     "hero_banner",
-    "membership_banner",
+    "membership_banner_reviews_Rn7HAM",
     "featured_products",
     "heritage_recipes_76xVan",
     "founder_section",
