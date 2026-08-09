@@ -128,8 +128,8 @@ font-size: 16px;
 }
 
 .faqs__answer-inner a, .faqs__answer-inner a:hover {
-  text-decoration:underline;
-  color:#661D1D;
+ text-decoration: underline !important;
+    color: #661d1d !important;
 }
 
 .faqs__answer .faqs__answer-inner > p {
