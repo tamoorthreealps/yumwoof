@@ -68,6 +68,7 @@
                 {%- assign v_desc_mf = v.metafields[desc_parts[0]][desc_parts[1]] -%}
                 {%- assign v_desc = v_desc_mf.value | default: desc_mf.value -%}
                 <li class="fp__card{% if v_hover != blank %} fp__card__hover{% endif %}" data-fp-slide>
+                  <a class="fp__card-link" href="{{ v.url }}" aria-label="{{ product.title | escape }} — {{ recipe_val | escape }}"></a>
                   <div class="fp__hover-media">
                     {%- if v_hover != blank -%}
                       {{ v_hover | image_url: width: 1200 | image_tag: class: 'fp__hover-image', alt: '' }}
@@ -116,6 +117,7 @@
               {%- endif -%}
               {% assign hover_media = product.metafields.custom.featured_hover_media.value %}
               <li class="fp__card {% if hover_media %}fp__card__hover{% endif %}" data-fp-slide>
+                <a class="fp__card-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
                 <div class="fp__hover-media">
                   {% if hover_media %}
                     {% if hover_media.media_type == 'image' %}
