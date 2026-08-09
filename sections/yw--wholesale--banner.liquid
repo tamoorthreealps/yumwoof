@@ -1,0 +1,676 @@
+{%- comment -%}
+  Section: yw--wholesale--banner
+  Green "SELL YUMWOOF / IN YOUR STORE" wholesale banner.
+  - Hexagon card shapes come from image assets (image_picker), never clip-path.
+  - Card content is a separate layer above the shape and always stays inside it.
+  - Kibble decor is fully positionable per breakpoint from the Theme Editor.
+  All CSS scoped under .yw--wholesale--banner
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+
+  assign desktop_bg = s.bg_image_desktop
+  assign mobile_bg = s.bg_image_mobile
+
+  comment
+    Background resolution rules:
+    desktop img + mobile img  -> each on its own breakpoint
+    desktop img only          -> desktop img on both breakpoints
+    mobile img only           -> color on desktop, mobile img on mobile
+    neither                   -> color on both
+  endcomment
+
+  assign desktop_bg_url = blank
+  if desktop_bg != blank
+    assign desktop_bg_url = desktop_bg | image_url: width: 2400
+  endif
+
+  assign mobile_bg_url = blank
+  if mobile_bg != blank
+    assign mobile_bg_url = mobile_bg | image_url: width: 1200
+  elsif desktop_bg != blank
+    assign mobile_bg_url = desktop_bg | image_url: width: 1200
+  endif
+-%}
+
+<style>
+  #shopify-section-{{ uid }} .yw--wholesale--banner {
+    /* colors */
+    --yw-wholesale-banner-bg: {{ s.bg_color }};
+    --yw-wholesale-banner-font: {{ s.heading_color }};
+    --yw-wholesale-banner-text: {{ s.text_color }};
+    --yw-wholesale-banner-card-title: {{ s.card_title_color }};
+    --yw-wholesale-banner-card-text: {{ s.card_text_color }};
+    --yw-wholesale-banner-card-border: {{ s.card_border_color }};
+    --yw-wholesale-banner-button-bg: {{ s.button_bg }};
+    --yw-wholesale-banner-button-text: {{ s.button_text }};
+    --yw-wholesale-banner-button-border: {{ s.button_border }};
+    --yw-wholesale-banner-button-hover-bg: {{ s.button_hover_bg }};
+    --yw-wholesale-banner-button-hover-text: {{ s.button_hover_text }};
+    --yw-wholesale-banner-button-radius: {{ s.button_radius }};
+
+    /* layout */
+    --yw-wholesale-banner-height: {{ s.height_desktop }};
+    --yw-wholesale-banner-height-mobile: {{ s.height_mobile }};
+    --yw-wholesale-banner-max-width: {{ s.content_max_width }};
+    --yw-wholesale-banner-pt: {{ s.padding_top }};
+    --yw-wholesale-banner-pb: {{ s.padding_bottom }};
+    --yw-wholesale-banner-pt-mobile: {{ s.padding_top_mobile }};
+    --yw-wholesale-banner-pb-mobile: {{ s.padding_bottom_mobile }};
+    --yw-wholesale-banner-gap: {{ s.card_gap }};
+    --yw-wholesale-banner-gap-mobile: {{ s.card_gap_mobile }};
+    --yw-wholesale-banner-heading-gap: {{ s.heading_to_description }};
+    --yw-wholesale-banner-cards-gap: {{ s.description_to_cards }};
+    --yw-wholesale-banner-cards-gap-mobile: {{ s.description_to_cards_mobile }};
+
+    /* card shape padding — keeps content inside the hexagon */
+    --yw-wholesale-banner-card-pad-x: {{ s.card_padding_x }};
+    --yw-wholesale-banner-card-pad-top: {{ s.card_padding_top }};
+    --yw-wholesale-banner-card-pad-bottom: {{ s.card_padding_bottom }};
+    --yw-wholesale-banner-card-pad-x-mobile: {{ s.card_padding_x_mobile }};
+    --yw-wholesale-banner-card-pad-top-mobile: {{ s.card_padding_top_mobile }};
+    --yw-wholesale-banner-card-pad-bottom-mobile: {{ s.card_padding_bottom_mobile }};
+  }
+
+  .yw--wholesale--banner {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--yw-wholesale-banner-height);
+    min-height: var(--yw-wholesale-banner-height);
+    padding: var(--yw-wholesale-banner-pt) 20px var(--yw-wholesale-banner-pb);
+    background-color: var(--yw-wholesale-banner-bg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .yw--wholesale--banner *,
+  .yw--wholesale--banner *::before,
+  .yw--wholesale--banner *::after { box-sizing: border-box; }
+
+  {%- comment -%} Desktop background: only ever the DESKTOP image. {%- endcomment -%}
+  {%- if desktop_bg_url != blank -%}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ uid }} .yw--wholesale--banner {
+        background-image: url("{{ desktop_bg_url }}");
+        background-position: {{ s.bg_position_desktop | default: 'center center' }};
+      }
+    }
+  {%- endif -%}
+
+  {%- comment -%} Mobile background: mobile image, else desktop image as fallback. {%- endcomment -%}
+  {%- if mobile_bg_url != blank -%}
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ uid }} .yw--wholesale--banner {
+        background-image: url("{{ mobile_bg_url }}");
+        background-position: {{ s.bg_position_mobile | default: 'center center' }};
+      }
+    }
+  {%- endif -%}
+
+  .yw--wholesale--banner__inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--yw-wholesale-banner-max-width);
+    margin: 0 auto;
+  }
+
+  /* ---------------- Heading ---------------- */
+  .yw--wholesale--banner__heading {
+    margin: 0;
+    text-align: center;
+    color: var(--yw-wholesale-banner-font);
+  }
+  .yw--wholesale--banner__heading-line1 {
+    display: block;
+    font-family: var(--font-heading-family, var(--font-heading, inherit));
+    font-weight: 800;
+    font-size: clamp(40px, 5.4vw, 74px);
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .yw--wholesale--banner__heading-line2 {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--font-heading-family, var(--font-heading, inherit));
+    font-weight: 700;
+    font-size: clamp(20px, 2.1vw, 31px);
+    line-height: 1.1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ---------------- Description ---------------- */
+  .yw--wholesale--banner__description {
+    max-width: 690px;
+    margin: var(--yw-wholesale-banner-heading-gap) auto 0;
+    text-align: center;
+    color: var(--yw-wholesale-banner-text);
+    font-family: var(--font-body-family, inherit);
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  .yw--wholesale--banner__description > *:first-child { margin-top: 0; }
+  .yw--wholesale--banner__description > *:last-child { margin-bottom: 0; }
+
+  /* ---------------- Cards ---------------- */
+  .yw--wholesale--banner__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--yw-wholesale-banner-gap);
+    align-items: stretch;
+    margin-top: var(--yw-wholesale-banner-cards-gap);
+  }
+
+  .yw--wholesale--banner__card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+  }
+
+  /* Shape layer — stretched image background, scales with the card */
+  .yw--wholesale--banner__card-shape {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%; /* stretch to card box so it always fits content */
+    pointer-events: none;
+  }
+  /* Fallback outline if no shape image is selected */
+  .yw--wholesale--banner__card-shape--fallback {
+    background-color: #fff;
+    border: 3px solid var(--yw-wholesale-banner-card-border);
+    border-radius: 26px;
+  }
+
+  .yw--wholesale--banner__card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding:
+      var(--yw-wholesale-banner-card-pad-top)
+      var(--yw-wholesale-banner-card-pad-x)
+      var(--yw-wholesale-banner-card-pad-bottom);
+    text-align: center;
+  }
+
+  .yw--wholesale--banner__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    margin-bottom: 18px;
+  }
+  .yw--wholesale--banner__logo img {
+    display: block;
+    max-width: 200px;
+    max-height: 56px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .yw--wholesale--banner__title {
+    margin: 0 0 14px;
+    font-family: var(--font-body-family, inherit);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--yw-wholesale-banner-card-title);
+  }
+
+  .yw--wholesale--banner__text {
+    margin: 0;
+    font-family: var(--font-body-family, inherit);
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--yw-wholesale-banner-card-text);
+  }
+  .yw--wholesale--banner__text > *:last-child { margin-bottom: 0; }
+
+  /* ---------------- Button ---------------- */
+  .yw--wholesale--banner__button {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 13px 26px;
+    border: 1.5px solid var(--yw-wholesale-banner-button-border);
+    border-radius: var(--yw-wholesale-banner-button-radius);
+    background: var(--yw-wholesale-banner-button-bg);
+    color: var(--yw-wholesale-banner-button-text);
+    font-family: var(--font-body-family, inherit);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1;
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .yw--wholesale--banner__button:hover,
+  .yw--wholesale--banner__button:focus-visible {
+    background: var(--yw-wholesale-banner-button-hover-bg);
+    color: var(--yw-wholesale-banner-button-hover-text);
+  }
+  .yw--wholesale--banner__button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+  /* ---------------- Kibbles ---------------- */
+  .yw--wholesale--banner__kibble {
+    position: absolute;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+    width: var(--k-w);
+    top: var(--k-top);
+    right: var(--k-right);
+    bottom: var(--k-bottom);
+    left: var(--k-left);
+    transform: rotate(var(--k-rot, 0deg));
+    max-width: 30vw;
+  }
+  .yw--wholesale--banner__kibble img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---------------- Tablet ---------------- */
+  @media screen and (max-width: 989px) and (min-width: 750px) {
+    .yw--wholesale--banner { height: auto; min-height: var(--yw-wholesale-banner-height); }
+    .yw--wholesale--banner__cards { gap: 18px; }
+    .yw--wholesale--banner__card-content { padding: 30px 18px 52px; }
+    .yw--wholesale--banner__text { font-size: 14.5px; }
+    .yw--wholesale--banner__logo img { max-height: 46px; }
+    .yw--wholesale--banner__kibble { width: calc(var(--k-w) * .78); }
+  }
+
+  /* ---------------- Mobile ---------------- */
+  @media screen and (max-width: 749px) {
+    .yw--wholesale--banner {
+      height: var(--yw-wholesale-banner-height-mobile);
+      min-height: var(--yw-wholesale-banner-height-mobile);
+      padding: var(--yw-wholesale-banner-pt-mobile) 16px var(--yw-wholesale-banner-pb-mobile);
+    }
+    .yw--wholesale--banner__heading-line1 { font-size: clamp(34px, 11vw, 48px); }
+    .yw--wholesale--banner__heading-line2 { font-size: clamp(17px, 5.4vw, 24px); letter-spacing: 0.12em; }
+    .yw--wholesale--banner__description { font-size: 15px; }
+
+    .yw--wholesale--banner__cards {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--yw-wholesale-banner-gap-mobile);
+      margin-top: var(--yw-wholesale-banner-cards-gap-mobile);
+    }
+    .yw--wholesale--banner__card-content {
+      padding:
+        var(--yw-wholesale-banner-card-pad-top-mobile)
+        var(--yw-wholesale-banner-card-pad-x-mobile)
+        var(--yw-wholesale-banner-card-pad-bottom-mobile);
+    }
+    .yw--wholesale--banner__logo img { max-height: 48px; }
+    .yw--wholesale--banner__title { font-size: 14px; }
+    .yw--wholesale--banner__button { font-size: 12.5px; padding: 12px 22px; }
+
+    .yw--wholesale--banner__kibble {
+      width: var(--k-w-m, var(--k-w));
+      top: var(--k-top-m, var(--k-top));
+      right: var(--k-right-m, var(--k-right));
+      bottom: var(--k-bottom-m, var(--k-bottom));
+      left: var(--k-left-m, var(--k-left));
+      transform: rotate(var(--k-rot-m, var(--k-rot, 0deg)));
+      max-width: 26vw;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .yw--wholesale--banner__button { transition: none; }
+  }
+</style>
+
+<section class="yw--wholesale--banner" aria-labelledby="yw-wholesale-banner-heading-{{ uid }}">
+
+  {%- comment -%} Decorative kibbles — behind content (z-index 1), content is z-index 2 {%- endcomment -%}
+  {%- for i in (1..6) -%}
+    {%- liquid
+    assign k_img_key = 'kibble_image_' | append: i
+    assign k_top_key = 'kibble_' | append: i | append: '_top'
+    assign k_right_key = 'kibble_' | append: i | append: '_right'
+    assign k_bottom_key = 'kibble_' | append: i | append: '_bottom'
+    assign k_left_key = 'kibble_' | append: i | append: '_left'
+    assign k_w_key = 'kibble_' | append: i | append: '_width'
+    assign k_rot_key = 'kibble_' | append: i | append: '_rotation'
+
+    assign k_top_m_key = 'kibble_' | append: i | append: '_top_mobile'
+    assign k_right_m_key = 'kibble_' | append: i | append: '_right_mobile'
+    assign k_bottom_m_key = 'kibble_' | append: i | append: '_bottom_mobile'
+    assign k_left_m_key = 'kibble_' | append: i | append: '_left_mobile'
+    assign k_w_m_key = 'kibble_' | append: i | append: '_width_mobile'
+    assign k_rot_m_key = 'kibble_' | append: i | append: '_rotation_mobile'
+
+    assign k_img = s[k_img_key]
+    assign k_top = s[k_top_key]
+    assign k_right = s[k_right_key]
+    assign k_bottom = s[k_bottom_key]
+    assign k_left = s[k_left_key]
+    assign k_w = s[k_w_key]
+    assign k_rot = s[k_rot_key]
+
+    assign k_top_m = s[k_top_m_key]
+    assign k_right_m = s[k_right_m_key]
+    assign k_bottom_m = s[k_bottom_m_key]
+    assign k_left_m = s[k_left_m_key]
+    assign k_w_m = s[k_w_m_key]
+    assign k_rot_m = s[k_rot_m_key]
+    -%}
+    {%- if k_img != blank -%}
+      <span
+        class="yw--wholesale--banner__kibble"
+        aria-hidden="true"
+        style="
+          --k-top: {{ k_top | default: 'auto' }};
+          --k-right: {{ k_right | default: 'auto' }};
+          --k-bottom: {{ k_bottom | default: 'auto' }};
+          --k-left: {{ k_left | default: 'auto' }};
+          --k-w: {{ k_w | default: '100px' }};
+          --k-rot: {{ k_rot | default: '0deg' }};
+          --k-top-m: {{ k_top_m | default: k_top | default: 'auto' }};
+          --k-right-m: {{ k_right_m | default: k_right | default: 'auto' }};
+          --k-bottom-m: {{ k_bottom_m | default: k_bottom | default: 'auto' }};
+          --k-left-m: {{ k_left_m | default: k_left | default: 'auto' }};
+          --k-w-m: {{ k_w_m | default: k_w | default: '100px' }};
+          --k-rot-m: {{ k_rot_m | default: k_rot | default: '0deg' }};
+        "
+      >
+        {{ k_img
+          | image_url: width: 400
+          | image_tag: loading: 'lazy', alt: '', widths: '120,200,300,400', sizes: '(max-width: 749px) 26vw, 12vw'
+        }}
+      </span>
+    {%- endif -%}
+  {%- endfor -%}
+
+  <div class="yw--wholesale--banner__inner">
+    <h2 class="yw--wholesale--banner__heading" id="yw-wholesale-banner-heading-{{ uid }}">
+      {%- if s.heading_line_1 != blank -%}
+        <span class="yw--wholesale--banner__heading-line1">{{ s.heading_line_1 }}</span>
+      {%- endif -%}
+      {%- if s.heading_line_2 != blank -%}
+        <span class="yw--wholesale--banner__heading-line2">{{ s.heading_line_2 }}</span>
+      {%- endif -%}
+    </h2>
+
+    {%- if s.description != blank -%}
+      <div class="yw--wholesale--banner__description">{{ s.description }}</div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="yw--wholesale--banner__cards">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            {%- liquid
+              assign shape = block.settings.shape_image
+              if shape == blank
+                assign shape = s.card_shape_default
+              endif
+            -%}
+            <div class="yw--wholesale--banner__card" {{ block.shopify_attributes }}>
+              {%- if shape != blank -%}
+                <span
+                  class="yw--wholesale--banner__card-shape"
+                  aria-hidden="true"
+                  style="background-image: url('{{ shape | image_url: width: 1200 }}');"
+                ></span>
+              {%- else -%}
+                <span class="yw--wholesale--banner__card-shape yw--wholesale--banner__card-shape--fallback" aria-hidden="true"></span>
+              {%- endif -%}
+
+              <div class="yw--wholesale--banner__card-content">
+                {%- if block.settings.logo -%}
+                  <div class="yw--wholesale--banner__logo">
+                    {{ block.settings.logo
+                      | image_url: width: 500
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '150,250,350,500',
+                        sizes: '(max-width: 749px) 60vw, 20vw',
+                        alt: block.settings.logo_alt | default: block.settings.title | escape
+                    }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.title != blank -%}
+                  <h3 class="yw--wholesale--banner__title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="yw--wholesale--banner__text">{{ block.settings.text }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.button_label != blank -%}
+                  <a
+                    class="yw--wholesale--banner__button"
+                    href="{{ block.settings.button_url | default: '#' }}"
+                    {% if block.settings.button_new_tab %}target="_blank" rel="noopener"{% endif %}
+                  >
+                    {{ block.settings.button_label }}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "YW Wholesale Banner",
+  "tag": "section",
+  "class": "yw--wholesale--banner-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "Sell Yumwoof" },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "In your store" },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Wholesale pricing for independent pet retailers with physical stores. Premium air-dried dog food — human-grade, GMO-free, and boosted with Cocomega™ superfats backed by research linked to longevity.</p>"
+    },
+
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "bg_image_desktop", "label": "Background image (desktop)" },
+    { "type": "image_picker", "id": "bg_image_mobile", "label": "Background image (mobile)" },
+    { "type": "text", "id": "bg_position_desktop", "label": "Background position (desktop)", "default": "center center" },
+    { "type": "text", "id": "bg_position_mobile", "label": "Background position (mobile)", "default": "center center" },
+    { "type": "color", "id": "bg_color", "label": "Background color", "default": "#4B8B5B" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111111" },
+    { "type": "color", "id": "text_color", "label": "Description color", "default": "#111111" },
+    { "type": "color", "id": "card_title_color", "label": "Card title color", "default": "#6E1B1B" },
+    { "type": "color", "id": "card_text_color", "label": "Card text color", "default": "#111111" },
+    { "type": "color", "id": "card_border_color", "label": "Card border color (fallback shape only)", "default": "#14351F" },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "color", "id": "button_bg", "label": "Button background", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#111111" },
+    { "type": "color", "id": "button_border", "label": "Button border", "default": "#111111" },
+    { "type": "color", "id": "button_hover_bg", "label": "Button hover background", "default": "#111111" },
+    { "type": "color", "id": "button_hover_text", "label": "Button hover text", "default": "#FFFFFF" },
+    { "type": "text", "id": "button_radius", "label": "Button border radius", "default": "999px" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "text", "id": "height_desktop", "label": "Height (desktop)", "default": "500px" },
+    { "type": "text", "id": "height_mobile", "label": "Height (mobile)", "default": "1200px" },
+    { "type": "text", "id": "content_max_width", "label": "Content max width", "default": "1240px" },
+    { "type": "text", "id": "padding_top", "label": "Padding top (desktop)", "default": "70px" },
+    { "type": "text", "id": "padding_bottom", "label": "Padding bottom (desktop)", "default": "110px" },
+    { "type": "text", "id": "padding_top_mobile", "label": "Padding top (mobile)", "default": "44px" },
+    { "type": "text", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "default": "60px" },
+    { "type": "text", "id": "heading_to_description", "label": "Heading to description", "default": "22px" },
+    { "type": "text", "id": "description_to_cards", "label": "Description to cards (desktop)", "default": "46px" },
+    { "type": "text", "id": "description_to_cards_mobile", "label": "Description to cards (mobile)", "default": "34px" },
+    { "type": "text", "id": "card_gap", "label": "Card gap (desktop)", "default": "26px" },
+    { "type": "text", "id": "card_gap_mobile", "label": "Card gap (mobile)", "default": "26px" },
+
+    { "type": "header", "content": "Card shape and padding" },
+    { "type": "image_picker", "id": "card_shape_default", "label": "Default hexagon shape image (used when a card has none)" },
+    { "type": "text", "id": "card_padding_x", "label": "Card padding left/right (desktop)", "default": "38px" },
+    { "type": "text", "id": "card_padding_top", "label": "Card padding top (desktop)", "default": "42px" },
+    { "type": "text", "id": "card_padding_bottom", "label": "Card padding bottom (desktop)", "default": "66px" },
+    { "type": "text", "id": "card_padding_x_mobile", "label": "Card padding left/right (mobile)", "default": "30px" },
+    { "type": "text", "id": "card_padding_top_mobile", "label": "Card padding top (mobile)", "default": "36px" },
+    { "type": "text", "id": "card_padding_bottom_mobile", "label": "Card padding bottom (mobile)", "default": "58px" },
+
+    { "type": "header", "content": "Kibble 1 (top left)" },
+    { "type": "image_picker", "id": "kibble_image_1", "label": "Image" },
+    { "type": "text", "id": "kibble_1_top", "label": "Top (desktop)", "default": "9%" },
+    { "type": "text", "id": "kibble_1_right", "label": "Right (desktop)" },
+    { "type": "text", "id": "kibble_1_bottom", "label": "Bottom (desktop)" },
+    { "type": "text", "id": "kibble_1_left", "label": "Left (desktop)", "default": "5%" },
+    { "type": "text", "id": "kibble_1_width", "label": "Width (desktop)", "default": "120px" },
+    { "type": "text", "id": "kibble_1_rotation", "label": "Rotation (desktop)", "default": "-8deg" },
+    { "type": "text", "id": "kibble_1_top_mobile", "label": "Top (mobile)", "default": "18%" },
+    { "type": "text", "id": "kibble_1_right_mobile", "label": "Right (mobile)", "default": "-3%" },
+    { "type": "text", "id": "kibble_1_bottom_mobile", "label": "Bottom (mobile)" },
+    { "type": "text", "id": "kibble_1_left_mobile", "label": "Left (mobile)", "default": "auto" },
+    { "type": "text", "id": "kibble_1_width_mobile", "label": "Width (mobile)", "default": "80px" },
+    { "type": "text", "id": "kibble_1_rotation_mobile", "label": "Rotation (mobile)", "default": "-8deg" },
+
+    { "type": "header", "content": "Kibble 2 (top right)" },
+    { "type": "image_picker", "id": "kibble_image_2", "label": "Image" },
+    { "type": "text", "id": "kibble_2_top", "label": "Top (desktop)", "default": "11%" },
+    { "type": "text", "id": "kibble_2_right", "label": "Right (desktop)", "default": "4%" },
+    { "type": "text", "id": "kibble_2_bottom", "label": "Bottom (desktop)" },
+    { "type": "text", "id": "kibble_2_left", "label": "Left (desktop)" },
+    { "type": "text", "id": "kibble_2_width", "label": "Width (desktop)", "default": "104px" },
+    { "type": "text", "id": "kibble_2_rotation", "label": "Rotation (desktop)", "default": "14deg" },
+    { "type": "text", "id": "kibble_2_top_mobile", "label": "Top (mobile)", "default": "33%" },
+    { "type": "text", "id": "kibble_2_right_mobile", "label": "Right (mobile)", "default": "auto" },
+    { "type": "text", "id": "kibble_2_bottom_mobile", "label": "Bottom (mobile)" },
+    { "type": "text", "id": "kibble_2_left_mobile", "label": "Left (mobile)", "default": "-3%" },
+    { "type": "text", "id": "kibble_2_width_mobile", "label": "Width (mobile)", "default": "76px" },
+    { "type": "text", "id": "kibble_2_rotation_mobile", "label": "Rotation (mobile)", "default": "14deg" },
+
+    { "type": "header", "content": "Kibble 3 (middle left)" },
+    { "type": "image_picker", "id": "kibble_image_3", "label": "Image" },
+    { "type": "text", "id": "kibble_3_top", "label": "Top (desktop)", "default": "56%" },
+    { "type": "text", "id": "kibble_3_right", "label": "Right (desktop)" },
+    { "type": "text", "id": "kibble_3_bottom", "label": "Bottom (desktop)" },
+    { "type": "text", "id": "kibble_3_left", "label": "Left (desktop)", "default": "2%" },
+    { "type": "text", "id": "kibble_3_width", "label": "Width (desktop)", "default": "78px" },
+    { "type": "text", "id": "kibble_3_rotation", "label": "Rotation (desktop)", "default": "-22deg" },
+    { "type": "text", "id": "kibble_3_top_mobile", "label": "Top (mobile)", "default": "58%" },
+    { "type": "text", "id": "kibble_3_right_mobile", "label": "Right (mobile)", "default": "-2%" },
+    { "type": "text", "id": "kibble_3_bottom_mobile", "label": "Bottom (mobile)" },
+    { "type": "text", "id": "kibble_3_left_mobile", "label": "Left (mobile)", "default": "auto" },
+    { "type": "text", "id": "kibble_3_width_mobile", "label": "Width (mobile)", "default": "66px" },
+    { "type": "text", "id": "kibble_3_rotation_mobile", "label": "Rotation (mobile)", "default": "-22deg" },
+
+    { "type": "header", "content": "Kibble 4 (middle right)" },
+    { "type": "image_picker", "id": "kibble_image_4", "label": "Image" },
+    { "type": "text", "id": "kibble_4_top", "label": "Top (desktop)" },
+    { "type": "text", "id": "kibble_4_right", "label": "Right (desktop)", "default": "1%" },
+    { "type": "text", "id": "kibble_4_bottom", "label": "Bottom (desktop)", "default": "22%" },
+    { "type": "text", "id": "kibble_4_left", "label": "Left (desktop)" },
+    { "type": "text", "id": "kibble_4_width", "label": "Width (desktop)", "default": "112px" },
+    { "type": "text", "id": "kibble_4_rotation", "label": "Rotation (desktop)", "default": "10deg" },
+    { "type": "text", "id": "kibble_4_top_mobile", "label": "Top (mobile)" },
+    { "type": "text", "id": "kibble_4_right_mobile", "label": "Right (mobile)", "default": "auto" },
+    { "type": "text", "id": "kibble_4_bottom_mobile", "label": "Bottom (mobile)", "default": "16%" },
+    { "type": "text", "id": "kibble_4_left_mobile", "label": "Left (mobile)", "default": "-3%" },
+    { "type": "text", "id": "kibble_4_width_mobile", "label": "Width (mobile)", "default": "80px" },
+    { "type": "text", "id": "kibble_4_rotation_mobile", "label": "Rotation (mobile)", "default": "10deg" },
+
+    { "type": "header", "content": "Kibble 5 (bottom left)" },
+    { "type": "image_picker", "id": "kibble_image_5", "label": "Image" },
+    { "type": "text", "id": "kibble_5_top", "label": "Top (desktop)" },
+    { "type": "text", "id": "kibble_5_right", "label": "Right (desktop)" },
+    { "type": "text", "id": "kibble_5_bottom", "label": "Bottom (desktop)" },
+    { "type": "text", "id": "kibble_5_left", "label": "Left (desktop)" },
+    { "type": "text", "id": "kibble_5_width", "label": "Width (desktop)", "default": "90px" },
+    { "type": "text", "id": "kibble_5_rotation", "label": "Rotation (desktop)", "default": "0deg" },
+    { "type": "text", "id": "kibble_5_top_mobile", "label": "Top (mobile)" },
+    { "type": "text", "id": "kibble_5_right_mobile", "label": "Right (mobile)" },
+    { "type": "text", "id": "kibble_5_bottom_mobile", "label": "Bottom (mobile)" },
+    { "type": "text", "id": "kibble_5_left_mobile", "label": "Left (mobile)" },
+    { "type": "text", "id": "kibble_5_width_mobile", "label": "Width (mobile)", "default": "70px" },
+    { "type": "text", "id": "kibble_5_rotation_mobile", "label": "Rotation (mobile)", "default": "0deg" },
+
+    { "type": "header", "content": "Kibble 6 (bottom right)" },
+    { "type": "image_picker", "id": "kibble_image_6", "label": "Image" },
+    { "type": "text", "id": "kibble_6_top", "label": "Top (desktop)" },
+    { "type": "text", "id": "kibble_6_right", "label": "Right (desktop)" },
+    { "type": "text", "id": "kibble_6_bottom", "label": "Bottom (desktop)" },
+    { "type": "text", "id": "kibble_6_left", "label": "Left (desktop)" },
+    { "type": "text", "id": "kibble_6_width", "label": "Width (desktop)", "default": "90px" },
+    { "type": "text", "id": "kibble_6_rotation", "label": "Rotation (desktop)", "default": "0deg" },
+    { "type": "text", "id": "kibble_6_top_mobile", "label": "Top (mobile)" },
+    { "type": "text", "id": "kibble_6_right_mobile", "label": "Right (mobile)" },
+    { "type": "text", "id": "kibble_6_bottom_mobile", "label": "Bottom (mobile)" },
+    { "type": "text", "id": "kibble_6_left_mobile", "label": "Left (mobile)" },
+    { "type": "text", "id": "kibble_6_width_mobile", "label": "Width (mobile)", "default": "70px" },
+    { "type": "text", "id": "kibble_6_rotation_mobile", "label": "Rotation (mobile)", "default": "0deg" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Wholesale card",
+      "settings": [
+        { "type": "image_picker", "id": "shape_image", "label": "Hexagon shape image" },
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "text", "id": "logo_alt", "label": "Logo alt text" },
+        { "type": "text", "id": "title", "label": "Card title", "default": "The lowest price you'll find" },
+        { "type": "richtext", "id": "text", "label": "Card description", "default": "<p>Apply for a wholesale account on yumwoof.com and receive our distributor pricing with no markup added. Low-MOQ plans available for smaller stores.</p>" },
+        { "type": "text", "id": "button_label", "label": "Button text", "default": "Create account" },
+        { "type": "url", "id": "button_url", "label": "Button URL" },
+        { "type": "checkbox", "id": "button_new_tab", "label": "Open in new tab", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "YW Wholesale Banner",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "title": "The lowest price you'll find",
+            "text": "<p>Apply for a wholesale account on yumwoof.com and receive our distributor pricing with no markup added. Low-MOQ plans available for smaller stores.</p>",
+            "button_label": "Create account"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "Buy on terms you already have",
+            "text": "<p>Already a Faire member? Order Yumwoof through your account. We do require proof of a physical retail store, and Faire pricing runs 10% above ordering direct from us.</p>",
+            "button_label": "Visit Faire"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "title": "On your usual schedule.",
+            "text": "<p>Prefer to work through a distributor? We're available on Pod Foods. And if there's another distributor you'd like us on in future, reach out and let our team know.</p>",
+            "button_label": "Visit Pod Foods"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
