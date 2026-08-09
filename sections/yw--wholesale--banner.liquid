@@ -4,6 +4,8 @@
   - Hexagon card shapes come from image assets (image_picker), never clip-path.
   - Card content is a separate layer above the shape and always stays inside it.
   - Kibble decor is fully positionable per breakpoint from the Theme Editor.
+  - Kibbles have infinite rotation (CSS) + scroll parallax (JS, on the wrapper).
+  - Cards stack on scroll at <=989px only; 990px+ keeps the 3-up grid.
   All CSS scoped under .yw--wholesale--banner
 {%- endcomment -%}
 
@@ -69,15 +71,25 @@
       --yw-wholesale-banner-card-pad-x-mobile: {{ s.card_padding_x_mobile }};
       --yw-wholesale-banner-card-pad-top-mobile: {{ s.card_padding_top_mobile }};
       --yw-wholesale-banner-card-pad-bottom-mobile: {{ s.card_padding_bottom_mobile }};
+
+      /* stacking */
+      --yw-wholesale-banner-stack-top: {{ s.stack_top | default: '110px' }};
+      --yw-wholesale-banner-stack-peek: {{ s.stack_peek | default: '24px' }};
+      --yw-wholesale-banner-stack-gap: {{ s.stack_gap | default: '80vh' }};
+      --yw-wholesale-banner-stack-top-mobile: {{ s.stack_top_mobile | default: '90px' }};
+      --yw-wholesale-banner-stack-peek-mobile: {{ s.stack_peek_mobile | default: '20px' }};
+      --yw-wholesale-banner-stack-gap-mobile: {{ s.stack_gap_mobile | default: '70vh' }};
+      --yw-wholesale-banner-stack-scale: {{ s.stack_scale | default: '0.10' }};
     }
 
     .yw--wholesale--banner {
       position: relative;
       isolation: isolate;
-      overflow: hidden;
+      /* NOTE: must NOT be overflow:hidden — that disables position:sticky */
+      overflow-x: clip;
       box-sizing: border-box;
       width: 100%;
-      height: height: auto;;
+      height: auto;
       min-height: var(--yw-wholesale-banner-height);
       padding: var(--yw-wholesale-banner-pt) 0 var(--yw-wholesale-banner-pb);
       background-color: var(--yw-wholesale-banner-bg);
@@ -318,14 +330,13 @@
     /* ---------------- Tablet ---------------- */
     @media screen and (max-width: 989px) and (min-width: 750px) {
       .yw--wholesale--banner { height: auto; min-height: var(--yw-wholesale-banner-height); }
-      .yw--wholesale--banner__cards { gap: 18px; }
       .yw--wholesale--banner__card-content { padding: 30px 18px 52px; }
       .yw--wholesale--banner__text { font-size: 14.5px; }
       .yw--wholesale--banner__logo img { max-height: 46px; }
       .yw--wholesale--banner__kibble { width: calc(var(--k-w) * .78); }
     }
 
-    /* ---------------- Mobile ---------------- */
+    /* ---------------- Mobile / tablet ---------------- */
     @media screen and (max-width: 989px) {
       .yw--wholesale--banner {
         height: auto;
@@ -366,9 +377,9 @@
       }
       .yw--wholesale--banner__card-shape {
         min-height: 332px;
-    max-width: 344px;
-            margin: 0 auto;
-    }
+        max-width: 344px;
+        margin: 0 auto;
+      }
       .yw--wholesale--banner__title { font-size: 14px; }
           .yw--wholesale--banner__button {
           font-size: 13px;
@@ -387,10 +398,62 @@
       }
     }
 
+    /* ---------------- Stacking cards (<=989px only) ---------------- */
+    /* Must come AFTER the base .yw--wholesale--banner__cards rules above. */
+    @media screen and (max-width: 989px) {
+      .yw--wholesale--banner__cards--stack {
+        display: block;
+        margin-top: 35px;
+        --stack-top: var(--yw-wholesale-banner-stack-top);
+        --stack-peek: var(--yw-wholesale-banner-stack-peek);
+        --stack-gap: var(--yw-wholesale-banner-stack-gap);
+      }
+
+      .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card {
+        position: sticky;
+        top: calc(var(--stack-top) + (var(--i, 0) * var(--stack-peek)));
+        display: block;
+        width: 100%;
+        max-width: 344px;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 332px;
+        transform-origin: top center;
+        will-change: transform;
+
+        /* If the hexagon PNG is transparent and cards show through each other,
+           uncomment a solid fill here:
+           background: #fff;
+           border-radius: 26px; */
+      }
+
+      /* scroll runway between cards — this is what makes them overlap gradually */
+      .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card + .yw--wholesale--banner__card {
+        margin-top: var(--stack-gap);
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      .yw--wholesale--banner__cards--stack {
+        --stack-top: var(--yw-wholesale-banner-stack-top-mobile);
+        --stack-peek: var(--yw-wholesale-banner-stack-peek-mobile);
+        --stack-gap: var(--yw-wholesale-banner-stack-gap-mobile);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-  .yw--wholesale--banner__kibble { transform: none !important; }
-  .yw--wholesale--banner__kibble img { animation: none; }
-}
+      .yw--wholesale--banner__kibble { transform: none !important; }
+      .yw--wholesale--banner__kibble img { animation: none; }
+      .yw--wholesale--banner__button { transition: none; }
+
+      .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card {
+        position: static;
+        transform: none !important;
+      }
+      .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card + .yw--wholesale--banner__card {
+        margin-top: var(--yw-wholesale-banner-gap-mobile);
+      }
+    }
 </style>
 
 <section class="yw--wholesale--banner" aria-labelledby="yw-wholesale-banner-heading-{{ uid }}">
@@ -475,7 +538,8 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <div class="yw--wholesale--banner__cards">
+      <div class="yw--wholesale--banner__cards{% if s.enable_stacking %} yw--wholesale--banner__cards--stack{% endif %}">
+        {%- assign card_i = 0 -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'card' -%}
             {%- liquid
@@ -484,7 +548,12 @@
                 assign shape = s.card_shape_default
               endif
             -%}
-            <div class="yw--wholesale--banner__card" {{ block.shopify_attributes }}>
+            <div
+              class="yw--wholesale--banner__card"
+              style="--i: {{ card_i }}; z-index: {{ card_i | plus: 1 }};"
+              data-stack-card
+              {{ block.shopify_attributes }}
+            >
               {%- if shape != blank -%}
                 <span
                   class="yw--wholesale--banner__card-shape"
@@ -524,7 +593,7 @@
                 {%- endif -%}
 
                 {%- if block.settings.button_label != blank -%}
-                  <a
+                  
                     class="yw--wholesale--banner__button"
                     href="{{ block.settings.button_url | default: '#' }}"
                     {% if block.settings.button_new_tab %}
@@ -536,6 +605,7 @@
                 {%- endif -%}
               </div>
             </div>
+            {%- assign card_i = card_i | plus: 1 -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -545,31 +615,51 @@
 
 <script>
   (function () {
-    var MQ = window.matchMedia('(max-width: 749px)');
+    var MOBILE_MQ = window.matchMedia('(max-width: 749px)');
+    var STACK_MQ = window.matchMedia('(max-width: 989px)');
     var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
+
     var items = [];
+    var cards = [];
     var ticking = false;
 
     function collect(root) {
       var scope = root || document;
-      var found = scope.querySelectorAll('.yw--wholesale--banner [data-yum-parallax]');
-      for (var i = 0; i < found.length; i++) {
-        if (items.indexOf(found[i]) === -1) items.push(found[i]);
+
+      var kib = scope.querySelectorAll('.yw--wholesale--banner [data-yum-parallax]');
+      for (var i = 0; i < kib.length; i++) {
+        if (items.indexOf(kib[i]) === -1) items.push(kib[i]);
+      }
+
+      var st = scope.querySelectorAll('.yw--wholesale--banner__cards--stack [data-stack-card]');
+      for (var j = 0; j < st.length; j++) {
+        if (cards.indexOf(st[j]) === -1) cards.push(st[j]);
       }
     }
 
-    function update() {
-      ticking = false;
-      if (REDUCED.matches) return;
+    function prune() {
+      items = items.filter(function (el) { return el.isConnected; });
+      cards = cards.filter(function (el) { return el.isConnected; });
+    }
 
-      var vh = window.innerHeight || document.documentElement.clientHeight;
-      var mobile = MQ.matches;
+    function clearCards() {
+      for (var i = 0; i < cards.length; i++) {
+        if (cards[i].isConnected) cards[i].style.transform = '';
+      }
+    }
+
+    function updateKibbles(vh) {
+      var mobile = MOBILE_MQ.matches;
 
       for (var i = 0; i < items.length; i++) {
         var el = items[i];
         if (!el.isConnected) continue;
 
-        var rect = el.getBoundingClientRect();
+        // measure the untransformed section, never the kibble itself
+        var host = el.closest('.yw--wholesale--banner');
+        if (!host) continue;
+
+        var rect = host.getBoundingClientRect();
         if (rect.bottom < -200 || rect.top > vh + 200) continue;
 
         var range = parseFloat(mobile ? el.dataset.parallaxRangeMobile : el.dataset.parallaxRange);
@@ -578,13 +668,54 @@
         var dir = parseFloat(el.dataset.parallaxDir);
         if (isNaN(dir)) dir = 1;
 
-        // 0 when entering from the bottom, 1 when leaving at the top
         var progress = (vh - rect.top) / (vh + rect.height);
         progress = Math.max(0, Math.min(1, progress));
 
         var shift = (progress - 0.5) * 2 * range * dir;
         el.style.setProperty('--k-shift', shift.toFixed(2) + 'px');
       }
+    }
+
+    function updateCards() {
+      // 990px and up: grid layout, nothing should be scaled
+      if (!STACK_MQ.matches) { clearCards(); return; }
+
+      var host = document.querySelector('.yw--wholesale--banner');
+      var scaleAmt = 0.10;
+      if (host) {
+        var v = parseFloat(getComputedStyle(host).getPropertyValue('--yw-wholesale-banner-stack-scale'));
+        if (!isNaN(v)) scaleAmt = v;
+      }
+
+      for (var i = 0; i < cards.length; i++) {
+        var el = cards[i];
+        if (!el.isConnected) continue;
+
+        var next = cards[i + 1];
+        if (!next || next.parentNode !== el.parentNode) {
+          el.style.transform = '';
+          continue;
+        }
+
+        var elRect = el.getBoundingClientRect();
+        var nextRect = next.getBoundingClientRect();
+
+        // 0 while the next card is still below; 1 once it fully covers this one
+        var travel = nextRect.top - elRect.top;
+        var progress = 1 - (travel / Math.max(elRect.height, 1));
+        progress = Math.max(0, Math.min(1, progress));
+
+        el.style.transform = 'scale(' + (1 - progress * scaleAmt).toFixed(4) + ')';
+      }
+    }
+
+    function update() {
+      ticking = false;
+      if (REDUCED.matches) return;
+
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      updateKibbles(vh);
+      updateCards();
     }
 
     function onScroll() {
@@ -603,20 +734,25 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
 
+    // crossing the 990px boundary — drop any leftover scale
+    function onBreakpoint() { clearCards(); update(); }
+    if (STACK_MQ.addEventListener) {
+      STACK_MQ.addEventListener('change', onBreakpoint);
+    } else if (STACK_MQ.addListener) {
+      STACK_MQ.addListener(onBreakpoint);
+    }
+
     // Theme Editor re-init
     document.addEventListener('shopify:section:load', function (e) {
-      items = items.filter(function (el) {
-        return el.isConnected;
-      });
+      prune();
       init(e.target);
     });
     document.addEventListener('shopify:section:unload', function () {
-      items = items.filter(function (el) {
-        return el.isConnected;
-      });
+      prune();
     });
   })();
 </script>
+
 {% schema %}
 {
   "name": "YW Wholesale Banner",
@@ -676,6 +812,20 @@
     { "type": "text", "id": "card_gap", "label": "Card gap (desktop)", "default": "26px" },
     { "type": "text", "id": "card_gap_mobile", "label": "Card gap (mobile)", "default": "26px" },
 
+    { "type": "header", "content": "Card stacking (990px and below)" },
+    { "type": "checkbox", "id": "enable_stacking", "label": "Enable scroll stacking for cards", "default": true },
+    { "type": "text", "id": "stack_top", "label": "Sticky offset from top (tablet)", "default": "110px" },
+    { "type": "text", "id": "stack_peek", "label": "Visible peek per stacked card (tablet)", "default": "24px" },
+    { "type": "text", "id": "stack_gap", "label": "Scroll distance between cards (tablet)", "default": "80vh" },
+    { "type": "text", "id": "stack_top_mobile", "label": "Sticky offset from top (mobile)", "default": "90px" },
+    { "type": "text", "id": "stack_peek_mobile", "label": "Visible peek per stacked card (mobile)", "default": "20px" },
+    { "type": "text", "id": "stack_gap_mobile", "label": "Scroll distance between cards (mobile)", "default": "70vh" },
+    { "type": "text", "id": "stack_scale", "label": "Shrink amount of covered card (0.10 = 10%)", "default": "0.10" },
+
+    { "type": "header", "content": "Kibble parallax defaults" },
+    { "type": "text", "id": "kibble_parallax_range", "label": "Default parallax range in px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_parallax_range_mobile", "label": "Default parallax range in px (mobile)", "default": "30" },
+
     { "type": "header", "content": "Card shape and padding" },
     {
       "type": "image_picker",
@@ -701,6 +851,18 @@
     { "type": "text", "id": "kibble_1_bottom_mobile", "label": "Bottom (mobile)" },
     { "type": "text", "id": "kibble_1_left_mobile", "label": "Left (mobile)", "default": "auto" },
     { "type": "text", "id": "kibble_1_width_mobile", "label": "Width (mobile)", "default": "80px" },
+    { "type": "text", "id": "kibble_1_parallax_range", "label": "Parallax range px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_1_parallax_range_mobile", "label": "Parallax range px (mobile)", "default": "30" },
+    {
+      "type": "select",
+      "id": "kibble_1_parallax_dir",
+      "label": "Parallax direction",
+      "options": [
+        { "value": "1", "label": "Down (slower than scroll)" },
+        { "value": "-1", "label": "Up (faster than scroll)" }
+      ],
+      "default": "-1"
+    },
 
     { "type": "header", "content": "Kibble 2 (top right)" },
     { "type": "image_picker", "id": "kibble_image_2", "label": "Image" },
@@ -714,6 +876,18 @@
     { "type": "text", "id": "kibble_2_bottom_mobile", "label": "Bottom (mobile)" },
     { "type": "text", "id": "kibble_2_left_mobile", "label": "Left (mobile)", "default": "-3%" },
     { "type": "text", "id": "kibble_2_width_mobile", "label": "Width (mobile)", "default": "76px" },
+    { "type": "text", "id": "kibble_2_parallax_range", "label": "Parallax range px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_2_parallax_range_mobile", "label": "Parallax range px (mobile)", "default": "30" },
+    {
+      "type": "select",
+      "id": "kibble_2_parallax_dir",
+      "label": "Parallax direction",
+      "options": [
+        { "value": "1", "label": "Down (slower than scroll)" },
+        { "value": "-1", "label": "Up (faster than scroll)" }
+      ],
+      "default": "1"
+    },
 
     { "type": "header", "content": "Kibble 3 (middle left)" },
     { "type": "image_picker", "id": "kibble_image_3", "label": "Image" },
@@ -727,6 +901,18 @@
     { "type": "text", "id": "kibble_3_bottom_mobile", "label": "Bottom (mobile)" },
     { "type": "text", "id": "kibble_3_left_mobile", "label": "Left (mobile)", "default": "auto" },
     { "type": "text", "id": "kibble_3_width_mobile", "label": "Width (mobile)", "default": "66px" },
+    { "type": "text", "id": "kibble_3_parallax_range", "label": "Parallax range px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_3_parallax_range_mobile", "label": "Parallax range px (mobile)", "default": "30" },
+    {
+      "type": "select",
+      "id": "kibble_3_parallax_dir",
+      "label": "Parallax direction",
+      "options": [
+        { "value": "1", "label": "Down (slower than scroll)" },
+        { "value": "-1", "label": "Up (faster than scroll)" }
+      ],
+      "default": "-1"
+    },
 
     { "type": "header", "content": "Kibble 4 (middle right)" },
     { "type": "image_picker", "id": "kibble_image_4", "label": "Image" },
@@ -740,6 +926,18 @@
     { "type": "text", "id": "kibble_4_bottom_mobile", "label": "Bottom (mobile)", "default": "16%" },
     { "type": "text", "id": "kibble_4_left_mobile", "label": "Left (mobile)", "default": "-3%" },
     { "type": "text", "id": "kibble_4_width_mobile", "label": "Width (mobile)", "default": "80px" },
+    { "type": "text", "id": "kibble_4_parallax_range", "label": "Parallax range px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_4_parallax_range_mobile", "label": "Parallax range px (mobile)", "default": "30" },
+    {
+      "type": "select",
+      "id": "kibble_4_parallax_dir",
+      "label": "Parallax direction",
+      "options": [
+        { "value": "1", "label": "Down (slower than scroll)" },
+        { "value": "-1", "label": "Up (faster than scroll)" }
+      ],
+      "default": "1"
+    },
 
     { "type": "header", "content": "Kibble 5 (bottom left)" },
     { "type": "image_picker", "id": "kibble_image_5", "label": "Image" },
@@ -753,6 +951,18 @@
     { "type": "text", "id": "kibble_5_bottom_mobile", "label": "Bottom (mobile)" },
     { "type": "text", "id": "kibble_5_left_mobile", "label": "Left (mobile)" },
     { "type": "text", "id": "kibble_5_width_mobile", "label": "Width (mobile)", "default": "70px" },
+    { "type": "text", "id": "kibble_5_parallax_range", "label": "Parallax range px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_5_parallax_range_mobile", "label": "Parallax range px (mobile)", "default": "30" },
+    {
+      "type": "select",
+      "id": "kibble_5_parallax_dir",
+      "label": "Parallax direction",
+      "options": [
+        { "value": "1", "label": "Down (slower than scroll)" },
+        { "value": "-1", "label": "Up (faster than scroll)" }
+      ],
+      "default": "-1"
+    },
 
     { "type": "header", "content": "Kibble 6 (bottom right)" },
     { "type": "image_picker", "id": "kibble_image_6", "label": "Image" },
@@ -765,7 +975,19 @@
     { "type": "text", "id": "kibble_6_right_mobile", "label": "Right (mobile)" },
     { "type": "text", "id": "kibble_6_bottom_mobile", "label": "Bottom (mobile)" },
     { "type": "text", "id": "kibble_6_left_mobile", "label": "Left (mobile)" },
-    { "type": "text", "id": "kibble_6_width_mobile", "label": "Width (mobile)", "default": "70px" }
+    { "type": "text", "id": "kibble_6_width_mobile", "label": "Width (mobile)", "default": "70px" },
+    { "type": "text", "id": "kibble_6_parallax_range", "label": "Parallax range px (desktop)", "default": "60" },
+    { "type": "text", "id": "kibble_6_parallax_range_mobile", "label": "Parallax range px (mobile)", "default": "30" },
+    {
+      "type": "select",
+      "id": "kibble_6_parallax_dir",
+      "label": "Parallax direction",
+      "options": [
+        { "value": "1", "label": "Down (slower than scroll)" },
+        { "value": "-1", "label": "Up (faster than scroll)" }
+      ],
+      "default": "1"
+    }
   ],
   "blocks": [
     {
