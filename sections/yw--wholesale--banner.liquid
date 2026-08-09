@@ -417,11 +417,22 @@
       assign k_bottom_m = s[k_bottom_m_key]
       assign k_left_m = s[k_left_m_key]
       assign k_w_m = s[k_w_m_key]
+
+      assign k_range_key = 'kibble_' | append: i | append: '_parallax_range'
+      assign k_range_m_key = 'kibble_' | append: i | append: '_parallax_range_mobile'
+      assign k_dir_key = 'kibble_' | append: i | append: '_parallax_dir'
+      assign k_range = s[k_range_key]
+      assign k_range_m = s[k_range_m_key]
+      assign k_dir = s[k_dir_key]
     -%}
     {%- if k_img != blank -%}
       <span
         class="yw--wholesale--banner__kibble yw--wholesale--banner__kibble-{{ i }}"
         aria-hidden="true"
+        data-yum-parallax
+        data-parallax-range="{{ k_range | default: s.kibble_parallax_range | default: 60 }}"
+        data-parallax-range-mobile="{{ k_range_m | default: s.kibble_parallax_range_mobile | default: 30 }}"
+        data-parallax-dir="{{ k_dir | default: '1' }}"
         style="
           --k-top: {{ k_top | default: 'auto' }};
           --k-right: {{ k_right | default: 'auto' }};
@@ -527,6 +538,78 @@
   </div>
 </section>
 
+<script>
+  (function () {
+    var MQ = window.matchMedia('(max-width: 749px)');
+    var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var items = [];
+    var ticking = false;
+
+    function collect(root) {
+      var scope = root || document;
+      var found = scope.querySelectorAll('.yw--wholesale--banner [data-yum-parallax]');
+      for (var i = 0; i < found.length; i++) {
+        if (items.indexOf(found[i]) === -1) items.push(found[i]);
+      }
+    }
+
+    function update() {
+      ticking = false;
+      if (REDUCED.matches) return;
+
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var mobile = MQ.matches;
+
+      for (var i = 0; i < items.length; i++) {
+        var el = items[i];
+        if (!el.isConnected) continue;
+
+        var rect = el.getBoundingClientRect();
+        if (rect.bottom < -200 || rect.top > vh + 200) continue;
+
+        var range = parseFloat(
+          mobile ? el.dataset.parallaxRangeMobile : el.dataset.parallaxRange
+        );
+        if (isNaN(range)) range = mobile ? 30 : 60;
+
+        var dir = parseFloat(el.dataset.parallaxDir);
+        if (isNaN(dir)) dir = 1;
+
+        // 0 when entering from the bottom, 1 when leaving at the top
+        var progress = (vh - rect.top) / (vh + rect.height);
+        progress = Math.max(0, Math.min(1, progress));
+
+        var shift = (progress - 0.5) * 2 * range * dir;
+        el.style.setProperty('--k-shift', shift.toFixed(2) + 'px');
+      }
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+
+    function init(root) {
+      collect(root);
+      update();
+    }
+
+    init();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    // Theme Editor re-init
+    document.addEventListener('shopify:section:load', function (e) {
+      items = items.filter(function (el) { return el.isConnected; });
+      init(e.target);
+    });
+    document.addEventListener('shopify:section:unload', function () {
+      items = items.filter(function (el) { return el.isConnected; });
+    });
+  })();
+</script>
 {% schema %}
 {
   "name": "YW Wholesale Banner",
