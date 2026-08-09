@@ -18,7 +18,7 @@
           "type": "mobile_banner",
           "settings": {
             "image": "shopify://shop_images/YumClub_Banner_45ee34ea-f882-4fb1-909c-eb9b76514fba.png",
-            "link": ""
+            "link": "shopify://pages/membership"
           }
         },
         "mobile_link_HwzCRp": {
