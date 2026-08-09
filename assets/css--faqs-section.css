@@ -127,6 +127,11 @@ font-size: 16px;
     max-height: 500px;
 }
 
+.faqs__answer-inner a {
+  text-decoration:underline;
+  color:#661D1D;
+}
+
 .faqs__answer .faqs__answer-inner > p {
   margin: 0 0 1.2rem;
 }
