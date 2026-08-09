@@ -163,18 +163,6 @@
 	z-index: 2;
 }
 
-.fp__card__hover:hover .fp__title,
-.fp__card__hover:hover .fp__label,
-.fp__card__hover:hover .fp__desc,
-.fp__card__hover:hover .fp__recipes {
-	color: #FFF9EF;
-	border-color: #FFF9EF;
-}
-
-.fp__card__hover:hover .fp__img {
-	opacity: 0;
-}
-
 .fp__title {
 	margin: 0 0 8px;
 	font-weight: 400;
@@ -435,6 +423,18 @@
 
 	.fp__hover-media img {
 		border-radius: 24px;
+	}
+
+	.fp__card__hover:hover .fp__title,
+	.fp__card__hover:hover .fp__label,
+	.fp__card__hover:hover .fp__desc,
+	.fp__card__hover:hover .fp__recipes {
+		color: #FFF9EF;
+		border-color: #FFF9EF;
+	}
+
+	.fp__card__hover:hover .fp__img {
+		opacity: 0;
 	}
 
 	.fp__card__hover:hover .fp__hover-media img {
