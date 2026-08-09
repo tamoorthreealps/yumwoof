@@ -72,7 +72,7 @@
             {%- if product.metafields.custom.pack_size != blank -%}
               {{ product.metafields.custom.pack_size.value }}
             {%- elsif size_value != blank -%}
-              {{ size_value }}
+              {{ size_value | remove: 'Full Bag (' | remove: 'Topper Size (' | remove: ')' | append: ' Bag' }}
             {%- endif -%}
           </p>
         </div>
