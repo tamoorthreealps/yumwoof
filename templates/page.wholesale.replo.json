@@ -164,10 +164,98 @@
         "kibble_6_left_mobile": "",
         "kibble_6_width_mobile": "70px"
       }
+    },
+    "yw_wholesale_form_z4BAxJ": {
+      "type": "yw--wholesale--form",
+      "blocks": {
+        "link_cXm36d": {
+          "type": "link",
+          "settings": {
+            "label": "Easy order page",
+            "url": "",
+            "new_tab": false
+          }
+        },
+        "link_Bd7YbD": {
+          "type": "link",
+          "settings": {
+            "label": "PIM",
+            "url": "",
+            "new_tab": false
+          }
+        },
+        "link_L9qFqV": {
+          "type": "link",
+          "settings": {
+            "label": "Product deck",
+            "url": "",
+            "new_tab": false
+          }
+        },
+        "link_JyaHXh": {
+          "type": "link",
+          "settings": {
+            "label": "Pricing policy",
+            "url": "",
+            "new_tab": false
+          }
+        },
+        "link_6RGWFe": {
+          "type": "link",
+          "settings": {
+            "label": "Retailer policy",
+            "url": "",
+            "new_tab": false
+          }
+        },
+        "link_8YUaA4": {
+          "type": "link",
+          "settings": {
+            "label": "Account",
+            "url": "",
+            "new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "link_cXm36d",
+        "link_Bd7YbD",
+        "link_L9qFqV",
+        "link_JyaHXh",
+        "link_6RGWFe",
+        "link_8YUaA4"
+      ],
+      "name": "YW Wholesale Form",
+      "settings": {
+        "heading": "Open your account",
+        "subheading": "<p>Fill in your store details below. Once approved, you'll have access to our distributor pricing.</p>",
+        "klaviyo_form_id": "RAPfgV",
+        "form_width": "560px",
+        "links_title": "Quick Links",
+        "kibble_left": "shopify://shop_images/Kibble_Cutout_Hero_Left.png",
+        "kibble_right": "shopify://shop_images/Kibble_Cutout_Hero_Right.png",
+        "kibble_width": "100px",
+        "kibble_width_mobile": "46px",
+        "hide_kibbles_mobile": true,
+        "bg_color": "#FDF6EB",
+        "text_color": "#3D3A34",
+        "heading_color": "#231F20",
+        "field_bg": "#FFFFFF",
+        "field_border": "#000000",
+        "btn_bg": "#F5B335",
+        "btn_bg_hover": "#000000",
+        "btn_text_color": "#000000",
+        "field_radius": "6",
+        "padding_top": "60px",
+        "padding_bottom": "70px",
+        "padding_top_mobile": "40px",
+        "padding_bottom_mobile": "48px"
+      }
     }
   },
   "order": [
     "main",
-    "yw_wholesale_banner_bdWxTK"
+    "yw_wholesale_banner_bdWxTK",
+    "yw_wholesale_form_z4BAxJ"
   ]
 }
