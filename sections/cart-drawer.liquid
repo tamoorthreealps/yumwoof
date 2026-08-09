@@ -362,7 +362,79 @@
                 </div>
               </div>
             {%- endif -%}
+            {%- comment -%} ===== MEMBERSHIP / CONGRATS BANNER ===== {%- endcomment -%}
+            {%- if show_membership_banner -%}
+              {%- capture membership_img -%}
+              {%- if section.settings.banner_image_desktop != blank -%}
+                {%- assign bd_alt = section.settings.banner_image_desktop.alt | default: 'Add membership' -%}
+                {{ section.settings.banner_image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: bd_alt, loading: 'lazy' }}
+              {%- endif -%}
+              {%- if section.settings.banner_image_mobile != blank -%}
+                {%- assign bm_alt = section.settings.banner_image_mobile.alt | default: 'Add membership' -%}
+                {{ section.settings.banner_image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: bm_alt, loading: 'lazy' }}
+              {%- endif -%}
+            {%- endcapture -%}
+              {%- if membership_img != blank and banner_variant_id != blank -%}
+                {%- assign banner_add_label = banner_product.title | escape -%}
+                <div class="cd-banner cd-banner--membership">
+                  <div class="cd-banner__content">
+                    <div class="cd-banner__image">
+                      {% if section.settings.banner_image_desktop != blank %}
+                        {{
+                          section.settings.banner_image_desktop
+                          | image_url: width: 1200
+                          | image_tag:
+                            class: 'cd-banner__img yumclub--desktop--img',
+                            loading: 'lazy',
+                            alt: section.settings.banner_heading
+                        }}
+                      {% endif %}
 
+                      {% if section.settings.banner_image_mobile != blank %}
+                        {{
+                          section.settings.banner_image_mobile
+                          | image_url: width: 600
+                          | image_tag:
+                            class: 'cd-banner__img yumclub--mobile--img',
+                            loading: 'lazy',
+                            alt: section.settings.banner_heading
+                        }}
+                      {% endif %}
+                    </div>
+
+                    <div class="cd-banner__text">
+                      <div class="cd-banner__text_inner">
+                        {% if section.settings.banner_heading != blank %}
+                          <h3 class="cd-banner__title">{{ section.settings.banner_heading }}</h3>
+                        {% endif %}
+                        {% if section.settings.banner_text != blank %}
+                          <p class="cd-banner__description">{{ section.settings.banner_text }}</p>
+                        {% endif %}
+                      </div>
+                      <div class="cd-banner__btn_hold">
+                        <button
+                          type="button"
+                          class="cd-banner__btn"
+                          data-cd-add
+                          data-variant-id="{{ banner_variant_id }}"
+                          data-selling-plan="{{ banner_selling_plan_id }}"
+                          aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
+                        >
+                          {{ section.settings.banner_button_text }}
+                          <span class="cd__desktop-text"
+                            >- {{ banner_variant.price | money_without_trailing_zeros }}/QTR</span
+                          >
+                        </button>
+                        <span class="cd__mobile-text">
+                          {{- banner_variant.price | money_without_trailing_zeros }}/QTR</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
             {%- comment -%} ===== CART ITEMS ===== {%- endcomment -%}
             <cart-drawer-items class="cd-items-wrap">
               <form
@@ -742,79 +814,6 @@
                 </div>
               </div>
             </cart-recommendations>
-            {%- comment -%} ===== MEMBERSHIP / CONGRATS BANNER ===== {%- endcomment -%}
-            {%- if show_membership_banner -%}
-              {%- capture membership_img -%}
-              {%- if section.settings.banner_image_desktop != blank -%}
-                {%- assign bd_alt = section.settings.banner_image_desktop.alt | default: 'Add membership' -%}
-                {{ section.settings.banner_image_desktop | image_url: width: 1000 | image_tag: class: 'cd-banner__img cd-banner__img--desktop', widths: '500, 750, 1000', alt: bd_alt, loading: 'lazy' }}
-              {%- endif -%}
-              {%- if section.settings.banner_image_mobile != blank -%}
-                {%- assign bm_alt = section.settings.banner_image_mobile.alt | default: 'Add membership' -%}
-                {{ section.settings.banner_image_mobile | image_url: width: 800 | image_tag: class: 'cd-banner__img cd-banner__img--mobile', widths: '400, 600, 800', alt: bm_alt, loading: 'lazy' }}
-              {%- endif -%}
-            {%- endcapture -%}
-              {%- if membership_img != blank and banner_variant_id != blank -%}
-                {%- assign banner_add_label = banner_product.title | escape -%}
-                <div class="cd-banner cd-banner--membership">
-                  <div class="cd-banner__content">
-                    <div class="cd-banner__image">
-                      {% if section.settings.banner_image_desktop != blank %}
-                        {{
-                          section.settings.banner_image_desktop
-                          | image_url: width: 1200
-                          | image_tag:
-                            class: 'cd-banner__img yumclub--desktop--img',
-                            loading: 'lazy',
-                            alt: section.settings.banner_heading
-                        }}
-                      {% endif %}
-
-                      {% if section.settings.banner_image_mobile != blank %}
-                        {{
-                          section.settings.banner_image_mobile
-                          | image_url: width: 600
-                          | image_tag:
-                            class: 'cd-banner__img yumclub--mobile--img',
-                            loading: 'lazy',
-                            alt: section.settings.banner_heading
-                        }}
-                      {% endif %}
-                    </div>
-
-                    <div class="cd-banner__text">
-                      <div class="cd-banner__text_inner">
-                        {% if section.settings.banner_heading != blank %}
-                          <h3 class="cd-banner__title">{{ section.settings.banner_heading }}</h3>
-                        {% endif %}
-                        {% if section.settings.banner_text != blank %}
-                          <p class="cd-banner__description">{{ section.settings.banner_text }}</p>
-                        {% endif %}
-                      </div>
-                      <div class="cd-banner__btn_hold">
-                        <button
-                          type="button"
-                          class="cd-banner__btn"
-                          data-cd-add
-                          data-variant-id="{{ banner_variant_id }}"
-                          data-selling-plan="{{ banner_selling_plan_id }}"
-                          aria-label="{{ 'products.product.add_to_cart' | t }}: {{ banner_product.title | escape }}"
-                        >
-                          {{ section.settings.banner_button_text }}
-                          <span class="cd__desktop-text"
-                            >- {{ banner_variant.price | money_without_trailing_zeros }}/QTR</span
-                          >
-                        </button>
-                        <span class="cd__mobile-text">
-                          {{- banner_variant.price | money_without_trailing_zeros }}/QTR</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {%- endif -%}
-            {%- endif -%}
-          </div>
 
           {%- comment -%} ===== FOOTER ===== {%- endcomment -%}
           {%- assign strike_total = 0 -%}
