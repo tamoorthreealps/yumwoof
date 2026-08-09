@@ -790,7 +790,7 @@ a.yf__questions-link.live-chat {
    -------------------------------------------------------------------------- */
 .yf__badge {
   display: flex;
-  transform: translate(-22px, -16px);
+  /* transform: translate(-22px, -16px); */
 }
 .yf__badge-inner {
   width: 100%;
