@@ -133,20 +133,23 @@
     text-align: center;
     margin-bottom: 24px;
   }
-  .yw--wholesale--form__title {
-    margin: 0 0 10px;
+ .yw--wholesale--form__title {
+    margin: 0 0 8px;
     color: var(--ywf-heading);
-    font-size: 26px;
-    line-height: 1.1;
-    letter-spacing: .01em;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -0.80px;
     text-transform: uppercase;
-  }
+    font-family: 'TAYRosemary';
+}
   .yw--wholesale--form__subtitle {
     margin: 0 auto;
     max-width: 34ch;
-    font-size: 13px;
-    line-height: 1.45;
-  }
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    font-family: 'Matter';
+}
   .yw--wholesale--form__subtitle p { margin: 0; }
 
   /* ---------- klaviyo wrapper ---------- */
@@ -225,20 +228,22 @@
 
   /* ---------- quick links ---------- */
   .yw--wholesale--form__links {
-    position: relative;
+        position: relative;
     z-index: 1;
     max-width: var(--ywf-form-width);
     margin: 28px auto 0;
     padding-top: 24px;
     border-top: 1px solid var(--ywf-field-border);
   }
-  .yw--wholesale--form__links-title {
-    margin: 0 0 14px;
+ .yw--wholesale--form__links-title {
+    margin: 0 0 12px;
     color: var(--ywf-heading);
-    font-size: 12px;
-    letter-spacing: .14em;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.80px;
     text-transform: uppercase;
-  }
+    font-family: 'TAY Birdie';
+}
   .yw--wholesale--form__links-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -247,24 +252,24 @@
     margin: 0;
     padding: 0;
   }
-  .yw--wholesale--form__link {
+.yw--wholesale--form__link {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
     width: 100%;
-    padding: 9px 12px;
+    padding: 5.2px 25px 5.2px 12px;
     border: 1px solid var(--ywf-field-border);
     border-radius: 6px;
     background-color: var(--ywf-field-bg);
     color: var(--ywf-heading);
-    font-size: 10px;
-    letter-spacing: .08em;
-    line-height: 1.2;
+    font-size: 14px;
+    letter-spacing: 0.56px;
+    line-height: 20px;
     text-transform: uppercase;
     text-decoration: none;
     transition: background-color .2s ease, border-color .2s ease;
-  }
+}
   .yw--wholesale--form__link:hover {
     background-color: var(--ywf-btn-bg);
     border-color: var(--ywf-btn-bg);
@@ -284,8 +289,17 @@
     .yw--wholesale--form__kibble--left  { left: 6%;  top: 120px; }
     .yw--wholesale--form__kibble--right { right: 6%; top: 220px; }
 
-    .yw--wholesale--form__title { font-size: 34px; }
-    .yw--wholesale--form__subtitle { font-size: 14px; max-width: 40ch; }
+        .yw--wholesale--form__title {
+        font-size: 56px;
+        line-height: 64px;
+        letter-spacing: -0.56px;
+        margin: 0;
+    }
+    .yw--wholesale--form__subtitle {
+        font-size: 18px;
+        line-height: 28px;
+        max-width: 400px;
+    }
     .yw--wholesale--form__head { margin-bottom: 30px; }
 
     /* two-up fields on desktop */
@@ -302,7 +316,10 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
-    .yw--wholesale--form__links { margin-top: 40px; padding-top: 30px; }
+        .yw--wholesale--form__links {
+        padding-top: 28px;
+        margin-top: 0;
+    }
   }
 {%- endstyle -%}
 
