@@ -68,7 +68,11 @@
                 {%- assign v_desc_mf = v.metafields[desc_parts[0]][desc_parts[1]] -%}
                 {%- assign v_desc = v_desc_mf.value | default: desc_mf.value -%}
                 <li class="fp__card{% if v_hover != blank %} fp__card__hover{% endif %}" data-fp-slide>
-                  <a class="fp__card-link" href="{{ v.url }}" aria-label="{{ product.title | escape }} — {{ recipe_val | escape }}"></a>
+                  <a
+                    class="fp__card-link"
+                    href="{{ v.url }}"
+                    aria-label="{{ product.title | escape }} — {{ recipe_val | escape }}"
+                  ></a>
                   <div class="fp__hover-media">
                     {%- if v_hover != blank -%}
                       {{ v_hover | image_url: width: 1200 | image_tag: class: 'fp__hover-image', alt: '' }}
@@ -125,7 +129,12 @@
                     {% elsif hover_media.media_type == 'video' %}
                       {{
                         hover_media
-                        | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'fp__hover-video'
+                        | video_tag:
+                          autoplay: true,
+                          loop: true,
+                          muted: true,
+                          playsinline: true,
+                          class: 'fp__hover-video'
                       }}
                     {% endif %}
                   {% endif %}
@@ -192,7 +201,31 @@
         {%- endif -%}
       </ul>
     </div>
+    {%- assign card_count = 0 -%}
+    {%- for product in products -%}
+      {%- assign recipe_pos = 0 -%}
+      {%- for opt in product.options_with_values -%}
+        {%- assign opt_name_dc = opt.name | downcase -%}
+        {%- if opt_name_dc == 'recipe' -%}{%- assign recipe_pos = forloop.index -%}{%- endif -%}
+      {%- endfor -%}
 
+      {%- if section.settings.split_by_recipe and recipe_pos > 0 -%}
+        {%- assign recipe_index0 = recipe_pos | minus: 1 -%}
+        {%- assign seen = '|' -%}
+        {%- for v in product.variants -%}
+          {%- assign rv = v.options[recipe_index0] -%}
+          {%- assign rk = '|' | append: rv | append: '|' -%}
+          {%- unless seen contains rk -%}
+            {%- assign seen = seen | append: rv | append: '|' -%}
+            {%- assign card_count = card_count | plus: 1 -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign card_count = card_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if products.size == 0 -%}{%- assign card_count = 3 -%}{%- endif -%}
     {%- if card_count > 1 -%}
       <div class="fp__nav" data-fp-nav>
         <button
@@ -563,8 +596,14 @@
         }
       }
 
-      if (prev) prev.addEventListener('click', function () { step(-1); });
-      if (next) next.addEventListener('click', function () { step(1); });
+      if (prev)
+        prev.addEventListener('click', function () {
+          step(-1);
+        });
+      if (next)
+        next.addEventListener('click', function () {
+          step(1);
+        });
 
       /* ---------- render state ---------- */
 
