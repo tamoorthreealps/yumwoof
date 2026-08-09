@@ -1681,7 +1681,7 @@ background: #000;
 		width: 70px;
 	}
 	.cd-congrats__text {
-		font-size: 14px;
-		line-height: 18px;
+		        font-size: 13px;
+        line-height: 16px;
 	}
 }
