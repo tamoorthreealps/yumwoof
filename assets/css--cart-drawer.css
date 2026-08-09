@@ -425,7 +425,7 @@ p.cd-banner__description {
 .cd-items-wrap {
 	display: block;
 	padding: 0 2rem;
-	margin: 2rem 0 3.2rem;
+	margin: 2rem 0 4rem;
 }
 
 .cd-items {
@@ -1324,7 +1324,7 @@ background: #000;
 
 	.cd-items-wrap {
 		padding: 0 1.6rem;
-		margin: 1.6rem 0 4rem;
+		margin: 1.6rem 0 3.2rem;
 	}
 
 	.cd-item {
