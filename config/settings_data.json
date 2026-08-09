@@ -109,8 +109,9 @@
     "brand_headline": "",
     "brand_description": "<p></p>",
     "brand_image_width": 100,
-    "social_facebook_link": "#",
-    "social_instagram_link": "#",
+    "social_facebook_link": "https://www.facebook.com/yumwoof/",
+    "social_spotify_link": "https://open.spotify.com/playlist/01bHso1IQB9nU4rEooIjse",
+    "social_instagram_link": "https://www.instagram.com/yumwoof/",
     "social_youtube_link": "",
     "social_tiktok_link": "",
     "social_twitter_link": "",
@@ -143,14 +144,6 @@
       "yum-club-section-1": {
         "type": "yum-club-section-1",
         "settings": {
-          "yum-club": "membership"
-        }
-      },
-      "membership-savings-section": {
-        "type": "membership-savings-section",
-        "settings": {
-          "base-food": "perfect-superfood",
-          "topper-price": 3299,
           "yum-club": "membership"
         }
       },
