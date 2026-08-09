@@ -391,6 +391,64 @@
   .yw--wholesale--banner__kibble { transform: none !important; }
   .yw--wholesale--banner__kibble img { animation: none; }
 }
+
+
+
+/* ---------------- Stacking mode (≤989px only) ---------------- */
+@media screen and (max-width: 989px) {
+  .yw--wholesale--banner__cards--stack {
+    display: block;
+    margin-top: 45px;
+    --stack-top: var(--yw-wholesale-banner-stack-top, 110px);
+    --stack-peek: var(--yw-wholesale-banner-stack-peek, 24px);
+    --stack-gap: var(--yw-wholesale-banner-stack-gap, 80vh);
+  }
+
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card {
+    position: sticky;
+    top: calc(var(--stack-top) + (var(--i) * var(--stack-peek)));
+    display: block;
+    margin: 0 auto;
+    max-width: 384px;
+    transform-origin: top center;
+    will-change: transform;
+  }
+
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card + .yw--wholesale--banner__card {
+    margin-top: var(--stack-gap);
+  }
+
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card-shape {
+    position: absolute;
+    inset: 0;
+    min-height: 400px;
+    max-width: 384px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .yw--wholesale--banner__cards--stack {
+    --stack-top: 90px;
+    --stack-peek: 20px;
+    --stack-gap: 70vh;
+    margin-top: 35px;
+  }
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card { max-width: 344px; }
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card-shape {
+    min-height: 332px;
+    max-width: 344px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card {
+    position: static;
+    transform: none !important;
+  }
+  .yw--wholesale--banner__cards--stack .yw--wholesale--banner__card + .yw--wholesale--banner__card {
+    margin-top: var(--yw-wholesale-banner-gap-mobile);
+  }
+}
 </style>
 
 <section class="yw--wholesale--banner" aria-labelledby="yw-wholesale-banner-heading-{{ uid }}">
@@ -616,7 +674,87 @@
       });
     });
   })();
+
+
+
+
+
+  (function () {
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var STACK_MQ = window.matchMedia('(max-width: 989px)');
+  var cards = [];
+  var ticking = false;
+
+  function collect(root) {
+    var scope = root || document;
+    var found = scope.querySelectorAll('.yw--wholesale--banner__cards--stack [data-stack-card]');
+    for (var i = 0; i < found.length; i++) {
+      if (cards.indexOf(found[i]) === -1) cards.push(found[i]);
+    }
+  }
+
+  function clearAll() {
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].isConnected) cards[i].style.transform = '';
+    }
+  }
+
+  function update() {
+    ticking = false;
+    if (REDUCED.matches) return;
+
+    // desktop: no stacking, make sure nothing is left scaled
+    if (!STACK_MQ.matches) { clearAll(); return; }
+
+    for (var i = 0; i < cards.length; i++) {
+      var el = cards[i];
+      if (!el.isConnected) continue;
+
+      var next = cards[i + 1];
+      if (!next || next.parentNode !== el.parentNode) {
+        el.style.transform = '';
+        continue;
+      }
+
+      var elRect = el.getBoundingClientRect();
+      var nextRect = next.getBoundingClientRect();
+
+      var travel = nextRect.top - elRect.top;
+      var progress = 1 - (travel / Math.max(elRect.height, 1));
+      progress = Math.max(0, Math.min(1, progress));
+
+      el.style.transform = 'scale(' + (1 - progress * 0.10).toFixed(4) + ')';
+    }
+  }
+
+  function onScroll() {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+  }
+
+  function init(root) { collect(root); update(); }
+
+  init();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  // handle crossing the 990px boundary
+  if (STACK_MQ.addEventListener) {
+    STACK_MQ.addEventListener('change', function () { clearAll(); update(); });
+  } else if (STACK_MQ.addListener) {
+    STACK_MQ.addListener(function () { clearAll(); update(); });
+  }
+
+  document.addEventListener('shopify:section:load', function (e) {
+    cards = cards.filter(function (el) { return el.isConnected; });
+    init(e.target);
+  });
+  document.addEventListener('shopify:section:unload', function () {
+    cards = cards.filter(function (el) { return el.isConnected; });
+  });
+})();
 </script>
+
+
 {% schema %}
 {
   "name": "YW Wholesale Banner",
