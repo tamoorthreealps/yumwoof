@@ -558,27 +558,30 @@ function initRecommendSlider() {
 
   const options = {
     type: "slide",
-    perPage: 1.18,
+    perPage: totalSlides === 1 ? 1 : 1.18,
     perMove: 1,
-    gap: "16px",
+    gap: totalSlides === 1 ? 0 : "16px",
     pagination: false,
     arrows: false,
-    drag: true,
+    drag: totalSlides > 1,
     omitEnd: true,
     trimSpace: true,
     focus: 0,
     breakpoints: {
       1024: {
-        perPage: 1.06,
+        perPage: totalSlides === 1 ? 1 : 1.06,
       },
       768: {
-        perPage: 1.06,
-        gap: "8px",
+        perPage: totalSlides === 1 ? 1 : 1.06,
+        gap: totalSlides === 1 ? 0 : "8px",
       },
     },
   };
 
-  // Show next card preview only when more than one slide exists
+  const prevBtn = document.querySelector("[data-cd-prev]");
+  const nextBtn = document.querySelector("[data-cd-next]");
+  const arrowWrap = prevBtn?.closest(".cd-carousel__nav");
+
   if (totalSlides > 1) {
     options.padding = {
       right: "64px",
@@ -591,15 +594,14 @@ function initRecommendSlider() {
     options.breakpoints[768].padding = {
       right: "16px",
     };
+  } else {
+    arrowWrap?.classList.add("is-hidden");
   }
 
   const splide = new Splide(slider, options);
 
-  const prevBtn = document.querySelector("[data-cd-prev]");
-  const nextBtn = document.querySelector("[data-cd-next]");
-
   function updateArrows() {
-    if (!prevBtn || !nextBtn) return;
+    if (!prevBtn || !nextBtn || totalSlides <= 1) return;
 
     prevBtn.disabled = splide.index === 0;
     nextBtn.disabled =
