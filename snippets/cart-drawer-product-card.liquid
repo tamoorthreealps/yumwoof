@@ -59,9 +59,22 @@
           {%- if recipe != blank -%}
             <p class="cd-rec-card__subtitle">{{ recipe }}</p>
           {%- endif -%}
-          {%- if product.metafields.custom.pack_size != blank -%}
-            <p class="cd-rec-card__meta">{{ product.metafields.custom.pack_size.value }}</p>
-          {%- endif -%}
+          {%- assign rec_variant = product.selected_or_first_available_variant -%}
+          {%- assign size_value = blank -%}
+
+          {%- for option in product.options -%}
+            {%- if option == 'Size' -%}
+              {%- assign size_value = rec_variant.options[forloop.index0] -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          <p class="cd-rec-card__meta">
+            {%- if product.metafields.custom.pack_size != blank -%}
+              {{ product.metafields.custom.pack_size.value }}
+            {%- elsif size_value != blank -%}
+              {{ size_value }}
+            {%- endif -%}
+          </p>
         </div>
         <div class="cd-rec-card__price">
           <span class="cd-rec-card__final">{{ price | money }}</span>
