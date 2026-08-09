@@ -23,6 +23,7 @@
         "card_NJncD8": {
           "type": "card",
           "settings": {
+            "logo": "shopify://shop_images/Navbar_Shape.svg",
             "logo_alt": "",
             "title": "The lowest price you'll find",
             "text": "<p>Apply for a wholesale account on yumwoof.com and receive our distributor pricing with no markup added. Low-MOQ plans available for smaller stores.</p>",
@@ -34,6 +35,7 @@
         "card_Nz3Wig": {
           "type": "card",
           "settings": {
+            "logo": "shopify://shop_images/Vector_91a84376-c8df-45ac-ac54-17c10619c0b9.svg",
             "logo_alt": "",
             "title": "Buy on terms you already have",
             "text": "<p>Already a Faire member? Order Yumwoof through your account. We do require proof of a physical retail store, and Faire pricing runs 10% above ordering direct from us.</p>",
@@ -45,6 +47,7 @@
         "card_JWeQet": {
           "type": "card",
           "settings": {
+            "logo": "shopify://shop_images/Vector_1_2faa822f-472d-4ec3-a4d5-88660e135ef8.svg",
             "logo_alt": "",
             "title": "On your usual schedule.",
             "text": "<p>Prefer to work through a distributor? We're available on Pod Foods. And if there's another distributor you'd like us on in future, reach out and let our team know.</p>",
