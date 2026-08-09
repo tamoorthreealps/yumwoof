@@ -442,6 +442,56 @@ display: inline-flex;
         }
 
         customElements.define('appstle-subscription-widget', AppstleSubscriptionWidget);
+
+        /* ----- Keep prices in sync on variant / swatch change -----
+           Dawn's product-info re-renders only the price + buy-buttons on a variant
+           change; this widget (whose sub/one-time prices are server-rendered per
+           variant) is left stale. product-info publishes variantChange with the
+           freshly-fetched section HTML for the NEW variant, so swap in that widget's
+           markup (new prices, freq options, saving) while preserving the shopper's
+           subscribe/one-time + frequency choice. */
+        function syncAswOnVariantChange(event) {
+          var html = event && event.data && event.data.html;
+          if (!html) return;
+          var current = document.querySelector('appstle-subscription-widget');
+          var incoming = html.querySelector('appstle-subscription-widget');
+          if (!current || !incoming) return;
+
+          var checked = current.querySelector('input[name^="asw_plan_"]:checked');
+          var prevPlan = checked ? checked.value : null;
+          var freqEl = current.querySelector('[data-asw-freq]');
+          var prevFreq = freqEl ? freqEl.value : null;
+
+          current.replaceWith(incoming); // adoption + upgrade runs connectedCallback()
+
+          if (prevPlan) {
+            var radio = incoming.querySelector('input[value="' + prevPlan + '"]');
+            if (radio) radio.checked = true;
+          }
+          var newFreq = incoming.querySelector('[data-asw-freq]');
+          if (newFreq && prevFreq) {
+            var keep = Array.prototype.some.call(newFreq.options, function (o) {
+              return o.value === prevFreq;
+            });
+            if (keep) newFreq.value = prevFreq;
+          }
+          if (typeof incoming.apply === 'function') incoming.apply();
+        }
+
+        function bindAswVariantSync() {
+          if (
+            typeof subscribe !== 'function' ||
+            typeof PUB_SUB_EVENTS === 'undefined' ||
+            !PUB_SUB_EVENTS.variantChange
+          ) {
+            return false;
+          }
+          subscribe(PUB_SUB_EVENTS.variantChange, syncAswOnVariantChange);
+          return true;
+        }
+        if (!bindAswVariantSync()) {
+          document.addEventListener('DOMContentLoaded', bindAswVariantSync, { once: true });
+        }
       })();
     </script>
   {%- endif -%}
