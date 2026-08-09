@@ -150,6 +150,7 @@
 	letter-spacing: 0;
 	color: var(--hb-text);
 	font-weight: 500;
+	padding-left: 7px;
 }
 
 /* --------------------------------------------------------------------------
@@ -201,5 +202,6 @@
 	.hero-banner__offer {
 		font-size: 14px;
 		line-height: 20px;
+		padding-left: 0;
 	}
 }
