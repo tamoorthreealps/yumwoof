@@ -845,7 +845,9 @@ p.cd-banner__description {
 	display: flex;
 	gap: 1.6rem;
 }
-
+.cd-carousel__nav.is-hidden {
+  display: none;
+}
 .cd-carousel__arrow {
 	border: 0;
 	background: none;
