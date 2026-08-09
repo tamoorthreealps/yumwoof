@@ -959,8 +959,11 @@ p.cd-banner__description {
 }
 
 .cd-rec-card__meta {
-	margin: 0.4rem 0 0;
-	font-size: 1.3rem;
+    margin: .8rem 0 0;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0;
+    color: #000;
 }
 
 .cd-rec-card__price {
@@ -1465,6 +1468,11 @@ background: #000;
 		font-size: 10px;
 		line-height: 12px;
 		letter-spacing: -.4px;
+	}
+
+	.cd-rec-card__meta {
+		font-size: 12px;
+		line-height: 16px;
 	}
 
 	.cd-rec-card__price {
