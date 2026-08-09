@@ -433,66 +433,109 @@ if (!customElements.get('cart-note')) {
   );
 }
 
+/* ============================================================
+   Empty-cart recommended products slider
+   Self-healing: safe to call any number of times. Re-mounts
+   whenever the drawer markup is swapped by an AJAX re-render.
+   ============================================================ */
+let emptyCartSplide = null;
+
 function initEmptyCartSlider() {
-  const slider = document.querySelector(".js-empty-cart-slider");
+  const slider = document.querySelector('.js-empty-cart-slider');
 
-  if (!slider || slider.classList.contains("is-initialized")) return;
+  // The node we mounted on was replaced or removed by a section
+  // re-render — tear the old instance down before doing anything else.
+  if (emptyCartSplide && emptyCartSplide.root !== slider) {
+    try {
+      emptyCartSplide.destroy(true);
+    } catch (e) {
+      /* already detached */
+    }
+    emptyCartSplide = null;
+  }
 
-  slider.classList.add("is-initialized");
+  if (!slider) return;
+  if (slider.classList.contains('is-initialized')) return;
 
-const splide = new Splide(slider, {
-  type: "slide",
-  perPage: 2,
-  perMove: 1,
-  gap: "12px",
-  pagination: false,
-  arrows: false,
-  drag: true,
-  omitEnd: true,
-  trimSpace: true,
-  focus: 0,
-  breakpoints: {
-    750: {
-      perPage: 1.6,
-      gap: "12px",
-      omitEnd: true,
-      trimSpace: true,
-      focus: 0,
+  // Markup arrived but slides haven't (or the collection resolved empty).
+  if (!slider.querySelector('.splide__slide')) return;
+
+  // Still display:none — mounting now would measure zero widths.
+  if (!slider.offsetParent) return;
+
+  slider.classList.add('is-initialized');
+
+  const splide = new Splide(slider, {
+    type: 'slide',
+    perPage: 2,
+    perMove: 1,
+    gap: '12px',
+    pagination: false,
+    arrows: false,
+    drag: true,
+    omitEnd: true,
+    trimSpace: true,
+    focus: 0,
+    breakpoints: {
+      750: {
+        perPage: 1.6,
+        gap: '12px',
+        omitEnd: true,
+        trimSpace: true,
+        focus: 0,
+      },
     },
-  },
-});
+  });
 
-  const wrapper = slider.closest(".cd-shop--main");
+  // Scope the arrows to THIS slider's wrapper, not the whole document —
+  // two copies can briefly coexist during a swap.
+  const wrapper = slider.closest('.cd-shop--main');
+  const prevBtn = wrapper?.querySelector('.empty-prev');
+  const nextBtn = wrapper?.querySelector('.empty-next');
 
-  const prevBtn = wrapper?.querySelector(".empty-prev");
-  const nextBtn = wrapper?.querySelector(".empty-next");
+  function updateArrows() {
+    if (!prevBtn || !nextBtn) return;
 
-function updateArrows() {
-  if (!prevBtn || !nextBtn) return;
+    prevBtn.disabled = splide.index <= 0;
+    nextBtn.disabled = splide.index >= splide.Components.Controller.getEnd();
 
-  prevBtn.disabled = splide.index <= 0;
-  nextBtn.disabled = splide.index >= splide.Components.Controller.getEnd();
+    prevBtn.classList.toggle('is-disabled', prevBtn.disabled);
+    nextBtn.classList.toggle('is-disabled', nextBtn.disabled);
+  }
 
-  prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
-  nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
-}
-
-  splide.on("mounted moved resized updated", updateArrows);
-
+  splide.on('mounted moved resized updated', updateArrows);
   splide.mount();
 
-  prevBtn?.addEventListener("click", (e) => {
+  prevBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    splide.go("<");
+    splide.go('<');
   });
 
-  nextBtn?.addEventListener("click", (e) => {
+  nextBtn?.addEventListener('click', (e) => {
     e.preventDefault();
-    splide.go(">");
+    splide.go('>');
   });
+
+  emptyCartSplide = splide;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+/* Re-run on every drawer mutation, so it doesn't matter which
+   cartUpdate subscriber finishes its re-render last. */
+function observeCartDrawer() {
+  const drawerRoot = document.querySelector('cart-drawer');
+  if (!drawerRoot || drawerRoot.dataset.emptySliderObserved) return;
+
+  drawerRoot.dataset.emptySliderObserved = 'true';
+
+  new MutationObserver(() => {
+    // rAF lets the browser apply the is-empty class / layout first,
+    // so the offsetParent check above reads correctly.
+    requestAnimationFrame(initEmptyCartSlider);
+  }).observe(drawerRoot, { childList: true, subtree: true });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  observeCartDrawer();
   initEmptyCartSlider();
 });
 
