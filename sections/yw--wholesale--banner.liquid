@@ -283,6 +283,23 @@
       will-change: transform;
     }
 
+    .yw--wholesale--banner__kibble-2 img,
+    .yw--wholesale--banner__kibble-3 img {
+      animation: bottomaicon 120s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    @keyframes bottomaicon {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(-360deg);
+        }
+    }
+
     @keyframes bowlRotate {
         from {
             transform: rotate(0deg);
@@ -395,7 +412,7 @@
     -%}
     {%- if k_img != blank -%}
       <span
-        class="yw--wholesale--banner__kibble yw--wholesale--banner__kibble-{{ i }}"
+        class="yw--wholesale--banner__kibble"
         aria-hidden="true"
         style="
           --k-top: {{ k_top | default: 'auto' }};
