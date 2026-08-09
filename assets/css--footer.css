@@ -73,9 +73,9 @@
   animation: yf-marquee var(--yf-marquee-duration, 30s) linear infinite;
 }
 
-.yf__marquee:hover .yf__marquee-row[data-marquee-ready] {
+/* .yf__marquee:hover .yf__marquee-row[data-marquee-ready] {
   animation-play-state: paused;
-}
+} */
 
 .yf__marquee-track {
   display: flex;
