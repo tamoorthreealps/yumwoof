@@ -141,12 +141,10 @@ position: absolute !important;
 }
 
 /* Anything that needs its own click target sits above the overlay */
-/* .fp__card .fp__recipes,
-.fp__card .fp__shop,
-.fp__card .fp__media {
+.fp__card .fp__recipes {
   position: relative;
-  z-index: 2;
-} */
+  z-index: 4;
+}
 
 /* .fp__card.is-active {
 	transform: scale(1);
