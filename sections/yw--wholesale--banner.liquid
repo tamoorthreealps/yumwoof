@@ -395,7 +395,7 @@
     -%}
     {%- if k_img != blank -%}
       <span
-        class="yw--wholesale--banner__kibble"
+        class="yw--wholesale--banner__kibble yw--wholesale--banner__kibble-{{ i }}"
         aria-hidden="true"
         style="
           --k-top: {{ k_top | default: 'auto' }};
