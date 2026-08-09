@@ -61,9 +61,6 @@
     --yw-wholesale-banner-pb-mobile: {{ s.padding_bottom_mobile }};
     --yw-wholesale-banner-gap: {{ s.card_gap }};
     --yw-wholesale-banner-gap-mobile: {{ s.card_gap_mobile }};
-    --yw-wholesale-banner-heading-gap: {{ s.heading_to_description }};
-    --yw-wholesale-banner-cards-gap: {{ s.description_to_cards }};
-    --yw-wholesale-banner-cards-gap-mobile: {{ s.description_to_cards_mobile }};
 
     /* card shape padding — keeps content inside the hexagon */
     --yw-wholesale-banner-card-pad-x: {{ s.card_padding_x }};
@@ -125,36 +122,36 @@
     text-align: center;
     color: var(--yw-wholesale-banner-font);
   }
-  .yw--wholesale--banner__heading-line1 {
-    display: block;
-    font-family: var(--font-heading-family, var(--font-heading, inherit));
-    font-weight: 800;
-    font-size: clamp(40px, 5.4vw, 74px);
-    line-height: 1.02;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-  }
-  .yw--wholesale--banner__heading-line2 {
+    .yw--wholesale--banner__heading-line1 {
+        display: block;
+        font-family: 'TAYRosemary';
+        font-size: 88px;
+        line-height: 64px;
+        letter-spacing: -1.76px;
+        text-transform: uppercase;
+        transform: translateY(-9px);
+    }
+.yw--wholesale--banner__heading-line2 {
     display: block;
     margin-top: 8px;
-    font-family: var(--font-heading-family, var(--font-heading, inherit));
-    font-weight: 700;
-    font-size: clamp(20px, 2.1vw, 31px);
-    line-height: 1.1;
-    letter-spacing: 0.14em;
+    font-family: 'TAY Birdie';
+    font-size: 36px;
+    line-height: 36px;
+    letter-spacing: -0.72px;
     text-transform: uppercase;
-  }
+}
 
   /* ---------------- Description ---------------- */
-  .yw--wholesale--banner__description {
-    max-width: 690px;
-    margin: var(--yw-wholesale-banner-heading-gap) auto 0;
+.yw--wholesale--banner__description {
+    max-width: 640px;
+    margin: 18px auto 0;
     text-align: center;
     color: var(--yw-wholesale-banner-text);
-    font-family: var(--font-body-family, inherit);
-    font-size: 17px;
-    line-height: 1.55;
-  }
+    font-family: 'Matter';
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0;
+}
   .yw--wholesale--banner__description > *:first-child { margin-top: 0; }
   .yw--wholesale--banner__description > *:last-child { margin-bottom: 0; }
 
@@ -164,7 +161,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--yw-wholesale-banner-gap);
     align-items: stretch;
-    margin-top: var(--yw-wholesale-banner-cards-gap);
+    margin-top: 45px;
   }
 
   .yw--wholesale--banner__card {
@@ -310,7 +307,7 @@
     .yw--wholesale--banner__cards {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--yw-wholesale-banner-gap-mobile);
-      margin-top: var(--yw-wholesale-banner-cards-gap-mobile);
+      margin-top: 35px;
     }
     .yw--wholesale--banner__card-content {
       padding:
@@ -521,9 +518,6 @@
     { "type": "text", "id": "padding_bottom", "label": "Padding bottom (desktop)", "default": "110px" },
     { "type": "text", "id": "padding_top_mobile", "label": "Padding top (mobile)", "default": "44px" },
     { "type": "text", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "default": "60px" },
-    { "type": "text", "id": "heading_to_description", "label": "Heading to description", "default": "22px" },
-    { "type": "text", "id": "description_to_cards", "label": "Description to cards (desktop)", "default": "46px" },
-    { "type": "text", "id": "description_to_cards_mobile", "label": "Description to cards (mobile)", "default": "34px" },
     { "type": "text", "id": "card_gap", "label": "Card gap (desktop)", "default": "26px" },
     { "type": "text", "id": "card_gap_mobile", "label": "Card gap (mobile)", "default": "26px" },
 
