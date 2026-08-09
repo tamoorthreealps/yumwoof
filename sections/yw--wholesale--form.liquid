@@ -276,16 +276,19 @@
       text-transform: uppercase;
       text-decoration: none;
       transition: background-color .2s ease, border-color .2s ease;
+      position: relative;
   }
     .yw--wholesale--form__link:hover {
       background-color: #000;
       color: #FFF9EF;
     }
     .yw--wholesale--form__link-arrow {
-      flex: 0 0 auto;
-      width: 12px;
-      height: 6px;
-    }
+    flex: 0 0 auto;
+    width: 12px;
+    height: 6px;
+    position: absolute;
+    right: 11px;
+}
 
     /* ---------- desktop ---------- */
     @media screen and (min-width: 768px) {
