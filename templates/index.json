@@ -62,9 +62,9 @@
         "rating_text": "Over 2,500 5-star reviews",
         "enable_marquee": true,
         "marquee_speed": 35,
-        "background_color": "#661C1C",
-        "text_color": "#FFF9EF",
-        "star_color": "#FFC069"
+        "background_color": "#661c1c",
+        "text_color": "#fff9ef",
+        "star_color": "#ffc069"
       }
     },
     "featured_products": {
@@ -454,29 +454,29 @@
         "faq_j6K7wk": {
           "type": "faq",
           "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in our founder’s book.</p>"
+            "question": "Why doesn’t Yumwoof use seed oils?",
+            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach. Our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness. Read more about Cocomega™ in <a href=\"#\" title=\"#\">our founder’s book.</a></p>"
           }
         },
         "faq_V3kVMX": {
           "type": "faq",
           "settings": {
             "question": "Why choose air-dried over fresh food?",
-            "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>"
+            "answer": "<p>Fresh food got one thing right: dogs deserve real food. But frozen meals can be expensive, messy, and inconvenient. Air-drying lets us preserve real ingredients in a shelf-stable format that’s easy to serve every day—no thawing or refrigeration required.</p>"
           }
         },
         "faq_R6KgQU": {
           "type": "faq",
           "settings": {
             "question": "Do you offer a money-back guarantee?",
-            "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>"
+            "answer": "<p>Yes. Yumwoof offers a 21-day money-back guarantee on your first bag. You’ll see improvement within 21 days, or you can work with our nutritionists to find the right food. And if Yumwoof still isn’t the right fit, we’ll refund your first bag in accordance with our refund policy.</p>"
           }
         },
         "faq_xFKKgM": {
           "type": "faq",
           "settings": {
             "question": "Why are organ meats important for dogs?",
-            "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>"
+            "answer": "<p>Before synthetic vitamin packs existed, dogs got nutrients from food. Organ meats like liver, heart, and gizzard are some of nature’s most nutrient-dense ingredients, naturally providing vitamins and minerals that help inspire our whole food approach to nutrition.</p>"
           }
         }
       },
