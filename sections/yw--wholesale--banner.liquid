@@ -177,8 +177,10 @@
       z-index: 0;
       background-repeat: no-repeat;
       background-position: center center;
-      background-size: 100% 100%; /* stretch to card box so it always fits content */
-      pointer-events: none;
+          background-size: contain;
+    pointer-events: none;
+    min-height: 400px;
+    max-width: 384px;
     }
     /* Fallback outline if no shape image is selected */
     .yw--wholesale--banner__card-shape--fallback {
