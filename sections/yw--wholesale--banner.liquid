@@ -273,10 +273,24 @@
       left: var(--k-left);
       max-width: 30vw;
     }
+
     .yw--wholesale--banner__kibble img {
       display: block;
       width: 100%;
       height: auto;
+      animation: bowlRotate 120s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    @keyframes bowlRotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
     }
 
     /* ---------------- Tablet ---------------- */
