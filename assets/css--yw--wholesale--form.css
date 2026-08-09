@@ -184,9 +184,6 @@
     transition: all .25s ease;
 }
 
-.yw--wholesale--form__link:hover svg path {
-  fill:#FFF9EF;
-}
 
     /* ---------- desktop ---------- */
     @media screen and (min-width: 768px) {
