@@ -274,6 +274,9 @@
       bottom: var(--k-bottom);
       left: var(--k-left);
       max-width: 30vw;
+      --k-shift: 0px;
+      transform: translate3d(0, var(--k-shift), 0);
+      will-change: transform;
     }
 
     .yw--wholesale--banner__kibble img {
@@ -384,8 +387,9 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .yw--wholesale--banner__button { transition: none; }
-    }
+  .yw--wholesale--banner__kibble { transform: none !important; }
+  .yw--wholesale--banner__kibble img { animation: none; }
+}
 </style>
 
 <section class="yw--wholesale--banner" aria-labelledby="yw-wholesale-banner-heading-{{ uid }}">
@@ -567,9 +571,7 @@
         var rect = el.getBoundingClientRect();
         if (rect.bottom < -200 || rect.top > vh + 200) continue;
 
-        var range = parseFloat(
-          mobile ? el.dataset.parallaxRangeMobile : el.dataset.parallaxRange
-        );
+        var range = parseFloat(mobile ? el.dataset.parallaxRangeMobile : el.dataset.parallaxRange);
         if (isNaN(range)) range = mobile ? 30 : 60;
 
         var dir = parseFloat(el.dataset.parallaxDir);
@@ -602,11 +604,15 @@
 
     // Theme Editor re-init
     document.addEventListener('shopify:section:load', function (e) {
-      items = items.filter(function (el) { return el.isConnected; });
+      items = items.filter(function (el) {
+        return el.isConnected;
+      });
       init(e.target);
     });
     document.addEventListener('shopify:section:unload', function () {
-      items = items.filter(function (el) { return el.isConnected; });
+      items = items.filter(function (el) {
+        return el.isConnected;
+      });
     });
   })();
 </script>
