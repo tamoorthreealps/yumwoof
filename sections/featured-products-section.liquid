@@ -192,7 +192,31 @@
         {%- endif -%}
       </ul>
     </div>
+    {%- assign card_count = 0 -%}
+{%- for product in products -%}
+  {%- assign recipe_pos = 0 -%}
+  {%- for opt in product.options_with_values -%}
+    {%- assign opt_name_dc = opt.name | downcase -%}
+    {%- if opt_name_dc == 'recipe' -%}{%- assign recipe_pos = forloop.index -%}{%- endif -%}
+  {%- endfor -%}
 
+  {%- if section.settings.split_by_recipe and recipe_pos > 0 -%}
+    {%- assign recipe_index0 = recipe_pos | minus: 1 -%}
+    {%- assign seen = '|' -%}
+    {%- for v in product.variants -%}
+      {%- assign rv = v.options[recipe_index0] -%}
+      {%- assign rk = '|' | append: rv | append: '|' -%}
+      {%- unless seen contains rk -%}
+        {%- assign seen = seen | append: rv | append: '|' -%}
+        {%- assign card_count = card_count | plus: 1 -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- assign card_count = card_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if products.size == 0 -%}{%- assign card_count = 3 -%}{%- endif -%}
     {%- if card_count > 1 -%}
       <div class="fp__nav" data-fp-nav>
         <button
