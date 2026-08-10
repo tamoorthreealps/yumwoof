@@ -695,11 +695,21 @@
 @media screen and (max-width: 520px) {
   .qz-scrim {
     padding: 8px;
+    align-items: flex-end;
   }
-  .qz-modal {
-    max-width: 376px;
-    padding: 0;
+  .qz-modal { 
+    width: 100%;
+    max-width: 100%;
     min-height: 656px;
+    max-height: 90vh;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+    opacity: 1;
+    transition: transform .55s cubic-bezier(.22,1,.36,1);
+  }
+  .qz-scrim.is-open .qz-modal {
+    transform: translateY(0);
+    opacity: 1;
   }
   .qz-head {
     padding: 14px 20px 9.2px;
