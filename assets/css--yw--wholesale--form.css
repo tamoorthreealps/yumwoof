@@ -420,8 +420,11 @@ background: transparent !important;
   letter-spacing: 0 !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-disclosure a {
-  color: #555555 !important;
-  text-decoration: underline !important;
+    color: #555 !important;
+    text-decoration: underline !important;
+    font-size: 13px !important;
+    line-height: 20px !important;
+    font-family: 'Matter' !important;
 }
 
 /* --- Submit button ("CREATE ACCOUNT") --- */
