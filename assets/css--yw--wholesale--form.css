@@ -443,14 +443,14 @@ background: transparent !important;
 /* --- Consent / disclaimer copy --- */
 .yw--wholesale--form__klaviyo .klaviyo-disclosure p {
   margin: 0 !important;
-  color: #555555 !important;
+  color: #000000 !important;
   font-family: "Matter", sans-serif !important;
   font-size: 13px !important;
   line-height: 20px !important;
   letter-spacing: 0 !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-disclosure a {
-    color: #555 !important;
+    color: #000000 !important;
     text-decoration: underline !important;
     font-size: 13px !important;
     line-height: 20px !important;
@@ -521,4 +521,15 @@ height: 48px !important;
     min-height: 56px !important;
     font-size: 16px !important;
   }
+  .yw--wholesale--form__klaviyo .klaviyo-disclosure p {
+  font-size: 11px !important;
+  line-height: 16px !important;
+}
+.yw--wholesale--form__klaviyo .klaviyo-disclosure a {
+    font-size: 11px !important;
+    line-height: 16px !important;
+}
+.yw--wholesale--form__klaviyo form [data-testid=form-row]:last-child {
+        padding: 12px 0 48px !important;
+    }
 }
