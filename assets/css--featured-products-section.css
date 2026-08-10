@@ -207,16 +207,15 @@ position: absolute !important;
 	}
 
 .fp__label {
-	padding: 4px 8.44px 3px;
-	border: 1px solid var(--fp-label);
-	border-radius: 100px;
-	color: var(--fp-label);
-	font-size: 12px;
-	line-height: 12px;
-	letter-spacing: -.12px;
-	text-transform: uppercase;
-	font-family: TAY Birdie;
-	font-weight: 400;
+padding: 0;
+    border-radius: 100px;
+    color: #000;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: -.12px;
+    text-transform: uppercase;
+    font-family: 'TAYRosemary';
+    font-weight: 400;
 }
 
 .fp__media {
@@ -488,11 +487,11 @@ position: absolute !important;
 	}
 
 	.fp__label {
-		font-size: 1.4rem;
-		line-height: 16px;
-		letter-spacing: -0.28px;
-		padding: 6px 9.02px 4.4px;
-		text-transform: uppercase;
+		        font-size: 40px;
+        line-height: 48px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        transform: translateY(-4px);
 	}
 
 	.fp__media {
