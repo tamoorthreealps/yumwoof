@@ -1,0 +1,327 @@
+        .yw--wholesale--banner {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      box-sizing: border-box;
+      width: 100%;
+      height: auto;
+      min-height: var(--yw-wholesale-banner-height);
+      padding: var(--yw-wholesale-banner-pt) 0 var(--yw-wholesale-banner-pb);
+      background-color: var(--yw-wholesale-banner-bg);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    .yw--wholesale--banner *,
+    .yw--wholesale--banner *::before,
+    .yw--wholesale--banner *::after { box-sizing: border-box; }
+    
+    .yw--wholesale--banner__inner {
+      position: relative;
+      z-index: 2;
+      max-width: var(--yw-wholesale-banner-max-width);
+      margin: 24px auto 0;
+      padding:0 24px;
+    }
+
+    /* ---------------- Heading ---------------- */
+    .yw--wholesale--banner__heading {
+      margin: 0;
+      text-align: center;
+      color: var(--yw-wholesale-banner-font);
+    }
+      .yw--wholesale--banner__heading-line1 {
+          display: block;
+          font-family: 'TAYRosemary';
+          font-size: 88px;
+          line-height: 64px;
+          letter-spacing: -1.76px;
+          text-transform: uppercase;
+          transform: translateY(-9px);
+      }
+  .yw--wholesale--banner__heading-line2 {
+      display: block;
+      margin-top: 8px;
+      font-family: 'TAY Birdie';
+      font-size: 36px;
+      line-height: 36px;
+      letter-spacing: -0.72px;
+      text-transform: uppercase;
+  }
+
+    /* ---------------- Description ---------------- */
+  .yw--wholesale--banner__description {
+      max-width: 640px;
+      margin: 18px auto 0;
+      text-align: center;
+      color: var(--yw-wholesale-banner-text);
+      font-family: 'Matter';
+      font-size: 18px;
+      line-height: 28px;
+      letter-spacing: 0;
+  }
+    .yw--wholesale--banner__description > *:first-child { margin-top: 0; }
+    .yw--wholesale--banner__description > *:last-child { margin-bottom: 0; }
+
+    /* ---------------- Cards ---------------- */
+    .yw--wholesale--banner__cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--yw-wholesale-banner-gap);
+      align-items: stretch;
+      margin-top: 45px;
+    }
+
+    .yw--wholesale--banner__card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+    }
+
+    /* Shape layer — stretched image background, scales with the card */
+    .yw--wholesale--banner__card-shape {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-repeat: no-repeat;
+      background-position: center center;
+          background-size: contain;
+    pointer-events: none;
+    min-height: 400px;
+    max-width: 384px;
+    }
+    /* Fallback outline if no shape image is selected */
+    .yw--wholesale--banner__card-shape--fallback {
+      background-color: #fff;
+      border: 3px solid var(--yw-wholesale-banner-card-border);
+      border-radius: 26px;
+    }
+
+    .yw--wholesale--banner__card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding:
+        var(--yw-wholesale-banner-card-pad-top)
+        var(--yw-wholesale-banner-card-pad-x)
+        var(--yw-wholesale-banner-card-pad-bottom);
+      text-align: center;
+    }
+
+    .yw--wholesale--banner__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+  }
+    .yw--wholesale--banner__logo img {
+      display: block;
+      max-width: 168px;
+      width: 100%;
+      height: 56px;
+      object-fit: contain;
+  }
+
+    .yw--wholesale--banner__title {
+      margin: 0 0 12px;
+      font-family: 'TAY Birdie';
+      font-size: 18px;
+      line-height: 24px;
+      letter-spacing: -0.72px;
+      text-transform: uppercase;
+      color: var(--yw-wholesale-banner-card-title);
+  }
+
+    .yw--wholesale--banner__text {
+      margin: 0;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0;
+      color: var(--yw-wholesale-banner-card-text);
+  }
+    .yw--wholesale--banner__text > *:last-child { margin: 0; }
+
+    /* ---------------- Button ---------------- */
+    .yw--wholesale--banner__button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 11.2px 29.4px;
+      border: 1px solid var(--yw-wholesale-banner-button-border);
+      border-radius: var(--yw-wholesale-banner-button-radius);
+      background: var(--yw-wholesale-banner-button-bg);
+      color: var(--yw-wholesale-banner-button-text);
+      font-family: var(--font-body-family, inherit);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.64px;
+      text-transform: uppercase;
+      text-decoration: none;
+      line-height: 24px;
+      transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+    }
+    .yw--wholesale--banner__button:hover,
+    .yw--wholesale--banner__button:focus-visible {
+      background: var(--yw-wholesale-banner-button-hover-bg);
+      color: var(--yw-wholesale-banner-button-hover-text);
+    }
+    .yw--wholesale--banner__button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+    /* ---------------- Kibbles ---------------- */
+    .yw--wholesale--banner__kibble {
+      position: absolute;
+      z-index: 1;
+      display: block;
+      pointer-events: none;
+      width: var(--k-w);
+      top: var(--k-top);
+      right: var(--k-right);
+      bottom: var(--k-bottom);
+      left: var(--k-left);
+      max-width: 30vw;
+      --k-shift: 0px;
+      transform: translate3d(0, var(--k-shift), 0);
+      will-change: transform;
+    }
+
+    .yw--wholesale--banner__kibble img {
+      display: block;
+      width: 100%;
+      height: auto;
+      animation: bowlRotate 120s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .yw--wholesale--banner__kibble-2 img,
+    .yw--wholesale--banner__kibble-3 img {
+      animation: bottomaicon 120s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    @keyframes bottomaicon {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(-360deg);
+        }
+    }
+
+    @keyframes bowlRotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* ---------------- Tablet ---------------- */
+    @media screen and (max-width: 989px) and (min-width: 750px) {
+      .yw--wholesale--banner { height: auto; min-height: var(--yw-wholesale-banner-height); }
+      .yw--wholesale--banner__cards { gap: 18px; }
+      .yw--wholesale--banner__card-content { padding: 30px 18px 52px; }
+      .yw--wholesale--banner__text { font-size: 14.5px; }
+      .yw--wholesale--banner__logo img { max-height: 46px; }
+      .yw--wholesale--banner__kibble { width: calc(var(--k-w) * .78); }
+    }
+
+    /* ---------------- Mobile ---------------- */
+    @media screen and (max-width: 989px) {
+      .yw--wholesale--banner {
+        overflow: clip;
+        height: auto;
+        min-height: var(--yw-wholesale-banner-height-mobile);
+        padding: var(--yw-wholesale-banner-pt-mobile) 0 var(--yw-wholesale-banner-pb-mobile);
+      }
+      .yw--wholesale--banner__inner {
+        margin: 0 auto;
+      }
+          .yw--wholesale--banner__heading-line1 {
+          font-size: 56px;
+          line-height: 56px;
+          letter-spacing: -1.12px;
+          transform: none;
+      }
+          .yw--wholesale--banner__heading-line2 {
+          font-size: 28px;
+          line-height: 28px;
+          letter-spacing: -0.46px;
+      }
+          .yw--wholesale--banner__description {
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0;
+          margin-top: 16px;
+          max-width: 320px;
+      }
+
+      .yw--wholesale--banner__cards {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--yw-wholesale-banner-gap-mobile);
+        margin-top: 35px;
+            position: relative;
+      }
+      .yw--wholesale--banner__card {
+    position: sticky;
+    top: 100px;
+}
+      .yw--wholesale--banner__card-content {
+        padding:
+          var(--yw-wholesale-banner-card-pad-top-mobile)
+          var(--yw-wholesale-banner-card-pad-x-mobile)
+          var(--yw-wholesale-banner-card-pad-bottom-mobile);
+          max-width: 342px;
+        margin: 0 auto;
+      }
+      .yw--wholesale--banner__card-shape {
+        min-height: 332px;
+    max-width: 344px;
+            margin: 0 auto;
+    }
+      .yw--wholesale--banner__title { font-size: 14px; }
+          .yw--wholesale--banner__button {
+          font-size: 13px;
+          line-height: 24px;
+          letter-spacing: 0.52px;
+          padding: 7.2px 28.3px;
+      }
+
+      .yw--wholesale--banner__kibble {
+        width: var(--k-w-m, var(--k-w));
+        top: var(--k-top-m, var(--k-top));
+        right: var(--k-right-m, var(--k-right));
+        bottom: var(--k-bottom-m, var(--k-bottom));
+        left: var(--k-left-m, var(--k-left));
+        max-width: 26vw;
+      }
+    }
+    @media screen and (max-width: 391px) {
+          .yw--wholesale--banner__cards {
+        gap: 64px;
+        margin-top: 55px;
+    }
+    .yw--wholesale--banner__card-shape {
+          inset: -16px;
+      }
+      .yw--wholesale--banner__text {
+    font-size: 14px;
+    line-height: 22px;
+      }
+      .yw--wholesale--banner__title {
+        margin: 0 0 8px;
+    }
+        .yw--wholesale--banner__button {
+        margin-top: 16px;
+    }
+    }
+    @media (prefers-reduced-motion: reduce) {
+  .yw--wholesale--banner__kibble { transform: none !important; }
+  .yw--wholesale--banner__kibble img { animation: none; }
+}
