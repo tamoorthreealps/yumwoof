@@ -16,10 +16,9 @@
           "type": "title",
           "settings": {}
         },
-        "vendor": {
-          "type": "text",
+        "subheading_WGtEza": {
+          "type": "subheading",
           "settings": {
-            "text": "AIR DRIED DOG FOOD - LAND & SEA",
             "text_style": "uppercase"
           }
         },
@@ -119,7 +118,7 @@
       },
       "block_order": [
         "title",
-        "vendor",
+        "subheading_WGtEza",
         "rating_AqGBUP",
         "short_description_HghaRg",
         "price",
