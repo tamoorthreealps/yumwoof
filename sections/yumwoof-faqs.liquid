@@ -4,8 +4,30 @@
   assign categories = shop.metaobjects.faq_category.values | sort: 'sort_order'
   assign faqs = shop.metaobjects.faq.values
 
-  assign category_count = categories.size
   assign question_count = faqs.size
+
+  comment
+    Only keep categories that have at least one FAQ pointing at them.
+  endcomment
+  assign used_ids = ''
+  for faq in faqs
+    assign fid = faq.category.value.system.id
+    if fid != blank
+      assign used_ids = used_ids | append: '|' | append: fid
+    endif
+  endfor
+  assign used_ids = used_ids | append: '|'
+
+  assign active_categories = ''
+  for category in categories
+    assign needle = '|' | append: category.system.id | append: '|'
+    if used_ids contains needle
+      assign active_categories = active_categories | append: category.system.handle | append: ','
+    endif
+  endfor
+  assign active_handles = active_categories | split: ','
+
+  assign category_count = active_handles.size
 
   assign show_filters = false
   if section.settings.show_filters and category_count > 0
@@ -52,9 +74,14 @@
 
       {%- if show_filters -%}
         <div class="yw-faqs__pills" role="group" aria-label="{{ section.settings.filter_label | escape }}">
+          {%- assign pill_index = 0 -%}
           {%- for category in categories -%}
             {%- liquid
               assign handle = category.system.handle
+              unless active_handles contains handle
+                continue
+              endunless
+              assign pill_index = pill_index | plus: 1
               assign pill_text = category.pill_label
               if pill_text == blank
                 assign pill_text = category.title
@@ -62,7 +89,7 @@
             -%}
             <button
               type="button"
-              class="yw-pill{% if forloop.first %} is-active{% endif %}"
+              class="yw-pill{% if pill_index == 1 %} is-active{% endif %}"
               data-yw-filter="{{ handle }}"
               aria-pressed="false"
             >
@@ -84,8 +111,13 @@
               {%- if section.settings.show_all_option -%}
                 {{ all_label | escape }}
               {%- else -%}
-                {%- assign first_category = categories | first -%}
-                {{ first_category.pill_label | default: first_category.title | escape }}
+                {%- for category in categories -%}
+                  {%- unless active_handles contains category.system.handle -%}
+                    {%- continue -%}
+                  {%- endunless -%}
+                  {{ category.pill_label | default: category.title | escape }}
+                  {%- break -%}
+                {%- endfor -%}
               {%- endif -%}
             </span>
             <span class="yw-pill__chevron" aria-hidden="true">
@@ -109,11 +141,16 @@
                 </button>
               </li>
             {%- endif -%}
+            {%- assign opt_index = 0 -%}
             {%- for category in categories -%}
+              {%- unless active_handles contains category.system.handle -%}
+                {%- continue -%}
+              {%- endunless -%}
+              {%- assign opt_index = opt_index | plus: 1 -%}
               <li role="presentation">
                 <button
                   type="button"
-                  class="yw-faqs__select-option{% unless section.settings.show_all_option %}{% if forloop.first %} is-active{% endif %}{% endunless %}"
+                  class="yw-faqs__select-option{% unless section.settings.show_all_option %}{% if opt_index == 1 %} is-active{% endif %}{% endunless %}"
                   role="option"
                   aria-selected="false"
                   data-yw-filter="{{ category.system.handle }}"
@@ -132,16 +169,9 @@
         {%- liquid
           assign cat_id = category.system.id
           assign cat_handle = category.system.handle
-
-          assign matched = 0
-          for faq in faqs
-            if faq.category.value.system.id == cat_id
-              assign matched = matched | plus: 1
-            endif
-          endfor
         -%}
 
-        {%- if matched > 0 -%}
+        {%- if active_handles contains cat_handle -%}
           <section class="yw-faqs__group" data-yw-group data-yw-category="{{ cat_handle }}">
             {%- if category.title != blank -%}
               <h2 class="yw-faqs__group-title">{{ category.title | escape }}</h2>
