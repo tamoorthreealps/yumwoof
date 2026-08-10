@@ -1,19 +1,20 @@
 {{ 'css--yumwoof-faqs.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign category_count = 0
-  assign question_count = 0
-  for block in section.blocks
-    if block.type == 'category'
-      assign category_count = category_count | plus: 1
-    elsif block.type == 'question'
-      assign question_count = question_count | plus: 1
-    endif
-  endfor
+  assign categories = shop.metaobjects.faq_category.values | sort: 'sort_order'
+  assign faqs = shop.metaobjects.faq.values
+
+  assign category_count = categories.size
+  assign question_count = faqs.size
 
   assign show_filters = false
   if section.settings.show_filters and category_count > 0
     assign show_filters = true
+  endif
+
+  assign all_label = section.settings.all_label
+  if all_label == blank
+    assign all_label = 'All'
   endif
 -%}
 
@@ -50,31 +51,23 @@
       </div>
 
       {%- if show_filters -%}
-        {%- liquid
-          assign all_label = section.settings.all_label
-          if all_label == blank
-            assign all_label = 'All'
-          endif
-        -%}
-
         <div class="yw-faqs__pills" role="group" aria-label="{{ section.settings.filter_label | escape }}">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'category' -%}
-              {%- liquid
-                assign pill_text = block.settings.pill_label
-                if pill_text == blank
-                  assign pill_text = block.settings.title
-                endif
-              -%}
-              <button
-                type="button"
-                class="yw-pill{% if forloop.first %} is-active{% endif %}"
-                data-yw-filter="{{ block.id }}"
-                aria-pressed="false"
-              >
-                {{ pill_text | escape }}
-              </button>
-            {%- endif -%}
+          {%- for category in categories -%}
+            {%- liquid
+              assign handle = category.system.handle
+              assign pill_text = category.pill_label
+              if pill_text == blank
+                assign pill_text = category.title
+              endif
+            -%}
+            <button
+              type="button"
+              class="yw-pill{% if forloop.first %} is-active{% endif %}"
+              data-yw-filter="{{ handle }}"
+              aria-pressed="false"
+            >
+              {{ pill_text | escape }}
+            </button>
           {%- endfor -%}
         </div>
 
@@ -91,12 +84,8 @@
               {%- if section.settings.show_all_option -%}
                 {{ all_label | escape }}
               {%- else -%}
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'category' -%}
-                    {{ block.settings.pill_label | default: block.settings.title | escape }}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
+                {%- assign first_category = categories | first -%}
+                {{ first_category.pill_label | default: first_category.title | escape }}
               {%- endif -%}
             </span>
             <span class="yw-pill__chevron" aria-hidden="true">
@@ -120,20 +109,18 @@
                 </button>
               </li>
             {%- endif -%}
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'category' -%}
-                <li role="presentation">
-                  <button
-                    type="button"
-                    class="yw-faqs__select-option{% unless section.settings.show_all_option %}{% if forloop.first %} is-active{% endif %}{% endunless %}"
-                    role="option"
-                    aria-selected="false"
-                    data-yw-filter="{{ block.id }}"
-                  >
-                    {{ block.settings.pill_label | default: block.settings.title | escape }}
-                  </button>
-                </li>
-              {%- endif -%}
+            {%- for category in categories -%}
+              <li role="presentation">
+                <button
+                  type="button"
+                  class="yw-faqs__select-option{% unless section.settings.show_all_option %}{% if forloop.first %} is-active{% endif %}{% endunless %}"
+                  role="option"
+                  aria-selected="false"
+                  data-yw-filter="{{ category.system.handle }}"
+                >
+                  {{ category.pill_label | default: category.title | escape }}
+                </button>
+              </li>
             {%- endfor -%}
           </ul>
         </div>
@@ -141,79 +128,119 @@
     </aside>
 
     <div class="yw-faqs__main" data-yw-main>
-      {%- liquid
-        assign group_open = false
-        assign first_category_id = ''
-      -%}
+      {%- for category in categories -%}
+        {%- liquid
+          assign cat_id = category.system.id
+          assign cat_handle = category.system.handle
 
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'category' -%}
-            {%- if group_open -%}
-              </div>
-              </section>
+          assign matched = 0
+          for faq in faqs
+            if faq.category.value.system.id == cat_id
+              assign matched = matched | plus: 1
+            endif
+          endfor
+        -%}
+
+        {%- if matched > 0 -%}
+          <section class="yw-faqs__group" data-yw-group data-yw-category="{{ cat_handle }}">
+            {%- if category.title != blank -%}
+              <h2 class="yw-faqs__group-title">{{ category.title | escape }}</h2>
             {%- endif -%}
-            {%- if first_category_id == blank -%}
-              {%- assign first_category_id = block.id -%}
-            {%- endif -%}
-            <section
-              class="yw-faqs__group"
-              data-yw-group
-              data-yw-category="{{ block.id }}"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.title != blank -%}
-                <h2 class="yw-faqs__group-title">{{ block.settings.title | escape }}</h2>
-              {%- endif -%}
-              <div class="yw-faqs__items">
-                {%- assign group_open = true -%}
-          {%- when 'question' -%}
-            {%- unless group_open -%}
-              <section class="yw-faqs__group" data-yw-group data-yw-category="uncategorised">
-                <div class="yw-faqs__items">
-                  {%- assign group_open = true -%}
-            {%- endunless -%}
 
-            {%- assign is_open = block.settings.open_by_default -%}
+            <div class="yw-faqs__items">
+              {%- for faq in faqs -%}
+                {%- if faq.category.value.system.id != cat_id -%}
+                  {%- continue -%}
+                {%- endif -%}
 
-            <div class="yw-faq{% if is_open %} is-open{% endif %}" data-yw-item {{ block.shopify_attributes }}>
-              <h3 class="yw-faq__h">
-                <button
-                  type="button"
-                  class="yw-faq__trigger"
-                  id="yw-q-{{ section.id }}-{{ block.id }}"
-                  aria-controls="yw-a-{{ section.id }}-{{ block.id }}"
-                  aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
-                  data-yw-trigger
-                >
-                  <span class="yw-faq__question">{{ block.settings.question | escape }}</span>
-                  <span class="yw-faq__icon" aria-hidden="true">
-                    <span class="yw-faq__icon-bar yw-faq__icon-bar--h"></span>
-                    <span class="yw-faq__icon-bar yw-faq__icon-bar--v"></span>
-                  </span>
-                </button>
-              </h3>
+                {%- assign uid = faq.system.handle | append: '-' | append: forloop.index -%}
 
-              <div
-                class="yw-faq__panel{% if is_open %} is-open{% endif %}"
-                id="yw-a-{{ section.id }}-{{ block.id }}"
-                role="region"
-                aria-labelledby="yw-q-{{ section.id }}-{{ block.id }}"
-                data-yw-panel
-              >
-                <div class="yw-faq__answer">{{ block.settings.answer }}</div>
-              </div>
+                <div class="yw-faq" data-yw-item>
+                  <h3 class="yw-faq__h">
+                    <button
+                      type="button"
+                      class="yw-faq__trigger"
+                      id="yw-q-{{ section.id }}-{{ uid }}"
+                      aria-controls="yw-a-{{ section.id }}-{{ uid }}"
+                      aria-expanded="false"
+                      data-yw-trigger
+                    >
+                      <span class="yw-faq__question">{{ faq.question | escape }}</span>
+                      <span class="yw-faq__icon" aria-hidden="true">
+                        <span class="yw-faq__icon-bar yw-faq__icon-bar--h"></span>
+                        <span class="yw-faq__icon-bar yw-faq__icon-bar--v"></span>
+                      </span>
+                    </button>
+                  </h3>
+
+                  <div
+                    class="yw-faq__panel"
+                    id="yw-a-{{ section.id }}-{{ uid }}"
+                    role="region"
+                    aria-labelledby="yw-q-{{ section.id }}-{{ uid }}"
+                    data-yw-panel
+                  >
+                    <div class="yw-faq__answer">{{ faq.answer | metafield_tag }}</div>
+                  </div>
+                </div>
+              {%- endfor -%}
             </div>
-        {%- endcase -%}
+          </section>
+        {%- endif -%}
       {%- endfor -%}
 
-      {%- if group_open -%}
-        </div>
+      {%- comment -%} Any FAQ without a category still renders {%- endcomment -%}
+      {%- assign orphan_count = 0 -%}
+      {%- for faq in faqs -%}
+        {%- if faq.category.value == blank -%}
+          {%- assign orphan_count = orphan_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if orphan_count > 0 -%}
+        <section class="yw-faqs__group" data-yw-group data-yw-category="uncategorised">
+          <div class="yw-faqs__items">
+            {%- for faq in faqs -%}
+              {%- if faq.category.value != blank -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- assign uid = faq.system.handle | append: '-u' | append: forloop.index -%}
+              <div class="yw-faq" data-yw-item>
+                <h3 class="yw-faq__h">
+                  <button
+                    type="button"
+                    class="yw-faq__trigger"
+                    id="yw-q-{{ section.id }}-{{ uid }}"
+                    aria-controls="yw-a-{{ section.id }}-{{ uid }}"
+                    aria-expanded="false"
+                    data-yw-trigger
+                  >
+                    <span class="yw-faq__question">{{ faq.question | escape }}</span>
+                    <span class="yw-faq__icon" aria-hidden="true">
+                      <span class="yw-faq__icon-bar yw-faq__icon-bar--h"></span>
+                      <span class="yw-faq__icon-bar yw-faq__icon-bar--v"></span>
+                    </span>
+                  </button>
+                </h3>
+                <div
+                  class="yw-faq__panel"
+                  id="yw-a-{{ section.id }}-{{ uid }}"
+                  role="region"
+                  aria-labelledby="yw-q-{{ section.id }}-{{ uid }}"
+                  data-yw-panel
+                >
+                  <div class="yw-faq__answer">{{ faq.answer | metafield_tag }}</div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
         </section>
       {%- endif -%}
 
       {%- if question_count == 0 -%}
-        <p class="yw-faqs__empty">Add a category and some questions to build this page.</p>
+        <p class="yw-faqs__empty">
+          Add entries to the “FAQs” and “Faqs Category” metaobjects in Content → Metaobjects to build this page.
+        </p>
       {%- endif -%}
     </div>
   </div>
@@ -333,7 +360,6 @@
         filters.forEach((b) => {
           let active = b.dataset.ywFilter === value;
 
-          // Desktop par All kabhi active na ho
           if (window.innerWidth >= 750 && b.dataset.ywFilter === 'all') {
             active = false;
           }
@@ -365,16 +391,6 @@
         groups.forEach((group) => {
           group.classList.remove('is-filtered-out');
         });
-
-        // Mobile only
-        if (window.innerWidth < 750 && value === 'all') {
-          groups.forEach((group) => {
-            group.classList.remove('is-filtered-out');
-          });
-
-          closeDropdown();
-          return;
-        }
 
         const target = faq.querySelector(`[data-yw-category="${value}"]`);
 
@@ -414,6 +430,7 @@
       selectMenu.hidden = true;
       selectTrigger.setAttribute('aria-expanded', 'false');
     }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -453,8 +470,11 @@
   "name": "FAQs",
   "tag": "section",
   "class": "yw-faqs-section",
-  "max_blocks": 50,
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "Questions and topics are managed in Content → Metaobjects (“FAQs” and “Faqs Category”). Topic order follows the Sort Order field."
+    },
     { "type": "header", "content": "Heading" },
     {
       "type": "text",
@@ -474,7 +494,7 @@
       "type": "checkbox",
       "id": "show_filters",
       "label": "Show topic filter",
-      "info": "Stacked pills on desktop, a dropdown on mobile. Needs at least one category block.",
+      "info": "Stacked pills on desktop, a dropdown on mobile. Needs at least one Faqs Category entry.",
       "default": true
     },
     {
@@ -543,62 +563,6 @@
       "default": 80
     }
   ],
-  "blocks": [
-    {
-      "type": "category",
-      "name": "Topic",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Topic heading",
-          "info": "Shown above the questions. Set in capitals to match the design.",
-          "default": "GENERAL"
-        },
-        {
-          "type": "text",
-          "id": "pill_label",
-          "label": "Filter label",
-          "info": "Optional shorter wording for the pill. Falls back to the topic heading."
-        }
-      ]
-    },
-    {
-      "type": "question",
-      "name": "Question",
-      "settings": [
-        {
-          "type": "text",
-          "id": "question",
-          "label": "Question",
-          "default": "Why doesn't Yumwoof use seed oils?"
-        },
-        {
-          "type": "richtext",
-          "id": "answer",
-          "label": "Answer",
-          "default": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>"
-        },
-        {
-          "type": "checkbox",
-          "id": "open_by_default",
-          "label": "Start expanded",
-          "default": false
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "FAQs",
-      "blocks": [
-        { "type": "category" },
-        { "type": "question" },
-        { "type": "question" },
-        { "type": "question" },
-        { "type": "question" }
-      ]
-    }
-  ]
+  "presets": [{ "name": "FAQs" }]
 }
 {% endschema %}
