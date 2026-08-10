@@ -290,8 +290,8 @@
   min-height: 0 !important;
   padding: 0 !important;
 }
-.yw--wholesale--form__klaviyo form.needsclick > .needsclick:nth-last-of-type(2),
-.yw--wholesale--form__klaviyo form.needsclick > .needsclick:nth-last-of-type(1) {
+.yw--wholesale--form__klaviyo form.needsclick > div[data-testid="form-row"]:nth-last-of-type(2),
+.yw--wholesale--form__klaviyo form.needsclick > div[data-testid="form-row"]:nth-last-of-type(1) {
   grid-column: 1 / -1 !important;
 }
 .yw--wholesale--form__klaviyo [data-testid="form-row"] {
