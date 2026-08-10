@@ -174,39 +174,39 @@
           "type": "link",
           "settings": {
             "label": "Easy order page",
-            "url": "",
-            "new_tab": false
+            "url": "shopify://collections/wholesale",
+            "new_tab": true
           }
         },
         "link_Bd7YbD": {
           "type": "link",
           "settings": {
             "label": "PIM",
-            "url": "",
-            "new_tab": false
+            "url": "https://pim.yumwoof.com",
+            "new_tab": true
           }
         },
         "link_L9qFqV": {
           "type": "link",
           "settings": {
             "label": "Product deck",
-            "url": "",
-            "new_tab": false
+            "url": "https://docsend.com/view/ku2syejrzvacjrri",
+            "new_tab": true
           }
         },
         "link_JyaHXh": {
           "type": "link",
           "settings": {
             "label": "Pricing policy",
-            "url": "",
-            "new_tab": false
+            "url": "shopify://pages/pricing-policy",
+            "new_tab": true
           }
         },
         "link_6RGWFe": {
           "type": "link",
           "settings": {
             "label": "Retailer policy",
-            "url": "",
+            "url": "shopify://pages/authorized-retailer-policy",
             "new_tab": false
           }
         },
@@ -214,8 +214,8 @@
           "type": "link",
           "settings": {
             "label": "Account",
-            "url": "",
-            "new_tab": false
+            "url": "/account",
+            "new_tab": true
           }
         }
       },
