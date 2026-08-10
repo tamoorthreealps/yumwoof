@@ -248,8 +248,8 @@
         "btn_bg_hover": "#000000",
         "btn_text_color": "#000000",
         "field_radius": "6",
-        "padding_top": "76px",
-        "padding_bottom": "112px",
+        "padding_top": "120px",
+        "padding_bottom": "120px",
         "padding_top_mobile": "64px",
         "padding_bottom_mobile": "80px"
       }
