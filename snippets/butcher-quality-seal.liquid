@@ -1,24 +1,24 @@
 <div class="yw-butcher-quality">
-  {% if section.settings.seal_image != blank %}
+  {% if block.settings.seal_image != blank %}
     <div class="yw-butcher-quality__image">
       {{
-        section.settings.seal_image
+        block.settings.seal_image
         | image_url: width: 220
-        | image_tag: loading: 'lazy', widths: '110,220', alt: section.settings.heading
+        | image_tag: loading: 'lazy', widths: '110,220', alt: block.settings.heading
       }}
     </div>
   {% endif %}
 
   <div class="yw-butcher-quality__content">
-    {% if section.settings.bq_heading != blank %}
+    {% if block.settings.bq_heading != blank %}
       <h3 class="yw-butcher-quality__heading">
-        {{ section.settings.bq_heading }}
+        {{ block.settings.bq_heading }}
       </h3>
     {% endif %}
 
-    {% if section.settings.bq_description != blank %}
+    {% if block.settings.bq_description != blank %}
       <div class="yw-butcher-quality__description">
-        {{ section.settings.bq_description }}
+        {{ block.settings.bq_description }}
       </div>
     {% endif %}
   </div>
