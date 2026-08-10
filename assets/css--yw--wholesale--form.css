@@ -1,242 +1,267 @@
 .yw--wholesale--form {
-      position: relative;
-      background-color: var(--ywf-bg);
-      padding: var(--ywf-pad-top-mob) 0 var(--ywf-pad-bottom-mob);
-      color: var(--ywf-text);
-      overflow: hidden;
-    }
-
-    .yw--wholesale--form__inner {
-      position: relative;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding:0 24px;
-    }
-
-    /* ---------- decorative kibbles ---------- */
-    .yw--wholesale--form__kibble {
-      position: absolute;
-      width: var(--ywf-kibble-w-mob);
-      height: auto;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
-    }
-    .yw--wholesale--form__kibble--left  { left: 0;  top: 110px; transform: rotate(-12deg); }
-    .yw--wholesale--form__kibble--right { right: 0; top: 300px; transform: rotate(14deg); }
-    .yw--wholesale--form--no-kibble-mob .yw--wholesale--form__kibble { display: none; }
-
-    /* ---------- heading ---------- */
-    .yw--wholesale--form__head {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      margin-bottom: 24px;
-    }
-   .yw--wholesale--form__title {
-      margin: 0 0 8px;
-      color: var(--ywf-heading);
-      font-size: 40px;
-      line-height: 40px;
-      letter-spacing: -0.80px;
-      text-transform: uppercase;
-      font-family: 'TAYRosemary';
-  }
-    .yw--wholesale--form__subtitle {
-      margin: 0 auto;
-      max-width: 34ch;
-      font-size: 14px;
-      line-height: 20px;
-      letter-spacing: 0;
-      font-family: 'Matter';
-  }
-    .yw--wholesale--form__subtitle p { margin: 0; }
-
-    /* ---------- klaviyo wrapper ---------- */
-    .yw--wholesale--form__klaviyo {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: var(--ywf-form-width);
-      margin: 0 auto;
-    }
-
-    /* Klaviyo renders its own markup — these overrides re-skin it to the design. */
-    .yw--wholesale--form__klaviyo form,
-    .yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] {
-      background: transparent !important;
-    }
-
-    .yw--wholesale--form__klaviyo input[type="text"],
-    .yw--wholesale--form__klaviyo input[type="email"],
-    .yw--wholesale--form__klaviyo input[type="tel"],
-    .yw--wholesale--form__klaviyo input[type="number"],
-    .yw--wholesale--form__klaviyo input[type="url"],
-    .yw--wholesale--form__klaviyo select,
-    .yw--wholesale--form__klaviyo textarea {
-      background-color: var(--ywf-field-bg) !important;
-      border: 1px solid var(--ywf-field-border) !important;
-      border-radius: var(--ywf-field-radius) !important;
-      box-shadow: none !important;
-      color: var(--ywf-text) !important;
-      font-size: 14px !important;
-      min-height: 44px !important;
-      padding: 10px 16px !important;
-    }
-    .yw--wholesale--form__klaviyo input::placeholder,
-    .yw--wholesale--form__klaviyo textarea::placeholder {
-      color: color-mix(in srgb, var(--ywf-text) 55%, transparent) !important;
-      opacity: 1 !important;
-    }
-    .yw--wholesale--form__klaviyo input:focus,
-    .yw--wholesale--form__klaviyo select:focus,
-    .yw--wholesale--form__klaviyo textarea:focus {
-      outline: none !important;
-      border-color: var(--ywf-btn-bg) !important;
-    }
-
-    /* phone field (intl-tel-input) */
-    .yw--wholesale--form__klaviyo .iti,
-    .yw--wholesale--form__klaviyo .iti--allow-dropdown { width: 100% !important; }
-    .yw--wholesale--form__klaviyo .iti__flag-container { border-radius: var(--ywf-field-radius) 0 0 var(--ywf-field-radius); }
-
-    /* consent / disclaimer copy */
-    .yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] p,
-    .yw--wholesale--form__klaviyo [data-testid="form-component"] p {
-      font-size: 10px !important;
-      line-height: 1.4 !important;
-    }
-
-    /* submit button */
-    .yw--wholesale--form__klaviyo button,
-    .yw--wholesale--form__klaviyo [type="submit"] {
-      background-color: var(--ywf-btn-bg) !important;
-      border: 0 !important;
-      border-radius: 999px !important;
-      color: var(--ywf-btn-text) !important;
-      font-size: 14px !important;
-      letter-spacing: .06em !important;
-      min-height: 48px !important;
-      text-transform: uppercase !important;
-      transition: background-color .2s ease;
-      width: 100% !important;
-    }
-    .yw--wholesale--form__klaviyo button:hover,
-    .yw--wholesale--form__klaviyo [type="submit"]:hover {
-      background-color: var(--ywf-btn-bg-hover) !important;
-    }
-
-    /* ---------- quick links ---------- */
-    .yw--wholesale--form__links {
-          position: relative;
-      z-index: 1;
-      max-width: var(--ywf-form-width);
-      margin: 0 auto;
-      padding-top: 14px;
-      border-top: 1px solid var(--ywf-field-border);
-    }
-   .yw--wholesale--form__links-title {
-      margin: 0 0 12px;
-      color: var(--ywf-heading);
-      font-size: 14px;
-      line-height: 20px;
-      letter-spacing: -0.14px;
-      text-transform: uppercase;
-      font-family: 'TAY Birdie';
-  }
-    .yw--wholesale--form__links-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px 12px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-  .yw--wholesale--form__link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      width: 100%;
-      padding: 5.2px 25px 5.2px 12px;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 6px;
-      background-color: var(--ywf-field-bg);
-      color: var(--ywf-heading);
-      font-size: 12px;
-      letter-spacing: 0.48px;
-      line-height: 20px;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: all .25s ease;
-      position: relative;
-  }
-    .yw--wholesale--form__link:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-      border-color:#000;
-    }
-    .yw--wholesale--form__link-arrow {
-    flex: 0 0 auto;
-    width: 12px;
-    height: 6px;
-    position: absolute;
-    right: 11px;
-    transition: all .25s ease;
+  position: relative;
+  background-color: var(--ywf-bg);
+  padding: var(--ywf-pad-top-mob) 0 var(--ywf-pad-bottom-mob);
+  color: var(--ywf-text);
+  overflow: hidden;
 }
 
+.yw--wholesale--form__inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-    /* ---------- desktop ---------- */
-    @media screen and (min-width: 768px) {
-      .yw--wholesale--form {
-        padding: var(--ywf-pad-top) 0 var(--ywf-pad-bottom);
-      }
-      .yw--wholesale--form__kibble { width: var(--ywf-kibble-w); display:block !important; }
-      .yw--wholesale--form__kibble--left  { left: 6%;  top: 120px; }
-      .yw--wholesale--form__kibble--right { right: 6%; top: 220px; }
+/* ---------- decorative kibbles ---------- */
+.yw--wholesale--form__kibble {
+  position: absolute;
+  width: var(--ywf-kibble-w-mob);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.yw--wholesale--form__kibble--left {
+  left: 0;
+  top: 110px;
+  transform: rotate(-12deg);
+}
+.yw--wholesale--form__kibble--right {
+  right: 0;
+  top: 300px;
+  transform: rotate(14deg);
+}
+.yw--wholesale--form--no-kibble-mob .yw--wholesale--form__kibble {
+  display: none;
+}
 
-          .yw--wholesale--form__title {
-          font-size: 56px;
-          line-height: 64px;
-          letter-spacing: -0.56px;
-          margin: 0;
-      }
-      .yw--wholesale--form__subtitle {
-          font-size: 18px;
-          line-height: 28px;
-          max-width: 400px;
-      }
-      .yw--wholesale--form__head { margin-bottom: 30px; }
+/* ---------- heading ---------- */
+.yw--wholesale--form__head {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.yw--wholesale--form__title {
+  margin: 0 0 8px;
+  color: var(--ywf-heading);
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: -0.8px;
+  text-transform: uppercase;
+  font-family: "TAYRosemary";
+}
+.yw--wholesale--form__subtitle {
+  margin: 0 auto;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-family: "Matter";
+}
+.yw--wholesale--form__subtitle p {
+  margin: 0;
+}
 
-      /* two-up fields on desktop */
-      .yw--wholesale--form__klaviyo form [data-testid="form-row"] {
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 12px !important;
-      }
-      .yw--wholesale--form__klaviyo form [data-testid="form-row"] > * {
-        min-width: 0 !important;
-      }
+/* ---------- klaviyo wrapper ---------- */
+.yw--wholesale--form__klaviyo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--ywf-form-width);
+  margin: 0 auto;
+}
 
-      .yw--wholesale--form__links-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-      }
-          .yw--wholesale--form__links {
-          padding-top: 28px;
-      }
-      .yw--wholesale--form__link {
-        font-size: 14px;
-      letter-spacing: 0.56px;
+/* Klaviyo renders its own markup — these overrides re-skin it to the design. */
+.yw--wholesale--form__klaviyo form,
+.yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] {
+  background: transparent !important;
+}
 
-      }
-      .yw--wholesale--form__links-title {
-      font-size: 20px;
-      line-height: 24px;
-      letter-spacing: -0.80px;
+.yw--wholesale--form__klaviyo input[type="text"],
+.yw--wholesale--form__klaviyo input[type="email"],
+.yw--wholesale--form__klaviyo input[type="tel"],
+.yw--wholesale--form__klaviyo input[type="number"],
+.yw--wholesale--form__klaviyo input[type="url"],
+.yw--wholesale--form__klaviyo select,
+.yw--wholesale--form__klaviyo textarea {
+  background-color: var(--ywf-field-bg) !important;
+  border: 1px solid var(--ywf-field-border) !important;
+  border-radius: var(--ywf-field-radius) !important;
+  box-shadow: none !important;
+  color: var(--ywf-text) !important;
+  font-size: 14px !important;
+  min-height: 44px !important;
+  padding: 10px 16px !important;
+}
+.yw--wholesale--form__klaviyo input::placeholder,
+.yw--wholesale--form__klaviyo textarea::placeholder {
+  color: color-mix(in srgb, var(--ywf-text) 55%, transparent) !important;
+  opacity: 1 !important;
+}
+.yw--wholesale--form__klaviyo input:focus,
+.yw--wholesale--form__klaviyo select:focus,
+.yw--wholesale--form__klaviyo textarea:focus {
+  outline: none !important;
+  border-color: var(--ywf-btn-bg) !important;
+}
+
+/* phone field (intl-tel-input) */
+.yw--wholesale--form__klaviyo .iti,
+.yw--wholesale--form__klaviyo .iti--allow-dropdown {
+  width: 100% !important;
+}
+.yw--wholesale--form__klaviyo .iti__flag-container {
+  border-radius: var(--ywf-field-radius) 0 0 var(--ywf-field-radius);
+}
+
+/* consent / disclaimer copy */
+.yw--wholesale--form__klaviyo [class*="kl-private-reset-css"] p,
+.yw--wholesale--form__klaviyo [data-testid="form-component"] p {
+  font-size: 10px !important;
+  line-height: 1.4 !important;
+}
+
+/* submit button */
+.yw--wholesale--form__klaviyo button,
+.yw--wholesale--form__klaviyo [type="submit"] {
+  background-color: var(--ywf-btn-bg) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  color: var(--ywf-btn-text) !important;
+  font-size: 14px !important;
+  letter-spacing: 0.06em !important;
+  min-height: 48px !important;
+  text-transform: uppercase !important;
+  transition: background-color 0.2s ease;
+  width: 100% !important;
+}
+.yw--wholesale--form__klaviyo button:hover,
+.yw--wholesale--form__klaviyo [type="submit"]:hover {
+  background-color: var(--ywf-btn-bg-hover) !important;
+}
+
+/* ---------- quick links ---------- */
+.yw--wholesale--form__links {
+  position: relative;
+  z-index: 1;
+  max-width: var(--ywf-form-width);
+  margin: 0 auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--ywf-field-border);
+}
+.yw--wholesale--form__links-title {
+  margin: 0 0 12px;
+  color: var(--ywf-heading);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  text-transform: uppercase;
+  font-family: "TAY Birdie";
+}
+.yw--wholesale--form__links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.yw--wholesale--form__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 5.2px 25px 5.2px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  background-color: var(--ywf-field-bg);
+  color: var(--ywf-heading);
+  font-size: 12px;
+  letter-spacing: 0.48px;
+  line-height: 20px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  position: relative;
+}
+.yw--wholesale--form__link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: #000;
+}
+.yw--wholesale--form__link-arrow {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 6px;
+  position: absolute;
+  right: 11px;
+  transition: all 0.25s ease;
+}
+
+/* ---------- desktop ---------- */
+@media screen and (min-width: 768px) {
+  .yw--wholesale--form {
+    padding: var(--ywf-pad-top) 0 var(--ywf-pad-bottom);
   }
-    }
+  .yw--wholesale--form__kibble {
+    width: var(--ywf-kibble-w);
+    display: block !important;
+  }
+  .yw--wholesale--form__kibble--left {
+    left: 6%;
+    top: 120px;
+  }
+  .yw--wholesale--form__kibble--right {
+    right: 6%;
+    top: 220px;
+  }
 
-    /* ============================================================
+  .yw--wholesale--form__title {
+    font-size: 56px;
+    line-height: 64px;
+    letter-spacing: -0.56px;
+    margin: 0;
+  }
+  .yw--wholesale--form__subtitle {
+    font-size: 18px;
+    line-height: 28px;
+    max-width: 400px;
+  }
+  .yw--wholesale--form__head {
+    margin-bottom: 30px;
+  }
+
+  /* two-up fields on desktop */
+  .yw--wholesale--form__klaviyo form [data-testid="form-row"] {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+  .yw--wholesale--form__klaviyo form [data-testid="form-row"] > * {
+    min-width: 0 !important;
+  }
+
+  .yw--wholesale--form__links-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .yw--wholesale--form__links {
+    padding-top: 28px;
+  }
+  .yw--wholesale--form__link {
+    font-size: 14px;
+    letter-spacing: 0.56px;
+  }
+  .yw--wholesale--form__links-title {
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.8px;
+  }
+}
+
+/* ============================================================
    Wholesale Klaviyo form → Figma design
    Uses Klaviyo's stable classes (.klaviyo-textinput / -emailinput
    / -phoneinput / -disclosure / -form-button, [data-testid=...]).
@@ -261,15 +286,17 @@
   padding: 0 !important;
 }
 .yw--wholesale--form__klaviyo [data-testid="form-row"] {
-  display: contents !important;                 /* children become grid cells */
+  display: contents !important; /* children become grid cells */
 }
 .yw--wholesale--form__klaviyo [data-testid="form-component"] {
   width: 100% !important;
   min-width: 0 !important;
 }
 /* consent + button span the full width */
-.yw--wholesale--form__klaviyo [data-testid="form-component"]:has(.klaviyo-disclosure),
-.yw--wholesale--form__klaviyo [data-testid="form-component"]:has(.klaviyo-form-button) {
+.yw--wholesale--form__klaviyo
+  [data-testid="form-component"]:has(.klaviyo-disclosure),
+.yw--wholesale--form__klaviyo
+  [data-testid="form-component"]:has(.klaviyo-form-button) {
   grid-column: 1 / -1 !important;
 }
 
@@ -286,11 +313,11 @@
   width: 100% !important;
   box-sizing: border-box !important;
   background: #ffffff !important;
-  border: 1px solid #DADADA !important;
+  border: 1px solid #dadada !important;
   border-radius: 12px !important;
   box-shadow: none !important;
   color: #1a1a1a !important;
-  font-family: 'Matter', sans-serif !important;
+  font-family: "Matter", sans-serif !important;
   font-size: 16px !important;
   line-height: 24px !important;
   letter-spacing: 0 !important;
@@ -301,11 +328,13 @@
 .yw--wholesale--form__klaviyo input::placeholder {
   color: #1a1a1a !important;
   opacity: 1 !important;
-  font-family: 'Matter', sans-serif !important;
+  font-family: "Matter", sans-serif !important;
 }
 .yw--wholesale--form__klaviyo input[type="text"]:focus,
 .yw--wholesale--form__klaviyo input[type="email"]:focus,
-.yw--wholesale--form__klaviyo .klaviyo-phoneinput > div:first-child:focus-within {
+.yw--wholesale--form__klaviyo
+  .klaviyo-phoneinput
+  > div:first-child:focus-within {
   outline: none !important;
   border-color: #1a1a1a !important;
 }
@@ -315,7 +344,7 @@
   display: flex !important;
   align-items: center !important;
   background: #ffffff !important;
-  border: 1px solid #DADADA !important;
+  border: 1px solid #dadada !important;
   border-radius: 12px !important;
   min-height: 56px !important;
   height: 56px !important;
@@ -328,7 +357,7 @@
   background: transparent !important;
   box-shadow: none !important;
   color: #1a1a1a !important;
-  font-family: 'Matter', sans-serif !important;
+  font-family: "Matter", sans-serif !important;
   font-size: 16px !important;
   line-height: 24px !important;
   height: auto !important;
@@ -344,14 +373,14 @@
   align-items: center !important;
   gap: 6px !important;
   cursor: pointer !important;
-  border-right: 1px solid #DADADA !important;   /* divider between flag and number */
+  border-right: 1px solid #dadada !important; /* divider between flag and number */
 }
 
 /* --- Consent / disclaimer copy --- */
 .yw--wholesale--form__klaviyo .klaviyo-disclosure p {
   margin: 0 !important;
   color: #555555 !important;
-  font-family: 'Matter', sans-serif !important;
+  font-family: "Matter", sans-serif !important;
   font-size: 13px !important;
   line-height: 1.5 !important;
   letter-spacing: 0 !important;
@@ -364,18 +393,18 @@
 /* --- Submit button ("CREATE ACCOUNT") --- */
 .yw--wholesale--form__klaviyo .klaviyo-form-button {
   width: 100% !important;
-  background: #F5B94D !important;               /* gold — tweak to taste */
-  border: 1px solid #F5B94D !important;
+  background: #f5b94d !important; /* gold — tweak to taste */
+  border: 1px solid #f5b94d !important;
   border-radius: 12px !important;
   color: #1a1a1a !important;
-  font-family: 'FFBlurProMedium', sans-serif !important;
+  font-family: "FFBlurProMedium", sans-serif !important;
   font-size: 18px !important;
   line-height: 24px !important;
   letter-spacing: 0.06em !important;
   min-height: 64px !important;
   text-transform: uppercase !important;
   cursor: pointer !important;
-  transition: background .25s ease, color .25s ease, border-color .25s ease !important;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-form-button:hover {
   background: #1a1a1a !important;
