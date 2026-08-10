@@ -1,0 +1,279 @@
+{{ 'css--faqs-section.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .faqs {
+    --faq-bg: {{ section.settings.background_color }};
+    --faq-text: {{ section.settings.text_color }};
+    --faq-line: {{ section.settings.line_color }};
+
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  @media screen and (max-width: 990px) {
+    #shopify-section-{{ section.id }} .faqs {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+
+<section class="faqs">
+  <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
+    <div class="faqs__content">
+      <div class="faqs__head">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="faqs__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="faqs__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if faq_blocks.size > 0 -%}
+        <div class="faqs__list">
+          {%- for block in faq_blocks -%}
+            <div
+              class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="faqs__question">
+                <span class="faqs__question-text">{{ block.settings.question }}</span>
+                <span class="faqs__icon" aria-hidden="true">
+                  <svg
+                    class="faqs__icon__plus"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M15.1111 7.11111H8.88889V0.888889C8.88889 0.398222 8.49067 0 8 0C7.50933 0 7.11111 0.398222 7.11111 0.888889V7.11111H0.888889C0.398222 7.11111 0 7.50933 0 8C0 8.49067 0.398222 8.88889 0.888889 8.88889H7.11111V15.1111C7.11111 15.6018 7.50933 16 8 16C8.49067 16 8.88889 15.6018 8.88889 15.1111V8.88889H15.1111C15.6018 8.88889 16 8.49067 16 8C16 7.50933 15.6018 7.11111 15.1111 7.11111Z" fill="black"/>
+                  </svg>
+
+                  <svg
+                    class="faqs__icon__minus"
+                    width="16"
+                    height="3"
+                    viewBox="0 0 16 3"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M15.1111 0H8.88889H7.11111H0.888889C0.398222 0 0 0.486194 0 1.08525C0 1.68431 0.398222 2.17051 0.888889 2.17051C0.888889 2.17051 4.68118 2.17051 7.11111 2.17051C7.80538 2.17051 8.88889 2.17051 8.88889 2.17051H15.1111C15.6018 2.17051 16 1.68431 16 1.08525C16 0.486194 15.6018 0 15.1111 0Z" fill="black"/>
+                  </svg>
+                </span>
+              </div>
+              {%- if block.settings.answer != blank -%}
+                <div class="faqs__answer rte">
+                  <div class="faqs__answer-inner">
+                    {{ block.settings.answer }}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {% if section.settings.faq_image != blank or section.settings.faq_image_mobile != blank %}
+      <div class="faqs__right">
+        <div class="faqs__right_img">
+          {% if section.settings.faq_image != blank %}
+            {{
+              section.settings.faq_image
+              | image_url: width: 900
+              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--desktop'
+            }}
+          {% endif %}
+
+          {% if section.settings.faq_image_mobile != blank %}
+            {{
+              section.settings.faq_image_mobile
+              | image_url: width: 700
+              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
+            }}
+          {% elsif section.settings.faq_image != blank %}
+            {{
+              section.settings.faq_image
+              | image_url: width: 700
+              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
+            }}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.faqs__question').forEach((question) => {
+    question.addEventListener('click', function () {
+      const item = this.parentElement;
+      const answer = item.querySelector('.faqs__answer');
+
+      document.querySelectorAll('.faqs__item').forEach((other) => {
+        if (other !== item) {
+          other.classList.remove('is-open');
+          other.querySelector('.faqs__answer').style.maxHeight = null;
+        }
+      });
+
+      if (item.classList.contains('is-open')) {
+        item.classList.remove('is-open');
+        answer.style.maxHeight = null;
+      } else {
+        item.classList.add('is-open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const section = document.querySelector('.faqs');
+  const images = section?.querySelectorAll('.faqs__image');
+
+  if (!section || !images.length) return;
+
+  let currentScale = 1;
+  let targetScale = 1;
+
+  function updateScale() {
+    currentScale += (targetScale - currentScale) * 0.08;
+
+    images.forEach((image) => {
+      image.style.transform = `scale(${currentScale})`;
+    });
+
+    requestAnimationFrame(updateScale);
+  }
+
+  function onScroll() {
+    const rect = section.getBoundingClientRect();
+
+    let progress =
+      (window.innerHeight - rect.top) /
+      (window.innerHeight + rect.height);
+
+    progress = Math.max(0, Math.min(progress, 1));
+
+    targetScale = 1 + progress * 0.08;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  onScroll();
+  updateScale();
+});
+</script>
+
+{% schema %}
+{
+  "name": "PDP FAQs Section",
+  "tag": "section",
+  "class": "section-faqs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Any Questions?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every dog is different. Find the recipe that's right for yours."
+    },
+    {
+      "type": "image_picker",
+      "id": "faq_image",
+      "label": "FAQ Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "faq_image_mobile",
+      "label": "FAQ Image (Mobile)"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question by default",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Divider",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop Top Padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop Bottom Padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile Top Padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile Bottom Padding",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP FAQs Section"
+    }
+  ]
+}
+{% endschema %}
