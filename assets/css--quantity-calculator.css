@@ -700,12 +700,14 @@
   .qz-modal { 
     width: 100%;
     max-width: 100%;
-    min-height: 656px;
-    max-height: 90vh;
+    height: 70vh;
+    min-height: 0;
+    max-height: 70vh;
     border-radius: 20px;
+    padding: 0;
     transform: translateY(100%);
     opacity: 1;
-    transition: transform .55s cubic-bezier(.22,1,.36,1);
+    transition: transform .55s cubic-bezier(.22,1,.36,1); 
   }
   .qz-scrim.is-open .qz-modal {
     transform: translateY(0);
