@@ -265,7 +265,7 @@
 
   .yw--wholesale--form__links-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 16px 18px;
   }
   .yw--wholesale--form__links {
     padding-top: 28px;
