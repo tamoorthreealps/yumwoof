@@ -5,63 +5,68 @@
 
   assign focal_d = s.focal_desktop | default: 'center center'
   assign focal_m = s.focal_mobile | default: 'center 60%'
+
+  assign img_d = s.image | default: s.image_mobile
+  assign img_m = s.image_mobile | default: s.image
 -%}
 
-<section
-  class="ywmb"
-  style="
+{%- if img_d != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ img_d | image_url: width: 1800 }}"
+    imagesrcset="{{ img_d | image_url: width: 1200 }} 1200w, {{ img_d | image_url: width: 1800 }} 1800w, {{ img_d | image_url: width: 2400 }} 2400w"
+    imagesizes="100vw"
+    media="(min-width: 750px)"
+  >
+{%- endif -%}
+{%- if img_m != blank -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ img_m | image_url: width: 880 }}"
+    imagesrcset="{{ img_m | image_url: width: 640 }} 640w, {{ img_m | image_url: width: 880 }} 880w, {{ img_m | image_url: width: 1200 }} 1200w"
+    imagesizes="100vw"
+    media="(max-width: 749px)"
+  >
+{%- endif -%}
+
+{%- style -%}
+  #ywmb-{{ section.id }} {
     --ywmb-height: {{ s.height_desktop | default: '812px' }};
     --ywmb-height-mobile: {{ s.height_mobile | default: '455px' }};
     --ywmb-focal: {{ focal_d }};
     --ywmb-focal-mobile: {{ focal_m }};
     --ywmb-scrim-opacity: {{ s.scrim_opacity | default: 100 | divided_by: 100.0 }};
-  "
+    {%- if img_d != blank %}
+    --ywmb-bg: image-set(
+      url("{{ img_d | image_url: width: 1200 }}") 1x,
+      url("{{ img_d | image_url: width: 2400 }}") 2x
+    );
+    {%- endif %}
+  }
+
+  {%- if img_m != blank %}
+  @media (max-width: 749px) {
+    #ywmb-{{ section.id }} {
+      --ywmb-bg: image-set(
+        url("{{ img_m | image_url: width: 880 }}") 1x,
+        url("{{ img_m | image_url: width: 1200 }}") 2x
+      );
+    }
+  }
+  {%- endif %}
+{%- endstyle -%}
+
+<section
+  id="ywmb-{{ section.id }}"
+  class="ywmb{% if img_d == blank and img_m == blank %} ywmb--no-image{% endif %}"
 >
-  <div class="ywmb__media">
-    {%- if s.image != blank or s.image_mobile != blank -%}
-      {%- if s.image_mobile != blank and s.image != blank -%}
-        <picture>
-          <source
-            media="(max-width: 749px)"
-            srcset="
-              {{ s.image_mobile | image_url: width: 640 }} 640w,
-              {{ s.image_mobile | image_url: width: 880 }} 880w,
-              {{ s.image_mobile | image_url: width: 1200 }} 1200w
-            "
-            sizes="100vw"
-          >
-          {{
-            s.image
-            | image_url: width: 2400
-            | image_tag:
-              loading: 'eager',
-              fetchpriority: 'high',
-              widths: '900, 1200, 1512, 1800, 2400',
-              sizes: '100vw',
-              class: 'ywmb__image',
-              alt: s.image.alt | default: ''
-          }}
-        </picture>
-      {%- else -%}
-        {%- assign single = s.image | default: s.image_mobile -%}
-        {{
-          single
-          | image_url: width: 2400
-          | image_tag:
-            loading: 'eager',
-            fetchpriority: 'high',
-            widths: '900, 1200, 1512, 1800, 2400',
-            sizes: '100vw',
-            class: 'ywmb__image',
-            alt: single.alt | default: ''
-        }}
-      {%- endif -%}
-    {%- else -%}
-      <div class="ywmb__placeholder">
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'ywmb__placeholder-svg' }}
-      </div>
-    {%- endif -%}
-  </div>
+  {%- if img_d == blank and img_m == blank -%}
+    <div class="ywmb__placeholder">
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'ywmb__placeholder-svg' }}
+    </div>
+  {%- endif -%}
 
   <div class="ywmb__scrim" aria-hidden="true"></div>
 

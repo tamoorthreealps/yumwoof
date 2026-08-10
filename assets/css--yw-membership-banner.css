@@ -19,7 +19,11 @@
   overflow: hidden;
   isolation: isolate;
   background: #000;
-      margin: 40px 0 0;
+  margin: 40px 0 0;
+  background-image: var(--ywmb-bg, none);
+  background-size: cover;
+  background-position: var(--ywmb-focal, center center);
+  background-repeat: no-repeat;
 }
 
 .ywmb *,
