@@ -25,13 +25,36 @@
 .yw--wholesale--form__kibble--left {
   left: 0;
   top: 110px;
-  transform: rotate(-12deg);
+  animation: bottomaiconwhole 120s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
 }
 .yw--wholesale--form__kibble--right {
   right: 0;
   top: 300px;
-  transform: rotate(14deg);
+  animation: bowlRotatewhole 120s linear infinite;
+      transform-origin: center center;
+      will-change: transform;
 }
+@keyframes bottomaiconwhole {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(-360deg);
+        }
+    }
+
+    @keyframes bowlRotatewhole {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
 .yw--wholesale--form--no-kibble-mob .yw--wholesale--form__kibble {
   display: none;
 }
