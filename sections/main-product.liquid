@@ -129,6 +129,10 @@
                         {{- product.metafields.custom.subheading -}}
                       </p>
                     {% endif %}
+                    {%- when 'butcher-quality' -%}
+                  {% if block.settings.seal_image != blank %}
+                    {% render 'butcher-quality-seal' %}
+                  {% endif %}
                   {%- when 'title' -%}
                     <div class="product__title" {{ block.shopify_attributes }}>
                       <h1>{{ product.title | escape }}</h1>
