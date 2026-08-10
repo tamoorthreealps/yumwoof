@@ -118,7 +118,9 @@ collection-component {
   font-family: "FFBlurProMedium";
   src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/font.woff2?v=1784897699') format('woff2'), url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/font.woff?v=1784897699') format('woff');
 }
-
+  html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: 'Matter', sans-serif;
   font-weight: 500;
