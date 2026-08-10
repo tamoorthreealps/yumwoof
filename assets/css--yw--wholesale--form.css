@@ -452,7 +452,8 @@ background: transparent !important;
     background-color: #ffffff !important;
     border-radius: 8px !important;
  }
- .go3312130881.go3312130881.go3312130881:hover {
+ .go3312130881.go3312130881.go3312130881:hover,
+ .go238159450.go238159450.go238159450:hover {
     border-color: rgb(7 7 7) !important;
 }
 /* --- Mobile: single column --- */
