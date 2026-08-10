@@ -248,6 +248,10 @@
     min-width: 0 !important;
   }
 
+  .yw--wholesale--form__klaviyo form [data-testid=form-row]:last-child{
+    grid-column: 1 / -1 !important;
+  }
+
   .yw--wholesale--form__links-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
