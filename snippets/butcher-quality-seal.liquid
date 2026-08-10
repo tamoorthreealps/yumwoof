@@ -73,14 +73,18 @@
 }
 
 @media (max-width:990px){
-    .butcher-quality-mobile {
-      display:flex;
-    }
-
     .yw-butcher-quality {
         display:none;
         gap:16px;
         align-items:flex-start;
+    }
+
+    .yw-butcher-quality.butcher-quality-mobile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
     }
 
     .yw-butcher-quality__image{
