@@ -253,6 +253,15 @@
     grid-column: 1 / -1 !important;
   }
 
+  .yw--wholesale--form__klaviyo form [data-testid="form-row"]:nth-last-child(3){
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
   .yw--wholesale--form__links-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
