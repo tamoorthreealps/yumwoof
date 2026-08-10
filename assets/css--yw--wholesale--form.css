@@ -338,6 +338,7 @@
 .yw--wholesale--form__klaviyo [data-testid="form-component"] {
   width: 100% !important;
   min-width: 0 !important;
+  flex: auto !important;
 }
 
 .yw--wholesale--form__klaviyo
@@ -530,8 +531,7 @@ height: 48px !important;
         padding: 12px 0 48px !important;
     }
 
-  .yw--wholesale--form__klaviyo form [data-testid=form-row]:nth-last-child(3) {
-            display: flex !important;
-        gap: 12px;
-  }
+      .yw--wholesale--form__klaviyo form [data-testid=form-row]:nth-last-child(3) {
+        flex-direction: column !important;
+    }
 }
