@@ -452,6 +452,9 @@ background: transparent !important;
     background-color: #ffffff !important;
     border-radius: 8px !important;
  }
+ .go3312130881.go3312130881.go3312130881:hover {
+    border-color: rgb(7 7 7) !important;
+}
 /* --- Mobile: single column --- */
 @media screen and (max-width: 768px) {
   .yw--wholesale--form__klaviyo form > .needsclick {
