@@ -332,20 +332,20 @@
 /* --- Text / email inputs --- */
 .yw--wholesale--form__klaviyo input[type="text"],
 .yw--wholesale--form__klaviyo input[type="email"] {
-  width: 100% !important;
-  box-sizing: border-box !important;
-  background: #ffffff !important;
-  border: 1px solid #dadada !important;
-  border-radius: 12px !important;
-  box-shadow: none !important;
-  color: #1a1a1a !important;
-  font-family: "Matter", sans-serif !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
-  letter-spacing: 0 !important;
-  min-height: 56px !important;
-  height: 56px !important;
-  padding: 14px 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: #fff !important;
+    border: 1px solid #000000 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    color: #1a1a1a !important;
+    font-family: Matter, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    letter-spacing: 0.16px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    padding: 12px 16px !important;
 }
 .yw--wholesale--form__klaviyo input::placeholder {
   color: #1a1a1a !important;
