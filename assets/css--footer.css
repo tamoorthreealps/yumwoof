@@ -807,8 +807,8 @@ a.yf__questions-link.live-chat {
   width: 100%;
   height: auto;
   /* Parallax + rotation, written by JS. */
-  transform: translate3d(0, var(--yf-badge-y, 0px), 0)
-    rotate(var(--yf-badge-rot, 0deg));
+  /* transform: translate3d(0, var(--yf-badge-y, 0px), 0)
+    rotate(var(--yf-badge-rot, 0deg)); */
 }
 
 @media (prefers-reduced-motion: reduce) {
