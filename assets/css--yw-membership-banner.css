@@ -24,6 +24,7 @@
   background-size: cover;
   background-position: var(--ywmb-focal, center center);
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .ywmb *,
