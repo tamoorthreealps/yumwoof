@@ -372,6 +372,9 @@ display: flex !important;
     height: 48px !important;
     padding: 0 8px 0 14px !important;
 }
+.yw--wholesale--form__klaviyo .klaviyo-phoneinput>div:first-child:hover {
+  border-color:#000 !important;
+}
 .yw--wholesale--form__klaviyo .klaviyo-phoneinput input[type="tel"] {
   flex: 1 1 auto !important;
   min-width: 0 !important;
