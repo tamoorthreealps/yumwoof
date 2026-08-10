@@ -143,6 +143,11 @@
   background-color: var(--ywf-btn-bg-hover) !important;
 }
 
+.yw--wholesale--form__klaviyo .needsclick.go310894487.kl-private-reset-css-Xuajs1,
+.yw--wholesale--form__klaviyo .go3623435737.go3623435737.go3623435737 {
+    padding: 0;
+}
+
 /* ---------- quick links ---------- */
 .yw--wholesale--form__links {
   position: relative;
