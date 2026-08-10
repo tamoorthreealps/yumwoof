@@ -789,6 +789,7 @@ position: absolute !important;
 		flex-direction: column;
 		gap: 28px;
 		border-radius: 20px;
+		max-height: calc(95vh - 16px);
 	}
 
 	.fp-popup__left,
