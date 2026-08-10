@@ -73,14 +73,14 @@
           "type": "legal_section",
           "settings": {
             "heading": "Retailer Requirements",
-            "content": "<p>To assure that all Yumwoof Natural Pet Food products are sold in accordance with applicable law, best practices, and in accordance with this Policy, and to prevent unauthorized sales of Yumwoof products, all Authorized Retailers must adhere to the following:</p><ul><li>All active business, regardless of whether in-store, by catalog, or online, must accurately describe the products sold, including any changes in the ingredients in the products. Retailers are required to review Yumwoof's website regularly to ensure that all public-facing product information is accurate and up-to-date.</li><li>Retailers must comply with applicable laws and regulations in making sales of Yumwoof products.</li><li>Retailers must comply with all quality control and handling standards.</li></ul>"
+            "content": "<p>To assure that all Yumwoof Natural Pet Food products are sold in accordance with applicable law, best practices, and in accordance with this Policy, and to prevent unauthorized sales of Yumwoof products, all Authorized Retailers must adhere to the following:</p><p>All advertisements, regardless of whether in-store, by catalog, or online, must accurately describe the products sold, including any changes in the ingredients in the products. Retailers are required to review Yumwoof’s website regularly to ensure that all public-facing product information is accurate and up-to-date.</p><p>Retailers must comply with applicable law and regulations in making sales of Yumwoof products.</p><p>Retailers must comply with all Yumwoof policies.</p><p>Retailers must comply with all quality control and handling standards.</p>"
           }
         },
         "legal_section_prohibited_conduct": {
           "type": "legal_section",
           "settings": {
             "heading": "Prohibited Conduct",
-            "content": "<p>Retailers shall not:</p><ul><li>a. Sell any products to any person or entity that the Retailer has reason to believe will re-sell the products.</li><li>b. Fulfill any sale order for any other Retailer of Yumwoof products, regardless of whether the other retailer is an Authorized Retailer.</li><li>c. Send, ship or otherwise deliver Yumwoof products to any person or entity which did not purchase the product directly from the Retailer.</li><li>d. Cause any Yumwoof product to be sent, shipped or otherwise delivered to any person or entity except those products that the Retailer has maintained in its own inventory.</li><li>e. Sell or agree to sell any Yumwoof products other than those purchased from an Authorized Yumwoof Distributor.</li><li>f. Sell any Yumwoof product past the expiration date, below cost, or sell any quantity to an individual greater than that typically purchased for personal use.</li></ul>"
+            "content": "<p>Retailers shall not:</p><p>a. Sell any products to any person or entity that the Retailer has reason to believe will re-sell the products.</p><p>b. Fulfill any sale order for any other Retailer of Yumwoof products, regardless of whether the other retailer is an Authorized Retailer.</p><p>c. Send, ship or otherwise deliver Yumwoof products to any person or entity which did not purchase the product directly from the Retailer.</p><p>d. Cause any Yumwoof product to be sent, shipped or otherwise delivered to any person or entity except those products that the Retailer has maintained in its own inventory.</p><p>e. Sell or agree to sell any Yumwoof products other than those purchased from an Authorized Yumwoof Distributor.</p><p>f. Sell any Yumwoof product past the expiration date, below cost, or sell any quantity to an individual greater than that typically purchased for personal</p>"
           }
         }
       },
@@ -107,7 +107,7 @@
         "overview_text": "<p>Yumwoof Natural Pet Food is on a mission to increase the lifespan of dogs with anti-inflammatory nutrition and holistic ingredients. Our premium air-dried dog food is GMO-free and boosted with Cocomega™ superfats backed by research linked to longevity. Respected health influencers including Dr. Will Cole, Thomas DeLauer and Dr. Ava Frick have all voiced their support.</p><p>We do this by offering modern nutrition products for dogs – a combination of science and holistic ingredients to improve nutrition for the better, one Yumwoof product at a time.</p>",
         "heading_color": "#000",
         "text_color": "#333333",
-        "section_background": "#7BA6DD"
+        "section_background": "#7ba6dd"
       }
     }
   },
