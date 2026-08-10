@@ -115,6 +115,7 @@
 
 .ywmb__line--1 {
   font-size: var(--ywmb-size-1);
+      transform: translateY(-12px);
 }
 
 .ywmb__line--2 {
