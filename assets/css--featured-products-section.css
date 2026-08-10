@@ -184,12 +184,12 @@ position: absolute !important;
 }
 
 .fp__title {
-	margin: 0 0 8px;
-	font-weight: 400;
-	font-size: 28px;
-	line-height: 32px;
-	font-family: TAYRosemary;
-	letter-spacing: 0;
+    margin: 0 0 8px;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0;
+    font-family: TAY Birdie;
 }
 
 .fp__labels {
@@ -472,9 +472,10 @@ padding: 0;
 	} */
 
 	.fp__title {
-		font-size: 3.6rem;
-		line-height: 4rem;
-		margin-bottom: .8rem;
+		font-size: 20px;
+        line-height: 16px;
+        letter-spacing: -0.40px;
+        margin: 0 0 12px;
 	}
 
 	.fp__labels {
