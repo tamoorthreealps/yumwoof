@@ -16,10 +16,9 @@
           "type": "title",
           "settings": {}
         },
-        "vendor": {
-          "type": "text",
+        "subheading_ULBAEm": {
+          "type": "subheading",
           "settings": {
-            "text": "AIR DRIED DOG FOOD - LAND & SEA",
             "text_style": "uppercase"
           }
         },
@@ -74,7 +73,10 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": false,
-            "show_gift_card_recipient": false
+            "show_gift_card_recipient": false,
+            "coming_soon_heading": "Coming Soon",
+            "coming_soon_text": "",
+            "klaviyo_form_class": "klaviyo-form-Ry6Yff"
           }
         },
         "guarantee_ribbon_NUFwfW": {
@@ -122,7 +124,7 @@
       },
       "block_order": [
         "title",
-        "vendor",
+        "subheading_ULBAEm",
         "rating_AqGBUP",
         "short_description_HghaRg",
         "price",
