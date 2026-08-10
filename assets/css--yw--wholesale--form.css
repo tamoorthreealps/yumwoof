@@ -255,7 +255,7 @@
 
   .yw--wholesale--form__klaviyo form [data-testid="form-row"]:nth-last-child(3){
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    grid-column: 1 / -1 !important;
     gap: 12px !important;
     width: 100% !important;
     min-height: 0 !important;
