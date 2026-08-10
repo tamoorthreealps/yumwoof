@@ -235,3 +235,172 @@
       letter-spacing: -0.80px;
   }
     }
+
+    /* ============================================================
+   Wholesale Klaviyo form → Figma design
+   Uses Klaviyo's stable classes (.klaviyo-textinput / -emailinput
+   / -phoneinput / -disclosure / -form-button, [data-testid=...]).
+   ============================================================ */
+
+/* --- Kill Klaviyo's dark box + padding, let the cream page show --- */
+.yw--wholesale--form__klaviyo .klaviyo-form,
+.yw--wholesale--form__klaviyo form {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+/* --- 2-column grid: dissolve Klaviyo's rows, flow components into a grid --- */
+.yw--wholesale--form__klaviyo form > .needsclick {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px 16px !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+.yw--wholesale--form__klaviyo [data-testid="form-row"] {
+  display: contents !important;                 /* children become grid cells */
+}
+.yw--wholesale--form__klaviyo [data-testid="form-component"] {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+/* consent + button span the full width */
+.yw--wholesale--form__klaviyo [data-testid="form-component"]:has(.klaviyo-disclosure),
+.yw--wholesale--form__klaviyo [data-testid="form-component"]:has(.klaviyo-form-button) {
+  grid-column: 1 / -1 !important;
+}
+
+/* --- Field wrappers full width --- */
+.yw--wholesale--form__klaviyo .klaviyo-textinput,
+.yw--wholesale--form__klaviyo .klaviyo-emailinput,
+.yw--wholesale--form__klaviyo .klaviyo-phoneinput {
+  width: 100% !important;
+}
+
+/* --- Text / email inputs --- */
+.yw--wholesale--form__klaviyo input[type="text"],
+.yw--wholesale--form__klaviyo input[type="email"] {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  border: 1px solid #DADADA !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  color: #1a1a1a !important;
+  font-family: 'Matter', sans-serif !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: 0 !important;
+  min-height: 56px !important;
+  height: 56px !important;
+  padding: 14px 20px !important;
+}
+.yw--wholesale--form__klaviyo input::placeholder {
+  color: #1a1a1a !important;
+  opacity: 1 !important;
+  font-family: 'Matter', sans-serif !important;
+}
+.yw--wholesale--form__klaviyo input[type="text"]:focus,
+.yw--wholesale--form__klaviyo input[type="email"]:focus,
+.yw--wholesale--form__klaviyo .klaviyo-phoneinput > div:first-child:focus-within {
+  outline: none !important;
+  border-color: #1a1a1a !important;
+}
+
+/* --- Phone field: border the whole component, flag + input inside --- */
+.yw--wholesale--form__klaviyo .klaviyo-phoneinput > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  background: #ffffff !important;
+  border: 1px solid #DADADA !important;
+  border-radius: 12px !important;
+  min-height: 56px !important;
+  height: 56px !important;
+  padding: 0 8px 0 14px !important;
+}
+.yw--wholesale--form__klaviyo .klaviyo-phoneinput input[type="tel"] {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #1a1a1a !important;
+  font-family: 'Matter', sans-serif !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 8px 10px !important;
+}
+.yw--wholesale--form__klaviyo .klaviyo-phoneinput button[role="combobox"] {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 10px 0 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  border-right: 1px solid #DADADA !important;   /* divider between flag and number */
+}
+
+/* --- Consent / disclaimer copy --- */
+.yw--wholesale--form__klaviyo .klaviyo-disclosure p {
+  margin: 0 !important;
+  color: #555555 !important;
+  font-family: 'Matter', sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+}
+.yw--wholesale--form__klaviyo .klaviyo-disclosure a {
+  color: #555555 !important;
+  text-decoration: underline !important;
+}
+
+/* --- Submit button ("CREATE ACCOUNT") --- */
+.yw--wholesale--form__klaviyo .klaviyo-form-button {
+  width: 100% !important;
+  background: #F5B94D !important;               /* gold — tweak to taste */
+  border: 1px solid #F5B94D !important;
+  border-radius: 12px !important;
+  color: #1a1a1a !important;
+  font-family: 'FFBlurProMedium', sans-serif !important;
+  font-size: 18px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.06em !important;
+  min-height: 64px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  transition: background .25s ease, color .25s ease, border-color .25s ease !important;
+}
+.yw--wholesale--form__klaviyo .klaviyo-form-button:hover {
+  background: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+  color: #fff9ef !important;
+}
+
+/* --- Mobile: single column --- */
+@media screen and (max-width: 768px) {
+  .yw--wholesale--form__klaviyo form > .needsclick {
+    grid-template-columns: 1fr !important;
+  }
+  .yw--wholesale--form__klaviyo input[type="text"],
+  .yw--wholesale--form__klaviyo input[type="email"],
+  .yw--wholesale--form__klaviyo .klaviyo-phoneinput > div:first-child {
+    min-height: 52px !important;
+    height: 52px !important;
+  }
+  .yw--wholesale--form__klaviyo input[type="text"],
+  .yw--wholesale--form__klaviyo input[type="email"],
+  .yw--wholesale--form__klaviyo .klaviyo-phoneinput input[type="tel"] {
+    font-size: 15px !important;
+  }
+  .yw--wholesale--form__klaviyo .klaviyo-form-button {
+    min-height: 56px !important;
+    font-size: 16px !important;
+  }
+}
