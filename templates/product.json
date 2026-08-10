@@ -165,7 +165,7 @@
       "name": "PDP FAQs Section",
       "settings": {
         "heading": "Any Questions?",
-        "subheading": "Every dog is different. Find the recipe that's right for yours.",
+        "subheading": "",
         "faq_image": "shopify://shop_images/faqs_desktop.png",
         "faq_image_mobile": "shopify://shop_images/faqs_mobile.png",
         "open_first": true,
