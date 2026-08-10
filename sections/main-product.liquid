@@ -97,7 +97,7 @@
               {%- case block.type -%}
                 {%- when 'butcher-quality' -%}
                   {% if block.settings.seal_image != blank %}
-                    {% render 'butcher-quality-seal' %}
+                    {% render 'butcher-quality-seal', block: block %}
                   {% endif %}
               {%- endcase -%}
             {% endfor %}
@@ -131,7 +131,7 @@
                     {% endif %}
                   {%- when 'butcher-quality' -%}
                     {% if block.settings.seal_image != blank %}
-                      {% render 'butcher-quality-seal' %}
+                      {% render 'butcher-quality-seal', block: block %}
                     {% endif %}
                   {%- when 'title' -%}
                     <div class="product__title" {{ block.shopify_attributes }}>
