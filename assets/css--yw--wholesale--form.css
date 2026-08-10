@@ -330,6 +330,9 @@
   [data-testid="form-component"]:has(.klaviyo-form-button) {
   grid-column: 1 / -1 !important;
 }
+.yw--wholesale--form__klaviyo [data-testid=form-component]:has(.klaviyo-form-button) {
+  padding:0 !important;
+}
 
 /* --- Field wrappers full width --- */
 .yw--wholesale--form__klaviyo .klaviyo-textinput,
