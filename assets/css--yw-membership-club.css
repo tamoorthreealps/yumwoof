@@ -174,6 +174,19 @@
   padding-right: 1px;
 }
 
+.ywmc__benefit:nth-child(1) .ywmc__benefit-desc {
+  padding-right:20px;
+}
+
+.ywmc__benefit:nth-child(3) .ywmc__benefit-desc {
+  padding-right:36px;
+}
+
+
+.ywmc__benefit:nth-child(4) .ywmc__benefit-desc {
+  padding-right:24px;
+}
+
 /* Built-in checkbox. Filled = solid swatch with a cut-out tick;
    outline = ruled box, used for the un-ticked row in the mobile reference. */
 .ywmc__benefit-icon {
@@ -438,12 +451,6 @@ width: 240px;
     line-height: 20px;
     padding-right: 4px;
   }
-
-  .ywmc__benefit:nth-child(1) .ywmc__benefit-desc,
-  .ywmc__benefit:nth-child(3) .ywmc__benefit-desc,
-  .ywmc__benefit:nth-child(4) .ywmc__benefit-desc {
-  padding-right:4px;
-}
 
     .ywmc__button {
        width: 100%;
