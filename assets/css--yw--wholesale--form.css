@@ -385,6 +385,7 @@
   height: auto !important;
   min-height: 0 !important;
   padding: 8px 10px !important;
+  width:auto !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-phoneinput button[role="combobox"] {
 background: transparent !important;
