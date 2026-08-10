@@ -322,6 +322,10 @@
 }
 
 .yw-faq__answer p {
+  margin-bottom:16px;
+}
+
+.yw-faq__answer p:last-child {
   margin:0;
 }
 
