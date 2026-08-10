@@ -509,8 +509,8 @@ height: 48px !important;
   .yw--wholesale--form__klaviyo input[type="text"],
   .yw--wholesale--form__klaviyo input[type="email"],
   .yw--wholesale--form__klaviyo .klaviyo-phoneinput > div:first-child {
-    min-height: 52px !important;
-    height: 52px !important;
+    min-height: 48px !important;
+    height: 48px !important;
   }
   .yw--wholesale--form__klaviyo input[type="text"],
   .yw--wholesale--form__klaviyo input[type="email"],
