@@ -23,29 +23,37 @@
         "legal_section_kxfgWq": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "POLICY OBJECTIVES",
+            "content": "<p>a. Ensure clear and consistent advertising prices across distribution channels.</p><p>b. Respect our partners and create a fair pricing environment.</p>"
           }
         },
         "legal_section_bUT7MG": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "PRICING POLICY STATEMENT",
+            "content": "<p>a. Terms</p><p>i. Retail B&M Locations: Physical retail brick & mortar locations.</p><p>ii. Online Retailers: Retailers using eCommerce platforms.</p><p>iii. MSRP: Yumwoof's Manufacturer's Suggested Retail Price.</p><p>iv. Pricing or Price: The minimum advertised price for Yumwoof items.</p><p>b. Pricing Guidelines:</p><p>i. For Retail B&M Locations: Pricing must equal or exceed MSRP.</p><p>1. Any discount below the price must occur only within the Retail B&M Location.</p><p>ii. For Online Retailers: Pricing must equal or exceed MSRP.</p><p>2. Any discount below the price must occur only at checkout.</p><p>3. This applies to all website levels/pages, excluding checkout pages.</p><p>c. Pricing must be fully inclusive of special offers, except for free shipping and approved repeat delivery options.</p>"
           }
         },
         "legal_section_9t9GdR": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "ENFORCEMENT",
+            "content": "<p>a. Yumwoof will monitor and report Pricing discrepancies.</p><p>b. Retail partners must correct discrepancies within 24 hours.</p><p>c. Violations may result in warnings, temporary suspension, or termination.</p><p>d. Yumwoof will take actions based on the severity and intentionality of violations.</p>"
+          }
+        },
+        "legal_section_PpRqPx": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "",
+            "content": "<p>This Policy applies to any activity designed to circumvent it. Yumwoof reserves the right to modify or withdraw this policy at any time. Questions or comments should be directed to woof@yumwoof.com.</p>"
           }
         }
       },
       "block_order": [
         "legal_section_kxfgWq",
         "legal_section_bUT7MG",
-        "legal_section_9t9GdR"
+        "legal_section_9t9GdR",
+        "legal_section_PpRqPx"
       ],
       "name": "Legal page Block",
       "settings": {
@@ -58,7 +66,7 @@
         "overview_heading": "",
         "overview_text": "<p>Yumwoof Natural Pet Food Inc. (“Yumwoof”) is on a mission to increase the lifespan of dogs with anti-inflammatory nutrition and holistic ingredients. Our premium air-dried dog food is GMO-free and boosted with Cocomega™ superfats backed by research linked to longevity. Respected health influencers including Dr. Will Cole, Thomas DeLauer and Dr. Ava Frick have all voiced their support.</p><p>We do this by offering modern nutrition products for dogs – a combination of science and holistic ingredients to improve nutrition for the better, one Yumwoof product at a time.</p><p>Yumwoof has built relationships with retailers to achieve this purpose. We remain committed to supporting our partners and promoting their efforts to inform and educate our customers.</p><p>Yumwoof recognizes the growing use of e-commerce and online platforms by our retail partners. To support this, minimize cross-channel conflict, and ensure our brand integrity, we have adopted the Yumwoof Pricing Policy.</p>",
         "heading_color": "#000",
-        "text_color": "#333333",
+        "text_color": "#1A1714",
         "section_background": "#7BA6DD"
       }
     }
