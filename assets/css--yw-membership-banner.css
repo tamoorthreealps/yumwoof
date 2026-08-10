@@ -118,7 +118,11 @@
 }
 
 .ywmb__line--2 {
-  font-size: var(--ywmb-size-2);
+    font-size: var(--ywmb-size-2);
+    line-height: 56px;
+    letter-spacing: -1.92px;
+    font-family: "TAY Birdie", var(--font-heading-family, serif);
+    text-transform: uppercase;
 }
 
 /* ------------------------------- Badge ------------------------------- */
