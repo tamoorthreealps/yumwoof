@@ -42,8 +42,8 @@
             "title": "Buy on terms you already have",
             "text": "<p>Already a Faire member? Order Yumwoof through your account. We do require proof of a physical retail store, and Faire pricing runs 10% above ordering direct from us.</p>",
             "button_label": "Visit Faire",
-            "button_url": "",
-            "button_new_tab": false
+            "button_url": "https://faire.com/direct/yumwoof",
+            "button_new_tab": true
           }
         },
         "card_JWeQet": {
@@ -55,8 +55,8 @@
             "title": "On your usual schedule.",
             "text": "<p>Prefer to work through a distributor? We're available on Pod Foods. And if there's another distributor you'd like us on in future, reach out and let our team know.</p>",
             "button_label": "Visit Pod Foods",
-            "button_url": "",
-            "button_new_tab": false
+            "button_url": "https://www.podfoods.co/yumwoof-b3054.html",
+            "button_new_tab": true
           }
         }
       },
