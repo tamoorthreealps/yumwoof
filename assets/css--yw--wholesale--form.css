@@ -51,6 +51,7 @@
   letter-spacing: -0.8px;
   text-transform: uppercase;
   font-family: "TAYRosemary";
+  transform: translateY(-4px);
 }
 .yw--wholesale--form__subtitle {
   margin: 0 auto;
@@ -223,6 +224,7 @@
     line-height: 64px;
     letter-spacing: -0.56px;
     margin: 0;
+    transform: translateY(-5px);
   }
   .yw--wholesale--form__subtitle {
     font-size: 18px;
