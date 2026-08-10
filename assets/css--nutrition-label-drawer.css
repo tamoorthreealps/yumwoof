@@ -419,6 +419,7 @@
     font-size: 36px;
     line-height: 40px;
     letter-spacing: -0.36px;
+    transform: translateY(-5px);
   }
   .nldrawer__eyebrow {
     font-size: 14px;
