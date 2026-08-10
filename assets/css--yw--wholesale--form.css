@@ -436,19 +436,20 @@ background: transparent !important;
 
 /* --- Submit button ("CREATE ACCOUNT") --- */
 .yw--wholesale--form__klaviyo .klaviyo-form-button {
-  width: 100% !important;
-  background: #f5b94d !important; /* gold — tweak to taste */
-  border: 1px solid #f5b94d !important;
-  border-radius: 12px !important;
-  color: #1a1a1a !important;
-  font-family: "FFBlurProMedium", sans-serif !important;
-  font-size: 18px !important;
-  line-height: 24px !important;
-  letter-spacing: 0.06em !important;
-  min-height: 64px !important;
-  text-transform: uppercase !important;
-  cursor: pointer !important;
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease !important;
+height: 48px !important;
+    width: 100% !important;
+    background: #f5b94d !important;
+    border: 1px solid #000000 !important;
+    border-radius: 100px !important;
+    color: #000 !important;
+    font-family: FFBlurProMedium, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    letter-spacing: .64px !important;
+    min-height: 48px !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: background .25s ease, color .25s ease, border-color .25s ease !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-form-button:hover {
   background: #1a1a1a !important;
