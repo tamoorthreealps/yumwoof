@@ -763,6 +763,9 @@
   .qz-opts {
       margin-bottom: 76px;
   }
+  .qz-know-top {
+      margin-bottom: 32px;
+  }
   .qz-presets button {
     border-radius: 8px;
     padding: 5.2px;
