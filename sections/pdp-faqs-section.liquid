@@ -18,8 +18,8 @@
   }
 {%- endstyle -%}
 
-{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
-
+{% assign faq = product.metafields.content.faq_section.value %}
+      {% if faq.faqs %}
 <section class="faqs">
   <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
     <div class="faqs__content">
@@ -32,15 +32,13 @@
         {%- endif -%}
       </div>
 
-      {%- if faq_blocks.size > 0 -%}
         <div class="faqs__list">
-          {%- for block in faq_blocks -%}
+          {%- for i in faq.faqs -%}
             <div
               class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}"
-              {{ block.shopify_attributes }}
             >
               <div class="faqs__question">
-                <span class="faqs__question-text">{{ block.settings.question }}</span>
+                <span class="faqs__question-text">{{ i.question }}</span>
                 <span class="faqs__icon" aria-hidden="true">
                   <svg
                     class="faqs__icon__plus"
@@ -65,17 +63,15 @@
                   </svg>
                 </span>
               </div>
-              {%- if block.settings.answer != blank -%}
                 <div class="faqs__answer rte">
                   <div class="faqs__answer-inner">
-                    {{ block.settings.answer }}
+                    {{ i.answer }}
                   </div>
                 </div>
-              {%- endif -%}
             </div>
           {%- endfor -%}
         </div>
-      {%- endif -%}
+      
     </div>
     {% if section.settings.faq_image != blank or section.settings.faq_image_mobile != blank %}
       <div class="faqs__right">
@@ -106,7 +102,7 @@
     {% endif %}
   </div>
 </section>
-
+{%- endif -%}
 <script>
   document.querySelectorAll('.faqs__question').forEach((question) => {
     question.addEventListener('click', function () {
