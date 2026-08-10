@@ -758,6 +758,10 @@
   .qz-presets {
     gap: 5.33px;
     margin-top: 24px;
+    margin-bottom: 116px;
+  }
+  .qz-opts {
+      margin-bottom: 76px;
   }
   .qz-presets button {
     border-radius: 8px;
