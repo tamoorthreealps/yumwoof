@@ -72,7 +72,7 @@
     width: min(1196px, calc(100% - 64px));
     margin-inline: auto;
     display: grid;
-    grid-template-columns: 520px 594px;
+    grid-template-columns: 490px 594px;
     justify-content: space-between;
     column-gap: 112px;
     align-items: center;
