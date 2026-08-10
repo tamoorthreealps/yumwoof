@@ -67,15 +67,15 @@
 /* ------------------------------- Container ------------------------------- */
 
 .ywmc__container {
-  position: relative;
-  z-index: 1;
-  width: min(1196px, calc(100% - 64px));
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: 520px 594px;
-  justify-content: space-between;
-  column-gap: 82px;
-  align-items: start;
+    position: relative;
+    z-index: 1;
+    width: min(1196px, calc(100% - 64px));
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 520px 594px;
+    justify-content: space-between;
+    column-gap: 112px;
+    align-items: center;
 }
 
 /* ----------------------------- Brand column ----------------------------- */
@@ -85,9 +85,10 @@
 }
 
 .ywmc__logo {
-  width: 520px;
-  max-width: 100%;
-  height: 260px;
+    width: 490px;
+    max-width: 100%;
+    height: 245px;
+    margin: 0 auto;
 }
 
 .ywmc .ywmc__logo-image {
@@ -99,25 +100,27 @@
 }
 
 .ywmc__eyebrow {
-    margin: -24px 0 0;
+    margin: -28px 0 0;
     color: var(--ywmc-heading);
     font-family: var(--ywmc-font-display);
     font-weight: 400;
-    font-size: 18px;
-    line-height: normal;
-    letter-spacing: 6.12px;
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: 0;
     text-transform: uppercase;
     text-align: center;
 }
 
 .ywmc__description {
-  margin-top: 45px;
-  color: var(--ywmc-text);
-  font-family: var(--ywmc-font-body);
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 28px;
-  letter-spacing: 0;
+    color: var(--ywmc-text);
+    font-family: var(--ywmc-font-body);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0;
+    max-width: 450px;
+    margin: 45px auto 0;
+    text-align: center;
 }
 
 .ywmc__description p {
@@ -139,28 +142,28 @@
 }
 
 .ywmc__benefits-title {
-  margin: 0;
-  color: var(--ywmc-accent);
-  font-family: var(--ywmc-font-display);
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 30px;
-  letter-spacing: -0.44px;
+    margin: 0;
+    color: var(--ywmc-accent);
+    font-family: var(--ywmc-font-display);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -.40px;
 }
 
 .ywmc__rule {
-  margin: 14px 0 0;
+  margin: 12px 0 0;
   border: 0;
   border-top: 1px solid var(--ywmc-border);
 }
 
 .ywmc__benefits {
-  margin: 32px 0 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .ywmc__benefit {
@@ -173,13 +176,13 @@
 /* Built-in checkbox. Filled = solid swatch with a cut-out tick;
    outline = ruled box, used for the un-ticked row in the mobile reference. */
 .ywmc__benefit-icon {
-  flex: 0 0 32px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
 }
 
 .ywmc__benefit-icon--filled {
@@ -210,10 +213,10 @@
 }
 
 .ywmc .ywmc__benefit-icon-image {
-  display: block;
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .ywmc__benefit-text {
@@ -223,36 +226,35 @@
 }
 
 .ywmc__benefit-title {
-  margin: 0;
-  color: var(--ywmc-accent);
-  font-family: var(--ywmc-font-display);
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 30px;
-  letter-spacing: -0.44px;
-  text-transform: uppercase;
+margin: 0;
+    color: var(--ywmc-accent);
+    font-family: var(--ywmc-font-display);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -.48px;
+    text-transform: uppercase;
 }
 
 .ywmc__benefit-desc {
-  color: var(--ywmc-text);
-  font-family: var(--ywmc-font-body);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0;
+color: var(--ywmc-text);
+    font-family: var(--ywmc-font-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
 /* --------------------------------- Button --------------------------------- */
 
 .ywmc__button {
-display: inline-flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 340px;
-    max-width: 100%;
-    height: 56px;
+    min-width: 296px;
+    min-height: 64px;
     margin-top: 32px;
-    padding: 18px 44px;
+    padding: 20px;
     border: 2px solid var(--ywmc-button-border);
     border-radius: var(--ywmc-button-radius);
     background: var(--ywmc-button-bg);
@@ -287,15 +289,15 @@ display: inline-flex;
 }
 
 .ywmc__fine-print {
-  width: 278px;
-  max-width: 100%;
-  margin: 24px 0 0;
-  color: var(--ywmc-text);
-  font-family: var(--ywmc-font-body);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0;
+    width: 310px;
+    max-width: 100%;
+    margin: 20px 0 0;
+    color: var(--ywmc-text);
+    font-family: var(--ywmc-font-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
 .ywmc__fine-print p {
