@@ -20,32 +20,80 @@
     "legal_pages_content_JpGTfY": {
       "type": "legal--pages--content",
       "blocks": {
-        "legal_section_xmr3mf": {
+        "legal_section_purpose": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "Purpose of this Policy",
+            "content": "<p>Yumwoof Natural Pet Food Inc. (\"Yumwoof\") has a long history of working with partners who share our goals. To maintain our product integrity, customer satisfaction, and quality partnerships, we have instituted this Authorized Retailer Policy (\"Retailer Policy\").</p>"
           }
         },
-        "legal_section_xmaFHk": {
+        "legal_section_applies_to": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "Who this Policy applies to",
+            "content": "<p>Yumwoof products are sold through various sales channels by businesses that sell our products to end-users (\"Retailers\"). An end-user is any purchaser of a product who is the ultimate consumer of the product and who does not intend to sell the product to a third party. All Retailers who purchase our products for resale to end-users through our network of Authorized Distributors or directly from Yumwoof agree to comply with this Retailer Policy and any considered \"Authorized Retailers.\" Any person or entity not in compliance with this Retailer Policy will lose their status as a Yumwoof Authorized Retailer and will not be permitted to buy Yumwoof products through our network of Authorized Distributors or directly from Yumwoof without any expressed written consent from Yumwoof. Yumwoof reserves the right, at any time, to refuse to do business with anyone, including previously Authorized Retailers. Warranties and benefits generally provided by Yumwoof to its Authorized Retailers and their customers may not be available for sale in violation of this Retailer Policy. Yumwoof does not permit any of its products to be sold to end-users through sales channels that are not stated in this policy or without express written permission from Yumwoof directly.</p>"
           }
         },
-        "legal_section_rAnLPM": {
+        "legal_section_brick_mortar": {
           "type": "legal_section",
           "settings": {
-            "heading": "Section 1 — Heading",
-            "content": "<p>Add section text here.</p>"
+            "heading": "Brick &amp; Mortar Sales",
+            "content": "<p>All sales made in person to end-users by an Authorized Retailer that has one or more physical locations (\"B&amp;M Retailers\") where the general public is invited to enter and purchase products through in-person transactions (\"B&amp;M Sales\") are authorized under this Retailer Policy. B&amp;M Retailers making the B&amp;M Sales must have as the primary sales channel in person transactions, and not in-person transactions ancillary to any other sales channel. B&amp;M Sales also include sales for delivery to past or same-day carrier if the transaction occurs with the end-user in person at the physical business location, subject to the other provisions of this Policy. B&amp;M Sales include sales resulting from solicitations made through a physical advertisement delivered to the end-user by the B&amp;M Retailer if the sale is made by physical box and email receipt of an order from an end-user to an Authorized Retailer for delivery to the end-user, although sales through online platforms resulting from solicitations that direct end-users to online platforms are the sole basis under this Policy and are not Catalog Sales. B&amp;M Sales also include sales made to end-users as a result of orders placed by an end-user through telephone calls or e-mails to a B&amp;M Retailer in which payment is made at the time of the customer duties with delivery of the products to be made by post or common carrier from the inventory of the B&amp;M Retailer, subject to the other provisions of this Policy.</p>"
+          }
+        },
+        "legal_section_online_sales": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Online Sales",
+            "content": "<p>Sales made to an end-user by entity of an order by the end-user on a website or online platform without any other contact between the end-user and the Retailer (\"Online Sales\") are permitted by Authorized Retailers in compliance with this Policy.</p>"
+          }
+        },
+        "legal_section_branded_websites": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Branded Websites",
+            "content": "<p>Authorized Retailers may make Online Sales of Yumwoof products only through their own Branded Websites. A Branded Website must be solely owned (including the domain name), controlled, operated, managed, and maintained by the Authorized Retailer. It must clearly state the name and contact information of the Authorized Retailer and it must not misrepresent the platform as being owned or operated by any other person or entity. Authorized Retailers may also use delivery services such as Shipt and Instacart to deliver products ordered through the delivery service's website, provided that the products ordered by the end-user through the delivery service are promptly transported directly from the Authorized Retailer to the end-user (i.e., not through fulfillment from the delivery service's own inventory). Delivery services may also provide ancillary services to the Authorized Retailer, such as listing and/or payment collection services. Permitted delivery services expressly exclude any provider that either itself or through an affiliate operates a third-party online platform (i.e., a delivery service that is operated by Amazon, Walmart, or Target, or one of their affiliates).</p>"
+          }
+        },
+        "legal_section_marketplaces": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Third-Party Marketplaces",
+            "content": "<p>Retailers shall not offer for sale or sell Yumwoof branded products on or through any website, online marketplace (including, but not limited to, Amazon, eBay, Google Shopping, Kroger Marketplace, Sears Marketplace, Target, and Walmart Marketplace), mobile application, or other online forum other than Retailer's Branded Website without the prior written consent of Yumwoof.</p>"
+          }
+        },
+        "legal_section_retailer_operations": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Retailer Operations",
+            "content": "<p>All Retailer Branded Websites must comply with applicable law, including laws regarding accessibility and security. Authorized Retailers are responsible for customer service, addressing complaints, accepting returns, and all other customer interactions for products purchased through online sales platforms.</p>"
+          }
+        },
+        "legal_section_retailer_requirements": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Retailer Requirements",
+            "content": "<p>To assure that all Yumwoof Natural Pet Food products are sold in accordance with applicable law, best practices, and in accordance with this Policy, and to prevent unauthorized sales of Yumwoof products, all Authorized Retailers must adhere to the following:</p><ul><li>All active business, regardless of whether in-store, by catalog, or online, must accurately describe the products sold, including any changes in the ingredients in the products. Retailers are required to review Yumwoof's website regularly to ensure that all public-facing product information is accurate and up-to-date.</li><li>Retailers must comply with applicable laws and regulations in making sales of Yumwoof products.</li><li>Retailers must comply with all quality control and handling standards.</li></ul>"
+          }
+        },
+        "legal_section_prohibited_conduct": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Prohibited Conduct",
+            "content": "<p>Retailers shall not:</p><ul><li>a. Sell any products to any person or entity that the Retailer has reason to believe will re-sell the products.</li><li>b. Fulfill any sale order for any other Retailer of Yumwoof products, regardless of whether the other retailer is an Authorized Retailer.</li><li>c. Send, ship or otherwise deliver Yumwoof products to any person or entity which did not purchase the product directly from the Retailer.</li><li>d. Cause any Yumwoof product to be sent, shipped or otherwise delivered to any person or entity except those products that the Retailer has maintained in its own inventory.</li><li>e. Sell or agree to sell any Yumwoof products other than those purchased from an Authorized Yumwoof Distributor.</li><li>f. Sell any Yumwoof product past the expiration date, below cost, or sell any quantity to an individual greater than that typically purchased for personal use.</li></ul>"
           }
         }
       },
       "block_order": [
-        "legal_section_xmr3mf",
-        "legal_section_xmaFHk",
-        "legal_section_rAnLPM"
+        "legal_section_purpose",
+        "legal_section_applies_to",
+        "legal_section_brick_mortar",
+        "legal_section_online_sales",
+        "legal_section_branded_websites",
+        "legal_section_marketplaces",
+        "legal_section_retailer_operations",
+        "legal_section_retailer_requirements",
+        "legal_section_prohibited_conduct"
       ],
       "name": "Legal page Block",
       "settings": {
