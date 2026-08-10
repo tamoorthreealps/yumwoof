@@ -442,15 +442,17 @@ background: transparent !important;
     display: flex;
     width: 100%;
 }
-.go1825707975.go1825707975.go1825707975 {
+.needsclick.go848705215.kl-private-reset-css-Xuajs1 {
     padding: 0 !important;
-    width: 100% !important;
     height: 48px;
+    width: 100% !important;
 }
-.go3754922709.go3754922709.go3754922709 {
-    border: 1px solid #000 !important;
+
+ .needsclick.go2335852107.kl-private-reset-css-Xuajs1 {
     background-color: #ffffff !important;
     border-radius: 8px !important;
+    border: 1px solid #000 !important;
+    box-sizing: border-box;
  }
  .go3312130881.go3312130881.go3312130881:hover,
  .go238159450.go238159450.go238159450:hover {
