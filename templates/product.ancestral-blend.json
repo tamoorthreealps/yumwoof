@@ -92,9 +92,9 @@
         "butcher_quality_KVmFAP": {
           "type": "butcher-quality",
           "settings": {
-            "promo_banner_content": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>",
-            "promo_banner_link": "",
-            "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg"
+            "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
+            "bq_heading": "",
+            "bq_description": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>"
           }
         },
         "nutrition_label_APTPBb": {
@@ -147,8 +147,8 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "bq_heading": "",
-        "bq_description": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>",
+        "promo_banner_content": "",
+        "promo_banner_link": "",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
