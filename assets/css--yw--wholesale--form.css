@@ -14,6 +14,7 @@
 }
 
 /* ---------- decorative kibbles ---------- */
+/* ---------- decorative kibbles ---------- */
 .yw--wholesale--form__kibble {
   position: absolute;
   width: var(--ywf-kibble-w-mob);
@@ -21,42 +22,39 @@
   pointer-events: none;
   user-select: none;
   z-index: 0;
+  --ywf-par: 0px;
+  transform-origin: center center;
+  will-change: transform;
 }
 .yw--wholesale--form__kibble--left {
   left: 0;
   top: 110px;
-  animation: bottomaiconwhole 120s linear infinite;
-      transform-origin: center center;
-      will-change: transform;
+  animation: ywfKibbleLeft 120s linear infinite;
 }
 .yw--wholesale--form__kibble--right {
   right: 0;
   top: 300px;
-  animation: bowlRotatewhole 120s linear infinite;
-      transform-origin: center center;
-      will-change: transform;
+  animation: ywfKibbleRight 120s linear infinite;
 }
-@keyframes bottomaiconwhole {
-        from {
-            transform: rotate(0deg);
-        }
 
-        to {
-            transform: rotate(-360deg);
-        }
-    }
+@keyframes ywfKibbleLeft {
+  from { transform: translate3d(0, var(--ywf-par, 0px), 0) rotate(0deg); }
+  to   { transform: translate3d(0, var(--ywf-par, 0px), 0) rotate(-360deg); }
+}
+@keyframes ywfKibbleRight {
+  from { transform: translate3d(0, var(--ywf-par, 0px), 0) rotate(0deg); }
+  to   { transform: translate3d(0, var(--ywf-par, 0px), 0) rotate(360deg); }
+}
 
-    @keyframes bowlRotatewhole {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
 .yw--wholesale--form--no-kibble-mob .yw--wholesale--form__kibble {
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yw--wholesale--form__kibble {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* ---------- heading ---------- */

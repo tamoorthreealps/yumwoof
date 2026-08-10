@@ -106,7 +106,61 @@
     {%- endif -%}
   </div>
 </section>
+<script>
+  (function () {
+    var root = document.getElementById('yw--wholesale--form-{{ section.id }}');
+    if (!root) return;
 
+    var items = root.querySelectorAll('[data-ywf-parallax]');
+    if (!items.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ticking = false;
+
+    function range() {
+      var cs = getComputedStyle(root);
+      var isMob = window.innerWidth < 768;
+      var v = isMob
+        ? cs.getPropertyValue('--ywf-par-range-mob')
+        : cs.getPropertyValue('--ywf-par-range');
+      return parseFloat(v) || 0;
+    }
+
+    function update() {
+      ticking = false;
+      var rect = root.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+
+      if (rect.bottom < 0 || rect.top > vh) return;
+
+      // -1 (section entering from below) → 1 (section leaving at top)
+      var progress = (vh - rect.top) / (vh + rect.height);
+      var offset = (progress - 0.5) * 2 * range();
+
+      for (var i = 0; i < items.length; i++) {
+        var dir = parseFloat(items[i].getAttribute('data-ywf-parallax-dir')) || 1;
+        items[i].style.setProperty('--ywf-par', (offset * dir).toFixed(2) + 'px');
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.detail.sectionId === '{{ section.id }}') update();
+      });
+    }
+  })();
+</script>
 
 {% schema %}
 {
