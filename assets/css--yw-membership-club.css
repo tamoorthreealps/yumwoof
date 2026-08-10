@@ -175,7 +175,11 @@
 }
 
 .ywmc__benefit:nth-child(1) .ywmc__benefit-desc {
-  padding-right:10px;
+  padding-right:20px;
+}
+
+.ywmc__benefit:nth-child(3) .ywmc__benefit-desc {
+  padding-right:36px;
 }
 
 /* Built-in checkbox. Filled = solid swatch with a cut-out tick;
