@@ -146,8 +146,27 @@
 
         <div class="yw-nav__icons">
           {%- if shop.customer_accounts_enabled -%}
+            {%- liquid
+              # Login routing (per spec): B2B customers — any tag starting with "b2b",
+              # case-insensitive — go to the Shopify account; guests AND non-B2B
+              # customers go to the portal.
+              assign account_dest = 'https://portal.yumwoof.com'
+              if customer
+                assign is_b2b = false
+                for tag in customer.tags
+                  assign tag_prefix = tag | downcase | slice: 0, 3
+                  if tag_prefix == 'b2b'
+                    assign is_b2b = true
+                    break
+                  endif
+                endfor
+                if is_b2b
+                  assign account_dest = routes.account_url
+                endif
+              endif
+            -%}
             <a
-              href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+              href="{{ account_dest }}"
               class="yw-nav__icon yw-icon--account link focus-inset"
               rel="nofollow"
             >
@@ -244,8 +263,27 @@
 
       <div class="yw-nav__icons">
         {%- if shop.customer_accounts_enabled -%}
+          {%- liquid
+            # Login routing (per spec): B2B customers — any tag starting with "b2b",
+            # case-insensitive — go to the Shopify account; guests AND non-B2B
+            # customers go to the portal.
+            assign account_dest = 'https://portal.yumwoof.com'
+            if customer
+              assign is_b2b = false
+              for tag in customer.tags
+                assign tag_prefix = tag | downcase | slice: 0, 3
+                if tag_prefix == 'b2b'
+                  assign is_b2b = true
+                  break
+                endif
+              endfor
+              if is_b2b
+                assign account_dest = routes.account_url
+              endif
+            endif
+          -%}
           <a
-            href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+            href="{{ account_dest }}"
             class="yw-nav__icon yw-icon--account"
             rel="nofollow"
           >
