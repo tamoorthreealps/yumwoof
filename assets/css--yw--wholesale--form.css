@@ -446,10 +446,11 @@ background: transparent !important;
     padding: 0 !important;
     height: 48px;
     width: 100% !important;
+    background-color: transparent !important;
 }
 
  .needsclick.go2335852107.kl-private-reset-css-Xuajs1 {
-    background-color: transparent !important;
+    background-color: #ffffff !important;
     border-radius: 8px !important;
     border: 1px solid #000 !important;
     box-sizing: border-box;
