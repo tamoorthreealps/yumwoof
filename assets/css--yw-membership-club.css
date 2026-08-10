@@ -72,7 +72,7 @@
     width: min(1196px, calc(100% - 64px));
     margin-inline: auto;
     display: grid;
-    grid-template-columns: 490px 594px;
+    grid-template-columns: 520px 594px;
     justify-content: space-between;
     column-gap: 112px;
     align-items: center;
@@ -172,6 +172,10 @@
   gap: 20px;
   align-items: flex-start;
   padding-right: 1px;
+}
+
+.ywmc__benefit:nth-child(1) .ywmc__benefit-desc {
+  padding-right:10px;
 }
 
 /* Built-in checkbox. Filled = solid swatch with a cut-out tick;
