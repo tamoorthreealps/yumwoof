@@ -36,7 +36,7 @@
           <h1 class="legal-page__title">{{ legal_heading }}</h1>
           {% if legal_updated != blank %}
             <p class="legal-page__updated">
-              {% unless template.suffix == 'pricing-policy' %}Last Updated · {% endunless %}
+              {% unless template.suffix == 'pricing-policy' or template.suffix == 'authorized-retailer-policy' %}Last Updated · {% endunless %}
               {{ legal_updated }}
             </p>
           {% endif %}
