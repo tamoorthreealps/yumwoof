@@ -254,7 +254,7 @@
   }
 
   .yw--wholesale--form__klaviyo form [data-testid=form-row]:last-child{
-    padding:0 0 52px !important;
+    padding:16px 0 52px !important;
   }
 
   .yw--wholesale--form__klaviyo form [data-testid="form-row"]:nth-last-child(3){
