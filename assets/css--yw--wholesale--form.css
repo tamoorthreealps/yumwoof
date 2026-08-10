@@ -387,15 +387,19 @@
   padding: 8px 10px !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-phoneinput button[role="combobox"] {
-  background: transparent !important;
-  border: 0 !important;
-  padding: 0 10px 0 0 !important;
-  margin: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  cursor: pointer !important;
-  border-right: 1px solid #dadada !important; /* divider between flag and number */
+background: transparent !important;
+    border: 0 !important;
+    padding: 0 10px 0 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    border-right: 1px solid #dadada !important;
+    width: auto;
+    border-radius: 0 !important;
+    height: 20px !important;
+    min-height: 20px !important;
 }
 
 /* --- Consent / disclaimer copy --- */
