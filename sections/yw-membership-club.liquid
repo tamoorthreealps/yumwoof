@@ -134,7 +134,9 @@
                   <h4 class="ywmc__benefit-title">{{ block.settings.title | escape }}</h4>
                 {%- endif -%}
                 {%- if block.settings.description != blank -%}
-                  <span class="ywmc__benefit-desc">{{ block.settings.description | escape }}</span>
+                  <div class="ywmc__benefit-desc">
+                    {{ block.settings.description | escape }}
+                  </div>
                 {%- endif -%}
               </span>
             </li>
