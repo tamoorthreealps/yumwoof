@@ -11,13 +11,60 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "legal_pages_content_wgKnBe": {
+      "type": "legal--pages--content",
+      "blocks": {
+        "legal_section_kxfgWq": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Section 1 — Heading",
+            "content": "<p>Add section text here.</p>"
+          }
+        },
+        "legal_section_bUT7MG": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Section 1 — Heading",
+            "content": "<p>Add section text here.</p>"
+          }
+        },
+        "legal_section_9t9GdR": {
+          "type": "legal_section",
+          "settings": {
+            "heading": "Section 1 — Heading",
+            "content": "<p>Add section text here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "legal_section_kxfgWq",
+        "legal_section_bUT7MG",
+        "legal_section_9t9GdR"
+      ],
+      "name": "Legal page Block",
+      "settings": {
+        "show_breadcrumb": true,
+        "title_source": "page",
+        "custom_title": "",
+        "date_source": "custom",
+        "custom_date": "Effective · January 23, 2024",
+        "show_overview": true,
+        "overview_heading": "",
+        "overview_text": "<p>Yumwoof Natural Pet Food Inc. (“Yumwoof”) is on a mission to increase the lifespan of dogs with anti-inflammatory nutrition and holistic ingredients. Our premium air-dried dog food is GMO-free and boosted with Cocomega™ superfats backed by research linked to longevity. Respected health influencers including Dr. Will Cole, Thomas DeLauer and Dr. Ava Frick have all voiced their support.</p><p>We do this by offering modern nutrition products for dogs – a combination of science and holistic ingredients to improve nutrition for the better, one Yumwoof product at a time.</p><p>Yumwoof has built relationships with retailers to achieve this purpose. We remain committed to supporting our partners and promoting their efforts to inform and educate our customers.</p><p>Yumwoof recognizes the growing use of e-commerce and online platforms by our retail partners. To support this, minimize cross-channel conflict, and ensure our brand integrity, we have adopted the Yumwoof Pricing Policy.</p>",
+        "heading_color": "#000",
+        "text_color": "#333333",
+        "section_background": "#7BA6DD"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "legal_pages_content_wgKnBe"
   ]
 }
