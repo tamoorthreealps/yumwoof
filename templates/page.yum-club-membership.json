@@ -42,7 +42,7 @@
             "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
             "icon_style": "filled",
             "title": "25% off every order",
-            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
           }
         },
         "benefit_NTDbza": {
@@ -50,8 +50,8 @@
           "settings": {
             "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
             "icon_style": "filled",
-            "title": "Prices locked",
-            "description": "Today's prices stay yours for the next twelve months, whatever the shelf does."
+            "title": "Prices locked for a year",
+            "description": "Today's prices stay yours for the next 12 months, whatever the shelf does."
           }
         },
         "benefit_YhgqEC": {
@@ -59,8 +59,8 @@
           "settings": {
             "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
             "icon_style": "filled",
-            "title": "The Cocomega book, free",
-            "description": "The Canine Cocomega Effect, digital edition. $24 on its own, included when you join."
+            "title": "The Cocomega book",
+            "description": "The Canine Cocomega Effect, digital edition. $24 on its own, included when you join."
           }
         },
         "benefit_HfwWww": {
@@ -69,7 +69,7 @@
             "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
             "icon_style": "filled",
             "title": "Priority support",
-            "description": "Member messages get answered first. Feeding plans, swaps, deliveries, anything."
+            "description": "Member messages get answered first. Feeding plans, swaps, deliveries, anything."
           }
         }
       },
