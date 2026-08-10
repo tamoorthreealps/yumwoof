@@ -437,7 +437,21 @@ background: transparent !important;
   border-color: #1a1a1a !important;
   color: #fff9ef !important;
 }
-
+.yw--wholesale--form__klaviyo .go1353235349.go1353235349.go1353235349 {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+.yw--wholesale--form__klaviyo .go1825707975.go1825707975.go1825707975 {
+    padding: 0 !important;
+    width: 100% !important;
+    height: 48px;
+}
+.yw--wholesale--form__klaviyo .go3754922709.go3754922709.go3754922709 {
+    border: 1px solid #000 !important;
+    background-color: #ffffff !important;
+    border-radius: 8px !important;
+ }
 /* --- Mobile: single column --- */
 @media screen and (max-width: 768px) {
   .yw--wholesale--form__klaviyo form > .needsclick {
