@@ -533,5 +533,6 @@ height: 48px !important;
 
       .yw--wholesale--form__klaviyo form [data-testid=form-row]:nth-last-child(3) {
         flex-direction: column !important;
+        gap:12px;
     }
 }
