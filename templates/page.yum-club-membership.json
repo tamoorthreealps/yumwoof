@@ -151,80 +151,80 @@
     "yw_membership_faq_Ew9Uz8": {
       "type": "yw-membership-faq",
       "blocks": {
-        "faq_Wt8X4b": {
-          "type": "faq",
-          "settings": {
-            "question": "How do I become a member?",
-            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
-            "open_by_default": true
-          }
-        },
-        "faq_33dFz7": {
-          "type": "faq",
-          "settings": {
-            "question": "Is the fee recurring?",
-            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_abttEk": {
-          "type": "faq",
-          "settings": {
-            "question": "How do I get the 25% off?",
-            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_c4NNha": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I stack it with Subscribe & Save?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_6xwmxD": {
-          "type": "faq",
-          "settings": {
-            "question": "Do I need an account?",
-            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_NRMgW3": {
-          "type": "faq",
-          "settings": {
-            "question": "My membership email isn't recognized.",
-            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
-            "open_by_default": false
-          }
-        },
-        "faq_KxKgi4": {
-          "type": "faq",
-          "settings": {
-            "question": "Can I buy more than one membership?",
-            "answer": "<p>Join from this page or the panel that slides in from any product. You pay $29 for the quarter, and the discount is live on your account straight away.</p>",
-            "open_by_default": false
-          }
-        },
         "faq_wGXe7j": {
           "type": "faq",
           "settings": {
-            "question": "How do I cancel?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach.</p>",
+            "question": "How do I access my account if my membership email address is not recognized?",
+            "answer": "<p>This issue usually arises when an account hasn’t been activated yet. When signing up for Membership, an account activation email should have been sent right away. Once locating that email, you should be able to activate your account immediately. Please reach out to concierge if this issue continues to persist. We’re eager to help!</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_WMcHiy": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I access my benefits once I have signed up?",
+            "answer": "<p>Sign up or log in through the <a href=\"/account/login\">account page</a> using the same email address at checkout.<br/><br/>Once you’ve signed in, your perks will automatically apply: 25% off all orders, locked-in pricing, etc.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_NErnBy": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need to have an account to access my membership?",
+            "answer": "<p>Yes. Once you sign up, you’ll be prompted to create an account (if you don’t already have one), which will grant you access to all your Member perks.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_p3Xeji": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I become a member?",
+            "answer": "<p>Add the membership to your cart from this page and check out! Then you will be prompted to either create an account or sign in to your existing account.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_3xaQkq": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I purchase multiple memberships?",
+            "answer": "<p>No. But we love your enthusiasm.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_kVGQMc": {
+          "type": "faq",
+          "settings": {
+            "question": "How can I cancel my membership?",
+            "answer": "<p>Please reach out to <a href=\"mailto:woof@yumwoof.com\">woof@yumwoof.com</a> for support. We can help ensure that your Membership does not automatically renew after your first year ends. There are no termination fees or hidden costs to cancel, but we do not provide refunds or credits, including partially used billing periods.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_P96ngY": {
+          "type": "faq",
+          "settings": {
+            "question": "Is the membership fee a recurring charge?",
+            "answer": "<p>Yes. Members pay $29 once a quarter to access all membership benefits. If you do not cancel upon the end of the first quarter, the cycle will automatically renew and you will be charged again.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_YFjQx9": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I receive 25% off all my orders?",
+            "answer": "<p>25% off will automatically apply at checkout. No code needed.</p>",
             "open_by_default": false
           }
         }
       },
       "block_order": [
-        "faq_Wt8X4b",
-        "faq_33dFz7",
-        "faq_abttEk",
-        "faq_c4NNha",
-        "faq_6xwmxD",
-        "faq_NRMgW3",
-        "faq_KxKgi4",
-        "faq_wGXe7j"
+        "faq_wGXe7j",
+        "faq_WMcHiy",
+        "faq_NErnBy",
+        "faq_p3Xeji",
+        "faq_3xaQkq",
+        "faq_kVGQMc",
+        "faq_P96ngY",
+        "faq_YFjQx9"
       ],
       "name": "Yum Club FAQ",
       "settings": {
