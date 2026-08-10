@@ -314,6 +314,11 @@
   width: 100% !important;
   min-width: 0 !important;
 }
+
+.yw--wholesale--form__klaviyo
+  [data-testid="form-row"]:nth-last-of-type(2) [data-testid="form-component"] {
+    padding:8px 0 0 !important;
+  }
 /* consent + button span the full width */
 .yw--wholesale--form__klaviyo
   [data-testid="form-component"]:has(.klaviyo-disclosure),
@@ -411,7 +416,7 @@ background: transparent !important;
   color: #555555 !important;
   font-family: "Matter", sans-serif !important;
   font-size: 13px !important;
-  line-height: 1.5 !important;
+  line-height: 20 !important;
   letter-spacing: 0 !important;
 }
 .yw--wholesale--form__klaviyo .klaviyo-disclosure a {
