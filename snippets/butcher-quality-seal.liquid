@@ -60,7 +60,7 @@
 
 .yw-butcher-quality__description,
 .yw-butcher-quality__description p {
-margin: 0;
+    margin: 0;
     font-family: 'TAY Birdie';
     font-size: 12px;
     line-height: 16px;
@@ -68,7 +68,14 @@ margin: 0;
     color: #661D1D;
 }
 
+.butcher-quality-mobile {
+    display:none;
+}
+
 @media (max-width:990px){
+    .butcher-quality-mobile {
+      display:flex;
+    }
 
     .yw-butcher-quality {
         display:none;
