@@ -723,6 +723,7 @@
   .qz-body {
     padding: 24px 20px 16px;
     min-height: 340px;
+    overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
   }
   .qz-dots {
     margin: 0 0 20px;
