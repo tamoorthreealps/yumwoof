@@ -421,54 +421,88 @@
 
 {% comment %} required--js--code {% endcomment %}
 <script>
-    {% comment %} popup--js--code {% endcomment %}
-  document.querySelectorAll(".recipe-view-ingredients").forEach(function(button) {
-    button.addEventListener("click", function(e) {
-      e.preventDefault();
+  {% comment %}
+    Delegated on document so the "+ View Ingredients" button keeps working after the
+    variant picker re-renders on a swatch change (direct listeners are lost then).
+    On open, the popup jumps to the tab whose title matches the selected recipe.
+  {% endcomment %}
+  (function () {
+    function norm(s) {
+      return (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    }
 
-      document.querySelector(".ingredients-popup").classList.add("active");
+    // Title of the recipe currently selected in the swatch group that owns the button.
+    function activeRecipeTitle(button) {
+      var scope = button.closest('.product-form__input--recipe') || document;
+      var checked = scope.querySelector('.recipe-swatch__input:checked');
+      if (!checked) return '';
+      var label = checked.id ? scope.querySelector('label[for="' + checked.id + '"]') : null;
+      var titleEl = label ? label.querySelector('.recipe-swatch__title') : null;
+      return (titleEl && titleEl.textContent) || checked.value || '';
+    }
+
+    function activateTab(popup, tab) {
+      popup.querySelectorAll('.ingredients-popup__tabs button').forEach(function (b) {
+        b.classList.remove('active');
+      });
+      popup.querySelectorAll('.ingredients-popup__content').forEach(function (c) {
+        c.classList.remove('active');
+      });
+      tab.classList.add('active');
+      var header = popup.querySelector('.ingredients-popup__panel_head');
+      if (header && tab.dataset.bg) header.style.background = tab.dataset.bg;
+      var content = popup.querySelector('[data-content="' + tab.dataset.tab + '"]');
+      if (content) content.classList.add('active');
+      var activeTitle = popup.querySelector('.ingredients-popup__active-tab');
+      var span = tab.querySelector('span');
+      if (activeTitle && span) activeTitle.textContent = span.textContent;
+    }
+
+    // Switch to the tab whose title matches the recipe (no-op if none match).
+    function openMatchingTab(popup, title) {
+      if (!title) return;
+      var want = norm(title);
+      var match = null;
+      popup.querySelectorAll('.ingredients-popup__tabs button').forEach(function (t) {
+        var span = t.querySelector('span');
+        if (span && norm(span.textContent) === want) match = t;
+      });
+      if (match) activateTab(popup, match);
+    }
+
+    document.addEventListener('click', function (e) {
+      // Open — button lives inside the variant picker (re-renders on variant change)
+      var opener = e.target.closest('.recipe-view-ingredients');
+      if (opener) {
+        e.preventDefault();
+        var id = opener.getAttribute('data-popup');
+        var popup = (id && document.getElementById(id)) || document.querySelector('.ingredients-popup');
+        if (!popup) return;
+        openMatchingTab(popup, activeRecipeTitle(opener));
+        popup.classList.add('active');
+        return;
+      }
+
+      // Close (X or overlay)
+      var closer = e.target.closest('.ingredients-popup__close, .ingredients-popup__overlay');
+      if (closer) {
+        var pc = closer.closest('.ingredients-popup');
+        if (pc) pc.classList.remove('active');
+        return;
+      }
+
+      // Tab switch
+      var tab = e.target.closest('.ingredients-popup__tabs button');
+      if (tab) {
+        var pt = tab.closest('.ingredients-popup');
+        if (pt) activateTab(pt, tab);
+      }
     });
-  });
 
-  document.querySelectorAll(".ingredients-popup").forEach(function(popup) {
-    popup.querySelector(".ingredients-popup__close").addEventListener("click", function() {
-      popup.classList.remove("active");
+    window.addEventListener('load', function () {
+      document.querySelectorAll('.ingredients-popup').forEach(function (popup) {
+        popup.classList.remove('is-loading');
+      });
     });
-
-    popup.querySelector(".ingredients-popup__overlay").addEventListener("click", function() {
-      popup.classList.remove("active");
-    });
-  });
-
-     document.querySelectorAll(".ingredients-popup").forEach(function(popup){
-         const tabs = popup.querySelectorAll(".ingredients-popup__tabs button");
-         const contents = popup.querySelectorAll(".ingredients-popup__content");
-         tabs.forEach(function(tab){
-             tab.addEventListener("click",function(){
-                 tabs.forEach(function(btn){
-                     btn.classList.remove("active");
-                 });
-                 contents.forEach(function(content){
-                     content.classList.remove("active");
-                 });
-                 tab.classList.add("active");
-				 const header = popup.querySelector(".ingredients-popup__panel_head");
-				 header.style.background = tab.dataset.bg;
-                 popup
-                     .querySelector('[data-content="'+tab.dataset.tab+'"]')
-                     .classList.add("active");
-				const activeTitle = popup.querySelector(".ingredients-popup__active-tab");
-
-				if (activeTitle) {
-					activeTitle.textContent = tab.querySelector("span").textContent;
-				}
-             });
-         });
-     });
-
-     window.addEventListener('load', () => {
-  document.querySelectorAll('.ingredients-popup').forEach((popup) => {
-    popup.classList.remove('is-loading');
-  });
-});
+  })();
 </script>
