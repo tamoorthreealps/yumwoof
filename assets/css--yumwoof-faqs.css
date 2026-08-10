@@ -321,6 +321,10 @@
   letter-spacing:0;
 }
 
+.yw-faq__answer p {
+  margin:0;
+}
+
 .yw-faq__answer > *:first-child {
   margin-top: 0;
 }
