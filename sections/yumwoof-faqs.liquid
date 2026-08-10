@@ -222,11 +222,11 @@
 <script>
   document.querySelectorAll('[data-yw-faqs]').forEach((faq) => {
     const header =
-  document.querySelector('.yw-header') ||
-  document.querySelector('.shopify-section-header') ||
-  document.querySelector('header');
+      document.querySelector('.yw-header') ||
+      document.querySelector('.shopify-section-header') ||
+      document.querySelector('header');
 
-const headerOffset = header ? header.offsetHeight + 20 : 20;
+    const headerOffset = header ? header.offsetHeight + 20 : 20;
 
     const groups = faq.querySelectorAll('[data-yw-group]');
     const filters = faq.querySelectorAll('[data-yw-filter]');
@@ -379,9 +379,9 @@ const headerOffset = header ? header.offsetHeight + 20 : 20;
         const target = faq.querySelector(`[data-yw-category="${value}"]`);
 
         if (target) {
-            window.scrollTo({
+          window.scrollTo({
             top: target.getBoundingClientRect().top + window.pageYOffset - headerOffset,
-            behavior: 'smooth'
+            behavior: 'smooth',
           });
         }
       });
@@ -415,36 +415,36 @@ const headerOffset = header ? header.offsetHeight + 20 : 20;
       selectTrigger.setAttribute('aria-expanded', 'false');
     }
     const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-      const category = entry.target.dataset.ywCategory;
+          const category = entry.target.dataset.ywCategory;
 
-      filters.forEach((btn) => {
-        const active = btn.dataset.ywFilter === category;
+          filters.forEach((btn) => {
+            const active = btn.dataset.ywFilter === category;
 
-        btn.classList.toggle('is-active', active);
+            btn.classList.toggle('is-active', active);
 
-        if (btn.hasAttribute('aria-pressed')) {
-          btn.setAttribute('aria-pressed', active);
-        }
+            if (btn.hasAttribute('aria-pressed')) {
+              btn.setAttribute('aria-pressed', active);
+            }
 
-        if (btn.hasAttribute('aria-selected')) {
-          btn.setAttribute('aria-selected', active);
-        }
-      });
+            if (btn.hasAttribute('aria-selected')) {
+              btn.setAttribute('aria-selected', active);
+            }
+          });
+        });
+      },
+      {
+        rootMargin: `-${headerOffset}px 0px -60% 0px`,
+        threshold: 0,
+      }
+    );
+
+    groups.forEach((group) => {
+      observer.observe(group);
     });
-  },
-  {
-    rootMargin: `-${headerOffset}px 0px -60% 0px`,
-    threshold: 0
-  }
-);
-
-groups.forEach((group) => {
-  observer.observe(group);
-});
   });
 </script>
 
