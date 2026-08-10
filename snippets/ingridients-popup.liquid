@@ -3,52 +3,31 @@
   <div class="ingredients-popup__overlay"></div>
 
   <div class="ingredients-popup__panel">
-    <div class="ingredients-popup__panel_head" style="background: {{ popup.tab_1_header_color }};">
-      <button class="ingredients-popup__close">
-        <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.32 5.288C4.32 5.544 4.064 5.608 3.744 5.832C3.36 6.12 3.04 6.568 3.04 7.336C3.04 9.672 3.008 9.96 2.752 10.376C2.56 10.696 2.272 11.016 2.272 11.4C2.272 11.656 2.4 11.912 2.656 12.232C3.008 12.68 3.04 13.128 3.04 13.544V15.432C3.04 16.968 4.32 17.032 4.32 17.48C4.32 17.768 4.16 17.864 3.712 17.864C2.464 17.864 1.696 17.128 1.696 15.688V13.96C1.696 13.544 1.6 12.968 1.44 12.712C1.312 12.52 1.12 12.296 0.8 12.072C0.512 11.88 0.224 11.688 0.224 11.4C0.224 11.08 0.416 10.92 0.992 10.536C1.536 10.184 1.696 9.32 1.696 9.096V7.112C1.696 5.768 2.432 4.936 3.552 4.936C4.256 4.936 4.32 5.064 4.32 5.288Z" fill="black"/>
-          <path d="M9.544 14.024L8.232 16.072C7.752 16.808 7.4 17 6.824 17H5.896C5.448 17 5.128 16.68 5.288 16.36C5.384 16.168 5.384 16.2 5.512 16.008L8.232 12.168C8.488 11.816 8.648 11.432 8.648 11.144C8.648 10.824 8.456 10.472 8.36 10.312L6.152 7.208C5.736 6.696 5.832 6.152 6.44 6.152H7.496C8.008 6.152 8.424 6.408 8.712 6.888L9.576 8.296C9.832 8.712 10.152 8.968 10.504 8.968C10.792 8.968 11.08 8.776 11.304 8.392L12.168 7.016C12.552 6.376 12.904 6.152 13.608 6.152H14.376C15.112 6.152 15.08 6.696 14.856 7.016L12.744 9.992C12.424 10.472 12.264 10.792 12.264 11.112C12.264 11.368 12.328 11.688 12.744 12.264L14.952 15.368C15.688 16.424 15.624 16.36 15.624 16.552C15.624 16.84 15.4 17 14.952 17H13.992C13.512 17 13.064 16.744 12.744 16.264L11.336 14.024C10.984 13.512 10.76 13.352 10.472 13.352C10.088 13.352 9.8 13.608 9.544 14.024Z" fill="black"/>
-          <path d="M16.68 5.288C16.68 5.544 16.936 5.608 17.256 5.832C17.64 6.12 17.96 6.568 17.96 7.336C17.96 9.672 17.992 9.96 18.248 10.376C18.44 10.696 18.728 11.016 18.728 11.4C18.728 11.656 18.6 11.912 18.344 12.232C17.992 12.68 17.96 13.128 17.96 13.544V15.432C17.96 16.968 16.68 17.032 16.68 17.48C16.68 17.768 16.84 17.864 17.288 17.864C18.536 17.864 19.304 17.128 19.304 15.688V13.96C19.304 13.544 19.4 12.968 19.56 12.712C19.688 12.52 19.88 12.296 20.2 12.072C20.488 11.88 20.776 11.688 20.776 11.4C20.776 11.08 20.584 10.92 20.008 10.536C19.464 10.184 19.304 9.32 19.304 9.096V7.112C19.304 5.768 18.568 4.936 17.448 4.936C16.744 4.936 16.68 5.064 16.68 5.288Z" fill="black"/>
-        </svg>
-      </button>
+    <button class="ingredients-popup__close">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.4 8.36C5.4 8.68 5.08 8.76 4.68 9.04C4.2 9.4 3.8 9.96 3.8 10.92C3.8 13.84 3.76 14.2 3.44 14.72C3.2 15.12 2.84 15.52 2.84 16C2.84 16.32 3 16.64 3.32 17.04C3.76 17.6 3.8 18.16 3.8 18.68V21.04C3.8 22.96 5.4 23.04 5.4 23.6C5.4 23.96 5.2 24.08 4.64 24.08C3.08 24.08 2.12 23.16 2.12 21.36V19.2C2.12 18.68 2 17.96 1.8 17.64C1.64 17.4 1.4 17.12 1 16.84C0.64 16.6 0.28 16.36 0.28 16C0.28 15.6 0.52 15.4 1.24 14.92C1.92 14.48 2.12 13.4 2.12 13.12V10.64C2.12 8.96 3.04 7.92 4.44 7.92C5.32 7.92 5.4 8.08 5.4 8.36Z" fill="black"/>
+        <path d="M14.612 18.652L13.136 20.956C12.596 21.784 12.2 22 11.552 22H10.508C10.004 22 9.644 21.64 9.824 21.28C9.932 21.064 9.932 21.1 10.076 20.884L13.136 16.564C13.424 16.168 13.604 15.736 13.604 15.412C13.604 15.052 13.388 14.656 13.28 14.476L10.796 10.984C10.328 10.408 10.436 9.796 11.12 9.796H12.308C12.884 9.796 13.352 10.084 13.676 10.624L14.648 12.208C14.936 12.676 15.296 12.964 15.692 12.964C16.016 12.964 16.34 12.748 16.592 12.316L17.564 10.768C17.996 10.048 18.392 9.796 19.184 9.796H20.048C20.876 9.796 20.84 10.408 20.588 10.768L18.212 14.116C17.852 14.656 17.672 15.016 17.672 15.376C17.672 15.664 17.744 16.024 18.212 16.672L20.696 20.164C21.524 21.352 21.452 21.28 21.452 21.496C21.452 21.82 21.2 22 20.696 22H19.616C19.076 22 18.572 21.712 18.212 21.172L16.628 18.652C16.232 18.076 15.98 17.896 15.656 17.896C15.224 17.896 14.9 18.184 14.612 18.652Z" fill="black"/>
+        <path d="M26.6 8.36C26.6 8.68 26.92 8.76 27.32 9.04C27.8 9.4 28.2 9.96 28.2 10.92C28.2 13.84 28.24 14.2 28.56 14.72C28.8 15.12 29.16 15.52 29.16 16C29.16 16.32 29 16.64 28.68 17.04C28.24 17.6 28.2 18.16 28.2 18.68V21.04C28.2 22.96 26.6 23.04 26.6 23.6C26.6 23.96 26.8 24.08 27.36 24.08C28.92 24.08 29.88 23.16 29.88 21.36V19.2C29.88 18.68 30 17.96 30.2 17.64C30.36 17.4 30.6 17.12 31 16.84C31.36 16.6 31.72 16.36 31.72 16C31.72 15.6 31.48 15.4 30.76 14.92C30.08 14.48 29.88 13.4 29.88 13.12V10.64C29.88 8.96 28.96 7.92 27.56 7.92C26.68 7.92 26.6 8.08 26.6 8.36Z" fill="black"/>
+      </svg>
+    </button>
 
-      <div class="ingredients-popup__left">
-        <h2 class="ingredients-popup__title">{{ popup.title }}</h2>
+    <div class="ingredients-popup__left">
+      <h2 class="ingredients-popup__title">{{ popup.title }}</h2>
 
-        <p class="ingredients-popup__subtitle">
-          {{ product.title | upcase }} -
-          <span class="ingredients-popup__active-tab">
-            {{ popup.tab_1_title }}
-          </span>
-        </p>
-      </div>
-    </div>
-    <div class="ingredients-popup__tabs_main">
+      <p class="ingredients-popup__subtitle">
+        {{ product.title | upcase }} -
+        <span class="ingredients-popup__active-tab">{{ popup.tab_1_title }}</span>
+      </p>
+
       <div class="ingredients-popup__tabs">
         {% if popup.tab_1_title != blank %}
-          <button class="active" data-tab="1" data-bg="{{ popup.tab_1_header_color }}">
-            {% if popup.tab_1_icon %}
-              {{ popup.tab_1_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_1_title }}
-            {% endif %}
-
-            <span>{{ popup.tab_1_title }}</span>
-          </button>
+          <button class="active" data-tab="1">{{ popup.tab_1_title }}</button>
         {% endif %}
         {% if popup.tab_2_title != blank %}
-          <button data-tab="2" data-bg="{{ popup.tab_2_header_color }}">
-            {% if popup.tab_2_icon %}
-              {{ popup.tab_2_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_2_title }}
-            {% endif %}
-            <span>{{ popup.tab_2_title }}</span>
-          </button>
+          <button data-tab="2">{{ popup.tab_2_title }}</button>
         {% endif %}
         {% if popup.tab_3_title != blank %}
-          <button data-tab="3" data-bg="{{ popup.tab_3_header_color }}">
-            {% if popup.tab_3_icon %}
-              {{ popup.tab_3_icon | image_url: width: 80 | image_tag: loading: 'lazy', alt: popup.tab_3_title }}
-            {% endif %}
-            <span>{{ popup.tab_3_title }}</span>
-          </button>
+          <button data-tab="3">{{ popup.tab_3_title }}</button>
         {% endif %}
       </div>
 
@@ -64,10 +43,35 @@
         {{ popup.tab_3_description | metafield_tag }}
       </div>
     </div>
+
+    <div class="ingredients-popup__right">
+      <div class="ingredients-popup__right_img">
+        {%- assign fallback_image = product.featured_image -%}
+        {%- for i in (1..3) -%}
+          {%- assign tab_title_key = 'tab_' | append: i | append: '_title' -%}
+          {%- assign tab_image_key = 'tab_' | append: i | append: '_icon' -%}
+          {%- if popup[tab_title_key] != blank -%}
+            {%- assign tab_image = popup[tab_image_key] | default: fallback_image -%}
+            <div class="ingredients-popup__tab-img{% if i == 1 %} active{% endif %}" data-image="{{ i }}">
+              {%- if tab_image != blank -%}
+                <img src="{{ tab_image | image_url: width: 900 }}" alt="{{ popup[tab_title_key] | escape }}">
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="ingredients-popup__right_img_bowl">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.png?v=1784716789"
+          alt=""
+        >
+      </div>
+    </div>
   </div>
 </div>
+
 <style>
-         	/*----- popup--css--code -----*/
+  /*----- popup--css--code -----*/
   .ingredients-popup {
   	position: fixed;
   	inset: 0;
@@ -95,39 +99,28 @@
 
   .ingredients-popup__panel {
   	position: absolute;
-  	top: 12px;
-  	right: 12px;
-  	bottom: 12px;
-  	left: auto;
-  	transform: translateX(calc(100% + 12px));
-  	transition: transform .5s cubic-bezier(.22, 1, .36, 1);
-  	width: max-content;
-  	min-width: 464px;
-  	max-width: min-content;
-  	display: flex;
-  	flex-direction: column;
-  	overflow: hidden;
-  	background: rgba(255, 255, 255, 0.9);
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -150%);
+  	transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+  	width: min(1392px, 90vw);
+  	background: #ffffffe6;
   	border-radius: 24px;
+  	overflow: hidden;
+  	display: flex;
+  	align-items: self-end;
+  	padding: 88px 71px 84px 98px;
+  	gap: 21px;
   	-webkit-backdrop-filter: blur(10px);
   	backdrop-filter: blur(10px);
   }
 
   .ingredients-popup.active .ingredients-popup__panel {
-  	transform: translateX(0);
-  }
-
-  .ingredients-popup__panel_head {
-  	flex: 0 0 auto;
-  	position: relative;
-  	background-color: rgba(132, 149, 75, 0.9);
-  	border-radius: 23px 23px 0 0;
-  	border-bottom: 1px solid #000000;
-  	padding: 32px 24px 28px;
+  	transform: translate(-50%, -50%);
   }
 
   .ingredients-popup__left {
-  	width: 100%;
+  	width: 71.17%;
   }
 
   .ingredients-popup__right {
@@ -141,8 +134,26 @@
   	height: 400px;
   	width: 100%;
   	margin: 0 0 -30px;
+  	position: relative;
   }
 
+  .ingredients-popup__tab-img {
+  	position: absolute;
+  	inset: 0;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	opacity: 0;
+  	visibility: hidden;
+  	transition: opacity .35s ease;
+  }
+
+  .ingredients-popup__tab-img.active {
+  	opacity: 1;
+  	visibility: visible;
+  }
+
+  .ingredients-popup__tab-img img,
   .ingredients-popup__right img {
   	max-width: 100%;
   	max-height: 100%;
@@ -170,111 +181,76 @@
   }
 
   @keyframes bowlRotatepop {
-  	from {
-  		transform: rotate(0deg);
-  	}
-
-  	to {
-  		transform: rotate(360deg);
-  	}
+  	from { transform: rotate(0deg); }
+  	to { transform: rotate(360deg); }
   }
 
   .ingredients-popup__close {
   	position: absolute;
-  	right: 29px;
-  	top: 16px;
+  	right: 28px;
+  	top: 20px;
+  	width: 32px;
+  	height: 32px;
   	border: none;
   	border-radius: 50%;
   	cursor: pointer;
   	background: transparent;
   	padding: 0;
   	margin: 0;
+  	z-index: 2;
   }
 
   .ingredients-popup__title {
-  	margin: 0;
-  	font-size: 44px;
-  	line-height: 48px;
+  	margin: 0 0 4px;
+  	font-size: 56px;
+  	line-height: 56px;
   	font-family: TAYRosemary;
-  	letter-spacing: -0.44px;
+  	letter-spacing: 0;
   	font-weight: 400;
   	color: #000000;
   }
 
   .ingredients-popup__subtitle {
-  	margin: 0;
-  	font-size: 16px;
-  	line-height: 20px;
+  	margin: 0 0 32px;
+  	font-size: 18px;
+  	line-height: 28px;
   	color: #000000;
-  	letter-spacing: -0.16px;
+  	letter-spacing: 0;
   	font-weight: 500;
-  	font-family: 'TAY Birdie';
   	text-transform: uppercase;
-  }
-
-  .ingredients-popup__tabs_main {
-  	flex: 1 1 auto;
-  	overflow-y: auto;
-  	padding: 24px 24px 32px;
-  }
-
-  .ingredients-popup__tabs_main::-webkit-scrollbar {
-  	width: 4px;
-  }
-
-  .ingredients-popup__tabs_main::-webkit-scrollbar-track {
-  	background: transparent;
-  }
-
-  .ingredients-popup__tabs_main::-webkit-scrollbar-thumb {
-  	background: #999;
-  	border-radius: 10px;
+  	font-family: 'TAY Birdie';
   }
 
   .ingredients-popup__tabs {
   	display: flex;
-  	gap: 12px;
+  	gap: 40px;
+  	border-bottom: 2px solid transparent;
   	margin-bottom: 32px;
   }
 
   .ingredients-popup__tabs button {
-  	padding: 0 10px 0 0;
+  	padding: 0 0 8px;
+  	border: none;
   	background: none;
   	cursor: pointer;
   	font-size: 16px;
   	line-height: 24px;
-  	letter-spacing: 0;
+  	letter-spacing: 0.64px;
   	font-weight: 500;
-  	color: #000;
-  	font-family: 'Matter';
-  	text-transform: capitalize;
-  	border: 1px solid rgba(0, 0, 0, .1);
-  	border-radius: 8px;
-  	display: flex;
-  	align-items: center;
-  	gap: 8px;
-  	width: 202px;
-  	flex: 1;
-  	height: 56px;
+  	text-transform: uppercase;
+  	color: rgba(0, 0, 0, 0.5);
+  	border-bottom: 2px solid transparent;
+  	font-family: "FFBlurProMedium";
   }
 
   .ingredients-popup__tabs button.active {
-  	color: #000;
-  	border-color: #000000;
-  	background: rgba(0, 0, 0, 0.1);
-  }
-
-  .ingredients-popup__tabs button img {
-  	width: 56px;
-  	height: 56px;
-  	object-fit: cover;
+  	color: #661D1D;
+  	border-color: #661D1D;
   }
 
   .ingredients-popup__content {
   	display: none;
-  	max-width: 100%;
-  	max-height: none;
-  	overflow: visible;
+  	max-width: 640px;
   }
 
   .ingredients-popup__content.active {
@@ -282,9 +258,9 @@
   }
 
   .ingredients-popup__content p {
-  	font-size: 16px;
-  	line-height: 24px;
-  	margin: 0 0 32px;
+  	font-size: 20px;
+  	line-height: 28px;
+  	margin: 0 0 16px;
   	letter-spacing: 0;
   	color: #000000;
   }
@@ -294,44 +270,49 @@
   }
 
   .ingredients-popup__content_btn {
-  	background: url(https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684) center / 100% 100% no-repeat;
+  	background: #fec068;
   	color: #000;
   	text-decoration: none;
-  	font-size: 16px;
-  	line-height: 24px;
-  	letter-spacing: 0.64px;
-  	width: 164px;
-  	height: 72px;
-  	display: flex;
-  	justify-content: center;
-  	align-items: center;
-  	font-family: "FFBlurProMedium";
+  	font-size: 14px;
+  	line-height: 20px;
+  	letter-spacing: .56px;
+  	font-family: FFBlurProMedium;
   	margin: 48px 0 0;
+  	border-radius: 100px;
+  	border: 1.5px solid #000000;
+  	display: inline-block;
+  	padding: 13.2px 23.47px;
+  	transition: all .25s ease;
+  }
+
+  .ingredients-popup__content_btn:hover {
+  	background: #000;
+  	color: #fff9ef;
+  }
+
+  @media(max-width:991px) {
+  	.ingredients-popup__panel {
+  		padding: 40px 28px 26px;
+  		width: 96vw;
+  		gap: 28px;
+  	}
+
+  	.ingredients-popup__right_img_bowl {
+  		height: 330px;
+  		bottom: 45px;
+  	}
   }
 
   @media(max-width:768px) {
-
   	.ingredients-popup__panel {
-  		top: auto;
-  		right: 8px;
-  		bottom: 8px;
-  		left: 8px;
-  		width: auto;
-  		min-width: 0;
-  		max-width: none;
+  		overflow-y: auto;
+  		padding: 40px 28px 26px;
+  		width: 96vw;
+  		max-width: 376px;
+  		max-height: 90vh;
+  		flex-direction: column;
+  		gap: 28px;
   		border-radius: 20px;
-      height: auto;
-      max-height: 90vh;
-  		transform: translateY(calc(100% + 8px));
-  	}
-
-  	.ingredients-popup.active .ingredients-popup__panel {
-  		transform: translateY(0);
-  	}
-
-  	.ingredients-popup__panel_head {
-  		border-radius: 20px 20px 0 0;
-  		padding: 28px 24px 20px;
   	}
 
   	.ingredients-popup__left,
@@ -340,35 +321,30 @@
   	}
 
   	.ingredients-popup__title {
-  		font-size: 36px;
-  		line-height: 40px;
-  		letter-spacing: -0.36px;
+  		margin: 0 0 4px;
+  		font-size: 32px;
+  		line-height: 32px;
+  		letter-spacing: -0.32px;
   	}
 
   	.ingredients-popup__subtitle {
+  		margin: 0 0 16px;
   		font-size: 14px;
   		line-height: 20px;
-  		letter-spacing: -0.14px;
-  	}
-
-  	.ingredients-popup__tabs_main {
-  		padding: 24px 24px 28px;
   	}
 
   	.ingredients-popup__tabs {
-  		margin-bottom: 0;
-  		padding-bottom: 20px;
-  		gap: 8px;
+  		gap: 24px;
+  		margin-bottom: 24px;
   		flex-wrap: wrap;
   	}
 
   	.ingredients-popup__tabs button {
-  		padding: 0 16px 0 0;
-  		font-size: 14px;
-  		line-height: 20px;
-  		letter-spacing: 0;
-  		gap: 12px;
-  		width: calc(50% - 4px);
+  		padding: 0 0 4px;
+  		font-size: 12px;
+  		line-height: 16px;
+  		letter-spacing: .48px;
+  		border-bottom: 1px solid transparent;
   	}
 
   	.ingredients-popup__content p {
@@ -379,11 +355,10 @@
 
   	.ingredients-popup__content_btn {
   		font-size: 12px;
-  		line-height: 18px;
-  		letter-spacing: .96px;
-  		width: 120px;
-  		height: 50px;
+  		line-height: 20px;
+  		letter-spacing: .60px;
   		margin: 24px 0 0;
+  		padding: 9.2px 24.67px;
   	}
 
   	.ingredients-popup__right {
@@ -415,7 +390,6 @@
   		max-width: 100%;
   		height: auto;
   	}
-
   }
 </style>
 
@@ -448,14 +422,20 @@
       popup.querySelectorAll('.ingredients-popup__content').forEach(function (c) {
         c.classList.remove('active');
       });
+      popup.querySelectorAll('.ingredients-popup__tab-img').forEach(function (i) {
+        i.classList.remove('active');
+      });
+
       tab.classList.add('active');
-      var header = popup.querySelector('.ingredients-popup__panel_head');
-      if (header && tab.dataset.bg) header.style.background = tab.dataset.bg;
+
       var content = popup.querySelector('[data-content="' + tab.dataset.tab + '"]');
       if (content) content.classList.add('active');
+
+      var image = popup.querySelector('[data-image="' + tab.dataset.tab + '"]');
+      if (image) image.classList.add('active');
+
       var activeTitle = popup.querySelector('.ingredients-popup__active-tab');
-      var span = tab.querySelector('span');
-      if (activeTitle && span) activeTitle.textContent = span.textContent;
+      if (activeTitle) activeTitle.textContent = tab.textContent.trim();
     }
 
     // Switch to the tab whose title matches the recipe (no-op if none match).
@@ -464,8 +444,7 @@
       var want = norm(title);
       var match = null;
       popup.querySelectorAll('.ingredients-popup__tabs button').forEach(function (t) {
-        var span = t.querySelector('span');
-        if (span && norm(span.textContent) === want) match = t;
+        if (norm(t.textContent) === want) match = t;
       });
       if (match) activateTab(popup, match);
     }
@@ -497,6 +476,13 @@
         var pt = tab.closest('.ingredients-popup');
         if (pt) activateTab(pt, tab);
       }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.ingredients-popup.active').forEach(function (p) {
+        p.classList.remove('active');
+      });
     });
 
     window.addEventListener('load', function () {
