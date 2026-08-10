@@ -89,6 +89,14 @@
             "show_video": false
           }
         },
+        "butcher_quality_KVmFAP": {
+          "type": "butcher-quality",
+          "settings": {
+            "promo_banner_content": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>",
+            "promo_banner_link": "",
+            "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg"
+          }
+        },
         "nutrition_label_APTPBb": {
           "type": "nutrition-label",
           "settings": {
@@ -130,6 +138,7 @@
         "buy_buttons",
         "guarantee_ribbon_NUFwfW",
         "pdp_videos_azzcwK",
+        "butcher_quality_KVmFAP",
         "nutrition_label_APTPBb",
         "nutritional_information_KCbq7E",
         "description",
@@ -138,9 +147,6 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "promo_banner_content": "<p>New to Yumwoof? <strong>Get a Personalized Meal Plan + 30% off</strong></p>",
-        "promo_banner_link": "https://my.yumwoof.com/",
-        "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
         "bq_heading": "",
         "bq_description": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>",
         "media_size": "large",
@@ -298,7 +304,7 @@
         "faq_image": "shopify://shop_images/faqs_desktop.png",
         "faq_image_mobile": "shopify://shop_images/faqs_mobile.png",
         "open_first": true,
-        "background_color": "#FFF9EF",
+        "background_color": "#fff9ef",
         "text_color": "#000000",
         "line_color": "#000000",
         "padding_top_desktop": 120,
