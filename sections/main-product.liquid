@@ -93,12 +93,9 @@
         <div class="product--main--grid product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
           <div class="grid__item product__media-wrapper pdp-gallery">
             {% render 'product-media-gallery', variant_images: variant_images %}
-            {%- for block in section.blocks -%}
-              {%- case block.type -%}
-                {%- when 'butcher-quality' -%}
-                    {% render 'butcher-quality-seal', block: block %}
-              {%- endcase -%}
-            {% endfor %}
+            {% if section.settings.seal_image != blank %}
+              {% render 'butcher-quality-seal' %}
+            {% endif %}
           </div>
           <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             <section
@@ -118,17 +115,15 @@
                     >
                       {{- block.settings.text -}}
                     </p>
-                  {%- when 'subheading' -%}
-                    {% if product.metafields.custom.subheading != blank %}
-                      <p
-                        class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
-                        {{ block.shopify_attributes }}
-                      >
-                        {{- product.metafields.custom.subheading -}}
-                      </p>
-                    {% endif %}
-                  {%- when 'butcher-quality' -%}
-                      {% render 'butcher-quality-seal', block: block %}
+                    {%- when 'subheading' -%}
+                      {% if product.metafields.custom.subheading != blank %}
+                    <p
+                      class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{- product.metafields.custom.subheading -}}
+                    </p>
+                  {% endif %}
                   {%- when 'title' -%}
                     <div class="product__title" {{ block.shopify_attributes }}>
                       <h1>{{ product.title | escape }}</h1>
@@ -929,7 +924,7 @@
         }
       ]
     },
-    {
+     {
       "type": "subheading",
       "name": "Subheading",
       "limit": 1,
@@ -1571,36 +1566,6 @@
       "name": "Product short Info",
       "limit": 1,
       "settings": []
-    },
-    {
-      "type": "butcher-quality",
-      "name": "Quality Butcher",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "header",
-          "content": "Promo Banner"
-        },
-        {
-          "type": "richtext",
-          "id": "promo_banner_content",
-          "label": "Promo Banner Text"
-        },
-        {
-          "type": "url",
-          "id": "promo_banner_link",
-          "label": "Promo Banner Link"
-        },
-        {
-          "type": "header",
-          "content": "Butcher Quality Seal"
-        },
-        {
-          "type": "image_picker",
-          "id": "seal_image",
-          "label": "Seal Image"
-        }
-      ]
     },
     {
       "type": "guarantee-ribbon",
@@ -2546,6 +2511,29 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Promo Banner"
+    },
+    {
+      "type": "richtext",
+      "id": "promo_banner_content",
+      "label": "Promo Banner Text"
+    },
+    {
+      "type": "url",
+      "id": "promo_banner_link",
+      "label": "Promo Banner Link"
+    },
+    {
+      "type": "header",
+      "content": "Butcher Quality Seal"
+    },
+    {
+      "type": "image_picker",
+      "id": "seal_image",
+      "label": "Seal Image"
     },
     {
       "type": "text",
