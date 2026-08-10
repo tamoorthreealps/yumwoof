@@ -94,7 +94,7 @@
         "quantity": 1,
         "cart_behavior": "drawer",
         "button_radius": 160,
-        "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? Log in</p>",
+        "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? <a href=\"/account/login\" title=\"/account/login\">Log in</a></p>",
         "color_bg": "#fff9ef",
         "bg_image": "shopify://shop_images/Club_Intro_Band_Background.png",
         "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.png",
