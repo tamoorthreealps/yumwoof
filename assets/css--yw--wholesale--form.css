@@ -334,9 +334,7 @@
   [data-testid="form-row"]:last-of-type [data-testid="form-component"] {
   grid-column: 1 / -1 !important;
 }
-.yw--wholesale--form__klaviyo [data-testid="form-row"] {
-  display: contents !important; /* children become grid cells */
-}
+
 .yw--wholesale--form__klaviyo [data-testid="form-component"] {
   width: 100% !important;
   min-width: 0 !important;
