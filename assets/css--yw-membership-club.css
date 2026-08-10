@@ -182,6 +182,11 @@
   padding-right:36px;
 }
 
+
+.ywmc__benefit:nth-child(4) .ywmc__benefit-desc {
+  padding-right:24px;
+}
+
 /* Built-in checkbox. Filled = solid swatch with a cut-out tick;
    outline = ruled box, used for the un-ticked row in the mobile reference. */
 .ywmc__benefit-icon {
