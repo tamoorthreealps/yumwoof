@@ -1,22 +1,32 @@
 <style>
   .yw-pcard-opinew-stars .opinew-no-reviews-stars-plugin {display:none;}
-  span.rating-wrap {
+  .yw-pcard-opinew-stars .rating-wrap {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-span.opinew-star-plugin-inside {
+.yw-pcard-opinew-stars .opinew-star-plugin-inside {
     display: flex;
     align-items: center;
     gap: 4px;
 }
-span.rating-summary {
+.yw-pcard-opinew-stars .rating-summary {
     font-size: 14px;
     line-height: 16px;
     letter-spacing: 0;
     color: #000;
     font-family: 'Matter';
     margin: 1px 0 0;
+}
+
+
+@media screen and (max-width: 990px) {
+.yw-pcard-opinew-stars .opinew-star-plugin-inside {
+    gap: 2px;
+}
+.yw-pcard-opinew-stars .rating-wrap {
+    gap: 6px;
+}
 }
 </style>
 
