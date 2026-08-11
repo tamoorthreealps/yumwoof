@@ -24,7 +24,8 @@
   assign sd_key = short_desc_mf | default: 'custom.collection_short_description'
   assign sd_parts = sd_key | split: '.'
   assign short_desc = product.metafields[sd_parts[0]][sd_parts[1]]
-
+  assign variant_short_desc = rep_variant.metafields.custom.product_card_short_description.value
+  
   assign rating = product.metafields.reviews.rating
   assign rating_count = product.metafields.reviews.rating_count
 
@@ -144,7 +145,10 @@
         </div>
       {%- endif -%}
 
-      {%- if short_desc != blank -%}
+
+      {%- if variant_short_desc != blank -%}
+        <p class="yw-pcard__desc">{{ variant_short_desc }}</p>
+      {%- elsif short_desc != blank -%}
         <p class="yw-pcard__desc">{{ short_desc }}</p>
       {%- endif -%}
 
