@@ -453,9 +453,18 @@
   opacity:.25;
     pointer-events:none;
 }
+.recipe-swatch__img--mobile{
+  display:none;
+}
 
 /* Custom gallery nav is desktop-only; mobile uses Dawn's native gallery slider. */
 @media screen and (max-width: 749px) {
+  .recipe-swatch__img--desktop{
+  display:none;
+}
+.recipe-swatch__img--mobile{
+  display:block;
+}
   .pdp-gallery .yw-gallery-nav {
     display: none !important;
   }
