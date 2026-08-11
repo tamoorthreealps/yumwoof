@@ -131,8 +131,7 @@
         <p class="yw-pcard__recipe">{{ recipe_label }}</p>
       {%- endif -%}
       <div class="yw-pcard-opw-dynamic">
-        <div class="opw-dynamic-stars-collection" data-product-id="123"></div>
-        <div class="opw-dynamic-stars-collection" data-product-id="{{product.id}}"></div>
+        <div class='opinew-stars-plugin-product-list'>{% render 'opinew_review_stars_lists' product:product %}</div>
       </div>
       {%- if rating != blank -%}
         {%- assign rating_val = rating.value | default: rating | times: 1.0 -%}
