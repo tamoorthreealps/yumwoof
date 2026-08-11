@@ -51,13 +51,13 @@
 	position: relative;
 }
 
-.mcb__band--image::before {
+/* .mcb__band--image::before {
 	content: "";
 	position: absolute;
 	inset: 0;
 	background: rgba(0, 0, 0, 0.4);
 	border-radius: inherit;
-}
+} */
 
 .mcb__band-inner {
 	position: relative;
