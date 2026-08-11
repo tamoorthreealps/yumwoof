@@ -788,7 +788,7 @@ padding: 0;
 		width: 96vw;
 		max-width: 376px;
 		flex-direction: column;
-		gap: 28px;
+		gap: 36px;
 		border-radius: 20px;
 		max-height: calc(95vh - 16px);
 	}
@@ -847,16 +847,17 @@ padding: 0;
 
 	.fp-popup__right {
 		justify-content: flex-end;
+		position: relative;
 	}
 
 	.fp-popup__right_img {
-		height: 194px;
+		height: 196px;
 		width: 244px;
 		margin: 0;
 	}
 
 	.fp-popup__right_img_bowl {
-		right: -100px;
+		right: -110px;
 		height: 220px;
 		width: auto;
 		bottom: -55px;
