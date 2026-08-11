@@ -767,7 +767,7 @@ padding: 0;
     color: #fff9ef;
 }
 
-@media(max-width:991px) {
+@media(max-width:1200px) {
 	.fp-popup__panel {
 		padding: 40px 28px 26px;
 		width: 96vw;
