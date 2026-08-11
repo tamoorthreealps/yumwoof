@@ -29,21 +29,30 @@
         "product_group_b9bXUj": {
           "type": "product_group",
           "settings": {
-            "heading": "Air dried food",
-            "subheading": "Ac nisl non sit ac augue pharetra. Sagittis morbi.",
+            "heading": "AIR DRIED FOOD",
+            "subheading": "Whole-prey recipes, complete and balanced.",
             "products": [
-              "ancestral-blend"
+              "ancestral-blend",
+              "perfect-kibble"
             ]
           }
         },
         "product_group_bT4yhm": {
           "type": "product_group",
           "settings": {
-            "heading": "Air dried food",
-            "subheading": "Ac nisl non sit ac augue pharetra. Sagittis morbi.",
+            "heading": "DIY MIX",
+            "subheading": "One base mix. Add your own fresh meat.",
             "products": [
-              "perfect-dog-food-mix",
-              "perfect-kibble",
+              "perfect-dog-food-mix"
+            ]
+          }
+        },
+        "product_group_h6PEX3": {
+          "type": "product_group",
+          "settings": {
+            "heading": "SUPPLEMENTS",
+            "subheading": "Targeted toppers for digestion, immunity and gut.",
+            "products": [
               "perfect-digestion",
               "perfect-immunity"
             ]
@@ -52,7 +61,8 @@
       },
       "block_order": [
         "product_group_b9bXUj",
-        "product_group_bT4yhm"
+        "product_group_bT4yhm",
+        "product_group_h6PEX3"
       ],
       "settings": {
         "show_collection_products": false,
