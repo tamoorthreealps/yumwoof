@@ -507,6 +507,14 @@ padding: 0;
 		max-width: 270px;
 	}
 
+	.fp__desc:nth-child(2) {
+		max-width: 220px;
+	}
+
+	.fp__desc:nth-child(3) {
+		max-width: 255px;
+	}
+
 	.fp__recipes {
 		font-size: 1.4rem;
 		line-height: 24px;
