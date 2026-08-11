@@ -151,9 +151,9 @@ background: #FFF9EF;
         transform: translateY(-4px);
 }
 
-.yw-pcard__title:hover {
+/* .yw-pcard__title:hover {
   text-decoration: underline;
-}
+} */
 
 .yw-pcard__recipe {
     margin: 0;
