@@ -13,7 +13,7 @@
 
 	background-color: var(--fp-bg);
 	color: var(--fp-text);
-	padding: 4.8rem 0 6.4rem;
+	padding: 5.2rem 0 6.4rem;
 	overflow: hidden;
 }
 
@@ -186,20 +186,21 @@ position: absolute !important;
 .fp__title {
     margin: 0 0 8px;
     font-weight: 400;
-    font-size: 28px;
-    line-height: 32px;
-    letter-spacing: 0;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -0.28px;
     font-family: TAY Birdie;
+    color: #000;
 }
 
 .fp__labels {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 8px;
-	margin: 0 0 16px;
-	padding: 0;
-	list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
 }
 
 .fp__label:not(:first-child) {
@@ -207,14 +208,14 @@ position: absolute !important;
 	}
 
 .fp__label {
-padding: 0;
+    padding: 0;
     border-radius: 100px;
     color: #000;
-    font-size: 12px;
-    line-height: 12px;
-    letter-spacing: -.12px;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0;
     text-transform: uppercase;
-    font-family: 'TAYRosemary';
+    font-family: TAYRosemary;
     font-weight: 400;
 }
 
