@@ -108,65 +108,73 @@
 </section>
 
 <script>
-  document.querySelectorAll('.faqs__question').forEach((question) => {
-    question.addEventListener('click', function () {
-      const item = this.parentElement;
-      const answer = item.querySelector('.faqs__answer');
-
-      document.querySelectorAll('.faqs__item').forEach((other) => {
-        if (other !== item) {
-          other.classList.remove('is-open');
-          other.querySelector('.faqs__answer').style.maxHeight = null;
-        }
-      });
-
-      if (item.classList.contains('is-open')) {
-        item.classList.remove('is-open');
-        answer.style.maxHeight = null;
-      } else {
-        item.classList.add('is-open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.faqs').forEach(initFaqs);
   });
 
+  function initFaqs(section) {
+    const items = section.querySelectorAll('.faqs__item');
+    const images = section.querySelectorAll('.faqs__image');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const section = document.querySelector('.faqs');
-  const images = section?.querySelectorAll('.faqs__image');
+    let currentScale = 1, targetScale = 1;
+    let currentPulse = 1, targetPulse = 1;
+    let pulseTimer;
 
-  if (!section || !images.length) return;
+    function render() {
+      currentScale += (targetScale - currentScale) * 0.08;
+      currentPulse += (targetPulse - currentPulse) * 0.12;
+      const s = (currentScale * currentPulse).toFixed(4);
+      images.forEach(function (img) {
+        img.style.transform = 'scale(' + s + ')';
+      });
+      requestAnimationFrame(render);
+    }
 
-  let currentScale = 1;
-  let targetScale = 1;
+    // subtle breath when the column height changes
+    function pulse() {
+      targetPulse = 1.015;
+      clearTimeout(pulseTimer);
+      pulseTimer = setTimeout(function () { targetPulse = 1; }, 280);
+    }
 
-  function updateScale() {
-    currentScale += (targetScale - currentScale) * 0.08;
+    function setOpen(item, open) {
+      const answer = item.querySelector('.faqs__answer');
+      item.classList.toggle('is-open', open);
+      if (!answer) return;
+      answer.style.maxHeight = open ? answer.scrollHeight + 'px' : null;
+    }
 
-    images.forEach((image) => {
-      image.style.transform = `scale(${currentScale})`;
+    items.forEach(function (item) {
+      const question = item.querySelector('.faqs__question');
+      if (!question) return;
+
+      question.addEventListener('click', function () {
+        const willOpen = !item.classList.contains('is-open');
+        items.forEach(function (other) {
+          if (other !== item) setOpen(other, false);
+        });
+        setOpen(item, willOpen);
+        pulse();
+      });
     });
 
-    requestAnimationFrame(updateScale);
+    function onScroll() {
+      const rect = section.getBoundingClientRect();
+      let progress =
+        (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      progress = Math.max(0, Math.min(progress, 1));
+      targetScale = 1 + progress * 0.08;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () {
+      const open = section.querySelector('.faqs__item.is-open .faqs__answer');
+      if (open) open.style.maxHeight = open.scrollHeight + 'px';
+    });
+
+    onScroll();
+    render();
   }
-
-  function onScroll() {
-    const rect = section.getBoundingClientRect();
-
-    let progress =
-      (window.innerHeight - rect.top) /
-      (window.innerHeight + rect.height);
-
-    progress = Math.max(0, Math.min(progress, 1));
-
-    targetScale = 1 + progress * 0.08;
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  onScroll();
-  updateScale();
-});
 </script>
 
 {% schema %}
