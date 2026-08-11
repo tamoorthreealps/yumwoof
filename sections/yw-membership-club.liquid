@@ -202,8 +202,6 @@
           data-ywmc-form
           data-cart-behavior="{{ s.cart_behavior }}"
           data-product-id="{{ atc_product.id }}"
-          data-in-cart-text="{{ s.in_cart_text | default: 'VIEW CART' | escape }}"
-          data-add-text="{{ s.button_text | default: 'ADD TO CART' | escape }}"
         >
           <input type="hidden" name="form_type" value="product">
           <input type="hidden" name="utf8" value="✓">
@@ -228,8 +226,6 @@
             <span class="ywmc__button-label">
               {%- if atc_variant.available == false -%}
                 {{ s.sold_out_text | default: 'SOLD OUT' | escape }}
-              {%- elsif ywmc_in_cart -%}
-                {{ s.in_cart_text | default: 'VIEW CART' | escape }}
               {%- else -%}
                 {{ s.button_text | default: 'ADD TO CART' | escape }}
               {%- endif -%}
@@ -292,11 +288,9 @@
     function setButtonState(form, inCart) {
       var button = form.querySelector('.ywmc__button');
       if (!button) return;
+      // State only — the label text never changes.
       button.dataset.ywmcInCart = inCart ? 'true' : 'false';
       button.classList.toggle('ywmc__button--in-cart', inCart);
-      var label = button.querySelector('.ywmc__button-label');
-      var text = inCart ? form.dataset.inCartText : form.dataset.addText;
-      if (label && text) label.textContent = text;
     }
 
     // Check the live cart rather than trusting the server-rendered flag —
@@ -483,13 +477,6 @@
       "default": false
     },
     { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
-    {
-      "type": "text",
-      "id": "in_cart_text",
-      "label": "Button text when already in cart",
-      "default": "VIEW CART",
-      "info": "The membership can only be added once. While it's in the cart, the button opens the cart instead of adding again."
-    },
     { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
     {
       "type": "select",
