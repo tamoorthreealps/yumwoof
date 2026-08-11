@@ -119,13 +119,21 @@
           {{
             card_image
             | image_url: width: 600
-            | image_tag: class: 'yw-pcard__img recipe-swatch__img--desktop', widths: '200, 300, 460, 600', alt: card_alt, loading: 'lazy'
+            | image_tag:
+              class: 'yw-pcard__img recipe-swatch__img--desktop',
+              widths: '200, 300, 460, 600',
+              alt: card_alt,
+              loading: 'lazy'
           }}
           {%- assign card_alt_mobile = card_image_mobile.alt | default: product.title | escape -%}
           {{
             card_image_mobile
             | image_url: width: 600
-            | image_tag: class: 'yw-pcard__img recipe-swatch__img--mobile', widths: '200, 300, 460, 600', alt: card_alt_mobile, loading: 'lazy'
+            | image_tag:
+              class: 'yw-pcard__img recipe-swatch__img--mobile',
+              widths: '200, 300, 460, 600',
+              alt: card_alt_mobile,
+              loading: 'lazy'
           }}
         {%- endif -%}
       </span>
@@ -145,11 +153,17 @@
       {%- endif -%}
       <a class="yw-pcard__title" href="{{ card_url }}">{{ product.title }}</a>
 
+      {%- assign collection_label = rep_variant.metafields.custom.collection_label.value
+        | default: product.metafields.custom.collection_label.value
+      -%}
+
       {%- if recipe_label != blank -%}
         <p class="yw-pcard__recipe">{{ recipe_label }}</p>
+      {%- elsif collection_label != blank -%}
+        <p class="yw-pcard__recipe">{{ collection_label }}</p>
       {%- endif -%}
       <div class="yw-pcard-opinew-stars">
-        <div class='opinew-stars-plugin-product-list'>{% render 'opinew_review_stars_lists' product:product %}</div>
+        <div class="opinew-stars-plugin-product-list">{% render 'opinew_review_stars_lists', product: product %}</div>
       </div>
       {%- if rating != blank -%}
         {%- assign rating_val = rating.value | default: rating | times: 1.0 -%}
