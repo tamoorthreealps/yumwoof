@@ -217,6 +217,7 @@ position: absolute !important;
     text-transform: uppercase;
     font-family: TAYRosemary;
     font-weight: 400;
+	transform: translateY(-4px);
 }
 
 .fp__media {
@@ -493,7 +494,7 @@ position: absolute !important;
         line-height: 48px;
         letter-spacing: 0;
         text-transform: uppercase;
-        transform: translateY(-4px);
+        
 	}
 
 	.fp__media {
