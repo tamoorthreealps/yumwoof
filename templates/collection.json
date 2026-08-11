@@ -77,7 +77,7 @@
       "type": "collection-faqs-section",
       "name": "Collection FAQs Section",
       "settings": {
-        "heading": "Any Questions?",
+        "heading": "Common Questions",
         "subheading": "Every dog is different. Find the recipe that's right for yours.",
         "faqs_metafield": "custom.collection_page_faqs",
         "open_first": true,
