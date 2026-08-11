@@ -96,7 +96,7 @@
 
                   {%- comment -%} Only render the trigger when the product actually has popup data. {%- endcomment -%}
                   {%- if section.settings.recipes_label != blank and popup != blank -%}
-                      <a
+                    <a
                       class="fp__recipes"
                       href="#"
                       data-popup="popup-{{ card_uid }}"
@@ -129,7 +129,12 @@
                     {% elsif hover_media.media_type == 'video' %}
                       {{
                         hover_media
-                        | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'fp__hover-video'
+                        | video_tag:
+                          autoplay: true,
+                          loop: true,
+                          muted: true,
+                          playsinline: true,
+                          class: 'fp__hover-video'
                       }}
                     {% endif %}
                   {% endif %}
@@ -188,7 +193,9 @@
               <span class="fp__media">{{ 'product-1' | placeholder_svg_tag: 'fp__img fp__img--placeholder' }}</span>
               <p class="fp__desc">{{ 'onboarding.product_description' | t | truncatewords: 8 }}</p>
               <span class="fp__recipes">{{ section.settings.recipes_label }}</span>
-              <span class="fp__shop"><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span>
+              <span class="fp__shop"
+                ><span class="fp__shop-label">{{ section.settings.shop_label }}</span></span
+              >
             </li>
           {%- endfor -%}
         {%- endif -%}
