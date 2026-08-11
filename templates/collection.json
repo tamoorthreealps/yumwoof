@@ -15,7 +15,7 @@
         "heading": "",
         "subheading": "",
         "show_collection_description": true,
-        "category_menu": "header-megamenu",
+        "category_menu": "collection-tab-bar",
         "health_label": "Shop by health goal",
         "health_menu": "",
         "band_color": "#1a1a1a",
