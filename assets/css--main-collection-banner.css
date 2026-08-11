@@ -105,6 +105,7 @@
     width: max-content;
     position: relative;
     padding-bottom: 2px;
+	width: 100%;
 }
 
 .mcb__tabs .mcb__tabs__hold::after {
