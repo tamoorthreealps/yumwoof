@@ -55,6 +55,11 @@
   background: #fff;
   border: 1.5px solid #000;
   border-radius: 2.4rem;
+  transition: all .25s ease;
+}
+
+.yw-pcard:hover {
+  box-shadow: -8px 8px 16px 0px #0000000F;
 }
 
 /* Image band */
