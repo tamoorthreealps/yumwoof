@@ -303,7 +303,7 @@
         "subheading": "",
         "faq_image": "shopify://shop_images/faqs_desktop.png",
         "faq_image_mobile": "shopify://shop_images/faqs_mobile.png",
-        "open_first": true,
+        "open_first": false,
         "background_color": "#fff9ef",
         "text_color": "#000000",
         "line_color": "#000000",
