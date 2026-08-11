@@ -75,7 +75,7 @@
                 {%- if faq_answer != blank -%}
                   <div class="faqs__answer rte">
                     <div class="faqs__answer-inner">
-                      {{ faq_answer }}
+                      {{ faq_answer | metafield_tag }}
                     </div>
                   </div>
                 {%- endif -%}
