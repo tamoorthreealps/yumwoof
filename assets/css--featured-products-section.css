@@ -507,11 +507,11 @@ padding: 0;
 		max-width: 270px;
 	}
 
-	.fp__desc:nth-child(2) {
+	.fp__card:nth-child(2) .fp__desc {
 		max-width: 220px;
 	}
 
-	.fp__desc:nth-child(3) {
+	.fp__card:nth-child(3) .fp__desc {
 		max-width: 255px;
 	}
 
