@@ -6,7 +6,8 @@
   CURRENT product is marked active (by handle).
 
   Data: product metafield custom.product_selectors -> list of `product_selectors`
-  metaobjects, each with: display_name, image (file), title, product (ref).
+  metaobjects, each with: display_name, image (file, desktop),
+  image_mobile (file, mobile), title, product (ref).
 
   Accepts:
   - product : {Object} current product
@@ -40,6 +41,9 @@
         {%- assign is_active = false -%}
         {%- if sp.handle == product.handle -%}{%- assign is_active = true -%}{%- endif -%}
         {%- assign sel_title = sel.title | default: sel.display_name -%}
+        {%- comment -%} Separate desktop/mobile images; each falls back to the other if only one is set. {%- endcomment -%}
+        {%- assign sel_desktop_img = sel.image | default: sel.image_mobile -%}
+        {%- assign sel_mobile_img = sel.image_mobile | default: sel.image -%}
         <a
           class="psel__item{% if is_active %} is-active{% endif %}"
           href="{{ sp.url }}"
@@ -48,10 +52,18 @@
             aria-current="true"
           {% endif %}
         >
-          {%- if sel.image != blank -%}
+          {%- if sel_desktop_img != blank -%}
             <img
-              class="psel__img"
-              src="{{ sel.image | image_url: width: 144 }}"
+              class="psel__img recipe-swatch__img--desktop"
+              src="{{ sel_desktop_img | image_url: width: 144 }}"
+              alt="{{ sel_title | escape }}"
+              width="72"
+              height="72"
+              loading="lazy"
+            >
+            <img
+              class="psel__img recipe-swatch__img--mobile"
+              src="{{ sel_mobile_img | image_url: width: 144 }}"
               alt="{{ sel_title | escape }}"
               width="72"
               height="72"
