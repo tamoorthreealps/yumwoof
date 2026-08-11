@@ -144,7 +144,7 @@
         </ul>
       {%- endif -%}
 
-      {%- comment -%} ---------------- Add to cart (subscription aware) ---------------- {%- endcomment -%}
+      {%- comment -%} ---------------- Add to cart (subscription aware, single purchase) ---------------- {%- endcomment -%}
       {%- liquid
         assign atc_product = s.product
         assign atc_variant = null
@@ -178,6 +178,20 @@
         if atc_plan_required and atc_selling_plan == null
           assign atc_blocked = true
         endif
+
+        comment
+          Membership is a one-per-cart item. Match on product_id so switching
+          variants can't slip a second membership into the cart.
+        endcomment
+        assign ywmc_in_cart = false
+        if atc_product != blank
+          for line in cart.items
+            if line.product_id == atc_product.id
+              assign ywmc_in_cart = true
+              break
+            endif
+          endfor
+        endif
       -%}
 
       {%- if atc_product != blank and atc_variant != blank -%}
@@ -187,6 +201,9 @@
           class="ywmc__form"
           data-ywmc-form
           data-cart-behavior="{{ s.cart_behavior }}"
+          data-product-id="{{ atc_product.id }}"
+          data-in-cart-text="{{ s.in_cart_text | default: 'VIEW CART' | escape }}"
+          data-add-text="{{ s.button_text | default: 'ADD TO CART' | escape }}"
         >
           <input type="hidden" name="form_type" value="product">
           <input type="hidden" name="utf8" value="✓">
@@ -202,7 +219,8 @@
 
           <button
             type="submit"
-            class="ywmc__button"
+            class="ywmc__button{% if ywmc_in_cart %} ywmc__button--in-cart{% endif %}"
+            data-ywmc-in-cart="{% if ywmc_in_cart %}true{% else %}false{% endif %}"
             {% if atc_variant.available == false or atc_blocked %}
               disabled
             {% endif %}
@@ -210,6 +228,8 @@
             <span class="ywmc__button-label">
               {%- if atc_variant.available == false -%}
                 {{ s.sold_out_text | default: 'SOLD OUT' | escape }}
+              {%- elsif ywmc_in_cart -%}
+                {{ s.in_cart_text | default: 'VIEW CART' | escape }}
               {%- else -%}
                 {{ s.button_text | default: 'ADD TO CART' | escape }}
               {%- endif -%}
@@ -255,17 +275,59 @@
       return el ? el.dataset.sectionId : 'cart-drawer';
     }
 
+    function openDrawer() {
+      var drawer = getDrawer();
+      if (drawer && typeof drawer.open === 'function') {
+        drawer.open();
+        return true;
+      }
+      var toggle = document.querySelector('#cart-icon-bubble, a[href$="/cart"]');
+      if (toggle) {
+        toggle.click();
+        return true;
+      }
+      return false;
+    }
+
+    function setButtonState(form, inCart) {
+      var button = form.querySelector('.ywmc__button');
+      if (!button) return;
+      button.dataset.ywmcInCart = inCart ? 'true' : 'false';
+      button.classList.toggle('ywmc__button--in-cart', inCart);
+      var label = button.querySelector('.ywmc__button-label');
+      var text = inCart ? form.dataset.inCartText : form.dataset.addText;
+      if (label && text) label.textContent = text;
+    }
+
+    // Check the live cart rather than trusting the server-rendered flag —
+    // the customer may have removed the item from the drawer since page load.
+    function isAlreadyInCart(productId) {
+      return fetch(window.Shopify.routes.root + 'cart.js', {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (cart) {
+          return (cart.items || []).some(function (line) {
+            return String(line.product_id) === String(productId);
+          });
+        })
+        .catch(function () {
+          return false;
+        });
+    }
+
     function initYwmcForm(root) {
       root.querySelectorAll('[data-ywmc-form]').forEach(function (form) {
         if (form.dataset.ywmcBound) return;
         form.dataset.ywmcBound = 'true';
 
         form.addEventListener('submit', function (event) {
-          var behavior = form.dataset.cartBehavior || 'drawer';
-          if (behavior === 'cart') return; // let it post normally
-
           event.preventDefault();
 
+          var behavior = form.dataset.cartBehavior || 'drawer';
           var button = form.querySelector('.ywmc__button');
           var errorEl = form.querySelector('[data-ywmc-error]');
           if (errorEl) {
@@ -277,72 +339,92 @@
             button.disabled = true;
           }
 
-          var drawer = getDrawer();
-          var planInput = form.querySelector('[data-ywmc-selling-plan]');
-
-          var item = {
-            id: Number(form.querySelector('input[name="id"]').value),
-            quantity: Number(form.querySelector('input[name="quantity"]').value || 1),
-          };
-          if (planInput && planInput.value) {
-            item.selling_plan = Number(planInput.value);
+          function release() {
+            if (button) {
+              button.removeAttribute('aria-busy');
+              button.disabled = false;
+            }
           }
 
-          var payload = { items: [item] };
+          isAlreadyInCart(form.dataset.productId).then(function (inCart) {
+            if (inCart) {
+              setButtonState(form, true);
+              release();
+              if (!openDrawer()) {
+                window.location.href = window.Shopify.routes.root + 'cart';
+              }
+              return;
+            }
 
-          // Ask Shopify to re-render the drawer sections in the same request,
-          // otherwise the drawer keeps its stale (empty) markup until a reload.
-          var sectionIds = [];
-          if (drawer && drawer.getSectionsToRender) {
-            sectionIds = drawer.getSectionsToRender().map(function (s) {
-              return s.id;
-            });
-          }
-          if (!sectionIds.length) {
-            sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
-          }
+            setButtonState(form, false);
 
-          payload.sections = sectionIds.join(',');
-          payload.sections_url = window.location.pathname;
+            if (behavior === 'cart') {
+              form.submit();
+              return;
+            }
 
-          fetch(window.Shopify.routes.root + 'cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
-            body: JSON.stringify(payload),
-          })
-            .then(function (res) {
-              return res.json();
+            var drawer = getDrawer();
+            var planInput = form.querySelector('[data-ywmc-selling-plan]');
+
+            var item = {
+              id: Number(form.querySelector('input[name="id"]').value),
+              quantity: Number(form.querySelector('input[name="quantity"]').value || 1),
+            };
+            if (planInput && planInput.value) {
+              item.selling_plan = Number(planInput.value);
+            }
+
+            var payload = { items: [item] };
+
+            // Ask Shopify to re-render the drawer sections in the same request,
+            // otherwise the drawer keeps its stale markup until a reload.
+            var sectionIds = [];
+            if (drawer && drawer.getSectionsToRender) {
+              sectionIds = drawer.getSectionsToRender().map(function (s) {
+                return s.id;
+              });
+            }
+            if (!sectionIds.length) {
+              sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
+            }
+
+            payload.sections = sectionIds.join(',');
+            payload.sections_url = window.location.pathname;
+
+            fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
+              body: JSON.stringify(payload),
             })
-            .then(function (data) {
-              if (data.status) throw new Error(data.description || data.message);
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (data) {
+                if (data.status) throw new Error(data.description || data.message);
 
-              if (drawer && typeof drawer.renderContents === 'function') {
-                // Dawn's renderContents both repaints and opens the drawer.
-                drawer.renderContents(data);
-              } else {
-                document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
-                if (behavior === 'drawer') {
-                  window.location.href = window.Shopify.routes.root + 'cart';
+                setButtonState(form, true);
+
+                if (drawer && typeof drawer.renderContents === 'function') {
+                  // Dawn's renderContents both repaints and opens the drawer.
+                  drawer.renderContents(data);
+                } else {
+                  document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+                  if (behavior === 'drawer') openDrawer();
+                  return;
                 }
-                return;
-              }
 
-              if (behavior === 'stay' && drawer.classList.contains('active')) {
-                if (typeof drawer.close === 'function') drawer.close();
-              }
-            })
-            .catch(function (err) {
-              if (errorEl) {
-                errorEl.textContent = err.message || 'Could not add to cart.';
-                errorEl.hidden = false;
-              }
-            })
-            .finally(function () {
-              if (button) {
-                button.removeAttribute('aria-busy');
-                button.disabled = false;
-              }
-            });
+                if (behavior === 'stay' && drawer.classList.contains('active')) {
+                  if (typeof drawer.close === 'function') drawer.close();
+                }
+              })
+              .catch(function (err) {
+                if (errorEl) {
+                  errorEl.textContent = err.message || 'Could not add to cart.';
+                  errorEl.hidden = false;
+                }
+              })
+              .finally(release);
+          });
         });
       });
     }
@@ -401,6 +483,13 @@
       "default": false
     },
     { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    {
+      "type": "text",
+      "id": "in_cart_text",
+      "label": "Button text when already in cart",
+      "default": "VIEW CART",
+      "info": "The membership can only be added once. While it's in the cart, the button opens the cart instead of adding again."
+    },
     { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
     {
       "type": "select",
