@@ -153,6 +153,7 @@ background: #FFF9EF;
     color: #000;
     text-decoration: none;
     letter-spacing: 0;
+    margin:0 0 4px;
         transform: translateY(-4px);
 }
 
@@ -161,7 +162,7 @@ background: #FFF9EF;
 } */
 
 .yw-pcard__recipe {
-    margin: 4px 0 0;
+    margin: 0 0 16px;
     font-family: "TAY Birdie", var(--font-body-family, sans-serif);
     font-size: 16px;
     line-height: 16px;
@@ -172,7 +173,7 @@ background: #FFF9EF;
 }
 
 .yw-pcard-opinew-stars {
-    margin: 16px 0 0;
+    margin: 0;
 }
 
 .yw-pcard__rating {
@@ -329,6 +330,7 @@ background: #FFF9EF;
         font-size: 2rem;
         line-height: 2.4rem;
         letter-spacing: -0.20px;
+        margin:0;
     }
 
       .yw-pcard__body {
@@ -338,11 +340,11 @@ background: #FFF9EF;
     font-size: 12px;
     line-height: 16px;
     letter-spacing: .24px;
-    margin: 0;
+    margin: 0 0 12px;
 }
 
 .yw-pcard-opinew-stars {
-    margin: 12px 0 0;
+    margin: 0;
 }
 
     .yw-pcard__desc {
