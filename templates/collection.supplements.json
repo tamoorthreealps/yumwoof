@@ -26,27 +26,6 @@
     "products-grid": {
       "type": "main-collection-products-grid",
       "blocks": {
-        "product_group_b9bXUj": {
-          "type": "product_group",
-          "settings": {
-            "heading": "AIR DRIED FOOD",
-            "subheading": "Whole-prey recipes, complete and balanced.",
-            "products": [
-              "ancestral-blend",
-              "perfect-kibble"
-            ]
-          }
-        },
-        "product_group_bT4yhm": {
-          "type": "product_group",
-          "settings": {
-            "heading": "DIY MIX",
-            "subheading": "One base mix. Add your own fresh meat.",
-            "products": [
-              "perfect-dog-food-mix"
-            ]
-          }
-        },
         "product_group_h6PEX3": {
           "type": "product_group",
           "settings": {
@@ -61,8 +40,6 @@
         }
       },
       "block_order": [
-        "product_group_b9bXUj",
-        "product_group_bT4yhm",
         "product_group_h6PEX3"
       ],
       "settings": {
