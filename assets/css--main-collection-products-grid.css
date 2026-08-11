@@ -271,7 +271,7 @@ background: #FFF9EF;
 
 }
 
-.yw-pcard__btn:hover {
+.yw-pcard:hover .yw-pcard__btn {
   background: #000;
     color: #fff9ef;
 }
