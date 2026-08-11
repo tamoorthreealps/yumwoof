@@ -15,10 +15,11 @@
         "heading": "",
         "subheading": "",
         "show_collection_description": true,
+        "band_image": "shopify://shop_images/Collection-Banner-All-Desktop.jpg",
         "category_menu": "collection-tab-bar",
         "health_label": "Shop by health goal",
         "health_menu": "",
-        "band_color": "#1a1a1a",
+        "band_color": "#000000",
         "band_text_color": "#fff9ef",
         "accent_color": "#000000"
       }
