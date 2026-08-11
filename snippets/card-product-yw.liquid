@@ -18,6 +18,9 @@
     compare-at price struck through when higher, an "as low as $Y / day" line
     (lowest price / 30) and a "Shop now" button linking to that variant's PDP.
     The "Healthy Grains (Original)" recipe is skipped.
+  - Card image: desktop from `custom.variant_image_collection_card`, mobile from
+    `custom.variant_image_collection_card_mobile`. Each falls back to the other,
+    then to the product featured image.
   - Short description from `custom.collection_short_description`.
 {% endcomment %}
 
@@ -68,6 +71,7 @@
     assign recipe_label = ''
     assign rep_variant = product.selected_or_first_available_variant
     assign group_image = ''
+    assign group_image_mobile = ''
 
     if recipe_idx0 >= 0
       assign recipe_label = rv
@@ -83,20 +87,28 @@
           if group_image == blank and v_img != blank
             assign group_image = v_img
           endif
+          # First variant with a mobile card image in this recipe sets the mobile card image.
+          assign v_img_m = v.metafields.custom.variant_image_collection_card_mobile.value
+          if group_image_mobile == blank and v_img_m != blank
+            assign group_image_mobile = v_img_m
+          endif
         endif
       endfor
     else
       assign group_min = product.price_min
       assign group_count = product.variants.size
       assign group_image = rep_variant.metafields.custom.variant_image_collection_card.value
+      assign group_image_mobile = rep_variant.metafields.custom.variant_image_collection_card_mobile.value
     endif
 
     assign rep_compare = rep_variant.compare_at_price
     assign per_day_cents = group_min | divided_by: 30
     assign card_url = rep_variant.url | default: product.url
     assign bestseller_label = rep_variant.metafields.custom.best_seller.value
-    # Variant image metafield (custom.variant_image_collection_card); fall back to the product featured image.
+    # Desktop image (custom.variant_image_collection_card); fall back to the product featured image.
     assign card_image = group_image | default: product.featured_image
+    # Mobile image (custom.variant_image_collection_card_mobile); fall back to the desktop image.
+    assign card_image_mobile = group_image_mobile | default: card_image
   -%}
 
   <div class="yw-pcard yw-pcard--{{ product.title | handleize }}">
@@ -107,7 +119,13 @@
           {{
             card_image
             | image_url: width: 600
-            | image_tag: class: 'yw-pcard__img', widths: '200, 300, 460, 600', alt: card_alt, loading: 'lazy'
+            | image_tag: class: 'yw-pcard__img recipe-swatch__img--desktop', widths: '200, 300, 460, 600', alt: card_alt, loading: 'lazy'
+          }}
+          {%- assign card_alt_mobile = card_image_mobile.alt | default: product.title | escape -%}
+          {{
+            card_image_mobile
+            | image_url: width: 600
+            | image_tag: class: 'yw-pcard__img recipe-swatch__img--mobile', widths: '200, 300, 460, 600', alt: card_alt_mobile, loading: 'lazy'
           }}
         {%- endif -%}
       </span>
