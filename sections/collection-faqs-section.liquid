@@ -18,7 +18,14 @@
   }
 {%- endstyle -%}
 
-{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+{%- comment -%}
+  FAQs come from a COLLECTION list metafield (custom.collection_page_faqs) that
+  references FAQ metaobjects. Each metaobject has "question" (text) and "answer"
+  (rich text) fields — the "category" field is ignored here.
+{%- endcomment -%}
+{%- assign faq_key = section.settings.faqs_metafield | default: 'custom.collection_page_faqs' -%}
+{%- assign faq_parts = faq_key | split: '.' -%}
+{%- assign faq_items = collection.metafields[faq_parts[0]][faq_parts[1]].value -%}
 
 <section class="faqs">
   <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
@@ -32,47 +39,48 @@
         {%- endif -%}
       </div>
 
-      {%- if faq_blocks.size > 0 -%}
+      {%- if faq_items != blank and faq_items.size > 0 -%}
         <div class="faqs__list">
-          {%- for block in faq_blocks -%}
-            <div
-              class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              <div class="faqs__question">
-                <span class="faqs__question-text">{{ block.settings.question }}</span>
-                <span class="faqs__icon" aria-hidden="true">
-                  <svg
-                    class="faqs__icon__plus"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M15.1111 7.11111H8.88889V0.888889C8.88889 0.398222 8.49067 0 8 0C7.50933 0 7.11111 0.398222 7.11111 0.888889V7.11111H0.888889C0.398222 7.11111 0 7.50933 0 8C0 8.49067 0.398222 8.88889 0.888889 8.88889H7.11111V15.1111C7.11111 15.6018 7.50933 16 8 16C8.49067 16 8.88889 15.6018 8.88889 15.1111V8.88889H15.1111C15.6018 8.88889 16 8.49067 16 8C16 7.50933 15.6018 7.11111 15.1111 7.11111Z" fill="black"/>
-                  </svg>
+          {%- for faq in faq_items -%}
+            {%- assign faq_question = faq.question -%}
+            {%- assign faq_answer = faq.answer -%}
+            {%- if faq_question != blank -%}
+              <div class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}">
+                <div class="faqs__question">
+                  <span class="faqs__question-text">{{ faq_question }}</span>
+                  <span class="faqs__icon" aria-hidden="true">
+                    <svg
+                      class="faqs__icon__plus"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M15.1111 7.11111H8.88889V0.888889C8.88889 0.398222 8.49067 0 8 0C7.50933 0 7.11111 0.398222 7.11111 0.888889V7.11111H0.888889C0.398222 7.11111 0 7.50933 0 8C0 8.49067 0.398222 8.88889 0.888889 8.88889H7.11111V15.1111C7.11111 15.6018 7.50933 16 8 16C8.49067 16 8.88889 15.6018 8.88889 15.1111V8.88889H15.1111C15.6018 8.88889 16 8.49067 16 8C16 7.50933 15.6018 7.11111 15.1111 7.11111Z" fill="black"/>
+                    </svg>
 
-                  <svg
-                    class="faqs__icon__minus"
-                    width="16"
-                    height="3"
-                    viewBox="0 0 16 3"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M15.1111 0H8.88889H7.11111H0.888889C0.398222 0 0 0.486194 0 1.08525C0 1.68431 0.398222 2.17051 0.888889 2.17051C0.888889 2.17051 4.68118 2.17051 7.11111 2.17051C7.80538 2.17051 8.88889 2.17051 8.88889 2.17051H15.1111C15.6018 2.17051 16 1.68431 16 1.08525C16 0.486194 15.6018 0 15.1111 0Z" fill="black"/>
-                  </svg>
-                </span>
-              </div>
-              {%- if block.settings.answer != blank -%}
-                <div class="faqs__answer rte">
-                  <div class="faqs__answer-inner">
-                    {{ block.settings.answer }}
-                  </div>
+                    <svg
+                      class="faqs__icon__minus"
+                      width="16"
+                      height="3"
+                      viewBox="0 0 16 3"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M15.1111 0H8.88889H7.11111H0.888889C0.398222 0 0 0.486194 0 1.08525C0 1.68431 0.398222 2.17051 0.888889 2.17051C0.888889 2.17051 4.68118 2.17051 7.11111 2.17051C7.80538 2.17051 8.88889 2.17051 8.88889 2.17051H15.1111C15.6018 2.17051 16 1.68431 16 1.08525C16 0.486194 15.6018 0 15.1111 0Z" fill="black"/>
+                    </svg>
+                  </span>
                 </div>
-              {%- endif -%}
-            </div>
+                {%- if faq_answer != blank -%}
+                  <div class="faqs__answer rte">
+                    <div class="faqs__answer-inner">
+                      {{ faq_answer }}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
@@ -179,7 +187,7 @@
 
 {% schema %}
 {
-  "name": "FAQs Section",
+  "name": "Collection FAQs Section",
   "tag": "section",
   "class": "section-faqs",
   "settings": [
@@ -194,6 +202,13 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Every dog is different. Find the recipe that's right for yours."
+    },
+    {
+      "type": "text",
+      "id": "faqs_metafield",
+      "label": "FAQs metafield (namespace.key)",
+      "info": "Collection metafield: a list of FAQ metaobjects. Each metaobject needs a 'question' and 'answer' field (category is ignored).",
+      "default": "custom.collection_page_faqs"
     },
     {
       "type": "image_picker",
@@ -278,60 +293,9 @@
       "default": 64
     }
   ],
-  "blocks": [
-    {
-      "type": "faq",
-      "name": "Question",
-      "settings": [
-        {
-          "type": "text",
-          "id": "question",
-          "label": "Question",
-          "default": "Why doesn't Yumwoof use seed oils?"
-        },
-        {
-          "type": "richtext",
-          "id": "answer",
-          "label": "Answer",
-          "default": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
-        }
-      ]
-    }
-  ],
-  "max_blocks": 16,
   "presets": [
     {
-      "name": "FAQs Section",
-      "blocks": [
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Why doesn't Yumwoof use seed oils?",
-            "answer": "<p>Not all fats are created equal. Many dog foods rely on seed oils high in omega-6 fats. We take a different approach — our Cocomega™ superfats provide omega-3-rich nutrition designed to support healthy inflammation levels, a thriving microbiome, and lifelong wellness.</p>"
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Why choose air-dried over fresh food?",
-            "answer": "<p>Air-drying gently cooks at low temperatures to preserve whole-food nutrition and flavor — with none of the freezer, fridge, or mess of fresh.</p>"
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Do you offer a money-back guarantee?",
-            "answer": "<p>Yes. If your dog isn't loving it, reach out and we'll make it right.</p>"
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Why are organ meats important for dogs?",
-            "answer": "<p>Organs are packed with bioavailable nutrients that muscle meat alone can't provide — closer to how dogs evolved to eat.</p>"
-          }
-        }
-      ]
+      "name": "Collection FAQs Section"
     }
   ]
 }
