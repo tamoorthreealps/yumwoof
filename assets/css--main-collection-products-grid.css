@@ -112,7 +112,7 @@
 
 /* Category badge(s) — straddling the bottom edge of the image */
 .yw-pcard__tags {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     margin: 0;
