@@ -146,11 +146,11 @@
 
       {%- assign variant_short_desc = rep_variant.metafields.custom.product_card_short_description.value -%}
 
-{%- if variant_short_desc != blank -%}
-  <p class="yw-pcard__desc">{{ variant_short_desc }}</p>
-{%- elsif short_desc != blank -%}
-  <p class="yw-pcard__desc">{{ short_desc }}</p>
-{%- endif -%}
+      {%- if variant_short_desc != blank -%}
+        <p class="yw-pcard__desc">{{ variant_short_desc }}</p>
+      {%- elsif short_desc != blank -%}
+        <p class="yw-pcard__desc">{{ short_desc }}</p>
+      {%- endif -%}
 
       <div class="yw-pcard__price">
         {%- if group_count > 1 -%}
