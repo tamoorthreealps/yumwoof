@@ -219,6 +219,10 @@ background: #FFF9EF;
     color: rgba(0, 0, 0, 0.5);
 }
 
+.yw-pcard.yw-pcard--perfect-dog-food-mix .yw-pcard__desc {
+    max-width: 23rem;
+}
+
 .yw-pcard__price {
     display: flex;
     align-items: baseline;
