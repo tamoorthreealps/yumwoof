@@ -15,6 +15,7 @@
         "heading": "",
         "subheading": "",
         "show_collection_description": true,
+        "band_image": "shopify://shop_images/Collection-Base-Img-Desktop.jpg",
         "category_menu": "collection-tab-bar",
         "health_label": "Shop by health goal",
         "health_menu": "",
