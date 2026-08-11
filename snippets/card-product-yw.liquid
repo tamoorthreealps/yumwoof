@@ -29,8 +29,6 @@
   assign rating = product.metafields.reviews.rating
   assign rating_count = product.metafields.reviews.rating_count
 
-
-
   assign extra_badges = product.metafields.custom.product_card_badges.value
 
   comment
@@ -132,9 +130,10 @@
       {%- if recipe_label != blank -%}
         <p class="yw-pcard__recipe">{{ recipe_label }}</p>
       {%- endif -%}
-<div class="opw-dynamic-stars-collection" data-product-id="123" ></div>
-
-<div class="opw-dynamic-stars-collection" data-product-id="{{product.id}}" ></div>
+      <div class="yw-pcard-opw-dynamic">
+        <div class="opw-dynamic-stars-collection" data-product-id="123"></div>
+        <div class="opw-dynamic-stars-collection" data-product-id="{{product.id}}"></div>
+      </div>
       {%- if rating != blank -%}
         {%- assign rating_val = rating.value | default: rating | times: 1.0 -%}
         <div class="yw-pcard__rating">
