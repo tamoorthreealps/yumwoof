@@ -253,15 +253,26 @@ font-size: 16px;
     gap: 84px;
   }
   .faqs__right_img {
-    height:100%;
+    position: absolute;
+    inset: 0;
+    height: auto;
+    min-height: 0;
     border-radius: 32px;
+    overflow: hidden;
   }
   .faqs__right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 32px;
+    will-change: transform;
   }
   .faqs__inner__media .faqs__content,
   .faqs__inner__media .faqs__right {
     order: initial;
+  }
+  .faqs__inner__media .faqs__right {
+    position:relative;
   }
   .faqs__inner__media .faqs__head {
     margin-bottom: 2.4rem;
