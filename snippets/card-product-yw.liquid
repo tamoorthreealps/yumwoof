@@ -29,10 +29,7 @@
   assign rating = product.metafields.reviews.rating
   assign rating_count = product.metafields.reviews.rating_count
 
-  assign is_bestseller = false
-  if product.tags contains 'best-seller'
-    assign is_bestseller = true
-  endif
+
 
   assign extra_badges = product.metafields.custom.product_card_badges.value
 
@@ -99,6 +96,7 @@
     assign rep_compare = rep_variant.compare_at_price
     assign per_day_cents = group_min | divided_by: 30
     assign card_url = rep_variant.url | default: product.url
+    assign bestseller_label = rep_variant.metafields.custom.best_seller.value
     # Variant image metafield (custom.variant_image_collection_card); fall back to the product featured image.
     assign card_image = group_image | default: product.featured_image
   -%}
@@ -116,8 +114,8 @@
         {%- endif -%}
       </span>
 
-      {%- if is_bestseller -%}
-        <span class="yw-pcard__flag">BESTSELLER</span>
+      {%- if bestseller_label != blank -%}
+        <span class="yw-pcard__flag">{{ bestseller_label }}</span>
       {%- endif -%}
     </a>
 
