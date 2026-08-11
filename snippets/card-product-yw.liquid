@@ -17,6 +17,7 @@
     subtitle, the lowest price of that recipe's variants ("From $X"), the
     compare-at price struck through when higher, an "as low as $Y / day" line
     (lowest price / 30) and a "Shop now" button linking to that variant's PDP.
+    The "Healthy Grains (Original)" recipe is skipped.
   - Short description from `custom.collection_short_description`.
 {% endcomment %}
 
@@ -62,6 +63,10 @@
 -%}
 
 {%- for rv in recipe_list -%}
+  {%- comment -%} Skip the "Healthy Grains (Original)" recipe entirely. {%- endcomment -%}
+  {%- assign rv_check = rv | strip | downcase -%}
+  {%- if rv_check == 'healthy grains (original)' -%}{%- continue -%}{%- endif -%}
+
   {%- liquid
     assign group_min = 0
     assign group_count = 0
@@ -78,7 +83,7 @@
             assign group_min = v.price
             assign rep_variant = v
           endif
-          # First variant with a custom.variant_image in this recipe sets the card image.
+          # First variant with a custom.variant_image_collection_card in this recipe sets the card image.
           assign v_img = v.metafields.custom.variant_image_collection_card.value
           if group_image == blank and v_img != blank
             assign group_image = v_img
@@ -94,7 +99,7 @@
     assign rep_compare = rep_variant.compare_at_price
     assign per_day_cents = group_min | divided_by: 30
     assign card_url = rep_variant.url | default: product.url
-    # Variant image metafield (custom.variant_image); fall back to the product featured image.
+    # Variant image metafield (custom.variant_image_collection_card); fall back to the product featured image.
     assign card_image = group_image | default: product.featured_image
   -%}
 
