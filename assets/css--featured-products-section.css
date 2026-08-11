@@ -569,21 +569,21 @@ padding: 0;
 }
 
 .fp-popup__panel {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -150%);
-	transition: transform .6s cubic-bezier(.22, 1, .36, 1);
-	width: min(1392px, 90vw);
-	background: #ffffffe6;
-	border-radius: 24px;
-	overflow: hidden;
-	display: flex;
-	align-items: self-end;
-	padding: 88px 71px 84px 98px;
-	gap: 21px;
-	-webkit-backdrop-filter: blur(10px);
-	backdrop-filter: blur(10px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+    width: min(1392px, 90vw);
+    background: #ffffffe6;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    align-items: self-end;
+    padding: 96px 71px 96px 98px;
+    gap: 21px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .fp-popup.active .fp-popup__panel {
@@ -604,7 +604,7 @@ padding: 0;
 .fp-popup__right_img {
 	height: 400px;
 	width: 100%;
-	margin: 0 0 -30px;
+	margin: 0 0 -42px;
 	position: relative;
 }
 
@@ -683,44 +683,44 @@ padding: 0;
 }
 
 .fp-popup__title {
-	margin: 0 0 4px;
-	font-size: 56px;
-	line-height: 56px;
-	font-family: TAYRosemary;
-	letter-spacing: 0;
-	font-weight: 400;
-	color: #000000;
+    margin: 0 0 4px;
+    font-size: 56px;
+    line-height: 56px;
+    font-family: TAYRosemary;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: #000;
 }
 
 .fp-popup__subtitle {
-	margin: 0 0 32px;
-	font-size: 18px;
-	line-height: 28px;
-	color: #000000;
-	letter-spacing: 0;
-	font-weight: 500;
+    margin: 0 0 24px;
+    font-size: 18px;
+    line-height: 28px;
+    color: #000;
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 .fp-popup__tabs {
-	display: flex;
-	gap: 40px;
-	border-bottom: 2px solid transparent;
-	margin-bottom: 32px;
+    display: flex;
+    gap: 40px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: 31px;
 }
 
 .fp-popup__tabs button {
-	padding: 0 0 8px;
-	border: none;
-	background: none;
-	cursor: pointer;
-	font-size: 16px;
-	line-height: 24px;
-	letter-spacing: 0.64px;
-	font-weight: 500;
-	text-transform: uppercase;
-	color: rgba(0, 0, 0, 0.5);
-	border-bottom: 2px solid transparent;
-	font-family: "FFBlurProMedium";
+    padding: 0 0 6.4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: .64px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #00000080;
+    border-bottom: 2px solid transparent;
+    font-family: FFBlurProMedium;
 }
 
 .fp-popup__tabs button.active {
@@ -753,7 +753,7 @@ padding: 0;
     line-height: 20px;
     letter-spacing: .56px;
     font-family: FFBlurProMedium;
-    margin: 48px 0 0;
+    margin: 32px 0 0;
     border-radius: 100px;
     border: 1.5px solid #000000;
     display: inline-block;
