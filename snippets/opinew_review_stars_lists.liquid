@@ -3,14 +3,6 @@
   assign rating_count = product.metafields.opinew_metafields.reviews_count | plus: 0
 -%}
 
-{% if rating != blank and rating_count > 0 %}
-  <span class="rating-wrap">
-    <span class="rating-summary">
-      {{ rating | times: 1.0 | round: 1 }} ({{ rating_count }})
-    </span>
-  </span>
-{% endif %}
-
 
 {% if product.metafields.opinew_metafields.stars_lists != blank %}
   {{ product.metafields.opinew_metafields.stars_lists }}
@@ -29,6 +21,12 @@
       <i class="stars-color opw-nocin opw-nocin-star-empty" aria-hidden="true"></i>
       <i class="stars-color opw-nocin opw-nocin-star-empty" aria-hidden="true"></i>
     </span>
-    <span class="opinew-no-reviews-stars-plugin" aria-label="review count"><b> </b></span>
+    {% if rating != blank and rating_count > 0 %}
+  <span class="rating-wrap">
+    <span class="rating-summary">
+      {{ rating | times: 1.0 | round: 1 }} ({{ rating_count }})
+    </span>
+  </span>
+{% endif %}
   </a>
 {% endif %}
