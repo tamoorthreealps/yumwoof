@@ -255,6 +255,7 @@
 		gap: 4rem;
 		overflow-x: auto;
 		overflow-y: hidden;
+		width: max-content;
 		margin: 0 2.4rem;
 	}
 
