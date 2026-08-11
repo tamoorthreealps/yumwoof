@@ -219,7 +219,8 @@
           {%- if atc_blocked -%}
             <p class="ywmc__form-error">
               {%- if request.design_mode -%}
-                This variant can only be purchased with a selling plan, but no plan is attached to it. Check the subscription app's plan group for this product.
+                This variant can only be purchased with a selling plan, but no plan is attached to it. Check the
+                subscription app's plan group for this product.
               {%- endif -%}
             </p>
           {%- endif -%}
@@ -267,15 +268,21 @@
 
           var button = form.querySelector('.ywmc__button');
           var errorEl = form.querySelector('[data-ywmc-error]');
-          if (errorEl) { errorEl.hidden = true; errorEl.textContent = ''; }
-          if (button) { button.setAttribute('aria-busy', 'true'); button.disabled = true; }
+          if (errorEl) {
+            errorEl.hidden = true;
+            errorEl.textContent = '';
+          }
+          if (button) {
+            button.setAttribute('aria-busy', 'true');
+            button.disabled = true;
+          }
 
           var drawer = getDrawer();
           var planInput = form.querySelector('[data-ywmc-selling-plan]');
 
           var item = {
             id: Number(form.querySelector('input[name="id"]').value),
-            quantity: Number(form.querySelector('input[name="quantity"]').value || 1)
+            quantity: Number(form.querySelector('input[name="quantity"]').value || 1),
           };
           if (planInput && planInput.value) {
             item.selling_plan = Number(planInput.value);
@@ -287,7 +294,9 @@
           // otherwise the drawer keeps its stale (empty) markup until a reload.
           var sectionIds = [];
           if (drawer && drawer.getSectionsToRender) {
-            sectionIds = drawer.getSectionsToRender().map(function (s) { return s.id; });
+            sectionIds = drawer.getSectionsToRender().map(function (s) {
+              return s.id;
+            });
           }
           if (!sectionIds.length) {
             sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
@@ -299,9 +308,11 @@
           fetch(window.Shopify.routes.root + 'cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
           })
-            .then(function (res) { return res.json(); })
+            .then(function (res) {
+              return res.json();
+            })
             .then(function (data) {
               if (data.status) throw new Error(data.description || data.message);
 
@@ -327,14 +338,19 @@
               }
             })
             .finally(function () {
-              if (button) { button.removeAttribute('aria-busy'); button.disabled = false; }
+              if (button) {
+                button.removeAttribute('aria-busy');
+                button.disabled = false;
+              }
             });
         });
       });
     }
 
     initYwmcForm(document);
-    document.addEventListener('shopify:section:load', function (e) { initYwmcForm(e.target); });
+    document.addEventListener('shopify:section:load', function (e) {
+      initYwmcForm(e.target);
+    });
   })();
 </script>
 
@@ -360,7 +376,12 @@
 
     { "type": "header", "content": "Button" },
     { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
-    { "type": "url", "id": "button_url", "label": "Button link", "info": "Only used when no product is selected below." },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link",
+      "info": "Only used when no product is selected below."
+    },
     {
       "type": "product",
       "id": "product",
@@ -373,7 +394,12 @@
       "label": "Selling plan ID (optional)",
       "info": "For subscription products. Leave empty to use the first available plan on the variant."
     },
-    { "type": "checkbox", "id": "show_plan_name", "label": "Show selling plan name above the button", "default": false },
+    {
+      "type": "checkbox",
+      "id": "show_plan_name",
+      "label": "Show selling plan name above the button",
+      "default": false
+    },
     { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
     { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
     {
@@ -500,7 +526,7 @@
         {
           "type": "textarea",
           "id": "description",
-          "label": "Description",
+          "label": "Description"
         }
       ]
     }
