@@ -170,6 +170,10 @@ background: #FFF9EF;
     color: #661D1D;
 }
 
+.yw-pcard-opinew-stars {
+    margin: 12px 0 0;
+}
+
 .yw-pcard__rating {
   display: flex;
   align-items: center;
@@ -329,6 +333,10 @@ background: #FFF9EF;
     font-size: 12px;
     line-height: 16px;
     letter-spacing: .24px;
+}
+
+.yw-pcard-opinew-stars {
+    margin: 16px 0 0;
 }
 
     .yw-pcard__desc {
