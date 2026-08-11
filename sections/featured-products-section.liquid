@@ -337,7 +337,7 @@
           </button>
 
           <div class="fp-popup__left">
-            <h2 class="fp-popup__title">{{ popup.title | default: product.title }}</h2>
+            <h2 class="fp-popup__title">{{ product.title | upcase }}</h2>
 
             {%- assign active_title_key = 'tab_' | append: active_tab | append: '_title' -%}
             <p class="fp-popup__subtitle">
