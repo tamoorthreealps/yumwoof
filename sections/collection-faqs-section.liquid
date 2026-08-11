@@ -1,3 +1,8 @@
+{%- assign faq_key = section.settings.faqs_metafield | default: 'custom.collection_page_faqs' -%}
+{%- assign faq_parts = faq_key | split: '.' -%}
+{%- assign faq_items = collection.metafields[faq_parts[0]][faq_parts[1]].value -%}
+
+{%- if faq_items != blank and faq_items.size > 0 -%}
 {{ 'css--faqs-section.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -23,9 +28,6 @@
   references FAQ metaobjects. Each metaobject has "question" (text) and "answer"
   (rich text) fields — the "category" field is ignored here.
 {%- endcomment -%}
-{%- assign faq_key = section.settings.faqs_metafield | default: 'custom.collection_page_faqs' -%}
-{%- assign faq_parts = faq_key | split: '.' -%}
-{%- assign faq_items = collection.metafields[faq_parts[0]][faq_parts[1]].value -%}
 
 <section class="faqs">
   <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
@@ -184,7 +186,7 @@
     render();
   }
 </script>
-
+{% endif %}
 {% schema %}
 {
   "name": "Collection FAQs Section",
