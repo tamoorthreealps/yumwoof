@@ -161,13 +161,14 @@ background: #FFF9EF;
 } */
 
 .yw-pcard__recipe {
-    margin: 0;
+    margin: 4px 0 0;
     font-family: "TAY Birdie", var(--font-body-family, sans-serif);
     font-size: 16px;
     line-height: 16px;
     letter-spacing: 0.32px;
     text-transform: uppercase;
     color: #661D1D;
+    transform:translateY(2px);
 }
 
 .yw-pcard-opinew-stars {
