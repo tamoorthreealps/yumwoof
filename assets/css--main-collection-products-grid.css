@@ -92,7 +92,7 @@
   transition: transform .4s ease;
 }
 
-.yw-pcard:hover .yw-pcard__img { transform: scale(0.98); }
+.yw-pcard:hover .yw-pcard__img { transform: scale(0.99); }
 /* BESTSELLER flag — top-left of the image */
 .yw-pcard__flag {
     position: absolute;
