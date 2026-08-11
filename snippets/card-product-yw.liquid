@@ -79,7 +79,7 @@
             assign rep_variant = v
           endif
           # First variant with a custom.variant_image in this recipe sets the card image.
-          assign v_img = v.metafields.custom.variant_image.value
+          assign v_img = v.metafields.custom.variant_image_collection_card.value
           if group_image == blank and v_img != blank
             assign group_image = v_img
           endif
