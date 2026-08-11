@@ -42,8 +42,8 @@
         {%- if sp.handle == product.handle -%}{%- assign is_active = true -%}{%- endif -%}
         {%- assign sel_title = sel.title | default: sel.display_name -%}
         {%- comment -%} Separate desktop/mobile images; each falls back to the other if only one is set. {%- endcomment -%}
-        {%- assign sel_desktop_img = sel.image | default: sel.image_mobile -%}
-        {%- assign sel_mobile_img = sel.image_mobile | default: sel.image -%}
+        {%- assign sel_desktop_img = sel.image  -%}
+        {%- assign sel_mobile_img = sel.image_mobile  -%}
         <a
           class="psel__item{% if is_active %} is-active{% endif %}"
           href="{{ sp.url }}"
@@ -61,6 +61,8 @@
               height="72"
               loading="lazy"
             >
+              {%- endif -%}
+              {%- if sel_mobile_img != blank -%}
             <img
               class="psel__img recipe-swatch__img--mobile"
               src="{{ sel_mobile_img | image_url: width: 144 }}"
