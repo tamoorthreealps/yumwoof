@@ -24,7 +24,6 @@
   assign sd_key = short_desc_mf | default: 'custom.collection_short_description'
   assign sd_parts = sd_key | split: '.'
   assign short_desc = product.metafields[sd_parts[0]][sd_parts[1]]
-  assign variant_short_desc = rep_variant.metafields.custom.product_card_short_description.value
 
   assign rating = product.metafields.reviews.rating
   assign rating_count = product.metafields.reviews.rating_count
@@ -68,6 +67,7 @@
     assign group_count = 0
     assign recipe_label = ''
     assign rep_variant = product.selected_or_first_available_variant
+    assign group_image = ''
 
     if recipe_idx0 >= 0
       assign recipe_label = rv
@@ -78,17 +78,24 @@
             assign group_min = v.price
             assign rep_variant = v
           endif
+          # First variant with a custom.variant_image in this recipe sets the card image.
+          assign v_img = v.metafields.custom.variant_image.value
+          if group_image == blank and v_img != blank
+            assign group_image = v_img
+          endif
         endif
       endfor
     else
       assign group_min = product.price_min
       assign group_count = product.variants.size
+      assign group_image = rep_variant.metafields.custom.variant_image.value
     endif
 
     assign rep_compare = rep_variant.compare_at_price
     assign per_day_cents = group_min | divided_by: 30
     assign card_url = rep_variant.url | default: product.url
-    assign card_image = rep_variant.image | default: product.featured_image
+    # Variant image metafield (custom.variant_image); fall back to the product featured image.
+    assign card_image = group_image | default: product.featured_image
   -%}
 
   <div class="yw-pcard">
@@ -137,11 +144,7 @@
         </div>
       {%- endif -%}
 
-      {%- assign variant_short_desc = rep_variant.metafields.custom.product_card_short_description.value -%}
-
-      {%- if variant_short_desc != blank -%}
-        <p class="yw-pcard__desc">{{ variant_short_desc }}</p>
-      {%- elsif short_desc != blank -%}
+      {%- if short_desc != blank -%}
         <p class="yw-pcard__desc">{{ short_desc }}</p>
       {%- endif -%}
 
