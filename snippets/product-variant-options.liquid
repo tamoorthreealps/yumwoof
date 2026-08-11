@@ -65,7 +65,7 @@
     {%- comment -%}
       Recipe swatch images come from the "recipe_swatches" metaobject: match its
       swatch_title to this option value, then use its desktop/mobile image fields.
-      Falls back to the value's handle + .png in Settings > Files if there's no match.
+      If no entry matches, no image is shown (title/badge only).
     {%- endcomment -%}
     {%- assign value_key = value | strip | downcase -%}
     {%- assign swatch_desktop = null -%}
@@ -81,8 +81,6 @@
     {%- comment -%} Each falls back to the other if only one image is set. {%- endcomment -%}
     {%- assign recipe_desktop_src = swatch_desktop | default: swatch_mobile -%}
     {%- assign recipe_mobile_src = swatch_mobile | default: swatch_desktop -%}
-    {%- comment -%} Legacy Files fallback (value handle + .png) when no metaobject match. {%- endcomment -%}
-    {%- assign recipe_image_url = value | handleize | append: '.png' | file_url -%}
     {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
     {%- assign swatch_badge = '' -%}
     {%- assign value_name = value | strip -%}
@@ -114,8 +112,6 @@
         {%- if recipe_desktop_src != blank -%}
           <img class="recipe-swatch__img recipe-swatch__img--desktop" src="{{ recipe_desktop_src | image_url: width: 128 }}" alt="" loading="lazy" width="64" height="64">
           <img class="recipe-swatch__img recipe-swatch__img--mobile" src="{{ recipe_mobile_src | image_url: width: 128 }}" alt="" loading="lazy" width="64" height="64">
-        {%- elsif recipe_image_url != blank -%}
-          <img class="recipe-swatch__img" src="{{ recipe_image_url }}" alt="" loading="lazy" width="64" height="64">
         {%- endif -%}
         <span class="recipe-swatch__title">{{ value }}</span>
         {{ label_unavailable }}
