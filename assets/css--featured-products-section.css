@@ -121,7 +121,7 @@
 	background-color: var(--fp-card-bg);
 	border: 1.28px solid var(--fp-card-border);
 	border-radius: 20px;
-	padding: 2.4rem 2rem 4.4rem;
+	padding: 2.8rem 2rem 4.4rem;
 	scroll-snap-stop: always;
 	will-change: transform;
 	backface-visibility: hidden;
@@ -220,12 +220,12 @@ position: absolute !important;
 }
 
 .fp__media {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 172px;
-	margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 180px;
+    margin-bottom: 1.2rem;
 }
 
 .fp__img {
