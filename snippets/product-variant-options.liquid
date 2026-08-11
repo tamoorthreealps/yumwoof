@@ -62,9 +62,27 @@
   {% assign escaped_value = value | escape %}
 
   {%- if picker_type == 'recipe_image' -%}
-    {%- comment -%} Image = the value's handle + .png, uploaded to Settings > Files. {%- endcomment -%}
-    {%- assign recipe_image_name = value | handleize | append: '.png' -%}
-    {%- assign recipe_image_url = recipe_image_name | file_url -%}
+    {%- comment -%}
+      Recipe swatch images come from the "recipe_swatches" metaobject: match its
+      swatch_title to this option value, then use its desktop/mobile image fields.
+      Falls back to the value's handle + .png in Settings > Files if there's no match.
+    {%- endcomment -%}
+    {%- assign value_key = value | strip | downcase -%}
+    {%- assign swatch_desktop = null -%}
+    {%- assign swatch_mobile = null -%}
+    {%- for rs in shop.metaobjects.recipe_swatches.values -%}
+      {%- assign rs_title = rs.swatch_title | strip | downcase -%}
+      {%- if rs_title == value_key -%}
+        {%- assign swatch_desktop = rs.swatch_desktop_image -%}
+        {%- assign swatch_mobile = rs.swatch_mobile_image -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- comment -%} Each falls back to the other if only one image is set. {%- endcomment -%}
+    {%- assign recipe_desktop_src = swatch_desktop | default: swatch_mobile -%}
+    {%- assign recipe_mobile_src = swatch_mobile | default: swatch_desktop -%}
+    {%- comment -%} Legacy Files fallback (value handle + .png) when no metaobject match. {%- endcomment -%}
+    {%- assign recipe_image_url = value | handleize | append: '.png' | file_url -%}
     {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
     {%- assign swatch_badge = '' -%}
     {%- assign value_name = value | strip -%}
@@ -93,7 +111,10 @@
         {{ input_dataset }}
       >
       <label class="recipe-swatch__label" for="{{ input_id }}">
-        {%- if recipe_image_url != blank -%}
+        {%- if recipe_desktop_src != blank -%}
+          <img class="recipe-swatch__img recipe-swatch__img--desktop" src="{{ recipe_desktop_src | image_url: width: 128 }}" alt="" loading="lazy" width="64" height="64">
+          <img class="recipe-swatch__img recipe-swatch__img--mobile" src="{{ recipe_mobile_src | image_url: width: 128 }}" alt="" loading="lazy" width="64" height="64">
+        {%- elsif recipe_image_url != blank -%}
           <img class="recipe-swatch__img" src="{{ recipe_image_url }}" alt="" loading="lazy" width="64" height="64">
         {%- endif -%}
         <span class="recipe-swatch__title">{{ value }}</span>
