@@ -318,7 +318,7 @@ background: #FFF9EF;
 }
 .yw-pcard__imgwrap {
   border-radius:1.1rem 1.1rem 0 0;
-  height: 164px;
+  /* height: 164px; */
 }
     .yw-pcard__flag {
     top: .8rem;
