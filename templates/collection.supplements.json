@@ -39,7 +39,6 @@
         },
         "product_group_bT4yhm": {
           "type": "product_group",
-          "disabled": true,
           "settings": {
             "heading": "DIY MIX",
             "subheading": "One base mix. Add your own fresh meat.",
@@ -50,7 +49,6 @@
         },
         "product_group_h6PEX3": {
           "type": "product_group",
-          "disabled": true,
           "settings": {
             "heading": "SUPPLEMENTS",
             "subheading": "Targeted toppers for digestion, immunity and gut.",
@@ -80,7 +78,7 @@
       "name": "Collection FAQs Section",
       "settings": {
         "heading": "Common Questions",
-        "subheading": "",
+        "subheading": "Every dog is different. Find the recipe that's right for yours.",
         "faqs_metafield": "custom.collection_page_faqs",
         "open_first": true,
         "background_color": "#fff9ef",
