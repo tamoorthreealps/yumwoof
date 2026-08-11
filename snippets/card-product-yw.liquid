@@ -132,11 +132,7 @@
       {%- if recipe_label != blank -%}
         <p class="yw-pcard__recipe">{{ recipe_label }}</p>
       {%- endif -%}
-<pre>
-Average: {{ product.metafields.opinew_metafields.reviews_average | json }}
-Count: {{ product.metafields.opinew_metafields.reviews_count | json }}
-Stars: {{ product.metafields.opinew_metafields.stars_product | json }}
-</pre>
+
       {%- if rating != blank -%}
         {%- assign rating_val = rating.value | default: rating | times: 1.0 -%}
         <div class="yw-pcard__rating">
