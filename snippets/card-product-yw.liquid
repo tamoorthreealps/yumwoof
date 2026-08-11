@@ -99,7 +99,7 @@
     assign card_image = group_image | default: product.featured_image
   -%}
 
-  <div class="yw-pcard">
+  <div class="yw-pcard yw-pcard--{{ product.title | handleize }}">
     <a class="yw-pcard__media" href="{{ card_url }}" aria-label="{{ product.title | escape }}">
       <span class="yw-pcard__imgwrap">
         {%- if card_image != blank -%}
