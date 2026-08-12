@@ -9,6 +9,17 @@
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
 {% assign popup = product.metafields.custom.ingredient_popup.value %}
+{%- liquid
+  assign nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
+  assign has_nl_ingredients = false
+  for v in product.variants
+    assign vnl = v.metafields.custom.nutrition_label.value
+    if vnl.ingredients != blank
+      assign has_nl_ingredients = true
+      break
+    endif
+  endfor
+-%}
 {{ 'css--swatch-subtitle.css' | asset_url | stylesheet_tag }}
 {%- unless product.has_only_default_variant -%}
   <variant-selects
@@ -54,23 +65,12 @@
         <fieldset class="js product-form__input product-form__input--recipe">
           <div class="recipe-heading  {% unless has_swatch_badge %} recipe-heading_nobadge{% endunless %} ">
             <legend class="form__label form__label--numbered">{{ option.name }}</legend>
-            {% if popup %}
-              {% if template.suffix == 'ancestral-blend' %}
-                <button
-                  class="recipe-view-ingredients"
-                  data-popup="ingredients-popup-1"
-                  type="button"
-                >
-                  + View Ingredients
-                </button>
-              {% else %}
-                <button
-                  class="recipe-view-ingredients--drawer"
-                  type="button"
-                >
-                  + View Ingredients
-                </button>
-              {% endif %}
+            {% if template.suffix == 'ancestral-blend' and popup %}
+              <button class="recipe-view-ingredients" data-popup="ingredients-popup-1" type="button">
+                + View Ingredients
+              </button>
+            {% elsif has_nl_ingredients %}
+              <button class="recipe-view-ingredients--drawer" type="button">+ View Ingredients</button>
             {% endif %}
           </div>
           <div class="recipe-swatches {% if product.handle == 'perfect-kibble' or product.handle == 'perfect-dog-food-mix' %}recipe-swatches_kibble{% endif %}">
@@ -149,3 +149,15 @@
     </script>
   </variant-selects>
 {%- endunless -%}
+
+
+
+<script>
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.recipe-view-ingredients--drawer');
+  if (!btn) return;
+  const root = document.querySelector('nutrition-label');
+  const launcher = root && root.querySelector('[data-nlabel-open="ingredients"]');
+  if (launcher) launcher.click();
+});
+</script>
