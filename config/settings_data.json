@@ -226,6 +226,27 @@
         "settings": {
           "yum-club": ""
         }
+      },
+      "shoppable-article": {
+        "type": "shoppable-article",
+        "settings": {
+          "brand_color": "#FFFFFF",
+          "border_radius": 0,
+          "collection": "",
+          "button_border_radius": 0,
+          "button_color": "#000000",
+          "button_text_color": "#ffffff",
+          "button_color_hover": "#ffffff",
+          "button_text_color_hover": "#000000",
+          "show_blog": true,
+          "blog": "nutrition",
+          "h2_size": 36,
+          "h2_top_margin": 30,
+          "h2_bottom_margin": 30,
+          "h3_size": 28,
+          "h3_top_margin": 30,
+          "h3_bottom_margin": 30
+        }
       }
     },
     "content_for_index": [],
