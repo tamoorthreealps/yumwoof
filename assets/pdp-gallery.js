@@ -90,41 +90,7 @@
       e.preventDefault();
       go(activeIndex() + 1);
     });
-    var dragStartX = 0;
-var dragStartY = 0;
-var isDragging = false;
-
-gallery.addEventListener('pointerdown', function (e) {
-  if (e.pointerType === 'mouse' && e.button !== 0) return;
-
-  dragStartX = e.clientX;
-  dragStartY = e.clientY;
-  isDragging = true;
-  gallery.classList.add('yw-gallery-dragging');
-});
-
-gallery.addEventListener('pointerup', function (e) {
-  if (!isDragging) return;
-
-  var diffX = e.clientX - dragStartX;
-  var diffY = e.clientY - dragStartY;
-
-  isDragging = false;
-  gallery.classList.remove('yw-gallery-dragging');
-
-  if (Math.abs(diffX) < 50 || Math.abs(diffX) < Math.abs(diffY)) return;
-
-  if (diffX < 0) {
-    go(activeIndex() + 1);
-  } else {
-    go(activeIndex() - 1);
-  }
-});
-
-gallery.addEventListener('pointercancel', function () {
-  isDragging = false;
-  gallery.classList.remove('yw-gallery-dragging');
-});
+    
     // A variant change can switch the active image — keep the counter in sync.
     if (window.MutationObserver) {
       new MutationObserver(update).observe(gallery, {

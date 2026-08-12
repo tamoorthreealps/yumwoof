@@ -470,7 +470,7 @@
   display:block;
 }
   .pdp-gallery .yw-gallery-nav {
-    display: none !important;
+    display: none;
   }
 }
 
@@ -1098,16 +1098,3 @@ width: 140px;
 
 
 
-.pdp-gallery media-gallery {
-  cursor: grab;
-  touch-action: pan-y;
-}
-
-.pdp-gallery media-gallery.yw-gallery-dragging {
-  cursor: grabbing;
-}
-
-.pdp-gallery media-gallery img {
-  user-select: none;
-  -webkit-user-drag: none;
-}
