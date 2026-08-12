@@ -12,50 +12,29 @@
 {% endcomment %}
 
 {%- liquid
-  # Variant-based gallery filtering.
-  #
-  # Rules:
-  # 1. Media with an empty/whitespace-only alt is GLOBAL and is shown for every variant.
-  # 2. Media with alt text is shown when the alt text contains the selected variant option 1.
-  # 3. The selected variant's featured media is only used as the first slide when it
-  #    passes the exact same filtering rules.
-  #
-  # Use option1 directly instead of parsing the variant title. This is more reliable
-  # because variant titles can contain additional options and custom separators.
-  assign current_variant = product.selected_or_first_available_variant
-  assign variant_key = current_variant.option1 | default: '' | strip | handle
-
+  # Variant-based gallery: show only media whose alt text (handleized) contains the
+  # selected variant's first option value (e.g. the Recipe). Media with NO alt text are
+  # shown for EVERY variant. Products whose media have no alt text are unaffected —
+  # every image is treated as blank, so all are shown.
   assign filtered_media = '' | split: ''
-  assign featured_media = current_variant.featured_media
-  assign featured_media_is_visible = false
-
+  assign raw_title_parts = product.selected_or_first_available_variant.title | split: ' / '
+  assign variant_key = raw_title_parts[0] | handle
   for media in product.media
-    # Keep the original alt text before handleizing it. `default` + `strip` makes
-    # nil, empty, and whitespace-only alt values behave as a global media item.
-    assign media_alt_text = media.alt | default: '' | strip
-    assign media_alt_handle = media_alt_text | handle
+    assign media_alt_handle = media.alt | handle
     assign show_media = false
-
-    if media_alt_text == ''
+    if media_alt_handle == blank
+      # No alt text (or whitespace-only) => show for every variant.
       assign show_media = true
-    elsif variant_key != blank and media_alt_handle contains variant_key
+    elsif media_alt_handle contains variant_key
+      # Alt text matches the selected variant's recipe.
       assign show_media = true
     endif
-
     if show_media
+      # Reliable single-item append (media | sort does NOT yield a 1-item array).
       assign one_media = product.media | where: 'id', media.id
       assign filtered_media = filtered_media | concat: one_media
-
-      if featured_media != null and media.id == featured_media.id
-        assign featured_media_is_visible = true
-      endif
     endif
   endfor
-
-  # Never render a featured media that was filtered out.
-  if featured_media != null and featured_media_is_visible == false
-    assign featured_media = null
-  endif
 
   if section.settings.hide_variants and variant_images.size == product.media.size
     assign single_media_visible = true
@@ -106,8 +85,8 @@
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
       role="list"
     >
-{%- if featured_media != null and featured_media_matches_filter -%}
-        {%- assign featured_media = current_variant.featured_media -%}
+      {%- if product.selected_or_first_available_variant.featured_media != null -%}
+        {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
         <li
           id="Slide-{{ section.id }}-{{ featured_media.id }}"
           class="product__media-item grid__item slider__slide is-active{% if single_media_visible %} product__media-item--single{% endif %}{% if featured_media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
@@ -131,7 +110,7 @@
         </li>
       {%- endif -%}
       {%- for media in filtered_media -%}
-        {% if limit != blank and media_position >= limit
+        {% if media_position >= limit
           or media_position >= 1
           and section.settings.hide_variants
           and variant_images contains media.src
@@ -139,10 +118,10 @@
           {% continue %}
         {% endif %}
 
-        {%- unless media.id == featured_media.id -%}
+        {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
           <li
             id="Slide-{{ section.id }}-{{ media.id }}"
-            class="product__media-item grid__item slider__slide{% if single_media_visible %} product__media-item--single{% endif %}{% if featured_media == nil and forloop.index == 1 %} is-active{% endif %}{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            class="product__media-item grid__item slider__slide{% if single_media_visible %} product__media-item--single{% endif %}{% if product.selected_or_first_available_variant.featured_media == nil and forloop.index == 1 %} is-active{% endif %}{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
             data-media-id="{{ section.id }}-{{ media.id }}"
           >
             {%- liquid
@@ -297,7 +276,7 @@
           </li>
         {%- endif -%}
         {%- for media in filtered_media -%}
-          {%- unless media.id == featured_media.id -%}
+          {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             {%- liquid
               capture media_index
                 if media.media_type == 'model'
@@ -335,8 +314,8 @@
               <button
                 class="thumbnail global-media-settings global-media-settings--no-shadow"
                 aria-label="{%- if media.media_type == 'image' -%}{{ 'products.product.media.load_image' | t: index: media_index }}{%- elsif media.media_type == 'model' -%}{{ 'products.product.media.load_model' | t: index: media_index }}{%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}{{ 'products.product.media.load_video' | t: index: media_index }}{%- endif -%}"
-                {% if media == featured_media
-                  or featured_media == null
+                {% if media == product.selected_or_first_available_variant.featured_media
+                  or product.selected_or_first_available_variant.featured_media == null
                   and forloop.index == 1
                 %}
                   aria-current="true"
