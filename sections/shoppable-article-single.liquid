@@ -1,0 +1,1141 @@
+<section class="qck-hero-highlight">
+  <div class="qck-hero-image-container">
+    <div class="qck-hero-text">
+      <h1 class="qck-hero-title">{{ collection.metafields.custom.rich_text_1_heading }}</h1>
+      <p class="qck-hero-description">
+        {{ collection.metafields.custom.rich_text_1_body | metafield_tag }}
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="qck-featured-product">
+  <div class="qck-featured-product-container">
+    {% if collection.metafields.custom.qck_featured_product != blank %}
+      {%- assign product = all_products[collection.metafields.custom.qck_featured_product] -%}
+      {%- assign current_variant = product.selected_or_first_available_variant -%}
+      <div class="qck-featured-product-wrapper">
+        <div class="qck-featured-product-gallery">
+          <div class="qck-featured-product-main-image">
+            {% if product.featured_media != blank %}
+              <img
+                src="{{ product.featured_media | image_url: width: 600 }}"
+                alt="{{ product.featured_media.alt | escape }}"
+                id="qck-featured-product-main-img"
+                loading="lazy"
+              >
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          {% if product.media.size > 1 %}
+            <div class="qck-featured-product-thumbnails">
+              {% for media in product.media limit: 5 %}
+                <div class="qck-featured-product-thumbnail{% if forloop.first %} active{% endif %}">
+                  <img
+                    src="{{ media | image_url: width: 150 }}"
+                    alt="{{ media.alt | escape }}"
+                    loading="lazy"
+                    data-full-img="{{ media | image_url: width: 600 }}"
+                    onclick="document.getElementById('qck-featured-product-main-img').src = this.getAttribute('data-full-img'); 
+                            const thumbs = document.querySelectorAll('.qck-featured-product-thumbnail');
+                            thumbs.forEach(t => t.classList.remove('active'));
+                            this.parentElement.classList.add('active');"
+                  >
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        
+        <div class="qck-featured-product-details">
+          <h2 class="qck-featured-product-title">{{ product.title | escape }}</h2>
+          
+          <div class="qck-featured-product-price">
+  {% if current_variant.compare_at_price > current_variant.price %}
+    <span class="qck-featured-price-sale">{{ current_variant.price | money }}</span>
+    <span class="qck-featured-price-compare">{{ current_variant.compare_at_price | money }}</span>
+    <span class="qck-featured-price-discount">-{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%</span>
+  {% else %}
+    <span class="qck-featured-price-regular">{{ current_variant.price | money }}</span>
+  {% endif %}
+</div>
+          
+          {% if section.settings.show_shipping_text %}
+            <div class="qck-featured-product-shipping">
+              <span class="qck-featured-shipping-text">+ FREE SHIPPING</span>
+            </div>
+          {% endif %}
+          
+          <div class="qck-featured-product-description">
+              {{ product.description | strip_html | truncatewords: 30 }}
+          </div>
+                      <a href="{{ product.url }}" class="qck-featured-product-button-link">
+              <button class="qck-featured-product-button">SHOP NOW</button>
+            </a>
+        </div>
+      </div>
+    {% else %}
+      <p>Please add a Product to your Collection Metafields.</p>
+    {% endif %}
+  </div>
+</section>
+{% if section.settings.show_blog %}
+<section class="qck-blog">
+  <div class="qck-blog-feature">
+    <h2 class="qck-blog-heading">Check out our Blog</h2>
+  
+  {%- assign blog = blogs[section.settings.blog] -%}
+  
+  {% if blog != blank %}
+    <div class="qck-blog-grid">
+      {% for article in blog.articles limit: 3 %}
+        <div class="qck-blog-card">
+          {% if article.image %}
+            <div class="qck-blog-image">
+              <img
+                src="{{ article.image | img_url: '400x' }}"
+                alt="{{ article.title | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {% else %}
+            <div class="qck-blog-image qck-blog-image-placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+          
+          <div class="qck-blog-content">
+            <h3 class="qck-blog-title">{{ article.title }}</h3>
+            
+            <div class="qck-blog-excerpt">
+              {% if article.excerpt != blank %}
+                {{ article.excerpt | strip_html | truncatewords: 20 }}
+              {% else %}
+                {{ article.content | strip_html | truncatewords: 20 }}
+              {% endif %}
+            </div>
+            
+            <div class="qck-blog-button-wrapper">
+              <a href="{{ article.url }}" class="qck-blog-button">Learn More</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="qck-blog-empty">Please select a blog in the section settings.</p>
+  {% endif %}
+</div>
+</section>
+{% endif %}
+<section class="qck-rich-text-left">
+   <h2>{{ collection.metafields.custom.rich_text_2_heading }}</h2>
+   <div class="qck-long-form-text">
+     {{ collection.metafields.custom.rich_text_2_body | metafield_tag }}
+   </div>
+ </section>
+
+
+
+
+ <section class="qck-accordion-section">
+   <h2>Frequently Asked Questions</h2>
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_1 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_1 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_2 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_2 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_3 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_3 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_4 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_4 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_5 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_5 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_6 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_6 | metafield_tag }}</p>
+   </div>
+ </section>
+
+
+
+
+<style>
+      /* ---------------------- Root ---------------------- */
+     .qck-hero-title {
+          font-size: {{ section.settings.h2_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+        }
+        
+   section {
+   /* max-width: 1400px; 
+   margin: 0 auto; */
+ }
+  
+    /* ---------------------- Image With Text Overlay ---------------------- */
+        .qck-hero-highlight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  /*height: 400px;*/
+  padding-top: 80px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+
+        .qck-hero-text {
+          flex: 1;
+          z-index: 2;
+          padding-right: 2rem;
+          max-width: 80%;
+          text-align: center;
+        }
+
+
+
+
+        .qck-hero-title h1 {
+          font-size: {{ section.settings.h2_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+   margin-top: {{ section.settings.h2_top_margin }}px !important;
+   margin-bottom: {{ section.settings.h2_bottom_margin }}px !important;
+        }
+
+
+
+
+        .qck-hero-description {
+          font-size: 16px;
+          line-height: 1.4;
+          color: black;
+        }
+
+
+
+
+        /* Image content */
+        .qck-hero-image-container {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          z-index: 2;
+          padding: 0 5%;
+        }
+
+
+
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+          .qck-hero-highlight {
+            flex-direction: column;
+            text-align: center;
+            padding: 0rem 0rem;
+          {% if collection.metafields.custom.qck_hero_desktop_image != blank %}
+            background: url({{ collection.metafields.custom.qck_hero_mobile_image | img_url: 'master' }});
+              {% else %}
+    background-color: {{ section.settings.hero_color }};
+    {% endif %}
+            /*height: 600px;*/
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+          }
+
+
+
+
+          .qck-hero-image-container {
+        align-items: flex-start;
+        padding-top: 10%;
+    }
+
+
+
+
+          .qck-hero-text {
+            padding-right: 0;
+            margin-bottom: 2rem;
+            max-width: 100%;
+          }
+
+
+
+
+          .qck-hero-title {
+          font-size: 28px;
+        }
+
+
+
+
+          .qck-hero-description {
+          font-size: 1.5rem;
+        }
+        }
+
+
+
+
+  /* ---------------------- Featured Product Section ---------------------- */
+.qck-featured-product {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5rem;
+}
+
+
+
+
+.qck-featured-product-container {
+  margin: 40px 0;
+}
+
+
+
+
+.qck-featured-product-wrapper {
+  display: flex;
+  gap: 40px;
+}
+
+
+
+
+.qck-featured-product-gallery {
+  flex: 1;
+  max-width: 50%;
+}
+
+
+
+
+.qck-featured-product-main-image {
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: {{ section.settings.border_radius }}px;
+  overflow: hidden;
+}
+
+
+
+
+.qck-featured-product-main-image img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+
+
+
+.qck-featured-product-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+
+
+.qck-featured-product-thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: {{ section.settings.border_radius | divided_by: 2 }}px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+
+
+
+.qck-featured-product-thumbnail.active {
+  border-color: #000;
+}
+
+
+
+
+.qck-featured-product-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+
+.qck-featured-product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+.qck-featured-product-title {
+  font-size: 36px !important;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em !important;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+}
+
+
+
+
+.qck-featured-product-price {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+
+.qck-featured-price-sale {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+
+
+.qck-featured-price-compare {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 20px;
+}
+
+
+
+
+.qck-featured-price-discount {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+
+
+.qck-featured-price-regular {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+
+
+.qck-featured-product-shipping {
+  margin-bottom: 15px;
+}
+
+
+
+
+.qck-featured-shipping-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #00b67a;
+}
+
+
+
+
+.qck-featured-product-description {
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+
+
+
+.qck-featured-product-quantity {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+
+
+.qck-featured-quantity-wrapper {
+  display: flex;
+  width: 150px;
+  height: 45px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+
+
+
+.qck-quantity-btn {
+  width: 45px;
+  background: #f5f5f5;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+
+
+.qck-quantity-input {
+  flex: 1;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  -moz-appearance: textfield;
+}
+
+
+
+
+.qck-quantity-input::-webkit-outer-spin-button,
+.qck-quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+.qck-featured-product-button {
+  display: inline-block;
+  padding: 15px 20px;
+  width: 100%;
+  background-color: {{ section.settings.button_color }};
+  border: 0px;
+  border-radius: {{ section.settings.button_border_radius }}px;
+  color: {{ section.settings.button_text_color }};
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+
+
+
+.qck-featured-product-button:hover {
+  background-color: {{ section.settings.button_color_hover }};
+  border: 0px;
+  color: {{ section.settings.button_text_color_hover }};
+}
+
+
+
+
+@media screen and (max-width: 989px) {
+  .qck-featured-product {
+    padding: 0 1rem;
+  }
+  
+  .qck-featured-product-wrapper {
+    flex-direction: column;
+    gap: 0px;
+  }
+  
+  .qck-featured-product-gallery {
+    max-width: 100%;
+  }
+  
+  .qck-featured-product-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+
+
+
+@media screen and (max-width: 749px) {
+  .qck-featured-product-thumbnails {
+    flex-wrap: wrap;
+  }
+  
+  .qck-featured-product-title {
+    font-size: 28px !important;
+  }
+}
+
+
+
+
+
+
+
+
+  /* ---------------------- Blog Section ---------------------- */
+  
+  
+  .qck-blog-feature {
+    padding: 5rem;
+    max-width: 1400px;
+    margin: 5% auto;
+    background-color: {{ section.settings.brand_color }};
+    border-radius: {{ section.settings.border_radius }}px;
+  }
+
+
+
+
+  .qck-blog-heading {
+    color: black;
+    text-align: center;
+    font-size: {{ section.settings.h3_size }}px !important;
+    margin-bottom: 40px;
+    margin-top: 0px;
+  }
+
+
+
+
+  .qck-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+
+
+
+  .qck-blog-card {
+    background: #fff;
+    border-radius: {{ section.settings.border_radius | divided_by: 1.5 }}px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+
+
+
+  .qck-blog-image {
+    position: relative;
+    padding-bottom: 60%;
+    overflow: hidden;
+  }
+
+
+
+
+  .qck-blog-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+
+
+  .qck-blog-content {
+    padding: 20px;
+    text-align: center;
+  }
+
+
+
+
+  .qck-blog-title {
+    font-size: 18px;
+    color: black;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+
+
+
+  .qck-blog-excerpt {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+
+
+
+  .qck-blog-button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+
+  .qck-blog-button {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 0px;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    background-color: {{ section.settings.button_color }};
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+
+
+
+  .qck-blog-button:hover {
+    background-color: {{ section.settings.button_color_hover }};
+    border: 0px;
+    color: {{ section.settings.button_text_color_hover }} !important;
+  }
+
+
+
+
+  @media screen and (max-width: 989px) {
+    .qck-blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .qck-blog-feature {
+    padding: 5rem 1rem;
+}
+  }
+
+
+
+
+  @media screen and (max-width: 749px) {
+    .qck-blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+
+
+/* ---------------------- Rich Text Section ---------------------- */
+   
+ .qck-rich-text-left {
+   max-width: 1400px;
+   padding: 5rem;
+   margin: 0 auto;
+   text-align: left;
+   padding-top: 1rem;
+ }
+
+
+
+
+ .qck-rich-text-left h2 {
+   font-size: {{ section.settings.h2_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+   margin-top: {{ section.settings.h2_top_margin }}px !important;
+   margin-bottom: {{ section.settings.h2_bottom_margin }}px !important;
+ }
+  .qck-rich-text-left h3 {
+   font-size: {{ section.settings.h3_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+   margin-top: {{ section.settings.h3_top_margin }}px !important;
+   margin-bottom: {{ section.settings.h3_bottom_margin }}px !important;
+ }
+  
+  .qck-long-form-text {
+   margin: 20px 0 !important;
+ }
+
+
+
+
+  .qck-long-form-text a,
+  .qck-hero-description a {
+    color: #0077E0;
+    text-decoration: underline;
+  }
+
+
+
+
+ .qck-long-form-text ul {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  margin-left: 1.5rem !important;
+  padding-left: 1.5rem !important;
+}
+.qck-long-form-text ul li {
+  margin-bottom: 1rem !important;
+  font-weight: 400 !important;
+  font-family: inherit !important;
+  color: #000; /* Adjust if needed for contrast */
+  display: list-item !important;
+}
+ 
+ .qck-rich-text-centered {
+   text-align: center !important;
+   padding-bottom: 2rem !important;
+ }
+
+
+
+
+   @media screen and (max-width: 989px) {
+    .qck-rich-text-left {
+    padding: 5rem 1rem;
+}
+.qck-rich-text-left h2 {
+   font-size: {{ section.settings.h2_size | divided_by: 1.25 }}px !important;
+ }
+  .qck-rich-text-left h3 {
+   font-size: {{ section.settings.h3_size | divided_by: 1.25 }}px !important;
+ }
+  }
+
+
+
+
+/* ---------------------- FAQ Section ---------------------- */
+
+
+
+
+  .qck-accordion-section {
+    padding: 5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+
+
+
+  .qck-accordion-section h2 {
+   font-size: {{ section.settings.h2_size }}px;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+ }
+  
+  .qck-accordion {
+   background-color: transparent !important;
+   color: #444;
+   cursor: pointer;
+   padding: 10px 20px;
+   width: 100%;
+   text-align: left;
+   border: none;
+   outline: none;
+   transition: 0.4s;
+   font-weight: 600;
+   font-size: 16px !important;
+   border-bottom: 2px solid #e5e5e5;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+ 
+   .qck-accordion h2 {
+     font-size: 18px !important;
+     margin: 0px !important;
+     padding: 0px !important;
+   }
+ 
+ .qck-accordion:after {
+   content: '\002B';
+   font-size: 25px !important;
+   color: #777;
+   float: right;
+   margin-left: 5px;
+ }
+ 
+ .qck-accordion .active:after {
+   content: "\2212";
+ }
+ 
+ .qck-accordion .active, 
+ .qck-accordion:hover {
+     background-color: {{ section.settings.brand_color }} !important;
+ }
+ 
+ .qck-panel {
+   padding: 0 18px;
+   background-color: transparent;
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.2s ease-out;
+ }
+
+
+
+
+  @media screen and (max-width: 989px) {
+    .qck-accordion-section {
+    padding: 5rem 1rem;
+}
+.qck-accordion-section h2 {
+   font-size: {{ section.settings.h2_size | divided_by: 1.25 }}px !important;
+ }
+  }
+ 
+ 
+</style>
+
+
+
+
+{% schema %}
+{
+  "name": "Shoppable Article",
+  "tag": "section",
+  "class": "custom-product-grid-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Branding"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Brand Color",
+      "default": "#eeeeee"
+     },
+     {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Card Border Radius",
+      "min": 0,
+      "max": 50,
+      "default": 0
+     },
+     {
+      "type": "header",
+      "content": "Featured Product"
+    },
+  {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "min": 0,
+      "max": 100,
+      "default": 0
+     },
+     {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#000000"
+     },
+     {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+     },
+     {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Button Color Hover",
+      "default": "#ffffff"
+     },
+     {
+      "type": "color",
+      "id": "button_text_color_hover",
+      "label": "Button Text Color Hover",
+      "default": "#000000"
+     },
+     {
+      "type": "header",
+      "content": "Blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog",
+      "default": true,
+      "label": "Show Blog"
+    },
+  {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+     {
+      "type": "header",
+      "content": "Article Content"
+    },
+    {
+      "type": "range",
+      "id": "h2_size",
+      "label": "H2 Font Size (px)",
+      "min": 24,
+      "max": 48,
+      "default": 36
+     },
+     {
+      "type": "range",
+      "id": "h2_top_margin",
+      "label": "H2 Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h2_bottom_margin",
+      "label": "H2 Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h3_size",
+      "label": "H3 Font Size (px)",
+      "min": 16,
+      "max": 36,
+      "default": 28
+     },
+     {
+      "type": "range",
+      "id": "h3_top_margin",
+      "label": "H3 Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h3_bottom_margin",
+      "label": "H3 Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     }
+  ],
+  "presets": [
+    {
+      "name": "Shoppable Article"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+
+<script>
+   var acc = document.getElementsByClassName("qck-accordion");
+ var i;
+ 
+ for (i = 0; i < acc.length; i++) {
+   acc[i].addEventListener("click", function() {
+     this.classList.toggle("active");
+     var panel = this.nextElementSibling;
+     if (panel.style.maxHeight) {
+       panel.style.maxHeight = null;
+     } else {
+       panel.style.maxHeight = panel.scrollHeight + "px";
+     }
+   });
+ }
+ </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.js-add-to-cart');
+    
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        const productId = this.getAttribute('data-product-id');
+        const variantId = this.getAttribute('data-variant-id');
+        const quantity = 1;
+        
+        this.textContent = 'Adding...';
+        const button = this;
+        
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            items: [{
+              id: variantId,
+              quantity: quantity
+            }]
+          })
+        })
+        .then(response => {
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            button.textContent = 'Error';
+            setTimeout(() => {
+              button.textContent = 'Add To Cart';
+            }, 2000);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          button.textContent = 'Error';
+          setTimeout(() => {
+            button.textContent = 'Add To Cart';
+          }, 2000);
+        });
+      });
+    });
+  });
+</script>
