@@ -55,13 +55,22 @@
           <div class="recipe-heading  {% unless has_swatch_badge %} recipe-heading_nobadge{% endunless %} ">
             <legend class="form__label form__label--numbered">{{ option.name }}</legend>
             {% if popup %}
-              <button
-                class="recipe-view-ingredients"
-                data-popup="ingredients-popup-1"
-                type="button"
-              >
-                + View Ingredients
-              </button>
+              {% if template.suffix == 'ancestral-blend' %}
+                <button
+                  class="recipe-view-ingredients"
+                  data-popup="ingredients-popup-1"
+                  type="button"
+                >
+                  + View Ingredients
+                </button>
+              {% else %}
+                <button
+                  class="recipe-view-ingredients"
+                  type="button"
+                >
+                  + View Ingredients
+                </button>
+              {% endif %}
             {% endif %}
           </div>
           <div class="recipe-swatches {% if product.handle == 'perfect-kibble' or product.handle == 'perfect-dog-food-mix' %}recipe-swatches_kibble{% endif %}">
