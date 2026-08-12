@@ -32,7 +32,7 @@
           "type": "mobile_cards",
           "settings": {
             "text": "Air dried food",
-            "link": "shopify://collections",
+            "link": "shopify://collections/air-dried-food",
             "card_1_image": "shopify://shop_images/1_101.png",
             "card_1_title": "LAND & SEA",
             "card_1_caption": "",
