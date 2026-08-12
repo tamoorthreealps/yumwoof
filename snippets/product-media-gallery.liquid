@@ -13,18 +13,26 @@
 
 {%- liquid
   # Variant-based gallery: show only media whose alt text (handleized) contains the
-  # selected variant's first option value (e.g. the Recipe). Media with a blank alt are
-  # shown for every variant. Products with no alt text on their media are unaffected —
+  # selected variant's first option value (e.g. the Recipe). Media with NO alt text are
+  # shown for EVERY variant. Products whose media have no alt text are unaffected —
   # every image is treated as blank, so all are shown.
   assign filtered_media = '' | split: ''
   assign raw_title_parts = product.selected_or_first_available_variant.title | split: ' / '
   assign variant_key = raw_title_parts[0] | handle
   for media in product.media
     assign media_alt_handle = media.alt | handle
-    # No alt text (or whitespace-only) => show this image for every variant.
-    if media_alt_handle == blank or media_alt_handle contains variant_key
-      assign single_media = media | sort
-      assign filtered_media = filtered_media | concat: single_media
+    assign show_media = false
+    if media_alt_handle == blank
+      # No alt text (or whitespace-only) => show for every variant.
+      assign show_media = true
+    elsif media_alt_handle contains variant_key
+      # Alt text matches the selected variant's recipe.
+      assign show_media = true
+    endif
+    if show_media
+      # Reliable single-item append (media | sort does NOT yield a 1-item array).
+      assign one_media = product.media | where: 'id', media.id
+      assign filtered_media = filtered_media | concat: one_media
     endif
   endfor
 
