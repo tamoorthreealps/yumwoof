@@ -41,7 +41,7 @@
 
   # --- Yum Club membership: logged-in customers with the member tag get a flat
   #     member discount scheme instead of the spend-based tiered thresholds. ---
-  assign member_tag = section.settings.member_tag | default: 'Yum Club Membership!'
+  assign member_tag = section.settings.member_tag | default: 'Yum! club member'
   assign is_member = false
   if customer and customer.tags contains member_tag
     assign is_member = true
@@ -70,22 +70,39 @@
     endif
   endif
   assign banner_product_in_cart = false
+  assign banner_product_qty = 0
   if banner_product != blank
     for item in cart.items
       if item.product.id == banner_product.id
         assign banner_product_in_cart = true
-        break
+        assign banner_product_qty = banner_product_qty | plus: item.quantity
       endif
     endfor
   endif
+
+  # The Yum Club discount is "active" for a shopper who is EITHER a logged-in member
+  # (customer tagged) OR has the membership product in the cart. Both show the gold
+  # success banner and hide the spend-tier thresholds. A logged-in member additionally
+  # gets the membership line item hidden in the items loop below (they already have it).
+  assign member_active = false
+  if is_member or banner_product_in_cart
+    assign member_active = true
+  endif
+
   assign show_membership_banner = false
   assign show_congrats_banner = false
-  if section.settings.banner_enable and is_member == false
-    if banner_product_in_cart
+  if section.settings.banner_enable
+    if member_active
       assign show_congrats_banner = true
     else
       assign show_membership_banner = true
     endif
+  endif
+
+  # Header count: when a member's membership line is hidden, drop it from the count too.
+  assign display_item_count = cart.item_count
+  if is_member and banner_product_in_cart
+    assign display_item_count = cart.item_count | minus: banner_product_qty
   endif
 
   # Reward thresholds (up to 4) live in section settings so they survive AJAX re-renders.
@@ -197,8 +214,8 @@
             {{ section.settings.title }}
             {%- if cart != empty -%}
               <span class="cd__count"
-                >[{{ cart.item_count }}
-                {{ cart.item_count | pluralize: 'ITEM', 'ITEMS' }}]</span
+                >[{{ display_item_count }}
+                {{ display_item_count | pluralize: 'ITEM', 'ITEMS' }}]</span
               >
             {%- endif -%}
           </h2>
@@ -324,11 +341,12 @@
                 </div>
               </div>
             {%- endif -%}
-            {%- if show_member_scheme -%}
-              <div class="cd-rewards cd-rewards--member">
-                <p class="cd-rewards__msg">{{ member_message }}</p>
-              </div>
-            {%- elsif threshold_count > 0 and banner_product_in_cart == false -%}
+            {%- comment -%}
+              Members / membership-in-cart see only the success banner above; the spend
+              tiers show for everyone else. (member_active = logged-in member OR the
+              membership product is in the cart.)
+            {%- endcomment -%}
+            {%- if threshold_count > 0 and member_active == false -%}
               <div class="cd-rewards">
                 <p class="cd-rewards__msg">{{ reward_message }}</p>
 
@@ -469,6 +487,14 @@
               >
                 <div id="CartDrawer-CartItems" class="js-contents cd-items">
                   {%- for item in cart.items -%}
+                    {%- comment -%}
+                      Logged-in Yum Club members already have membership, so hide the
+                      membership product line. A logged-OUT shopper who adds it still
+                      sees it (is_member is false for them).
+                    {%- endcomment -%}
+                    {%- if is_member and banner_product != blank and item.product.id == banner_product.id -%}
+                      {%- continue -%}
+                    {%- endif -%}
                     {%- liquid
                       assign is_sub = false
                       if item.selling_plan_allocation != null
