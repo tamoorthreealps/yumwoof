@@ -794,6 +794,18 @@
 
         var activeTitle = panel.querySelector('.fp-popup__active-tab');
         if (activeTitle) activeTitle.textContent = tab.textContent.trim();
+
+        function lockScroll() {
+            var gap = window.innerWidth - document.documentElement.clientWidth;
+            document.documentElement.style.setProperty('--fp-scrollbar-gap', gap + 'px');
+            document.body.classList.add('fp-popup-open');
+          }
+
+          function unlockScroll() {
+            if (document.querySelector('.fp-popup.active')) return;
+            document.body.classList.remove('fp-popup-open');
+            document.documentElement.style.removeProperty('--fp-scrollbar-gap');
+          }
       }
 
       // Jump to the tab whose title matches the card's recipe (no-op if none match).
@@ -817,6 +829,7 @@
           if (!popup) return;
           openMatchingTab(popup, trigger.dataset.recipe);
           popup.classList.add('active');
+          lockScroll();
           return;
         }
 
@@ -825,6 +838,7 @@
         if (closer) {
           var openPopup = closer.closest('.fp-popup');
           if (openPopup) openPopup.classList.remove('active');
+          unlockScroll();
           return;
         }
 
@@ -841,6 +855,7 @@
         document.querySelectorAll('.fp-popup.active').forEach(function (p) {
           p.classList.remove('active');
         });
+        unlockScroll();
       });
     }
 
