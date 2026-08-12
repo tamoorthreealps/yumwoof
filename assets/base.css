@@ -3693,7 +3693,10 @@ details-disclosure > details {
   display: block;
 }
 .card_new_badge{
-
+    position: absolute;
+    z-index: 1;
+    right: 12px;
+    top: 12px;
 }
 .mobile_badge{
   display:none;
