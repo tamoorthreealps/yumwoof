@@ -1,0 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "heading": "",
+        "subheading": "",
+        "show_collection_description": true,
+        "band_image": "shopify://shop_images/Collection-Banner-All-Desktop.jpg",
+        "category_menu": "collection-tab-bar",
+        "health_label": "Shop by health goal",
+        "health_menu": "",
+        "band_color": "#000000",
+        "band_text_color": "#fff9ef",
+        "accent_color": "#000000"
+      }
+    },
+    "products-grid": {
+      "type": "main-collection-products-grid",
+      "blocks": {
+        "product_group_b9bXUj": {
+          "type": "product_group",
+          "settings": {
+            "heading": "AIR DRIED FOOD",
+            "subheading": "Whole-prey recipes, complete and balanced.",
+            "products": [
+              "ancestral-blend",
+              "perfect-kibble"
+            ]
+          }
+        },
+        "product_group_bT4yhm": {
+          "type": "product_group",
+          "settings": {
+            "heading": "DIY MIX",
+            "subheading": "One base mix. Add your own fresh meat.",
+            "products": [
+              "perfect-dog-food-mix"
+            ]
+          }
+        },
+        "product_group_h6PEX3": {
+          "type": "product_group",
+          "settings": {
+            "heading": "SUPPLEMENTS",
+            "subheading": "Targeted toppers for digestion, immunity and gut.",
+            "products": [
+              "perfect-digestion",
+              "perfect-immunity",
+              "perfect-probiotics"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "product_group_b9bXUj",
+        "product_group_bT4yhm",
+        "product_group_h6PEX3"
+      ],
+      "settings": {
+        "show_collection_products": false,
+        "collection_heading": "",
+        "products_per_page": 24,
+        "columns_desktop": 3,
+        "short_desc_metafield": "custom.collection_short_description"
+      }
+    },
+    "collection_faqs_section_wnHKTP": {
+      "type": "collection-faqs-section",
+      "name": "Collection FAQs Section",
+      "settings": {
+        "heading": "Common Questions",
+        "subheading": "Every dog is different. Find the recipe that's right for yours.",
+        "faqs_metafield": "custom.collection_page_faqs",
+        "open_first": true,
+        "background_color": "#fff9ef",
+        "text_color": "#000000",
+        "line_color": "#000000",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 120,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "products-grid",
+    "collection_faqs_section_wnHKTP"
+  ]
+}
