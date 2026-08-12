@@ -64,7 +64,9 @@
               </button>
             {% endif %}
           </div>
-          <div class="recipe-swatches {% if product.title contains 'perfect-kibble' %}recipe-swatches_kibble{% endif %}">
+          {% assign product_title = product.title | downcase %}
+
+<div class="recipe-swatches {% if product_title contains 'perfect kibble' %}recipe-swatches_kibble{% endif %}">
             {% render 'product-variant-options',
               product: product,
               option: option,
