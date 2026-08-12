@@ -60,6 +60,10 @@
   else
     assign recipe_list = '__ALL__' | split: '#'
   endif
+   assign new_badge = false
+   if product.tags contains 'new' or product.tags contains 'New' or product.tags contains 'NEW'
+   assign new_badge = true
+   endif
 -%}
 
 {%- for rv in recipe_list -%}
