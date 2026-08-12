@@ -21,7 +21,7 @@
         "recommend_title": "You'll Also Love",
         "recommend_intent": "related",
         "member_enable": true,
-        "member_tag": "Yum Club Membership!",
+        "member_tag": "Yum! club member",
         "member_percent": 25,
         "member_message": "{percent}% applied",
         "unlocked_message": "You've unlocked every reward! 🎉",
