@@ -475,6 +475,12 @@
   button.yw-gallery-btn {
     width: 16px;
 }
+.yw-gallery-next {
+    right: 16px;
+}
+.yw-gallery-prev {
+    left: 16px;
+}
 }
 
 /*------ custom--waqar--css ------*/
