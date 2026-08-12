@@ -400,7 +400,7 @@
 .yw-gallery-pagination {
     position:absolute;
     left:50%;
-    bottom:20px;
+    bottom:16px;
     transform:translateX(-50%);
     display:flex;
     gap:8px;
@@ -470,7 +470,7 @@
   display:block;
 }
   .pdp-gallery .yw-gallery-nav {
-    display: block;
+    display: none;
   }
 }
 
@@ -964,6 +964,10 @@ a.pdp--promo--banner_link svg {
     line-height: 20px;
     padding: 0 2.2rem;
   }
+
+  .yw-gallery-pagination {
+    bottom:20px;
+}
 
   .recipe-heading {
     margin: 0 0 20px;
