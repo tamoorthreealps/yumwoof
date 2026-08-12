@@ -4,6 +4,8 @@
   Accepts:
   - product {product} - the product to render
   - style {string} - 'recommend' (compact, ADD button) or 'empty' (tall, SHOP NOW)
+  - recipe {string} - (optional, 'empty' style) render this card for a single Recipe
+      value; image + link come from that recipe's cheapest variant.
 {%- endcomment -%}
 
 {%- liquid
@@ -14,28 +16,67 @@
 -%}
 
 {%- if style == 'empty' -%}
+  {%- liquid
+    # Representative variant: cheapest variant of the passed recipe, else the
+    # product's selected/first-available variant.
+    assign rep = product.selected_or_first_available_variant
+    assign recipe_label = recipe
+    if recipe != blank
+      assign recipe_idx = -1
+      for opt in product.options
+        assign optn = opt | downcase | strip
+        if optn == 'recipe'
+          assign recipe_idx = forloop.index0
+        endif
+      endfor
+      if recipe_idx >= 0
+        assign rep_price = 0
+        for v in product.variants
+          if v.options[recipe_idx] == recipe
+            if rep_price == 0 or v.price < rep_price
+              assign rep_price = v.price
+              assign rep = v
+            endif
+          endif
+        endfor
+      endif
+    endif
+
+    # Image: variant desktop/mobile metafields -> variant image -> product image.
+    assign card_desktop = rep.metafields.custom.variant_image_collection_card.value | default: rep.image | default: product.featured_image
+    assign card_mobile = rep.metafields.custom.variant_image_collection_card_mobile.value | default: card_desktop
+    assign card_url = rep.url | default: product.url
+    assign card_short_desc = rep.metafields.custom.product_card_short_description.value | default: product.metafields.custom.product_card_short_description.value
+  -%}
   <div class="cd-shop-card">
-    <a href="{{ product.url }}" class="cd-shop-card__media" tabindex="-1" aria-hidden="true">
-      {%- if product.featured_image -%}
+    <a href="{{ card_url }}" class="cd-shop-card__media" tabindex="-1" aria-hidden="true">
+      {%- if card_desktop != blank -%}
         {{
-          product.featured_image
+          card_desktop
           | image_url: width: 400
-          | image_tag: class: 'cd-shop-card__img', widths: '160, 260, 400', alt: card_alt, loading: 'lazy'
+          | image_tag: class: 'cd-shop-card__img cd-shop-card__img--desktop', widths: '160, 260, 400', alt: card_alt, loading: 'lazy'
+        }}
+        {{
+          card_mobile
+          | image_url: width: 400
+          | image_tag: class: 'cd-shop-card__img cd-shop-card__img--mobile', widths: '160, 260, 400', alt: card_alt, loading: 'lazy'
         }}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'cd-shop-card__img' }}
       {%- endif -%}
     </a>
     <div class="cd-shop-card__body">
-      {%- if product.type != blank -%}
+      {%- if recipe_label != blank -%}
+        <p class="cd-shop-card__type">{{ recipe_label }}</p>
+      {%- elsif product.type != blank -%}
         <p class="cd-shop-card__type">{{ product.type }}</p>
       {%- endif -%}
-      <a href="{{ product.url }}" class="cd-shop-card__title">{{ product.title | escape }}</a>
-      {%- if product.metafields.custom.product_card_short_description != blank -%}
-        <p class="cd-shop-card__desc">{{ product.metafields.custom.product_card_short_description.value }}</p>
+      <a href="{{ card_url }}" class="cd-shop-card__title">{{ product.title | escape }}</a>
+      {%- if card_short_desc != blank -%}
+        <p class="cd-shop-card__desc">{{ card_short_desc }}</p>
       {%- endif -%}
     </div>
-    <a href="{{ product.url }}" class="cd-hex-btn cd-shop-card__btn">SHOP NOW</a>
+    <a href="{{ card_url }}" class="cd-hex-btn cd-shop-card__btn">SHOP NOW</a>
   </div>
 
 {%- else -%}

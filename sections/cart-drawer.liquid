@@ -251,9 +251,33 @@
                   <div class="splide__track">
                     <ul class="splide__list">
                       {%- for product in empty_coll.products limit: 8 -%}
-                        <li class="splide__slide">
-                          {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
-                        </li>
+                        {%- comment -%} One card per Recipe (mirrors the collection page); products without a Recipe option render a single card. {%- endcomment -%}
+                        {%- assign recipe_idx0 = -1 -%}
+                        {%- for opt in product.options -%}
+                          {%- assign optname = opt | downcase | strip -%}
+                          {%- if optname == 'recipe' -%}{%- assign recipe_idx0 = forloop.index0 -%}{%- endif -%}
+                        {%- endfor -%}
+                        {%- if recipe_idx0 >= 0 -%}
+                          {%- assign recipe_values = '' -%}
+                          {%- for v in product.variants -%}
+                            {%- assign token = v.options[recipe_idx0] | append: '||' -%}
+                            {%- unless recipe_values contains token -%}
+                              {%- assign recipe_values = recipe_values | append: token -%}
+                            {%- endunless -%}
+                          {%- endfor -%}
+                          {%- assign recipe_list = recipe_values | split: '||' -%}
+                          {%- for rv in recipe_list -%}
+                            {%- assign rv_check = rv | strip | downcase -%}
+                            {%- if rv_check == 'healthy grains (original)' -%}{%- continue -%}{%- endif -%}
+                            <li class="splide__slide">
+                              {% render 'cart-drawer-product-card', product: product, style: 'empty', recipe: rv %}
+                            </li>
+                          {%- endfor -%}
+                        {%- else -%}
+                          <li class="splide__slide">
+                            {% render 'cart-drawer-product-card', product: product, style: 'empty' %}
+                          </li>
+                        {%- endif -%}
                       {%- endfor -%}
                     </ul>
                   </div>

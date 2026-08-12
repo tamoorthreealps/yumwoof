@@ -1207,6 +1207,20 @@ background: #000;
 	    border-radius: 12px;
 }
 
+/* Desktop/mobile variant card images (custom.variant_image_collection_card[_mobile]).
+   Desktop-first: show the desktop image, hide the mobile one; flipped at <= 750px. */
+.cd-shop-card__img--mobile {
+	display: none;
+}
+@media screen and (max-width: 750px) {
+	.cd-shop-card__img--desktop {
+		display: none;
+	}
+	.cd-shop-card__img--mobile {
+		display: block;
+	}
+}
+
 .cd-shop-card__type {
 	color: var(--cd-header-bg);
 	font-size: 13px;
