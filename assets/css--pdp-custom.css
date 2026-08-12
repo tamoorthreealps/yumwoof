@@ -472,6 +472,9 @@
   .pdp-gallery .yw-gallery-nav {
     display: block;
   }
+  button.yw-gallery-btn {
+    width: 16px;
+}
 }
 
 /*------ custom--waqar--css ------*/
