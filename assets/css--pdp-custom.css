@@ -998,7 +998,7 @@ a.pdp--promo--banner_link svg {
     align-items: center;
     flex-direction: inherit;
     justify-content: normal;
-    gap: 8px;
+    gap: 0;
     height: 56px;
     border-radius: 8px;
   }
