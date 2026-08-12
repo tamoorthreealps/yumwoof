@@ -35,7 +35,7 @@
 	font-size: 14px;
 	line-height: 20px;
 	letter-spacing: 0;
-	color: #000;
+	color: var(--rs-text);
 	font-family: TAY Birdie;
 }
 
@@ -45,10 +45,12 @@
 	font-size: 40px;
 	line-height: 40px;
 	letter-spacing: -.40px;
-	color: #000;
+	color: var(--rs-text);
 	font-family: TAYRosemary;
 }
-
+.research__intro__top .research__eyebrow, .research__intro__top .research__heading{
+	color:#000;
+}
 .research--uppercase .research__eyebrow,
 .research--uppercase .research__heading {
 	text-transform: uppercase;
