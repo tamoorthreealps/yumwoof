@@ -1,3 +1,7 @@
+<style>
+  .yw-pcard-opinew-stars span.opinew-no-reviews-stars-plugin {display:none;}
+</style>
+
 {%- liquid
   assign rating = product.metafields.opinew_metafields.reviews_average
   assign rating_count = product.metafields.opinew_metafields.reviews_count | plus: 0
