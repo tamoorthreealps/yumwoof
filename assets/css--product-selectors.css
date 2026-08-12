@@ -87,7 +87,10 @@
 	}
 
     .psel__img {
-        width: 108px;
-        height:80px;
+        width: 50px;
+        height: 52px;
+        right: 0;
+        bottom: 14px;
+        margin: 0 auto;
     }
 }
