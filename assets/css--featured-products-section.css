@@ -17,7 +17,7 @@
 	overflow: hidden;
 }
 
-body.fp-popup-open {
+body.ingredient-popup-open {
   overflow: hidden;
   /* keeps layout from shifting when the scrollbar disappears */
   padding-right: var(--fp-scrollbar-gap, 0px);
