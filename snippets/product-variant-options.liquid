@@ -126,7 +126,7 @@
       <span class="visually-hidden">{{ escaped_value }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
-{% unless value == '3.5 Pound Bag' %}
+{% unless value == '3.5 Pound Bag' or value == '1.75 Pound Box' %}
     {% render 'swatch-input',
       id: input_id,
       name: input_name,
