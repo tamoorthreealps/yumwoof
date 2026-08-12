@@ -106,10 +106,7 @@
         },
         "nutritional_information_KCbq7E": {
           "type": "nutritional-information",
-          "settings": {
-            "nutritional_heading": "COMPLETE & BALANCED",
-            "nutritional_content": "Yumwoof Ancestral Blend is formulated to meet the nutritional levels established by the AAFCO Dog Food Nutrient Profiles for all life stages."
-          }
+          "settings": {}
         },
         "description": {
           "type": "description",
@@ -301,8 +298,8 @@
       "settings": {
         "heading": "Any Questions?",
         "subheading": "",
-        "faq_image": "shopify://shop_images/faqs_desktop.png",
-        "faq_image_mobile": "shopify://shop_images/faqs_mobile.png",
+        "faq_image": "shopify://shop_images/faq-desktop.png",
+        "faq_image_mobile": "shopify://shop_images/faq-mobie.png",
         "open_first": false,
         "background_color": "#fff9ef",
         "text_color": "#000000",
