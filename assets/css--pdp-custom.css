@@ -1076,5 +1076,9 @@ width: 140px;
 }
 .recipe-swatches.recipe-swatches_kibble .recipe-swatch__title {
     text-align: left;
+    padding:0 12px 0 0;
+}
+.recipe-swatches.recipe-swatches_kibble .recipe-swatch__img {
+  height:56px;
 }
 }
