@@ -3702,6 +3702,10 @@ details-disclosure > details {
   display:none;
 }
 @media screen and (max-width: 749px) {
+  .card_new_badge{
+        top: 8px;
+    right: 8px;
+  }
 .desktop_badge{
   display:none;
 }
