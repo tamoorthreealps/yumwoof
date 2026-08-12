@@ -25,12 +25,12 @@
   >
     {% assign has_swatch_badge = false %}
 
-{% for v in product.variants %}
-  {% if v.metafields.custom.swatch_badge.value != blank %}
-    {% assign has_swatch_badge = true %}
-    {% break %}
-  {% endif %}
-{% endfor %}
+    {% for v in product.variants %}
+      {% if v.metafields.custom.swatch_badge.value != blank %}
+        {% assign has_swatch_badge = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
     {%- for option in product.options_with_values -%}
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
@@ -66,7 +66,7 @@
           </div>
           {% assign product_title = product.title | downcase %}
 
-<div class="recipe-swatches {% if product_title contains 'perfect kibble' %}recipe-swatches_kibble{% endif %}">
+          <div class="recipe-swatches {% if product_title contains 'perfect kibble' or product_title contains 'perfect-dog-food-mix' %}recipe-swatches_kibble{% endif %}">
             {% render 'product-variant-options',
               product: product,
               option: option,
