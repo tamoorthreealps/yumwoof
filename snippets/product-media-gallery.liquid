@@ -12,45 +12,49 @@
 {% endcomment %}
 
 {%- liquid
-  # Variant-based gallery:
-  # - Show media when its alt text is blank.
-  # - Show media when its alt text contains the selected/first available
-  #   variant's first option value.
-  # This keeps generic media (blank alt) visible for every variant.
-  assign filtered_media = '' | split: ''
+  # Variant-based gallery filtering.
+  #
+  # Rules:
+  # 1. Media with an empty/whitespace-only alt is GLOBAL and is shown for every variant.
+  # 2. Media with alt text is shown when the alt text contains the selected variant option 1.
+  # 3. The selected variant's featured media is only used as the first slide when it
+  #    passes the exact same filtering rules.
+  #
+  # Use option1 directly instead of parsing the variant title. This is more reliable
+  # because variant titles can contain additional options and custom separators.
   assign current_variant = product.selected_or_first_available_variant
-  assign raw_title_parts = current_variant.title | split: ' / '
-  assign variant_key = raw_title_parts[0] | handle
+  assign variant_key = current_variant.option1 | default: '' | strip | handle
+
+  assign filtered_media = '' | split: ''
+  assign featured_media = current_variant.featured_media
+  assign featured_media_is_visible = false
 
   for media in product.media
-    assign media_alt_handle = media.alt | handle
+    # Keep the original alt text before handleizing it. `default` + `strip` makes
+    # nil, empty, and whitespace-only alt values behave as a global media item.
+    assign media_alt_text = media.alt | default: '' | strip
+    assign media_alt_handle = media_alt_text | handle
     assign show_media = false
 
-    if media_alt_handle == blank
-      # Empty/whitespace-only alt text => show for every variant.
+    if media_alt_text == ''
       assign show_media = true
     elsif variant_key != blank and media_alt_handle contains variant_key
-      # Variant-specific media => show when the variant key is in the alt text.
       assign show_media = true
     endif
 
     if show_media
-      # Append the media as a real one-item array.
       assign one_media = product.media | where: 'id', media.id
       assign filtered_media = filtered_media | concat: one_media
+
+      if featured_media != null and media.id == featured_media.id
+        assign featured_media_is_visible = true
+      endif
     endif
   endfor
 
-  # The selected variant's featured media must also pass the same filter.
-  # Previously it was rendered unconditionally, outside filtered_media.
-  assign featured_media = current_variant.featured_media
-  assign featured_media_matches_filter = false
-
-  if featured_media != null
-    assign featured_media_filtered = filtered_media | where: 'id', featured_media.id
-    if featured_media_filtered.size > 0
-      assign featured_media_matches_filter = true
-    endif
+  # Never render a featured media that was filtered out.
+  if featured_media != null and featured_media_is_visible == false
+    assign featured_media = null
   endif
 
   if section.settings.hide_variants and variant_images.size == product.media.size
@@ -62,7 +66,6 @@
   endif
 
   assign media_count = filtered_media.size
-
   if section.settings.hide_variants and media_count > 1 and variant_images.size > 0
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
@@ -128,7 +131,7 @@
         </li>
       {%- endif -%}
       {%- for media in filtered_media -%}
-        {% if media_position >= limit
+        {% if limit != blank and media_position >= limit
           or media_position >= 1
           and section.settings.hide_variants
           and variant_images contains media.src
