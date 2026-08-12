@@ -239,6 +239,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   font-family: "FFBlurProMedium";
+  display:none;
 }
 
 .yw-nav__membership:hover {
