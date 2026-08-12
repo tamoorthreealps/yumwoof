@@ -25,12 +25,12 @@
   >
     {% assign has_swatch_badge = false %}
 
-    {% for v in product.variants %}
-      {% if v.metafields.custom.swatch_badge.value != blank %}
-        {% assign has_swatch_badge = true %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
+{% for v in product.variants %}
+  {% if v.metafields.custom.swatch_badge.value != blank %}
+    {% assign has_swatch_badge = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
     {%- for option in product.options_with_values -%}
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
