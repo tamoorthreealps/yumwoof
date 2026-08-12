@@ -78,8 +78,8 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	-webkit-overflow-scrolling: touch;
-	scroll-snap-type: x mandatory;
-	overscroll-behavior-x: contain;
+		scroll-snap-type: x mandatory;   /* add this */
+	overscroll-behavior-x: contain;  /* stops the rubber-band drift */
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 	padding-bottom: 4rem;
@@ -128,24 +128,28 @@
 }
 
 .fp__card-link {
-	position: absolute !important;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 3 !important;
-	border-radius: inherit;
-	font-size: 0;
-	display: block !important;
-	cursor: pointer;
+position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3 !important;
+    border-radius: inherit;
+    font-size: 0;
+    display: block !important;
+    cursor: pointer;
 }
 
 /* Anything that needs its own click target sits above the overlay */
 .fp__card .fp__recipes,
 .fp__card .fp__shop {
-	position: relative;
-	z-index: 4;
+  position: relative;
+  z-index: 4;
 }
+
+/* .fp__card.is-active {
+	transform: scale(1);
+} */
 
 .fp__hover-media {
 	position: absolute !important;
@@ -165,7 +169,7 @@
 }
 
 .fp__hover-media img {
-	width: 100%;
+		width: 100%;
 	height: 100%;
 	object-fit: cover;
 	border-radius: 20px;
@@ -180,49 +184,49 @@
 }
 
 .fp__title {
-	margin: 0 0 8px;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 16px;
-	letter-spacing: -0.28px;
-	font-family: TAY Birdie;
-	color: #000;
+    margin: 0 0 8px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -0.28px;
+    font-family: TAY Birdie;
+    color: #000;
 }
 
 .fp__labels {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 8px;
-	margin: 0 0 12px;
-	padding: 0;
-	list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
 }
 
 .fp__label:not(:first-child) {
-	display: none;
-}
+		display: none;
+	}
 
 .fp__label {
-	padding: 0;
-	border-radius: 100px;
-	color: #000;
-	font-size: 28px;
-	line-height: 32px;
-	letter-spacing: 0;
-	text-transform: uppercase;
-	font-family: TAYRosemary;
-	font-weight: 400;
+    padding: 0;
+    border-radius: 100px;
+    color: #000;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-family: TAYRosemary;
+    font-weight: 400;
 	transform: translateY(-4px);
 }
 
 .fp__media {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 180px;
-	margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 180px;
+    margin-bottom: 1.2rem;
 }
 
 .fp__img {
@@ -232,6 +236,12 @@
 	height: auto;
 	object-fit: contain;
 }
+
+/* .fp__card:hover .fp__img {
+
+	transform: scale(1.08);
+
+} */
 
 .fp__desc {
 	margin: 0 0 1.2rem;
@@ -249,29 +259,51 @@
 	font-size: 11px;
 	line-height: 16px;
 	letter-spacing: 0.44px;
+	text-transform: capitalize;
 	text-decoration: none;
 	font-family: "FFBlurProMedium";
 	text-decoration: underline;
 	text-transform: uppercase;
 }
 
-.fp__shop {
-	color: #000;
-	text-decoration: none;
-	background: #FEC068;
-	display: flex;
+/* Amber hexagon SHOP button overlapping the card's bottom edge */
+/* .fp__shop {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, 50%);
+	width: 120px;
+	height: 48px;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid #000;
-	border-radius: 100px;
-	transition: all .25s ease;
-	padding: 10px 22px 8.4px;
-	margin: 24px 0 -64px;
+	background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/featured--cards--mb--btn.svg?v=1784731933") center / 100% 100% no-repeat;
+	color: #000000;
+	text-decoration: none;
 }
 
-.fp__shop:hover {
-	background: #000;
+
+.fp__card__hover:hover .fp__shop {
+	background: url("https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Button.svg?v=1784734468") center / 100% 100% no-repeat;
 	color: #FFF9EF;
+} */
+
+.fp__shop {
+    color: #000;
+    text-decoration: none;
+    background: #FEC068;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    border-radius: 100px;
+	transition: all .25s ease;
+	padding: 10px 22px 8.4px;
+    margin: 24px 0 -64px;
+}
+.fp__shop:hover {
+    background: #000;
+    color: #FFF9EF;
 }
 
 .fp__shop-label {
@@ -338,6 +370,7 @@
 
 
 .mobile_fp__button {
+	display: block;
 	display: block;
 	text-align: center;
 	padding: 0 24px;
@@ -428,16 +461,23 @@
 	.fp__card__hover:hover .fp__hover-media img {
 		transform: scale(1.04);
 	}
-
 	.fp__card__hover:hover .fp__hover-media {
 		opacity: 1;
 	}
 
+	/* .fp__card:hover {
+
+		transform: translateY(-12px);
+
+		box-shadow: 0 30px 70px rgba(0, 0, 0, .12);
+
+	} */
+
 	.fp__title {
 		font-size: 20px;
-		line-height: 16px;
-		letter-spacing: -0.40px;
-		margin: 0 0 12px;
+        line-height: 16px;
+        letter-spacing: -0.40px;
+        margin: 0 0 12px;
 	}
 
 	.fp__labels {
@@ -450,10 +490,11 @@
 	}
 
 	.fp__label {
-		font-size: 40px;
-		line-height: 48px;
-		letter-spacing: 0;
-		text-transform: uppercase;
+		        font-size: 40px;
+        line-height: 48px;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        
 	}
 
 	.fp__media {
@@ -486,11 +527,17 @@
 		text-transform: uppercase;
 	}
 
-	.fp__shop {
-		border: 1.5px solid #000;
-		padding: 12.2px 33.79px 10.2px;
-		margin: 24px 0 0;
-	}
+	/* .fp__shop {
+		width: 164px;
+		height: 72px;
+		background: url("https://yumwoof-2.myshopify.com/cdn/shop/files/megamenu-desktop-btn-ng.svg?v=1784203684") center / 100% 100% no-repeat;
+	} */
+
+	    .fp__shop {
+        border: 1.5px solid #000;
+        padding: 12.2px 33.79px 10.2px;
+        margin: 24px 0 0;
+    }
 
 	.fp__shop-label {
 		font-size: 16px;
@@ -532,21 +579,21 @@
 }
 
 .fp-popup__panel {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -150%);
-	transition: transform .6s cubic-bezier(.22, 1, .36, 1);
-	width: min(1392px, 90vw);
-	background: #ffffffe6;
-	border-radius: 24px;
-	overflow: hidden;
-	display: flex;
-	align-items: self-end;
-	padding: 96px 71px 96px 98px;
-	gap: 21px;
-	-webkit-backdrop-filter: blur(10px);
-	backdrop-filter: blur(10px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+    width: min(1392px, 90vw);
+    background: #ffffffe6;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    align-items: self-end;
+    padding: 96px 71px 96px 98px;
+    gap: 21px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .fp-popup.active .fp-popup__panel {
@@ -557,14 +604,11 @@
 	width: 71.17%;
 }
 
-/* FIX: position the bowl's actual parent so `right` resolves against the
-   same box at every breakpoint (the bowl is a SIBLING of __right_img). */
 .fp-popup__right {
 	width: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	position: relative;
 }
 
 .fp-popup__right_img {
@@ -607,13 +651,13 @@
 }
 
 .fp-popup__right_img_bowl {
-    position: absolute;
-    right: -222px;
-    height: 436px;
-    width: auto;
-    bottom: -57px;
-    top: auto;
+	position: absolute;
+	right: -135px;
+	height: 436px;
+	width: auto;
+	bottom: 30px;
 }
+
 .fp-popup__right_img_bowl img {
 	margin: 0;
 	height: 100%;
@@ -650,45 +694,45 @@
 }
 
 .fp-popup__title {
-	margin: 0 0 4px;
-	font-size: 56px;
-	line-height: 56px;
-	font-family: TAYRosemary;
-	letter-spacing: 0;
-	font-weight: 400;
-	color: #000;
+    margin: 0 0 4px;
+    font-size: 56px;
+    line-height: 56px;
+    font-family: TAYRosemary;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: #000;
 	transform: translateY(-4px);
 }
 
 .fp-popup__subtitle {
-	margin: 0 0 24px;
-	font-size: 18px;
-	line-height: 28px;
-	color: #000;
-	letter-spacing: 0;
-	font-weight: 500;
+    margin: 0 0 24px;
+    font-size: 18px;
+    line-height: 28px;
+    color: #000;
+    letter-spacing: 0;
+    font-weight: 500;
 }
 
 .fp-popup__tabs {
-	display: flex;
-	gap: 40px;
-	border-bottom: 2px solid transparent;
-	margin-bottom: 31px;
+    display: flex;
+    gap: 40px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: 31px;
 }
 
 .fp-popup__tabs button {
-	padding: 0 0 6.4px;
-	border: none;
-	background: none;
-	cursor: pointer;
-	font-size: 16px;
-	line-height: 24px;
-	letter-spacing: .64px;
-	font-weight: 500;
-	text-transform: uppercase;
-	color: #00000080;
-	border-bottom: 2px solid transparent;
-	font-family: FFBlurProMedium;
+    padding: 0 0 6.4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: .64px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #00000080;
+    border-bottom: 2px solid transparent;
+    font-family: FFBlurProMedium;
 }
 
 .fp-popup__tabs button.active {
@@ -714,24 +758,24 @@
 }
 
 .fp-popup__content_btn {
-	background: #fec068;
-	color: #000;
-	text-decoration: none;
-	font-size: 14px;
-	line-height: 20px;
-	letter-spacing: .56px;
-	font-family: FFBlurProMedium;
-	margin: 32px 0 0;
-	border-radius: 100px;
-	border: 1.5px solid #000000;
-	display: inline-block;
-	padding: 13.2px 23.47px;
-	transition: all .25s ease;
+    background: #fec068;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .56px;
+    font-family: FFBlurProMedium;
+    margin: 32px 0 0;
+    border-radius: 100px;
+    border: 1.5px solid #000000;
+    display: inline-block;
+    padding: 13.2px 23.47px;
+	    transition: all .25s ease;
 }
 
 .fp-popup__content_btn:hover {
-	background: #000;
-	color: #fff9ef;
+    background: #000;
+    color: #fff9ef;
 }
 
 @media(max-width:1200px) {
@@ -749,15 +793,9 @@
 
 @media(max-width:768px) {
 
-	/* FIX (iOS): the panel is a scroll container. Combining
-	   -webkit-backdrop-filter with an infinitely animating, layer-promoted
-	   child makes Safari composite them on separate layers and mis-clip the
-	   bowl during scroll. Drop the blur on mobile and use a solid fill. */
 	.fp-popup__panel {
 		overflow-x: hidden;
 		overflow-y: auto;
-		-webkit-overflow-scrolling: touch;
-		overscroll-behavior: contain;
 		padding: 40px 28px 26px;
 		width: 96vw;
 		max-width: 376px;
@@ -765,10 +803,6 @@
 		gap: 36px;
 		border-radius: 20px;
 		max-height: calc(95vh - 16px);
-		max-height: calc(95dvh - 16px);
-		background: #ffffff;
-		-webkit-backdrop-filter: none;
-		backdrop-filter: none;
 	}
 
 	.fp-popup__left,
@@ -816,12 +850,12 @@
 	}
 
 	.fp-popup__content_btn {
-		font-size: 12px;
-		line-height: 20px;
-		letter-spacing: .60px;
-		margin: 24px 0 0;
-		padding: 9.2px 24.67px;
-	}
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: .60px;
+        margin: 24px 0 0;
+        padding: 9.2px 24.67px;
+    }
 
 	.fp-popup__right {
 		justify-content: flex-end;
@@ -833,25 +867,12 @@
 		margin: 0;
 	}
 
-	/* FIX: keep the bowl inside the panel — the panel clips with
-	   overflow: hidden, so a negative `right` will always crop it. */
-	.fp-popup__right_img_bowl {
-        right: -92px;
-        bottom: 0;
-        height: 200px;
+	    .fp-popup__right_img_bowl {
+        right: -84px;
+        height: 220px;
         width: auto;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-	}
-
-	/* FIX (iOS): don't promote the rotating <img> itself — let the wrapper
-	   own the layer. will-change on a child inside a scrolled, clipped
-	   ancestor is what triggers the stale-tile repaint on Safari. */
-	.fp-popup__right_img_bowl img {
-		will-change: auto;
-	}
+        bottom: 16px;
+    }
 
 	.fp-popup__close {
 		right: 16px;
