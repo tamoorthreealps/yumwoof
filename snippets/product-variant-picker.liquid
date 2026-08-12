@@ -65,7 +65,7 @@
         <fieldset class="js product-form__input product-form__input--recipe">
           <div class="recipe-heading  {% unless has_swatch_badge %} recipe-heading_nobadge{% endunless %} ">
             <legend class="form__label form__label--numbered">{{ option.name }}</legend>
-            {% if template.suffix == 'ancestral-blend' and popup %}
+            {% if popup %}
               <button class="recipe-view-ingredients" data-popup="ingredients-popup-1" type="button">
                 + View Ingredients
               </button>
