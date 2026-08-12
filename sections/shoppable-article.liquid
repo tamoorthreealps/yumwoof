@@ -1,0 +1,1117 @@
+<section class="qck-hero-highlight">
+  <div class="qck-hero-image-container">
+    <div class="qck-hero-text">
+      <h1 class="qck-hero-title">{{ collection.metafields.custom.rich_text_1_heading }}</h1>
+      <p class="qck-hero-description">
+        {{ collection.metafields.custom.rich_text_1_body | metafield_tag }}
+      </p>
+    </div>
+  </div>
+</section>
+<section class="qck-product-grid-new">
+  <div class="qck-custom-product-grid">
+    {% if section.settings.collection != blank %}
+    {%- assign collection = collections[section.settings.collection] -%}
+    {% else %}
+    {%- assign collection = collection -%}
+    {% endif %}
+
+
+
+
+    {% if collection != blank %}
+      <ul class="qck-product-grid">
+        {% for product in collection.products %}
+          <li class="qck-grid-item {% if forloop.index > 4 %}qck-hidden-product{% endif %}">
+            <a href="{{ product.url | within: collection }}" class="qck-product-link">
+              <div class="qck-product-image">
+                {% if product.featured_media != blank %}
+                  <img
+                    src="{{ product.featured_media | image_url: width: 500 }}"
+                    alt="{{ product.featured_media.alt | escape }}"
+                    loading="lazy"
+                  >
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              <h3 class="qck-product-title">{{ product.title | escape }}</h3>
+              <div class="qck-product-price">
+                {% if product.compare_at_price > product.price %}
+                  <span class="qck-price-sale">{{ product.price | money }}</span>
+                  <span class="qck-price-compare">{{ product.compare_at_price | money }}</span>
+                {% else %}
+                  <span class="qck-price-regular">{{ product.price | money }}</span>
+                {% endif %}
+              </div>
+            </a>
+            
+            {% comment %} Check if product has multiple variants {% endcomment %}
+            {% if product.has_only_default_variant %}
+              <button 
+                class="qck-product-button js-add-to-cart" 
+                data-product-id="{{ product.id }}"
+                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+              >
+                Add To Cart
+              </button>
+            {% else %}
+              <a href="{{ product.url | within: collection }}" class="qck-product-button-link">
+                <button class="qck-product-button">
+                  Choose Options
+                </button>
+              </a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      
+      {% if collection.products.size > 4 %}
+        <div class="qck-load-more-container">
+          <button class="qck-load-more-button" id="qck-load-more">
+            Load More Products
+          </button>
+        </div>
+      {% endif %}
+    {% else %}
+      <p>Please select a collection in the section settings.</p>
+    {% endif %}
+  </div>
+</section>
+{% if section.settings.show_blog %}
+<section class="qck-blog">
+  <div class="qck-blog-feature">
+    <h2 class="qck-blog-heading">Check out our Blog</h2>
+  
+  {%- assign blog = blogs[section.settings.blog] -%}
+  
+  {% if blog != blank %}
+    <div class="qck-blog-grid">
+      {% for article in blog.articles limit: 3 %}
+        <div class="qck-blog-card">
+          {% if article.image %}
+            <div class="qck-blog-image">
+              <img
+                src="{{ article.image | img_url: '400x' }}"
+                alt="{{ article.title | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {% else %}
+            <div class="qck-blog-image qck-blog-image-placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endif %}
+          
+          <div class="qck-blog-content">
+            <h3 class="qck-blog-title">{{ article.title }}</h3>
+            
+            <div class="qck-blog-excerpt">
+              {% if article.excerpt != blank %}
+                {{ article.excerpt | strip_html | truncatewords: 20 }}
+              {% else %}
+                {{ article.content | strip_html | truncatewords: 20 }}
+              {% endif %}
+            </div>
+            
+            <div class="qck-blog-button-wrapper">
+              <a href="{{ article.url }}" class="qck-blog-button">Learn More</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="qck-blog-empty">Please select a blog in the section settings.</p>
+  {% endif %}
+</div>
+</section>
+{% endif %}
+<section class="qck-rich-text-left">
+   <h2>{{ collection.metafields.custom.rich_text_2_heading }}</h2>
+   <div class="qck-long-form-text">
+     {{ collection.metafields.custom.rich_text_2_body | metafield_tag }}
+   </div>
+ </section>
+
+
+
+
+ <section class="qck-accordion-section">
+   <h2>Frequently Asked Questions</h2>
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_1 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_1 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_2 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_2 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_3 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_3 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_4 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_4 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_5 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_5 | metafield_tag }}</p>
+   </div>
+ 
+   <button class="qck-accordion">
+     <h2>{{ collection.metafields.custom.qck_accordion.value.question_6 }}</h2>
+   </button>
+   <div class="qck-panel">
+     <p>{{ collection.metafields.custom.qck_accordion.value.answer_6 | metafield_tag }}</p>
+   </div>
+ </section>
+
+
+
+
+<style>
+      /* ---------------------- Root ---------------------- */
+  #shopify-section-shoppable-article {
+    background-color: #ffffff;
+  }
+   section {
+   /* max-width: 1400px; 
+   margin: 0 auto; */
+ }
+  
+    /* ---------------------- Image With Text Overlay ---------------------- */
+        .qck-hero-highlight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  /*height: 400px;*/
+  padding-top: 80px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+
+        .qck-hero-text {
+          flex: 1;
+          z-index: 2;
+          padding-right: 2rem;
+          max-width: 80%;
+          text-align: center;
+        }
+
+
+
+
+        .qck-hero-title {
+          font-size: {{ section.settings.h2_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+        }
+
+
+
+
+        .qck-hero-description {
+          font-size: 16px;
+          line-height: 1.4;
+          color: black;
+        }
+
+
+
+
+        /* Image content */
+        .qck-hero-image-container {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          z-index: 2;
+          padding: 0 5%;
+        }
+
+
+
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+          .qck-hero-highlight {
+            flex-direction: column;
+            text-align: center;
+            padding: 0rem 0rem;
+          {% if collection.metafields.custom.qck_hero_desktop_image != blank %}
+            background: url({{ collection.metafields.custom.qck_hero_mobile_image | img_url: 'master' }});
+              {% else %}
+    background-color: {{ section.settings.hero_color }};
+    {% endif %}
+            /*height: 600px;*/
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+          }
+
+
+
+
+          .qck-hero-image-container {
+        align-items: flex-start;
+        padding-top: 10%;
+    }
+
+
+
+
+          .qck-hero-text {
+            padding-right: 0;
+            margin-bottom: 2rem;
+            max-width: 100%;
+          }
+
+
+
+
+          .qck-hero-title {
+          font-size: 28px;
+        }
+
+
+
+
+          .qck-hero-description {
+          font-size: 1.5rem;
+        }
+        }
+
+
+
+
+     /* ---------------------- Product Grid ---------------------- */
+.qck-custom-product-grid {
+  padding: 5% 5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+
+
+
+.qck-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+
+
+
+.qck-grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;    
+  padding: 20px;
+  background-color: {{ section.settings.brand_color }};
+  border-radius: {{ section.settings.border_radius }}px;
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+
+
+/* Hidden products styling */
+.qck-hidden-product {
+  display: none;
+}
+
+
+
+
+.qck-hidden-product.qck-show-product {
+  display: flex;
+  animation: qck-fadeInUp 0.5s ease forwards;
+}
+
+
+
+
+@keyframes qck-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+.qck-grid-item a {
+  text-decoration: none;
+  color: black;
+}
+
+
+
+
+.qck-product-image {
+  position: relative;
+  padding-bottom: 100%;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: {{ section.settings.border_radius | divided_by: 1.5 }}px;
+}
+
+
+
+
+.qck-product-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+
+.qck-product-title {
+  font-size: 22px !important;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 0.02px !important;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+  margin: 20px 0px 10px 0px;
+}
+
+
+
+
+.qck-product-price {
+  text-align: center;
+}
+
+
+
+
+.qck-price-compare {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 12px;
+}
+
+
+
+
+.qck-product-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  width: 100%;
+  background-color: {{ section.settings.button_color }};
+  border: 0px;
+  border-radius: {{ section.settings.button_border_radius }}px;
+  color: {{ section.settings.button_text_color }};
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+
+
+
+.qck-product-button:hover {
+  background-color: {{ section.settings.button_color_hover }};
+  border: 0px;
+  color: {{ section.settings.button_text_color_hover }};
+}
+
+
+
+
+/* Load More Button Styles */
+.qck-load-more-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+
+
+.qck-load-more-button {
+  padding: 15px 30px;
+  background-color: {{ section.settings.button_color }};
+  border: 0px;
+  border-radius: {{ section.settings.button_border_radius }}px;
+  color: {{ section.settings.button_text_color }};
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+
+.qck-load-more-button:hover {
+  background-color: {{ section.settings.button_color_hover }};
+  border: 0px;
+  color: {{ section.settings.button_text_color_hover }};
+}
+
+
+
+
+.qck-load-more-button.qck-loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+
+
+@media screen and (max-width: 989px) {
+  .qck-custom-product-grid {
+    padding: 30px 10px;
+    margin: 0 auto;
+  }
+  .qck-grid-item {
+    padding: 10px;
+  }
+  .qck-product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .qck-product-title {
+    font-size: 16px !important;
+  }
+  .qck-product-button {
+    font-size: 12px;
+  }
+}
+
+
+
+
+@media screen and (max-width: 749px) {
+  .qck-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+
+
+
+@media screen and (max-width: 480px) {
+  .qck-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+
+
+
+  /* ---------------------- Blog Section ---------------------- */
+  
+  
+  .qck-blog-feature {
+    padding: 5rem;
+    max-width: 1400px;
+    margin: 5% auto;
+    background-color: {{ section.settings.brand_color }};
+    border-radius: {{ section.settings.border_radius }}px;
+  }
+
+
+
+
+  .qck-blog-heading {
+    color: black;
+    text-align: center;
+    font-size: {{ section.settings.h3_size }}px !important;
+    margin-bottom: 40px;
+    margin-top: 0px;
+  }
+
+
+
+
+  .qck-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+
+
+
+  .qck-blog-card {
+    background: #fff;
+    border-radius: {{ section.settings.border_radius | divided_by: 1.5 }}px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+
+
+
+  .qck-blog-image {
+    position: relative;
+    padding-bottom: 60%;
+    overflow: hidden;
+  }
+
+
+
+
+  .qck-blog-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+
+
+  .qck-blog-content {
+    padding: 20px;
+    text-align: center;
+  }
+
+
+
+
+  .qck-blog-title {
+    font-size: 18px;
+    color: black;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+
+
+
+  .qck-blog-excerpt {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+
+
+
+  .qck-blog-button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+
+  .qck-blog-button {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 0px;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    background-color: {{ section.settings.button_color }};
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+
+
+
+  .qck-blog-button:hover {
+    background-color: {{ section.settings.button_color_hover }};
+    border: 0px;
+    color: {{ section.settings.button_text_color_hover }} !important;
+  }
+
+
+
+
+  @media screen and (max-width: 989px) {
+    .qck-blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .qck-blog-feature {
+    padding: 5rem 1rem;
+}
+  }
+
+
+
+
+  @media screen and (max-width: 749px) {
+    .qck-blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+
+
+/* ---------------------- Rich Text Section ---------------------- */
+   
+ .qck-rich-text-left {
+   max-width: 1400px;
+   padding: 5rem;
+   margin: 0 auto;
+   text-align: left;
+   padding-top: 1rem;
+ }
+
+
+
+
+ .qck-rich-text-left h2 {
+   font-size: {{ section.settings.h2_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+   margin-top: {{ section.settings.h2_top_margin }}px !important;
+   margin-bottom: {{ section.settings.h2_bottom_margin }}px !important;
+ }
+  .qck-rich-text-left h3 {
+   font-size: {{ section.settings.h3_size }}px !important;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+   margin-top: {{ section.settings.h3_top_margin }}px !important;
+   margin-bottom: {{ section.settings.h3_bottom_margin }}px !important;
+ }
+  
+  .qck-long-form-text {
+   margin: 20px 0 !important;
+ }
+
+
+
+
+  .qck-long-form-text a,
+  .qck-hero-description a {
+    color: #0077E0;
+    text-decoration: underline;
+  }
+
+
+
+
+ .qck-long-form-text ul {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  margin-left: 1.5rem !important;
+  padding-left: 1.5rem !important;
+}
+.qck-long-form-text ul li {
+  margin-bottom: 1rem !important;
+  font-weight: 400 !important;
+  font-family: inherit !important;
+  color: #000; /* Adjust if needed for contrast */
+  display: list-item !important;
+}
+ 
+ .qck-rich-text-centered {
+   text-align: center !important;
+   padding-bottom: 2rem !important;
+ }
+
+
+
+
+   @media screen and (max-width: 989px) {
+    .qck-rich-text-left {
+    padding: 5rem 1rem;
+}
+.qck-rich-text-left h2 {
+   font-size: {{ section.settings.h2_size | divided_by: 1.25 }}px !important;
+ }
+  .qck-rich-text-left h3 {
+   font-size: {{ section.settings.h3_size | divided_by: 1.25 }}px !important;
+ }
+  }
+
+
+.qck-long-form-text ol,
+.qck-long-form-text ul {
+  padding-inline-start: 1.5rem;
+  margin-bottom: 25px;
+  line-height: 25px;
+}
+.qck-long-form-text ol li {
+  list-style: decimal !important;
+  margin-bottom: 15px;
+}
+.qck-long-form-text ul li {
+  list-style: disc !important;
+}
+.qck-long-form-text ul li strong,
+.qck-long-form-text ol li strong {
+  font-weight: bold !important;
+}
+
+
+
+
+/* ---------------------- FAQ Section ---------------------- */
+
+
+
+
+  .qck-accordion-section {
+    padding: 5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+
+
+
+  .qck-accordion-section h2 {
+   font-size: {{ section.settings.h2_size }}px;
+   letter-spacing: 0.02em !important;
+   padding-bottom: 0px !important;
+   padding-top: 0px !important;
+ }
+  
+  .qck-accordion {
+   background-color: transparent !important;
+   color: #444;
+   cursor: pointer;
+   padding: 10px 20px;
+   width: 100%;
+   text-align: left;
+   border: none;
+   outline: none;
+   transition: 0.4s;
+   font-weight: 600;
+   font-size: 16px !important;
+   border-bottom: 2px solid #e5e5e5;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+ 
+   .qck-accordion h2 {
+     font-size: 18px !important;
+     margin: 0px !important;
+     padding: 0px !important;
+   }
+ 
+ .qck-accordion:after {
+   content: '\002B';
+   font-size: 25px !important;
+   color: #777;
+   float: right;
+   margin-left: 5px;
+ }
+ 
+ .qck-accordion .active:after {
+   content: "\2212";
+ }
+ 
+ .qck-accordion .active, 
+ .qck-accordion:hover {
+     background-color: {{ section.settings.brand_color }} !important;
+ }
+ 
+ .qck-panel {
+   padding: 0 18px;
+   background-color: transparent;
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.2s ease-out;
+ }
+
+
+
+
+  @media screen and (max-width: 989px) {
+    .qck-accordion-section {
+    padding: 5rem 1rem;
+}
+.qck-accordion-section .qck-accordion {
+   font-size: 16px !important;
+ }
+  }
+
+
+ 
+ 
+</style>
+
+
+
+
+{% schema %}
+{
+  "name": "Shoppable Article",
+  "tag": "section",
+  "class": "custom-product-grid-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Branding"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Brand Color",
+      "default": "#eeeeee"
+     },
+     {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Card Border Radius",
+      "min": 0,
+      "max": 50,
+      "default": 0
+     },
+     {
+      "type": "header",
+      "content": "Collection Grid"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+     {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "min": 0,
+      "max": 100,
+      "default": 0
+     },
+     {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#000000"
+     },
+     {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+     },
+     {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Button Color Hover",
+      "default": "#ffffff"
+     },
+     {
+      "type": "color",
+      "id": "button_text_color_hover",
+      "label": "Button Text Color Hover",
+      "default": "#000000"
+     },
+     {
+      "type": "header",
+      "content": "Blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blog",
+      "default": true,
+      "label": "Show Blog"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+     {
+      "type": "header",
+      "content": "Article Content"
+    },
+    {
+      "type": "range",
+      "id": "h2_size",
+      "label": "H2 Font Size (px)",
+      "min": 24,
+      "max": 48,
+      "default": 36
+     },
+     {
+      "type": "range",
+      "id": "h2_top_margin",
+      "label": "H2 Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h2_bottom_margin",
+      "label": "H2 Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h3_size",
+      "label": "H3 Font Size (px)",
+      "min": 16,
+      "max": 36,
+      "default": 28
+     },
+     {
+      "type": "range",
+      "id": "h3_top_margin",
+      "label": "H3 Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h3_bottom_margin",
+      "label": "H3 Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     }
+  ],
+  "presets": [
+    {
+      "name": "Shoppable Article"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+
+<script>
+   var acc = document.getElementsByClassName("qck-accordion");
+ var i;
+ 
+ for (i = 0; i < acc.length; i++) {
+   acc[i].addEventListener("click", function() {
+     this.classList.toggle("active");
+     var panel = this.nextElementSibling;
+     if (panel.style.maxHeight) {
+       panel.style.maxHeight = null;
+     } else {
+       panel.style.maxHeight = panel.scrollHeight + "px";
+     }
+   });
+ }
+ </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const addToCartButtons = document.querySelectorAll('.js-add-to-cart');
+  
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      
+      const productId = this.getAttribute('data-product-id');
+      const variantId = this.getAttribute('data-variant-id');
+      const quantity = 1;
+      
+      this.textContent = 'Adding...';
+      const button = this;
+      
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          items: [{
+            id: variantId,
+            quantity: quantity
+          }]
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.reload();
+          
+        } else {
+          button.textContent = 'Error';
+          setTimeout(() => {
+            button.textContent = 'Add To Cart';
+          }, 2000);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        button.textContent = 'Error';
+        setTimeout(() => {
+          button.textContent = 'Add To Cart';
+        }, 2000);
+      });
+    });
+  });
+
+
+  const loadMoreButton = document.getElementById('qck-load-more');
+  const hiddenProducts = document.querySelectorAll('.qck-hidden-product');
+  
+  if (loadMoreButton && hiddenProducts.length > 0) {
+    loadMoreButton.addEventListener('click', function() {
+      this.textContent = 'Loading...';
+      this.classList.add('qck-loading');
+      
+      setTimeout(() => {
+        hiddenProducts.forEach((product, index) => {
+          setTimeout(() => {
+            product.classList.add('qck-show-product');
+          }, index * 100);
+        });
+        
+        setTimeout(() => {
+          this.style.display = 'none';
+        }, hiddenProducts.length * 100 + 300);
+      }, 300);
+    });
+  }
+});
+</script>
