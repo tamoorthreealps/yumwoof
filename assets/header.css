@@ -609,7 +609,12 @@ body.is-open::after {
   width: 18px;
   height: 18px;
 }
-
+.yw-mobile-menu__close:focus,
+.yw-mobile-menu__close:focus-visible {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
 .yw-mobile-menu__body {
   padding: 1.6rem 2.4rem 4.4rem;
 }
