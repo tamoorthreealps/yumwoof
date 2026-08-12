@@ -9,23 +9,39 @@
   metaobjects, each with: display_name, image (file, desktop),
   image_mobile (file, mobile), title, product (ref).
 
+  NOTE: the <a> and <img> tags below are kept on single lines on purpose.
+  Multi-line tags with Liquid inside were being output as literal text.
+
   Accepts:
   - product : {Object} current product
   - heading : {String} optional legend label (e.g. "Recipe" / "Formula")
 {% endcomment %}
-{%- assign selectors = product.metafields.custom.product_selectors.value -%}
-{% assign popup = product.metafields.custom.ingredient_popup.value %}
+
 {%- liquid
-  assign nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
+  assign selectors = product.metafields.custom.product_selectors.value
+  assign popup = product.metafields.custom.ingredient_popup.value
+  assign dp = product.metafields.custom.pdp_drawer.value
+
+  comment
+    The "+ View Ingredients" drawer button shows when the nutrition-label
+    drawer has an ingredients panel — via EITHER path:
+      A) generic   : product custom.pdp_drawer
+      B) structured: any variant custom.nutrition_label with ingredients
+  endcomment
   assign has_nl_ingredients = false
-  for v in product.variants
-    assign vnl = v.metafields.custom.nutrition_label.value
-    if vnl.ingredients != blank
-      assign has_nl_ingredients = true
-      break
-    endif
-  endfor
+  if dp != blank
+    assign has_nl_ingredients = true
+  else
+    for v in product.variants
+      assign vnl = v.metafields.custom.nutrition_label.value
+      if vnl.ingredients != blank
+        assign has_nl_ingredients = true
+        break
+      endif
+    endfor
+  endif
 -%}
+
 {%- if selectors and selectors.size > 0 -%}
   {{ 'css--product-selectors.css' | asset_url | stylesheet_tag }}
 
@@ -34,13 +50,12 @@
       {%- if heading != blank -%}
         <p class="psel__legend">{{ heading }}</p>
       {%- endif -%}
-      {% if template.suffix == 'ancestral-blend' and popup %}
-        <button class="recipe-view-ingredients" data-popup="ingredients-popup-1" type="button">
-          + View Ingredients
-        </button>
-      {% elsif has_nl_ingredients %}
+
+      {%- if template.suffix == 'ancestral-blend' and popup -%}
+        <button class="recipe-view-ingredients" data-popup="ingredients-popup-1" type="button">+ View Ingredients</button>
+      {%- elsif has_nl_ingredients -%}
         <button class="recipe-view-ingredients--drawer" type="button">+ View Ingredients</button>
-      {% endif %}
+      {%- endif -%}
     </div>
 
     <div class="psel__row" role="list">
@@ -50,37 +65,12 @@
         {%- assign is_active = false -%}
         {%- if sp.handle == product.handle -%}{%- assign is_active = true -%}{%- endif -%}
         {%- assign sel_title = sel.title | default: sel.display_name -%}
-        {%- comment -%} Separate desktop/mobile images; each falls back to the other if only one is set. {%- endcomment -%}
+        {%- comment -%} Separate desktop/mobile images; either may be omitted. {%- endcomment -%}
         {%- assign sel_desktop_img = sel.image -%}
         {%- assign sel_mobile_img = sel.image_mobile -%}
-        <a
-          class="psel__item{% if is_active %} is-active{% endif %}"
-          href="{{ sp.url }}"
-          role="listitem"
-          {% if is_active %}
-            aria-current="true"
-          {% endif %}
-        >
-          {%- if sel_desktop_img != blank -%}
-            <img
-              class="psel__img recipe-swatch__img--desktop"
-              src="{{ sel_desktop_img | image_url: width: 144 }}"
-              alt="{{ sel_title | escape }}"
-              width="72"
-              height="72"
-              loading="lazy"
-            >
-          {%- endif -%}
-          {%- if sel_mobile_img != blank -%}
-            <img
-              class="psel__img recipe-swatch__img--mobile"
-              src="{{ sel_mobile_img | image_url: width: 144 }}"
-              alt="{{ sel_title | escape }}"
-              width="72"
-              height="72"
-              loading="lazy"
-            >
-          {%- endif -%}
+        <a class="psel__item{% if is_active %} is-active{% endif %}" href="{{ sp.url }}" role="listitem"{% if is_active %} aria-current="true"{% endif %}>
+          {%- if sel_desktop_img != blank -%}<img class="psel__img recipe-swatch__img--desktop" src="{{ sel_desktop_img | image_url: width: 144 }}" alt="{{ sel_title | escape }}" width="72" height="72" loading="lazy">{%- endif -%}
+          {%- if sel_mobile_img != blank -%}<img class="psel__img recipe-swatch__img--mobile" src="{{ sel_mobile_img | image_url: width: 144 }}" alt="{{ sel_title | escape }}" width="72" height="72" loading="lazy">{%- endif -%}
           <span class="psel__title">{{ sel_title }}</span>
         </a>
       {%- endfor -%}
@@ -89,11 +79,28 @@
 {%- endif -%}
 
 <script>
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.recipe-view-ingredients--drawer');
-    if (!btn) return;
-    const root = document.querySelector('nutrition-label');
-    const launcher = root && root.querySelector('[data-nlabel-open="ingredients"]');
-    if (launcher) launcher.click();
-  });
+  (function () {
+    if (window.__nlIngredientsBound) return;
+    window.__nlIngredientsBound = true;
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.recipe-view-ingredients--drawer');
+      if (!btn) return;
+
+      var root = document.querySelector('nutrition-label');
+      if (!root) return;
+
+      // Structured path exposes an explicit key; the generic (pdp_drawer) path
+      // uses numbered keys, so fall back to matching the visible label.
+      var launcher =
+        root.querySelector('[data-nlabel-open="ingredients"]') ||
+        Array.prototype.find.call(root.querySelectorAll('.nlabel__btn'), function (b) {
+          var label = b.querySelector('.nlabel__label');
+          return label && /ingredient/i.test(label.textContent);
+        }) ||
+        root.querySelector('.nlabel__btn');
+
+      if (launcher) launcher.click();
+    });
+  })();
 </script>
