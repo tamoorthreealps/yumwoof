@@ -35,7 +35,7 @@
 	font-size: 14px;
 	line-height: 20px;
 	letter-spacing: 0;
-	color: var(--rs-text);
+	color: #000;
 	font-family: TAY Birdie;
 }
 
@@ -45,7 +45,7 @@
 	font-size: 40px;
 	line-height: 40px;
 	letter-spacing: -.40px;
-	color: var(--rs-text);
+	color: #000;
 	font-family: TAYRosemary;
 }
 
