@@ -598,9 +598,7 @@
                       -%}
                     </div>
                   {%- when 'nutritional-information' -%}
-                    {% assign nutritional_content = product.metafields.custom.complete_balanced.value
-                      | default: 'Yumwoof Ancestral Blend is formulated to meet the nutritional levels established by the AAFCO Dog Food Nutrient Profiles for all life stages.'
-                    %}
+                    {% assign nutritional_content = product.metafields.custom.complete_balanced.value %}
                     {% if nutritional_content != blank %}
                     <div class="nutritional--info">
                       <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
