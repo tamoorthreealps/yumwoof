@@ -12,29 +12,46 @@
 {% endcomment %}
 
 {%- liquid
-  # Variant-based gallery: show only media whose alt text (handleized) contains the
-  # selected variant's first option value (e.g. the Recipe). Media with NO alt text are
-  # shown for EVERY variant. Products whose media have no alt text are unaffected —
-  # every image is treated as blank, so all are shown.
+  # Variant-based gallery:
+  # - Show media when its alt text is blank.
+  # - Show media when its alt text contains the selected/first available
+  #   variant's first option value.
+  # This keeps generic media (blank alt) visible for every variant.
   assign filtered_media = '' | split: ''
-  assign raw_title_parts = product.selected_or_first_available_variant.title | split: ' / '
+  assign current_variant = product.selected_or_first_available_variant
+  assign raw_title_parts = current_variant.title | split: ' / '
   assign variant_key = raw_title_parts[0] | handle
+
   for media in product.media
     assign media_alt_handle = media.alt | handle
     assign show_media = false
+
     if media_alt_handle == blank
-      # No alt text (or whitespace-only) => show for every variant.
+      # Empty/whitespace-only alt text => show for every variant.
       assign show_media = true
-    elsif media_alt_handle contains variant_key
-      # Alt text matches the selected variant's recipe.
+    elsif variant_key != blank and media_alt_handle contains variant_key
+      # Variant-specific media => show when the variant key is in the alt text.
       assign show_media = true
     endif
+
     if show_media
-      # Reliable single-item append (media | sort does NOT yield a 1-item array).
+      # Append the media as a real one-item array.
       assign one_media = product.media | where: 'id', media.id
       assign filtered_media = filtered_media | concat: one_media
     endif
   endfor
+
+  # The selected variant's featured media must also pass the same filter.
+  # Previously it was rendered unconditionally, outside filtered_media.
+  assign featured_media = current_variant.featured_media
+  assign featured_media_matches_filter = false
+
+  if featured_media != null
+    assign featured_media_filtered = filtered_media | where: 'id', featured_media.id
+    if featured_media_filtered.size > 0
+      assign featured_media_matches_filter = true
+    endif
+  endif
 
   if section.settings.hide_variants and variant_images.size == product.media.size
     assign single_media_visible = true
@@ -45,6 +62,7 @@
   endif
 
   assign media_count = filtered_media.size
+
   if section.settings.hide_variants and media_count > 1 and variant_images.size > 0
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
@@ -85,8 +103,8 @@
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
       role="list"
     >
-      {%- if product.selected_or_first_available_variant.featured_media != null -%}
-        {%- assign featured_media = product.selected_or_first_available_variant.featured_media -%}
+{%- if featured_media != null and featured_media_matches_filter -%}
+        {%- assign featured_media = current_variant.featured_media -%}
         <li
           id="Slide-{{ section.id }}-{{ featured_media.id }}"
           class="product__media-item grid__item slider__slide is-active{% if single_media_visible %} product__media-item--single{% endif %}{% if featured_media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
@@ -118,10 +136,10 @@
           {% continue %}
         {% endif %}
 
-        {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+        {%- unless media.id == featured_media.id -%}
           <li
             id="Slide-{{ section.id }}-{{ media.id }}"
-            class="product__media-item grid__item slider__slide{% if single_media_visible %} product__media-item--single{% endif %}{% if product.selected_or_first_available_variant.featured_media == nil and forloop.index == 1 %} is-active{% endif %}{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            class="product__media-item grid__item slider__slide{% if single_media_visible %} product__media-item--single{% endif %}{% if featured_media == nil and forloop.index == 1 %} is-active{% endif %}{% if media.media_type != 'image' %} product__media-item--full{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
             data-media-id="{{ section.id }}-{{ media.id }}"
           >
             {%- liquid
@@ -276,7 +294,7 @@
           </li>
         {%- endif -%}
         {%- for media in filtered_media -%}
-          {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+          {%- unless media.id == featured_media.id -%}
             {%- liquid
               capture media_index
                 if media.media_type == 'model'
@@ -314,8 +332,8 @@
               <button
                 class="thumbnail global-media-settings global-media-settings--no-shadow"
                 aria-label="{%- if media.media_type == 'image' -%}{{ 'products.product.media.load_image' | t: index: media_index }}{%- elsif media.media_type == 'model' -%}{{ 'products.product.media.load_model' | t: index: media_index }}{%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}{{ 'products.product.media.load_video' | t: index: media_index }}{%- endif -%}"
-                {% if media == product.selected_or_first_available_variant.featured_media
-                  or product.selected_or_first_available_variant.featured_media == null
+                {% if media == featured_media
+                  or featured_media == null
                   and forloop.index == 1
                 %}
                   aria-current="true"
