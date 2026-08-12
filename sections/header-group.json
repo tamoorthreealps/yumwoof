@@ -50,9 +50,9 @@
         "mobile_link_xthb3t": {
           "type": "mobile_link",
           "settings": {
-            "text": "NUTRITIONAL MIX",
-            "link": "",
-            "image": "shopify://shop_images/Category_IMG_1.png"
+            "text": "DIY MIX",
+            "link": "shopify://products/perfect-dog-food-mix",
+            "image": "shopify://shop_images/4_9.png"
           }
         },
         "mobile_link_XBaRhf": {
