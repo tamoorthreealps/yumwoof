@@ -234,11 +234,12 @@
           "ul,ol {margin: 0 !important; padding: 0 0 0 30px !important; color: inherit;}",
           "ul li {margin: 0 0 5px !important; list-style: disc; color: inherit;}",
           "ol li {margin: 0 0 5px !important; list-style: auto; color: inherit;}",
-          ".qck-panel .metafield-rich_text_field p {margin-top: 10px;}"
+          ".qck-panel .metafield-rich_text_field p {margin-top: 10px;}",
+          ".custom-product-grid-section{margin-top:50px;}"
         ],
         "settings": {
           "brand_color": "#FFFFFF",
-          "border_radius": 0,
+          "border_radius": 24,
           "collection": "",
           "button_border_radius": 8,
           "button_color": "#FFC069",
