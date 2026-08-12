@@ -16,7 +16,7 @@
         "uppercase_heading": true,
         "subheading": "Next-level nutrition. Your dog deserves it.",
         "button_label": "Take the quiz",
-        "button_link": "",
+        "button_link": "https://my.yumwoof.com/",
         "offer_text": "Get 30% Off and Free Shipping.",
         "content_position": "bottom",
         "content_alignment": "left",
@@ -69,77 +69,6 @@
     },
     "featured_products": {
       "type": "featured-products-section",
-      "blocks": {
-        "popup_4cqqzU": {
-          "type": "popup",
-          "settings": {
-            "popup_title": "",
-            "popup_subtitle": "",
-            "tab_1_title": "LAND & SEA",
-            "tab_1_image": "shopify://shop_images/Mask_group.png",
-            "tab_1_content": "Turkey, Turkey Neck, Pork Liver, Pork, Whole Eggs, Sweet Potato, Tapioca, Turkey Liver, Sardines, Anchovy, Turkey Heart, Turkey Gizzard, Cartilage, Kelp, Duck, Oysters, Cod Liver Oil, Nutritional Yeast, Thyme, Ginger, Himalayan Sea Salt, Coconut Oil, Taurine, Blueberries, Cumin, Rose Hips",
-            "tab_1_button_label": "SHOP NOW",
-            "tab_1_button_link": "shopify://collections/all",
-            "tab_2_title": "TURKEY",
-            "tab_2_image": "shopify://shop_images/Mask_group_1.png",
-            "tab_2_content": "85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck heart, turkey gizzard, duck gizzard, cartilage), tapioca, whole eggs, beet fiber, brewer’s yeast, carrots, blueberries, organic coconut oil, cumin, thyme, turmeric, rose hip.",
-            "tab_2_button_label": "SHOP NOW",
-            "tab_2_button_link": "shopify://collections/all",
-            "tab_3_title": "WILD CAUGHT FISH",
-            "tab_3_image": "shopify://shop_images/Mask_group_2.png",
-            "tab_3_content": "Anchovy, Sardines, Sweet Potato, Fish Bone, Tapioca, Trout Oil, Nutritional Yeast, Sesame Seeds, Krill Oil, Oysters, Cod Liver Oil, Thyme, Himalayan Sea Salt, Cumin, Coconut Oil, Ginger, Kelp, Broccoli Flower, Blueberries, Coriander, Taurine",
-            "tab_3_button_label": "SHOP NOW",
-            "tab_3_button_link": "shopify://collections/all"
-          }
-        },
-        "popup_38A7U8": {
-          "type": "popup",
-          "settings": {
-            "popup_title": "",
-            "popup_subtitle": "",
-            "tab_1_title": "LAND & SEA",
-            "tab_1_image": "shopify://shop_images/Mask_group.png",
-            "tab_1_content": "Turkey, Turkey Neck, Pork Liver, Pork, Whole Eggs, Sweet Potato, Tapioca, Turkey Liver, Sardines, Anchovy, Turkey Heart, Turkey Gizzard, Cartilage, Kelp, Duck, Oysters, Cod Liver Oil, Nutritional Yeast, Thyme, Ginger, Himalayan Sea Salt, Coconut Oil, Taurine, Blueberries, Cumin, Rose Hips",
-            "tab_1_button_label": "SHOP NOW",
-            "tab_1_button_link": "shopify://products/elevated-harvest",
-            "tab_2_title": "TURKEY",
-            "tab_2_image": "shopify://shop_images/Mask_group_1.png",
-            "tab_2_content": "85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck heart, turkey gizzard, duck gizzard, cartilage), tapioca, whole eggs, beet fiber, brewer’s yeast, carrots, blueberries, organic coconut oil, cumin, thyme, turmeric, rose hip.",
-            "tab_2_button_label": "SHOP NOW",
-            "tab_2_button_link": "shopify://products/elevated-harvest",
-            "tab_3_title": "",
-            "tab_3_content": "",
-            "tab_3_button_label": "",
-            "tab_3_button_link": ""
-          }
-        },
-        "popup_NWGH39": {
-          "type": "popup",
-          "settings": {
-            "popup_title": "",
-            "popup_subtitle": "",
-            "tab_1_title": "TURKEY",
-            "tab_1_image": "shopify://shop_images/Mask_group_1.png",
-            "tab_1_content": "85% fresh meats (turkey, wild caught whole fish, pork, duck, turkey liver, duck liver, turkey heart, duck heart, turkey gizzard, duck gizzard, cartilage), tapioca, whole eggs, beet fiber, brewer’s yeast, carrots, blueberries, organic coconut oil, cumin, thyme, turmeric, rose hip.",
-            "tab_1_button_label": "Shop Now",
-            "tab_1_button_link": "shopify://products/big-breed",
-            "tab_2_title": "WILD CAUGHT FISH",
-            "tab_2_image": "shopify://shop_images/Mask_group_2.png",
-            "tab_2_content": "Anchovy, Sardines, Sweet Potato, Fish Bone, Tapioca, Trout Oil, Nutritional Yeast, Sesame Seeds, Krill Oil, Oysters, Cod Liver Oil, Thyme, Himalayan Sea Salt, Cumin, Coconut Oil, Ginger, Kelp, Broccoli Flower, Blueberries, Coriander, Taurine",
-            "tab_2_button_label": "SHOP NOW",
-            "tab_2_button_link": "shopify://products/big-breed",
-            "tab_3_title": "",
-            "tab_3_content": "",
-            "tab_3_button_label": "",
-            "tab_3_button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "popup_4cqqzU",
-        "popup_38A7U8",
-        "popup_NWGH39"
-      ],
       "settings": {
         "heading": "Explore our air dried food",
         "uppercase_heading": true,
@@ -154,6 +83,7 @@
         "metafield_recipes_link": "custom.recipes_link",
         "recipes_label": "+ View INGREIDNETS",
         "shop_label": "Shop now",
+        "popup_button_label": "SHOP NOW",
         "background_color": "#fff9ef",
         "text_color": "#000000",
         "card_background": "#ffffff",
