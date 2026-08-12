@@ -817,6 +817,7 @@
           if (!popup) return;
           openMatchingTab(popup, trigger.dataset.recipe);
           popup.classList.add('active');
+          document.body.classList.add('ingredient-popup-open');
           return;
         }
 
@@ -825,6 +826,7 @@
         if (closer) {
           var openPopup = closer.closest('.fp-popup');
           if (openPopup) openPopup.classList.remove('active');
+          document.body.classList.remove('ingredient-popup-open');
           return;
         }
 
