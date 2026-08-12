@@ -23,7 +23,7 @@
         "min_height": 840,
         "min_height_mobile": 680,
         "background_image": "shopify://shop_images/Homepage-Hero-Desktop.jpg",
-        "background_image_mobile": "shopify://shop_images/Hero-Mobile.jpg",
+        "background_image_mobile": "shopify://shop_images/Homepage-Hero-Mobile.jpg",
         "background_color": "#1a1a1a",
         "show_texture": true,
         "text_color": "#fff9ef",
