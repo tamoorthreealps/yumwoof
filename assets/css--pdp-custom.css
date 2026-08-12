@@ -1063,3 +1063,18 @@ width: 140px;
 }
 
 }
+
+
+
+@media screen and (max-width: 990px) {
+.recipe-swatches.recipe-swatches_kibble .recipe-swatch__label {
+    display: flex;
+    flex-direction: inherit;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+.recipe-swatches.recipe-swatches_kibble .recipe-swatch__title {
+    text-align: left;
+}
+}
