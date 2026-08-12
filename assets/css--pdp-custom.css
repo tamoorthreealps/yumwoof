@@ -875,6 +875,12 @@ display: flex;
 .mobile-gallery-dot.is-active {
     background: #FFF9EF;
 }
+.product__media-list.slider--mobile {
+    scroll-padding-left: 0 !important;
+}
+.product__media-list.slider--mobile:after {
+    display: none !important;
+}
 @media screen and (min-width: 990px) {
   .product--main--info {
     padding: 156px 0 120px;
