@@ -858,7 +858,6 @@ position: absolute !important;
 
 	.fp-popup__right {
 		justify-content: flex-end;
-		position: relative;
 	}
 
 	.fp-popup__right_img {
@@ -867,12 +866,12 @@ position: absolute !important;
 		margin: 0;
 	}
 
-	.fp-popup__right_img_bowl {
-		right: -110px;
-		height: 220px;
-		width: auto;
-		bottom: -8px;
-	}
+	    .fp-popup__right_img_bowl {
+        right: -84px;
+        height: 220px;
+        width: auto;
+        bottom: 16px;
+    }
 
 	.fp-popup__close {
 		right: 16px;
