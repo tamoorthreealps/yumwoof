@@ -165,6 +165,11 @@
         "enable_video_looping": false
       }
     },
+    "perfect_superfood_ingredients_xK997p": {
+      "type": "perfect-superfood-ingredients",
+      "name": "Perfectfood Ingredients",
+      "settings": {}
+    },
     "pdp_faqs_section_k4GtF3": {
       "type": "pdp-faqs-section",
       "name": "PDP FAQs Section",
@@ -225,6 +230,7 @@
   },
   "order": [
     "main",
+    "perfect_superfood_ingredients_xK997p",
     "pdp_faqs_section_k4GtF3",
     "related-products",
     "custom_reviews_DQxkJb"
