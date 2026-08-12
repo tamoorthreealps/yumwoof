@@ -1,0 +1,1142 @@
+<article class="qck__article-template qck__article" itemscope itemtype="http://schema.org/BlogPosting">
+  <div id="{{ section.id }}" class="qck__main-home-hero-wrapper" style="margin-top: 0;">
+    <div class="qck__page-width">
+      <div class="qck__main-home-hero-inner">
+      <div class="qck__main-home-hero-inner-wrp qck__main-home-hero-slider">
+        {%- liquid
+          assign image = article.image.src
+          assign mobileImage = article.image.src
+          assign title = article.title
+        -%}
+
+        <div class="qck__main-home-hero-header-slide qck__main-home-hero-slide-image qck__h-small">
+          <div class="qck__image-section">
+            <div class="qck__image-wrapper">
+              {% if image != blank %}
+                <img
+                  class="qck__desktop-only"
+                  style="height: 100%; object-fit: cover;"
+                  src="{{ image | image_url: width: 1500 }}"
+                  alt="{{ image.alt }}"
+                >
+              {% endif %}
+              {% if mobileImage != blank %}
+                <img
+                  class="qck__mobile-only"
+                  style="height: 100%; object-fit: cover;"
+                  src="{{ mobileImage | image_url: width: 991 }}"
+                  alt="{{ mobileImage.alt }}"
+                >
+              {% endif %}
+            </div>
+            <div class="qck__dark-bg"></div>
+          </div>
+
+          <div class="qck__slide-content qck__scroll-trigger qck__animate--slide-in qck__aligned-center">
+            <h1
+              class="qck__article-template__title qck__text-white"
+              itemprop="headline"
+            >
+              {{ article.title | escape }}
+            </h1>
+
+            <div class="qck__d-flex">
+              <span
+                class="qck__circle-divider qck__caption-with-letter-spacing qck__text-white"
+                itemprop="dateCreated pubdate datePublished"
+              >
+                {{- article.published_at | time_tag: format: 'date' -}}
+              </span>
+              <span
+                class="qck__caption-with-letter-spacing qck__text-white"
+                itemprop="author"
+                itemscope
+                itemtype="http://schema.org/Person"
+              >
+                <span itemprop="name">{{ article.author }}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="qck__main-article-wrapper qck__enable_side_bar">
+        <div class="qck__main-article-content-wrapper">
+          <div
+            class="qck__article-template__content qck__rte{% if settings.animations_reveal_on_scroll %} qck__scroll-trigger qck__animate--slide-in{% endif %}"
+            itemprop="articleBody"
+          >
+            {{ article.content }}
+          </div>
+          <div class="qck__social-sharing">
+            {% if article.tags.size > 0 %}
+              <p class="qck__capitalize qck__tags qck__d-inline-block">
+                tags:
+                {% for tag in article.tags %}
+                  <span class="qck__d-inline-block">
+                    {{- tag -}}
+                    <span>,</span></span>
+                {% endfor %}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+       <div class="qck__main-article-sidebar">
+         {% if section.settings.show_newsletter %}
+                <div class="qck__article-item qck__article-newsletter">
+                  <div class="qck__article-newsletter--wrapper qck__center">
+                    {% if section.settings.nl_heading != blank %}
+                    <h4 class="qck__article-newsletter--heading">{{ section.settings.nl_heading }}</h4>
+                    {% endif %}
+                    {% if section.settings.nl_text != blank %}
+                    <div class="qck__article-newsletter-text qck__rte">{{ section.settings.nl_text }}</div>
+                    {% endif %}
+                 {% if section.settings.klaviyo_form != blank %}
+          {{ section.settings.klaviyo_form }}
+          {% else %}
+                    <div class="qck__article-newsletter--form" >
+                      {% form 'customer', class: 'qck__newsletter-form' %}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <div
+                          class="qck__newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} qck__scroll-trigger qck__animate--slide-in{% endif %}"
+                          {% if settings.animations_reveal_on_scroll %}
+                            data-cascade
+                            style="--animation-order: {{ forloop.index }};"
+                          {% endif %}
+                        >
+                          <div class="qck__field">
+                            <input
+                              id="NewsletterForm--{{ section.id }}"
+                              type="email"
+                              name="contact[email]"
+                              class="qck__field__input"
+                              value="{{ form.email }}"
+                              aria-required="true"
+                              autocorrect="off"
+                              autocapitalize="off"
+                              autocomplete="email"
+                              {% if form.errors %}
+                                autofocus
+                                aria-invalid="true"
+                                aria-describedby="Newsletter-error--{{ section.id }}"
+                              {% elsif form.posted_successfully? %}
+                                aria-describedby="Newsletter-success--{{ section.id }}"
+                              {% endif %}
+                              placeholder=""
+                              required
+                            >
+                            <label class="qck__field__label" for="NewsletterForm--{{ section.id }}">
+                              Enter your email
+                            </label>
+                            <button
+                              type="submit"
+                              class="qck__newsletter-form__button qck__field__button qck__btn"
+                              name="commit"
+                              id="Subscribe"
+                              aria-label="SIGN ME UP!"
+                            >
+                             SIGN ME UP!
+                            </button>
+                          </div>
+                          {%- if form.errors -%}
+                            <small class="qck__newsletter-form__message qck__form__message" id="Newsletter-error--{{ section.id }}">
+                              <svg aria-hidden="true" focusable="false" class="qck__icon qck__icon-error" viewBox="0 0 13 13">
+                                <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+                                <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+                                <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+                                <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7"/>
+                              </svg>
+
+                              {{- form.errors.translated_fields.email | capitalize }}
+                              {{ form.errors.messages.email -}}
+                            </small>
+                          {%- endif -%}
+                        </div>
+                        {%- if form.posted_successfully? -%}
+                          <h3
+                            class="qck__newsletter-form__message qck__newsletter-form__message--success qck__form__message"
+                            id="Newsletter-success--{{ section.id }}"
+                            tabindex="-1"
+                            autofocus
+                          >
+                            <svg aria-hidden="true" focusable="false" class="qck__icon qck__icon-success" viewBox="0 0 13 13">
+                              <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="#428445" stroke="white" stroke-width="0.7"/>
+                              <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"/>
+                              <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white"/>
+                            </svg>
+
+                            {{- 'newsletter.success' | t }}
+                          </h3>
+                        {%- endif -%}
+                      {% endform %}
+                    </div>
+           {% endif %}
+                  </div>
+                </div>
+               {% endif %}
+          {% if article.metafields.custom.qck_product_1 %}
+  <div class="qck__article-item qck__article-product">
+    {%- assign product = article.metafields.custom.qck_product_1.value -%}
+    <div class="qck__product-card">
+      <div class="qck__product-image">
+        <a href="{{ product.url }}">
+          <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+        </a>
+      </div>
+      <div class="qck__product-details">
+        <h3 class="qck__product-title">{{ product.title }}</h3>
+        <p class="qck__product-description">
+          {{ product.description | strip_html | truncatewords: 15 }}
+        </p>
+        <p class="qck__product-price">{{ product.price | money }}</p>
+        <a href="{{ product.url }}" class="qck__shop-now-btn">Shop Now</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if article.metafields.custom.qck_product_2 %}
+  <div class="qck__article-item qck__article-product">
+    {%- assign product = article.metafields.custom.qck_product_2.value -%}
+    <div class="qck__product-card">
+      <div class="qck__product-image">
+        <a href="{{ product.url }}">
+          <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+        </a>
+      </div>
+      <div class="qck__product-details">
+        <h3 class="qck__product-title">{{ product.title }}</h3>
+        <p class="qck__product-description">
+          {{ product.description | strip_html | truncatewords: 15 }}
+        </p>
+        <p class="qck__product-price">{{ product.price | money }}</p>
+        <a href="{{ product.url }}" class="qck__shop-now-btn">Shop Now</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+          {% if section.settings.show_helpful %}
+                <div class="qck__article-item qck__article-help_links">
+  {% if section.settings.hf_heading != blank %}
+    <h4 class="qck__article-helpful_links--heading qck__center">{{ section.settings.hf_heading }}</h4>
+  {% endif %}
+  {% if section.settings.hf_text != blank %}
+                    <div class="qck__article-helpful_links--text qck__rte">{{ section.settings.hf_text }}</div>
+                  {% else %}
+  {% if section.settings.selected_blog != blank %}
+    <div class="qck__article-helpful_links--text">
+      <ul class="qck__blog-list">
+        {% for article in blogs[section.settings.selected_blog].articles limit: 5 %}
+          <li class="qck__blog-item">
+            <a href="{{ article.url }}">{{ article.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+                  {% endif %}
+</div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+.qck__article-template {
+  background: #ffffff;
+}
+
+.qck__page-width {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .qck__page-width {
+    padding: 0 28px;
+  }
+}
+
+.qck__main-home-hero-wrapper {
+  position: relative;
+  padding-top: 30px;
+  padding-bottom: 60px;
+}
+
+.qck__main-home-hero-inner {
+  position: relative;
+}
+
+.qck__main-home-hero-header-slide {
+  position: relative;
+}
+
+.qck__main-home-hero-header-slide .qck__image-section {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.qck__main-home-hero-header-slide .qck__image-section .qck__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding-top: 0%;
+  pointer-events: none;
+}
+
+.qck__main-home-hero-header-slide .qck__image-section .qck__image-wrapper:before {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.00) 100%);
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  z-index: 1;
+}
+
+.qck__main-home-hero-header-slide .qck__image-section .qck__image-wrapper img {
+  width: 100%;
+}
+
+.qck__main-home-hero-header-slide .qck__image-section .qck__dark-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  display: block;
+}
+
+.qck__main-home-hero-header-slide .qck__slide-content {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  max-width: 530px;
+}
+
+.qck__main-home-hero-header-slide .qck__slide-content p {
+  max-width: 430px;
+}
+
+.qck__main-home-hero-header-slide .qck__slide-content.qck__aligned-center {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.qck__main-home-hero-header-slide .qck__slide-content.qck__aligned-center > * {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+.qck__main-home-hero-header-slide .qck__slide-content h1.qck__text-white {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+@media screen and (min-width: 992px) {
+  .qck__main-home-hero-header-slide {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5rem;
+  }
+
+  .qck__main-home-hero-header-slide.qck__h-small {
+    height: 35vw;
+    min-height: 320px;
+  }
+
+  .qck__article .qck__main-home-hero-header-slide.qck__h-small {
+    height: 35vw;
+    min-height: 320px;
+  }
+
+  .qck__main-home-hero-header-slide .qck__image-section .qck__image-wrapper img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.qck__article-template__title {
+  margin: 0;
+}
+
+.qck__article-template__title:not(:only-child) {
+  margin-bottom: 1rem;
+}
+
+.qck__text-white {
+  color: #fff !important;
+}
+
+.qck__caption-with-letter-spacing {
+  font-size: 1rem;
+  letter-spacing: .13rem;
+  line-height: calc(1 + .2 / 1.0);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.qck__article .qck__caption-with-letter-spacing {
+  margin-top: 1rem;
+}
+
+.qck__article .qck__d-flex {
+  display: flex;
+  justify-content: center;
+}
+
+.qck__circle-divider::after {
+  content: '\2022';
+  margin: 0 1.3rem 0 1.5rem;
+}
+
+.qck__main-article-wrapper {
+  margin: 3rem 0;
+}
+
+.qck__main-article-wrapper img {
+  width: 100%;
+  display: block;
+}
+
+.qck__article-template__content {
+  color: #000;
+}
+
+.qck__article-template__content h2 {
+  margin-top: {{ section.settings.h2_top_margin }}px;
+  margin-bottom: {{ section.settings.h2_bottom_margin }}px;
+  font-size: {{ section.settings.h2_size }}px;
+}
+
+.qck__article-template__content h3 {
+  margin: 0;
+  font-size: {{ section.settings.h3_size }}px;
+  margin-top: {{ section.settings.h3_top_margin }}px;
+  margin-bottom: {{ section.settings.h3_bottom_margin }}px;
+}
+
+.qck__article-template__content h4 {
+  margin: 0;
+}
+
+.qck__article-template__content p, 
+.qck__article-template__content span {
+  color: #000;
+}
+
+.qck__article-template__content ul {
+  list-style-position: outside;
+}
+
+.qck__article-template__content li {
+  line-height: 150%;
+}
+
+.qck__article-template__content li + li {
+  margin-top: 1rem;
+}
+
+/*.qck__article-template__content h1 span,
+.qck__article-template__content h2 span,
+.qck__article-template__content h3 span,
+.qck__article-template__content h4 span,
+.qck__article-template__content h5 span,
+.qck__article-template__content h6 span,
+.qck__article-template__content h1,
+.qck__article-template__content h2,
+.qck__article-template__content h3,
+.qck__article-template__content h4,
+.qck__article-template__content h5,
+.qck__article-template__content h6 {
+  font-weight: 700 !important;
+}*/
+
+.qck__article .qck__social-sharing {
+  margin: 38px 0 85.5px;
+  padding: 30px 0;
+  border-top: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+  position: relative;
+}
+
+.qck__article .qck__social-sharing * {
+  color: #333;
+  font-weight: 300;
+}
+
+.qck__article .qck__social-sharing .qck__d-inline-block {
+  display: inline-block;
+}
+
+.qck__article .qck__social-sharing .qck__text-center {
+  text-align: center;
+}
+
+.qck__article .qck__social-sharing .qck__capitalize {
+  text-transform: capitalize !important;
+}
+
+.qck__article .qck__social-sharing p {
+  margin: 0;
+}
+
+.qck__article .qck__social-sharing p.qck__tags {
+  width: 100%;
+  text-align: center;
+}
+
+.qck__article .qck__social-sharing p.qck__tags span:last-child span {
+  display: none;
+}
+
+.qck__enable_side_bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.qck__enable_side_bar .qck__main-article-sidebar {
+  width: 100%;
+}
+
+.qck__enable_side_bar .qck__main-article-content-wrapper {
+  width: 100%;
+}
+
+.qck__article-item {
+  background-color: {{ section.settings.brand_color}};
+  padding: 15px 14px;
+  border-radius: {{ section.settings.border_radius }}px;
+}
+
+.qck__article-item:not(:first-child) {
+  margin-top: 24px;
+}
+
+.qck__article-newsletter--wrapper {
+  background-color:{{ section.settings.brand_color}};
+  filter: brightness(0.97);
+  border-radius: {{ section.settings.border_radius | divided_by: 1.3 }}px;
+  padding: 18px 22px;
+}
+
+.qck__article-newsletter-text {
+  margin-top: 18px;
+}
+
+.qck__article-newsletter--form {
+  margin-top: 18px;
+}
+
+.qck__article-newsletter--heading, 
+.qck__article-helpful_links--heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: rgb(18, 18, 18);
+  margin: 0;
+}
+
+.qck__article-newsletter-text, 
+.qck__article-helpful_links--text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  color: #000;
+  margin: 0;
+}
+
+.qck__article-helpful_links--text a, 
+.qck__rte a {
+  text-decoration: underline;
+  color: rgba(18, 18, 18, 1);
+  text-underline-offset: .3rem;
+}
+
+.qck__field {
+  position: relative;
+  width: 100%;
+  transition: box-shadow .1s ease;
+}
+
+.qck__article-newsletter--form .qck__newsletter-form__field-wrapper .qck__field {
+  display: block;
+}
+
+.qck__field__input, 
+.qck__form__label {
+  font-size: 1.3rem;
+  line-height: calc(1 + .5 / 1);
+  letter-spacing: .04rem;
+}
+
+.qck__article-newsletter--form .qck__newsletter-form__field-wrapper .qck__field__input {
+  height: 38px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.qck__newsletter-form__field-wrapper .qck__field__input {
+  line-height: calc(1 + .5 / 1.0);
+  letter-spacing: .04rem;
+  -webkit-appearance: none;
+  appearance: none;
+  color: rgb(18, 18, 18);
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: calc(1px * 2);
+  min-width: calc(7rem +(1px * 2));
+  position: relative;
+  text-align: left;
+  padding: 1.5rem;
+  margin: 1px;
+  transition: box-shadow .1s ease;
+  padding-right: 5rem;
+}
+
+.qck__field__label, 
+.qck__customer .qck__field label {
+  font-size: 16px;
+  left: calc(1px + 2rem);
+  top: calc(0.8rem + 1px);
+  margin-bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: top .1s ease, font-size .1s ease;
+  color: rgba(18, 18, 18, .75);
+  letter-spacing: .1rem;
+  line-height: 1.5;
+}
+
+.qck__article-newsletter--form .qck__field__label {
+  top: calc(0.8rem + 1px);
+}
+
+.qck__field__input:focus-visible {
+  box-shadow: 0 0 0 calc(.1rem + 1px) rgba(18, 18, 18);
+  outline: 0;
+}
+
+.qck__field__input:focus {
+  box-shadow: 0 0 0 calc(.1rem + 1px) rgba(18, 18, 18);
+  outline: 0;
+  padding: 2.2rem 1.5rem .8rem 2rem;
+  margin: 1px;
+}
+
+.qck__field__input:focus ~ .qck__field__label {
+  font-size: 1rem;
+  top: calc(1px + .5rem);
+  left: calc(1px + 2rem);
+  letter-spacing: .04rem;
+}
+
+.qck__field__input:not(:placeholder-shown) ~ .qck__field__label, 
+.qck__field__input:-webkit-autofill ~ .qck__field__label {
+  font-size: 1rem;
+  top: calc(1px + .5rem);
+  left: calc(1px + 2rem);
+  letter-spacing: .04rem;
+}
+
+.qck__field__input:not(:placeholder-shown), 
+.qck__field__input:-webkit-autofill {
+  padding: 2.2rem 1.5rem .8rem 2rem;
+  margin: 1px;
+}
+
+.qck__article-newsletter--form .qck__newsletter-form__button:not(:focus-visible):not(.focused),
+.qck__article-newsletter--form .qck__newsletter-form__button {
+  font-size: 16px;
+  font-style: normal;
+  line-height: 150%;
+  letter-spacing: 0px;
+  min-width: 120px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin-top: 18px;
+  position: unset;
+  padding: 7px 10px;
+  cursor: pointer;
+  background-color: {{ section.settings.button_color }};
+  border: 0px;
+  border-radius: {{ section.settings.button_border_radius }}px;
+  color: {{ section.settings.button_text_color }};
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.qck__newsletter-form__button:hover {
+  background-color: {{ section.settings.button_color_hover }} !important;
+  border: 0px !important;
+  color: {{ section.settings.button_text_color_hover }} !important;
+}
+
+.qck__article-newsletter--form .qck__cancel-btn {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 7px 10px;
+  font-weight: 700 !important;
+  line-height: 150%;
+  letter-spacing: 0px;
+  text-decoration: none;
+  color: #000000;
+  margin-top: 18px;
+}
+
+.qck__newsletter-form__message {
+  align-items: center;
+  display: flex;
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 0;
+  margin-top: 2rem;
+}
+
+.qck__form__message .qck__icon {
+  flex-shrink: 0;
+  height: 1.3rem;
+  margin-right: .5rem;
+  width: 1.3rem;
+}
+
+.qck__article-help_links {
+  padding: 33px 36px;
+}
+
+.qck__article-helpfu_links--text {
+  margin-top: 18px;
+}
+
+.qck__article-helpfu_links--text a {
+  text-decoration: underline;
+}
+
+.qck__product-card {
+  overflow: hidden;
+  display: block;
+}
+
+.qck__product-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: {{ section.settings.border_radius | divided_by: 1.3 }}px;
+}
+
+.qck__product-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 10px 0 8px;
+  color: #000;
+  line-height: 22px;
+}
+
+.qck__product-description {
+  font-size: 14px;
+  margin: 0 0 8px;
+  color: #000;
+  line-height: 18px;
+}
+
+.qck__product-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0 0 8px;
+}
+
+.qck__shop-now-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  width: 100%;
+  background-color: {{ section.settings.button_color }};
+  border: 0px;
+  border-radius: {{ section.settings.button_border_radius }}px;
+  color: {{ section.settings.button_text_color }};
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  text-align: center;
+}
+
+.qck__shop-now-btn:hover {
+  background-color: {{ section.settings.button_color_hover }};
+  border: 0px;
+  color: {{ section.settings.button_text_color_hover }};
+}
+
+.qck__center {
+  text-align: center;
+}
+
+.qck__desktop-only {
+  display: none;
+}
+
+.qck__mobile-only {
+  display: block;
+}
+
+.qck__blog-list {
+  padding: 0px;
+  list-style: none;
+}
+
+.qck__blog-item {
+  padding-bottom: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .qck__desktop-only {
+    display: block;
+  }
+  
+  .qck__mobile-only {
+    display: none;
+  }
+  
+  .qck__article h1 {
+    font-size: 48px !important;
+    line-height: 61.82px;
+  }
+  
+  .qck__article-template__content h2 {
+    font-size: {{ section.settings.h2_size }}px;
+  }
+    .qck__main-article-wrapper {
+    margin: 5rem 0;
+  }
+  
+  .qck__enable_side_bar {
+    gap: 50px;
+  }
+  
+  .qck__enable_side_bar .qck__main-article-sidebar {
+    max-width: 325px;
+  }
+  
+  .qck__enable_side_bar .qck__main-article-content-wrapper {
+    max-width: calc(100% - 375px);
+  }
+  
+  .qck__article-item {
+    padding: 13px 12px;
+  }
+  
+  .qck__article-newsletter--wrapper {
+    padding: 16px 20px;
+  }
+  
+  .qck__article-newsletter-text,
+  .qck__article-newsletter--form,
+  .qck__article-helpfu_links--text {
+    margin-top: 16px;
+  }
+  
+  .qck__article-helpful_links--heading,
+  .qck__article-newsletter--heading {
+    font-size: 24px;
+    line-height: 31px;
+  }
+  
+  .qck__article-help_links {
+    padding: 29px 32px;
+  }
+  
+  .qck__product-title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  
+  .qck__product-description {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  
+  .qck__newsletter-form__message {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .qck__main-home-hero-header-slide .qck__slide-content {
+    max-width: 100%;
+    padding: 180px 20px 180px;
+  }
+  
+  .qck__main-home-hero-header-slide .qck__image-section .qck__image-wrapper img {
+    height: 100%;
+    object-fit: cover;
+  }
+  .qck__shop-now-btn {
+    font-size: 14px;
+}
+}
+
+@media screen and (max-width: 767px) {
+  .qck__main-home-hero-header-slide .qck__slide-content h1.qck__text-white,
+  .qck__main-home-hero-header-slide .qck__slide-content h1.qck__article-template__title {
+    font-size: 32px !important;
+  }
+  
+  .qck__main-home-hero-header-slide .qck__slide-content h1.qck__article-template__title {
+    line-height: 41.2px;
+  }
+  
+  .qck__main-home-hero-header-slide .qck__slide-content {
+    padding: 20px 20px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .qck__article-template__content p,
+  .qck__article-template__content ul,
+  .qck__article-template__content ol {
+    font-size: 12.67px;
+    line-height: 19.01px;
+  }
+  
+  .qck__article-template__content h2 {
+    font-size: {{ section.settings.h2_size | divided_by: 1.5 }}px;
+  }
+  
+  .qck__article-template__content h3 {
+    font-size: {{ section.settings.h3_size | divided_by: 1.5 }}px;
+  }
+  
+  .qck__circle-divider:after {
+    margin: 0 1rem;
+  }
+  
+  .qck__article .qck__social-sharing {
+    margin-bottom: 3rem;
+  }
+}
+</style>
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "articleBody": {{ article.content | strip_html | json }},
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ request.origin | append: page.url | json }}
+    },
+    "headline": {{ article.title | json }},
+    {% if article.excerpt != blank %}
+      "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+      "image": [
+        {{ article | image_url: width: 1920 | prepend: "https:" | json }}
+      ],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }}
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Branding"
+    },
+     {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "min": 0,
+      "max": 50,
+      "default": 0
+     },
+     {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "min": 0,
+      "max": 100,
+      "default": 0
+     },
+     {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Branding Color",
+      "default": "#fafafa"
+     },
+     {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#000000"
+     },
+     {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+     },
+     {
+      "type": "color",
+      "id": "button_color_hover",
+      "label": "Button Color Hover",
+      "default": "#ffffff"
+     },
+     {
+      "type": "color",
+      "id": "button_text_color_hover",
+      "label": "Button Text Color Hover",
+      "default": "#000000"
+     },
+     {
+      "type": "header",
+      "content": "Fonts"
+    },
+     {
+      "type": "range",
+      "id": "h2_size",
+      "label": "H2 Font Size (px)",
+      "min": 24,
+      "max": 48,
+      "default": 36
+     },
+     {
+      "type": "range",
+      "id": "h2_top_margin",
+      "label": "H2 Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h2_bottom_margin",
+      "label": "H2 Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h3_size",
+      "label": "H3 Font Size (px)",
+      "min": 16,
+      "max": 36,
+      "default": 28
+     },
+     {
+      "type": "range",
+      "id": "h3_top_margin",
+      "label": "H3 Top Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+     {
+      "type": "range",
+      "id": "h3_bottom_margin",
+      "label": "H3 Bottom Margin (px)",
+      "min": 0,
+      "max": 100,
+      "default": 30
+     },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "nl_heading",
+      "label": "Heading",
+      "default": "Join our mailing list."
+    },
+    {
+      "type": "richtext",
+      "id": "nl_text",
+      "label": "Text",
+      "default": "<p>Sign up to be the first to know about our can't-miss product drops, special VIP offers & exclusive discounts, and upcoming holiday promotions.</p>"
+    },
+    {
+      "type": "liquid",
+      "id": "klaviyo_form",
+      "label": "Klaviyo Email Form"
+    },
+    {
+      "type": "header",
+      "content": "Helpful links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_helpful",
+      "label": "Show Helpful Links",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "hf_heading",
+      "label": "Heading",
+      "default": "Other helpful links"
+    },
+    {
+      "type": "blog",
+      "id": "selected_blog",
+      "label": "Blog Links"
+    },
+    {
+      "type": "richtext",
+      "id": "hf_text",
+      "label": "Text"
+    }
+  ]
+}
+{% endschema %}
