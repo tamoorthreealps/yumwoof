@@ -867,12 +867,19 @@ position: absolute !important;
 		margin: 0;
 	}
 
-	    .fp-popup__right_img_bowl {
+	.fp-popup__right_img_bowl {
         right: -84px;
         height: 220px;
-        width: auto;
+        width: 220px;   
         bottom: 16px;
     }
+
+	.fp-popup__right_img_bowl img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		will-change: auto;
+	}
 
 	.fp-popup__close {
 		right: 16px;
