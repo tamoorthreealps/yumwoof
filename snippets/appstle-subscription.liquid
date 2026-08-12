@@ -256,7 +256,7 @@ display: inline-flex;
 
       assign benefits = product.metafields.custom.subscription_benefits.value
       if benefits == blank
-        assign benefits = 'Sized to your dog,Swap recipe anytime,Modify or Cancel Anytime,Your price stays locked' | split: ','
+        assign benefits = 'Modify or Cancel Anytime' | split: ','
       endif
 
       assign sub_title = product.metafields.custom.subscription_title.value | default: 'Autoship'
