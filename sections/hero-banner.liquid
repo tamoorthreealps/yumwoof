@@ -15,18 +15,40 @@
 <section
   class="hero-banner hero-banner--{{ section.settings.content_position }} hero-banner--{{ section.settings.content_alignment }}{% if section.settings.show_texture %} hero-banner--texture{% endif %}{% if section.settings.uppercase_heading %} hero-banner--uppercase{% endif %}"
 >
-  {%- if section.settings.background_image != blank -%}
-    {{
-      section.settings.background_image
-      | image_url: width: 3000
-      | image_tag:
-        class: 'hero-banner__image',
-        widths: '750, 1100, 1500, 2000, 3000',
-        sizes: '100vw',
-        alt: section.settings.background_image.alt | default: section.settings.heading,
-        loading: 'eager',
-        fetchpriority: 'high'
-    }}
+  {%- comment -%}
+    Separate desktop / mobile background images. Rendered as a <picture> so the
+    browser downloads only the one it needs (a hidden <img> would still load).
+    Each falls back to the other if only one is set.
+  {%- endcomment -%}
+  {%- assign hb_bg_desktop = section.settings.background_image | default: section.settings.background_image_mobile -%}
+  {%- assign hb_bg_mobile = section.settings.background_image_mobile -%}
+  {%- if hb_bg_desktop != blank -%}
+    {%- assign hb_bg_alt = hb_bg_desktop.alt | default: section.settings.heading -%}
+    <picture class="hero-banner__picture">
+      {%- if hb_bg_mobile != blank -%}
+        <source
+          media="(max-width: 749px)"
+          srcset="
+            {{ hb_bg_mobile | image_url: width: 480 }} 480w,
+            {{ hb_bg_mobile | image_url: width: 750 }} 750w,
+            {{ hb_bg_mobile | image_url: width: 1100 }} 1100w,
+            {{ hb_bg_mobile | image_url: width: 1500 }} 1500w
+          "
+          sizes="100vw"
+        >
+      {%- endif -%}
+      {{
+        hb_bg_desktop
+        | image_url: width: 3000
+        | image_tag:
+          class: 'hero-banner__image',
+          widths: '750, 1100, 1500, 2000, 3000',
+          sizes: '100vw',
+          alt: hb_bg_alt,
+          loading: 'eager',
+          fetchpriority: 'high'
+      }}
+    </picture>
   {%- endif -%}
 
   <div class="hero-banner__inner">
@@ -152,8 +174,14 @@
     {
       "type": "image_picker",
       "id": "background_image",
-      "label": "Background image",
-      "info": "Optional. Sits behind the text on the dark background."
+      "label": "Background image (desktop)",
+      "info": "Optional. Sits behind the text on the dark background. Shown on screens wider than 749px; used everywhere if no mobile image is set."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background image (mobile)",
+      "info": "Optional. Shown on screens 749px and below. Falls back to the desktop image if left empty."
     },
     {
       "type": "color",

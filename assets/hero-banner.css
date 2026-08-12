@@ -22,6 +22,11 @@
 }
 
 /* Optional background image */
+/* <picture> wrapper carries no box so the <img> positions against .hero-banner. */
+.hero-banner__picture {
+	display: contents;
+}
+
 .hero-banner__image {
 	position: absolute;
 	inset: 0;
