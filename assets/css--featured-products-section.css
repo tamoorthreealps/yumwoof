@@ -17,6 +17,12 @@
 	overflow: hidden;
 }
 
+body.fp-popup-open {
+  overflow: hidden;
+  /* keeps layout from shifting when the scrollbar disappears */
+  padding-right: var(--fp-scrollbar-gap, 0px);
+}
+
 .fp__inner {
 	max-width: 1246px;
 	margin: 0 auto;
