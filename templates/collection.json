@@ -29,6 +29,7 @@
       "blocks": {
         "product_group_b9bXUj": {
           "type": "product_group",
+          "disabled": true,
           "settings": {
             "heading": "AIR DRIED FOOD",
             "subheading": "Whole-prey recipes, complete and balanced.",
@@ -40,6 +41,7 @@
         },
         "product_group_bT4yhm": {
           "type": "product_group",
+          "disabled": true,
           "settings": {
             "heading": "DIY MIX",
             "subheading": "One base mix. Add your own fresh meat.",
@@ -50,6 +52,7 @@
         },
         "product_group_h6PEX3": {
           "type": "product_group",
+          "disabled": true,
           "settings": {
             "heading": "SUPPLEMENTS",
             "subheading": "Targeted toppers for digestion, immunity and gut.",
@@ -67,7 +70,7 @@
         "product_group_h6PEX3"
       ],
       "settings": {
-        "show_collection_products": false,
+        "show_collection_products": true,
         "collection_heading": "",
         "products_per_page": 24,
         "columns_desktop": 3,
