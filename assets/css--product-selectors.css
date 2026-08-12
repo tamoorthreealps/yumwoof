@@ -84,6 +84,7 @@
 	.psel__title {
 		line-height: 1.6rem;
 		letter-spacing: 0.28px;
+                margin: 0 auto;
 	}
 
     .psel__img {
