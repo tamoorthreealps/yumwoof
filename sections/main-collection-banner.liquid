@@ -6,6 +6,22 @@
     --mcb-band-text: {{ section.settings.band_text_color }};
     --mcb-accent: {{ section.settings.accent_color }};
   }
+
+  #shopify-section-{{ section.id }} .mcb__band {
+    {% if section.settings.band_image != blank %}
+      background-image: url({{ section.settings.band_image | image_url: width: 1600 }});
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .mcb__band {
+      {% if section.settings.mobile_band_image != blank %}
+        background-image: url({{ section.settings.mobile_band_image | image_url: width: 1000 }});
+      {% elsif section.settings.band_image != blank %}
+        background-image: url({{ section.settings.band_image | image_url: width: 1000 }});
+      {% endif %}
+    }
+  }
 {%- endstyle -%}
 
 <div class="mcb page-width">
@@ -17,12 +33,7 @@
   </nav>
 
   {%- comment -%} Dark banner band {%- endcomment -%}
-  <div
-    class="mcb__band{% if section.settings.band_image != blank %} mcb__band--image{% endif %}"
-    {% if section.settings.band_image != blank %}
-      style="background-image: url({{ section.settings.band_image | image_url: width: 1600 }});"
-    {% endif %}
-  >
+  <div class="mcb__band{% if section.settings.band_image != blank or section.settings.mobile_band_image != blank %} mcb__band--image{% endif %}">
     <div class="mcb__band-inner">
       <nav class="mcb__crumbs mobile_mcb__crumbs" aria-label="Breadcrumb">
         <a href="{{ routes.root_url }}">Home</a>
@@ -95,6 +106,12 @@
       "default": true
     },
     { "type": "image_picker", "id": "band_image", "label": "Banner background image" },
+    {
+      "type": "image_picker",
+      "id": "mobile_band_image",
+      "label": "Mobile banner background image",
+      "info": "Shown on mobile. Desktop image is used if this is empty."
+    },
     { "type": "header", "content": "Category tabs" },
     {
       "type": "link_list",
