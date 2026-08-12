@@ -1,0 +1,23 @@
+{% for i in shop.metaobjects.ingredient.values %}
+  <div class="modal fade ing_modal" id="ingredient_{{ i.system.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="exampleModalLabel">{{ i.title }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{ i.description }}
+          <div class="ing_tag">
+            {% for tag in i.tags.value %}
+              <span>{{ tag }}</span>
+            {% endfor %}
+            {% if i.article_link %}
+              <a href="{{ i.article_link }}" class="link-primary">{{ i.article_display_text | default: 'Science' }}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
