@@ -3692,7 +3692,20 @@ details-disclosure > details {
 .progress-bar .progress-bar-value {
   display: block;
 }
+.card_new_badge{
 
+}
+.mobile_badge{
+  display:none;
+}
+@media screen and (max-width: 749px) {
+.desktop_badge{
+  display:none;
+}
+.mobile_badge{
+  display:block;
+}
+}
 @keyframes indeterminateAnimation {
   0% {
     transform: translateX(-20%) scaleX(0);
