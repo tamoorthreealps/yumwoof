@@ -64,7 +64,7 @@
               </button>
             {% endif %}
           </div>
-          <div class="recipe-swatches">
+          <div class="recipe-swatches {% if template.suffix == 'pk-v3' %}recipe-swatches_kibble{% endif %}">
             {% render 'product-variant-options',
               product: product,
               option: option,
