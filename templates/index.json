@@ -292,8 +292,8 @@
         "stats_note": "*Based on Yumwoof Customer Survey",
         "background_color": "#fff9ef",
         "text_color": "#fff9ef",
-        "background_image": "shopify://shop_images/Rectangle_24.png",
-        "background_image_mobile": "shopify://shop_images/Quality_Results_Background.png"
+        "background_image": "shopify://shop_images/Quality-Section-Img-Desktop.jpg",
+        "background_image_mobile": "shopify://shop_images/Quality-Section-Img-Mobile.jpg"
       }
     },
     "cocomega_section": {
