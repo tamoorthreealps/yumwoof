@@ -3698,6 +3698,11 @@ details-disclosure > details {
     right: 12px;
     top: 12px;
 }
+.hp_card{
+  position:absolute;
+  top:12px;
+  right:16px;
+}
 .mobile_badge{
   display:none;
 }
