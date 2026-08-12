@@ -87,7 +87,7 @@
 	}
 
     .psel__img {
-        width: 50px;
+        width: auto;
         height: 52px;
         right: 0;
         bottom: 14px;
