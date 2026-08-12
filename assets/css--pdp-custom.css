@@ -82,7 +82,8 @@
   margin-bottom: 12px;
 }
 
-.recipe-view-ingredients {
+.recipe-view-ingredients,
+.recipe-view-ingredients--drawer {
   background: transparent;
   border: 0;
   padding: 0;
@@ -97,7 +98,8 @@
   text-decoration: none;
 }
 
-.recipe-view-ingredients::after {
+.recipe-view-ingredients::after,
+.recipe-view-ingredients--drawer::after {
   content: "";
   position: absolute;
   left: 0;
@@ -111,12 +113,14 @@
   transition: transform .35s ease;
 }
 
-.recipe-view-ingredients:hover::after {
+.recipe-view-ingredients:hover::after,
+.recipe-view-ingredients--drawer:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.recipe-view-ingredients:not(:hover)::after {
+.recipe-view-ingredients:not(:hover)::after,
+.recipe-view-ingredients--drawer:not(:hover)::after {
   transform: scaleX(0);
   transform-origin: right;
 }
@@ -965,7 +969,8 @@ a.pdp--promo--banner_link svg {
     letter-spacing: -0.64px;
   }
 
-  .recipe-view-ingredients {
+  .recipe-view-ingredients,
+  .recipe-view-ingredients--drawer {
     line-height: 20px;
     font-size: 14px;
   }
