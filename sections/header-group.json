@@ -59,7 +59,7 @@
           "type": "mobile_link",
           "settings": {
             "text": "SUPPLEMENTS",
-            "link": "",
+            "link": "shopify://products/perfect-digestion",
             "image": "shopify://shop_images/Category_IMG_2.png"
           }
         },
