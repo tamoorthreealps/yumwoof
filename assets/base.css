@@ -3698,7 +3698,7 @@ details-disclosure > details {
     right: 12px;
     top: 12px;
 }
-.hp_card{
+.card_new_badge.hp_card{
   position:absolute;
   top:12px;
   right:16px;
@@ -3707,11 +3707,19 @@ details-disclosure > details {
   display:none;
 }
 @media screen and (max-width: 749px) {
+  .card_new_badge{
+    right: 8px;
+    top: 8px;
+}
 .desktop_badge{
   display:none;
 }
 .mobile_badge{
   display:block;
+}
+.card_new_badge.hp_card{
+  top:8px;
+  right:8px;
 }
 }
 @keyframes indeterminateAnimation {
