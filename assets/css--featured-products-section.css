@@ -836,14 +836,14 @@
 	/* FIX: keep the bowl inside the panel — the panel clips with
 	   overflow: hidden, so a negative `right` will always crop it. */
 	.fp-popup__right_img_bowl {
-		right: 0;
-		bottom: -26px;
-		height: 200px;
-		width: auto;
-		-webkit-transform: translateZ(0);
-		transform: translateZ(0);
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
+        right: -92px;
+        bottom: 0;
+        height: 200px;
+        width: auto;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
 	}
 
 	/* FIX (iOS): don't promote the rotating <img> itself — let the wrapper
