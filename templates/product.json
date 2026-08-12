@@ -97,6 +97,7 @@
         },
         "butcher_quality_Qm6kwt": {
           "type": "butcher-quality",
+          "disabled": true,
           "settings": {
             "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
             "bq_heading": "",
