@@ -396,3 +396,31 @@ background: #FFF9EF;
   display:block;
 }
 }
+
+
+/* review--stars--css */
+.yw-pcard-opinew-stars .rating-summary {
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: underline;
+    color: #000000;
+    font-family: 'Matter';
+    letter-spacing: 0;
+}
+.yw-pcard-opinew-stars .rating-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.yw-pcard-opinew-stars .opinew-star-plugin-inside {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.yw-pcard-opinew-stars .opw-noci:before {
+    width: 16px;
+    height: 16px;
+}
+@media screen and (max-width: 749px) {
+
+}
