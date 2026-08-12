@@ -12,21 +12,21 @@
 {% endcomment %}
 
 {%- liquid
-  # Variant-based gallery: when product.metafields.custom.variant_gallery_enable is on,
-  # show only media whose alt text (handleized) contains the selected variant's first
-  # option value (e.g. the Recipe). Media with a blank alt are shown for every variant.
-  # When the metafield is off, filtered_media == product.media, so behaviour is unchanged.
-  assign filtered_media = product.media
-    assign filtered_media = '' | split: ''
-    assign raw_title_parts = product.selected_or_first_available_variant.title | split: ' / '
-    assign variant_key = raw_title_parts[0] | handle
-    for media in product.media
-      assign media_alt_handle = media.alt | handle
-      if media_alt_handle contains variant_key or media.alt == blank
-        assign single_media = media | sort
-        assign filtered_media = filtered_media | concat: single_media
-      endif
-    endfor
+  # Variant-based gallery: show only media whose alt text (handleized) contains the
+  # selected variant's first option value (e.g. the Recipe). Media with a blank alt are
+  # shown for every variant. Products with no alt text on their media are unaffected —
+  # every image is treated as blank, so all are shown.
+  assign filtered_media = '' | split: ''
+  assign raw_title_parts = product.selected_or_first_available_variant.title | split: ' / '
+  assign variant_key = raw_title_parts[0] | handle
+  for media in product.media
+    assign media_alt_handle = media.alt | handle
+    # No alt text (or whitespace-only) => show this image for every variant.
+    if media_alt_handle == blank or media_alt_handle contains variant_key
+      assign single_media = media | sort
+      assign filtered_media = filtered_media | concat: single_media
+    endif
+  endfor
 
   if section.settings.hide_variants and variant_images.size == product.media.size
     assign single_media_visible = true
