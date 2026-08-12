@@ -12,6 +12,24 @@
 {% endcomment %}
 
 {%- liquid
+  # Variant-based gallery: when product.metafields.custom.variant_gallery_enable is on,
+  # show only media whose alt text (handleized) contains the selected variant's first
+  # option value (e.g. the Recipe). Media with a blank alt are shown for every variant.
+  # When the metafield is off, filtered_media == product.media, so behaviour is unchanged.
+  assign filtered_media = product.media
+  if product.metafields.custom.variant_gallery_enable
+    assign filtered_media = '' | split: ''
+    assign raw_title_parts = product.selected_or_first_available_variant.title | split: ' / '
+    assign variant_key = raw_title_parts[0] | handle
+    for media in product.media
+      assign media_alt_handle = media.alt | handle
+      if media_alt_handle contains variant_key or media.alt == blank
+        assign single_media = media | sort
+        assign filtered_media = filtered_media | concat: single_media
+      endif
+    endfor
+  endif
+
   if section.settings.hide_variants and variant_images.size == product.media.size
     assign single_media_visible = true
   endif
@@ -20,7 +38,7 @@
     assign single_media_visible = true
   endif
 
-  assign media_count = product.media.size
+  assign media_count = filtered_media.size
   if section.settings.hide_variants and media_count > 1 and variant_images.size > 0
     assign media_count = media_count | minus: variant_images.size | plus: 1
   endif
@@ -85,7 +103,7 @@
           %}
         </li>
       {%- endif -%}
-      {%- for media in product.media -%}
+      {%- for media in filtered_media -%}
         {% if media_position >= limit
           or media_position >= 1
           and section.settings.hide_variants
@@ -251,7 +269,7 @@
             </button>
           </li>
         {%- endif -%}
-        {%- for media in product.media -%}
+        {%- for media in filtered_media -%}
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             {%- liquid
               capture media_index
