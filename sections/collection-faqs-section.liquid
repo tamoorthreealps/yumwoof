@@ -1,6 +1,27 @@
 {%- assign faq_key = section.settings.faqs_metafield | default: 'custom.collection_page_faqs' -%}
 {%- assign faq_parts = faq_key | split: '.' -%}
-{%- assign faq_items = collection.metafields[faq_parts[0]][faq_parts[1]].value -%}
+{%- assign faq_source = collection.metafields[faq_parts[0]][faq_parts[1]].value -%}
+
+{%- comment -%}
+  The metafield can be one of three shapes:
+  1. A LIST of FAQ metaobjects            -> use as-is
+  2. A SINGLE FAQ metaobject (question/answer) -> wrap into a one-item array
+  3. A SINGLE container metaobject holding a list field -> read that list
+  Set section.settings.faq_list_field to the list field name for case 3.
+{%- endcomment -%}
+
+{%- assign faq_items = blank -%}
+{%- assign list_field = section.settings.faq_list_field | default: 'faqs' -%}
+
+{%- if faq_source != blank -%}
+  {%- if faq_source.question != blank -%}
+    {%- assign faq_items = faq_source | split: '~~never~~' -%}
+  {%- elsif faq_source.size > 0 -%}
+    {%- assign faq_items = faq_source -%}
+  {%- elsif faq_source[list_field] != blank -%}
+    {%- assign faq_items = faq_source[list_field].value -%}
+  {%- endif -%}
+{%- endif -%}
 
 {%- if faq_items != blank and faq_items.size > 0 -%}
 {{ 'css--faqs-section.css' | asset_url | stylesheet_tag }}
@@ -23,12 +44,6 @@
   }
 {%- endstyle -%}
 
-{%- comment -%}
-  FAQs come from a COLLECTION list metafield (custom.collection_page_faqs) that
-  references FAQ metaobjects. Each metaobject has "question" (text) and "answer"
-  (rich text) fields — the "category" field is ignored here.
-{%- endcomment -%}
-
 <section class="faqs">
   <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
     <div class="faqs__content">
@@ -41,52 +56,51 @@
         {%- endif -%}
       </div>
 
-      {%- if faq_items != blank and faq_items.size > 0 -%}
-        <div class="faqs__list">
-          {%- for faq in faq_items -%}
-            {%- assign faq_question = faq.question -%}
-            {%- assign faq_answer = faq.answer -%}
-            {%- if faq_question != blank -%}
-              <div class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}">
-                <div class="faqs__question">
-                  <span class="faqs__question-text">{{ faq_question }}</span>
-                  <span class="faqs__icon" aria-hidden="true">
-                    <svg
-                      class="faqs__icon__plus"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M15.1111 7.11111H8.88889V0.888889C8.88889 0.398222 8.49067 0 8 0C7.50933 0 7.11111 0.398222 7.11111 0.888889V7.11111H0.888889C0.398222 7.11111 0 7.50933 0 8C0 8.49067 0.398222 8.88889 0.888889 8.88889H7.11111V15.1111C7.11111 15.6018 7.50933 16 8 16C8.49067 16 8.88889 15.6018 8.88889 15.1111V8.88889H15.1111C15.6018 8.88889 16 8.49067 16 8C16 7.50933 15.6018 7.11111 15.1111 7.11111Z" fill="black"/>
-                    </svg>
+      <div class="faqs__list">
+        {%- for faq in faq_items -%}
+          {%- assign faq_question = faq.question -%}
+          {%- assign faq_answer = faq.answer -%}
+          {%- if faq_question != blank -%}
+            <div class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}">
+              <div class="faqs__question">
+                <span class="faqs__question-text">{{ faq_question }}</span>
+                <span class="faqs__icon" aria-hidden="true">
+                  <svg
+                    class="faqs__icon__plus"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M15.1111 7.11111H8.88889V0.888889C8.88889 0.398222 8.49067 0 8 0C7.50933 0 7.11111 0.398222 7.11111 0.888889V7.11111H0.888889C0.398222 7.11111 0 7.50933 0 8C0 8.49067 0.398222 8.88889 0.888889 8.88889H7.11111V15.1111C7.11111 15.6018 7.50933 16 8 16C8.49067 16 8.88889 15.6018 8.88889 15.1111V8.88889H15.1111C15.6018 8.88889 16 8.49067 16 8C16 7.50933 15.6018 7.11111 15.1111 7.11111Z" fill="black"/>
+                  </svg>
 
-                    <svg
-                      class="faqs__icon__minus"
-                      width="16"
-                      height="3"
-                      viewBox="0 0 16 3"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M15.1111 0H8.88889H7.11111H0.888889C0.398222 0 0 0.486194 0 1.08525C0 1.68431 0.398222 2.17051 0.888889 2.17051C0.888889 2.17051 4.68118 2.17051 7.11111 2.17051C7.80538 2.17051 8.88889 2.17051 8.88889 2.17051H15.1111C15.6018 2.17051 16 1.68431 16 1.08525C16 0.486194 15.6018 0 15.1111 0Z" fill="black"/>
-                    </svg>
-                  </span>
-                </div>
-                {%- if faq_answer != blank -%}
-                  <div class="faqs__answer rte">
-                    <div class="faqs__answer-inner">
-                      {{ faq_answer | metafield_tag }}
-                    </div>
-                  </div>
-                {%- endif -%}
+                  <svg
+                    class="faqs__icon__minus"
+                    width="16"
+                    height="3"
+                    viewBox="0 0 16 3"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M15.1111 0H8.88889H7.11111H0.888889C0.398222 0 0 0.486194 0 1.08525C0 1.68431 0.398222 2.17051 0.888889 2.17051C0.888889 2.17051 4.68118 2.17051 7.11111 2.17051C7.80538 2.17051 8.88889 2.17051 8.88889 2.17051H15.1111C15.6018 2.17051 16 1.68431 16 1.08525C16 0.486194 15.6018 0 15.1111 0Z" fill="black"/>
+                  </svg>
+                </span>
               </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
+              {%- if faq_answer != blank -%}
+                <div class="faqs__answer rte">
+                  <div class="faqs__answer-inner">
+                    {{ faq_answer }}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
+
     {% if section.settings.faq_image != blank or section.settings.faq_image_mobile != blank %}
       <div class="faqs__right">
         <div class="faqs__right_img">
@@ -140,7 +154,6 @@
       requestAnimationFrame(render);
     }
 
-    // subtle breath when the column height changes
     function pulse() {
       targetPulse = 1.015;
       clearTimeout(pulseTimer);
@@ -168,6 +181,10 @@
       });
     });
 
+    // set initial height for the default-open item
+    const first = section.querySelector('.faqs__item.is-open');
+    if (first) setOpen(first, true);
+
     function onScroll() {
       const rect = section.getBoundingClientRect();
       let progress =
@@ -186,7 +203,8 @@
     render();
   }
 </script>
-{% endif %}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Collection FAQs Section",
@@ -209,8 +227,15 @@
       "type": "text",
       "id": "faqs_metafield",
       "label": "FAQs metafield (namespace.key)",
-      "info": "Collection metafield: a list of FAQ metaobjects. Each metaobject needs a 'question' and 'answer' field (category is ignored).",
+      "info": "Collection metafield referencing FAQ metaobject(s). Works with a single reference or a list.",
       "default": "custom.collection_page_faqs"
+    },
+    {
+      "type": "text",
+      "id": "faq_list_field",
+      "label": "List field inside container metaobject",
+      "info": "Only needed if the metafield points to one container metaobject that holds a list of FAQs. Enter that list field's key.",
+      "default": "faqs"
     },
     {
       "type": "image_picker",
