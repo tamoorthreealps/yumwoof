@@ -16,8 +16,10 @@
     rendered per distinct recipe value. Each card shows that recipe as its
     subtitle, the lowest price of that recipe's variants ("From $X"), the
     compare-at price struck through when higher, an "as low as $Y / day" line
-    (lowest price / 30) and a "Shop now" button linking to that variant's PDP.
-    The "Healthy Grains (Original)" recipe is skipped.
+    (lowest price / 30) and a "Shop now" button.
+  - Links: the card links to the LARGEST (highest priced) available variant of
+    the recipe, so shoppers land on the big bag rather than the trial size.
+    Pricing still uses the lowest priced variant ("From $X").
   - Card image: desktop from `custom.variant_image_collection_card`, mobile from
     `custom.variant_image_collection_card_mobile`. Each falls back to the other,
     then to the product featured image.
@@ -70,6 +72,7 @@
     assign group_count = 0
     assign recipe_label = ''
     assign rep_variant = product.selected_or_first_available_variant
+    assign link_variant = blank
     assign group_image = ''
     assign group_image_mobile = ''
 
@@ -78,9 +81,17 @@
       for v in product.variants
         if v.options[recipe_idx0] == rv
           assign group_count = group_count | plus: 1
+          # Cheapest variant in this recipe drives the "From $X" price.
           if group_min == 0 or v.price < group_min
             assign group_min = v.price
             assign rep_variant = v
+          endif
+          # Largest (highest priced) available variant in this recipe drives the link,
+          # so shoppers land on the big bag instead of the trial size.
+          if v.available
+            if link_variant == blank or v.price > link_variant.price
+              assign link_variant = v
+            endif
           endif
           # First variant with a custom.variant_image_collection_card in this recipe sets the card image.
           assign v_img = v.metafields.custom.variant_image_collection_card.value
@@ -97,13 +108,21 @@
     else
       assign group_min = product.price_min
       assign group_count = product.variants.size
+      for v in product.variants
+        if v.available
+          if link_variant == blank or v.price > link_variant.price
+            assign link_variant = v
+          endif
+        endif
+      endfor
       assign group_image = rep_variant.metafields.custom.variant_image_collection_card.value
       assign group_image_mobile = rep_variant.metafields.custom.variant_image_collection_card_mobile.value
     endif
 
     assign rep_compare = rep_variant.compare_at_price
     assign per_day_cents = group_min | divided_by: 30
-    assign card_url = rep_variant.url | default: product.url
+    # Link to the largest available variant; fall back to the cheapest, then the product.
+    assign card_url = link_variant.url | default: rep_variant.url | default: product.url
     assign bestseller_label = rep_variant.metafields.custom.best_seller.value
     # Desktop image (custom.variant_image_collection_card); fall back to the product featured image.
     assign card_image = group_image | default: product.featured_image
