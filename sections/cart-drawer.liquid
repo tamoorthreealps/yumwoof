@@ -229,8 +229,9 @@
               <p class="cd-empty__text">{{ section.settings.empty_text }}</p>
             {%- endif -%}
 
-            {%- if section.settings.empty_collection != blank -%}
-              {%- assign empty_coll = section.settings.empty_collection -%}
+            {%- assign empty_coll = section.settings.empty_collection -%}
+            {%- if empty_coll != blank and empty_coll.products_count > 0 -%}
+              
               <div class="cd-shop--main">
                 <div class="cd-shop__head">
                   <p class="cd-shop__label">{{ section.settings.empty_collection_title }}</p>
