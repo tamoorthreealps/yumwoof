@@ -607,13 +607,13 @@
 }
 
 .fp-popup__right_img_bowl {
-	position: absolute;
-	right: -135px;
-	height: 436px;
-	width: auto;
-	bottom: 30px;
+    position: absolute;
+    right: -222px;
+    height: 436px;
+    width: auto;
+    bottom: -57px;
+    top: auto;
 }
-
 .fp-popup__right_img_bowl img {
 	margin: 0;
 	height: 100%;
