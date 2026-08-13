@@ -3706,6 +3706,11 @@ details-disclosure > details {
 .mobile_badge{
   display:none;
 }
+.gorgias-chat-key-1xnb2ti {
+    height: 88svh !important;
+    left: 0px;
+    top: 78px !important;
+}
 @media screen and (max-width: 749px) {
   .card_new_badge{
     right: 8px;
