@@ -300,14 +300,12 @@
                     {% render 'components--pdp-videos', block: block %}
 
                   {%- when 'appstle_subscription' -%}
-                    {% unless product.handle == 'membership' %}
                     <div class="qty freq">
                       <div class="frequency_title_container">
                         <h2 class="selector-title">Delivery</h2>
                       </div>
                       {% render 'appstle-subscription', product: product %}
                     </div>
-                    {% endunless %}
                   {%- when 'custom_liquid' -%}
                     {{ block.settings.custom_liquid }}
                   {%- when 'collapsible_tab' -%}
