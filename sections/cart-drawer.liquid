@@ -248,7 +248,6 @@
 
             {%- assign empty_coll = section.settings.empty_collection -%}
             {%- if empty_coll != blank and empty_coll.products_count > 0 -%}
-              
               <div class="cd-shop--main">
                 <div class="cd-shop__head">
                   <p class="cd-shop__label">{{ section.settings.empty_collection_title }}</p>
@@ -591,7 +590,7 @@
                         <div class="cd-item__media">
                           {%- if item.image -%}
                             {%- assign cd_img_alt = item.image.alt | escape -%}
-                            <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                            {% if banner_product != blank and item.product.id == banner_product.id %}
                               {{
                                 item.image
                                 | image_url: width: 240
@@ -601,14 +600,30 @@
                                   alt: cd_img_alt,
                                   loading: 'lazy'
                               }}
-                            </a>
+                            {% else %}
+                              <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                                {{
+                                  item.image
+                                  | image_url: width: 240
+                                  | image_tag:
+                                    class: 'cd-item__img',
+                                    widths: '120, 180, 240',
+                                    alt: cd_img_alt,
+                                    loading: 'lazy'
+                                }}
+                              </a>
+                            {% endif %}
                           {%- endif -%}
                         </div>
                         <div class="cd-item__main">
                           <div class="cd-item__top">
                             <div class="cd-item__titles">
                               {% assign variant_parts = item.variant.title | split: ' / ' %}
-                              <a href="{{ item.url }}" class="cd-item__name">{{ item.product.title | escape }}</a>
+                              {% if banner_product != blank and item.product.id == banner_product.id %}
+                                <span class="cd-item__name">{{ item.product.title | escape }}</span>
+                              {% else %}
+                                <a href="{{ item.url }}" class="cd-item__name">{{ item.product.title | escape }}</a>
+                              {% endif %}
                               {% assign recipe_name = '' %}
                               {% assign recipe_value = '' %}
 
