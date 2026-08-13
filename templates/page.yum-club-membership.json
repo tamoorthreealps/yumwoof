@@ -264,6 +264,11 @@
         "description": "",
         "button_text": "JOIN YUMCLUB · $29/QTR",
         "button_url": "",
+        "product": "membership",
+        "show_plan_name": false,
+        "sold_out_text": "SOLD OUT",
+        "quantity": 1,
+        "cart_behavior": "drawer",
         "content_align": "center",
         "bg_image": "shopify://shop_images/Group_162_21ea30d7-68c5-4e3e-aecd-9f1b6a0bd58a.jpg",
         "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf_c969ffe7-ae88-420d-a4cc-6662edd19ac8.jpg",
@@ -282,11 +287,7 @@
         "button_radius": "160px",
         "height_desktop": "800px",
         "height_mobile": "560px",
-        "padding_top": "120px",
-        "padding_top_mobile": "68px",
-        "content_width": "792px",
-        "parallax_range": 0,
-        "parallax_range_mobile": 0
+        "content_width": "792px"
       }
     }
   },
