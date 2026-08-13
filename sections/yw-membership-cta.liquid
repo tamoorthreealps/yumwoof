@@ -69,9 +69,6 @@
 <section
   class="ywcta"
   id="ywcta-{{ uid }}"
-  data-yw-parallax
-  data-yw-parallax-range="{{ s.parallax_range }}"
-  data-yw-parallax-range-mobile="{{ s.parallax_range_mobile }}"
   {% if s.heading != blank %}aria-labelledby="ywcta-heading-{{ uid }}"{% endif %}
   style="
     --ywcta-bg: {{ s.color_bg }};
@@ -95,7 +92,7 @@
   "
 >
   {%- comment -%} Decorative: CSS background only — no markup image, no alt. {%- endcomment -%}
-  <div class="ywcta__bg" data-yw-parallax-layer aria-hidden="true"></div>
+  <div class="ywcta__bg" aria-hidden="true"></div>
   <div class="ywcta__overlay" aria-hidden="true"></div>
 
   <div class="ywcta__container ywcta__container--{{ s.content_align }}">
@@ -133,154 +130,6 @@
 
   </div>
 </section>
-
-<script>
-  /* Scoped parallax. Defers to a shared theme system if one is present
-     (window.YwParallaxShared / window.YumParallax), otherwise runs this
-     lightweight rAF fallback. Only targets [data-yw-parallax]. */
-  (function () {
-    if (window.YumParallax && window.YumParallax.scan) { window.YumParallax.scan(document); return; }
-    if (window.YwmfParallax && window.YwmfParallax.scan) { window.YwmfParallax.scan(document); return; }
-    if (window.YwctaParallax) { window.YwctaParallax.scan(); return; }
-
-    var items = [];
-    var ticking = false;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var mobile = window.matchMedia('(max-width: 749px)');
-
-    function measure(item) {
-      var rect = item.el.getBoundingClientRect();
-      item.top = rect.top + window.pageYOffset;
-      item.height = rect.height;
-    }
-
-    function measureAll() {
-      for (var i = 0; i < items.length; i++) measure(items[i]);
-      update();
-    }
-
-    function update() {
-      ticking = false;
-      if (reduce.matches) return;
-
-      var vh = window.innerHeight;
-      var y = window.pageYOffset;
-
-      for (var i = 0; i < items.length; i++) {
-        var item = items[i];
-        if (!item.visible) continue;
-
-        var range = mobile.matches ? item.rangeMobile : item.range;
-        if (!range) {
-          if (item.last !== 0) {
-            item.layer.style.transform = 'translate3d(0,0,0)';
-            item.last = 0;
-          }
-          continue;
-        }
-
-        var span = vh + item.height;
-        var progress = span > 0 ? (y + vh - item.top) / span : 0;
-        if (progress < 0) progress = 0;
-        if (progress > 1) progress = 1;
-
-        /* Rests mid-travel so the section matches the design when centred. */
-        var offset = Math.round((progress - 0.5) * range * -1 * 100) / 100;
-        if (offset !== item.last) {
-          item.layer.style.transform = 'translate3d(0,' + offset + 'px,0)';
-          item.last = offset;
-        }
-      }
-    }
-
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
-    }
-
-    var io = 'IntersectionObserver' in window
-      ? new IntersectionObserver(function (entries) {
-          for (var i = 0; i < entries.length; i++) {
-            var it = entries[i].target.__ywcta;
-            if (!it) continue;
-            it.visible = entries[i].isIntersecting;
-            if (it.visible) measure(it);
-          }
-          onScroll();
-        }, { rootMargin: '200px 0px' })
-      : null;
-
-    function register(el) {
-      if (el.__ywcta) return;
-      var layer = el.querySelector('[data-yw-parallax-layer]');
-      if (!layer) return;
-
-      var item = {
-        el: el,
-        layer: layer,
-        range: parseFloat(el.getAttribute('data-yw-parallax-range')) || 0,
-        rangeMobile: parseFloat(el.getAttribute('data-yw-parallax-range-mobile')) || 0,
-        visible: !io,
-        last: null
-      };
-      el.__ywcta = item;
-      items.push(item);
-      measure(item);
-      if (io) io.observe(el);
-    }
-
-    function scan(root) {
-      var nodes = (root || document).querySelectorAll('[data-yw-parallax]');
-      for (var i = 0; i < nodes.length; i++) register(nodes[i]);
-      onScroll();
-    }
-
-    function unregister(root) {
-      for (var i = items.length - 1; i >= 0; i--) {
-        if (root !== items[i].el && !root.contains(items[i].el)) continue;
-        if (io) io.unobserve(items[i].el);
-        items[i].layer.style.transform = '';
-        delete items[i].el.__ywcta;
-        items.splice(i, 1);
-      }
-    }
-
-    function debounce(fn, wait) {
-      var t;
-      return function () { clearTimeout(t); t = setTimeout(fn, wait); };
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', debounce(measureAll, 150), { passive: true });
-    window.addEventListener('orientationchange', debounce(measureAll, 150));
-    window.addEventListener('load', measureAll);
-
-    function onMedia(mq, fn) {
-      if (mq.addEventListener) mq.addEventListener('change', fn);
-      else if (mq.addListener) mq.addListener(fn);
-    }
-    onMedia(reduce, function (e) {
-      if (e.matches) {
-        for (var i = 0; i < items.length; i++) {
-          items[i].layer.style.transform = '';
-          items[i].last = null;
-        }
-      } else { measureAll(); }
-    });
-    onMedia(mobile, measureAll);
-
-    document.addEventListener('shopify:section:load', function (e) { scan(e.target); measureAll(); });
-    document.addEventListener('shopify:section:unload', function (e) { unregister(e.target); });
-    document.addEventListener('shopify:section:reorder', measureAll);
-
-    window.YwctaParallax = { scan: scan, refresh: measureAll };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () { scan(); });
-    } else { scan(); }
-  })();
-</script>
 
 {% schema %}
 {
@@ -370,30 +219,7 @@
     { "type": "text", "id": "height_mobile", "label": "Height (mobile)", "default": "343px" },
     { "type": "text", "id": "padding_top", "label": "Content offset from top (desktop)", "default": "96px" },
     { "type": "text", "id": "padding_top_mobile", "label": "Content offset from top (mobile)", "default": "34px" },
-    { "type": "text", "id": "content_width", "label": "Content width", "default": "700px" },
-
-    { "type": "header", "content": "Parallax" },
-    {
-      "type": "range",
-      "id": "parallax_range",
-      "label": "Parallax range (desktop)",
-      "min": 0,
-      "max": 160,
-      "step": 10,
-      "unit": "px",
-      "default": 80,
-      "info": "Set to 0 to disable. Only has a visible effect when a background image is set."
-    },
-    {
-      "type": "range",
-      "id": "parallax_range_mobile",
-      "label": "Parallax range (mobile)",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "default": 30
-    }
+    { "type": "text", "id": "content_width", "label": "Content width", "default": "700px" }
   ],
   "presets": [{ "name": "Yum Club Final CTA" }]
 }
