@@ -300,7 +300,7 @@
                     {% render 'components--pdp-videos', block: block %}
 
                   {%- when 'appstle_subscription' -%}
-                    <div class="qty freq">
+                    <div class="qty freq {% if product.handle == 'membership' %}qrt_freq_membership{% endif %}">
                       <div class="frequency_title_container">
                         <h2 class="selector-title">Delivery</h2>
                       </div>
