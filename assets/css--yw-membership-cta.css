@@ -23,7 +23,6 @@
   --ywcta-button-radius: 160px;
 
   --ywcta-height: 617px;
-  --ywcta-pad-top: 96px;
   --ywcta-position: center center;
   --ywcta-max-width: 700px;
 
@@ -73,7 +72,6 @@
   z-index: 2;
   width: min(var(--ywcta-max-width), calc(100% - 64px));
   margin-inline: auto;
-  padding-top: var(--ywcta-pad-top);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -193,7 +191,6 @@
 @media (max-width: 989px) {
   .ywcta {
     --ywcta-height: 520px;
-    --ywcta-pad-top: 72px;
   }
 
   .ywcta__heading {
@@ -209,7 +206,6 @@
 @media (max-width: 749px) {
   .ywcta {
     --ywcta-height: var(--ywcta-height-mobile, 343px) !important;
-    --ywcta-pad-top: var(--ywcta-pad-top-mobile, 34px);
   }
 
   .ywcta__bg {
