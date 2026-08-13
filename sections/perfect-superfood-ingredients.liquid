@@ -1,0 +1,106 @@
+<section class="product-section-2">
+   {% render 'product-ingredients-modal' %}    
+    <div class="site-container">
+       <div class="content-nutrition">
+         <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/pro-nutrition-txt.png?v=1667393177" alt="product nutrition details">
+         <p class="hd-txt">All ingredients in {{ product.title }} are human-grade and GMO-free.</p>
+         {% for option in product.options_with_values %}  
+            {% if option.name == "Recipe" %}
+              <div class="radio-wrapper js product-form__item type {% if option.name == 'Purchase Option' %}visually-hidden{% endif %}">
+              
+                <label class="single-option-radio__label" for="ing-recipe-selector">
+                       {{ option.name | escape }}:
+                    </label>
+                {% if section.settings.product_selector != 'radio' %}
+                   <fieldset class="single-option-radio new-single-class" id="ing-recipe-selector">
+                      {% assign option_index = forloop.index %}
+                      {% for value in option.values %}
+                         {% if value == 'Healthy Grains (Original)'%}
+                            {% continue %}                        
+                         {% endif %}
+                         {% assign variant_label_state = true %}                                
+                         {% if product.options.size == 1 %}
+                            {% unless product.variants[forloop.index0].available  %}                             
+                               {% assign variant_label_state = false %}
+                            {% endunless %}
+                         {% elsif value == "Full bag (7 lbs)" or value == "14 Oz bag"%}
+                            {% assign variant_label_state = false %}
+                         {% endif %}
+                         <input type="radio"
+                         {% if option.selected_value == value and variant_label_state == true %} checked="checked"{% endif %}
+                         {% unless variant_label_state %} disabled="disabled"{% endunless %}
+                         value="{{ value | escape }}"
+                         data-index="option{{ option_index }}"
+                         name="option{{ option.position }}"
+                         class="single-option-selector__radio{% unless variant_label_state %} disabled{% endunless %}"
+                         id="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}">
+                         <label for="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}"{% unless variant_label_state %} class="disabled"{% endunless %}>{{ value | escape }}</label>
+                      {% endfor %}
+                   </fieldset>
+                {% else %}
+                   <select class="single-option-selector__radio single-option-selector-{{ section.id }} product-form__input" 
+                      id="SingleOptionSelector-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                      {% for value in option.values %}
+                         <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>{{ value | escape }}</option>
+                      {% endfor %}
+                   </select> 
+                {% endif %}
+              
+            </div>
+                  {% endif %}
+         {% endfor %}
+          <ul class="ing-list">
+               {% for ingred_obj in product.selected_or_first_available_variant.metafields.info.ingredients.value %}
+                  <li>
+                     <img class="ingred_icon" src="{{ ingred_obj.image | image_url}}" alt="" loading="lazy"> 
+                     <span>                    
+                        {% if ingred_obj.display_text %}
+                           {{ ingred_obj.display_text }}
+                        {% else %}
+                           {{ ingred_obj.title }}
+                        {% endif %}
+                       <button type="button" class="ing_btn" data-bs-toggle="modal" data-bs-target="#ingredient_{{ ingred_obj.system.id }}" aria-label="More about {{ ingred_obj.display_text | default: ingred_obj.title }}"> 
+                       <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/plus.png?v=1667388322" alt=""> </button> 
+                    </span>                 
+                      </li>                              
+               {% endfor %}
+          </ul>
+       </div>
+    </div>
+ </section>
+ <style>
+   .content-nutrition .product-form__item.type{
+      display: flex;
+      align-items: center;
+      font-family: var(--headline-font-family);
+      font-size: 1.5vw;
+      margin-top: 18px;
+   } 
+
+   #ing-recipe-selector label{
+      font-size: 1.3vw;
+   }
+
+   @media (max-width: 767px) {
+      #ing-recipe-selector label{
+         font-size: 3.1vw;
+      }
+      .content-nutrition .product-form__item.type{
+         {% comment %} font-size: 3.8vw; {% endcomment %}
+         margin-top:10px;
+      }
+  }
+ </style>
+ {% schema %}
+{
+  "name": "Perfectfood Ingredients",
+  "tag": "section",
+  "settings": [
+  ],
+  "presets": [
+    {
+      "name": "Perfectfood Ingredients"
+    }
+  ]
+}
+{% endschema %}

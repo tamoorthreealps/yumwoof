@@ -1,0 +1,238 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "subheading_ULBAEm": {
+          "type": "subheading",
+          "settings": {
+            "text_style": "uppercase"
+          }
+        },
+        "rating_AqGBUP": {
+          "type": "rating",
+          "settings": {}
+        },
+        "short_description_HghaRg": {
+          "type": "short_description",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "disabled": true,
+          "settings": {}
+        },
+        "usps_wWfcV4": {
+          "type": "usps",
+          "settings": {
+            "scroll_seconds": 25
+          }
+        },
+        "product_selectors_x34MRL": {
+          "type": "product-selectors",
+          "settings": {
+            "heading": "Formula"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {
+            "show_quantity_calculator": true
+          }
+        },
+        "quantity_calculator_HFLFAL": {
+          "type": "quantity-calculator",
+          "disabled": true,
+          "settings": {}
+        },
+        "appstle_subscription_qkkVmJ": {
+          "type": "appstle_subscription",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false,
+            "coming_soon_heading": "Coming Soon",
+            "coming_soon_text": "",
+            "klaviyo_form_class": "klaviyo-form-Ry6Yff"
+          }
+        },
+        "guarantee_ribbon_NUFwfW": {
+          "type": "guarantee-ribbon",
+          "settings": {
+            "heading": "21-Day First Bag Guarantee",
+            "text": "Money back if your dog doesn't love it",
+            "background_image": "shopify://shop_images/Background.png",
+            "background_color": "#cb890040",
+            "ribbon_color": "#fff9ef"
+          }
+        },
+        "pdp_videos_azzcwK": {
+          "type": "pdp-videos",
+          "settings": {
+            "show_video": false
+          }
+        },
+        "butcher_quality_Qm6kwt": {
+          "type": "butcher-quality",
+          "disabled": true,
+          "settings": {
+            "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
+            "bq_heading": "",
+            "bq_description": "<p>THE BUTCHER QUALITY SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>"
+          }
+        },
+        "nutrition_label_APTPBb": {
+          "type": "nutrition-label",
+          "settings": {
+            "heading": "Know what you're feeding",
+            "brand_label": "Ancestral Blend"
+          }
+        },
+        "nutritional_information_KCbq7E": {
+          "type": "nutritional-information",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "subheading_ULBAEm",
+        "rating_AqGBUP",
+        "short_description_HghaRg",
+        "price",
+        "usps_wWfcV4",
+        "product_selectors_x34MRL",
+        "variant_picker",
+        "quantity_selector",
+        "quantity_calculator_HFLFAL",
+        "appstle_subscription_qkkVmJ",
+        "buy_buttons",
+        "guarantee_ribbon_NUFwfW",
+        "pdp_videos_azzcwK",
+        "butcher_quality_Qm6kwt",
+        "nutrition_label_APTPBb",
+        "nutritional_information_KCbq7E",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "promo_banner_content": "<p>New to Yumwoof? <strong>Get a Personalized Meal Plan + 30% off</strong></p>",
+        "promo_banner_link": "#",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": true,
+        "enable_video_looping": false
+      }
+    },
+    "perfect_superfood_ingredients_xK997p": {
+      "type": "perfect-superfood-ingredients",
+      "name": "Perfectfood Ingredients",
+      "settings": {}
+    },
+    "pdp_faqs_section_k4GtF3": {
+      "type": "pdp-faqs-section",
+      "name": "PDP FAQs Section",
+      "settings": {
+        "heading": "Any Questions?",
+        "subheading": "",
+        "faq_image": "shopify://shop_images/faqs_desktop.png",
+        "faq_image_mobile": "shopify://shop_images/faqs_mobile.png",
+        "open_first": false,
+        "background_color": "#fff9ef",
+        "text_color": "#000000",
+        "line_color": "#000000",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 120,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "custom_reviews_DQxkJb": {
+      "type": "custom-reviews",
+      "blocks": {
+        "opinew_reviews_product_widget_eVJnJ8": {
+          "type": "shopify://apps/opinew-reviews/blocks/product-widget/e1d8e0dc-17ff-4e4a-8a8a-1e73c8ef8676",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "opinew_reviews_product_widget_eVJnJ8"
+      ],
+      "name": "Custom Reviews",
+      "settings": {
+        "bg_image_desktop": "shopify://shop_images/BG.png",
+        "bg_color_desktop": "#fff9ef",
+        "bg_color_mobile": "#7ba6dd",
+        "left_bone": "shopify://shop_images/Group_80.png",
+        "right_bone": "shopify://shop_images/Group_79.png"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "perfect_superfood_ingredients_xK997p",
+    "pdp_faqs_section_k4GtF3",
+    "related-products",
+    "custom_reviews_DQxkJb"
+  ]
+}

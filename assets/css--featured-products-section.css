@@ -566,7 +566,7 @@ position: absolute !important;
 .fp-popup {
 	position: fixed;
 	inset: 0;
-	z-index: 9999;
+	z-index: -1;
 	visibility: hidden;
 	opacity: 0;
 	transition: .35s;
@@ -575,6 +575,7 @@ position: absolute !important;
 .fp-popup.active {
 	visibility: visible;
 	opacity: 1;
+	z-index:9999;
 }
 
 .fp-popup__overlay {
