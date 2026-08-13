@@ -104,10 +104,23 @@
       <div class="cd-rec-card__body__content">
         <div class="cd-rec-card__body">
           <p class="cd-rec-card__title">{{ product.title | escape }}</p>
-          {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
+          {% comment %} {%- assign recipe = product.metafields.custom.recipe | default: product.type -%}
           {%- if recipe != blank -%}
             <p class="cd-rec-card__subtitle">{{ recipe }}</p>
-          {%- endif -%}
+          {%- endif -%} {% endcomment %}
+           {%- assign rec_variant = product.selected_or_first_available_variant -%}
+{%- assign variant_option_value = blank -%}
+
+{%- for option in product.options -%}
+  {%- if option != 'Size' -%}
+    {%- assign variant_option_value = rec_variant.options[forloop.index0] -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if variant_option_value != blank -%}
+  <p class="cd-rec-card__subtitle">{{ variant_option_value }}</p>
+{%- endif -%}
           {%- assign rec_variant = product.selected_or_first_available_variant -%}
           {%- assign rec_variant = product.selected_or_first_available_variant -%}
           {%- assign size_value = blank -%}
