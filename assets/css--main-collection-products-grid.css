@@ -381,10 +381,10 @@ background: #FFF9EF;
         letter-spacing: 0.52px;
         padding: 0 23.15px;
         margin-top: 12px;
-          display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px; 
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px; 
     }
 
     .yw-pcard__btn span {
