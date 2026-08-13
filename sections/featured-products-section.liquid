@@ -286,7 +286,8 @@
 {% comment %}
   popup--html--code
   One popup per CARD, populated entirely from product.metafields.custom.ingredient_popup.
-  The card's own URL is reused for the popup button so both always point at the same place.
+  Each tab's CTA links to that tab's own product variant (tab_1_variant / tab_2_variant /
+  tab_3_variant on the metaobject), falling back to the card's URL when unset.
 {% endcomment %}
 {%- if products.size > 0 -%}
   {%- for product in products -%}
@@ -384,12 +385,20 @@
             {%- for i in (1..3) -%}
               {%- assign tk = 'tab_' | append: i | append: '_title' -%}
               {%- assign dk = 'tab_' | append: i | append: '_description' -%}
+              {%- assign vk = 'tab_' | append: i | append: '_variant' -%}
               {%- if popup[tk] != blank -%}
+                {%- liquid
+                  assign tab_variant = popup[vk]
+                  if tab_variant.value != blank
+                    assign tab_variant = tab_variant.value
+                  endif
+                  assign tab_btn_url = tab_variant.url | default: card_url
+                -%}
                 <div class="fp-popup__content{% if i == active_tab %} active{% endif %}" data-content="{{ i }}">
                   {{ popup[dk] | metafield_tag }}
 
                   {%- if section.settings.popup_button_label != blank -%}
-                    <a href="{{ card_url }}" class="fp-popup__content_btn">
+                    <a href="{{ tab_btn_url }}" class="fp-popup__content_btn">
                       {{ section.settings.popup_button_label }}
                     </a>
                   {%- endif -%}
@@ -426,7 +435,6 @@
     {%- endfor -%}
   {%- endfor -%}
 {%- endif -%}
-{% comment %} required--js--code {% endcomment %}
 {% comment %} required--js--code {% endcomment %}
 <script>
   (function () {
@@ -908,7 +916,7 @@
     { "type": "header", "content": "Ingredients popup" },
     {
       "type": "paragraph",
-      "content": "Popup content is read from each product's custom.ingredient_popup metaobject. The trigger is hidden for products without one."
+      "content": "Popup content is read from each product's custom.ingredient_popup metaobject. The trigger is hidden for products without one. Each tab's button links to that tab's variant field (Tab 1/2/3 Variant), falling back to the card's own URL."
     },
     { "type": "text", "id": "popup_button_label", "label": "Popup button label", "default": "SHOP NOW" },
     { "type": "header", "content": "Colors" },

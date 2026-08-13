@@ -271,7 +271,7 @@
         </ul>
       {%- endif -%}
       {%- if section.settings.site_credit_label != blank -%}
-        <a class="yf__site-credit" href="{{ section.settings.site_credit_url | default: '#' }}" target="_blank">
+        <a class="yf__site-credit" href="{{ section.settings.site_credit_url | default: '#' }}">
           {{- section.settings.site_credit_label -}}
         </a>
       {%- endif -%}
