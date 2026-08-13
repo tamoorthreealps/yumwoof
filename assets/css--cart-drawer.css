@@ -948,6 +948,9 @@ p.cd-banner__description {
 	line-height: 28px;
 	letter-spacing: 0;
 	text-transform: uppercase;
+	  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cd-rec-card__subtitle {
