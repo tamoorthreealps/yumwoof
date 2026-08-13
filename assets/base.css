@@ -3707,9 +3707,8 @@ details-disclosure > details {
   display:none;
 }
 .gorgias-chat-key-1xnb2ti {
-    height: 88svh !important;
-    left: 0px;
-    top: 78px !important;
+    height: 85svh !important;
+    top: 100px !important;
 }
 @media screen and (max-width: 749px) {
   .card_new_badge{
