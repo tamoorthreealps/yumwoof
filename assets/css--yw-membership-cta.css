@@ -216,11 +216,13 @@
   }
 
   .ywcta__container {
-    width: 100%;
-    padding-inline: 24px;
-    padding-top: 68px;
-    padding-bottom: 80px;
-    height: 100%;
+      width: 100%;
+      padding-inline: 24px;
+      padding-top: 64px;
+      padding-bottom: 80px;
+      height: 100%;
+      justify-content: space-between;
+      gap: 16px;
   }
 
   .ywcta__heading {
