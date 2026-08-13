@@ -154,6 +154,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   transition: background-color .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
+  cursor: pointer;
 }
 
 .ywcta__button:hover,
