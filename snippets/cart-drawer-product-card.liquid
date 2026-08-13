@@ -54,12 +54,20 @@
         {{
           card_desktop
           | image_url: width: 400
-          | image_tag: class: 'cd-shop-card__img cd-shop-card__img--desktop', widths: '160, 260, 400', alt: card_alt, loading: 'lazy'
+          | image_tag:
+            class: 'cd-shop-card__img cd-shop-card__img--desktop',
+            widths: '160, 260, 400',
+            alt: card_alt,
+            loading: 'lazy'
         }}
         {{
           card_mobile
           | image_url: width: 400
-          | image_tag: class: 'cd-shop-card__img cd-shop-card__img--mobile', widths: '160, 260, 400', alt: card_alt, loading: 'lazy'
+          | image_tag:
+            class: 'cd-shop-card__img cd-shop-card__img--mobile',
+            widths: '160, 260, 400',
+            alt: card_alt,
+            loading: 'lazy'
         }}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'cd-shop-card__img' }}
