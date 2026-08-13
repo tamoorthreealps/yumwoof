@@ -147,6 +147,12 @@ display: inline-flex;
     letter-spacing: -1.04px;
     padding: 4px 5.92px 1px;
 }
+@supports (-webkit-touch-callout: none) {
+		.asw__save-pill {
+			padding-top: 0;
+			padding-bottom: 2px;
+		}
+	}
 .asw-option__subtitle {
     font-size: 12px;
     line-height: 16px;
@@ -198,12 +204,7 @@ display: inline-flex;
 }
     }
 
-@supports (-webkit-touch-callout: none) {
-	.asw__save-pill {
-		padding-top: 0;
-		padding-bottom: 2px;
-	}
-}
+
 </style>
 {%- liquid
   assign appstle_app_id = 'appstle'
