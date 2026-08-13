@@ -379,12 +379,14 @@ background: #FFF9EF;
         font-size: 13px;
         line-height: 20px;
         letter-spacing: 0.52px;
-        padding: 10px 22.3px 8.4px;
+        padding: 10.4px 23.15px 8px;
         margin-top: 12px;
-		max-width: 120px;
-    white-space:nowrap;
-		box-sizing: border-box;
-		text-align: center;
+    }
+
+    .yw-pcard__btn span {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.98px;
     }
 
     .yw-pcard__img.recipe-swatch__img--desktop {
