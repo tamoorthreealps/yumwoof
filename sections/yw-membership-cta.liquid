@@ -103,7 +103,108 @@
       <div class="ywcta__description">{{ s.description }}</div>
     {%- endif -%}
 
-    {%- if s.button_text != blank -%}
+    {%- comment -%} ---------------- Add to cart (subscription aware, single purchase) ---------------- {%- endcomment -%}
+    {%- liquid
+      assign atc_product = s.product
+      assign atc_variant = null
+      assign atc_selling_plan = null
+      assign atc_plan_required = false
+
+      if atc_product != blank
+        assign atc_variant = atc_product.selected_or_first_available_variant
+      endif
+
+      if atc_variant != blank
+        assign atc_plan_required = atc_variant.requires_selling_plan
+
+        if atc_variant.selling_plan_allocations.size > 0
+          if s.selling_plan_id != blank
+            for allocation in atc_variant.selling_plan_allocations
+              if allocation.selling_plan.id == s.selling_plan_id
+                assign atc_selling_plan = allocation.selling_plan
+                break
+              endif
+            endfor
+          endif
+
+          if atc_selling_plan == null
+            assign atc_selling_plan = atc_variant.selling_plan_allocations.first.selling_plan
+          endif
+        endif
+      endif
+
+      assign atc_blocked = false
+      if atc_plan_required and atc_selling_plan == null
+        assign atc_blocked = true
+      endif
+
+      comment
+        Membership is a one-per-cart item. Match on product_id so switching
+        variants can't slip a second membership into the cart.
+      endcomment
+      assign ywcta_in_cart = false
+      if atc_product != blank
+        for line in cart.items
+          if line.product_id == atc_product.id
+            assign ywcta_in_cart = true
+            break
+          endif
+        endfor
+      endif
+    -%}
+
+    {%- if atc_product != blank and atc_variant != blank -%}
+      <div class="ywcta__button-wrap">
+        <form
+          method="post"
+          action="{{ routes.cart_add_url }}"
+          class="ywcta__form"
+          data-ywcta-form
+          data-cart-behavior="{{ s.cart_behavior }}"
+          data-product-id="{{ atc_product.id }}"
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="id" value="{{ atc_variant.id }}">
+          <input type="hidden" name="quantity" value="{{ s.quantity }}">
+          {%- if atc_selling_plan != null -%}
+            <input type="hidden" name="selling_plan" value="{{ atc_selling_plan.id }}" data-ywcta-selling-plan>
+          {%- endif -%}
+
+          {%- if atc_selling_plan != null and s.show_plan_name -%}
+            <p class="ywcta__plan-name">{{ atc_selling_plan.name | escape }}</p>
+          {%- endif -%}
+
+          <button
+            type="submit"
+            class="ywcta__button{% if ywcta_in_cart %} ywcta__button--in-cart{% endif %}"
+            data-ywcta-in-cart="{% if ywcta_in_cart %}true{% else %}false{% endif %}"
+            {% if atc_variant.available == false or atc_blocked %}
+              disabled
+            {% endif %}
+          >
+            <span>
+              {%- if atc_variant.available == false -%}
+                {{ s.sold_out_text | default: 'SOLD OUT' | escape }}
+              {%- else -%}
+                {{ s.button_text | default: 'ADD TO CART' | escape }}
+              {%- endif -%}
+            </span>
+          </button>
+
+          {%- if atc_blocked and request.design_mode -%}
+            <p class="ywcta__form-error">
+              This variant can only be purchased with a selling plan, but no plan is attached to it. Check the
+              subscription app's plan group for this product.
+            </p>
+          {%- endif -%}
+
+          <p class="ywcta__form-error" data-ywcta-error hidden></p>
+        </form>
+      </div>
+
+    {%- elsif s.button_text != blank -%}
+      {%- comment -%} No product selected — fall back to a plain link {%- endcomment -%}
       <div class="ywcta__button-wrap">
         <a class="ywcta__button" href="{{ s.button_url | default: '#' }}">
           <span>{{ s.button_text | escape }}</span>
@@ -129,6 +230,176 @@
   </div>
 </section>
 
+<script>
+  (function () {
+    function getDrawer() {
+      return document.querySelector('cart-drawer');
+    }
+
+    function getDrawerSectionId() {
+      var el = document.getElementById('CartDrawer-SectionId');
+      return el ? el.dataset.sectionId : 'cart-drawer';
+    }
+
+    function openDrawer() {
+      var drawer = getDrawer();
+      if (drawer && typeof drawer.open === 'function') {
+        drawer.open();
+        return true;
+      }
+      var toggle = document.querySelector('#cart-icon-bubble, a[href$="/cart"]');
+      if (toggle) {
+        toggle.click();
+        return true;
+      }
+      return false;
+    }
+
+    function setButtonState(form, inCart) {
+      var button = form.querySelector('.ywcta__button');
+      if (!button) return;
+      // State only — the label text never changes.
+      button.dataset.ywctaInCart = inCart ? 'true' : 'false';
+      button.classList.toggle('ywcta__button--in-cart', inCart);
+    }
+
+    // Check the live cart rather than trusting the server-rendered flag —
+    // the customer may have removed the item from the drawer since page load.
+    function isAlreadyInCart(productId) {
+      return fetch(window.Shopify.routes.root + 'cart.js', {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (cart) {
+          return (cart.items || []).some(function (line) {
+            return String(line.product_id) === String(productId);
+          });
+        })
+        .catch(function () {
+          return false;
+        });
+    }
+
+    function initYwctaForm(root) {
+      root.querySelectorAll('[data-ywcta-form]').forEach(function (form) {
+        if (form.dataset.ywctaBound) return;
+        form.dataset.ywctaBound = 'true';
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          var behavior = form.dataset.cartBehavior || 'drawer';
+          var button = form.querySelector('.ywcta__button');
+          var errorEl = form.querySelector('[data-ywcta-error]');
+          if (errorEl) {
+            errorEl.hidden = true;
+            errorEl.textContent = '';
+          }
+          if (button) {
+            button.setAttribute('aria-busy', 'true');
+            button.disabled = true;
+          }
+
+          function release() {
+            if (button) {
+              button.removeAttribute('aria-busy');
+              button.disabled = false;
+            }
+          }
+
+          isAlreadyInCart(form.dataset.productId).then(function (inCart) {
+            if (inCart) {
+              setButtonState(form, true);
+              release();
+              if (!openDrawer()) {
+                window.location.href = window.Shopify.routes.root + 'cart';
+              }
+              return;
+            }
+
+            setButtonState(form, false);
+
+            if (behavior === 'cart') {
+              form.submit();
+              return;
+            }
+
+            var drawer = getDrawer();
+            var planInput = form.querySelector('[data-ywcta-selling-plan]');
+
+            var item = {
+              id: Number(form.querySelector('input[name="id"]').value),
+              quantity: Number(form.querySelector('input[name="quantity"]').value || 1),
+            };
+            if (planInput && planInput.value) {
+              item.selling_plan = Number(planInput.value);
+            }
+
+            var payload = { items: [item] };
+
+            // Ask Shopify to re-render the drawer sections in the same request,
+            // otherwise the drawer keeps its stale markup until a reload.
+            var sectionIds = [];
+            if (drawer && drawer.getSectionsToRender) {
+              sectionIds = drawer.getSectionsToRender().map(function (s) {
+                return s.id;
+              });
+            }
+            if (!sectionIds.length) {
+              sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
+            }
+
+            payload.sections = sectionIds.join(',');
+            payload.sections_url = window.location.pathname;
+
+            fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
+              body: JSON.stringify(payload),
+            })
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (data) {
+                if (data.status) throw new Error(data.description || data.message);
+
+                setButtonState(form, true);
+
+                if (drawer && typeof drawer.renderContents === 'function') {
+                  // Dawn's renderContents both repaints and opens the drawer.
+                  drawer.renderContents(data);
+                } else {
+                  document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+                  if (behavior === 'drawer') openDrawer();
+                  return;
+                }
+
+                if (behavior === 'stay' && drawer.classList.contains('active')) {
+                  if (typeof drawer.close === 'function') drawer.close();
+                }
+              })
+              .catch(function (err) {
+                if (errorEl) {
+                  errorEl.textContent = err.message || 'Could not add to cart.';
+                  errorEl.hidden = false;
+                }
+              })
+              .finally(release);
+          });
+        });
+      });
+    }
+
+    initYwctaForm(document);
+    document.addEventListener('shopify:section:load', function (e) {
+      initYwctaForm(e.target);
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Yum Club Final CTA",
@@ -144,7 +415,43 @@
     },
     { "type": "richtext", "id": "description", "label": "Supporting text" },
     { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN YUMCLUB · $29/QTR" },
-    { "type": "url", "id": "button_url", "label": "Button link" },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link",
+      "info": "Only used when no product is selected below."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product to add to cart",
+      "info": "Leave empty to use the button as a normal link instead."
+    },
+    {
+      "type": "number",
+      "id": "selling_plan_id",
+      "label": "Selling plan ID (optional)",
+      "info": "For subscription products. Leave empty to use the first available plan on the variant."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_plan_name",
+      "label": "Show selling plan name above the button",
+      "default": false
+    },
+    { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+    {
+      "type": "select",
+      "id": "cart_behavior",
+      "label": "After adding to cart",
+      "options": [
+        { "value": "stay", "label": "Stay on page" },
+        { "value": "drawer", "label": "Open cart drawer" },
+        { "value": "cart", "label": "Go to cart page" }
+      ],
+      "default": "drawer"
+    },
     { "type": "image_picker", "id": "badge", "label": "Badge / sticker" },
     {
       "type": "select",
