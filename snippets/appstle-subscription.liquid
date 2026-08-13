@@ -351,8 +351,9 @@ display: inline-flex;
           </span>
         </label>
       </div>
-
+      
       {%- comment -%} ---------- One-time option ---------- {%- endcomment -%}
+       {% unless product.handle == 'membership' %}
       <div class="asw-option asw-option--one">
         <label class="asw-option__label">
           <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="onetime">
@@ -377,6 +378,7 @@ display: inline-flex;
           </span>
         </label>
       </div>
+      {% endunless %}
     </appstle-subscription-widget>
 
     <script>
