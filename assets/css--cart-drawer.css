@@ -911,13 +911,14 @@ p.cd-banner__description {
 	background: var(--cd-drawer-bg);
 	border-radius: 12px;
 	line-height: 0;
-	padding: 16px;
+	padding: 0;
 }
 
 .cd-rec-card__img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	border-radius: 12px;
 }
 
 .cd-rec-card__body__main {
@@ -1465,11 +1466,15 @@ background: #000;
 	}
 
 	.cd-rec-card__media {
-		height: 104px;
+		height: 88px;
 		width: 88px;
 		border-radius: 8px;
 		padding: 11px;
 	}
+
+	.cd-rec-card__img {
+	border-radius: 8px;
+}
 
 	.cd-rec-card__body__main {
 		padding: 8px 0;
