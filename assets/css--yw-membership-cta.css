@@ -122,4 +122,153 @@
 /* Explicit order so mobile can reflow badge/button without duplicate markup. */
 .ywcta__heading { order: 1; }
 .ywcta__description { order: 2; }
-.ywcta__butt
+.ywcta__button-wrap { order: 3; }
+.ywcta__badge { order: 4; }
+
+/* --------------------------------- Button --------------------------------- */
+
+.ywcta__button-wrap {
+  margin-top: 27px;
+}
+
+.ywcta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 296px;
+  max-width: 100%;
+  height: 64px;
+  padding: 13px 32px 9px;
+  border: 2px solid var(--ywcta-button-border);
+  border-radius: var(--ywcta-button-radius);
+  background: var(--ywcta-button-bg);
+  color: var(--ywcta-button-text);
+  font-family: 'FFBlurProMedium';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 1.28px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
+}
+
+.ywcta__button:hover,
+.ywcta__button:focus-visible {
+  background: var(--ywcta-button-hover-bg);
+  color: var(--ywcta-button-hover-text);
+  transform: translateY(-2px);
+}
+
+.ywcta__button:focus-visible {
+  outline: 3px solid var(--ywcta-heading);
+  outline-offset: 3px;
+}
+
+.ywcta__button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* --------------------------------- Badge --------------------------------- */
+
+.ywcta__badge {
+  margin-top: 25px;
+  width: 154px;
+  height: 160px;
+  margin-left: auto;
+}
+
+.ywcta .ywcta__badge-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ================================= TABLET ================================= */
+
+@media (max-width: 989px) {
+  .ywcta {
+    --ywcta-height: 520px;
+    --ywcta-pad-top: 72px;
+  }
+
+  .ywcta__heading {
+    font-size: 18px;
+    line-height: 29px;
+  }
+}
+
+/* ================================= MOBILE =================================
+   Per the mobile reference: tighter type, and the badge sits BETWEEN the
+   heading and the button rather than below both. */
+
+@media (max-width: 749px) {
+  .ywcta {
+    --ywcta-height: var(--ywcta-height-mobile, 343px) !important;
+    --ywcta-pad-top: var(--ywcta-pad-top-mobile, 34px);
+  }
+
+  .ywcta__bg {
+    background-position: var(--ywcta-position-mobile, center center);
+  }
+
+  .ywcta__container {
+    width: 100%;
+    padding-inline: 24px;
+    padding-top: 68px;
+    padding-bottom: 80px;
+    height: 100%;
+  }
+
+  .ywcta__heading {
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
+
+  .ywcta__heading br {
+    display: none;
+  }
+
+  /* Badge before the button on mobile. */
+  .ywcta__badge {
+    order: 3;
+    margin-top: 38px;
+    width: 109px;
+    height: 113px;
+  }
+
+  .ywcta__button-wrap {
+    order: 4;
+    margin-top: 141px;
+    width: 100%;
+  }
+
+  .ywcta__button {
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    padding: 10px 20px;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 1.28px;
+    max-width: 298px;
+  }
+}
+
+/* ============================= Reduced motion ============================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ywcta__button {
+    transition: none;
+  }
+
+  .ywcta__button:hover,
+  .ywcta__button:focus-visible {
+    transform: none;
+  }
+}
