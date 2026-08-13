@@ -927,7 +927,7 @@ p.cd-banner__description {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: end;
-	padding: 12px 0 8px;
+	padding: 8px 0 4px;
 }
 
 .cd-rec-card__body__content {
