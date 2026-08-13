@@ -3710,6 +3710,9 @@ details-disclosure > details {
     height: 85svh !important;
     top: 100px !important;
 }
+#chat-button{
+  position:absolute;
+}
 @media screen and (max-width: 749px) {
   .card_new_badge{
     right: 8px;
