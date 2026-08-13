@@ -437,3 +437,34 @@ background: #FFF9EF;
     height: 12px;
 }
 }
+
+
+
+
+
+
+
+@media screen and (max-width: 749px) {
+  /* Button alignment only — cards stretch to row height, button pinned to bottom */
+  .mcg__grid { align-items: stretch; }
+
+  .yw-pcard { height: 100%; }
+
+  .yw-pcard__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+  }
+
+  /* preserve the existing 12px gap above the button on the tallest card */
+  .yw-pcard__perday:has(+ .yw-pcard__btn),
+  .yw-pcard__price:has(+ .yw-pcard__btn),
+  .yw-pcard__desc:has(+ .yw-pcard__btn) {
+    margin-bottom: 12px;
+  }
+
+  .yw-pcard__btn {
+    margin-top: auto;   /* was 12px — auto absorbs the leftover space */
+  }
+}
