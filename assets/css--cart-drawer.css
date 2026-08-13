@@ -939,6 +939,7 @@ p.cd-banner__description {
 .cd-rec-card__body {
 	flex: 1 1 auto;
 	min-width: 0;
+	width: 0;
 }
 
 .cd-rec-card__title {
