@@ -90,7 +90,8 @@
                   ></a>
                   <div class="fp__hover-media">
                     {%- if v_hover != blank -%}
-                      {{ v_hover | image_url: width: 1200 | image_tag: class: 'fp__hover-image', alt: '' }}
+                      {%- comment -%} Hover image is a desktop-only reveal — lazy-load it (never blocks first paint / mobile). {%- endcomment -%}
+                      {{ v_hover | image_url: width: 800 | image_tag: class: 'fp__hover-image', alt: '', loading: 'lazy' }}
                     {%- endif -%}
                   </div>
                   <h3 class="fp__title">{{ product.title }}</h3>
@@ -146,7 +147,8 @@
                 <div class="fp__hover-media">
                   {% if hover_media %}
                     {% if hover_media.media_type == 'image' %}
-                      {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
+                      {%- comment -%} Hover image is a desktop-only reveal — lazy-load it (never blocks first paint / mobile). {%- endcomment -%}
+                      {{ hover_media | image_url: width: 800 | image_tag: class: 'fp__hover-image', loading: 'lazy' }}
                     {% elsif hover_media.media_type == 'video' %}
                       {{
                         hover_media
