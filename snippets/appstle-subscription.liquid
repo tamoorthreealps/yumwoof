@@ -197,6 +197,13 @@ display: inline-flex;
     height: 12px;
 }
     }
+
+@supports (-webkit-touch-callout: none) {
+	.asw__save-pill {
+		padding-top: 4px;
+		padding-bottom: 2px;
+	}
+}
 </style>
 {%- liquid
   assign appstle_app_id = 'appstle'
