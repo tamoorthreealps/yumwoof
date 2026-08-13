@@ -386,12 +386,6 @@ background: #FFF9EF;
     justify-content: center;
     }
 
-    .yw-pcard__btn span {
-        font-size: 12px;
-        line-height: 16px;
-        letter-spacing: 0.98px;
-    }
-
     .yw-pcard__img.recipe-swatch__img--desktop {
       display:none;
 }
