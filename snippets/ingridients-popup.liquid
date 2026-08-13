@@ -75,11 +75,10 @@
   .ingredients-popup {
   	position: fixed;
   	inset: 0;
-  	z-index: 9999;
+  	z-index: -1;
   	visibility: hidden;
   	opacity: 0;
   	transition: .35s;
-    height:0;
   }
 
   .ingredients-popup.is-loading {
@@ -89,7 +88,7 @@
   .ingredients-popup.active {
   	visibility: visible;
   	opacity: 1;
-    height:auto;
+    z-index:9999;
   }
 
   .ingredients-popup__overlay {
