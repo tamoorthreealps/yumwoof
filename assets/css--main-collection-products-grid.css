@@ -376,11 +376,15 @@ background: #FFF9EF;
     margin:0;
 }
         .yw-pcard__btn {
-        font-size: 13px;
+                font-size: 13px;
         line-height: 20px;
-        letter-spacing: 0.52px;
-        padding: 9.2px 22.3px;
+        letter-spacing: .52px;
+        padding: 4.2px 22.3px;
         margin-top: 12px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .yw-pcard__img.recipe-swatch__img--desktop {
