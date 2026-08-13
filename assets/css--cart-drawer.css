@@ -934,6 +934,7 @@ p.cd-banner__description {
 	justify-content: space-between;
 	width: 100%;
 	text-align: left;
+	gap: 8px;
 }
 
 .cd-rec-card__body {
