@@ -570,11 +570,13 @@ position: absolute !important;
 	visibility: hidden;
 	opacity: 0;
 	transition: .35s;
+	height:0;
 }
 
 .fp-popup.active {
 	visibility: visible;
 	opacity: 1;
+	height:auto;
 }
 
 .fp-popup__overlay {
