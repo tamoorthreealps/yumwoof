@@ -379,8 +379,12 @@ background: #FFF9EF;
         font-size: 13px;
         line-height: 20px;
         letter-spacing: 0.52px;
-        padding: 10.4px 23.15px 8px;
+        padding: 0 23.15px;
         margin-top: 12px;
+          display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px; 
     }
 
     .yw-pcard__btn span {
