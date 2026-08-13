@@ -64,6 +64,7 @@
   will-change: transform;
   backface-visibility: hidden;
   pointer-events: none;
+      display: block !important;
 }
 
 .ywcta__overlay {
