@@ -379,11 +379,8 @@ background: #FFF9EF;
         font-size: 13px;
         line-height: 20px;
         letter-spacing: 0.52px;
-        padding: 10.4px 23.15px;
+        padding: 9.2px 22.3px;
         margin-top: 12px;
-            display: flex;
-    align-items: center;
-    justify-content: center;
     }
 
     .yw-pcard__img.recipe-swatch__img--desktop {
