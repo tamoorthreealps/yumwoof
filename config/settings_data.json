@@ -353,6 +353,21 @@
         "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
         "disabled": false,
         "settings": {}
+      },
+      "260908246434737815": {
+        "type": "shopify://apps/thoughtmetric/blocks/tm/5a9f9e10-3a9f-41b1-8250-d2eab3bd19a4",
+        "disabled": false,
+        "settings": {}
+      },
+      "13031214066075061788": {
+        "type": "shopify://apps/klickly-connector/blocks/klickly-embed/019d9086-f209-7d9a-959a-034ff6648e37",
+        "disabled": false,
+        "settings": {}
+      },
+      "14327677521557774844": {
+        "type": "shopify://apps/simprosys-google-shopping-feed/blocks/core_settings_block/1f0b859e-9fa6-4007-97e8-4513aff5ff3b",
+        "disabled": false,
+        "settings": {}
       }
     },
     "color_schemes": {
