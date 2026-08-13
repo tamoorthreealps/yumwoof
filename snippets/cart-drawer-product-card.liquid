@@ -110,17 +110,18 @@
               <p class="cd-rec-card__subtitle">{{ recipe }}</p>
             {%- endif -%}
           {% endcomment %}
-          {%- assign recipe_label = blank -%}
+          {%- assign rec_variant = product.selected_or_first_available_variant -%}
+          {%- assign recipe_value = blank -%}
 
           {%- for option in product.options -%}
             {%- if option == 'Recipe' -%}
-              {%- assign recipe_label = option -%}
+              {%- assign recipe_value = rec_variant.options[forloop.index0] -%}
               {%- break -%}
             {%- endif -%}
           {%- endfor -%}
 
-          {%- if recipe_label != blank -%}
-            <p class="cd-rec-card__subtitle">{{ recipe_label }}</p>
+          {%- if recipe_value != blank -%}
+            <p class="cd-rec-card__subtitle">{{ recipe_value }}</p>
           {%- endif -%}
           {%- assign rec_variant = product.selected_or_first_available_variant -%}
           {%- assign rec_variant = product.selected_or_first_available_variant -%}
