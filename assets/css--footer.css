@@ -942,7 +942,12 @@ a.yf__site-credit {
 .yf__site-credit-wrap:hover .yf__site-credit-tooltip {
   opacity: 1;
   visibility: visible;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--tooltip-shadow) 35%, transparent),
+    0 0 20px color-mix(in srgb, var(--tooltip-shadow) 25%, transparent),
+    0 0 30px color-mix(in srgb, var(--tooltip-shadow) 18%, transparent);
 }
+
 
 /* ==========================================================================
    Desktop
