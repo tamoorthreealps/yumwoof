@@ -48,8 +48,9 @@
         "site_credit_label": "Site Credit",
         "site_credit_url": "https://www.threealps.com/",
         "site_credit_tooltip_bg": "#661d1d",
-        "site_credit_tooltip_text": "#FFF9EF",
-        "site_credit_tooltip_icon": "#FFF9EF",
+        "site_credit_tooltip_text": "#fff9ef",
+        "site_credit_tooltip_icon": "#fff9ef",
+        "site_credit_tooltip_shadow": "#FFF9EF",
         "enable_country_selector": true
       }
     }
