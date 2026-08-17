@@ -957,6 +957,11 @@ a.yf__site-credit {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--tooltip-shadow) 25%, transparent),
+    0 0 18px color-mix(in srgb, var(--tooltip-shadow) 20%, transparent),
+    0 0 36px color-mix(in srgb, var(--tooltip-shadow) 14%, transparent),
+    0 0 60px color-mix(in srgb, var(--tooltip-shadow) 8%, transparent);
 }
 
 /* Extra lift when the cursor is on the pill itself */
@@ -966,7 +971,7 @@ a.yf__site-credit {
     0 0 10px color-mix(in srgb, var(--tooltip-shadow) 70%, transparent),
     0 0 24px color-mix(in srgb, var(--tooltip-shadow) 50%, transparent),
     0 0 48px color-mix(in srgb, var(--tooltip-shadow) 34%, transparent),
-    0 0 80px color-mix(in srgb, var(--tooltip-shadow) 20%, transparent);
+    0 0 80px color-mix(in srgb, var(--tooltip-shadow) 20%, transparent) !important;
 }
 
 
