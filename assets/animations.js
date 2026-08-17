@@ -46,7 +46,7 @@ function initializeScrollZoomAnimationTrigger() {
 
   if (animationTriggerElements.length === 0) return;
 
-  const scaleAmount = 0.2 / 100;
+  const scaleAmount = 0.1 / 100;
 
   animationTriggerElements.forEach((element) => {
     let elementIsVisible = false;
