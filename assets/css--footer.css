@@ -953,8 +953,7 @@ a.yf__site-credit {
 
 /* Show on hovering the link OR the tooltip itself */
 .yf__site-credit-wrap:hover .yf__site-credit-tooltip,
-.yf__site-credit-wrap:focus-within .yf__site-credit-tooltip,
-.yf__site-credit-tooltip:hover {
+.yf__site-credit-wrap:focus-within .yf__site-credit-tooltip {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
