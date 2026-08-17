@@ -299,13 +299,14 @@ p.yf__signup__footer_content a {
 }
 
 .yf__signup-form .go3176171171 span {
-  color: #fff9ef;
-  font-size: 16px !important;
-  line-height: 24px;
-  letter-spacing: -0.64px;
-  font-family: "TAY Birdie";
-  display: block;
-  margin: 0 0 20px;
+    color: #fff9ef !important;
+    font-size: 16px !important;
+    line-height: 24px;
+    letter-spacing: -.64px;
+    display: block;
+    margin: 0 0 20px;
+    font-family: 'TAY Birdie' !important;
+    text-transform: capitalize;
 }
 
 .yf__signup-form .go1838617735.go1838617735.go1838617735 {
