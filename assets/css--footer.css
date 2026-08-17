@@ -908,9 +908,9 @@ a.yf__site-credit {
 
 .yf__site-credit-tooltip {
   position: absolute;
-  bottom: 130%;
+  bottom: calc(100% + 10px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(4px);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -924,10 +924,22 @@ a.yf__site-credit {
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .35s ease;
+  pointer-events: none;
+  text-decoration: none;
+  transition: opacity .3s ease, transform .3s ease, box-shadow .3s ease;
   z-index: 50;
   font-weight: 500;
-  border:1px solid var(--tooltip-text);
+  border: 1px solid var(--tooltip-text);
+}
+
+/* Invisible bridge so the cursor can travel from the link up into the pill */
+.yf__site-credit-tooltip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 14px;
 }
 
 .yf__site-credit-tooltip-icon {
@@ -939,13 +951,28 @@ a.yf__site-credit {
   display: block;
 }
 
-.yf__site-credit-wrap:hover .yf__site-credit-tooltip {
+/* Show on hovering the link OR the tooltip itself */
+.yf__site-credit-wrap:hover .yf__site-credit-tooltip,
+.yf__site-credit-wrap:focus-within .yf__site-credit-tooltip,
+.yf__site-credit-tooltip:hover {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
   box-shadow:
-    0 0 10px color-mix(in srgb, var(--tooltip-shadow) 35%, transparent),
-    0 0 20px color-mix(in srgb, var(--tooltip-shadow) 25%, transparent),
-    0 0 30px color-mix(in srgb, var(--tooltip-shadow) 18%, transparent);
+    0 0 8px color-mix(in srgb, var(--tooltip-shadow) 55%, transparent),
+    0 0 18px color-mix(in srgb, var(--tooltip-shadow) 40%, transparent),
+    0 0 36px color-mix(in srgb, var(--tooltip-shadow) 28%, transparent),
+    0 0 60px color-mix(in srgb, var(--tooltip-shadow) 16%, transparent);
+}
+
+/* Extra lift when the cursor is on the pill itself */
+.yf__site-credit-tooltip:hover {
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--tooltip-shadow) 70%, transparent),
+    0 0 24px color-mix(in srgb, var(--tooltip-shadow) 50%, transparent),
+    0 0 48px color-mix(in srgb, var(--tooltip-shadow) 34%, transparent),
+    0 0 80px color-mix(in srgb, var(--tooltip-shadow) 20%, transparent);
 }
 
 
