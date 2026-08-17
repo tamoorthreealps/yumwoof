@@ -221,12 +221,28 @@
         "left_bone": "shopify://shop_images/Group_80.png",
         "right_bone": "shopify://shop_images/Group_79.png"
       }
+    },
+    "opinew-reviews-product-page-code": {
+      "type": "apps",
+      "blocks": {
+        "opinew-reviews-widget": {
+          "type": "shopify://apps/opinew-reviews/blocks/product-widget/e1d8e0dc-17ff-4e4a-8a8a-1e73c8ef8676",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "opinew-reviews-widget"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
     "pdp_faqs_section_k4GtF3",
     "related-products",
-    "custom_reviews_DQxkJb"
+    "custom_reviews_DQxkJb",
+    "opinew-reviews-product-page-code"
   ]
 }

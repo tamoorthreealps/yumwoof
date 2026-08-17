@@ -19,18 +19,18 @@
 {%- endstyle -%}
 
 {% assign faq = product.metafields.content.faq_section.value %}
-      {% if faq.faqs %}
-<section class="faqs">
-  <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
-    <div class="faqs__content">
-      <div class="faqs__head">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="faqs__heading">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="faqs__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-      </div>
+{% if faq.faqs %}
+  <section class="faqs">
+    <div class="faqs__inner {% if section.settings.faq_image != blank %}faqs__inner__media{% endif %}">
+      <div class="faqs__content">
+        <div class="faqs__head">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="faqs__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="faqs__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+        </div>
 
         <div class="faqs__list">
           {%- for i in faq.faqs -%}
@@ -63,45 +63,44 @@
                   </svg>
                 </span>
               </div>
-                <div class="faqs__answer rte">
-                  <div class="faqs__answer-inner">
-                    {{ i.answer }}
-                  </div>
+              <div class="faqs__answer rte">
+                <div class="faqs__answer-inner">
+                  {{ i.answer }}
                 </div>
+              </div>
             </div>
           {%- endfor -%}
         </div>
-      
-    </div>
-    {% if section.settings.faq_image != blank or section.settings.faq_image_mobile != blank %}
-      <div class="faqs__right">
-        <div class="faqs__right_img">
-          {% if section.settings.faq_image != blank %}
-            {{
-              section.settings.faq_image
-              | image_url: width: 900
-              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--desktop'
-            }}
-          {% endif %}
-
-          {% if section.settings.faq_image_mobile != blank %}
-            {{
-              section.settings.faq_image_mobile
-              | image_url: width: 700
-              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
-            }}
-          {% elsif section.settings.faq_image != blank %}
-            {{
-              section.settings.faq_image
-              | image_url: width: 700
-              | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
-            }}
-          {% endif %}
-        </div>
       </div>
-    {% endif %}
-  </div>
-</section>
+      {% if section.settings.faq_image != blank or section.settings.faq_image_mobile != blank %}
+        <div class="faqs__right">
+          <div class="faqs__right_img">
+            {% if section.settings.faq_image != blank %}
+              {{
+                section.settings.faq_image
+                | image_url: width: 900
+                | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--desktop'
+              }}
+            {% endif %}
+
+            {% if section.settings.faq_image_mobile != blank %}
+              {{
+                section.settings.faq_image_mobile
+                | image_url: width: 700
+                | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
+              }}
+            {% elsif section.settings.faq_image != blank %}
+              {{
+                section.settings.faq_image
+                | image_url: width: 700
+                | image_tag: loading: 'lazy', class: 'faqs__image faqs__image--mobile'
+              }}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </section>
 {%- endif -%}
 <script>
   document.querySelectorAll('.faqs__question').forEach((question) => {
@@ -126,43 +125,40 @@
     });
   });
 
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('.faqs');
+    const images = section?.querySelectorAll('.faqs__image');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const section = document.querySelector('.faqs');
-  const images = section?.querySelectorAll('.faqs__image');
+    if (!section || !images.length) return;
 
-  if (!section || !images.length) return;
+    let currentScale = 1;
+    let targetScale = 1;
 
-  let currentScale = 1;
-  let targetScale = 1;
+    function updateScale() {
+      currentScale += (targetScale - currentScale) * 0.08;
 
-  function updateScale() {
-    currentScale += (targetScale - currentScale) * 0.08;
+      images.forEach((image) => {
+        image.style.transform = `scale(${currentScale})`;
+      });
 
-    images.forEach((image) => {
-      image.style.transform = `scale(${currentScale})`;
-    });
+      requestAnimationFrame(updateScale);
+    }
 
-    requestAnimationFrame(updateScale);
-  }
+    function onScroll() {
+      const rect = section.getBoundingClientRect();
 
-  function onScroll() {
-    const rect = section.getBoundingClientRect();
+      let progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
 
-    let progress =
-      (window.innerHeight - rect.top) /
-      (window.innerHeight + rect.height);
+      progress = Math.max(0, Math.min(progress, 1));
 
-    progress = Math.max(0, Math.min(progress, 1));
+      targetScale = 1 + progress * 0.08;
+    }
 
-    targetScale = 1 + progress * 0.08;
-  }
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  onScroll();
-  updateScale();
-});
+    onScroll();
+    updateScale();
+  });
 </script>
 
 {% schema %}
