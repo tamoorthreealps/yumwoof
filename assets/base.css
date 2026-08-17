@@ -691,7 +691,7 @@ details > * {
   --duration-announcement-bar: 250ms;
   --duration-medium: 300ms;
   --duration-long: 500ms;
-  --duration-extra-long: 600000ms;
+  --duration-extra-long: 1200ms;
   --duration-extra-longer: 750ms;
   --duration-extended: 3s;
   --ease-out-slow: cubic-bezier(0, 0, 0.3, 1);
