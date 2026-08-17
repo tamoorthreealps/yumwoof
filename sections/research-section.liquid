@@ -16,10 +16,17 @@
     display:none;
   }
 
+  @media screen and (min-width: 767px) {
+  #shopify-section-{{ section.id }} .research {
+    background-position: top;
+  }
+  }
+
   @media screen and (min-width: 990px) {
     #shopify-section-{{ section.id }} .research {
       {% if section.settings.background_image != blank %}
     background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
+    background-position: center;
   {% endif %}
     }
 
