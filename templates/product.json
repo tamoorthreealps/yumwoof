@@ -113,10 +113,7 @@
         },
         "nutritional_information_KCbq7E": {
           "type": "nutritional-information",
-          "settings": {
-            "nutritional_heading": "COMPLETE & BALANCED",
-            "nutritional_content": "Yumwoof Perfect Kibble is formulated to meet the nutritional levels established by the AAFCO Dog Food Nutrient Profiles for all life stages."
-          }
+          "settings": {}
         },
         "description": {
           "type": "description",
@@ -156,7 +153,7 @@
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
         "promo_banner_content": "<p>New to Yumwoof? <strong>Get a Personalized Meal Plan + 30% off</strong></p>",
-        "promo_banner_link": "#",
+        "promo_banner_link": "https://my.yumwoof.com/",
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
