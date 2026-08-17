@@ -17,14 +17,7 @@
     aria-modal="true"
     tabindex="-1"
   >
-    <button
-      id="ModalClose-{{ section.id }}"
-      type="button"
-      class="product-media-modal__toggle"
-      aria-label="{{ 'accessibility.close' | t }}"
-    >
-      {{ 'icon-close.svg' | inline_asset_content }}
-    </button>
+
 
     <div
       class="product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
@@ -32,6 +25,14 @@
       aria-label="{{ 'products.modal.label' | t }}"
       tabindex="0"
     >
+          <button
+      id="ModalClose-{{ section.id }}"
+      type="button"
+      class="product-media-modal__toggle"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      {{ 'icon-close.svg' | inline_asset_content }}
+    </button>
       {%- liquid
         if product.selected_or_first_available_variant.featured_media != null
           assign media = product.selected_or_first_available_variant.featured_media
