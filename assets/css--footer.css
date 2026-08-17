@@ -927,7 +927,7 @@ a.yf__site-credit {
   transition: opacity .35s ease;
   z-index: 50;
   font-weight: 500;
-  font-family: 'GT Pressura Extended';
+  border:1px solid var(--tooltip-text);
 }
 
 .yf__site-credit-tooltip-icon {
