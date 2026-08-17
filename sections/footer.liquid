@@ -271,13 +271,18 @@
         </ul>
       {%- endif -%}
       {%- if section.settings.site_credit_label != blank -%}
+        {%- assign credit_url = section.settings.site_credit_url | default: '#' -%}
         <span class="yf__site-credit-wrap">
-          <a class="yf__site-credit" href="{{ section.settings.site_credit_url | default: '#' }}" target="_blank">
+          <a class="yf__site-credit" href="{{ credit_url }}" target="_blank">
             {{- section.settings.site_credit_label -}}
           </a>
 
-          <span
+          <a
             class="yf__site-credit-tooltip"
+            href="{{ credit_url }}"
+            target="_blank"
+            rel="noopener"
+            tabindex="-1"
             style="
               --tooltip-bg: {{ section.settings.site_credit_tooltip_bg }};
               --tooltip-text: {{ section.settings.site_credit_tooltip_text }};
@@ -291,9 +296,8 @@
                 <path d="M17.8254 16.3579L12.1519 24L6.47328 16.3579H17.8254Z" fill="currentColor"/>
               </svg>
             </span>
-
             Built by <span>ThreeAlps</span>
-          </span>
+          </a>
         </span>
       {%- endif -%}
     </div>
