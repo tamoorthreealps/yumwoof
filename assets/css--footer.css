@@ -958,7 +958,6 @@ a.yf__site-credit {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
   box-shadow:
     0 0 8px color-mix(in srgb, var(--tooltip-shadow) 55%, transparent),
     0 0 18px color-mix(in srgb, var(--tooltip-shadow) 40%, transparent),
@@ -968,6 +967,7 @@ a.yf__site-credit {
 
 /* Extra lift when the cursor is on the pill itself */
 .yf__site-credit-tooltip:hover {
+  transform: translateX(-50%) translateY(0);
   box-shadow:
     0 0 10px color-mix(in srgb, var(--tooltip-shadow) 70%, transparent),
     0 0 24px color-mix(in srgb, var(--tooltip-shadow) 50%, transparent),
