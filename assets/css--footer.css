@@ -1099,7 +1099,48 @@ a.yf__site-credit {
     line-height: 20px;
     letter-spacing: -0.28px;
   }
+.yf__site-credit-wrap {
+  position: relative;
+  display: inline-block;
+}
 
+.yf__site-credit-tooltip {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  padding: 9px 13px 8px;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: -0.48px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease;
+  z-index: 50;
+  font-weight: 500;
+  font-family: 'GT Pressura Extended';
+}
+
+.yf__site-credit-tooltip-icon {
+  display: flex;
+  color: var(--tooltip-icon);
+}
+
+.yf__site-credit-tooltip-icon svg {
+  display: block;
+}
+
+.yf__site-credit-wrap:hover .yf__site-credit-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
   /* Klaviyo signup — centered eyebrow + heading, inline submit */
   .yf__signup-form .go3176171171 p {
     text-align: center !important;
