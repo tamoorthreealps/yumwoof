@@ -280,7 +280,6 @@ color: var(--ywmc-text);
     letter-spacing: 1.28px;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
     white-space: nowrap;
     cursor: pointer;
     transition: background-color .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
