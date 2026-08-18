@@ -7,6 +7,7 @@
  *   feeding          -> computed from feeding_table bands (cups / kg / grams)
  *   transition       -> shared
  * The header band takes the selected recipe's colour (data-color).
+ * The eyebrow always reflects the selected product + variant.
  */
 (function () {
   var SHARED = { feeding: 1, transition: 1 };
@@ -40,6 +41,7 @@
       this.panels = Array.prototype.slice.call(this.drawer.querySelectorAll('[data-nldrawer-panel]'));
       this.variantEls = Array.prototype.slice.call(this.drawer.querySelectorAll('[data-nldrawer-variant]'));
       this.bodyEl = this.drawer.querySelector('[data-nldrawer-body]');
+      this.productTitle = this.drawer.getAttribute('data-product-title') || '';
       this.activePanel = null;
       this.lastFocus = null;
 
@@ -72,6 +74,16 @@
 
     activeVariantEl() {
       return this.variantEl(this._variantId) || this.variantEls[0] || null;
+    }
+
+    /* "Product Title · Variant Title" — drops the variant when it's absent,
+       or when it just repeats the product title (single-variant products
+       where Liquid substituted product.title for "Default Title"). */
+    sharedEyebrow(vEl) {
+      var product = this.productTitle;
+      var variant = vEl ? vEl.getAttribute('data-variant-title') || '' : '';
+      if (!product) return '';
+      return variant && variant !== product ? product + ' · ' + variant : product;
     }
 
     open(panel) {
@@ -109,7 +121,7 @@
 
       if (SHARED[panel]) {
         el = this.drawer.querySelector('.nldrawer__panel--shared[data-nldrawer-panel="' + panel + '"]');
-        if (el) eyebrow = el.getAttribute('data-eyebrow') || '';
+        eyebrow = this.sharedEyebrow(vEl) || (el ? el.getAttribute('data-eyebrow') || '' : '');
       } else if (vEl) {
         vEl.hidden = false;
         el = vEl.querySelector('[data-nldrawer-panel="' + panel + '"]');

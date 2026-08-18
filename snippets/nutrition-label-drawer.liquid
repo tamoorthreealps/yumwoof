@@ -20,7 +20,7 @@
 {% endcomment %}
 
 {%- liquid
-  assign brand = brand_label | default: 'Ancestral Blend'
+  assign brand = brand_label | default: product.title
   assign tp = product.metafields.custom.transition_plan.value
   assign ft = product.metafields.custom.feeding_table.value
   assign gpc = product.metafields.custom.feeding_grams_per_cup | default: 160
@@ -32,7 +32,7 @@
   assign dial100 = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Ratio_Dial_100.png?v=1785701384'
 -%}
 
-<div class="nldrawer" data-nldrawer hidden>
+<div class="nldrawer" data-nldrawer data-product-title="{{ product.title | escape }}" hidden>
   <div class="nldrawer__scrim" data-nldrawer-close></div>
 
   <div
@@ -69,12 +69,13 @@
           {%- assign vcolor = variant.metafields.custom.nutrition_head_color.value | default: palette[palette_idx] -%}
           {%- assign vi = vi | plus: 1 -%}
           <div
-            class="nldrawer__variant"
-            data-nldrawer-variant="{{ variant.id }}"
-            data-color="{{ vcolor }}"
-            data-eyebrow="{{ recipe | append: ' Recipe' | escape }}"
-            hidden
-          >
+  class="nldrawer__variant"
+  data-nldrawer-variant="{{ variant.id }}"
+  data-variant-title="{{ recipe | escape }}"
+  data-color="{{ vcolor }}"
+  data-eyebrow="{{ recipe | append: ' Recipe' | escape }}"
+  hidden
+>
 
             {%- comment -%} Ingredients {%- endcomment -%}
             {%- if nl.ingredients != blank -%}
