@@ -69,14 +69,13 @@
           {%- assign vcolor = variant.metafields.custom.nutrition_head_color.value | default: palette[palette_idx] -%}
           {%- assign vi = vi | plus: 1 -%}
           <div
-  class="nldrawer__variant"
-  data-nldrawer-variant="{{ variant.id }}"
-  data-variant-title="{{ recipe | escape }}"
-  data-color="{{ vcolor }}"
-  data-eyebrow="{{ recipe | append: ' Recipe' | escape }}"
-  hidden
->
-
+            class="nldrawer__variant"
+            data-nldrawer-variant="{{ variant.id }}"
+            data-variant-title="{{ recipe | escape }}"
+            data-color="{{ vcolor }}"
+            data-eyebrow="{{ recipe | append: ' Recipe' | escape }}"
+            hidden
+          >
             {%- comment -%} Ingredients {%- endcomment -%}
             {%- if nl.ingredients != blank -%}
               <section class="nldrawer__panel" data-nldrawer-panel="ingredients" data-title="Ingredients" hidden>
@@ -126,30 +125,29 @@
 
             {%- comment -%} Full Nutritional Data (only when the variant has it) {%- endcomment -%}
             {%- if nl.full_data != blank -%}
-            <section class="nldrawer__panel" data-nldrawer-panel="full" data-title="Full Nutritional Data" hidden>
-              {%- assign fd_rows = nl.full_data | strip | newline_to_br | strip_newlines | split: '<br />' -%}
-              {%- assign open = false -%}
-              {%- for line in fd_rows -%}
-                {%- assign row = line | strip -%}
-                {%- if row == blank -%}{%- continue -%}{%- endif -%}
-                {%- assign first = row | slice: 0 -%}
-                {%- if first == '#' -%}
-                  {%- if open -%}</div>{%- endif -%}
-                  <p class="nldrawer__section">{{ row | remove_first: '#' | strip }}</p>
-                  <div class="nldrawer__full">
-                    {%- assign open = true -%}
-                {%- else -%}
-                  {%- assign c = row | split: '|' -%}
-                  <div class="nldrawer__full-row">
-                    <span class="nldrawer__full-name">{{ c[0] | strip }}</span>
-                    <span class="nldrawer__full-val">{{ c[1] | strip }}</span>
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
-              {%- if open -%}</div>{%- endif -%}
-            </section>
+              <section class="nldrawer__panel" data-nldrawer-panel="full" data-title="Full Nutritional Data" hidden>
+                {%- assign fd_rows = nl.full_data | strip | newline_to_br | strip_newlines | split: '<br />' -%}
+                {%- assign open = false -%}
+                {%- for line in fd_rows -%}
+                  {%- assign row = line | strip -%}
+                  {%- if row == blank -%}{%- continue -%}{%- endif -%}
+                  {%- assign first = row | slice: 0 -%}
+                  {%- if first == '#' -%}
+                    {%- if open -%}</div>{%- endif -%}
+                    <p class="nldrawer__section">{{ row | remove_first: '#' | strip }}</p>
+                    <div class="nldrawer__full">
+                      {%- assign open = true -%}
+                  {%- else -%}
+                    {%- assign c = row | split: '|' -%}
+                    <div class="nldrawer__full-row">
+                      <span class="nldrawer__full-name">{{ c[0] | strip }}</span>
+                      <span class="nldrawer__full-val">{{ c[1] | strip }}</span>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if open -%}</div>{%- endif -%}
+              </section>
             {%- endif -%}
-
           </div>
         {%- endif -%}
       {%- endfor -%}
