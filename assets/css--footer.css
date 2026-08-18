@@ -309,6 +309,21 @@ p.yf__signup__footer_content a {
     text-transform: capitalize;
 }
 
+div#rich-text-01M0AD925X8W05VNW4BDWD1CZ1 span {
+    font-size: 40px !important;
+    line-height: 44px !important;
+    letter-spacing: -0.80px !important;
+    margin: 0 !important;
+    font-family: 'TAYRosemary' !important;
+}
+div#rich-text-01M0AD92650E77PVY1B0D97VX8 span {
+    font-family: 'Matter' !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    letter-spacing: -0.32px !important;
+    margin: 0 !important;
+}
+
 .yf__signup-form .go1838617735.go1838617735.go1838617735 {
   padding: 0;
   margin: 0 0 22px;
