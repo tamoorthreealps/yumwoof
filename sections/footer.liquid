@@ -436,40 +436,37 @@
 
   (function () {
   var signup = document.querySelector('[data-yf] .yf__signup');
-  if (!signup) return;
-
-  var host = signup.querySelector('.yf__signup-form');
+  var host = signup && signup.querySelector('.yf__signup-form');
   if (!host) return;
 
-  var RESET_DELAY = 4500; // ms — 4.5s on the success screen
+  var RESET_DELAY = 4500; // 4.5s on the success screen
+  var formClass = (host.firstElementChild && host.firstElementChild.className) || '';
   var timer = null;
 
-  function remount() {
-    var wrapper = host.querySelector('div');
-    if (!wrapper) return;
-    var className = wrapper.className;
-
-    // Swap in a fresh, empty embed div — Klaviyo's observer re-renders it.
+  function reset() {
+    // 1. Rebuild the empty embed target
     host.innerHTML = '';
-    var fresh = document.createElement('div');
-    fresh.className = className;
-    host.appendChild(fresh);
-
+    var div = document.createElement('div');
+    div.className = formClass;
+    host.appendChild(div);
     signup.classList.remove('is-submitted');
 
-    // Nudge Klaviyo to re-scan the page for embeds.
-    if (window._klOnsite) {
-      window._klOnsite.push(['openForm', '']);
-    }
+    // 2. Re-inject klaviyo.js so it re-scans and mounts a fresh, working form
+    var old = document.querySelector('script[src*="klaviyo.com/onsite/js"]');
+    if (!old) return;
+    var src = old.getAttribute('src');
+    old.remove();
+    var fresh = document.createElement('script');
+    fresh.async = true;
+    fresh.src = src;
+    document.head.appendChild(fresh);
   }
 
   window.addEventListener('klaviyoForms', function (e) {
-    if (!e.detail) return;
-
-    if (e.detail.type === 'submit' || e.detail.type === 'stepSubmit') {
+    if (e.detail && e.detail.type === 'submit') {
       signup.classList.add('is-submitted');
       clearTimeout(timer);
-      timer = setTimeout(remount, RESET_DELAY);
+      timer = setTimeout(reset, RESET_DELAY);
     }
   });
 })();
