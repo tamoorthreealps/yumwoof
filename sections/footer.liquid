@@ -430,6 +430,49 @@
     window.addEventListener('resize', onScroll, { passive: true });
     update();
   })();
+
+
+
+
+  (function () {
+  var signup = document.querySelector('[data-yf] .yf__signup');
+  if (!signup) return;
+
+  var host = signup.querySelector('.yf__signup-form');
+  if (!host) return;
+
+  var RESET_DELAY = 4500; // ms — 4.5s on the success screen
+  var timer = null;
+
+  function remount() {
+    var wrapper = host.querySelector('div');
+    if (!wrapper) return;
+    var className = wrapper.className;
+
+    // Swap in a fresh, empty embed div — Klaviyo's observer re-renders it.
+    host.innerHTML = '';
+    var fresh = document.createElement('div');
+    fresh.className = className;
+    host.appendChild(fresh);
+
+    signup.classList.remove('is-submitted');
+
+    // Nudge Klaviyo to re-scan the page for embeds.
+    if (window._klOnsite) {
+      window._klOnsite.push(['openForm', '']);
+    }
+  }
+
+  window.addEventListener('klaviyoForms', function (e) {
+    if (!e.detail) return;
+
+    if (e.detail.type === 'submit' || e.detail.type === 'stepSubmit') {
+      signup.classList.add('is-submitted');
+      clearTimeout(timer);
+      timer = setTimeout(remount, RESET_DELAY);
+    }
+  });
+})();
 </script>
 
 {% schema %}
