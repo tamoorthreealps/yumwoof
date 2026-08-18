@@ -328,259 +328,259 @@
                     </div>
                   {%- when 'quantity_selector' -%}
                     {% unless product.handle == 'membership' %}
-                    <div
-                      id="Quantity-Form-{{ section.id }}"
-                      class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
-                      {{ block.shopify_attributes }}
-                    >
-                      {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
-                      {% # theme-check-disable %}
-                      {%- assign cart_qty = cart
-                        | item_count_for_variant: product.selected_or_first_available_variant.id
-                      -%}
-                      {% # theme-check-enable %}
-                      <span class="visually-hidden" id="quantity-label-{{ section.id }}">
-                        {%- if cart_qty > 0 -%}
-                          {{- 'products.product.quantity.in_cart_aria_label' | t: quantity: cart_qty -}}
-                        {%- else -%}
-                          {{- 'products.product.quantity.label' | t -}}
-                        {%- endif -%}
-                      </span>
-                      <label
-                        class="quantity__label form__label"
-                        for="Quantity-{{ section.id }}"
-                        aria-labelledby="quantity-label-{{ section.id }}"
+                      <div
+                        id="Quantity-Form-{{ section.id }}"
+                        class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
+                        {{ block.shopify_attributes }}
                       >
-                        <span aria-hidden="true">{{ 'products.product.quantity.label' | t }}</span>
-                        <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
-                          {%- render 'loading-spinner' -%}
-                          <span
-                            >(
-                            {{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}}
-                            )</span
-                          >
-                        </span>
-                      </label>
-                      <div class="price-per-item__container">
-                        <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
-                          <button class="quantity__button" name="minus" type="button">
-                            <span class="visually-hidden">
-                              {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
-                            </span>
-                            <span class="svg-wrapper">
-                              <svg
-                                width="11"
-                                height="3"
-                                viewBox="0 0 11 3"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M10.6208 0.314262C10.6968 0.896501 10.6714 1.45342 10.5955 2.03566C10.2411 2.06098 9.93732 2.08629 9.63354 2.08629C9.00067 2.11161 8.3678 2.16224 7.76025 2.16224C7.27927 2.16224 6.36794 2.13692 6.36794 2.13692C6.36794 2.13692 5.10279 2.13692 4.29214 2.13692C3.1157 2.13692 2.29227 2.13692 1.27968 2.13692C1.05185 2.13692 0.798705 2.18755 0.570873 2.21287C0.444299 2.21287 0.292411 2.21287 0.140522 2.21287C-0.0619952 1.58 0.0139489 0.94713 0.0139489 0.263633C0.165837 0.213004 0.317725 0.187689 0.469614 0.162374C1.73535 0.0864299 4.29214 0.0611149 4.29214 0.0611149L6.36794 0.0864299C6.36794 0.0864299 7.22864 0.08643 7.65899 0.0611149C8.13997 0.0611149 8.62095 0.0104859 9.10193 0.0104859C9.53228 -0.0148292 9.96263 0.0104859 10.4183 0.0358002C10.4689 0.0611146 10.5196 0.137059 10.5702 0.187689C10.5955 0.213003 10.6208 0.263633 10.6208 0.314262Z" fill="black"/>
-                              </svg>
-                            </span>
-                          </button>
-                          <input
-                            class="quantity__input"
-                            type="number"
-                            name="quantity"
-                            id="Quantity-{{ section.id }}"
-                            data-cart-quantity="{{ cart_qty }}"
-                            data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-                            min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-                            {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
-                              data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
-                              max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
-                            {% endif %}
-                            step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
-                            value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
-                            form="{{ product_form_id }}"
-                          >
-                          <button class="quantity__button" name="plus" type="button">
-                            <span class="visually-hidden">
-                              {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
-                            </span>
-                            <span class="svg-wrapper">
-                              <svg
-                                width="11"
-                                height="11"
-                                viewBox="0 0 11 11"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M10.6208 4.54528C10.6968 5.12752 10.6714 5.68444 10.5955 6.26668C10.2411 6.292 9.93731 6.31731 9.63354 6.31731C9.00067 6.34263 8.3678 6.39326 7.76025 6.39326C7.27927 6.39326 6.82361 6.36794 6.36794 6.36794C6.36794 6.79829 6.36794 7.22864 6.36794 7.65899C6.36794 8.13997 6.41857 8.62095 6.44388 9.10193C6.44388 9.53228 6.41857 9.96263 6.39326 10.4183C6.39326 10.4689 6.31731 10.5196 6.24137 10.5702C6.21605 10.5955 6.16542 10.6208 6.11479 10.6208C5.55787 10.6968 4.97563 10.6714 4.39339 10.5955C4.36808 10.2411 4.36808 9.93732 4.34276 9.63354C4.31745 9.00067 4.29213 8.39312 4.29213 7.76025C4.29213 7.30459 4.29213 6.82361 4.29213 6.36794C3.27955 6.36794 2.29227 6.36794 1.27968 6.36794C1.05185 6.36794 0.798705 6.41857 0.570873 6.44389C0.444299 6.44389 0.292411 6.44389 0.140522 6.44389C-0.0619952 5.81102 0.0139489 5.17815 0.0139489 4.49465C0.165837 4.44402 0.317725 4.41871 0.469614 4.39339C1.73535 4.31745 3.0264 4.29213 4.29213 4.29213C4.29213 3.30486 4.29213 2.29227 4.29213 1.27968C4.29213 1.05185 4.26682 0.798704 4.24151 0.570872C4.21619 0.444298 4.24151 0.29241 4.24151 0.140523C4.84906 -0.0619956 5.50724 0.0139491 6.19074 0.0139491C6.21605 0.165837 6.24137 0.317725 6.26668 0.469613C6.36794 1.76066 6.36794 3.0264 6.36794 4.31745C6.79829 4.31745 7.22864 4.31745 7.65899 4.29213C8.13997 4.29213 8.62095 4.24151 9.10193 4.24151C9.53228 4.21619 9.96263 4.24151 10.4183 4.26682C10.4689 4.29213 10.5196 4.36808 10.5702 4.41871C10.5955 4.44402 10.6208 4.49465 10.6208 4.54528Z" fill="black"/>
-                              </svg>
-                            </span>
-                          </button>
-                        </quantity-input>
-                        {%- liquid
-                          assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
-                          assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min
-                          if cart_qty > 0
-                            assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
-                          endif
+                        {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
+                        {% # theme-check-disable %}
+                        {%- assign cart_qty = cart
+                          | item_count_for_variant: product.selected_or_first_available_variant.id
                         -%}
-                        {%- if product.quantity_price_breaks_configured? -%}
-                          <price-per-item
-                            id="Price-Per-Item-{{ section.id }}"
-                            data-section-id="{{ section.id }}"
-                            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                          >
-                            {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
-                              {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
-                              <div class="price-per-item">
-                                {%- if variant_price_compare -%}
-                                  <dl class="price-per-item--current">
-                                    <dt class="visually-hidden">
-                                      {{ 'products.product.price.regular_price' | t }}
-                                    </dt>
-                                    <dd>
-                                      <s class="variant-item__old-price">
-                                        {{ variant_price_compare | money_with_currency }}
-                                      </s>
-                                    </dd>
-                                  </dl>
-                                {%- endif -%}
-                                {%- if current_qty_for_volume_pricing < volume_pricing_array.last.minimum_quantity -%}
-                                  {%- assign variant_price = product.selected_or_first_available_variant.price
-                                    | money_with_currency
-                                  -%}
-                                  <span class="price-per-item--current">
-                                    {{-
-                                      'products.product.volume_pricing.price_at_each_html'
-                                      | t: price: variant_price
-                                    -}}
-                                  </span>
-                                {%- else -%}
-                                  {%- for price_break in volume_pricing_array -%}
-                                    {%- if current_qty_for_volume_pricing >= price_break.minimum_quantity -%}
-                                      {%- assign price_break_price = price_break.price | money_with_currency -%}
-                                      <span class="price-per-item--current">
-                                        {{-
-                                          'products.product.volume_pricing.price_at_each_html'
-                                          | t: price: price_break_price
-                                        -}}
-                                      </span>
-                                      {%- break -%}
-                                    {%- endif -%}
-                                  {%- endfor -%}
-                                {%- endif -%}
-                              </div>
-                            {%- else -%}
-                              {%- assign variant_price = product.selected_or_first_available_variant.price
-                                | money_with_currency
-                              -%}
-                              {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
-                              <div class="price-per-item">
-                                {%- if variant_price_compare -%}
-                                  <dl class="price-per-item--current">
-                                    <dt class="visually-hidden">
-                                      {{ 'products.product.price.regular_price' | t }}
-                                    </dt>
-                                    <dd>
-                                      <s class="variant-item__old-price">
-                                        {{ variant_price_compare | money_with_currency }}
-                                      </s>
-                                    </dd>
-                                    <dt class="visually-hidden">
-                                      {{ 'products.product.price.sale_price' | t }}
-                                    </dt>
-                                    <dd>
-                                      <span class="price-per-item--current">
-                                        {{-
-                                          'products.product.volume_pricing.price_at_each_html'
-                                          | t: price: variant_price
-                                        -}}
-                                      </span>
-                                    </dd>
-                                  </dl>
-                                {%- else -%}
-                                  <span class="price-per-item--current">
-                                    {{-
-                                      'products.product.volume_pricing.price_at_each_html'
-                                      | t: price: variant_price
-                                    -}}
-                                  </span>
-                                {%- endif -%}
-                              </div>
-                            {%- endif -%}
-                          </price-per-item>
-                        {%- endif -%}
-                        {% if block.settings.show_quantity_calculator %}
-                          <div class="component--quantity-calculator" {{ block.shopify_attributes }}>
-                            {%- render 'quantity-calculator', product: product, section_id: section.id -%}
-                          </div>
-                        {% endif %}
-                      </div>
-                      <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
-                        {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
-                          <span class="divider">
-                            {{-
-                              'products.product.quantity.multiples_of'
-                              | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment
-                            -}}
+                        {% # theme-check-enable %}
+                        <span class="visually-hidden" id="quantity-label-{{ section.id }}">
+                          {%- if cart_qty > 0 -%}
+                            {{- 'products.product.quantity.in_cart_aria_label' | t: quantity: cart_qty -}}
+                          {%- else -%}
+                            {{- 'products.product.quantity.label' | t -}}
+                          {%- endif -%}
+                        </span>
+                        <label
+                          class="quantity__label form__label"
+                          for="Quantity-{{ section.id }}"
+                          aria-labelledby="quantity-label-{{ section.id }}"
+                        >
+                          <span aria-hidden="true">{{ 'products.product.quantity.label' | t }}</span>
+                          <span class="quantity__rules-cart{% if cart_qty == 0 %} hidden{% endif %}" aria-hidden="true">
+                            {%- render 'loading-spinner' -%}
+                            <span
+                              >(
+                              {{- 'products.product.quantity.in_cart_html' | t: quantity: cart_qty -}}
+                              )</span
+                            >
                           </span>
-                        {%- endif -%}
-                        {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
-                          <span class="divider">
-                            {{-
-                              'products.product.quantity.minimum_of'
-                              | t: quantity: product.selected_or_first_available_variant.quantity_rule.min
-                            -}}
-                          </span>
-                        {%- endif -%}
-                        {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
-                          <span class="divider">
-                            {{-
-                              'products.product.quantity.maximum_of'
-                              | t: quantity: product.selected_or_first_available_variant.quantity_rule.max
-                            -}}
-                          </span>
-                        {%- endif -%}
-                      </div>
-                      {%- if product.quantity_price_breaks_configured? -%}
-                        <volume-pricing class="parent-display" id="Volume-{{ section.id }}">
-                          {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
-                            <span class="caption-large">{{ 'products.product.volume_pricing.title' | t }}</span>
-                            <ul class="list-unstyled">
-                              <li>
-                                <span>{{ product.selected_or_first_available_variant.quantity_rule.min }}+</span>
-                                {%- assign price = product.selected_or_first_available_variant.price
+                        </label>
+                        <div class="price-per-item__container">
+                          <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
+                            <button class="quantity__button" name="minus" type="button">
+                              <span class="visually-hidden">
+                                {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
+                              </span>
+                              <span class="svg-wrapper">
+                                <svg
+                                  width="11"
+                                  height="3"
+                                  viewBox="0 0 11 3"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M10.6208 0.314262C10.6968 0.896501 10.6714 1.45342 10.5955 2.03566C10.2411 2.06098 9.93732 2.08629 9.63354 2.08629C9.00067 2.11161 8.3678 2.16224 7.76025 2.16224C7.27927 2.16224 6.36794 2.13692 6.36794 2.13692C6.36794 2.13692 5.10279 2.13692 4.29214 2.13692C3.1157 2.13692 2.29227 2.13692 1.27968 2.13692C1.05185 2.13692 0.798705 2.18755 0.570873 2.21287C0.444299 2.21287 0.292411 2.21287 0.140522 2.21287C-0.0619952 1.58 0.0139489 0.94713 0.0139489 0.263633C0.165837 0.213004 0.317725 0.187689 0.469614 0.162374C1.73535 0.0864299 4.29214 0.0611149 4.29214 0.0611149L6.36794 0.0864299C6.36794 0.0864299 7.22864 0.08643 7.65899 0.0611149C8.13997 0.0611149 8.62095 0.0104859 9.10193 0.0104859C9.53228 -0.0148292 9.96263 0.0104859 10.4183 0.0358002C10.4689 0.0611146 10.5196 0.137059 10.5702 0.187689C10.5955 0.213003 10.6208 0.263633 10.6208 0.314262Z" fill="black"/>
+                                </svg>
+                              </span>
+                            </button>
+                            <input
+                              class="quantity__input"
+                              type="number"
+                              name="quantity"
+                              id="Quantity-{{ section.id }}"
+                              data-cart-quantity="{{ cart_qty }}"
+                              data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                              min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                              {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+                                data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                                max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                              {% endif %}
+                              step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
+                              value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                              form="{{ product_form_id }}"
+                            >
+                            <button class="quantity__button" name="plus" type="button">
+                              <span class="visually-hidden">
+                                {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
+                              </span>
+                              <span class="svg-wrapper">
+                                <svg
+                                  width="11"
+                                  height="11"
+                                  viewBox="0 0 11 11"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M10.6208 4.54528C10.6968 5.12752 10.6714 5.68444 10.5955 6.26668C10.2411 6.292 9.93731 6.31731 9.63354 6.31731C9.00067 6.34263 8.3678 6.39326 7.76025 6.39326C7.27927 6.39326 6.82361 6.36794 6.36794 6.36794C6.36794 6.79829 6.36794 7.22864 6.36794 7.65899C6.36794 8.13997 6.41857 8.62095 6.44388 9.10193C6.44388 9.53228 6.41857 9.96263 6.39326 10.4183C6.39326 10.4689 6.31731 10.5196 6.24137 10.5702C6.21605 10.5955 6.16542 10.6208 6.11479 10.6208C5.55787 10.6968 4.97563 10.6714 4.39339 10.5955C4.36808 10.2411 4.36808 9.93732 4.34276 9.63354C4.31745 9.00067 4.29213 8.39312 4.29213 7.76025C4.29213 7.30459 4.29213 6.82361 4.29213 6.36794C3.27955 6.36794 2.29227 6.36794 1.27968 6.36794C1.05185 6.36794 0.798705 6.41857 0.570873 6.44389C0.444299 6.44389 0.292411 6.44389 0.140522 6.44389C-0.0619952 5.81102 0.0139489 5.17815 0.0139489 4.49465C0.165837 4.44402 0.317725 4.41871 0.469614 4.39339C1.73535 4.31745 3.0264 4.29213 4.29213 4.29213C4.29213 3.30486 4.29213 2.29227 4.29213 1.27968C4.29213 1.05185 4.26682 0.798704 4.24151 0.570872C4.21619 0.444298 4.24151 0.29241 4.24151 0.140523C4.84906 -0.0619956 5.50724 0.0139491 6.19074 0.0139491C6.21605 0.165837 6.24137 0.317725 6.26668 0.469613C6.36794 1.76066 6.36794 3.0264 6.36794 4.31745C6.79829 4.31745 7.22864 4.31745 7.65899 4.29213C8.13997 4.29213 8.62095 4.24151 9.10193 4.24151C9.53228 4.21619 9.96263 4.24151 10.4183 4.26682C10.4689 4.29213 10.5196 4.36808 10.5702 4.41871C10.5955 4.44402 10.6208 4.49465 10.6208 4.54528Z" fill="black"/>
+                                </svg>
+                              </span>
+                            </button>
+                          </quantity-input>
+                          {%- liquid
+                            assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
+                            assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min
+                            if cart_qty > 0
+                              assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.increment
+                            endif
+                          -%}
+                          {%- if product.quantity_price_breaks_configured? -%}
+                            <price-per-item
+                              id="Price-Per-Item-{{ section.id }}"
+                              data-section-id="{{ section.id }}"
+                              data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                            >
+                              {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
+                                {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+                                <div class="price-per-item">
+                                  {%- if variant_price_compare -%}
+                                    <dl class="price-per-item--current">
+                                      <dt class="visually-hidden">
+                                        {{ 'products.product.price.regular_price' | t }}
+                                      </dt>
+                                      <dd>
+                                        <s class="variant-item__old-price">
+                                          {{ variant_price_compare | money_with_currency }}
+                                        </s>
+                                      </dd>
+                                    </dl>
+                                  {%- endif -%}
+                                  {%- if current_qty_for_volume_pricing < volume_pricing_array.last.minimum_quantity -%}
+                                    {%- assign variant_price = product.selected_or_first_available_variant.price
+                                      | money_with_currency
+                                    -%}
+                                    <span class="price-per-item--current">
+                                      {{-
+                                        'products.product.volume_pricing.price_at_each_html'
+                                        | t: price: variant_price
+                                      -}}
+                                    </span>
+                                  {%- else -%}
+                                    {%- for price_break in volume_pricing_array -%}
+                                      {%- if current_qty_for_volume_pricing >= price_break.minimum_quantity -%}
+                                        {%- assign price_break_price = price_break.price | money_with_currency -%}
+                                        <span class="price-per-item--current">
+                                          {{-
+                                            'products.product.volume_pricing.price_at_each_html'
+                                            | t: price: price_break_price
+                                          -}}
+                                        </span>
+                                        {%- break -%}
+                                      {%- endif -%}
+                                    {%- endfor -%}
+                                  {%- endif -%}
+                                </div>
+                              {%- else -%}
+                                {%- assign variant_price = product.selected_or_first_available_variant.price
                                   | money_with_currency
                                 -%}
-                                <span data-text="{{ 'products.product.volume_pricing.price_at_each_html' | t: price: variant_price }}">
-                                  {{- 'sections.quick_order_list.each' | t: money: price -}}
-                                </span>
-                              </li>
-                              {%- for price_break in product.selected_or_first_available_variant.quantity_price_breaks -%}
-                                {%- assign price_break_price = price_break.price | money_with_currency -%}
-                                <li class="{%- if forloop.index >= 3 -%}show-more-item hidden{%- endif -%}">
-                                  <span>
-                                    {{- price_break.minimum_quantity -}}
-                                    <span aria-hidden="true">+</span></span
-                                  >
-                                  <span data-text="{{ 'products.product.volume_pricing.price_at_each_html' | t: price: price_break_price }}">
-                                    {{- 'sections.quick_order_list.each' | t: money: price_break_price -}}
+                                {%- assign variant_price_compare = product.selected_or_first_available_variant.compare_at_price -%}
+                                <div class="price-per-item">
+                                  {%- if variant_price_compare -%}
+                                    <dl class="price-per-item--current">
+                                      <dt class="visually-hidden">
+                                        {{ 'products.product.price.regular_price' | t }}
+                                      </dt>
+                                      <dd>
+                                        <s class="variant-item__old-price">
+                                          {{ variant_price_compare | money_with_currency }}
+                                        </s>
+                                      </dd>
+                                      <dt class="visually-hidden">
+                                        {{ 'products.product.price.sale_price' | t }}
+                                      </dt>
+                                      <dd>
+                                        <span class="price-per-item--current">
+                                          {{-
+                                            'products.product.volume_pricing.price_at_each_html'
+                                            | t: price: variant_price
+                                          -}}
+                                        </span>
+                                      </dd>
+                                    </dl>
+                                  {%- else -%}
+                                    <span class="price-per-item--current">
+                                      {{-
+                                        'products.product.volume_pricing.price_at_each_html'
+                                        | t: price: variant_price
+                                      -}}
+                                    </span>
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                            </price-per-item>
+                          {%- endif -%}
+                          {% if block.settings.show_quantity_calculator %}
+                            <div class="component--quantity-calculator" {{ block.shopify_attributes }}>
+                              {%- render 'quantity-calculator', product: product, section_id: section.id -%}
+                            </div>
+                          {% endif %}
+                        </div>
+                        <div class="quantity__rules caption" id="Quantity-Rules-{{ section.id }}">
+                          {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+                            <span class="divider">
+                              {{-
+                                'products.product.quantity.multiples_of'
+                                | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment
+                              -}}
+                            </span>
+                          {%- endif -%}
+                          {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+                            <span class="divider">
+                              {{-
+                                'products.product.quantity.minimum_of'
+                                | t: quantity: product.selected_or_first_available_variant.quantity_rule.min
+                              -}}
+                            </span>
+                          {%- endif -%}
+                          {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
+                            <span class="divider">
+                              {{-
+                                'products.product.quantity.maximum_of'
+                                | t: quantity: product.selected_or_first_available_variant.quantity_rule.max
+                              -}}
+                            </span>
+                          {%- endif -%}
+                        </div>
+                        {%- if product.quantity_price_breaks_configured? -%}
+                          <volume-pricing class="parent-display" id="Volume-{{ section.id }}">
+                            {%- if product.selected_or_first_available_variant.quantity_price_breaks.size > 0 -%}
+                              <span class="caption-large">{{ 'products.product.volume_pricing.title' | t }}</span>
+                              <ul class="list-unstyled">
+                                <li>
+                                  <span>{{ product.selected_or_first_available_variant.quantity_rule.min }}+</span>
+                                  {%- assign price = product.selected_or_first_available_variant.price
+                                    | money_with_currency
+                                  -%}
+                                  <span data-text="{{ 'products.product.volume_pricing.price_at_each_html' | t: price: variant_price }}">
+                                    {{- 'sections.quick_order_list.each' | t: money: price -}}
                                   </span>
                                 </li>
-                              {%- endfor -%}
-                            </ul>
-                            {%- if product.selected_or_first_available_variant.quantity_price_breaks.size >= 3 -%}
-                              <show-more-button>
-                                <button
-                                  class="button-show-more link underlined-link"
-                                  id="Show-More-{{ section.id }}"
-                                  type="button"
-                                >
-                                  <span class="label-show-more label-text"
-                                    ><span aria-hidden="true">+ </span>{{ 'products.facets.show_more' | t }}
-                                  </span>
-                                </button>
-                              </show-more-button>
+                                {%- for price_break in product.selected_or_first_available_variant.quantity_price_breaks -%}
+                                  {%- assign price_break_price = price_break.price | money_with_currency -%}
+                                  <li class="{%- if forloop.index >= 3 -%}show-more-item hidden{%- endif -%}">
+                                    <span>
+                                      {{- price_break.minimum_quantity -}}
+                                      <span aria-hidden="true">+</span></span
+                                    >
+                                    <span data-text="{{ 'products.product.volume_pricing.price_at_each_html' | t: price: price_break_price }}">
+                                      {{- 'sections.quick_order_list.each' | t: money: price_break_price -}}
+                                    </span>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                              {%- if product.selected_or_first_available_variant.quantity_price_breaks.size >= 3 -%}
+                                <show-more-button>
+                                  <button
+                                    class="button-show-more link underlined-link"
+                                    id="Show-More-{{ section.id }}"
+                                    type="button"
+                                  >
+                                    <span class="label-show-more label-text"
+                                      ><span aria-hidden="true">+ </span>{{ 'products.facets.show_more' | t }}
+                                    </span>
+                                  </button>
+                                </show-more-button>
+                              {%- endif -%}
                             {%- endif -%}
-                          {%- endif -%}
-                        </volume-pricing>
-                      {%- endif -%}
-                    </div>
+                          </volume-pricing>
+                        {%- endif -%}
+                      </div>
                     {% endunless %}
                   {%- when 'quantity-calculator' -%}
                     <div {{ block.shopify_attributes }}>
@@ -602,11 +602,11 @@
                   {%- when 'nutritional-information' -%}
                     {% assign nutritional_content = product.metafields.custom.complete_balanced.value %}
                     {% if nutritional_content != blank %}
-                    <div class="nutritional--info">
-                      <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
-                      <p class="nutritional--info--content">{{ nutritional_content }}</p>
-                    </div>
-                  {% endif %}
+                      <div class="nutritional--info">
+                        <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
+                        <p class="nutritional--info--content">{{ nutritional_content }}</p>
+                      </div>
+                    {% endif %}
                   {%- when 'popup' -%}
                     <modal-opener
                       class="product-popup-modal__opener quick-add-hidden"
@@ -653,7 +653,9 @@
                     -%}
 
                   {%- when 'guarantee-ribbon' -%}
-                    {% render 'ym-guarantee-ribbon', block: block %}
+                    {%- unless product.handle == 'the-canine-cocomega-effect-book' -%}
+                      {% render 'ym-guarantee-ribbon', block: block %}
+                    {%- endunless -%}
 
                   {%- when 'rating' -%}
                     {% render 'opinew_review_stars_product' %}
