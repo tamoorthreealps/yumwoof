@@ -269,6 +269,10 @@
   flex-direction: column;
   gap: 16px;
 }
+/* Hide the consent line while the Klaviyo success step is showing */
+.yf__signup.is-submitted .yf__signup__footer {
+  display: none;
+}
 p.yf__signup__footer_content {
   font-size: 14px;
   line-height: 20px;
