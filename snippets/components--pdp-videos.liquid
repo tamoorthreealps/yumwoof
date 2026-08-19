@@ -264,26 +264,28 @@
     }
   });
 
-  const slider = document.querySelector('.yumw-video-grid.splide');
-
-  if (slider) {
-    new Splide(slider, {
-      type: 'slide',
-      perPage: 3,
-      perMove: 1,
-      gap: '8px',
-      pagination: false,
-      arrows: false,
-      drag: true,
-      omitEnd: true,
-      trimSpace: true,
-      speed: 600,
-      focus: 0,
-      breakpoints: {
-        767: {
-          perPage: 2.1,
+  // Splide is loaded with `defer`, so wait for DOMContentLoaded (defer scripts run before it).
+  document.addEventListener('DOMContentLoaded', function () {
+    var slider = document.querySelector('.yumw-video-grid.splide');
+    if (slider && typeof Splide !== 'undefined') {
+      new Splide(slider, {
+        type: 'slide',
+        perPage: 3,
+        perMove: 1,
+        gap: '8px',
+        pagination: false,
+        arrows: false,
+        drag: true,
+        omitEnd: true,
+        trimSpace: true,
+        speed: 600,
+        focus: 0,
+        breakpoints: {
+          767: {
+            perPage: 2.1,
+          },
         },
-      },
-    }).mount();
-  }
+      }).mount();
+    }
+  });
 </script>

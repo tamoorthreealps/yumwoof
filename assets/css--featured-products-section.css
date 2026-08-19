@@ -359,18 +359,30 @@ position: absolute !important;
 	gap: 8px;
 }
 
+/* 24x24 tap target (a11y target-size) with an 8px visual dot centered inside. */
 .fp__dot {
-	width: 8px;
-	height: 8px;
+	width: 24px;
+	height: 24px;
 	padding: 0;
 	border: 0;
-	border-radius: 50%;
 	background: transparent;
 	cursor: pointer;
-	border: 1px solid #000000;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.fp__dot[aria-current='true'] {
+.fp__dot::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	border: 1px solid #000000;
+	background: transparent;
+	transition: background 0.2s ease;
+}
+
+.fp__dot[aria-current='true']::before {
 	background: var(--fp-text);
 }
 
@@ -531,6 +543,10 @@ position: absolute !important;
 		padding-bottom: 3.2px;
 		text-decoration: none;
 		text-transform: uppercase;
+		/* a11y target-size: guarantee a >=24px tall tap target */
+		display: inline-flex;
+		align-items: center;
+		min-height: 24px;
 	}
 
 	/* .fp__shop {
