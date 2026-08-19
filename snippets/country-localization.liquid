@@ -10,6 +10,7 @@
     assign currencies = localization.available_countries | map: 'currency' | map: 'iso_code' | uniq
     assign popular_countries = localization.available_countries | where: 'popular?' | sort: 'name'
 
+    
     assign show_country_filter = false
     if localization.available_countries.size > 9
       assign show_country_filter = true
