@@ -526,8 +526,7 @@ function initEmptyCartSlider() {
 
   splide.on('mounted moved resized updated', updateArrows);
   splide.mount();
-const list = slider.querySelector('.splide__list');
-if (list) list.removeAttribute('role');
+
   prevBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     splide.go('<');
@@ -636,7 +635,13 @@ function initRecommendSlider() {
   splide.on("mounted move resized updated", updateArrows);
 
   splide.mount();
+const list = slider.querySelector('.splide__list');
+if (list) list.removeAttribute('role');
 
+prevBtn?.addEventListener('click', (e) => {
+  e.preventDefault();
+  splide.go('<');
+});
   prevBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     splide.go("<");
