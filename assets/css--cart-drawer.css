@@ -18,7 +18,7 @@ cart-drawer {
 	position: fixed;
 	inset: 0;
 	z-index: 1000;
-	visibility: hidden;
+	visibility: hidden !important;
 	transition: visibility 0s linear .45s;
 }
 
