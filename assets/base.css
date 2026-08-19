@@ -134,6 +134,10 @@ body {
   z-index:3 !important;
 } */
 
+cart-drawer {
+  visibility:hidden !important;
+}
+
 #gorgias-chat-container {
     z-index: 1 !important;
 }
