@@ -55,7 +55,7 @@
                 <div class="mem__slide{% if forloop.first %} is-active{% endif %}" data-mem-slide {{ block.shopify_attributes }}>
                   {%- if block.settings.icon != blank -%}
                     <span class="mem__slide-icon">
-                      {{ block.settings.icon | image_url: width: 160 | image_tag: alt: '', widths: '72, 120, 160', loading: 'lazy' }}
+                      {{ block.settings.icon | image_url: width: 160 | image_tag: alt: 'mem slide icon', widths: '72, 120, 160', loading: 'lazy' }}
                     </span>
                   {%- endif -%}
                   <span class="mem__slide-text">
