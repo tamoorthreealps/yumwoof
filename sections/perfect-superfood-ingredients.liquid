@@ -2,7 +2,7 @@
    {% render 'product-ingredients-modal' %}    
     <div class="site-container">
        <div class="content-nutrition">
-         <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/pro-nutrition-txt.png?v=1667393177" alt="product nutrition details">
+         <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/pro-nutrition-txt.png?v=1667393177" alt="Product nutrition information">
          <p class="hd-txt">All ingredients in {{ product.title }} are human-grade and GMO-free.</p>
          {% for option in product.options_with_values %}  
             {% if option.name == "Recipe" %}
@@ -52,7 +52,7 @@
           <ul class="ing-list">
                {% for ingred_obj in product.selected_or_first_available_variant.metafields.info.ingredients.value %}
                   <li>
-                     <img class="ingred_icon" src="{{ ingred_obj.image | image_url}}" alt="" loading="lazy"> 
+                     <img class="ingred_icon" src="{{ ingred_obj.image | image_url}}" alt="{{ ingred_obj.display_text | default: ingred_obj.title | escape }}" loading="lazy"> 
                      <span>                    
                         {% if ingred_obj.display_text %}
                            {{ ingred_obj.display_text }}
@@ -60,7 +60,7 @@
                            {{ ingred_obj.title }}
                         {% endif %}
                        <button type="button" class="ing_btn" data-bs-toggle="modal" data-bs-target="#ingredient_{{ ingred_obj.system.id }}" aria-label="More about {{ ingred_obj.display_text | default: ingred_obj.title }}"> 
-                       <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/plus.png?v=1667388322" alt=""> </button> 
+                       <img src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/plus.png?v=1667388322" alt="{{ ingred_obj.display_text | default: ingred_obj.title }}"> </button> 
                     </span>                 
                       </li>                              
                {% endfor %}
