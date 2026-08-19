@@ -227,40 +227,64 @@
   })();
 
 
+  // Row-height equalisation, batched to avoid layout thrashing:
+  // pass 1 = all writes (reset), pass 2 = all reads (ONE forced layout), pass 3 = all writes.
   function equalComparisonRows() {
-  document.querySelectorAll(".cmp").forEach(section => {
-    const cols = [...section.querySelectorAll(".cmp__col")];
-    if (!cols.length) return;
+    document.querySelectorAll(".cmp").forEach(section => {
+      const cols = [...section.querySelectorAll(".cmp__col")];
+      if (!cols.length) return;
+      const rowCount = cols[0].querySelectorAll(".cmp__cell").length;
 
-    const rows = cols[0].querySelectorAll(".cmp__cell");
+      const rowsCells = [];
+      for (let index = 0; index < rowCount; index++) {
+        const cells = [];
+        cols.forEach(col => {
+          const cell = col.querySelectorAll(".cmp__cell")[index];
+          if (cell) cells.push(cell);
+        });
+        rowsCells.push(cells);
+      }
 
-    rows.forEach((_, index) => {
-      let maxHeight = 0;
-      const cells = [];
-
-      cols.forEach(col => {
-        const cell = col.querySelectorAll(".cmp__cell")[index];
-        if (!cell) return;
-
+      // pass 1: reset (writes only)
+      rowsCells.forEach(cells => cells.forEach(cell => {
         cell.style.height = "auto";
         cell.style.flexBasis = "auto";
-
-        cells.push(cell);
-        maxHeight = Math.max(maxHeight, cell.offsetHeight);
-      });
-
-      cells.forEach(cell => {
-        cell.style.height = maxHeight + "px";
-        cell.style.flexBasis = maxHeight + "px";
-      });
+      }));
+      // pass 2: read every height at once (single layout for the whole section)
+      const maxes = rowsCells.map(cells => cells.reduce((m, cell) => Math.max(m, cell.offsetHeight), 0));
+      // pass 3: apply (writes only)
+      rowsCells.forEach((cells, i) => cells.forEach(cell => {
+        cell.style.height = maxes[i] + "px";
+        cell.style.flexBasis = maxes[i] + "px";
+      }));
     });
-  });
-}
+  }
 
-window.addEventListener("load", equalComparisonRows);
-window.addEventListener("resize", equalComparisonRows);
+  // rAF-debounced so a resize storm can't re-run it synchronously many times.
+  let eqScheduled = false;
+  function scheduleEqual() {
+    if (eqScheduled) return;
+    eqScheduled = true;
+    requestAnimationFrame(() => { eqScheduled = false; equalComparisonRows(); });
+  }
 
-document.addEventListener("shopify:section:load", equalComparisonRows);
+  // Run when the section scrolls into view (it's below the fold on the homepage) — not on load.
+  function observeComparison() {
+    const sections = document.querySelectorAll(".cmp");
+    if (!sections.length) return;
+    if (!("IntersectionObserver" in window)) { scheduleEqual(); return; }
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { scheduleEqual(); obs.unobserve(e.target); }
+      });
+    }, { rootMargin: "300px" });
+    sections.forEach(s => io.observe(s));
+  }
+
+  if (document.readyState !== "loading") observeComparison();
+  else document.addEventListener("DOMContentLoaded", observeComparison);
+  window.addEventListener("resize", scheduleEqual);
+  document.addEventListener("shopify:section:load", () => { observeComparison(); scheduleEqual(); });
 </script>
 
 {% schema %}
