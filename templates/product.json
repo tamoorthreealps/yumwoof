@@ -171,8 +171,8 @@
       "settings": {
         "heading": "Any Questions?",
         "subheading": "",
-        "faq_image": "shopify://shop_images/faqs_desktop.png",
-        "faq_image_mobile": "shopify://shop_images/faqs_mobile.png",
+        "faq_image": "shopify://shop_images/faqs_desktop.webp",
+        "faq_image_mobile": "shopify://shop_images/faqs_mobile.webp",
         "open_first": false,
         "background_color": "#fff9ef",
         "text_color": "#000000",
@@ -215,7 +215,7 @@
       ],
       "name": "Custom Reviews",
       "settings": {
-        "bg_image_desktop": "shopify://shop_images/BG.png",
+        "bg_image_desktop": "shopify://shop_images/heritage_bg_desktop.webp",
         "bg_color_desktop": "#fff9ef",
         "bg_color_mobile": "#7ba6dd",
         "left_bone": "shopify://shop_images/Group_80.png",
