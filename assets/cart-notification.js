@@ -141,7 +141,6 @@ function updateCartIconBubbles(sectionHTML) {
 
   const parsed = new DOMParser().parseFromString(sectionHTML, 'text/html');
   const newBubble = parsed.querySelector('.shopify-section') || parsed.body;
-
   if (!newBubble || !newBubble.innerHTML.trim()) return;
 
   targets.forEach((bubble) => {
@@ -150,3 +149,43 @@ function updateCartIconBubbles(sectionHTML) {
 }
 
 window.updateCartIconBubbles = updateCartIconBubbles;
+
+/**
+ * Safety net. Some cart consumers (theme legacy code, apps) still write to
+ * #cart-icon-bubble by id and only ever hit the desktop icon. Mirror whatever
+ * lands there onto every other cart icon so the mobile count can't drift.
+ */
+(function mirrorCartIconBubble() {
+  function start() {
+    const source = document.getElementById('cart-icon-bubble');
+    if (!source || source.dataset.bubbleMirrored === 'true') return;
+    source.dataset.bubbleMirrored = 'true';
+
+    let mirroring = false;
+
+    const observer = new MutationObserver(() => {
+      if (mirroring) return;
+      mirroring = true;
+
+      const others = document.querySelectorAll('[data-cart-icon-bubble]');
+      others.forEach((target) => {
+        if (target === source) return;
+        if (target.innerHTML === source.innerHTML) return;
+        target.innerHTML = source.innerHTML;
+      });
+
+      // Let the observer settle before accepting further mutations.
+      requestAnimationFrame(() => {
+        mirroring = false;
+      });
+    });
+
+    observer.observe(source, { childList: true, subtree: true, characterData: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
