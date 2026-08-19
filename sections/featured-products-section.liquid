@@ -767,8 +767,22 @@
       track.dataset.fpReady = 'true';
     }
 
+    // Defer the (heavy) carousel setup + scale animation until the section nears the
+    // viewport — it's below the hero, so this keeps it off the initial main-thread work.
+    function initCarouselWhenVisible(section) {
+      if (section.dataset.fpObserved) return;
+      section.dataset.fpObserved = 'true';
+      if (!('IntersectionObserver' in window)) { initCarousel(section); return; }
+      var io = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { initCarousel(e.target); obs.unobserve(e.target); }
+        });
+      }, { rootMargin: '400px' });
+      io.observe(section);
+    }
+
     function init(root) {
-      root.querySelectorAll('.fp').forEach(initCarousel);
+      root.querySelectorAll('.fp').forEach(initCarouselWhenVisible);
     }
 
     /* ---------- popups (delegated — works for cloned cards too) ---------- */
