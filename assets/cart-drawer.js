@@ -15,6 +15,13 @@ class CartDrawer extends HTMLElement {
     cartLinks.forEach((cartLink) => {
       cartLink.setAttribute('role', 'button');
       cartLink.setAttribute('aria-haspopup', 'dialog');
+      cartLink.setAttribute('aria-expanded', this.classList.contains('active') ? 'true' : 'false');
+
+      // renderContents() calls this again after every cart update. The links
+      // themselves aren't replaced, only their children, so without this guard
+      // we'd stack a new click/keydown listener on each update.
+      if (cartLink.dataset.cartDrawerBound === 'true') return;
+      cartLink.dataset.cartDrawerBound = 'true';
 
       cartLink.addEventListener('click', (event) => {
         event.preventDefault();
@@ -27,6 +34,12 @@ class CartDrawer extends HTMLElement {
           this.open(cartLink);
         }
       });
+    });
+  }
+
+  setCartIconExpanded(isExpanded) {
+    document.querySelectorAll('[data-cart-icon-bubble]').forEach((cartLink) => {
+      cartLink.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
     });
   }
 
@@ -53,6 +66,7 @@ class CartDrawer extends HTMLElement {
     );
 
     document.body.classList.add('overflow-hidden');
+    this.setCartIconExpanded(true);
 
     // cart-drawer-items is a CartItems subclass that extends createViewEventElement.
     // Its `view-event-trigger="manual"` skips auto-dispatch on connect; we fire
@@ -64,6 +78,7 @@ class CartDrawer extends HTMLElement {
     this.classList.remove('active');
     removeTrapFocus(this.activeElement);
     document.body.classList.remove('overflow-hidden');
+    this.setCartIconExpanded(false);
   }
 
   setSummaryAccessibility(cartDrawerNote) {
@@ -87,12 +102,7 @@ class CartDrawer extends HTMLElement {
     this.productId = parsedState.id;
     this.getSectionsToRender().forEach((section) => {
       if (section.id === 'cart-icon-bubble') {
-        const newBubble = this.getSectionDOM(parsedState.sections[section.id], '.shopify-section');
-
-        document.querySelectorAll('[data-cart-icon-bubble]').forEach((bubble) => {
-          bubble.innerHTML = newBubble.innerHTML;
-        });
-
+        updateCartIconBubbles(parsedState.sections[section.id]);
         return;
       }
 
