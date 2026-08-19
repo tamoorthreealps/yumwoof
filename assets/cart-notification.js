@@ -3,8 +3,12 @@ class CartNotification extends HTMLElement {
     super();
 
     this.notification = document.getElementById('cart-notification');
-    this.header = document.querySelector('sticky-header');
+    // This theme's sticky header is <yw-header data-sticky>, not <sticky-header>.
+    // Guarded because reveal() only exists if header.js defines it.
+    this.header = document.querySelector('yw-header[data-sticky]');
     this.onBodyClick = this.handleBodyClick.bind(this);
+
+    if (!this.notification) return;
 
     this.notification.addEventListener('keyup', (evt) => evt.code === 'Escape' && this.close());
     this.querySelectorAll('button[type="button"]').forEach((closeButton) =>
@@ -13,6 +17,8 @@ class CartNotification extends HTMLElement {
   }
 
   open() {
+    if (!this.notification) return;
+
     this.notification.classList.add('animate', 'active');
 
     this.notification.addEventListener(
@@ -57,6 +63,8 @@ class CartNotification extends HTMLElement {
   }
 
   close() {
+    if (!this.notification) return;
+
     this.notification.classList.remove('active');
     document.body.removeEventListener('click', this.onBodyClick);
 
@@ -67,13 +75,7 @@ class CartNotification extends HTMLElement {
     this.cartItemKey = parsedState.key;
     this.getSectionsToRender().forEach((section) => {
       if (section.id === 'cart-icon-bubble') {
-        const newBubble = this.getSectionDOM(parsedState.sections[section.id], '.shopify-section');
-        if (!newBubble) return;
-
-        document.querySelectorAll('[data-cart-icon-bubble]').forEach((bubble) => {
-          bubble.innerHTML = newBubble.innerHTML;
-        });
-
+        updateCartIconBubbles(parsedState.sections[section.id]);
         return;
       }
 
@@ -86,7 +88,7 @@ class CartNotification extends HTMLElement {
       );
     });
 
-    if (this.header) this.header.reveal();
+    if (this.header && typeof this.header.reveal === 'function') this.header.reveal();
     this.open();
   }
 
