@@ -210,7 +210,7 @@
       <div class="drawer__inner_container">
         {%- comment -%} ===== HEADER ===== {%- endcomment -%}
         <div class="cd__header">
-          <p class="cd__title">
+          <h2 class="cd__title">
             {{ section.settings.title }}
             {%- if cart != empty -%}
               <span class="cd__count"
@@ -218,7 +218,7 @@
                 {{ display_item_count | pluralize: 'ITEM', 'ITEMS' }}]</span
               >
             {%- endif -%}
-          </p>
+          </h2>
           <button
             class="drawer__close cd__close"
             type="button"
