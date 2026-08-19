@@ -23,7 +23,7 @@ cart-drawer {
 }
 
 cart-drawer.active {
-	visibility: visible;
+	visibility: visible !important;
 	transition-delay: 0s;
 }
 
