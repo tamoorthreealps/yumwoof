@@ -110,43 +110,63 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
     this.validateQuantity(event);
   }
 
+  // Refreshes every cart icon (desktop + mobile) from a standalone
+  // ?section_id=cart-icon-bubble render. Kept separate from the drawer/main
+  // re-render below because those only touch the cart body, never the header.
+  refreshCartIconBubbles() {
+    return fetch(`${routes.cart_url}?section_id=cart-icon-bubble`)
+      .then((response) => response.text())
+      .then((responseText) => updateCartIconBubbles(responseText))
+      .catch(() => {
+        /* header count is cosmetic; don't break the cart re-render */
+      });
+  }
+
   onCartUpdate() {
+    const bubbleRefresh = this.refreshCartIconBubbles();
+
     if (this.tagName === 'CART-DRAWER-ITEMS') {
-      return fetch(`${routes.cart_url}?section_id=cart-drawer`)
-        .then((response) => response.text())
-        .then((responseText) => {
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          const selectors = ['cart-drawer-items', '.cart-drawer__footer'];
-          for (const selector of selectors) {
-            const targetElement = document.querySelector(selector);
-            const sourceElement = html.querySelector(selector);
-            if (targetElement && sourceElement) {
-              targetElement.replaceWith(sourceElement);
+      return Promise.all([
+        bubbleRefresh,
+        fetch(`${routes.cart_url}?section_id=cart-drawer`)
+          .then((response) => response.text())
+          .then((responseText) => {
+            const html = new DOMParser().parseFromString(responseText, 'text/html');
+            const selectors = ['cart-drawer-items', '.cart-drawer__footer'];
+            for (const selector of selectors) {
+              const targetElement = document.querySelector(selector);
+              const sourceElement = html.querySelector(selector);
+              if (targetElement && sourceElement) {
+                targetElement.replaceWith(sourceElement);
+              }
             }
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    } else {
-      return fetch(`${routes.cart_url}?section_id=main-cart-items`)
+          })
+          .catch((e) => {
+            console.error(e);
+          }),
+      ]);
+    }
+
+    return Promise.all([
+      bubbleRefresh,
+      fetch(`${routes.cart_url}?section_id=main-cart-items`)
         .then((response) => response.text())
         .then((responseText) => {
           const html = new DOMParser().parseFromString(responseText, 'text/html');
           const sourceQty = html.querySelector('cart-items');
-          this.innerHTML = sourceQty.innerHTML;
+          if (sourceQty) this.innerHTML = sourceQty.innerHTML;
         })
         .catch((e) => {
           console.error(e);
-        });
-    }
+        }),
+    ]);
   }
 
   getSectionsToRender() {
     return [
       {
         id: 'main-cart-items',
-        section: document.getElementById('main-cart-items').dataset.id,
+        section: document.getElementById('main-cart-items')?.dataset.id,
         selector: '.js-contents',
       },
       {
@@ -161,10 +181,10 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
       },
       {
         id: 'main-cart-footer',
-        section: document.getElementById('main-cart-footer').dataset.id,
+        section: document.getElementById('main-cart-footer')?.dataset.id,
         selector: '.js-contents',
       },
-    ];
+    ].filter((section) => section.section);
   }
 
   updateQuantity(line, quantity, event, name, variantId) {
@@ -220,31 +240,28 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
 
           if (cartFooter) cartFooter.classList.toggle('is-empty', parsedState.item_count === 0);
           if (cartDrawerWrapper) cartDrawerWrapper.classList.toggle('is-empty', parsedState.item_count === 0);
-          
 
           sectionsToRender.forEach((section) => {
+            // The cart icon exists twice in the DOM (desktop nav + mobile menu
+            // bar) with different ids, so it can't be resolved by id here.
+            // [data-cart-icon-bubble] matches both.
             if (section.id === 'cart-icon-bubble') {
-              const html = this.getSectionInnerHTML(
-                parsedState.sections[section.section],
-                section.selector
-              );
-
-              document.querySelectorAll('#cart-icon-bubble').forEach((icon) => {
-                icon.innerHTML = html;
-              });
-
+              updateCartIconBubbles(parsedState.sections[section.section]);
               return;
             }
 
-            const elementToReplace =
-              document.getElementById(section.id).querySelector(section.selector) ||
-              document.getElementById(section.id);
+            // main-cart-items / main-cart-footer don't exist when the drawer is
+            // used off the /cart page. Without this guard the whole callback
+            // throws partway through and later sections never render.
+            const sectionRoot = document.getElementById(section.id);
+            if (!sectionRoot) return;
 
-            elementToReplace.innerHTML = this.getSectionInnerHTML(
-              parsedState.sections[section.section],
-              section.selector
-            );
+            const elementToReplace = sectionRoot.querySelector(section.selector) || sectionRoot;
+            const newHTML = this.getSectionInnerHTML(parsedState.sections[section.section], section.selector);
+
+            if (newHTML !== null) elementToReplace.innerHTML = newHTML;
           });
+
           const updatedValue = parsedState.items[line - 1] ? parsedState.items[line - 1].quantity : undefined;
           let message = '';
           if (items.length === parsedState.items.length && updatedValue !== parseInt(quantityElement.value)) {
@@ -325,10 +342,12 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
       document.getElementById(`Line-item-error-${line}`) || document.getElementById(`CartDrawer-LineItemError-${line}`);
     if (lineItemError) lineItemError.querySelector('.cart-item__error-text').textContent = message;
 
-    this.lineItemStatusElement.setAttribute('aria-hidden', true);
+    if (this.lineItemStatusElement) this.lineItemStatusElement.setAttribute('aria-hidden', true);
 
     const cartStatus =
       document.getElementById('cart-live-region-text') || document.getElementById('CartDrawer-LiveRegionText');
+    if (!cartStatus) return;
+
     cartStatus.setAttribute('aria-hidden', false);
 
     setTimeout(() => {
@@ -337,12 +356,14 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
   }
 
   getSectionInnerHTML(html, selector) {
-    return new DOMParser().parseFromString(html, 'text/html').querySelector(selector).innerHTML;
+    if (!html) return null;
+    const found = new DOMParser().parseFromString(html, 'text/html').querySelector(selector);
+    return found ? found.innerHTML : null;
   }
 
   enableLoading(line) {
     const mainCartItems = document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems');
-    mainCartItems.classList.add('cart__items--disabled');
+    if (mainCartItems) mainCartItems.classList.add('cart__items--disabled');
 
     const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading__spinner`);
     const cartDrawerItemElements = this.querySelectorAll(`#CartDrawer-Item-${line} .loading__spinner`);
@@ -350,12 +371,12 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
     [...cartItemElements, ...cartDrawerItemElements].forEach((overlay) => overlay.classList.remove('hidden'));
 
     document.activeElement.blur();
-    this.lineItemStatusElement.setAttribute('aria-hidden', false);
+    if (this.lineItemStatusElement) this.lineItemStatusElement.setAttribute('aria-hidden', false);
   }
 
   disableLoading(line) {
     const mainCartItems = document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems');
-    mainCartItems.classList.remove('cart__items--disabled');
+    if (mainCartItems) mainCartItems.classList.remove('cart__items--disabled');
 
     const cartItemElements = this.querySelectorAll(`#CartItem-${line} .loading__spinner`);
     const cartDrawerItemElements = this.querySelectorAll(`#CartDrawer-Item-${line} .loading__spinner`);
