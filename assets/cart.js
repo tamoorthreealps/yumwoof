@@ -526,7 +526,8 @@ function initEmptyCartSlider() {
 
   splide.on('mounted moved resized updated', updateArrows);
   splide.mount();
-
+const list = slider.querySelector('.splide__list');
+if (list) list.removeAttribute('role');
   prevBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     splide.go('<');
