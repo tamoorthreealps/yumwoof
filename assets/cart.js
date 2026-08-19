@@ -632,19 +632,26 @@ function initRecommendSlider() {
     nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
   }
 
-  splide.on("mounted move resized updated", updateArrows);
+splide.on("mounted move resized updated", updateArrows);
 
-  splide.mount();
+const removePresentationRole = () => {
+  const list = slider.querySelector(".splide__list");
+  if (list) list.removeAttribute("role");
+};
 
-  prevBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    splide.go("<");
-  });
+splide.on("mounted updated resized", removePresentationRole);
+splide.mount();
+removePresentationRole();
 
-  nextBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    splide.go(">");
-  });
+prevBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  splide.go("<");
+});
 
-  updateArrows();
+nextBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  splide.go(">");
+});
+
+updateArrows();
 }
