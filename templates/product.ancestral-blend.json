@@ -298,8 +298,8 @@
       "settings": {
         "heading": "Any Questions?",
         "subheading": "",
-        "faq_image": "shopify://shop_images/faq-desktop.png",
-        "faq_image_mobile": "shopify://shop_images/faq-mobie.png",
+        "faq_image": "shopify://shop_images/faq-desktop.webp",
+        "faq_image_mobile": "shopify://shop_images/faq-mobie.webp",
         "open_first": false,
         "background_color": "#fff9ef",
         "text_color": "#000000",
