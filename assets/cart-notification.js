@@ -139,11 +139,10 @@ function updateCartIconBubbles(sectionHTML) {
   const targets = document.querySelectorAll('[data-cart-icon-bubble]');
   if (!targets.length || !sectionHTML) return;
 
-  const newBubble = new DOMParser()
-    .parseFromString(sectionHTML, 'text/html')
-    .querySelector('.shopify-section');
+  const parsed = new DOMParser().parseFromString(sectionHTML, 'text/html');
+  const newBubble = parsed.querySelector('.shopify-section') || parsed.body;
 
-  if (!newBubble) return;
+  if (!newBubble || !newBubble.innerHTML.trim()) return;
 
   targets.forEach((bubble) => {
     bubble.innerHTML = newBubble.innerHTML;
