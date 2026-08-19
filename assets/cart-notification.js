@@ -126,3 +126,28 @@ class CartNotification extends HTMLElement {
 }
 
 customElements.define('cart-notification', CartNotification);
+
+
+
+
+
+
+
+
+
+function updateCartIconBubbles(sectionHTML) {
+  const targets = document.querySelectorAll('[data-cart-icon-bubble]');
+  if (!targets.length || !sectionHTML) return;
+
+  const newBubble = new DOMParser()
+    .parseFromString(sectionHTML, 'text/html')
+    .querySelector('.shopify-section');
+
+  if (!newBubble) return;
+
+  targets.forEach((bubble) => {
+    bubble.innerHTML = newBubble.innerHTML;
+  });
+}
+
+window.updateCartIconBubbles = updateCartIconBubbles;
