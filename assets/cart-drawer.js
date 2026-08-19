@@ -8,7 +8,7 @@ class CartDrawer extends HTMLElement {
   }
 
   setHeaderCartIconAccessibility() {
-    const cartLinks = document.querySelectorAll('#cart-icon-bubble, #mobile-cart-icon-bubble');
+    const cartLinks = document.querySelectorAll('[data-cart-icon-bubble]');
 
     if (!cartLinks.length) return;
 
@@ -89,7 +89,7 @@ class CartDrawer extends HTMLElement {
       if (section.id === 'cart-icon-bubble') {
         const newBubble = this.getSectionDOM(parsedState.sections[section.id], '.shopify-section');
 
-        document.querySelectorAll('#cart-icon-bubble, #mobile-cart-icon-bubble').forEach((bubble) => {
+        document.querySelectorAll('[data-cart-icon-bubble]').forEach((bubble) => {
           bubble.innerHTML = newBubble.innerHTML;
         });
 
