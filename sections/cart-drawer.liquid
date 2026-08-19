@@ -1,4 +1,6 @@
-{{ 'css--cart-drawer.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Cart drawer is closed on load — load its CSS without blocking first paint. {%- endcomment -%}
+<link rel="stylesheet" href="{{ 'css--cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'css--cart-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <script src="{{ 'custom-cart-subscription.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
