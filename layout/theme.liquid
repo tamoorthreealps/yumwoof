@@ -8,10 +8,17 @@
     <link rel="canonical" href="{{ canonical_url }}">
     {%- comment -%} Splide is only used by below-the-fold carousels (PDP videos, cart drawer) — load its CSS without blocking first paint. {%- endcomment -%}
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css"></noscript>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css"
+      media="print"
+      onload="this.media='all'"
+    >
+    <noscript
+      ><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css"
+    ></noscript>
 
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
@@ -31,7 +38,7 @@
     {% render 'meta-tags' %}
     {%- comment -%} Customers.ai / AddShoppers / OpenAI-ads pixels moved to just before </body> for performance. {%- endcomment -%}
 
-        <script>
+    <script>
       /* >> TriplePixel :: start*/
       (window.TriplePixelData = {
         TripleName: 'yumwoof.myshopify.com',
@@ -188,7 +195,7 @@
     <script src="{{ 'standard-actions-override.js' | asset_url }}" defer="defer"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
 
-  {% render 'gsf-conversion-pixels' %}
+    {% render 'gsf-conversion-pixels' %}
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
@@ -449,12 +456,30 @@
       }
     </script>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TR3RM44');</script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-TR3RM44');
+    </script>
     <!-- End Google Tag Manager -->
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TR3RM44"height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TR3RM44"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -524,7 +549,7 @@
         countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
       };
     </script>
-<script>
+    <script>
       document.addEventListener('DOMContentLoaded', function () {
         window.klaviyo.isIdentified().then((rsp) => {
           if (rsp) {
@@ -553,48 +578,50 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
     {%- render 'qck-schema-organization' -%}
-{%- if request.page_type == 'index' -%}
-  {%- render 'qck-schema-homepage' -%}
-{%- elsif request.page_type == 'product' -%}
-  {%- render 'qck-schema-product', product: product -%}
-  {%- render 'qck-schema-breadcrumbs', product: product -%}
-{%- elsif request.page_type == 'collection' -%}
-  {%- render 'qck-schema-breadcrumbs', collection: collection -%}
-{%- elsif request.page_type == 'article' -%}
-  {%- render 'qck-schema-article', article: article -%}
-  {%- render 'qck-schema-breadcrumbs', article: article, blog: blog -%}
-{%- endif -%}
+    {%- if request.page_type == 'index' -%}
+      {%- render 'qck-schema-homepage' -%}
+    {%- elsif request.page_type == 'product' -%}
+      {%- render 'qck-schema-product', product: product -%}
+      {%- render 'qck-schema-breadcrumbs', product: product -%}
+    {%- elsif request.page_type == 'collection' -%}
+      {%- render 'qck-schema-breadcrumbs', collection: collection -%}
+    {%- elsif request.page_type == 'article' -%}
+      {%- render 'qck-schema-article', article: article -%}
+      {%- render 'qck-schema-breadcrumbs', article: article, blog: blog -%}
+    {%- endif -%}
 
-  {%- comment -%} Non-essential marketing pixels — moved out of <head> to keep them off the critical render path. {%- endcomment -%}
-  <!-- Customers.ai Pixel -->
-  <script async="async" src="https://mm-uxrv.com/js/mm_1d4ef5e1-1d66-4a2d-ad37-aa0e33537fc5-35044943.js"></script>
-  <!-- AddShoppers / shop.pe (CPG Pixel) -->
-  <script type="text/javascript">
-    var AddShoppersWidgetOptions = { loadCss: false, pushResponse: false };
-    !(function () {
-      var t = document.createElement('script');
-      (t.type = 'text/javascript'),
-        (t.async = !0),
-        (t.id = 'AddShoppers'),
-        (t.src = 'https://shop.pe/widget/widget_async.js#658153ee3ef6663bfe5b2cff'),
-        document.getElementsByTagName('head')[0].appendChild(t);
-    })();
-  </script>
-  <!-- OpenAI ads pixel -->
-  <script>
-    !function(w, d, s, u) {
-      if (w.oaiq) return;
-      var q = function() { q.q.push(arguments); };
-      q.q = [];
-      w.oaiq = q;
-      var j = d.createElement(s);
-      j.async = 1;
-      j.src = u;
-      var f = d.getElementsByTagName(s)[0];
-      f.parentNode.insertBefore(j, f);
-    }(window, document, 'script', 'https://cdn.openai.com/ads/oaiq.js');
-    oaiq('init', 'TeQ6wbNgBfSLAUECcnegb2');
-    oaiq('track', 'page_viewed');
-  </script>
+    {%- comment -%} Non-essential marketing pixels — moved out of <head> to keep them off the critical render path. {%- endcomment -%}
+    <!-- Customers.ai Pixel -->
+    <script async="async" src="https://mm-uxrv.com/js/mm_1d4ef5e1-1d66-4a2d-ad37-aa0e33537fc5-35044943.js"></script>
+    <!-- AddShoppers / shop.pe (CPG Pixel) -->
+    <script type="text/javascript">
+      var AddShoppersWidgetOptions = { loadCss: false, pushResponse: false };
+      !(function () {
+        var t = document.createElement('script');
+        (t.type = 'text/javascript'),
+          (t.async = !0),
+          (t.id = 'AddShoppers'),
+          (t.src = 'https://shop.pe/widget/widget_async.js#658153ee3ef6663bfe5b2cff'),
+          document.getElementsByTagName('head')[0].appendChild(t);
+      })();
+    </script>
+    <!-- OpenAI ads pixel -->
+    <script>
+      !(function (w, d, s, u) {
+        if (w.oaiq) return;
+        var q = function () {
+          q.q.push(arguments);
+        };
+        q.q = [];
+        w.oaiq = q;
+        var j = d.createElement(s);
+        j.async = 1;
+        j.src = u;
+        var f = d.getElementsByTagName(s)[0];
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'https://cdn.openai.com/ads/oaiq.js');
+      oaiq('init', 'TeQ6wbNgBfSLAUECcnegb2');
+      oaiq('track', 'page_viewed');
+    </script>
   </body>
 </html>
