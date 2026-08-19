@@ -14,8 +14,8 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "footer_bg_image_desktop": "shopify://shop_images/desktop--footer--background.png",
-        "footer_bg_image_mobile": "shopify://shop_images/mobile-footer-background.png",
+        "footer_bg_image_desktop": "shopify://shop_images/desktop--footer--background.webp",
+        "footer_bg_image_mobile": "shopify://shop_images/mobile-footer-background.webp",
         "footer_bg": "#fff9ef",
         "footer_text": "#fff9ef",
         "marquee_text": "GORGEOUS, GORGEOUS DOGS EAT YUMWOOF. GORGEOUS, GORGEOUS DOGS EAT YUMWOOF.",
@@ -50,7 +50,7 @@
         "site_credit_tooltip_bg": "#661d1d",
         "site_credit_tooltip_text": "#fff9ef",
         "site_credit_tooltip_icon": "#fff9ef",
-        "site_credit_tooltip_shadow": "#FFF9EF",
+        "site_credit_tooltip_shadow": "#fff9ef",
         "enable_country_selector": true
       }
     }
