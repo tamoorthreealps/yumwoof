@@ -1,4 +1,14 @@
-{%- comment -%} Cart drawer is closed on load — load its CSS without blocking first paint. {%- endcomment -%}
+{%- comment -%}
+  Inline the critical "hide the closed drawer" rule so it's hidden at first paint —
+  otherwise the drawer markup flashes unstyled (visible, in-flow) until the async CSS
+  loads. Then load the full stylesheet async so it doesn't block first paint.
+{%- endcomment -%}
+<style>
+  cart-drawer{position:fixed;inset:0;z-index:1000;visibility:hidden}
+  cart-drawer.active{visibility:visible}
+  cart-drawer .cd__inner{position:fixed;inset:0;transform:translateX(100%)}
+  cart-drawer.active .cd__inner{transform:translateX(0)}
+</style>
 <link rel="stylesheet" href="{{ 'css--cart-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <noscript>{{ 'css--cart-drawer.css' | asset_url | stylesheet_tag }}</noscript>
 <script src="{{ 'custom-cart-subscription.js' | asset_url }}" defer="defer"></script>
