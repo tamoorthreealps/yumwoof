@@ -21,8 +21,8 @@
       "type": "yw-membership-banner",
       "name": "YW-Membership banner",
       "settings": {
-        "image": "shopify://shop_images/Hero_Scrim.jpg",
-        "image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.jpg",
+        "image": "shopify://shop_images/dog-eating-dog-food.webp",
+        "image_mobile": "shopify://shop_images/dog-enjoying-fresh-food.webp",
         "focal_desktop": "center center",
         "focal_mobile": "center 60%",
         "heading_line_1": "WELL-FED DOGS",
