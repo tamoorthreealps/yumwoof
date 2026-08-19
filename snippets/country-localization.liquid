@@ -181,7 +181,7 @@
     class="country-pill__button"
     aria-expanded="false"
     aria-controls="{{ localPosition }}-country-results"
-    aria-describedby="{{ localPosition }}Label"
+    {% comment %} aria-describedby="{{ localPosition }}Label" {% endcomment %}
   >
     {%- for row in allowed_rows -%}
       {%- assign parts = row | split: '|' -%}
