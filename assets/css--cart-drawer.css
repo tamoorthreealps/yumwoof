@@ -304,7 +304,7 @@ cart-drawer.active .cd__inner {
     justify-content: space-between;
     align-items: center;
 }
-h3.cd-banner__title {
+.cd-banner__title {
     font-size: 28px;
     line-height: 36px;
     color: #000;
@@ -367,7 +367,7 @@ span.cd__mobile-text {
     border-radius: 12px;
     margin-top: 0;
 }
-h3.cd-banner__title {
+.cd-banner__title {
     font-size: 20px;
     line-height: 28px;
 }
