@@ -110,8 +110,8 @@
       >
       <label class="recipe-swatch__label" for="{{ input_id }}">
         {%- if recipe_desktop_src != blank -%}
-          <img class="recipe-swatch__img recipe-swatch__img--desktop" src="{{ recipe_desktop_src | image_url: width: 128 }}" alt="" loading="lazy" width="64" height="64">
-          <img class="recipe-swatch__img recipe-swatch__img--mobile" src="{{ recipe_mobile_src | image_url: width: 128 }}" alt="" loading="lazy" width="64" height="64">
+          <img class="recipe-swatch__img recipe-swatch__img--desktop" src="{{ recipe_desktop_src | image_url: width: 128 }}" alt="Recipe Swatch Image" loading="lazy" width="64" height="64">
+          <img class="recipe-swatch__img recipe-swatch__img--mobile" src="{{ recipe_mobile_src | image_url: width: 128 }}" alt="Recipe Swatch Image" loading="lazy" width="64" height="64">
         {%- endif -%}
         <span class="recipe-swatch__title">{{ value }}</span>
         {{ label_unavailable }}
