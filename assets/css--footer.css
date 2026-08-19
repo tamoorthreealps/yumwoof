@@ -556,11 +556,21 @@ div#rich-text-01M0AD92650E77PVY1B0D97VX8 span {
   color: #fff9ef;
   letter-spacing: 0;
 }
-a.yf__questions-link.live-chat {
+.yf__questions-link.live-chat {
   color: #7ba6dd;
 }
 .yf__questions-link {
   text-decoration: none;
+}
+/* live-chat is a <button> styled as a link */
+button.yf__questions-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
 }
 /* .yf__questions-link:hover {
 	opacity: 0.65;

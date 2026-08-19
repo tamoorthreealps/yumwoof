@@ -167,13 +167,14 @@
         <ul class="yf__questions-list" role="list">
           {%- if section.settings.live_chat_label != blank -%}
             <li>
-              <a
+              {%- comment -%} Chat is an action, not navigation — use a <button> so it's not an uncrawlable anchor. {%- endcomment -%}
+              <button
+                type="button"
                 class="yf__questions-link live-chat"
-                href="{{ section.settings.live_chat_url | default: 'javascript:void(0);' }}"
-                onclick="GorgiasChat.open()"
+                onclick="if(window.GorgiasChat){GorgiasChat.open();}"
               >
                 {{- section.settings.live_chat_label }} &rarr;
-              </a>
+              </button>
             </li>
           {%- endif -%}
           {%- if section.settings.contact_email != blank -%}
