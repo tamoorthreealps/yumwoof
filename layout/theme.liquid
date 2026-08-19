@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css">
+    {%- comment -%} Splide is only used by below-the-fold carousels (PDP videos, cart drawer) — load its CSS without blocking first paint. {%- endcomment -%}
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css"></noscript>
 
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
 
@@ -26,9 +29,7 @@
     {% endif %}
 
     {% render 'meta-tags' %}
-    <!-- START Customers.ai Pixel -->
-    <script async="async" src="https://mm-uxrv.com/js/mm_1d4ef5e1-1d66-4a2d-ad37-aa0e33537fc5-35044943.js"></script>
-    <!-- END Customers.ai Pixel -->
+    {%- comment -%} Customers.ai / AddShoppers / OpenAI-ads pixels moved to just before </body> for performance. {%- endcomment -%}
 
         <script>
       /* >> TriplePixel :: start*/
@@ -104,67 +105,6 @@
       /* << TriplePixel :: end*/
     </script>
 
-    <script>
-      /* >> TriplePixel :: start*/
-      (window.TriplePixelData = { TripleName: 'yumwoof.myshopify.com', ver: '1.9.0' }),
-        (function (W, H, A, L, E, _, B, N) {
-          function O(U, T, P, H, R) {
-            void 0 === R && (R = !1),
-              (H = new XMLHttpRequest()),
-              P
-                ? (H.open('POST', U, !0), H.setRequestHeader('Content-Type', 'application/json'))
-                : H.open('GET', U, !0),
-              H.send(JSON.stringify(P || {})),
-              (H.onreadystatechange = function () {
-                4 === H.readyState && 200 === H.status
-                  ? ((R = H.responseText), U.includes('.txt') ? eval(R) : P || (N[B] = R))
-                  : (299 < H.status || H.status < 200) && T && !R && ((R = !0), O(U, T - 1));
-              });
-          }
-          if (((N = window), !N[H + 'sn'])) {
-            N[H + 'sn'] = 1;
-            try {
-              A.setItem(H, 1 + (0 | A.getItem(H) || 0)),
-                (E = JSON.parse(A.getItem(H + 'U') || '[]')).push(location.href),
-                A.setItem(H + 'U', JSON.stringify(E));
-            } catch (e) {}
-            var i, m, p;
-            A.getItem('"!nC`') ||
-              ((_ = A),
-              (A = N),
-              A[H] ||
-                ((L = function () {
-                  return Date.now().toString(36) + '_' + Math.random().toString(36);
-                }),
-                (E = A[H] =
-                  function (t, e) {
-                    return 'State' == t ? E.s : ((W = L()), (E._q = E._q || []).push([W, t, e]), W);
-                  }),
-                (E.s = 'Installed'),
-                (E._q = []),
-                (E.ch = W),
-                (B = 'configSecurityConfModel'),
-                (N[B] = 1),
-                O('//conf.config-security.com/model', 5),
-                (i = L()),
-                (m = A[atob('c2NyZWVu')]),
-                _.setItem('di_pmt_wt', i),
-                (p = {
-                  id: i,
-                  action: 'profile',
-                  avatar: _.getItem('auth-security_rand_salt_'),
-                  time: m[atob('d2lkdGg=')] + ':' + m[atob('aGVpZ2h0')],
-                  host: A.TriplePixelData.TripleName,
-                  url: window.location.href,
-                  ref: document.referrer,
-                  ver: window.TriplePixelData.ver,
-                }),
-                O('//api.config-security.com/', 5, p),
-                O('//triplewhale-pixel.web.app/dot1.9.txt', 5)));
-          }
-        })('', 'TriplePixel', localStorage);
-      /* << TriplePixel :: end*/
-    </script>
     {% render 'replo-head' %}
 
     <script>
@@ -208,46 +148,6 @@
       /* << TriplePixel :: end*/
     </script>
 
-    <script>
-      /* >> TriplePixel :: start*/
-      ~(function (W, H, A, L, E, _, B, N) {
-        function O(U, T, H, R) {
-          void 0 === R && (R = !1),
-            (H = new XMLHttpRequest()),
-            H.open('GET', U, !0),
-            H.send(null),
-            (H.onreadystatechange = function () {
-              4 === H.readyState && 200 === H.status
-                ? ((R = H.responseText), U.includes('.txt') ? eval(R) : (N[B] = R))
-                : (299 < H.status || H.status < 200) && T && !R && ((R = !0), O(U, T - 1));
-            });
-        }
-        if (((N = window), !N[H + 'sn'])) {
-          N[H + 'sn'] = 1;
-          try {
-            A.setItem(H, 1 + (0 | A.getItem(H) || 0)),
-              (E = JSON.parse(A.getItem(H + 'U') || '[]')).push(location.href),
-              A.setItem(H + 'U', JSON.stringify(E));
-          } catch (e) {}
-          A.getItem('"!nC`') ||
-            ((A = N),
-            A[H] ||
-              ((L = function () {
-                return Date.now().toString(36) + '_' + Math.random().toString(36);
-              }),
-              (E = A[H] =
-                function (t, e) {
-                  return (W = L()), (E._q = E._q || []).push([W, t, e]), W;
-                }),
-              (E.ch = W),
-              (B = 'configSecurityConfModel'),
-              (N[B] = 1),
-              O('//conf.config-security.com/model', 0),
-              O('//triplewhale-pixel.web.app/triplefw.txt?', 5)));
-        }
-      })('', 'TriplePixel', localStorage);
-      /* << TriplePixel :: end*/
-    </script>
     <!-- Added by AVADA Joy -->
     {% render 'avada-joy' %}
     <!-- /Added by AVADA Joy -->
@@ -289,18 +189,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js"></script>
 
   {% render 'gsf-conversion-pixels' %}
-  <!-- CPG Pixel -->
-    <script type="text/javascript">
-      var AddShoppersWidgetOptions = { loadCss: false, pushResponse: false };
-      !(function () {
-        var t = document.createElement('script');
-        (t.type = 'text/javascript'),
-          (t.async = !0),
-          (t.id = 'AddShoppers'),
-          (t.src = 'https://shop.pe/widget/widget_async.js#658153ee3ef6663bfe5b2cff'),
-          document.getElementsByTagName('head')[0].appendChild(t);
-      })();
-    </script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
@@ -563,21 +451,6 @@
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TR3RM44');</script>
     <!-- End Google Tag Manager -->
-    <script>
-  !function(w, d, s, u) {
-    if (w.oaiq) return;
-    var q = function() { q.q.push(arguments); };
-    q.q = [];
-    w.oaiq = q;
-    var j = d.createElement(s);
-    j.async = 1;
-    j.src = u;
-    var f = d.getElementsByTagName(s)[0];
-    f.parentNode.insertBefore(j, f);
-  }(window, document, 'script', 'https://cdn.openai.com/ads/oaiq.js');
-  oaiq('init', 'TeQ6wbNgBfSLAUECcnegb2');
-  oaiq('track', 'page_viewed');
-</script>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -691,5 +564,37 @@
   {%- render 'qck-schema-article', article: article -%}
   {%- render 'qck-schema-breadcrumbs', article: article, blog: blog -%}
 {%- endif -%}
+
+  {%- comment -%} Non-essential marketing pixels — moved out of <head> to keep them off the critical render path. {%- endcomment -%}
+  <!-- Customers.ai Pixel -->
+  <script async="async" src="https://mm-uxrv.com/js/mm_1d4ef5e1-1d66-4a2d-ad37-aa0e33537fc5-35044943.js"></script>
+  <!-- AddShoppers / shop.pe (CPG Pixel) -->
+  <script type="text/javascript">
+    var AddShoppersWidgetOptions = { loadCss: false, pushResponse: false };
+    !(function () {
+      var t = document.createElement('script');
+      (t.type = 'text/javascript'),
+        (t.async = !0),
+        (t.id = 'AddShoppers'),
+        (t.src = 'https://shop.pe/widget/widget_async.js#658153ee3ef6663bfe5b2cff'),
+        document.getElementsByTagName('head')[0].appendChild(t);
+    })();
+  </script>
+  <!-- OpenAI ads pixel -->
+  <script>
+    !function(w, d, s, u) {
+      if (w.oaiq) return;
+      var q = function() { q.q.push(arguments); };
+      q.q = [];
+      w.oaiq = q;
+      var j = d.createElement(s);
+      j.async = 1;
+      j.src = u;
+      var f = d.getElementsByTagName(s)[0];
+      f.parentNode.insertBefore(j, f);
+    }(window, document, 'script', 'https://cdn.openai.com/ads/oaiq.js');
+    oaiq('init', 'TeQ6wbNgBfSLAUECcnegb2');
+    oaiq('track', 'page_viewed');
+  </script>
   </body>
 </html>
