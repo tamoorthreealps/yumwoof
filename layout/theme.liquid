@@ -647,5 +647,31 @@
       oaiq('track', 'page_viewed');
     </script>
 {% endcomment %}
+
+<script>
+(function () {
+  function fixShopifyCookieHeading() {
+    const title = document.querySelector("#shopify-pc__banner__body-title");
+
+    if (title && title.tagName.toLowerCase() === "h2") {
+      const heading = document.createElement("div");
+      heading.id = title.id;
+      heading.setAttribute("role", "heading");
+      heading.setAttribute("aria-level", "2");
+      heading.innerHTML = title.innerHTML;
+      title.replaceWith(heading);
+    }
+  }
+
+  fixShopifyCookieHeading();
+
+  const observer = new MutationObserver(fixShopifyCookieHeading);
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
+</script>
   </body>
 </html>
