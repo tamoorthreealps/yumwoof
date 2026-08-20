@@ -601,7 +601,12 @@
                       -%}
                     </div>
                   {%- when 'nutritional-information' -%}
-                    {% assign nutritional_content = product.metafields.custom.complete_balanced.value %}
+                    {% assign variant_nutritional_content = product.selected_or_first_available_variant.metafields.custom.complete_balanced.value %}
+                    {% assign product_nutritional_content = product.metafields.custom.complete_balanced.value %}
+                    {% assign nutritional_content = variant_nutritional_content
+                      | default: product_nutritional_content
+                    %}
+
                     {% if nutritional_content != blank %}
                       <div class="nutritional--info">
                         <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
