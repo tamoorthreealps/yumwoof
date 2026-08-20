@@ -634,14 +634,19 @@ function initRecommendSlider() {
 
 splide.on("mounted move resized updated", updateArrows);
 
-const removePresentationRole = () => {
+const fixSliderAccessibility = () => {
   const list = slider.querySelector(".splide__list");
-  if (list) list.removeAttribute("role");
+  if (list) {
+    list.removeAttribute("role");
+    list.removeAttribute("aria-live");
+  }
 };
 
-splide.on("mounted updated resized", removePresentationRole);
+splide.on("mounted", fixSliderAccessibility);
+splide.on("updated", fixSliderAccessibility);
 splide.mount();
-removePresentationRole();
+
+fixSliderAccessibility();
 
 prevBtn?.addEventListener("click", (e) => {
   e.preventDefault();
