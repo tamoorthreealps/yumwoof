@@ -600,13 +600,13 @@
                       -%}
                     </div>
                   {%- when 'nutritional-information' -%}
-                    {% assign nutritional_content = product.metafields.custom.complete_balanced.value %}
-                    {% if nutritional_content != blank %}
-                      <div class="nutritional--info">
-                        <h4 class="nutritional--info--heading">COMPLETE & BALANCED</h4>
-                        <p class="nutritional--info--content">{{ nutritional_content }}</p>
-                      </div>
-                    {% endif %}
+                    <div {{ block.shopify_attributes }}>
+                      {%- render 'variant-metafield-text',
+                        product: product,
+                        key: 'complete_balanced',
+                        heading: 'COMPLETE & BALANCED'
+                      -%}
+                    </div>
                   {%- when 'popup' -%}
                     <modal-opener
                       class="product-popup-modal__opener quick-add-hidden"
