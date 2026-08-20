@@ -315,53 +315,6 @@
         "text_color": "#000000"
       }
     },
-    "explore_membership_3tTpcM": {
-      "type": "explore-membership",
-      "blocks": {
-        "perk_EBxbWR": {
-          "type": "perk",
-          "settings": {
-            "title": "25% off every order",
-            "subtitle": "Member rate on food"
-          }
-        },
-        "perk_W4je7p": {
-          "type": "perk",
-          "settings": {
-            "title": "Free shipping",
-            "subtitle": "On every membership order"
-          }
-        },
-        "perk_q3zz67": {
-          "type": "perk",
-          "settings": {
-            "title": "Exclusive perks",
-            "subtitle": "Members-only benefits"
-          }
-        }
-      },
-      "block_order": [
-        "perk_EBxbWR",
-        "perk_W4je7p",
-        "perk_q3zz67"
-      ],
-      "disabled": true,
-      "name": "Explore membership",
-      "settings": {
-        "eyebrow": "Membership has its perks",
-        "description": "<p>Become a member to save <strong>25% on every order</strong>, avoid a year of inflation, and enjoy exclusive benefits.</p>",
-        "button_label": "Explore Membership →",
-        "button_link": "",
-        "image_position": "left",
-        "uppercase_perk_title": true,
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "background_color": "#fff9ef",
-        "card_background": "#fff9ef",
-        "text_color": "#000000",
-        "accent_color": "#661d1d"
-      }
-    },
     "quiz_section_XQVHjY": {
       "type": "quiz-section",
       "name": "Quiz call to action",
@@ -442,7 +395,6 @@
     "comparison_section",
     "research_section",
     "cocomega_section",
-    "explore_membership_3tTpcM",
     "quiz_section_XQVHjY",
     "faqs_section_RMq6DN"
   ]
