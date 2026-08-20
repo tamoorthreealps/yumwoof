@@ -60,7 +60,7 @@
         var bullet = document.createElement('button');
         bullet.type = 'button';
         bullet.className = 'yw-gallery-bullet';
-
+        bullet.setAttribute('aria-label', 'View image ' + (index + 1));
         bullet.addEventListener('click', function () {
           go(index);
         });
