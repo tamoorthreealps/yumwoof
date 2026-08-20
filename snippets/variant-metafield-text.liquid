@@ -1,15 +1,20 @@
 {% comment %}
   Renders a metafield value that follows the selected variant.
 
+  Reads the variant-level metafield and falls back to the product-level one.
+  Updates on variant selection without a page reload.
+
   Accepts:
-  - product: {Object}
-  - key:     {String} metafield key under the `custom` namespace
-  - heading: {String} optional heading text
-  - class:   {String} optional extra class on the wrapper
+  - product: {Object} product object.
+  - key:     {String} metafield key under the `custom` namespace.
+  - heading: {String} optional heading text.
 
   Usage:
   {% render 'variant-metafield-text',
-     product: product, key: 'complete_balanced', heading: 'COMPLETE & BALANCED' %}
+     product: product,
+     key: 'complete_balanced',
+     heading: 'COMPLETE & BALANCED'
+  %}
 {% endcomment %}
 
 {%- liquid
@@ -19,11 +24,8 @@
 -%}
 
 {%- if fallback != blank or current != blank -%}
-  <variant-metafield-text
-    class="variant-metafield-text {{ class }}"
-    {% if current == blank %}hidden{% endif %}
-  >
-    <script type="application/json" data-variant-values>
+  <div class="nutritional--info" data-variant-metafield {% if current == blank %}hidden{% endif %}>
+    <script type="application/json" data-variant-metafield-values>
       {
         "fallback": {{ fallback | default: '' | json }},
         "variants": [
@@ -38,64 +40,63 @@
     </script>
 
     {%- if heading != blank -%}
-      <h4 class="variant-metafield-text__heading">{{ heading }}</h4>
+      <h4 class="nutritional--info--heading">{{ heading }}</h4>
     {%- endif -%}
-    <p class="variant-metafield-text__value" data-value>{{ current }}</p>
-  </variant-metafield-text>
-{%- endif -%}
+    <p class="nutritional--info--content" data-variant-metafield-value>{{ current }}</p>
+  </div>
 
-<script>
-  if (!customElements.get('variant-metafield-text')) {
-    customElements.define(
-      'variant-metafield-text',
-      class extends HTMLElement {
-        connectedCallback() {
-          const dataEl = this.querySelector('[data-variant-values]');
-          if (!dataEl) return;
+  <script>
+    (function () {
+      if (window.variantMetafieldTextInit) return;
+      window.variantMetafieldTextInit = true;
 
-          try {
-            this.data = JSON.parse(dataEl.textContent);
-          } catch (e) {
-            return;
-          }
-
-          this.target = this.querySelector('[data-value]');
-          this.picker = this.closest('product-info, .product__info-container')?.querySelector('variant-selects');
-          if (!this.picker || !this.target) return;
-
-          this.onChange = this.onChange.bind(this);
-          this.picker.addEventListener('change', this.onChange);
-        }
-
-        disconnectedCallback() {
-          this.picker?.removeEventListener('change', this.onChange);
-        }
-
-        selectedOptions() {
-          return Array.from(
-            this.picker.querySelectorAll('fieldset, .product-form__input--dropdown')
-          )
-            .map((group) => {
-              const select = group.querySelector('select');
-              if (select) return select.value;
-              return group.querySelector('input:checked')?.value ?? null;
-            })
-            .filter((value) => value !== null);
-        }
-
-        onChange() {
-          const selected = this.selectedOptions();
-          const match = this.data.variants.find(
-            (variant) =>
-              variant.options.length === selected.length &&
-              variant.options.every((option, i) => option === selected[i])
-          );
-
-          const value = (match ? match.value : this.data.fallback) || '';
-          this.target.textContent = value;
-          this.toggleAttribute('hidden', value.trim() === '');
-        }
+      function selectedOptions(picker) {
+        return Array.from(picker.querySelectorAll('fieldset, .product-form__input--dropdown'))
+          .map(function (group) {
+            var select = group.querySelector('select');
+            if (select) return select.value;
+            var checked = group.querySelector('input:checked');
+            return checked ? checked.value : null;
+          })
+          .filter(function (value) {
+            return value !== null;
+          });
       }
-    );
-  }
-</script>
+
+      function update(el) {
+        var dataEl = el.querySelector('[data-variant-metafield-values]');
+        var target = el.querySelector('[data-variant-metafield-value]');
+        var scope = el.closest('product-info') || el.closest('.product__info-container');
+        var picker = scope ? scope.querySelector('variant-selects') : null;
+        if (!dataEl || !target || !picker) return;
+
+        var data;
+        try {
+          data = JSON.parse(dataEl.textContent);
+        } catch (e) {
+          return;
+        }
+
+        var selected = selectedOptions(picker);
+        var match = data.variants.find(function (variant) {
+          return (
+            variant.options.length === selected.length &&
+            variant.options.every(function (option, i) {
+              return option === selected[i];
+            })
+          );
+        });
+
+        var value = (match ? match.value : data.fallback) || '';
+        target.textContent = value;
+        el.toggleAttribute('hidden', value.trim() === '');
+      }
+
+      // Delegated so it survives the section re-render performed by product-info.js.
+      document.addEventListener('change', function (event) {
+        if (!event.target.closest || !event.target.closest('variant-selects')) return;
+        document.querySelectorAll('[data-variant-metafield]').forEach(update);
+      });
+    })();
+  </script>
+{%- endif -%}
