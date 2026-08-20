@@ -127,7 +127,7 @@ body {
   font-style: normal;
   font-display: swap;
 }
-.shopify-pc__banner__body-title {
+#shopify-pc__banner__body-title {
     color: hsl(0deg, 0%, 12%, 100%);
     font-family: inherit;
     font-size: 120%;
