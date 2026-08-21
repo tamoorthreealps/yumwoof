@@ -117,7 +117,7 @@ variant-selects {
   border-color: rgba(var(--color-foreground), 0.1);
   color: rgba(var(--color-foreground), 0.6);
   text-decoration: line-through;
-  display:none;
+  /* display:none; */
 }
 
 /* .product-form__input--pill input[type='radio'].disabled:checked + label,
