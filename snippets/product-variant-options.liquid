@@ -37,6 +37,22 @@
     if value.available
       assign option_disabled = false
     endif
+    # US only: Perfect Superfood – Wild Caught Fish / 14 Oz Bag OOS
+if localization.country.iso_code == 'US' and product.handle == 'perfect-superfood'
+  if option.name == 'Size' and value == '14 Oz Bag'
+    assign selected_recipe = null
+    for opt in product.options_with_values
+      assign opt_name_down = opt.name | downcase
+      if opt_name_down == 'recipe' or opt_name_down == 'recipes'
+        assign selected_recipe = opt.selected_value
+        break
+      endif
+    endfor
+    if selected_recipe == 'Wild Caught Fish'
+      assign option_disabled = true
+    endif
+  endif
+endif
   -%}
 
   {%- capture input_id -%}
