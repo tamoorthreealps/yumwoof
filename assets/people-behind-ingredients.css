@@ -43,7 +43,7 @@
 
 .people-behind-ingredients__slide {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, .85fr);
+    grid-template-columns: minmax(0,1.05452fr) minmax(0,.85fr);
     align-items: center;
     column-gap: 128px;
     box-sizing: border-box;
