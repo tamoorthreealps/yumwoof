@@ -107,10 +107,78 @@
         "text_color": "#fff9ef",
         "line_color": "#fff9ef"
       }
+    },
+    "butcher_quality_promise_mgrPzc": {
+      "type": "butcher-quality-promise",
+      "blocks": {
+        "promise_JjzJe4": {
+          "type": "promise",
+          "settings": {
+            "title": "TRUSTED FARMS & FISHERMEN",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+          }
+        },
+        "promise_bVYKyc": {
+          "type": "promise",
+          "settings": {
+            "title": "PREMIUM PROTEINS",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+          }
+        },
+        "promise_YhXhGx": {
+          "type": "promise",
+          "settings": {
+            "title": "WHOLE FOOD NUTRITION",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+          }
+        },
+        "promise_YxwpD3": {
+          "type": "promise",
+          "settings": {
+            "title": "HEALTHY FATS BY DESIGN",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+          }
+        },
+        "promise_VhJeyp": {
+          "type": "promise",
+          "settings": {
+            "title": "GENTLY AIR-DRIED",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+          }
+        },
+        "promise_r3VwUW": {
+          "type": "promise",
+          "settings": {
+            "title": "INDEPENDENT TESTING",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "promise_JjzJe4",
+        "promise_bVYKyc",
+        "promise_YhXhGx",
+        "promise_YxwpD3",
+        "promise_VhJeyp",
+        "promise_r3VwUW"
+      ],
+      "name": "Butcher Quality Promise",
+      "settings": {
+        "heading": "<h2>OUR BUTCHER QUALITY PROMISE</h2>",
+        "description": "<p>From sourcing to testing, these commitments guide every YUMWOOF recipe.</p>",
+        "desktop_background_color": "#FFF9EF",
+        "mobile_background_color": "#FFF9EF",
+        "text_color": "#000000",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 30,
+        "mobile_padding_bottom": 30
+      }
     }
   },
   "order": [
     "main",
-    "butcher_quality_standard_MiRc3R"
+    "butcher_quality_standard_MiRc3R",
+    "butcher_quality_promise_mgrPzc"
   ]
 }
