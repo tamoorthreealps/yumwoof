@@ -27,65 +27,89 @@
 .whats-not-included__heading h1,
 .whats-not-included__heading h2,
 .whats-not-included__heading h3 {
-  margin: 0;
-  color: var(--wni-heading-color);
-  font-family: 'TAY Birdie';
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+    margin: 0;
+    color: var(--wni-heading-color);
+    font-family: TAY Birdie;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0;
+    text-transform: uppercase;
 }
 
 .whats-not-included__description {
-  margin-top: 12px;
-  padding: 0 20px;
-  color: var(--wni-description-color);
-  font-family: 'Matter';
-  font-size: 12px;
-  line-height: 1.4;
-  text-align: center;
+    margin-top: 12px;
+    padding: 0;
+    color: var(--wni-description-color);
+    font-family: Matter;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    letter-spacing: 0;
 }
 
 .whats-not-included__description p {
   margin: 0;
 }
 
+/* Marquee — two rows, full-bleed out of the 1368px container */
 .whats-not-included__marquee {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100vw;
+    max-width: 100vw;
+    margin-top: 40px;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    overflow: hidden;
+}
+
+.whats-not-included__row {
   width: 100%;
-  margin-top: 27px;
   overflow: hidden;
 }
 
 .whats-not-included__track {
   display: flex;
   width: max-content;
-  animation: whats-not-included-marquee 35s linear infinite;
+  animation: whats-not-included-marquee var(--wni-marquee-speed, 60s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.whats-not-included__row--reverse .whats-not-included__track {
+  animation-direction: var(--wni-row2-direction, reverse);
+}
+
+.whats-not-included__marquee:hover .whats-not-included__track {
+  animation-play-state: paused;
 }
 
 .whats-not-included__group {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding-right: 18px;
-  flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding-right: 28px;
+    flex-shrink: 0;
 }
 
 .whats-not-included__pill {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  flex-shrink: 0;
-  padding: 8px 16px;
-  border: 1px solid var(--wni-pill-border-color);
-  border-radius: 999px;
-  color: var(--wni-pill-text-color);
-  background: var(--wni-pill-bg-color);
-  font-family: 'TAY Birdie';
-  font-size: 11px;
-  line-height: 1;
-  letter-spacing: 1.5px;
-  white-space: nowrap;
-  text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    padding: 9.2px 27.73px;
+    border: 1px solid var(--wni-pill-border-color);
+    border-radius: 999px;
+    color: var(--wni-pill-text-color);
+    background: var(--wni-pill-bg-color);
+    font-family: TAY Birdie;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.40px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 400;
 }
 
 .whats-not-included__pill span {
@@ -95,20 +119,21 @@
 }
 
 .whats-not-included__link-wrap {
-  margin-top: 30px;
+  margin-top: 48px;
   text-align: center;
 }
 
 .whats-not-included__link {
-  display: inline-block;
-  padding-bottom: 7px;
-  border-bottom: 1px solid currentColor;
-  color: var(--wni-link-color);
-  font-family: 'Matter';
-  font-size: 11px;
-  line-height: 1;
-  text-decoration: none;
-  transition: color 0.2s ease;
+    display: inline-block;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid currentColor;
+    color: var(--wni-link-color);
+    font-family: Matter;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0;
+    text-decoration: none;
+    transition: color .2s ease;
 }
 
 .whats-not-included__link:hover {
@@ -122,6 +147,22 @@
 
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whats-not-included__row {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .whats-not-included__row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .whats-not-included__track {
+    animation: none;
   }
 }
 
@@ -144,6 +185,7 @@
 
   .whats-not-included__marquee {
     margin-top: 22px;
+    gap: 10px;
   }
 
   .whats-not-included__group {
