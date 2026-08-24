@@ -118,39 +118,47 @@
   }
 
   .butcher-quality-promise__inner {
-    padding: var(--bqp-mobile-padding-top) 10px var(--bqp-mobile-padding-bottom);
+    padding: var(--bqp-mobile-padding-top) 24px var(--bqp-mobile-padding-bottom);
   }
 
   .butcher-quality-promise__heading h1,
   .butcher-quality-promise__heading h2,
   .butcher-quality-promise__heading h3 {
-    font-size: clamp(30px, 9vw, 42px);
+    font-size: 48px;
+    line-height: 48px;
+    letter-spacing: -0.48px;
+    transform: translateY(-4px);
+    max-width: 330px;
   }
 
   .butcher-quality-promise__description {
-    margin-top: 6px;
-    font-size: 9px;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 32px;
+    max-width: 316px;
   }
 
   .butcher-quality-promise__grid {
     grid-template-columns: 1fr;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 24px;
   }
 
   .butcher-quality-promise__card {
-    aspect-ratio: 1 / 0.9;
+    aspect-ratio:1/1;
   }
 
   .butcher-quality-promise__card-content {
-    padding: 18px 14px 15px;
+    padding: 33px 28px 38px;
   }
 
   .butcher-quality-promise__card-title {
-    font-size: 13px;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.48px;
   }
 
   .butcher-quality-promise__card-description {
-    font-size: 8px;
+    font-size: 14px;
+    line-height: 20px;
   }
 }
