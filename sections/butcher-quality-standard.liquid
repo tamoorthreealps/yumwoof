@@ -23,7 +23,7 @@
       {% if section.settings.description_1 != blank %}
         <div class="butcher-quality-standard__description">
           {% if section.settings.description_1 != blank %}
-            <p>{{ section.settings.description_1 }}</p>
+            {{ section.settings.description_1 | replace: '<p></p>', '' }}
           {% endif %}
         </div>
       {% endif %}
