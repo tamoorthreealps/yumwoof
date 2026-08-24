@@ -66,16 +66,18 @@
 }
 
 .butcher-quality-standard__description {
-  max-width: 345px;
-  margin-top: auto;
-  padding-bottom: 48px;
-  font-size: 11px;
-  line-height: 1.45;
+    max-width: 592px;
+    margin-top: auto;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0;
+    font-family: 'Matter';
 }
 
 .butcher-quality-standard__description p {
-  margin: 0 0 13px;
-  color: var(--bqs-text-color);
+    margin: 0 0 13px;
+    color: var(--bqs-text-color);
+    font-weight: 400;
 }
 
 .butcher-quality-standard__description p:last-child {
