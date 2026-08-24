@@ -393,6 +393,27 @@
         "description": "<p>Every Yummoof product undergoes testing across multiple parameters to ensure safety, compliance, and purity exceeding industry standards.</p>",
         "list_type": "none"
       }
+    },
+    "standard_in_every_bag_NXD6YH": {
+      "type": "standard-in-every-bag",
+      "name": "Standard In Every Bag",
+      "settings": {
+        "desktop_background_color": "#FFF9EF",
+        "mobile_background_color": "#FFF9EF",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 100,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 100,
+        "heading": "THE STANDARD\nIS IN EVERY BAG",
+        "description": "<p>Every ingredient is chosen for a reason.</p>",
+        "button_text": "SHOP YUMWOOF",
+        "button_url": "#",
+        "image": "shopify://shop_images/Membership_Background.jpg",
+        "heading_color": "#000000",
+        "description_color": "#000000",
+        "button_color": "#F8B95B",
+        "button_hover_color": "#000000"
+      }
     }
   },
   "order": [
@@ -401,6 +422,7 @@
     "butcher_quality_promise_mgrPzc",
     "whats_not_included_Kdz67G",
     "people_behind_ingredients_d4UwGE",
-    "testing_standard_ywnhmD"
+    "testing_standard_ywnhmD",
+    "standard_in_every_bag_NXD6YH"
   ]
 }
