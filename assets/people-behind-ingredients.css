@@ -246,7 +246,7 @@ height: auto;
   }
 
   .people-behind-ingredients__description {
-        max-width: 100%;
+        max-width: 343px;
         font-size: 16px;
         line-height: 24px;
   }
