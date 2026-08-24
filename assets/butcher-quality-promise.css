@@ -22,21 +22,23 @@
 .butcher-quality-promise__heading h1,
 .butcher-quality-promise__heading h2,
 .butcher-quality-promise__heading h3 {
-  margin: 0;
-  color: var(--bqp-text-color);
-  font-family: 'TAYRosemary';
-  font-size: 56px;
-  line-height: 0.95;
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
+    margin: 0 0 4px;
+    color: var(--bqp-text-color);
+    font-family: TAYRosemary;
+    font-size: 80px;
+    line-height: 80px;
+    letter-spacing: -0.80px;
+    text-transform: uppercase;
+    transform: translateY(-8px);
 }
 
 .butcher-quality-promise__description {
-  margin-top: 8px;
-  color: var(--bqp-text-color);
-  font-family: 'Matter';
-  font-size: 14px;
-  line-height: 1.35;
+    color: var(--bqp-text-color);
+    font-family: Matter;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0;
+    margin: 0 0 48px;
 }
 
 .butcher-quality-promise__description p {
@@ -46,15 +48,14 @@
 .butcher-quality-promise__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 28px;
+  gap: 32px 30px;
 }
 
 .butcher-quality-promise__card {
   position: relative;
-  aspect-ratio: 1 / 1.12;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 13px;
+  border-radius: 24px;
   background: #222;
 }
 
@@ -83,25 +84,24 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 23px 15px 19px;
+  padding: 40px 34px 35px 32px;
   box-sizing: border-box;
-  color: #fff;
+  color:var(--bqp-text-color);
 }
 
 .butcher-quality-promise__card-title {
-  max-width: 190px;
-  font-family: 'TAY Birdie';
-  font-size: 15px;
-  line-height: 1.2;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
+    font-family: TAY Birdie;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -0.56px;
+    text-transform: uppercase;
 }
 
 .butcher-quality-promise__card-description {
-  max-width: 215px;
-  font-family: 'Matter';
-  font-size: 8px;
-  line-height: 1.35;
+    font-family: Matter;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
 }
 
 .butcher-quality-promise__card-description p {
