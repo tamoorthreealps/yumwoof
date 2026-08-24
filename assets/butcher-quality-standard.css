@@ -11,7 +11,7 @@
   background-color: var(--bqs-desktop-bg);
   background-image: var(--bqs-desktop-image);
   background-position: center;
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 
