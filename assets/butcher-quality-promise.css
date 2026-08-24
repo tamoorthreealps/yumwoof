@@ -103,7 +103,10 @@
     line-height: 24px;
     letter-spacing: 0;
 }
-
+.butcher-quality-promise__card-title,
+.butcher-quality-promise__card-description {
+  color: var(--bqp-card-text-color);
+}
 .butcher-quality-promise__card-description p {
   margin: 0;
 }

@@ -7,6 +7,7 @@
     --bqp-desktop-bg: {{ section.settings.desktop_background_color }};
     --bqp-mobile-bg: {{ section.settings.mobile_background_color }};
     --bqp-text-color: {{ section.settings.text_color }};
+    --bqp-card-text-color: {{ section.settings.card_text_color }};
     --bqp-desktop-image: {% if section.settings.desktop_background_image != blank %}url('{{ section.settings.desktop_background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
     --bqp-mobile-image: {% if section.settings.mobile_background_image != blank %}url('{{ section.settings.mobile_background_image | image_url: width: 1600 }}'){% else %}none{% endif %};
     --bqp-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
@@ -115,8 +116,14 @@
     {
       "type": "color",
       "id": "text_color",
-      "label": "Font color",
+      "label": "Head text color",
       "default": "#000000"
+    },
+    {
+    "type": "color",
+    "id": "card_text_color",
+    "label": "Card text color",
+    "default": "#FFFFFF"
     },
     {
       "type": "header",
