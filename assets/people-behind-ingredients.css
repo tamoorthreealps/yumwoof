@@ -81,7 +81,6 @@
 }
 
 .people-behind-ingredients__description {
-    max-width: 390px;
     color: var(--pbi-text-color);
     font-family: Matter;
     font-size: 18px;
