@@ -286,6 +286,7 @@
         "person_hneLbJ": {
           "type": "person",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_108.webp",
             "title": "GROWERS",
             "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
           }
@@ -321,7 +322,7 @@
       "name": "People Behind Ingredients",
       "settings": {
         "heading": "<h2>THE PEOPLE BEHIND OUR INGREDIENTS</h2>",
-        "background_color": "#FFF9EF",
+        "background_color": "#fff9ef",
         "text_color": "#000000",
         "desktop_padding_top": 0,
         "desktop_padding_bottom": 160,
