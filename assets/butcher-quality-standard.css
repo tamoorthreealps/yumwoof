@@ -80,12 +80,12 @@
   font-weight: 400;
 }
 
-.butcher-quality-standard__description p:first-child {
-  margin: 0;
-}
-
 .butcher-quality-standard__description p:empty {
   display: none;
+}
+
+.butcher-quality-standard__description p:not(:empty):last-of-type {
+  margin-bottom: 0;
 }
 
 .butcher-quality-standard__principles {
