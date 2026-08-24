@@ -16,7 +16,7 @@
     <div class="butcher-quality-standard__content">
       {% if section.settings.heading != blank %}
         <div class="butcher-quality-standard__heading">
-          {{ section.settings.heading }}
+          {{ section.settings.heading | replace: '™', '<span class="trademark">™</span>' }}
         </div>
       {% endif %}
 
