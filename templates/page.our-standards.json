@@ -31,6 +31,7 @@
         "principle_FbWHKF": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/seed_oli_free.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -38,6 +39,7 @@
         "principle_EGQ7qj": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/non-GMO.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -45,6 +47,7 @@
         "principle_xd9hL3": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/trusted-partners.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -52,6 +55,7 @@
         "principle_YjGkea": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/wild-caught-fish.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -59,6 +63,7 @@
         "principle_EYn9wt": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/gently-air-dried.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -66,6 +71,7 @@
         "principle_xCmpkE": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/third-party-tested.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -73,6 +79,7 @@
         "principle_cHjNbX": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/heavy-metal-tested.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
