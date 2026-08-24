@@ -97,12 +97,13 @@
       ],
       "name": "Our Standard - Butcher Quality",
       "settings": {
-        "heading": "The Butcher Quality STANDARD",
+        "heading": "<p>The Butcher Quality STANDARD</p>",
         "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.<br/><br/>Because dogs deserve food made with the same care we'd expect for our family.</p>",
-        "description_2": "",
         "principles_label": "EVERY YUMWOOF RECIPE IS GUIDED BY THESE 8 PRINCIPLES:",
-        "desktop_background_color": "#0b0b0b",
-        "mobile_background_color": "#0b0b0b",
+        "desktop_background_color": "#FFF9EF",
+        "desktop_background_image": "shopify://shop_images/Hero_Scrim.webp",
+        "mobile_background_color": "#FFF9EF",
+        "mobile_background_image": "shopify://shop_images/Hero_Scrim_1.webp",
         "text_color": "#f6efe2",
         "line_color": "#5b5b5b",
         "circle_border_color": "#777777"
