@@ -165,7 +165,10 @@
     animation: none;
   }
 }
-
+.whats-not-included__heading-mobile,
+.whats-not-included__description-mobile {
+  display: none;
+}
 @media screen and (max-width: 767px) {
   .whats-not-included__inner {
     padding: var(--wni-mobile-padding-top) 24px var(--wni-mobile-padding-bottom);
@@ -225,4 +228,13 @@ margin-top: 24px;
         line-height: 28px;
         padding-bottom: 8px;
     }
+      .whats-not-included__heading-desktop,
+  .whats-not-included__description-desktop {
+    display: none;
+  }
+
+  .whats-not-included__heading-mobile,
+  .whats-not-included__description-mobile {
+    display: block;
+  }
 }
