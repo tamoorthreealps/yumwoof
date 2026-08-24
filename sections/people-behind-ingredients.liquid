@@ -105,8 +105,6 @@
     if (!slider) return;
 
     const splide = new Splide(slider, {
-      /* 'fade' gives the soft crossfade. Note: fade mode has no drag —
-         to bring swipe back, use type: 'loop' and rewind: false instead. */
       type: 'fade',
       rewind: false,
       perPage: 1,
@@ -140,6 +138,9 @@
     progressGroups.forEach(function (group) {
       Array.prototype.forEach.call(group.children, function (item, itemIndex) {
         item.addEventListener('click', function () {
+          if (phase === 'active' && !aligning) {
+            nextAllowed = Date.now() + SETTLE;
+          }
           splide.go(itemIndex);
         });
       });
@@ -147,46 +148,53 @@
 
     /* ---------- Scroll-controlled slider ---------- */
 
-        /* ---------- Scroll-controlled slider ---------- */
-
+    const body = document.body;
     const lastIndex = splide.length - 1;
-    const SETTLE = 780;   // must exceed the 700ms slide transition
-    const ALIGN = 420;    // time allowed for the one-time centering scroll
-    const SNAP = 0.45;    // how close to centered before we take over
 
-    let phase = 'idle';   // idle | aligning | locked | released
-    let lockedY = 0;
-    let busy = false;
-    let touchY = null;
-    let exitDir = 0;
+    const SETTLE = 820;   // cooldown between slides (must exceed the 700ms fade)
+    const ALIGN_MS = 480; // duration of the self-driven centering animation
+    const ARM_MS = 140;   // grace after centering before the first slide step
+    const WHEEL_MIN = 3;
+    const TOUCH_MIN = 14;
+    const EXIT_NUDGE = 90;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const body = document.body;
 
-    function offset() {
+    let phase = 'idle';       // idle | active | released
+    let aligning = false;
+    let lockedY = 0;
+    let nextAllowed = 0;
+    let touchY = null;
+    let lastScrollY = window.pageYOffset;
+    let rafId = null;
+
+    /* Must be called BEFORE locking: once body is fixed, pageYOffset is 0. */
+    function centerTarget() {
       const rect = section.getBoundingClientRect();
-      return (rect.top + rect.height / 2) - window.innerHeight / 2;
+      const top = rect.top + window.pageYOffset;
+      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const target = top + rect.height / 2 - window.innerHeight / 2;
+      return Math.max(0, Math.min(target, max));
     }
 
-    function inRange() {
+    function inViewport() {
       const rect = section.getBoundingClientRect();
-      if (rect.height >= window.innerHeight) {
-        return rect.top <= 0 && rect.bottom >= window.innerHeight;
-      }
-      return Math.abs(offset()) < window.innerHeight * SNAP;
+      return rect.top < window.innerHeight && rect.bottom > 0;
     }
 
-    function lockBody() {
-      lockedY = window.pageYOffset;
-      // Compensate for the scrollbar so fixing the body causes no reflow.
+    function setLockedY(y) {
+      lockedY = y;
+      body.style.top = -y + 'px';
+    }
+
+    function lockBody(y) {
       const barWidth = window.innerWidth - document.documentElement.clientWidth;
       body.style.position = 'fixed';
-      body.style.top = -lockedY + 'px';
       body.style.left = '0';
       body.style.right = '0';
       body.style.width = '100%';
       if (barWidth > 0) body.style.paddingRight = barWidth + 'px';
-      phase = 'locked';
+      setLockedY(y);
     }
 
     function unlockBody() {
@@ -196,70 +204,103 @@
       body.style.right = '';
       body.style.width = '';
       body.style.paddingRight = '';
-      // Restore instantly at the exact same offset — no visual jump.
       const prev = document.documentElement.style.scrollBehavior;
       document.documentElement.style.scrollBehavior = 'auto';
       window.scrollTo(0, lockedY);
       document.documentElement.style.scrollBehavior = prev;
-      phase = 'released';
+      lastScrollY = lockedY;
     }
 
-    function beginAlign() {
-      phase = 'aligning';
-      const target = window.pageYOffset + offset();
-      if (reduceMotion || Math.abs(offset()) < 2) {
-        window.scrollTo(0, target);
-        lockBody();
+    /* Animate the *locked* offset — visually identical to a smooth scroll,
+       but nothing native is running, so momentum can't fight it. */
+    function animateTo(target, done) {
+      if (rafId) cancelAnimationFrame(rafId);
+      const from = lockedY;
+      const distance = target - from;
+
+      if (reduceMotion || Math.abs(distance) < 2) {
+        setLockedY(target);
+        done();
         return;
       }
-      window.scrollTo({ top: target, behavior: 'smooth' });
-      setTimeout(function () {
-        if (phase !== 'aligning') return;
-        window.scrollTo(0, window.pageYOffset + offset()); // kill any residual drift
-        lockBody();
-      }, ALIGN);
+
+      const start = performance.now();
+      (function step(now) {
+        const t = Math.min((now - start) / ALIGN_MS, 1);
+        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        setLockedY(from + distance * eased);
+        if (t < 1) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          rafId = null;
+          done();
+        }
+      })(start);
     }
 
-    // Returns true when the event should be swallowed.
+    function activate(direction) {
+      const startY = window.pageYOffset;
+      const target = centerTarget();
+
+      phase = 'active';
+      aligning = true;
+      lockBody(startY);
+
+      /* Entering downward starts on slide 1, upward starts on the last slide. */
+      splide.go(direction > 0 ? 0 : lastIndex);
+
+      animateTo(target, function () {
+        aligning = false;
+        nextAllowed = Date.now() + ARM_MS;
+      });
+    }
+
+    function release(direction) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      phase = 'released';
+      aligning = false;
+      unlockBody();
+      window.scrollBy({
+        top: direction * EXIT_NUDGE,
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+    }
+
+    /* Returns true when the gesture was consumed. */
     function handle(direction) {
       if (phase === 'released') return false;
-      if (phase === 'aligning') return true;   // eat everything mid-alignment
 
       if (phase === 'idle') {
-        if (!inRange()) return false;
-        beginAlign();
+        if (!inViewport()) return false;
+        activate(direction);
         return true;
       }
 
-      // phase === 'locked'
+      /* phase === 'active' — swallow everything, including momentum. */
+      if (aligning) return true;
+      if (Date.now() < nextAllowed) return true;
+
       const atEdge =
         (direction > 0 && splide.index >= lastIndex) ||
         (direction < 0 && splide.index <= 0);
 
       if (atEdge) {
-        exitDir = direction;
-        unlockBody();
-        // Hand the gesture back to the page with a nudge in the same direction,
-        // so releasing never feels like a dead scroll.
-        window.scrollBy({ top: direction * 60, behavior: reduceMotion ? 'auto' : 'smooth' });
+        release(direction);
         return true;
       }
 
-      if (busy) return true;   // swallow momentum during the transition
-
-      busy = true;
       splide.go(direction > 0 ? '+1' : '-1');
-      setTimeout(function () { busy = false; }, SETTLE);
+      nextAllowed = Date.now() + SETTLE;
       return true;
     }
 
     window.addEventListener('wheel', function (e) {
-      if (phase === 'locked' || phase === 'aligning') {
-        e.preventDefault();   // nothing gets through, momentum included
-        handle(e.deltaY > 0 ? 1 : -1);
+      if (phase === 'active') {
+        e.preventDefault();
+        if (Math.abs(e.deltaY) >= WHEEL_MIN) handle(e.deltaY > 0 ? 1 : -1);
         return;
       }
-      if (Math.abs(e.deltaY) < 2) return;
+      if (Math.abs(e.deltaY) < WHEEL_MIN) return;
       if (handle(e.deltaY > 0 ? 1 : -1)) e.preventDefault();
     }, { passive: false });
 
@@ -275,32 +316,45 @@
     }, { passive: true });
 
     window.addEventListener('touchmove', function (e) {
-      if (phase === 'locked' || phase === 'aligning') e.preventDefault();
+      if (phase === 'active') e.preventDefault();
       if (touchY === null) return;
       const delta = touchY - e.touches[0].clientY;
-      if (Math.abs(delta) < 12) return;
+      if (Math.abs(delta) < TOUCH_MIN) return;
       touchY = e.touches[0].clientY;
       if (handle(delta > 0 ? 1 : -1)) e.preventDefault();
     }, { passive: false });
 
     window.addEventListener('touchend', function () { touchY = null; }, { passive: true });
 
-    // Re-arm once the section has fully left the viewport in either direction.
+    /* Catches entries that don't come from wheel/key (scrollbar drag, anchor,
+       flick momentum) and re-arms the section once it has fully left. */
     window.addEventListener('scroll', function () {
-      if (phase !== 'released') return;
-      const rect = section.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) {
-        phase = 'idle';
-        exitDir = 0;
+      if (phase === 'active') return;
+
+      const y = window.pageYOffset;
+      const direction = y > lastScrollY ? 1 : -1;
+      lastScrollY = y;
+
+      if (phase === 'released') {
+        const rect = section.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) phase = 'idle';
+        return;
       }
+
+      if (phase === 'idle' && inViewport()) activate(direction);
     }, { passive: true });
 
     window.addEventListener('resize', function () {
-      if (phase === 'locked') { unlockBody(); phase = 'idle'; }
+      if (phase === 'active') {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        aligning = false;
+        unlockBody();
+        phase = 'released';
+      }
     });
 
     if (window.Shopify && window.Shopify.designMode) phase = 'released';
-    });
+  });
 </script>
 
 {% schema %}
