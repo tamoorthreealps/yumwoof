@@ -327,10 +327,71 @@
         "heading": "<h2>THE PEOPLE BEHIND OUR INGREDIENTS</h2>",
         "background_color": "#fff9ef",
         "text_color": "#000000",
+        "media_height": 560,
         "desktop_padding_top": 0,
         "desktop_padding_bottom": 160,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 120
+      }
+    },
+    "testing_standard_ywnhmD": {
+      "type": "testing-standard",
+      "blocks": {
+        "list_item_AYAGia": {
+          "type": "list_item",
+          "settings": {
+            "text": "HEAVY METALS"
+          }
+        },
+        "list_item_R3hwxH": {
+          "type": "list_item",
+          "settings": {
+            "text": "LABEL CLAIMS"
+          }
+        },
+        "list_item_PxyKFN": {
+          "type": "list_item",
+          "settings": {
+            "text": "PATHOGENS"
+          }
+        },
+        "list_item_MA8iwM": {
+          "type": "list_item",
+          "settings": {
+            "text": "PESTICIDES"
+          }
+        },
+        "list_item_33fyRQ": {
+          "type": "list_item",
+          "settings": {
+            "text": "NON-GMO"
+          }
+        },
+        "list_item_YJUgiV": {
+          "type": "list_item",
+          "settings": {
+            "text": "NUTRITIONAL COMPLIANCE"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_AYAGia",
+        "list_item_R3hwxH",
+        "list_item_PxyKFN",
+        "list_item_MA8iwM",
+        "list_item_33fyRQ",
+        "list_item_YJUgiV"
+      ],
+      "name": "Testing Standard",
+      "settings": {
+        "desktop_background_color": "#3F8F5B",
+        "desktop_background_image": "shopify://shop_images/Rectangle_109_1.jpg",
+        "mobile_background_color": "#3F8F5B",
+        "mobile_background_image": "shopify://shop_images/Rectangle_110_1.jpg",
+        "text_color": "#000000",
+        "heading": "TRUST IS GOOD.\nTESTING IS BETTER.",
+        "description": "<p>Every Yummoof product undergoes testing across multiple parameters to ensure safety, compliance, and purity exceeding industry standards.</p>",
+        "list_type": "bulleted"
       }
     }
   },
@@ -339,6 +400,7 @@
     "butcher_quality_standard_MiRc3R",
     "butcher_quality_promise_mgrPzc",
     "whats_not_included_Kdz67G",
-    "people_behind_ingredients_d4UwGE"
+    "people_behind_ingredients_d4UwGE",
+    "testing_standard_ywnhmD"
   ]
 }
