@@ -68,7 +68,59 @@
     </div>
   </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('.butcher-quality-promise');
 
+  sections.forEach(section => {
+    const cards = section.querySelectorAll('.butcher-quality-promise__card');
+
+    if (cards.length < 2) return;
+
+    const updateCards = () => {
+      const top = 100;
+
+      cards.forEach((card, index) => {
+        if (index === cards.length - 1) return;
+
+        const nextCard = cards[index + 1];
+        const nextRect = nextCard.getBoundingClientRect();
+
+        const progress = Math.max(
+          0,
+          Math.min(1, (top + card.offsetHeight - nextRect.top) / card.offsetHeight)
+        );
+
+        const scale = 1 - (progress * 0.06);
+
+        card.style.transform = `scale(${scale})`;
+      });
+    };
+
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+
+      requestAnimationFrame(() => {
+        if (window.innerWidth <= 767) {
+          updateCards();
+        } else {
+          cards.forEach(card => {
+            card.style.transform = '';
+          });
+        }
+
+        ticking = false;
+      });
+
+      ticking = true;
+    }, { passive: true });
+
+    updateCards();
+  });
+});
+</script>
 {% schema %}
 {
   "name": "Butcher Quality Promise",
