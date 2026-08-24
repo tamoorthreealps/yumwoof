@@ -86,7 +86,7 @@
         "description": "<p>We built Yumwoof because good dog food cost too much and did too little. Yum Club is the rest of that answer. Pay in once a quarter and the whole counter drops by 25%, so feeding a dog properly stops being the expensive option.</p>",
         "benefits_title": "Here's what you get:",
         "show_rule": true,
-        "button_text": "Join Yum! Club · $29/QTR",
+        "button_text": "Join Yum Club · $29/QTR",
         "button_url": "",
         "product": "membership",
         "show_plan_name": false,
@@ -262,7 +262,7 @@
       "settings": {
         "heading": "<p>Feed your dog better for less,<br/>starting with the next order you place.</p>",
         "description": "",
-        "button_text": "Join Yum! Club · $29/QTR",
+        "button_text": "Join Yum Club · $29/QTR",
         "button_url": "",
         "product": "membership",
         "show_plan_name": false,
