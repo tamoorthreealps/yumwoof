@@ -98,7 +98,7 @@
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
-    padding: 9.2px 24px;
+    padding: 8.4px 24px;
     border: 2px solid var(--wni-pill-border-color);
     border-radius: 999px;
     color: var(--wni-pill-text-color);
