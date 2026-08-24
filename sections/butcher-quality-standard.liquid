@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (rect.bottom < 0 || rect.top > windowHeight) return;
 
       const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-      const offset = (progress - 0.5) * 100;
+      const offset = (progress - 0.5) * 200;
 
       section.style.setProperty('--bqs-parallax-y', `${offset}px`);
     });
