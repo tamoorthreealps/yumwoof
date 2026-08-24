@@ -81,7 +81,7 @@
 }
 
 .butcher-quality-standard__description p:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .butcher-quality-standard__principles {
