@@ -1,0 +1,102 @@
+.standard-in-every-bag {
+  background-color: var(--sieb-desktop-bg-color);
+  background-image: var(--sieb-desktop-bg-image);
+  background-size: cover;
+  background-position: center;
+  padding-top: var(--sieb-desktop-padding-top);
+  padding-bottom: var(--sieb-desktop-padding-bottom);
+}
+
+.standard-in-every-bag__inner {
+  max-width: 1224px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 111px;
+}
+
+.standard-in-every-bag__content {
+  text-align: center;
+}
+
+.standard-in-every-bag__heading {
+    margin: 0 0 6px;
+    color: var(--sieb-heading-color);
+    font-family: TAYRosemary;
+    font-size: 88px;
+    line-height: 88px;
+    letter-spacing: -.8px;
+}
+
+.standard-in-every-bag__description {
+    margin: 0 0 21px;
+    color: var(--sieb-description-color);
+    font-family: Matter;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.standard-in-every-bag__description p {
+  margin: 0;
+}
+
+.standard-in-every-bag__button {
+display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 19.2px 41.42px;
+    border: 1px solid #000;
+    border-radius: 999px;
+    background: var(--sieb-button-color);
+    color: #000;
+    text-decoration: none;
+    font-family: Matter;
+    transition: background-color .3s ease, color .3s ease;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.72px;
+}
+
+.standard-in-every-bag__button:hover {
+  background: var(--sieb-button-hover-color);
+  color: #fff9ef;
+}
+
+.standard-in-every-bag__media {
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.standard-in-every-bag__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 749px) {
+  .standard-in-every-bag {
+    background-color: var(--sieb-mobile-bg-color);
+    background-image: var(--sieb-mobile-bg-image);
+    padding-top: var(--sieb-mobile-padding-top);
+    padding-bottom: var(--sieb-mobile-padding-bottom);
+  }
+
+  .standard-in-every-bag__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .standard-in-every-bag__heading {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .standard-in-every-bag__media {
+    aspect-ratio: 1 / 1;
+  }
+}
