@@ -144,7 +144,9 @@
   }
 
   .butcher-quality-promise__card {
-    aspect-ratio:1/1;
+      aspect-ratio: 1 / 1;
+      position: sticky;
+      top: 100px;
   }
 
   .butcher-quality-promise__card-content {
