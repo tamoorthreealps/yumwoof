@@ -15,9 +15,105 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "butcher_quality_standard_ECdEDD": {
+      "type": "butcher-quality-standard",
+      "blocks": {
+        "principle_zwfUwq": {
+          "type": "principle",
+          "settings": {
+            "label": "Whole food ingredients"
+          }
+        },
+        "principle_FbWHKF": {
+          "type": "principle",
+          "settings": {
+            "label": "Seed oil free"
+          }
+        },
+        "principle_EGQ7qj": {
+          "type": "principle",
+          "settings": {
+            "label": "Non GMO"
+          }
+        },
+        "principle_xd9hL3": {
+          "type": "principle",
+          "settings": {
+            "label": "Trusted farm partners"
+          }
+        },
+        "principle_YjGkea": {
+          "type": "principle",
+          "settings": {
+            "label": "Wild caught fish"
+          }
+        },
+        "principle_EYn9wt": {
+          "type": "principle",
+          "settings": {
+            "label": "Gently air dried"
+          }
+        },
+        "principle_xCmpkE": {
+          "type": "principle",
+          "settings": {
+            "label": "Third-party tested"
+          }
+        },
+        "principle_cHjNbX": {
+          "type": "principle",
+          "settings": {
+            "label": "Heavy metal tested"
+          }
+        }
+      },
+      "block_order": [
+        "principle_zwfUwq",
+        "principle_FbWHKF",
+        "principle_EGQ7qj",
+        "principle_xd9hL3",
+        "principle_YjGkea",
+        "principle_EYn9wt",
+        "principle_xCmpkE",
+        "principle_cHjNbX"
+      ],
+      "name": "Our Standard - Butcher Quality",
+      "settings": {
+        "heading": "The Butcher Quality Standard",
+        "trademark": true,
+        "body": "<p>Butcher Quality is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p><p>Because dogs deserve food made with the same care we'd expect for our family.</p>",
+        "show_divider": true,
+        "eyebrow": "Every Yumwoof recipe is guided by these 8 principles:",
+        "section_id": "",
+        "desktop_bg_color": "#0B0B0B",
+        "mobile_bg_color": "#0B0B0B",
+        "bg_position": "center center",
+        "overlay_top": 20,
+        "overlay_bottom": 60,
+        "heading_color": "#F6EFE2",
+        "text_color": "#F6EFE2",
+        "divider_color": "#5A5751",
+        "badge_border_color": "#F6EFE2",
+        "heading_size": 64,
+        "body_size": 15,
+        "min_height": 860,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "padding_inline": 56,
+        "badge_size": 82,
+        "badge_gap": 18,
+        "heading_size_mobile": 34,
+        "min_height_mobile": 640,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 40,
+        "padding_inline_mobile": 20,
+        "badge_size_mobile": 96
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "butcher_quality_standard_ECdEDD"
   ]
 }
