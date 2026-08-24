@@ -57,8 +57,6 @@
   overflow: hidden;
   border-radius: 24px;
   background: #222;
-   transform-origin: top center;
-  transition: transform 0.15s linear;
 }
 
 .butcher-quality-promise__card-image {
@@ -149,6 +147,8 @@
       aspect-ratio: 1 / 1;
       position: sticky;
       top: 100px;
+         transform-origin: top center;
+  transition: transform 0.15s linear;
   }
 
   .butcher-quality-promise__card-content {
