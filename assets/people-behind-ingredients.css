@@ -231,6 +231,7 @@
   .people-behind-ingredients__media {
 height: auto;
         aspect-ratio: auto;
+                border-radius: 16px;
   }
 
   .people-behind-ingredients__content {
