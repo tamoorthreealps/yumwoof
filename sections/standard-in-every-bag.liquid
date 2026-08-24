@@ -1,0 +1,208 @@
+{{ 'standard-in-every-bag.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="StandardInEveryBag-{{ section.id }}"
+  class="standard-in-every-bag"
+  style="
+    --sieb-desktop-bg-color: {{ section.settings.desktop_background_color }};
+    --sieb-mobile-bg-color: {{ section.settings.mobile_background_color }};
+    --sieb-heading-color: {{ section.settings.heading_color }};
+    --sieb-description-color: {{ section.settings.description_color }};
+    --sieb-button-color: {{ section.settings.button_color }};
+    --sieb-button-hover-color: {{ section.settings.button_hover_color }};
+    --sieb-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --sieb-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --sieb-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --sieb-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    {% if section.settings.desktop_background_image != blank %}
+      --sieb-desktop-bg-image: url('{{ section.settings.desktop_background_image | image_url }}');
+    {% endif %}
+    {% if section.settings.mobile_background_image != blank %}
+      --sieb-mobile-bg-image: url('{{ section.settings.mobile_background_image | image_url }}');
+    {% endif %}
+  "
+>
+  <div class="standard-in-every-bag__inner">
+    <div class="standard-in-every-bag__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="standard-in-every-bag__heading">
+          {{ section.settings.heading | newline_to_br }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="standard-in-every-bag__description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_text != blank %}
+        <a
+          href="{{ section.settings.button_url }}"
+          class="standard-in-every-bag__button"
+        >
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="standard-in-every-bag__media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'lazy',
+            class: 'standard-in-every-bag__image',
+            widths: '400, 600, 800, 1000, 1200, 1600',
+            sizes: '(max-width: 749px) 100vw, 50vw'
+        }}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Standard In Every Bag",
+  "tag": "section",
+  "class": "section-standard-in-every-bag",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "desktop_background_color",
+      "label": "Desktop background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_background_image",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "color",
+      "id": "mobile_background_color",
+      "label": "Mobile background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "THE STANDARD\nIS IN EVERY BAG"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every ingredient is chosen for a reason.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP YUMWOOF"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right side image"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#F8B95B"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Standard In Every Bag"
+    }
+  ]
+}
+{% endschema %}
