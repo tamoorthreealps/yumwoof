@@ -1,0 +1,153 @@
+.section-butcher-quality-promise {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.butcher-quality-promise {
+  color: var(--bqp-text-color);
+  background-color: var(--bqp-desktop-bg);
+  background-image: var(--bqp-desktop-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.butcher-quality-promise__inner {
+  max-width: 1368px;
+  margin: 0 auto;
+  padding: var(--bqp-desktop-padding-top) 24px var(--bqp-desktop-padding-bottom);
+  box-sizing: border-box;
+}
+
+.butcher-quality-promise__heading h1,
+.butcher-quality-promise__heading h2,
+.butcher-quality-promise__heading h3 {
+  margin: 0;
+  color: var(--bqp-text-color);
+  font-family: 'TAYRosemary';
+  font-size: 56px;
+  line-height: 0.95;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+.butcher-quality-promise__description {
+  margin-top: 8px;
+  color: var(--bqp-text-color);
+  font-family: 'Matter';
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.butcher-quality-promise__description p {
+  margin: 0;
+}
+
+.butcher-quality-promise__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.butcher-quality-promise__card {
+  position: relative;
+  aspect-ratio: 1 / 1.12;
+  overflow: hidden;
+  border-radius: 13px;
+  background: #222;
+}
+
+.butcher-quality-promise__card-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.butcher-quality-promise__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.05) 35%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+.butcher-quality-promise__card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 23px 15px 19px;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+.butcher-quality-promise__card-title {
+  max-width: 190px;
+  font-family: 'TAY Birdie';
+  font-size: 15px;
+  line-height: 1.2;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.butcher-quality-promise__card-description {
+  max-width: 215px;
+  font-family: 'Matter';
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.butcher-quality-promise__card-description p {
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .butcher-quality-promise {
+    background-color: var(--bqp-mobile-bg);
+    background-image: var(--bqp-mobile-image);
+  }
+
+  .butcher-quality-promise__inner {
+    padding: var(--bqp-mobile-padding-top) 10px var(--bqp-mobile-padding-bottom);
+  }
+
+  .butcher-quality-promise__heading h1,
+  .butcher-quality-promise__heading h2,
+  .butcher-quality-promise__heading h3 {
+    font-size: clamp(30px, 9vw, 42px);
+  }
+
+  .butcher-quality-promise__description {
+    margin-top: 6px;
+    font-size: 9px;
+  }
+
+  .butcher-quality-promise__grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .butcher-quality-promise__card {
+    aspect-ratio: 1 / 0.9;
+  }
+
+  .butcher-quality-promise__card-content {
+    padding: 18px 14px 15px;
+  }
+
+  .butcher-quality-promise__card-title {
+    font-size: 13px;
+  }
+
+  .butcher-quality-promise__card-description {
+    font-size: 8px;
+  }
+}
