@@ -14,14 +14,13 @@
 }
 
 .people-behind-ingredients__inner {
-  max-width: 1368px;
-  margin: 0 auto;
-  padding: var(--pbi-desktop-padding-top) 70px var(--pbi-desktop-padding-bottom);
-  box-sizing: border-box;
+    max-width: 1368px;
+    margin: 0 auto;
+    padding: var(--pbi-desktop-padding-top) 24px var(--pbi-desktop-padding-bottom);
 }
 
 .people-behind-ingredients__heading {
-  margin-bottom: 34px;
+  margin-bottom: 56px;
   text-align: center;
 }
 
@@ -30,11 +29,12 @@
 .people-behind-ingredients__heading h3 {
   margin: 0;
   color: var(--pbi-text-color);
-  font-family: 'TAY Rosemary';
-  font-size: 38px;
-  line-height: 1;
-  letter-spacing: 0;
+  font-family: 'TAYRosemary';
+  font-size: 80px;
+  line-height: 80px;
+  letter-spacing: -0.80px;
   text-transform: uppercase;
+  font-weight: 400;
 }
 
 .people-behind-ingredients__slider {
@@ -42,18 +42,18 @@
 }
 
 .people-behind-ingredients__slide {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-  align-items: center;
-  column-gap: 58px;
-  box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .85fr);
+    align-items: center;
+    column-gap: 128px;
+    box-sizing: border-box;
 }
 
 .people-behind-ingredients__media {
-  width: 100%;
-  aspect-ratio: 1 / 0.82;
-  overflow: hidden;
-  border-radius: 13px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 24px;
 }
 
 .people-behind-ingredients__image {
@@ -67,25 +67,26 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 430px;
+  max-width: 450px;
 }
 
 .people-behind-ingredients__title {
-  margin-bottom: 13px;
-  color: var(--pbi-text-color);
-  font-family: 'TAY Birdie';
-  font-size: 16px;
-  line-height: 1;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+    margin-bottom: 24px;
+    color: var(--pbi-text-color);
+    font-family: TAY Birdie;
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: -0.32px;
+    text-transform: uppercase;
 }
 
 .people-behind-ingredients__description {
-  max-width: 390px;
-  color: var(--pbi-text-color);
-  font-family: 'Matter';
-  font-size: 10px;
-  line-height: 1.45;
+    max-width: 390px;
+    color: var(--pbi-text-color);
+    font-family: Matter;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0;
 }
 
 .people-behind-ingredients__description p {
@@ -93,22 +94,23 @@
 }
 
 .people-behind-ingredients__pagination {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 34px;
+    display: flex;
+    align-items: baseline;
+    gap: 23px;
+    margin-top: 48px;
 }
 
 .people-behind-ingredients__progress {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  max-width: 175px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 100%;
+    gap: 16px;
 }
 
 .people-behind-ingredients__progress-item {
   flex: 1;
-  height: 1px;
+  height: 2px;
   background: var(--pbi-text-color);
   opacity: 0.12;
 }
@@ -118,14 +120,15 @@
 }
 
 .people-behind-ingredients__counter {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  color: var(--pbi-text-color);
-  font-family: 'Matter';
-  font-size: 8px;
-  line-height: 1;
-  white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--pbi-text-color);
+    font-family: 'TAY Birdie';
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: -0.16px;
+    white-space: nowrap;
 }
 
 .people-behind-ingredients__slider .splide__track {
