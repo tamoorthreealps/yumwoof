@@ -175,17 +175,114 @@
         "desktop_background_color": "#fff9ef",
         "mobile_background_color": "#fff9ef",
         "text_color": "#000000",
-        "card_text_color": "#FFF9EF",
+        "card_text_color": "#fff9ef",
         "desktop_padding_top": 0,
         "desktop_padding_bottom": 125,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 45
+      }
+    },
+    "whats_not_included_Kdz67G": {
+      "type": "whats-not-included",
+      "blocks": {
+        "ingredient_btTdze": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO GMO INGREDIENTS"
+          }
+        },
+        "ingredient_3NeFVQ": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO SYNTHETICS"
+          }
+        },
+        "ingredient_8VxqWA": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO SEED OILS"
+          }
+        },
+        "ingredient_dCMRk3": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO MEAT MEALS"
+          }
+        },
+        "ingredient_HCxHCW": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO BY-PRODUCTS"
+          }
+        },
+        "ingredient_6jkMf6": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO NATURAL FLAVORS"
+          }
+        },
+        "ingredient_tHaApF": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO PRESERVATIVES"
+          }
+        },
+        "ingredient_N9kaBY": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO FILLERS"
+          }
+        },
+        "ingredient_a9CLQa": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO ADDED SUGAR"
+          }
+        },
+        "ingredient_HCpa6W": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO CARRAGEENAN"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_btTdze",
+        "ingredient_3NeFVQ",
+        "ingredient_8VxqWA",
+        "ingredient_dCMRk3",
+        "ingredient_HCxHCW",
+        "ingredient_6jkMf6",
+        "ingredient_tHaApF",
+        "ingredient_N9kaBY",
+        "ingredient_a9CLQa",
+        "ingredient_HCpa6W"
+      ],
+      "name": "What's Not Included",
+      "settings": {
+        "heading": "<h2>WHAT'S NOT INCLUDED MATTERS TOO</h2>",
+        "description": "<p>Every Yumwoof recipe is free from ingredients we believe don't belong in your dog's bowl.</p>",
+        "background_color": "#FFF9EF",
+        "heading_color": "#000000",
+        "description_color": "#000000",
+        "pill_text_color": "#000000",
+        "pill_border_color": "#000000",
+        "pill_background_color": "#FFFFFF",
+        "link_text": "+ See Banned Ingredients List",
+        "link_url": "#",
+        "link_color": "#661D1D",
+        "link_hover_color": "#111111",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 160,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 110
       }
     }
   },
   "order": [
     "main",
     "butcher_quality_standard_MiRc3R",
-    "butcher_quality_promise_mgrPzc"
+    "butcher_quality_promise_mgrPzc",
+    "whats_not_included_Kdz67G"
   ]
 }
