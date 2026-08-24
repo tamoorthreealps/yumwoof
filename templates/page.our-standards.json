@@ -279,12 +279,62 @@
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 110
       }
+    },
+    "people_behind_ingredients_d4UwGE": {
+      "type": "people-behind-ingredients",
+      "blocks": {
+        "person_hneLbJ": {
+          "type": "person",
+          "settings": {
+            "title": "GROWERS",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        },
+        "person_7QgVwY": {
+          "type": "person",
+          "settings": {
+            "title": "FISHERMEN",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        },
+        "person_7M8qKh": {
+          "type": "person",
+          "settings": {
+            "title": "RANCHERS",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        },
+        "person_a7Mp37": {
+          "type": "person",
+          "settings": {
+            "title": "SUPPLIERS",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "person_hneLbJ",
+        "person_7QgVwY",
+        "person_7M8qKh",
+        "person_a7Mp37"
+      ],
+      "name": "People Behind Ingredients",
+      "settings": {
+        "heading": "<h2>THE PEOPLE BEHIND OUR INGREDIENTS</h2>",
+        "background_color": "#FFF9EF",
+        "text_color": "#000000",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 160,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 120
+      }
     }
   },
   "order": [
     "main",
     "butcher_quality_standard_MiRc3R",
     "butcher_quality_promise_mgrPzc",
-    "whats_not_included_Kdz67G"
+    "whats_not_included_Kdz67G",
+    "people_behind_ingredients_d4UwGE"
   ]
 }
