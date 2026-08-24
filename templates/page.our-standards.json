@@ -268,7 +268,7 @@
         "pill_text_color": "#000000",
         "pill_border_color": "#000000",
         "pill_background_color": "#ffffff",
-        "marquee_speed": 200,
+        "marquee_speed": 400,
         "reverse_second_row": true,
         "link_text": "+ See Banned Ingredients List",
         "link_url": "#",
