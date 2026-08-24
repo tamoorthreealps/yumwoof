@@ -147,63 +147,118 @@
 
     /* ---------- Scroll-controlled slider ---------- */
 
-    const lastIndex = splide.length - 1;
-    const SETTLE = 850;   // must exceed the 700ms transition
-    const SNAP = 0.35;    // how close to centered before we take over
+        /* ---------- Scroll-controlled slider ---------- */
 
+    const lastIndex = splide.length - 1;
+    const SETTLE = 780;   // must exceed the 700ms slide transition
+    const ALIGN = 420;    // time allowed for the one-time centering scroll
+    const SNAP = 0.45;    // how close to centered before we take over
+
+    let phase = 'idle';   // idle | aligning | locked | released
+    let lockedY = 0;
     let busy = false;
-    let released = false; // true after we hand scrolling back, until section leaves view
     let touchY = null;
+    let exitDir = 0;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const body = document.body;
 
     function offset() {
       const rect = section.getBoundingClientRect();
-      const sectionCenter = rect.top + rect.height / 2;
-      return sectionCenter - window.innerHeight / 2;
+      return (rect.top + rect.height / 2) - window.innerHeight / 2;
     }
 
     function inRange() {
       const rect = section.getBoundingClientRect();
-      // Taller than the viewport: engaged whenever it fills the screen.
       if (rect.height >= window.innerHeight) {
         return rect.top <= 0 && rect.bottom >= window.innerHeight;
       }
       return Math.abs(offset()) < window.innerHeight * SNAP;
     }
 
-    function centerSection() {
-      const target = window.pageYOffset + offset();
-      window.scrollTo({ top: target, behavior: reduceMotion ? 'auto' : 'smooth' });
+    function lockBody() {
+      lockedY = window.pageYOffset;
+      // Compensate for the scrollbar so fixing the body causes no reflow.
+      const barWidth = window.innerWidth - document.documentElement.clientWidth;
+      body.style.position = 'fixed';
+      body.style.top = -lockedY + 'px';
+      body.style.left = '0';
+      body.style.right = '0';
+      body.style.width = '100%';
+      if (barWidth > 0) body.style.paddingRight = barWidth + 'px';
+      phase = 'locked';
     }
 
-    function handle(direction) {
-      // direction: 1 = down, -1 = up
-      if (!inRange()) {
-        released = false;
-        return false;
-      }
-      if (released) return false;
+    function unlockBody() {
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.width = '';
+      body.style.paddingRight = '';
+      // Restore instantly at the exact same offset — no visual jump.
+      const prev = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, lockedY);
+      document.documentElement.style.scrollBehavior = prev;
+      phase = 'released';
+    }
 
+    function beginAlign() {
+      phase = 'aligning';
+      const target = window.pageYOffset + offset();
+      if (reduceMotion || Math.abs(offset()) < 2) {
+        window.scrollTo(0, target);
+        lockBody();
+        return;
+      }
+      window.scrollTo({ top: target, behavior: 'smooth' });
+      setTimeout(function () {
+        if (phase !== 'aligning') return;
+        window.scrollTo(0, window.pageYOffset + offset()); // kill any residual drift
+        lockBody();
+      }, ALIGN);
+    }
+
+    // Returns true when the event should be swallowed.
+    function handle(direction) {
+      if (phase === 'released') return false;
+      if (phase === 'aligning') return true;   // eat everything mid-alignment
+
+      if (phase === 'idle') {
+        if (!inRange()) return false;
+        beginAlign();
+        return true;
+      }
+
+      // phase === 'locked'
       const atEdge =
         (direction > 0 && splide.index >= lastIndex) ||
         (direction < 0 && splide.index <= 0);
 
       if (atEdge) {
-        released = true;   // let the page carry on past the section
-        return false;
+        exitDir = direction;
+        unlockBody();
+        // Hand the gesture back to the page with a nudge in the same direction,
+        // so releasing never feels like a dead scroll.
+        window.scrollBy({ top: direction * 60, behavior: reduceMotion ? 'auto' : 'smooth' });
+        return true;
       }
 
-      if (busy) return true; // swallow input mid-transition
+      if (busy) return true;   // swallow momentum during the transition
 
       busy = true;
-      centerSection();
       splide.go(direction > 0 ? '+1' : '-1');
       setTimeout(function () { busy = false; }, SETTLE);
       return true;
     }
 
     window.addEventListener('wheel', function (e) {
+      if (phase === 'locked' || phase === 'aligning') {
+        e.preventDefault();   // nothing gets through, momentum included
+        handle(e.deltaY > 0 ? 1 : -1);
+        return;
+      }
       if (Math.abs(e.deltaY) < 2) return;
       if (handle(e.deltaY > 0 ? 1 : -1)) e.preventDefault();
     }, { passive: false });
@@ -220,6 +275,7 @@
     }, { passive: true });
 
     window.addEventListener('touchmove', function (e) {
+      if (phase === 'locked' || phase === 'aligning') e.preventDefault();
       if (touchY === null) return;
       const delta = touchY - e.touches[0].clientY;
       if (Math.abs(delta) < 12) return;
@@ -229,16 +285,21 @@
 
     window.addEventListener('touchend', function () { touchY = null; }, { passive: true });
 
-    // Re-arm the lock once the section has left the viewport in either direction.
+    // Re-arm once the section has fully left the viewport in either direction.
     window.addEventListener('scroll', function () {
-      if (!released) return;
+      if (phase !== 'released') return;
       const rect = section.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) released = false;
+      if (rect.bottom < 0 || rect.top > window.innerHeight) {
+        phase = 'idle';
+        exitDir = 0;
+      }
     }, { passive: true });
 
-    // Editor preview: don't fight the theme editor.
-    if (window.Shopify && window.Shopify.designMode) released = true;
-  });
+    window.addEventListener('resize', function () {
+      if (phase === 'locked') { unlockBody(); phase = 'idle'; }
+    });
+
+    if (window.Shopify && window.Shopify.designMode) phase = 'released';
 </script>
 
 {% schema %}
