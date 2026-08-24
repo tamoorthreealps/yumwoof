@@ -57,6 +57,11 @@
   list-style-type: disc;
 }
 
+.testing-standard__list--none {
+  padding-left: 0;
+  list-style: none;
+}
+
 @media screen and (max-width: 749px) {
   .testing-standard {
     background-color: var(--ts-mobile-bg-color);
