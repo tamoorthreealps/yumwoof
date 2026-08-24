@@ -92,8 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         const scale = 1 - (progress * 0.06);
+        const translateY = progress * -18;
 
-        card.style.transform = `scale(${scale})`;
+        card.style.transform = `translateY(${translateY}px) scale(${scale})`;
       });
     };
 
