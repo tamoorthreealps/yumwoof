@@ -8,7 +8,6 @@
     --bqs-mobile-bg: {{ section.settings.mobile_background_color }};
     --bqs-text-color: {{ section.settings.text_color }};
     --bqs-line-color: {{ section.settings.line_color }};
-    --bqs-circle-border: {{ section.settings.circle_border_color }};
     --bqs-desktop-image: {% if section.settings.desktop_background_image != blank %}url('{{ section.settings.desktop_background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
     --bqs-mobile-image: {% if section.settings.mobile_background_image != blank %}url('{{ section.settings.mobile_background_image | image_url: width: 1600 }}'){% else %}none{% endif %};
   "
