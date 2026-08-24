@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -22,49 +23,58 @@
         "principle_zwfUwq": {
           "type": "principle",
           "settings": {
-            "label": "Whole food ingredients"
+            "icon": "shopify://shop_images/Group_207.svg",
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_FbWHKF": {
           "type": "principle",
           "settings": {
-            "label": "Seed oil free"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_EGQ7qj": {
           "type": "principle",
           "settings": {
-            "label": "Non GMO"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_xd9hL3": {
           "type": "principle",
           "settings": {
-            "label": "Trusted farm partners"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_YjGkea": {
           "type": "principle",
           "settings": {
-            "label": "Wild caught fish"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_EYn9wt": {
           "type": "principle",
           "settings": {
-            "label": "Gently air dried"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_xCmpkE": {
           "type": "principle",
           "settings": {
-            "label": "Third-party tested"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         },
         "principle_cHjNbX": {
           "type": "principle",
           "settings": {
-            "label": "Heavy metal tested"
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
           }
         }
       },
@@ -81,34 +91,14 @@
       "name": "Our Standard - Butcher Quality",
       "settings": {
         "heading": "The Butcher Quality Standard",
-        "trademark": true,
-        "body": "<p>Butcher Quality is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p><p>Because dogs deserve food made with the same care we'd expect for our family.</p>",
-        "show_divider": true,
-        "eyebrow": "Every Yumwoof recipe is guided by these 8 principles:",
-        "section_id": "",
-        "desktop_bg_color": "#0B0B0B",
-        "mobile_bg_color": "#0B0B0B",
-        "bg_position": "center center",
-        "overlay_top": 20,
-        "overlay_bottom": 60,
-        "heading_color": "#F6EFE2",
-        "text_color": "#F6EFE2",
-        "divider_color": "#5A5751",
-        "badge_border_color": "#F6EFE2",
-        "heading_size": 64,
-        "body_size": 15,
-        "min_height": 860,
-        "padding_top": 64,
-        "padding_bottom": 64,
-        "padding_inline": 56,
-        "badge_size": 82,
-        "badge_gap": 18,
-        "heading_size_mobile": 34,
-        "min_height_mobile": 640,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 40,
-        "padding_inline_mobile": 20,
-        "badge_size_mobile": 96
+        "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p>",
+        "description_2": "<p>Because dogs deserve food made with the same care we'd expect for our family.</p>",
+        "principles_label": "EVERY YUMWOOF RECIPE IS GUIDED BY THESE 8 PRINCIPLES:",
+        "desktop_background_color": "#0b0b0b",
+        "mobile_background_color": "#0b0b0b",
+        "text_color": "#f6efe2",
+        "line_color": "#5b5b5b",
+        "circle_border_color": "#777777"
       }
     }
   },
