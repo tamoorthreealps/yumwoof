@@ -102,7 +102,7 @@
 
     {% if section.settings.link_text != blank %}
       <div class="whats-not-included__link-wrap">
-        
+        <a
           href="{{ section.settings.link_url | default: '#' }}"
           class="whats-not-included__link"
         >{{ section.settings.link_text | escape }}</a>
