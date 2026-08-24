@@ -30,6 +30,18 @@
     </div>
 
     <div class="butcher-quality-standard__principles{% if section.settings.divider_image != blank %} butcher-quality-standard__principles--image-divider{% endif %}">
+        {% if section.settings.divider_image != blank %}
+    <div class="butcher-quality-standard__divider-image">
+      {{
+        section.settings.divider_image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'lazy',
+          alt: ''
+      }}
+    </div>
+  {% endif %}
+
       {% if section.settings.principles_label != blank %}
         <div class="butcher-quality-standard__principles-label">
           {{ section.settings.principles_label | escape }}
