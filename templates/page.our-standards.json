@@ -302,6 +302,7 @@
         "person_7M8qKh": {
           "type": "person",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_108.webp",
             "title": "RANCHERS",
             "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
           }
@@ -309,6 +310,7 @@
         "person_a7Mp37": {
           "type": "person",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_108_1.webp",
             "title": "SUPPLIERS",
             "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
           }
