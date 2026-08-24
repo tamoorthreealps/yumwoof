@@ -169,10 +169,10 @@
         "desktop_background_color": "#FFF9EF",
         "mobile_background_color": "#FFF9EF",
         "text_color": "#000000",
-        "desktop_padding_top": 40,
-        "desktop_padding_bottom": 40,
-        "mobile_padding_top": 30,
-        "mobile_padding_bottom": 30
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 125,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 45
       }
     }
   },
