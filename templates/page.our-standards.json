@@ -261,7 +261,9 @@
       "name": "What's Not Included",
       "settings": {
         "heading": "<h2>WHAT'S NOT INCLUDED MATTERS TOO</h2>",
+        "mobile_heading": "<h2>The no-no list</h2>",
         "description": "<p>Every Yumwoof recipe is free from ingredients we believe don't belong in your dog's bowl.</p>",
+        "mobile_description": "<p>Every recipe. Every batch. Every bag.</p>",
         "background_color": "#fff9ef",
         "heading_color": "#000000",
         "description_color": "#000000",
