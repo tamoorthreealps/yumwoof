@@ -75,9 +75,13 @@
 }
 
 .butcher-quality-standard__description p {
-    margin: 0 0 13px;
-    color: var(--bqs-text-color);
-    font-weight: 400;
+  margin: 0 0 13px;
+  color: var(--bqs-text-color);
+  font-weight: 400;
+}
+
+.butcher-quality-standard__description p:empty {
+  display: none;
 }
 
 .butcher-quality-standard__description p:last-child {
