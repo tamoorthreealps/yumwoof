@@ -11,105 +11,13 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
-    },
-    "butcher_quality_standard_ECdEDD": {
-      "type": "butcher-quality-standard",
-      "blocks": {
-        "principle_zwfUwq": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/Group_207.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_FbWHKF": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/seed_oli_free.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_EGQ7qj": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/non-GMO.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_xd9hL3": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/trusted-partners.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_YjGkea": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/wild-caught-fish.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_EYn9wt": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/gently-air-dried.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_xCmpkE": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/third-party-tested.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        },
-        "principle_cHjNbX": {
-          "type": "principle",
-          "settings": {
-            "icon": "shopify://shop_images/heavy-metal-tested.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
-            "short_label": "WHOLE FOOD"
-          }
-        }
-      },
-      "block_order": [
-        "principle_zwfUwq",
-        "principle_FbWHKF",
-        "principle_EGQ7qj",
-        "principle_xd9hL3",
-        "principle_YjGkea",
-        "principle_EYn9wt",
-        "principle_xCmpkE",
-        "principle_cHjNbX"
-      ],
-      "name": "Our Standard - Butcher Quality",
-      "settings": {
-        "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.<br/><br/>Because dogs deserve food made with the same care we'd expect for our family.</p>",
-        "principles_label": "EVERY YUMWOOF RECIPE IS GUIDED BY THESE 8 PRINCIPLES:",
-        "desktop_background_color": "#fff9ef",
-        "desktop_background_image": "shopify://shop_images/Hero_Scrim.webp",
-        "mobile_background_color": "#fff9ef",
-        "mobile_background_image": "shopify://shop_images/Hero_Scrim_1.webp",
-        "text_color": "#fff9ef",
-        "line_color": "#fff9ef"
-      }
     }
   },
   "order": [
-    "main",
-    "butcher_quality_standard_ECdEDD"
+    "main"
   ]
 }
