@@ -1,0 +1,212 @@
+{%- comment -%}
+  Section: Butcher Quality Standard (.bqs)
+  Styles: assets/butcher-quality-standard.css
+  Theme-editor values are passed to the stylesheet as CSS custom properties.
+  Mobile-first vars (--bqs-*) plus desktop overrides (--bqs-*-d).
+{%- endcomment -%}
+
+{{ 'butcher-quality-standard.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign badges = section.blocks | where: 'type', 'principle'
+  assign badge_cols = badges.size | at_least: 1
+-%}
+
+<section
+  class="bqs"
+  {% if s.section_id != blank %}id="{{ s.section_id }}"{% endif %}
+  aria-labelledby="bqs-title-{{ section.id }}"
+  style="
+    --bqs-bg: {{ s.mobile_bg_color }};
+    {% if s.mobile_bg_image %}--bqs-bg-image: url('{{ s.mobile_bg_image | image_url: width: 1200 }}');{% endif %}
+    --bqs-bg-position: {{ s.bg_position }};
+    --bqs-text: {{ s.text_color }};
+    --bqs-heading: {{ s.heading_color }};
+    --bqs-rule: {{ s.divider_color }};
+    --bqs-badge-border: {{ s.badge_border_color }};
+    --bqs-overlay-top: {{ s.overlay_top | divided_by: 100.0 }};
+    --bqs-overlay-bottom: {{ s.overlay_bottom | divided_by: 100.0 }};
+    --bqs-body-size: {{ s.body_size }}px;
+    --bqs-badge-gap: {{ s.badge_gap }}px;
+    --bqs-min-h: {{ s.min_height_mobile }}px;
+    --bqs-pad-top: {{ s.padding_top_mobile }}px;
+    --bqs-pad-bottom: {{ s.padding_bottom_mobile }}px;
+    --bqs-pad-inline: {{ s.padding_inline_mobile }}px;
+    --bqs-h-size: {{ s.heading_size_mobile }}px;
+    --bqs-badge-size: {{ s.badge_size_mobile }}px;
+    --bqs-badge-cols: 2;
+    --bqs-bg-d: {{ s.desktop_bg_color }};
+    {% if s.desktop_bg_image %}--bqs-bg-image-d: url('{{ s.desktop_bg_image | image_url: width: 2400 }}');{% endif %}
+    --bqs-min-h-d: {{ s.min_height }}px;
+    --bqs-pad-top-d: {{ s.padding_top }}px;
+    --bqs-pad-bottom-d: {{ s.padding_bottom }}px;
+    --bqs-pad-inline-d: {{ s.padding_inline }}px;
+    --bqs-h-size-d: {{ s.heading_size }}px;
+    --bqs-badge-size-d: {{ s.badge_size }}px;
+    --bqs-badge-cols-d: {{ badge_cols }};
+  "
+>
+  <span class="bqs__overlay" aria-hidden="true"></span>
+
+  {%- if s.edge_top -%}
+    <img
+      class="bqs__edge bqs__edge--top"
+      src="{{ s.edge_top | image_url: width: 2400 }}"
+      alt=""
+      role="presentation"
+      loading="lazy"
+      width="{{ s.edge_top.width }}"
+      height="{{ s.edge_top.height }}"
+    >
+  {%- endif -%}
+
+  {%- if s.heading != blank -%}
+    <h2 class="bqs__title" id="bqs-title-{{ section.id }}">
+      {{ s.heading }}{% if s.trademark %}<sup>&trade;</sup>{% endif %}
+    </h2>
+  {%- endif -%}
+
+  <div class="bqs__foot">
+    {%- if s.body != blank -%}
+      <div class="bqs__copy">{{ s.body }}</div>
+    {%- endif -%}
+
+    {%- if s.show_divider -%}
+      <hr class="bqs__rule">
+    {%- endif -%}
+
+    {%- if s.eyebrow != blank -%}
+      <p class="bqs__eyebrow">{{ s.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- if badges.size > 0 -%}
+      <ul class="bqs__badges">
+        {%- for block in badges -%}
+          <li class="bqs__badge" {{ block.shopify_attributes }}>
+            {%- if block.settings.image -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 300 }}"
+                alt="{{ block.settings.label | escape }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                loading="lazy"
+              >
+            {%- else -%}
+              <span class="bqs__badge-text">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+
+  {%- if s.edge_bottom -%}
+    <img
+      class="bqs__edge bqs__edge--bottom"
+      src="{{ s.edge_bottom | image_url: width: 2400 }}"
+      alt=""
+      role="presentation"
+      loading="lazy"
+      width="{{ s.edge_bottom.width }}"
+      height="{{ s.edge_bottom.height }}"
+    >
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Butcher Quality Standard",
+  "tag": "section",
+  "class": "bqs-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Butcher Quality Standard" },
+    { "type": "checkbox", "id": "trademark", "label": "Show trademark symbol after heading", "default": true },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>Butcher Quality is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p><p>Because dogs deserve food made with the same care we'd expect for our family.</p>"
+    },
+    { "type": "checkbox", "id": "show_divider", "label": "Show divider line", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "Every Yumwoof recipe is guided by these 8 principles:" },
+    { "type": "text", "id": "section_id", "label": "Anchor ID (optional)" },
+
+    { "type": "header", "content": "Desktop background" },
+    { "type": "image_picker", "id": "desktop_bg_image", "label": "Desktop background image" },
+    { "type": "color", "id": "desktop_bg_color", "label": "Desktop background color", "default": "#0B0B0B" },
+
+    { "type": "header", "content": "Mobile background" },
+    { "type": "image_picker", "id": "mobile_bg_image", "label": "Mobile background image" },
+    { "type": "color", "id": "mobile_bg_color", "label": "Mobile background color", "default": "#0B0B0B" },
+
+    { "type": "header", "content": "Background options" },
+    {
+      "type": "select",
+      "id": "bg_position",
+      "label": "Background position",
+      "default": "center center",
+      "options": [
+        { "value": "center top", "label": "Top" },
+        { "value": "center center", "label": "Center" },
+        { "value": "center bottom", "label": "Bottom" }
+      ]
+    },
+    { "type": "range", "id": "overlay_top", "label": "Overlay opacity (top)", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 20 },
+    { "type": "range", "id": "overlay_bottom", "label": "Overlay opacity (bottom)", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 60 },
+    { "type": "image_picker", "id": "edge_top", "label": "Torn edge image (top)", "info": "Optional PNG/SVG overlay for the ragged top edge." },
+    { "type": "image_picker", "id": "edge_bottom", "label": "Torn edge image (bottom)" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F6EFE2" },
+    { "type": "color", "id": "text_color", "label": "Body text", "default": "#F6EFE2" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#5A5751" },
+    { "type": "color", "id": "badge_border_color", "label": "Badge border", "default": "#F6EFE2" },
+
+    { "type": "header", "content": "Typography and layout - desktop" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 32, "max": 120, "step": 2, "unit": "px", "default": 64 },
+    { "type": "range", "id": "body_size", "label": "Body size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 400, "max": 1200, "step": 20, "unit": "px", "default": 860 },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_inline", "label": "Side padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "badge_size", "label": "Badge size", "min": 48, "max": 140, "step": 2, "unit": "px", "default": 82 },
+    { "type": "range", "id": "badge_gap", "label": "Badge gap", "min": 4, "max": 48, "step": 2, "unit": "px", "default": 18 },
+
+    { "type": "header", "content": "Typography and layout - mobile" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size", "min": 24, "max": 72, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "min_height_mobile", "label": "Minimum height", "min": 300, "max": 1000, "step": 20, "unit": "px", "default": 640 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_inline_mobile", "label": "Side padding", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "badge_size_mobile", "label": "Badge size", "min": 48, "max": 140, "step": 2, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "principle",
+      "name": "Principle badge",
+      "limit": 12,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Badge image", "info": "Export each circular badge (curved text + icon) from Figma as SVG or PNG." },
+        { "type": "text", "id": "label", "label": "Label / alt text", "default": "Whole food ingredients" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Butcher Quality Standard",
+      "blocks": [
+        { "type": "principle", "settings": { "label": "Whole food ingredients" } },
+        { "type": "principle", "settings": { "label": "Seed oil free" } },
+        { "type": "principle", "settings": { "label": "Non GMO" } },
+        { "type": "principle", "settings": { "label": "Trusted farm partners" } },
+        { "type": "principle", "settings": { "label": "Wild caught fish" } },
+        { "type": "principle", "settings": { "label": "Gently air dried" } },
+        { "type": "principle", "settings": { "label": "Third-party tested" } },
+        { "type": "principle", "settings": { "label": "Heavy metal tested" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

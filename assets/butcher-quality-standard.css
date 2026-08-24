@@ -1,0 +1,174 @@
+/* ==========================================================================
+   Butcher Quality Standard (.bqs)
+   Paired with sections/butcher-quality-standard.liquid
+   All theme-editor values arrive as CSS custom properties on .bqs via an
+   inline style attribute (mobile-first: --bqs-*, desktop: --bqs-*-d).
+   One breakpoint. No JavaScript.
+   ========================================================================== */
+
+.bqs {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: var(--bqs-min-h);
+  padding: var(--bqs-pad-top) var(--bqs-pad-inline) var(--bqs-pad-bottom);
+  background-color: var(--bqs-bg);
+  background-image: var(--bqs-bg-image, none);
+  background-size: cover;
+  background-position: var(--bqs-bg-position, center center);
+  background-repeat: no-repeat;
+  color: var(--bqs-text);
+}
+
+.bqs__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, var(--bqs-overlay-top)),
+    rgba(0, 0, 0, var(--bqs-overlay-bottom))
+  );
+}
+
+.bqs__edge {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bqs__edge--top { top: -1px; }
+.bqs__edge--bottom { bottom: -1px; }
+
+/* Heading ---------------------------------------------------------------- */
+
+.bqs__title {
+  max-width: 12ch;
+  margin: 0;
+  font-size: var(--bqs-h-size);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--bqs-heading);
+}
+
+.bqs__title sup {
+  font-size: 0.28em;
+  line-height: 1;
+  vertical-align: super;
+}
+
+/* Lower content ---------------------------------------------------------- */
+
+.bqs__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bqs__copy {
+  max-width: 46ch;
+  font-size: var(--bqs-body-size);
+  line-height: 1.5;
+}
+
+.bqs__copy > :first-child { margin-top: 0; }
+.bqs__copy > :last-child { margin-bottom: 0; }
+.bqs__copy p { margin: 0 0 1em; }
+.bqs__copy a { color: inherit; }
+
+.bqs__rule {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--bqs-rule);
+}
+
+.bqs__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Principle badges ------------------------------------------------------- */
+
+.bqs__badges {
+  display: grid;
+  grid-template-columns: repeat(var(--bqs-badge-cols), 1fr);
+  gap: var(--bqs-badge-gap);
+  justify-items: center;
+  align-items: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bqs__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--bqs-badge-size);
+  height: var(--bqs-badge-size);
+  overflow: hidden;
+  border: 1px solid var(--bqs-badge-border);
+  border-radius: 50%;
+  text-align: center;
+}
+
+.bqs__badge img,
+.bqs__badge svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bqs__badge-text {
+  padding: 8px;
+  font-size: 9px;
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bqs-text);
+}
+
+/* Desktop ---------------------------------------------------------------- */
+
+@media screen and (min-width: 990px) {
+  .bqs {
+    --bqs-bg: var(--bqs-bg-d);
+    --bqs-bg-image: var(--bqs-bg-image-d, none);
+    --bqs-min-h: var(--bqs-min-h-d);
+    --bqs-pad-top: var(--bqs-pad-top-d);
+    --bqs-pad-bottom: var(--bqs-pad-bottom-d);
+    --bqs-pad-inline: var(--bqs-pad-inline-d);
+    --bqs-h-size: var(--bqs-h-size-d);
+    --bqs-badge-size: var(--bqs-badge-size-d);
+    --bqs-badge-cols: var(--bqs-badge-cols-d);
+    gap: 64px;
+  }
+
+  .bqs__foot { gap: 32px; }
+  .bqs__badges { justify-items: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bqs *,
+  .bqs *::before,
+  .bqs *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
