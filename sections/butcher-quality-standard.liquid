@@ -21,14 +21,10 @@
         </h2>
       {% endif %}
 
-      {% if section.settings.description_1 != blank or section.settings.description_2 != blank %}
+      {% if section.settings.description_1 != blank %}
         <div class="butcher-quality-standard__description">
           {% if section.settings.description_1 != blank %}
             <p>{{ section.settings.description_1 }}</p>
-          {% endif %}
-
-          {% if section.settings.description_2 != blank %}
-            <p>{{ section.settings.description_2 }}</p>
           {% endif %}
         </div>
       {% endif %}
@@ -85,22 +81,16 @@
   "class": "section-butcher-quality-standard",
   "settings": [
     {
-      "type": "text",
+      "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "THE BUTCHER QUALITY STANDARD™"
+      "default": "<h1>THE BUTCHER QUALITY STANDARD™</h1>"
     },
     {
       "type": "richtext",
       "id": "description_1",
       "label": "Description 1",
       "default": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p>"
-    },
-    {
-      "type": "richtext",
-      "id": "description_2",
-      "label": "Description 2",
-      "default": "<p>Because dogs deserve food made with the same care we'd expect for our family.</p>"
     },
     {
       "type": "text",
