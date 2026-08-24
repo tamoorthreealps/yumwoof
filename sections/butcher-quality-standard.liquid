@@ -84,43 +84,58 @@
     </div>
   </div>
 </section>
+
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const sections = document.querySelectorAll('.butcher-quality-standard');
+(() => {
+  const SPEED = 0.3; // fraction of the overflow used as travel
 
-  if (!sections.length) return;
+  const init = (root = document) => {
+    const sections = root.querySelectorAll('.butcher-quality-standard');
+    if (!sections.length) return;
 
-  const updateParallax = () => {
-    sections.forEach(section => {
-      const rect = section.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+    const update = () => {
+      const vh = window.innerHeight;
 
-      if (rect.bottom < 0 || rect.top > windowHeight) return;
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) return;
 
-      const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-      const offset = (progress - 0.5) * 200;
+        // 0 when the section is just entering, 1 when it's just leaving
+        let progress = (vh - rect.top) / (vh + rect.height);
+        progress = Math.min(Math.max(progress, 0), 1);
 
-      section.style.setProperty('--bqs-parallax-y', `${offset}px`);
-    });
+        // overflow available above/below (matches the -15% inset in CSS)
+        const overflow = rect.height * 0.15;
+        const offset = (progress - 0.5) * 2 * overflow * SPEED;
+
+        section.style.setProperty('--bqs-parallax-y', `${offset.toFixed(2)}px`);
+      });
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
   };
 
-  let ticking = false;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => init());
+  } else {
+    init();
+  }
 
-  const handleScroll = () => {
-    if (ticking) return;
-
-    requestAnimationFrame(() => {
-      updateParallax();
-      ticking = false;
-    });
-
-    ticking = true;
-  };
-
-  window.addEventListener('scroll', handleScroll, { passive: true });
-
-  updateParallax();
-});
+  // Shopify theme editor re-render
+  document.addEventListener('shopify:section:load', (e) => init(e.target));
+})();
 </script>
 {% schema %}
 {
