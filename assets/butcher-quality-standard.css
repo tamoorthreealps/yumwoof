@@ -1,5 +1,5 @@
 .section-butcher-quality-standard {
-  margin: 0 !important;
+  margin: 0 0 120px !important;
   padding: 0 !important;
 }
 
@@ -165,6 +165,9 @@ display: block;
 }
 
 @media screen and (max-width: 767px) {
+  .section-butcher-quality-standard {
+    margin:0 0 56px;
+  }
   .butcher-quality-standard {
     background-color: var(--bqs-mobile-bg);
     background-image: var(--bqs-mobile-image);
