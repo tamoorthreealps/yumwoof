@@ -3,6 +3,7 @@
 <section
   id="ButcherQualityStandard-{{ section.id }}"
   class="butcher-quality-standard"
+  data-bqs-parallax
   style="
     --bqs-desktop-bg: {{ section.settings.desktop_background_color }};
     --bqs-mobile-bg: {{ section.settings.mobile_background_color }};
@@ -87,28 +88,17 @@
 
 <script>
 (() => {
-  const SPEED = 0.3; // fraction of the overflow used as travel
+  const SPEED = 0.3;
 
   const init = (root = document) => {
-    const sections = root.querySelectorAll('.butcher-quality-standard');
+    const sections = root.querySelectorAll('[data-bqs-parallax]');
     if (!sections.length) return;
 
     const update = () => {
-      const vh = window.innerHeight;
-
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > vh) return;
-
-        // 0 when the section is just entering, 1 when it's just leaving
-        let progress = (vh - rect.top) / (vh + rect.height);
-        progress = Math.min(Math.max(progress, 0), 1);
-
-        // overflow available above/below (matches the -15% inset in CSS)
-        const overflow = rect.height * 0.15;
-        const offset = (progress - 0.5) * 2 * overflow * SPEED;
-
-        section.style.setProperty('--bqs-parallax-y', `${offset.toFixed(2)}px`);
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        section.style.backgroundPositionY = (-rect.top * SPEED) + 'px';
       });
     };
 
@@ -116,10 +106,7 @@
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(() => {
-        update();
-        ticking = false;
-      });
+      requestAnimationFrame(() => { update(); ticking = false; });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -127,13 +114,10 @@
     update();
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => init());
-  } else {
-    init();
-  }
+  document.readyState === 'loading'
+    ? document.addEventListener('DOMContentLoaded', () => init())
+    : init();
 
-  // Shopify theme editor re-render
   document.addEventListener('shopify:section:load', (e) => init(e.target));
 })();
 </script>
