@@ -1,102 +1,109 @@
 {{ 'people-behind-ingredients.css' | asset_url | stylesheet_tag }}
 
-<section
-  id="PeopleBehindIngredients-{{ section.id }}"
-  class="people-behind-ingredients"
-  style="
-    --pbi-bg: {{ section.settings.background_color }};
-    --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
-    --pbi-text-color: {{ section.settings.text_color }};
-    --pbi-media-height: {{ section.settings.media_height }}px;
-    --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
-    --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
-    --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
-    --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
-  "
+<div
+  id="PeopleBehindIngredientsTrack-{{ section.id }}"
+  class="people-behind-ingredients__track"
+  style="--pbi-slides: {{ section.blocks.size }};"
 >
-  <div class="people-behind-ingredients__inner">
+  <section
+    id="PeopleBehindIngredients-{{ section.id }}"
+    class="people-behind-ingredients"
+    style="
+      --pbi-bg: {{ section.settings.background_color }};
+      --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+      --pbi-text-color: {{ section.settings.text_color }};
+      --pbi-media-height: {{ section.settings.media_height }}px;
+      --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+      --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+      --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+      --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    "
+  >
+    <div class="people-behind-ingredients__inner">
 
-    {% if section.settings.heading != blank %}
-      <div class="people-behind-ingredients__heading">
-        {{ section.settings.heading }}
-      </div>
-    {% endif %}
+      {% if section.settings.heading != blank %}
+        <div class="people-behind-ingredients__heading">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
 
-    {% if section.blocks.size > 0 %}
-      <div
-        id="PeopleBehindIngredientsSlider-{{ section.id }}"
-        class="splide people-behind-ingredients__slider"
-        aria-label="{{ section.settings.heading | strip_html | escape }}"
-      >
-        <div class="splide__track">
-          <ul class="splide__list">
-            {% for block in section.blocks %}
-              <li
-                class="splide__slide people-behind-ingredients__slide"
-                {{ block.shopify_attributes }}
-              >
-                <div class="people-behind-ingredients__media">
-                  {% if block.settings.image != blank %}
-                    {{
-                      block.settings.image
-                      | image_url: width: 1200
-                      | image_tag:
-                        class: 'people-behind-ingredients__image',
-                        loading: 'lazy',
-                        widths: '500,700,900,1200',
-                        sizes: '(max-width: 767px) 100vw, 50vw',
-                        alt: block.settings.title
-                    }}
-                  {% endif %}
-                </div>
+      {% if section.blocks.size > 0 %}
+        <div
+          id="PeopleBehindIngredientsSlider-{{ section.id }}"
+          class="splide people-behind-ingredients__slider"
+          aria-label="{{ section.settings.heading | strip_html | escape }}"
+        >
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                <li
+                  class="splide__slide people-behind-ingredients__slide"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="people-behind-ingredients__media">
+                    {% if block.settings.image != blank %}
+                      {{
+                        block.settings.image
+                        | image_url: width: 1200
+                        | image_tag:
+                          class: 'people-behind-ingredients__image',
+                          loading: 'lazy',
+                          widths: '500,700,900,1200',
+                          sizes: '(max-width: 767px) 100vw, 50vw',
+                          alt: block.settings.title
+                      }}
+                    {% endif %}
+                  </div>
 
-                <div class="people-behind-ingredients__content">
-                  {% if block.settings.title != blank %}
-                    <div class="people-behind-ingredients__title">
-                      {{ block.settings.title | escape }}
-                    </div>
-                  {% endif %}
+                  <div class="people-behind-ingredients__content">
+                    {% if block.settings.title != blank %}
+                      <div class="people-behind-ingredients__title">
+                        {{ block.settings.title | escape }}
+                      </div>
+                    {% endif %}
 
-                  {% if block.settings.description != blank %}
-                    <div class="people-behind-ingredients__description">
-                      {{ block.settings.description }}
-                    </div>
-                  {% endif %}
+                    {% if block.settings.description != blank %}
+                      <div class="people-behind-ingredients__description">
+                        {{ block.settings.description }}
+                      </div>
+                    {% endif %}
 
-                  <div class="people-behind-ingredients__pagination">
-                    <div class="people-behind-ingredients__progress">
-                      {% for item in section.blocks %}
-                        <button
-                          type="button"
-                          class="people-behind-ingredients__progress-item"
-                          aria-label="Go to slide {{ forloop.index }}"
-                        ></button>
-                      {% endfor %}
-                    </div>
+                    <div class="people-behind-ingredients__pagination">
+                      <div class="people-behind-ingredients__progress">
+                        {% for item in section.blocks %}
+                          <button
+                            type="button"
+                            class="people-behind-ingredients__progress-item"
+                            aria-label="Go to slide {{ forloop.index }}"
+                          ></button>
+                        {% endfor %}
+                      </div>
 
-                    <div class="people-behind-ingredients__counter">
-                      <span class="people-behind-ingredients__current">01</span>
-                      <span>/</span>
-                      <span class="people-behind-ingredients__total">
-                        {{ section.blocks.size | prepend: '00' | slice: -2, 2 }}
-                      </span>
+                      <div class="people-behind-ingredients__counter">
+                        <span class="people-behind-ingredients__current">01</span>
+                        <span>/</span>
+                        <span class="people-behind-ingredients__total">
+                          {{ section.blocks.size | prepend: '00' | slice: -2, 2 }}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
-      </div>
-    {% endif %}
+      {% endif %}
 
-  </div>
-</section>
+    </div>
+  </section>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const track = document.querySelector('#PeopleBehindIngredientsTrack-{{ section.id }}');
     const section = document.querySelector('#PeopleBehindIngredients-{{ section.id }}');
-    if (!section || typeof Splide === 'undefined') return;
+    if (!track || !section || typeof Splide === 'undefined') return;
 
     const slider = section.querySelector('.people-behind-ingredients__slider');
     const currentEls = section.querySelectorAll('.people-behind-ingredients__current');
@@ -105,6 +112,8 @@
     if (!slider) return;
 
     const splide = new Splide(slider, {
+      /* 'fade' gives the soft crossfade. Slide changes are driven entirely by
+         scroll position below — no drag, no autoplay, no arrows. */
       type: 'fade',
       rewind: false,
       perPage: 1,
@@ -135,225 +144,64 @@
 
     splide.mount();
 
+    /* ---------- Scroll-driven slider (native scroll, sticky track) ---------- */
+
+    const total = splide.length;
+    let current = splide.index;
+    let ticking = false;
+
+    /* Position within the track expressed as a 0..(total - 1) float. */
+    function progress() {
+      const rect = track.getBoundingClientRect();
+      const travel = track.offsetHeight - window.innerHeight;
+      if (travel <= 0 || total < 2) return 0;
+      const scrolled = Math.min(Math.max(-rect.top, 0), travel);
+      return (scrolled / travel) * (total - 1);
+    }
+
+    function update() {
+      ticking = false;
+
+      const raw = progress();
+
+      /* Hysteresis: only commit once we're clearly inside the next band, so a
+         scroll position sitting on a boundary can't flicker between slides. */
+      let index = current;
+      if (raw > current + 0.55) index = Math.ceil(raw - 0.45);
+      else if (raw < current - 0.55) index = Math.floor(raw + 0.45);
+
+      index = Math.min(Math.max(index, 0), total - 1);
+
+      if (index !== current) {
+        current = index;
+        splide.go(index);
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    /* Clicking a progress bar scrolls the page to that slide's band, so the
+       scroll position and the visible slide never disagree. */
     progressGroups.forEach(function (group) {
       Array.prototype.forEach.call(group.children, function (item, itemIndex) {
-        item.addEventListener('click', function () {
-          if (phase === 'active' && !aligning) {
-            nextAllowed = Date.now() + SETTLE;
-          }
-          splide.go(itemIndex);
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          const travel = track.offsetHeight - window.innerHeight;
+          if (travel <= 0 || total < 2) return;
+          const top = track.offsetTop + travel * (itemIndex / (total - 1));
+          window.scrollTo({ top: top, behavior: 'smooth' });
         });
       });
     });
 
-    /* ---------- Scroll-controlled slider ---------- */
-
-    const body = document.body;
-    const lastIndex = splide.length - 1;
-
-    const SETTLE = 820;   // cooldown between slides (must exceed the 700ms fade)
-    const ALIGN_MS = 480; // duration of the self-driven centering animation
-    const ARM_MS = 140;   // grace after centering before the first slide step
-    const WHEEL_MIN = 3;
-    const TOUCH_MIN = 14;
-    const EXIT_NUDGE = 90;
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let phase = 'idle';       // idle | active | released
-    let aligning = false;
-    let lockedY = 0;
-    let nextAllowed = 0;
-    let touchY = null;
-    let lastScrollY = window.pageYOffset;
-    let rafId = null;
-
-    /* Must be called BEFORE locking: once body is fixed, pageYOffset is 0. */
-    function centerTarget() {
-      const rect = section.getBoundingClientRect();
-      const top = rect.top + window.pageYOffset;
-      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-      const target = top + rect.height / 2 - window.innerHeight / 2;
-      return Math.max(0, Math.min(target, max));
-    }
-
-    function inViewport() {
-      const rect = section.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom > 0;
-    }
-
-    function setLockedY(y) {
-      lockedY = y;
-      body.style.top = -y + 'px';
-    }
-
-    function lockBody(y) {
-      const barWidth = window.innerWidth - document.documentElement.clientWidth;
-      body.style.position = 'fixed';
-      body.style.left = '0';
-      body.style.right = '0';
-      body.style.width = '100%';
-      if (barWidth > 0) body.style.paddingRight = barWidth + 'px';
-      setLockedY(y);
-    }
-
-    function unlockBody() {
-      body.style.position = '';
-      body.style.top = '';
-      body.style.left = '';
-      body.style.right = '';
-      body.style.width = '';
-      body.style.paddingRight = '';
-      const prev = document.documentElement.style.scrollBehavior;
-      document.documentElement.style.scrollBehavior = 'auto';
-      window.scrollTo(0, lockedY);
-      document.documentElement.style.scrollBehavior = prev;
-      lastScrollY = lockedY;
-    }
-
-    /* Animate the *locked* offset — visually identical to a smooth scroll,
-       but nothing native is running, so momentum can't fight it. */
-    function animateTo(target, done) {
-      if (rafId) cancelAnimationFrame(rafId);
-      const from = lockedY;
-      const distance = target - from;
-
-      if (reduceMotion || Math.abs(distance) < 2) {
-        setLockedY(target);
-        done();
-        return;
-      }
-
-      const start = performance.now();
-      (function step(now) {
-        const t = Math.min((now - start) / ALIGN_MS, 1);
-        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        setLockedY(from + distance * eased);
-        if (t < 1) {
-          rafId = requestAnimationFrame(step);
-        } else {
-          rafId = null;
-          done();
-        }
-      })(start);
-    }
-
-    function activate(direction) {
-      const startY = window.pageYOffset;
-      const target = centerTarget();
-
-      phase = 'active';
-      aligning = true;
-      lockBody(startY);
-
-      /* Entering downward starts on slide 1, upward starts on the last slide. */
-      splide.go(direction > 0 ? 0 : lastIndex);
-
-      animateTo(target, function () {
-        aligning = false;
-        nextAllowed = Date.now() + ARM_MS;
-      });
-    }
-
-    function release(direction) {
-      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-      phase = 'released';
-      aligning = false;
-      unlockBody();
-      window.scrollBy({
-        top: direction * EXIT_NUDGE,
-        behavior: reduceMotion ? 'auto' : 'smooth'
-      });
-    }
-
-    /* Returns true when the gesture was consumed. */
-    function handle(direction) {
-      if (phase === 'released') return false;
-
-      if (phase === 'idle') {
-        if (!inViewport()) return false;
-        activate(direction);
-        return true;
-      }
-
-      /* phase === 'active' — swallow everything, including momentum. */
-      if (aligning) return true;
-      if (Date.now() < nextAllowed) return true;
-
-      const atEdge =
-        (direction > 0 && splide.index >= lastIndex) ||
-        (direction < 0 && splide.index <= 0);
-
-      if (atEdge) {
-        release(direction);
-        return true;
-      }
-
-      splide.go(direction > 0 ? '+1' : '-1');
-      nextAllowed = Date.now() + SETTLE;
-      return true;
-    }
-
-    window.addEventListener('wheel', function (e) {
-      if (phase === 'active') {
-        e.preventDefault();
-        if (Math.abs(e.deltaY) >= WHEEL_MIN) handle(e.deltaY > 0 ? 1 : -1);
-        return;
-      }
-      if (Math.abs(e.deltaY) < WHEEL_MIN) return;
-      if (handle(e.deltaY > 0 ? 1 : -1)) e.preventDefault();
-    }, { passive: false });
-
-    window.addEventListener('keydown', function (e) {
-      const down = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
-      const up = e.key === 'ArrowUp' || e.key === 'PageUp';
-      if (!down && !up) return;
-      if (handle(down ? 1 : -1)) e.preventDefault();
-    });
-
-    window.addEventListener('touchstart', function (e) {
-      touchY = e.touches[0].clientY;
-    }, { passive: true });
-
-    window.addEventListener('touchmove', function (e) {
-      if (phase === 'active') e.preventDefault();
-      if (touchY === null) return;
-      const delta = touchY - e.touches[0].clientY;
-      if (Math.abs(delta) < TOUCH_MIN) return;
-      touchY = e.touches[0].clientY;
-      if (handle(delta > 0 ? 1 : -1)) e.preventDefault();
-    }, { passive: false });
-
-    window.addEventListener('touchend', function () { touchY = null; }, { passive: true });
-
-    /* Catches entries that don't come from wheel/key (scrollbar drag, anchor,
-       flick momentum) and re-arms the section once it has fully left. */
-    window.addEventListener('scroll', function () {
-      if (phase === 'active') return;
-
-      const y = window.pageYOffset;
-      const direction = y > lastScrollY ? 1 : -1;
-      lastScrollY = y;
-
-      if (phase === 'released') {
-        const rect = section.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) phase = 'idle';
-        return;
-      }
-
-      if (phase === 'idle' && inViewport()) activate(direction);
-    }, { passive: true });
-
-    window.addEventListener('resize', function () {
-      if (phase === 'active') {
-        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-        aligning = false;
-        unlockBody();
-        phase = 'released';
-      }
-    });
-
-    if (window.Shopify && window.Shopify.designMode) phase = 'released';
+    update();
   });
 </script>
 

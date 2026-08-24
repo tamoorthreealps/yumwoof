@@ -3,6 +3,28 @@
   padding: 0 !important;
 }
 
+/* ---------- Sticky scroll track ---------- */
+
+.people-behind-ingredients__track {
+  position: relative;
+  /* One viewport to read the section, plus one scroll length per extra slide. */
+  height: calc(100vh + (var(--pbi-slides, 1) - 1) * var(--pbi-step, 90vh));
+}
+
+.people-behind-ingredients__track > .people-behind-ingredients {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.people-behind-ingredients__track > .people-behind-ingredients > .people-behind-ingredients__inner {
+  width: 100%;
+}
+
+/* ---------- Section ---------- */
+
 .people-behind-ingredients {
   overflow: hidden;
   color: var(--pbi-text-color);
@@ -181,6 +203,10 @@
 }
 
 @media screen and (max-width: 767px) {
+  .people-behind-ingredients__track {
+    --pbi-step: 75vh;
+  }
+
   .people-behind-ingredients__inner {
     padding: var(--pbi-mobile-padding-top) 20px var(--pbi-mobile-padding-bottom);
   }
