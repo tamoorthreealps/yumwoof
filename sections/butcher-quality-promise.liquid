@@ -78,17 +78,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cards.length < 2) return;
 
     const updateCards = () => {
-      const top = 100;
+      if (window.innerWidth > 767) return;
+
+      const stickyTop = 100;
 
       cards.forEach((card, index) => {
-        if (index === cards.length - 1) return;
+        if (index === cards.length - 1) {
+          card.style.transform = '';
+          return;
+        }
 
         const nextCard = cards[index + 1];
         const nextRect = nextCard.getBoundingClientRect();
 
         const progress = Math.max(
           0,
-          Math.min(1, (top + card.offsetHeight - nextRect.top) / card.offsetHeight)
+          Math.min(
+            1,
+            (stickyTop + card.offsetHeight - nextRect.top) / card.offsetHeight
+          )
         );
 
         const scale = 1 - (progress * 0.06);
@@ -100,23 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let ticking = false;
 
-    window.addEventListener('scroll', () => {
+    const handleScroll = () => {
       if (ticking) return;
 
       requestAnimationFrame(() => {
-        if (window.innerWidth <= 767) {
-          updateCards();
-        } else {
-          cards.forEach(card => {
-            card.style.transform = '';
-          });
-        }
-
+        updateCards();
         ticking = false;
       });
 
       ticking = true;
-    }, { passive: true });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateCards);
 
     updateCards();
   });
