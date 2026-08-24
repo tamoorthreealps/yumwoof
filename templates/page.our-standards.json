@@ -23,6 +23,7 @@
         "principle_Cm7LCR": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/Group_207.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -30,6 +31,7 @@
         "principle_NPBVyJ": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/seed_oli_free.svg",
             "title": "SEED OIL FREE",
             "short_label": "SEED OIL"
           }
@@ -37,6 +39,7 @@
         "principle_iWD7LT": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/non-GMO.svg",
             "title": "NON GMO",
             "short_label": "NON GMO"
           }
@@ -44,6 +47,7 @@
         "principle_wLKdrU": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/trusted-partners.svg",
             "title": "ROASTED & AIR-DRIED",
             "short_label": "AIR DRIED"
           }
@@ -51,6 +55,7 @@
         "principle_iRtPQR": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/wild-caught-fish.svg",
             "title": "INDEPENDENTLY TESTED",
             "short_label": "TESTED"
           }
@@ -58,6 +63,7 @@
         "principle_PYyFQ7": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/gently-air-dried.svg",
             "title": "GENTLY AIR-DRIED",
             "short_label": "AIR DRIED"
           }
@@ -65,6 +71,7 @@
         "principle_QXgRb4": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/third-party-tested.svg",
             "title": "THIRD-PARTY TESTED",
             "short_label": "3RD PARTY"
           }
@@ -72,6 +79,7 @@
         "principle_6yedeC": {
           "type": "principle",
           "settings": {
+            "icon": "shopify://shop_images/heavy-metal-tested.svg",
             "title": "HEAVY METAL TESTED",
             "short_label": "HEAVY METAL"
           }
@@ -92,10 +100,12 @@
         "heading": "<p>THE BUTCHER QUALITY™ STANDARD</p>",
         "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p>",
         "principles_label": "EVERY YUMWOOF RECIPE IS GUIDED BY THESE 8 PRINCIPLES:",
-        "desktop_background_color": "#0B0B0B",
-        "mobile_background_color": "#0B0B0B",
-        "text_color": "#FFFFFF",
-        "line_color": "#5B5B5B"
+        "desktop_background_color": "#FFF9EF",
+        "desktop_background_image": "shopify://shop_images/Hero_Scrim.webp",
+        "mobile_background_color": "#FFF9EF",
+        "mobile_background_image": "shopify://shop_images/Hero_Scrim_1.webp",
+        "text_color": "#FFF9EF",
+        "line_color": "#FFF9EF"
       }
     }
   },
