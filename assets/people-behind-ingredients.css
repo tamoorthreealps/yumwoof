@@ -132,7 +132,7 @@
 }
 
 .people-behind-ingredients__slider .splide__track {
-  overflow: visible;
+  overflow: hidden;
 }
 
 .people-behind-ingredients__slider .splide__list {
