@@ -84,8 +84,8 @@
   display: none;
 }
 
-.butcher-quality-standard__description p:last-child {
-  margin-bottom: 0;
+.butcher-quality-standard__description p:not(:empty):last-of-type {
+  margin-bottom: 13px;
 }
 
 .butcher-quality-standard__principles {
