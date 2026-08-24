@@ -37,7 +37,7 @@
             </li>
           {% endfor %}
         </ol>
-      {% else %}
+      {% elsif section.settings.list_type == 'bulleted' %}
         <ul class="testing-standard__list">
           {% for block in section.blocks %}
             <li class="testing-standard__item" {{ block.shopify_attributes }}>
@@ -45,6 +45,14 @@
             </li>
           {% endfor %}
         </ul>
+      {% else %}
+        <div class="testing-standard__list testing-standard__list--none">
+          {% for block in section.blocks %}
+            <div class="testing-standard__item" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {% endfor %}
+        </div>
       {% endif %}
     {% endif %}
   </div>
@@ -116,6 +124,10 @@
         {
           "value": "numbered",
           "label": "Numbers"
+        },
+        {
+          "value": "none",
+          "label": "None"
         }
       ],
       "default": "bulleted"
