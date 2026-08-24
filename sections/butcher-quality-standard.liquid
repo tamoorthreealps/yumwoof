@@ -84,7 +84,44 @@
     </div>
   </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('.butcher-quality-standard');
 
+  if (!sections.length) return;
+
+  const updateParallax = () => {
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      if (rect.bottom < 0 || rect.top > windowHeight) return;
+
+      const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+      const offset = (progress - 0.5) * 100;
+
+      section.style.setProperty('--bqs-parallax-y', `${offset}px`);
+    });
+  };
+
+  let ticking = false;
+
+  const handleScroll = () => {
+    if (ticking) return;
+
+    requestAnimationFrame(() => {
+      updateParallax();
+      ticking = false;
+    });
+
+    ticking = true;
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  updateParallax();
+});
+</script>
 {% schema %}
 {
   "name": "Butcher Quality Standard",
