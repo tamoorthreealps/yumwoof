@@ -108,7 +108,7 @@
       /* 'fade' gives the soft crossfade. Note: fade mode has no drag —
          to bring swipe back, use type: 'loop' and rewind: false instead. */
       type: 'fade',
-      rewind: true,
+      rewind: false,
       perPage: 1,
       perMove: 1,
       arrows: false,
@@ -144,6 +144,100 @@
         });
       });
     });
+
+    /* ---------- Scroll-controlled slider ---------- */
+
+    const lastIndex = splide.length - 1;
+    const SETTLE = 850;   // must exceed the 700ms transition
+    const SNAP = 0.35;    // how close to centered before we take over
+
+    let busy = false;
+    let released = false; // true after we hand scrolling back, until section leaves view
+    let touchY = null;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function offset() {
+      const rect = section.getBoundingClientRect();
+      const sectionCenter = rect.top + rect.height / 2;
+      return sectionCenter - window.innerHeight / 2;
+    }
+
+    function inRange() {
+      const rect = section.getBoundingClientRect();
+      // Taller than the viewport: engaged whenever it fills the screen.
+      if (rect.height >= window.innerHeight) {
+        return rect.top <= 0 && rect.bottom >= window.innerHeight;
+      }
+      return Math.abs(offset()) < window.innerHeight * SNAP;
+    }
+
+    function centerSection() {
+      const target = window.pageYOffset + offset();
+      window.scrollTo({ top: target, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+
+    function handle(direction) {
+      // direction: 1 = down, -1 = up
+      if (!inRange()) {
+        released = false;
+        return false;
+      }
+      if (released) return false;
+
+      const atEdge =
+        (direction > 0 && splide.index >= lastIndex) ||
+        (direction < 0 && splide.index <= 0);
+
+      if (atEdge) {
+        released = true;   // let the page carry on past the section
+        return false;
+      }
+
+      if (busy) return true; // swallow input mid-transition
+
+      busy = true;
+      centerSection();
+      splide.go(direction > 0 ? '+1' : '-1');
+      setTimeout(function () { busy = false; }, SETTLE);
+      return true;
+    }
+
+    window.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaY) < 2) return;
+      if (handle(e.deltaY > 0 ? 1 : -1)) e.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener('keydown', function (e) {
+      const down = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
+      const up = e.key === 'ArrowUp' || e.key === 'PageUp';
+      if (!down && !up) return;
+      if (handle(down ? 1 : -1)) e.preventDefault();
+    });
+
+    window.addEventListener('touchstart', function (e) {
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function (e) {
+      if (touchY === null) return;
+      const delta = touchY - e.touches[0].clientY;
+      if (Math.abs(delta) < 12) return;
+      touchY = e.touches[0].clientY;
+      if (handle(delta > 0 ? 1 : -1)) e.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener('touchend', function () { touchY = null; }, { passive: true });
+
+    // Re-arm the lock once the section has left the viewport in either direction.
+    window.addEventListener('scroll', function () {
+      if (!released) return;
+      const rect = section.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) released = false;
+    }, { passive: true });
+
+    // Editor preview: don't fight the theme editor.
+    if (window.Shopify && window.Shopify.designMode) released = true;
   });
 </script>
 
