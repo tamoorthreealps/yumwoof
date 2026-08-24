@@ -172,9 +172,10 @@
       "settings": {
         "heading": "<h2>OUR BUTCHER QUALITY PROMISE</h2>",
         "description": "<p>From sourcing to testing, these commitments guide every YUMWOOF recipe.</p>",
-        "desktop_background_color": "#FFF9EF",
-        "mobile_background_color": "#FFF9EF",
+        "desktop_background_color": "#fff9ef",
+        "mobile_background_color": "#fff9ef",
         "text_color": "#000000",
+        "card_text_color": "#FFF9EF",
         "desktop_padding_top": 0,
         "desktop_padding_bottom": 125,
         "mobile_padding_top": 0,
