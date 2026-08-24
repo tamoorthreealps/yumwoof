@@ -101,7 +101,7 @@
         "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p><p>Because dogs deserve food made with the same care we'd expect for our family.</p>",
         "principles_label": "Every Yumwoof recipe is guided by these 8 principles:",
         "desktop_background_color": "#fff9ef",
-        "desktop_background_image": "shopify://shop_images/Hero_Scrim.webp",
+        "desktop_background_image": "shopify://shop_images/Quality-Section-Img-Desktop.jpg",
         "mobile_background_color": "#fff9ef",
         "mobile_background_image": "shopify://shop_images/Hero_Scrim_1.webp",
         "text_color": "#fff9ef",
@@ -398,8 +398,8 @@
       "type": "standard-in-every-bag",
       "name": "Standard In Every Bag",
       "settings": {
-        "desktop_background_color": "#FFF9EF",
-        "mobile_background_color": "#FFF9EF",
+        "desktop_background_color": "#fff9ef",
+        "mobile_background_color": "#fff9ef",
         "desktop_padding_top": 0,
         "desktop_padding_bottom": 100,
         "mobile_padding_top": 0,
@@ -411,7 +411,7 @@
         "image": "shopify://shop_images/Membership_Background.jpg",
         "heading_color": "#000000",
         "description_color": "#000000",
-        "button_color": "#F8B95B",
+        "button_color": "#f8b95b",
         "button_hover_color": "#000000"
       }
     }
