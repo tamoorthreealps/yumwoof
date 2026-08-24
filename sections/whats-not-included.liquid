@@ -36,14 +36,19 @@
     {% endif %}
 
     {% if section.blocks.size > 0 %}
-      {% assign half = section.blocks.size | divided_by: 2.0 | ceil %}
+      {%- assign half = section.blocks.size | divided_by: 2.0 | ceil -%}
+      {%- comment -%}
+        8 copies per track. The animation moves 50% (4 copies), so the loop is
+        seamless and 4 copies of a row are always wider than any viewport.
+      {%- endcomment -%}
+      {%- assign copies = 8 -%}
 
       <div class="whats-not-included__marquee">
 
         {%- comment -%} Row 1 — first half of the blocks {%- endcomment -%}
         <div class="whats-not-included__row">
           <div class="whats-not-included__track">
-            {% for i in (1..2) %}
+            {% for i in (1..copies) %}
               <div
                 class="whats-not-included__group"
                 {% unless forloop.first %}
@@ -69,7 +74,7 @@
         {%- comment -%} Row 2 — second half of the blocks {%- endcomment -%}
         <div class="whats-not-included__row whats-not-included__row--reverse">
           <div class="whats-not-included__track">
-            {% for i in (1..2) %}
+            {% for i in (1..copies) %}
               <div
                 class="whats-not-included__group"
                 {% unless forloop.first %}
@@ -95,14 +100,12 @@
       </div>
     {% endif %}
 
-    {% if section.settings.link_text != blank and section.settings.link_url != blank %}
+    {% if section.settings.link_text != blank %}
       <div class="whats-not-included__link-wrap">
         
-          href="{{ section.settings.link_url }}"
+          href="{{ section.settings.link_url | default: '#' }}"
           class="whats-not-included__link"
-        >
-          {{ section.settings.link_text | escape }}
-        </a>
+        >{{ section.settings.link_text | escape }}</a>
       </div>
     {% endif %}
 
@@ -190,10 +193,10 @@
       "label": "Scroll duration",
       "info": "Higher = slower scroll.",
       "min": 10,
-      "max": 80,
-      "step": 1,
+      "max": 120,
+      "step": 2,
       "unit": "s",
-      "default": 35
+      "default": 60
     },
     {
       "type": "checkbox",
