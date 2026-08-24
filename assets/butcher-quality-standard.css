@@ -22,7 +22,7 @@
   background-color: var(--bqs-desktop-bg);
   background-image: var(--bqs-desktop-image);
   background-position: center;
-  background-size: 100% 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   will-change: transform;
   transform: translate3d(0, var(--bqs-parallax-y, 0px), 0);
@@ -181,7 +181,7 @@ display: block;
   .section-butcher-quality-standard {
     margin:0 0 56px;
   }
-  
+
   .butcher-quality-standard::before {
     background-color: var(--bqs-mobile-bg);
     background-image: var(--bqs-mobile-image);
