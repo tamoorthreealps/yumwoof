@@ -1,0 +1,268 @@
+{{ 'people-behind-ingredients.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="PeopleBehindIngredients-{{ section.id }}"
+  class="people-behind-ingredients"
+  style="
+    --pbi-bg: {{ section.settings.background_color }};
+    --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+    --pbi-text-color: {{ section.settings.text_color }};
+    --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  "
+>
+  <div class="people-behind-ingredients__inner">
+
+    {% if section.settings.heading != blank %}
+      <div class="people-behind-ingredients__heading">
+        {{ section.settings.heading }}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div
+        id="PeopleBehindIngredientsSlider-{{ section.id }}"
+        class="splide people-behind-ingredients__slider"
+        aria-label="{{ section.settings.heading | strip_html | escape }}"
+      >
+        <div class="splide__track">
+          <ul class="splide__list">
+            {% for block in section.blocks %}
+              <li
+                class="splide__slide people-behind-ingredients__slide"
+                {{ block.shopify_attributes }}
+              >
+                <div class="people-behind-ingredients__media">
+                  {% if block.settings.image != blank %}
+                    {{
+                      block.settings.image
+                      | image_url: width: 1200
+                      | image_tag:
+                        class: 'people-behind-ingredients__image',
+                        loading: 'lazy',
+                        widths: '500,700,900,1200',
+                        sizes: '(max-width: 767px) 100vw, 50vw',
+                        alt: block.settings.title
+                    }}
+                  {% endif %}
+                </div>
+
+                <div class="people-behind-ingredients__content">
+                  {% if block.settings.title != blank %}
+                    <div class="people-behind-ingredients__title">
+                      {{ block.settings.title | escape }}
+                    </div>
+                  {% endif %}
+
+                  {% if block.settings.description != blank %}
+                    <div class="people-behind-ingredients__description">
+                      {{ block.settings.description }}
+                    </div>
+                  {% endif %}
+
+                  <div class="people-behind-ingredients__pagination">
+                    <div class="people-behind-ingredients__progress">
+                      {% for item in section.blocks %}
+                        <span class="people-behind-ingredients__progress-item"></span>
+                      {% endfor %}
+                    </div>
+
+                    <div class="people-behind-ingredients__counter">
+                      <span class="people-behind-ingredients__current">01</span>
+                      <span>/</span>
+                      <span class="people-behind-ingredients__total">
+                        {{ section.blocks.size | prepend: '00' | slice: -2, 2 }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.querySelector('#PeopleBehindIngredients-{{ section.id }}');
+    if (!section || typeof Splide === 'undefined') return;
+
+    const slider = section.querySelector('.people-behind-ingredients__slider');
+    const current = section.querySelector('.people-behind-ingredients__current');
+    const progressItems = section.querySelectorAll('.people-behind-ingredients__progress-item');
+
+    if (!slider) return;
+
+    const splide = new Splide(slider, {
+      type: 'loop',
+      perPage: 1,
+      perMove: 1,
+      arrows: false,
+      pagination: false,
+      drag: true,
+      speed: 900,
+      easing: 'ease',
+      rewind: false,
+      autoplay: false,
+      gap: 0
+    });
+
+    splide.on('mounted move', function () {
+      const index = splide.index;
+      const number = String(index + 1).padStart(2, '0');
+
+      if (current) {
+        current.textContent = number;
+      }
+
+      progressItems.forEach(function (item, itemIndex) {
+        item.classList.toggle('is-active', itemIndex === index);
+      });
+    });
+
+    splide.mount();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "People Behind Ingredients",
+  "tag": "section",
+  "class": "section-people-behind-ingredients",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>THE PEOPLE BEHIND OUR INGREDIENTS</h2>"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "person",
+      "name": "Ingredient Partner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "GROWERS"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "People Behind Ingredients",
+      "blocks": [
+        {
+          "type": "person",
+          "settings": {
+            "title": "GROWERS"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "title": "FISHERMEN"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "title": "RANCHERS"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "title": "SUPPLIERS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
