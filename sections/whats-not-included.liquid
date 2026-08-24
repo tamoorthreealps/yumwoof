@@ -1,0 +1,306 @@
+{{ 'whats-not-included.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="WhatsNotIncluded-{{ section.id }}"
+  class="whats-not-included"
+  style="
+    --wni-bg: {{ section.settings.background_color }};
+    --wni-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+    --wni-heading-color: {{ section.settings.heading_color }};
+    --wni-description-color: {{ section.settings.description_color }};
+    --wni-pill-text-color: {{ section.settings.pill_text_color }};
+    --wni-pill-border-color: {{ section.settings.pill_border_color }};
+    --wni-pill-bg-color: {{ section.settings.pill_background_color }};
+    --wni-link-color: {{ section.settings.link_color }};
+    --wni-link-hover-color: {{ section.settings.link_hover_color }};
+    --wni-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --wni-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --wni-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --wni-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  "
+>
+  <div class="whats-not-included__inner">
+
+    {% if section.settings.heading != blank %}
+      <div class="whats-not-included__heading">
+        {{ section.settings.heading }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="whats-not-included__description">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="whats-not-included__marquee">
+        <div class="whats-not-included__track">
+          <div class="whats-not-included__group">
+            {% for block in section.blocks %}
+              <div
+                class="whats-not-included__pill"
+                {{ block.shopify_attributes }}
+              >
+                <span>×</span>
+                {{ block.settings.text | escape }}
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="whats-not-included__group" aria-hidden="true">
+            {% for block in section.blocks %}
+              <div class="whats-not-included__pill">
+                <span>×</span>
+                {{ block.settings.text | escape }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.link_text != blank and section.settings.link_url != blank %}
+      <div class="whats-not-included__link-wrap">
+        <a
+          href="{{ section.settings.link_url }}"
+          class="whats-not-included__link"
+        >
+          {{ section.settings.link_text | escape }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "What's Not Included",
+  "tag": "section",
+  "class": "section-whats-not-included",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>WHAT'S NOT INCLUDED MATTERS TOO</h2>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every Yumwoof recipe is free from ingredients we believe don't belong in your dog's bowl.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Main Text Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Pill Colors"
+    },
+    {
+      "type": "color",
+      "id": "pill_text_color",
+      "label": "Pill text color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "pill_border_color",
+      "label": "Pill border color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "pill_background_color",
+      "label": "Pill background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "+ See Banned Ingredients List"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#8D4B42"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "NO GMO INGREDIENTS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "What's Not Included",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO GMO INGREDIENTS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO SYNTHETICS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO SEED OILS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO MEAT MEALS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO BY-PRODUCTS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO NATURAL FLAVORS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO PRESERVATIVES"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO FILLERS"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO ADDED SUGAR"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO CARRAGEENAN"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
