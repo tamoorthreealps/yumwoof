@@ -174,37 +174,52 @@
   .whats-not-included__heading h1,
   .whats-not-included__heading h2,
   .whats-not-included__heading h3 {
-    font-size: 18px;
-    letter-spacing: 2px;
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.80px;
   }
 
   .whats-not-included__description {
-    margin-top: 9px;
-    font-size: 9px;
+        margin-top: 4px;
+        font-size: 14px;
+        line-height: 20px;
   }
 
   .whats-not-included__marquee {
-    margin-top: 22px;
-    gap: 10px;
+margin-top: 24px;
+        gap: 16px;
   }
 
   .whats-not-included__group {
-    gap: 10px;
-    padding-right: 10px;
+        gap: 12px;
+        padding-right: 12px;
   }
 
   .whats-not-included__pill {
-    padding: 7px 12px;
-    gap: 5px;
-    font-size: 8px;
-    letter-spacing: 1px;
+        padding: 7.8px 12.6px 5px;
+        gap: 8px;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0;
+        align-items: baseline;
   }
+.whats-not-included__pill span {
+    line-height: 0;
+    width: 9px;
+    height: 9px;
+}
+.whats-not-included__pill span svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+      .whats-not-included__link-wrap {
+        margin-top: 30px;
+    }
 
-  .whats-not-included__link-wrap {
-    margin-top: 25px;
-  }
-
-  .whats-not-included__link {
-    font-size: 9px;
-  }
+      .whats-not-included__link {
+        font-size: 16px;
+        line-height: 28px;
+        padding-bottom: 8px;
+    }
 }
