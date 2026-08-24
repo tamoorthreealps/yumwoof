@@ -1,0 +1,53 @@
+.testing-standard {
+  position: relative;
+  background-color: var(--ts-desktop-bg-color);
+  background-image: var(--ts-desktop-bg-image);
+  background-size: cover;
+  background-position: center;
+  color: var(--ts-text-color);
+}
+
+.testing-standard__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.testing-standard__heading {
+    margin: 0 0 12px;
+    font-size: 80px;
+    line-height: 80px;
+    font-family: 'TAYRosemary';
+    letter-spacing: -0.80px;
+}
+
+.testing-standard__description {
+  margin: 0 0 41px;
+}
+
+.testing-standard__description p {
+      margin: 0;
+    font-size: 20px;
+    line-height: 28px;
+    font-family: 'TAYRosemary';
+    letter-spacing: 0;
+}
+
+.testing-standard__list {
+  margin: 0;
+  padding-left: 1.5em;
+}
+
+.testing-standard__item {
+  margin: 0;
+}
+
+.testing-standard__list:not(ol) {
+  list-style-type: disc;
+}
+
+@media screen and (max-width: 749px) {
+  .testing-standard {
+    background-color: var(--ts-mobile-bg-color);
+    background-image: var(--ts-mobile-bg-image);
+  }
+}
