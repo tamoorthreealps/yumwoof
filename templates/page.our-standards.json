@@ -104,8 +104,8 @@
         "desktop_background_image": "shopify://shop_images/Hero_Scrim.webp",
         "mobile_background_color": "#FFF9EF",
         "mobile_background_image": "shopify://shop_images/Hero_Scrim_1.webp",
-        "text_color": "#f6efe2",
-        "line_color": "#5b5b5b",
+        "text_color": "#FFF9EF",
+        "line_color": "#FFF9EF",
         "circle_border_color": "#777777"
       }
     }
