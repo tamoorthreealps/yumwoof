@@ -5,11 +5,15 @@
   background-size: cover;
   background-position: center;
   color: var(--ts-text-color);
+  padding:120px 0 164px;
 }
 
 .testing-standard__inner {
-  position: relative;
-  z-index: 1;
+    position: relative;
+    z-index: 1;
+    max-width: 1224px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
 .testing-standard__heading {
@@ -22,6 +26,7 @@
 
 .testing-standard__description {
   margin: 0 0 41px;
+  max-width: 516px;
 }
 
 .testing-standard__description p {
@@ -33,12 +38,19 @@
 }
 
 .testing-standard__list {
-  margin: 0;
-  padding-left: 1.5em;
+    margin: 0;
+    padding-left: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .testing-standard__item {
-  margin: 0;
+    margin: 0;
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: -0.32px;
+    font-family: 'TAY Birdie';
 }
 
 .testing-standard__list:not(ol) {
