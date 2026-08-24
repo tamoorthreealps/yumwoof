@@ -260,6 +260,11 @@ height: auto;
         gap: 0;
   }
 
+  .people-behind-ingredients__counter {
+        position: absolute;
+    top: 0;
+  }
+
   .people-behind-ingredients__progress-item::after {
     display:none;
   }
