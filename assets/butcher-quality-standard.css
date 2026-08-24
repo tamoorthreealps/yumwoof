@@ -1,174 +1,204 @@
-/* ==========================================================================
-   Butcher Quality Standard (.bqs)
-   Paired with sections/butcher-quality-standard.liquid
-   All theme-editor values arrive as CSS custom properties on .bqs via an
-   inline style attribute (mobile-first: --bqs-*, desktop: --bqs-*-d).
-   One breakpoint. No JavaScript.
-   ========================================================================== */
-
-.bqs {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
-  min-height: var(--bqs-min-h);
-  padding: var(--bqs-pad-top) var(--bqs-pad-inline) var(--bqs-pad-bottom);
-  background-color: var(--bqs-bg);
-  background-image: var(--bqs-bg-image, none);
-  background-size: cover;
-  background-position: var(--bqs-bg-position, center center);
-  background-repeat: no-repeat;
-  color: var(--bqs-text);
+.section-butcher-quality-standard {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.bqs__overlay {
+.butcher-quality-standard {
+  --bqs-content-width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: var(--bqs-text-color);
+  background-color: var(--bqs-desktop-bg);
+  background-image: var(--bqs-desktop-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.butcher-quality-standard::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, var(--bqs-overlay-top)),
-    rgba(0, 0, 0, var(--bqs-overlay-bottom))
+  z-index: 2;
+  right: -2%;
+  bottom: -1px;
+  left: -2%;
+  height: 13px;
+  background: var(--bqs-desktop-bg);
+  clip-path: polygon(
+    0 55%, 2% 40%, 4% 58%, 6% 44%, 8% 62%, 10% 43%, 12% 58%,
+    14% 42%, 16% 60%, 18% 44%, 20% 58%, 22% 43%, 24% 61%, 26% 45%,
+    28% 59%, 30% 42%, 32% 61%, 34% 44%, 36% 58%, 38% 43%, 40% 60%,
+    42% 44%, 44% 59%, 46% 42%, 48% 60%, 50% 43%, 52% 59%, 54% 44%,
+    56% 61%, 58% 43%, 60% 58%, 62% 42%, 64% 60%, 66% 44%, 68% 59%,
+    70% 43%, 72% 61%, 74% 44%, 76% 58%, 78% 42%, 80% 60%, 82% 44%,
+    84% 59%, 86% 43%, 88% 61%, 90% 44%, 92% 58%, 94% 42%, 96% 60%,
+    98% 44%, 100% 57%, 100% 100%, 0 100%
   );
 }
 
-.bqs__edge {
-  position: absolute;
-  inset-inline: 0;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  pointer-events: none;
-  user-select: none;
-}
-
-.bqs__edge--top { top: -1px; }
-.bqs__edge--bottom { bottom: -1px; }
-
-/* Heading ---------------------------------------------------------------- */
-
-.bqs__title {
-  max-width: 12ch;
-  margin: 0;
-  font-size: var(--bqs-h-size);
-  line-height: 0.94;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--bqs-heading);
-}
-
-.bqs__title sup {
-  font-size: 0.28em;
-  line-height: 1;
-  vertical-align: super;
-}
-
-/* Lower content ---------------------------------------------------------- */
-
-.bqs__foot {
+.butcher-quality-standard__inner {
+  width: min(var(--bqs-content-width), 100%);
+  min-height: 610px;
+  margin: 0 auto;
+  padding: 55px 80px 42px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
-.bqs__copy {
-  max-width: 46ch;
-  font-size: var(--bqs-body-size);
-  line-height: 1.5;
+.butcher-quality-standard__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.bqs__copy > :first-child { margin-top: 0; }
-.bqs__copy > :last-child { margin-bottom: 0; }
-.bqs__copy p { margin: 0 0 1em; }
-.bqs__copy a { color: inherit; }
-
-.bqs__rule {
-  width: 100%;
-  height: 1px;
+.butcher-quality-standard__heading {
+  max-width: 430px;
   margin: 0;
-  border: 0;
-  background: var(--bqs-rule);
+  color: var(--bqs-text-color);
+  font: inherit;
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 0.98;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
-.bqs__eyebrow {
-  margin: 0;
+.butcher-quality-standard__description {
+  max-width: 345px;
+  margin-top: auto;
+  padding-bottom: 48px;
   font-size: 11px;
-  line-height: 1.4;
+  line-height: 1.45;
+}
+
+.butcher-quality-standard__description p {
+  margin: 0 0 13px;
+  color: var(--bqs-text-color);
+}
+
+.butcher-quality-standard__description p:last-child {
+  margin-bottom: 0;
+}
+
+.butcher-quality-standard__principles {
+  border-top: 1px solid var(--bqs-line-color);
+  padding-top: 10px;
+}
+
+.butcher-quality-standard__principles-label {
+  margin-bottom: 17px;
+  color: var(--bqs-text-color);
+  font-size: 8px;
+  line-height: 1.2;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-/* Principle badges ------------------------------------------------------- */
-
-.bqs__badges {
+.butcher-quality-standard__grid {
   display: grid;
-  grid-template-columns: repeat(var(--bqs-badge-cols), 1fr);
-  gap: var(--bqs-badge-gap);
-  justify-items: center;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 13px;
   align-items: start;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
-.bqs__badge {
+.butcher-quality-standard__item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.butcher-quality-standard__circle {
+  width: min(100%, 78px);
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--bqs-badge-size);
-  height: var(--bqs-badge-size);
-  overflow: hidden;
-  border: 1px solid var(--bqs-badge-border);
+  border: 1px solid var(--bqs-circle-border);
   border-radius: 50%;
-  text-align: center;
+  box-sizing: border-box;
 }
 
-.bqs__badge img,
-.bqs__badge svg {
+.butcher-quality-standard__icon {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 82%;
+  height: 82%;
   object-fit: contain;
 }
 
-.bqs__badge-text {
+.butcher-quality-standard__fallback-icon {
   padding: 8px;
-  font-size: 9px;
+  color: var(--bqs-text-color);
+  font-size: 8px;
   line-height: 1.15;
-  letter-spacing: 0.06em;
+  text-align: center;
   text-transform: uppercase;
-  color: var(--bqs-text);
 }
 
-/* Desktop ---------------------------------------------------------------- */
+.butcher-quality-standard__item-title {
+  display: none;
+}
 
-@media screen and (min-width: 990px) {
-  .bqs {
-    --bqs-bg: var(--bqs-bg-d);
-    --bqs-bg-image: var(--bqs-bg-image-d, none);
-    --bqs-min-h: var(--bqs-min-h-d);
-    --bqs-pad-top: var(--bqs-pad-top-d);
-    --bqs-pad-bottom: var(--bqs-pad-bottom-d);
-    --bqs-pad-inline: var(--bqs-pad-inline-d);
-    --bqs-h-size: var(--bqs-h-size-d);
-    --bqs-badge-size: var(--bqs-badge-size-d);
-    --bqs-badge-cols: var(--bqs-badge-cols-d);
-    gap: 64px;
+@media screen and (max-width: 767px) {
+  .butcher-quality-standard {
+    background-color: var(--bqs-mobile-bg);
+    background-image: var(--bqs-mobile-image);
   }
 
-  .bqs__foot { gap: 32px; }
-  .bqs__badges { justify-items: start; }
-}
+  .butcher-quality-standard::after {
+    background: var(--bqs-mobile-bg);
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  .bqs *,
-  .bqs *::before,
-  .bqs *::after {
-    animation: none !important;
-    transition: none !important;
+  .butcher-quality-standard__inner {
+    min-height: 0;
+    padding: 31px 10px 43px;
+  }
+
+  .butcher-quality-standard__heading {
+    max-width: 245px;
+    font-size: clamp(29px, 8.2vw, 42px);
+    line-height: 0.91;
+  }
+
+  .butcher-quality-standard__description {
+    max-width: 270px;
+    margin-top: auto;
+    padding-top: 185px;
+    padding-bottom: 29px;
+    font-size: 8px;
+    line-height: 1.35;
+  }
+
+  .butcher-quality-standard__description p {
+    margin-bottom: 9px;
+  }
+
+  .butcher-quality-standard__principles {
+    padding-top: 9px;
+  }
+
+  .butcher-quality-standard__principles-label {
+    margin-bottom: 12px;
+    font-size: 6px;
+    letter-spacing: 0.08em;
+  }
+
+  .butcher-quality-standard__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px 11px;
+    justify-items: start;
+  }
+
+  .butcher-quality-standard__item {
+    width: 100%;
+    align-items: center;
+  }
+
+  .butcher-quality-standard__circle {
+    width: min(100%, 67px);
+  }
+
+  .butcher-quality-standard__item-title {
+    display: none;
   }
 }

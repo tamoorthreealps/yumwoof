@@ -1,210 +1,247 @@
-{%- comment -%}
-  Section: Butcher Quality Standard (.bqs)
-  Styles: assets/butcher-quality-standard.css
-  Theme-editor values are passed to the stylesheet as CSS custom properties.
-  Mobile-first vars (--bqs-*) plus desktop overrides (--bqs-*-d).
-{%- endcomment -%}
-
 {{ 'butcher-quality-standard.css' | asset_url | stylesheet_tag }}
 
-{%- liquid
-  assign s = section.settings
-  assign badges = section.blocks | where: 'type', 'principle'
-  assign badge_cols = badges.size | at_least: 1
--%}
-
 <section
-  class="bqs"
-  {% if s.section_id != blank %}id="{{ s.section_id }}"{% endif %}
-  aria-labelledby="bqs-title-{{ section.id }}"
+  id="ButcherQualityStandard-{{ section.id }}"
+  class="butcher-quality-standard"
   style="
-    --bqs-bg: {{ s.mobile_bg_color }};
-    {% if s.mobile_bg_image %}--bqs-bg-image: url('{{ s.mobile_bg_image | image_url: width: 1200 }}');{% endif %}
-    --bqs-bg-position: {{ s.bg_position }};
-    --bqs-text: {{ s.text_color }};
-    --bqs-heading: {{ s.heading_color }};
-    --bqs-rule: {{ s.divider_color }};
-    --bqs-badge-border: {{ s.badge_border_color }};
-    --bqs-overlay-top: {{ s.overlay_top | divided_by: 100.0 }};
-    --bqs-overlay-bottom: {{ s.overlay_bottom | divided_by: 100.0 }};
-    --bqs-body-size: {{ s.body_size }}px;
-    --bqs-badge-gap: {{ s.badge_gap }}px;
-    --bqs-min-h: {{ s.min_height_mobile }}px;
-    --bqs-pad-top: {{ s.padding_top_mobile }}px;
-    --bqs-pad-bottom: {{ s.padding_bottom_mobile }}px;
-    --bqs-pad-inline: {{ s.padding_inline_mobile }}px;
-    --bqs-h-size: {{ s.heading_size_mobile }}px;
-    --bqs-badge-size: {{ s.badge_size_mobile }}px;
-    --bqs-badge-cols: 2;
-    --bqs-bg-d: {{ s.desktop_bg_color }};
-    {% if s.desktop_bg_image %}--bqs-bg-image-d: url('{{ s.desktop_bg_image | image_url: width: 2400 }}');{% endif %}
-    --bqs-min-h-d: {{ s.min_height }}px;
-    --bqs-pad-top-d: {{ s.padding_top }}px;
-    --bqs-pad-bottom-d: {{ s.padding_bottom }}px;
-    --bqs-pad-inline-d: {{ s.padding_inline }}px;
-    --bqs-h-size-d: {{ s.heading_size }}px;
-    --bqs-badge-size-d: {{ s.badge_size }}px;
-    --bqs-badge-cols-d: {{ badge_cols }};
+    --bqs-desktop-bg: {{ section.settings.desktop_background_color }};
+    --bqs-mobile-bg: {{ section.settings.mobile_background_color }};
+    --bqs-text-color: {{ section.settings.text_color }};
+    --bqs-line-color: {{ section.settings.line_color }};
+    --bqs-circle-border: {{ section.settings.circle_border_color }};
+    --bqs-desktop-image: {% if section.settings.desktop_background_image != blank %}url('{{ section.settings.desktop_background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+    --bqs-mobile-image: {% if section.settings.mobile_background_image != blank %}url('{{ section.settings.mobile_background_image | image_url: width: 1600 }}'){% else %}none{% endif %};
   "
 >
-  <span class="bqs__overlay" aria-hidden="true"></span>
+  <div class="butcher-quality-standard__inner">
+    <div class="butcher-quality-standard__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="butcher-quality-standard__heading">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {% endif %}
 
-  {%- if s.edge_top -%}
-    <img
-      class="bqs__edge bqs__edge--top"
-      src="{{ s.edge_top | image_url: width: 2400 }}"
-      alt=""
-      role="presentation"
-      loading="lazy"
-      width="{{ s.edge_top.width }}"
-      height="{{ s.edge_top.height }}"
-    >
-  {%- endif -%}
+      {% if section.settings.description_1 != blank or section.settings.description_2 != blank %}
+        <div class="butcher-quality-standard__description">
+          {% if section.settings.description_1 != blank %}
+            <p>{{ section.settings.description_1 }}</p>
+          {% endif %}
 
-  {%- if s.heading != blank -%}
-    <h2 class="bqs__title" id="bqs-title-{{ section.id }}">
-      {{ s.heading }}{% if s.trademark %}<sup>&trade;</sup>{% endif %}
-    </h2>
-  {%- endif -%}
+          {% if section.settings.description_2 != blank %}
+            <p>{{ section.settings.description_2 }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
 
-  <div class="bqs__foot">
-    {%- if s.body != blank -%}
-      <div class="bqs__copy">{{ s.body }}</div>
-    {%- endif -%}
+    <div class="butcher-quality-standard__principles">
+      {% if section.settings.principles_label != blank %}
+        <div class="butcher-quality-standard__principles-label">
+          {{ section.settings.principles_label | escape }}
+        </div>
+      {% endif %}
 
-    {%- if s.show_divider -%}
-      <hr class="bqs__rule">
-    {%- endif -%}
+      <div class="butcher-quality-standard__grid">
+        {% for block in section.blocks %}
+          <div
+            class="butcher-quality-standard__item"
+            {{ block.shopify_attributes }}
+          >
+            <div class="butcher-quality-standard__circle">
+              {% if block.settings.icon != blank %}
+                {{
+                  block.settings.icon
+                  | image_url: width: 180
+                  | image_tag:
+                    class: 'butcher-quality-standard__icon',
+                    loading: 'lazy',
+                    widths: '80,120,180',
+                    sizes: '80px',
+                    alt: block.settings.title
+                }}
+              {% else %}
+                <span class="butcher-quality-standard__fallback-icon">
+                  {{ block.settings.short_label | escape }}
+                </span>
+              {% endif %}
+            </div>
 
-    {%- if s.eyebrow != blank -%}
-      <p class="bqs__eyebrow">{{ s.eyebrow }}</p>
-    {%- endif -%}
-
-    {%- if badges.size > 0 -%}
-      <ul class="bqs__badges">
-        {%- for block in badges -%}
-          <li class="bqs__badge" {{ block.shopify_attributes }}>
-            {%- if block.settings.image -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 300 }}"
-                alt="{{ block.settings.label | escape }}"
-                width="{{ block.settings.image.width }}"
-                height="{{ block.settings.image.height }}"
-                loading="lazy"
-              >
-            {%- else -%}
-              <span class="bqs__badge-text">{{ block.settings.label }}</span>
-            {%- endif -%}
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+            {% if block.settings.title != blank %}
+              <div class="butcher-quality-standard__item-title">
+                {{ block.settings.title | escape }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
-
-  {%- if s.edge_bottom -%}
-    <img
-      class="bqs__edge bqs__edge--bottom"
-      src="{{ s.edge_bottom | image_url: width: 2400 }}"
-      alt=""
-      role="presentation"
-      loading="lazy"
-      width="{{ s.edge_bottom.width }}"
-      height="{{ s.edge_bottom.height }}"
-    >
-  {%- endif -%}
 </section>
 
 {% schema %}
 {
   "name": "Butcher Quality Standard",
   "tag": "section",
-  "class": "bqs-section",
+  "class": "section-butcher-quality-standard",
   "settings": [
-    { "type": "header", "content": "Content" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "The Butcher Quality Standard" },
-    { "type": "checkbox", "id": "trademark", "label": "Show trademark symbol after heading", "default": true },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "THE BUTCHER QUALITY STANDARD™"
+    },
     {
       "type": "richtext",
-      "id": "body",
-      "label": "Body copy",
-      "default": "<p>Butcher Quality is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p><p>Because dogs deserve food made with the same care we'd expect for our family.</p>"
+      "id": "description_1",
+      "label": "Description 1",
+      "default": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p>"
     },
-    { "type": "checkbox", "id": "show_divider", "label": "Show divider line", "default": true },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow label", "default": "Every Yumwoof recipe is guided by these 8 principles:" },
-    { "type": "text", "id": "section_id", "label": "Anchor ID (optional)" },
-
-    { "type": "header", "content": "Desktop background" },
-    { "type": "image_picker", "id": "desktop_bg_image", "label": "Desktop background image" },
-    { "type": "color", "id": "desktop_bg_color", "label": "Desktop background color", "default": "#0B0B0B" },
-
-    { "type": "header", "content": "Mobile background" },
-    { "type": "image_picker", "id": "mobile_bg_image", "label": "Mobile background image" },
-    { "type": "color", "id": "mobile_bg_color", "label": "Mobile background color", "default": "#0B0B0B" },
-
-    { "type": "header", "content": "Background options" },
     {
-      "type": "select",
-      "id": "bg_position",
-      "label": "Background position",
-      "default": "center center",
-      "options": [
-        { "value": "center top", "label": "Top" },
-        { "value": "center center", "label": "Center" },
-        { "value": "center bottom", "label": "Bottom" }
-      ]
+      "type": "richtext",
+      "id": "description_2",
+      "label": "Description 2",
+      "default": "<p>Because dogs deserve food made with the same care we'd expect for our family.</p>"
     },
-    { "type": "range", "id": "overlay_top", "label": "Overlay opacity (top)", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 20 },
-    { "type": "range", "id": "overlay_bottom", "label": "Overlay opacity (bottom)", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 60 },
-    { "type": "image_picker", "id": "edge_top", "label": "Torn edge image (top)", "info": "Optional PNG/SVG overlay for the ragged top edge." },
-    { "type": "image_picker", "id": "edge_bottom", "label": "Torn edge image (bottom)" },
-
-    { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F6EFE2" },
-    { "type": "color", "id": "text_color", "label": "Body text", "default": "#F6EFE2" },
-    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#5A5751" },
-    { "type": "color", "id": "badge_border_color", "label": "Badge border", "default": "#F6EFE2" },
-
-    { "type": "header", "content": "Typography and layout - desktop" },
-    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 32, "max": 120, "step": 2, "unit": "px", "default": 64 },
-    { "type": "range", "id": "body_size", "label": "Body size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
-    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 400, "max": 1200, "step": 20, "unit": "px", "default": 860 },
-    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
-    { "type": "range", "id": "padding_inline", "label": "Side padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
-    { "type": "range", "id": "badge_size", "label": "Badge size", "min": 48, "max": 140, "step": 2, "unit": "px", "default": 82 },
-    { "type": "range", "id": "badge_gap", "label": "Badge gap", "min": 4, "max": 48, "step": 2, "unit": "px", "default": 18 },
-
-    { "type": "header", "content": "Typography and layout - mobile" },
-    { "type": "range", "id": "heading_size_mobile", "label": "Heading size", "min": 24, "max": 72, "step": 2, "unit": "px", "default": 34 },
-    { "type": "range", "id": "min_height_mobile", "label": "Minimum height", "min": 300, "max": 1000, "step": 20, "unit": "px", "default": 640 },
-    { "type": "range", "id": "padding_top_mobile", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 32 },
-    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "padding_inline_mobile", "label": "Side padding", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
-    { "type": "range", "id": "badge_size_mobile", "label": "Badge size", "min": 48, "max": 140, "step": 2, "unit": "px", "default": 96 }
+    {
+      "type": "text",
+      "id": "principles_label",
+      "label": "Principles label",
+      "default": "EVERY YUMWOOF RECIPE IS GUIDED BY THESE 8 PRINCIPLES:"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "desktop_background_color",
+      "label": "Desktop background color",
+      "default": "#0B0B0B"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_background_image",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "color",
+      "id": "mobile_background_color",
+      "label": "Mobile background color",
+      "default": "#0B0B0B"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Divider color",
+      "default": "#5B5B5B"
+    },
+    {
+      "type": "color",
+      "id": "circle_border_color",
+      "label": "Circle border color",
+      "default": "#777777"
+    }
   ],
   "blocks": [
     {
       "type": "principle",
-      "name": "Principle badge",
-      "limit": 12,
+      "name": "Principle",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Badge image", "info": "Export each circular badge (curved text + icon) from Figma as SVG or PNG." },
-        { "type": "text", "id": "label", "label": "Label / alt text", "default": "Whole food ingredients" }
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "WHOLE FOOD INGREDIENTS"
+        },
+        {
+          "type": "text",
+          "id": "short_label",
+          "label": "Fallback label",
+          "default": "WHOLE FOOD"
+        }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Our Standard - Butcher Quality",
+      "name": "Butcher Quality Standard",
       "blocks": [
-        { "type": "principle", "settings": { "label": "Whole food ingredients" } },
-        { "type": "principle", "settings": { "label": "Seed oil free" } },
-        { "type": "principle", "settings": { "label": "Non GMO" } },
-        { "type": "principle", "settings": { "label": "Trusted farm partners" } },
-        { "type": "principle", "settings": { "label": "Wild caught fish" } },
-        { "type": "principle", "settings": { "label": "Gently air dried" } },
-        { "type": "principle", "settings": { "label": "Third-party tested" } },
-        { "type": "principle", "settings": { "label": "Heavy metal tested" } }
+        {
+          "type": "principle",
+          "settings": {
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "SEED OIL FREE",
+            "short_label": "SEED OIL"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "NON GMO",
+            "short_label": "NON GMO"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "ROASTED & AIR-DRIED",
+            "short_label": "AIR DRIED"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "INDEPENDENTLY TESTED",
+            "short_label": "TESTED"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "GENTLY AIR-DRIED",
+            "short_label": "AIR DRIED"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "THIRD-PARTY TESTED",
+            "short_label": "3RD PARTY"
+          }
+        },
+        {
+          "type": "principle",
+          "settings": {
+            "title": "HEAVY METAL TESTED",
+            "short_label": "HEAVY METAL"
+          }
+        }
       ]
     }
   ]
