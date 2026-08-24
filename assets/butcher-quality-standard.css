@@ -39,7 +39,7 @@
 .butcher-quality-standard__inner {
     width: min(var(--bqs-content-width), 100%);
     min-height: 610px;
-    padding: 192px 24px 128px;
+    padding: 232px 24px 128px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
