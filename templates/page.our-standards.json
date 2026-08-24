@@ -11,13 +11,96 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "butcher_quality_standard_MiRc3R": {
+      "type": "butcher-quality-standard",
+      "blocks": {
+        "principle_Cm7LCR": {
+          "type": "principle",
+          "settings": {
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
+          }
+        },
+        "principle_NPBVyJ": {
+          "type": "principle",
+          "settings": {
+            "title": "SEED OIL FREE",
+            "short_label": "SEED OIL"
+          }
+        },
+        "principle_iWD7LT": {
+          "type": "principle",
+          "settings": {
+            "title": "NON GMO",
+            "short_label": "NON GMO"
+          }
+        },
+        "principle_wLKdrU": {
+          "type": "principle",
+          "settings": {
+            "title": "ROASTED & AIR-DRIED",
+            "short_label": "AIR DRIED"
+          }
+        },
+        "principle_iRtPQR": {
+          "type": "principle",
+          "settings": {
+            "title": "INDEPENDENTLY TESTED",
+            "short_label": "TESTED"
+          }
+        },
+        "principle_PYyFQ7": {
+          "type": "principle",
+          "settings": {
+            "title": "GENTLY AIR-DRIED",
+            "short_label": "AIR DRIED"
+          }
+        },
+        "principle_QXgRb4": {
+          "type": "principle",
+          "settings": {
+            "title": "THIRD-PARTY TESTED",
+            "short_label": "3RD PARTY"
+          }
+        },
+        "principle_6yedeC": {
+          "type": "principle",
+          "settings": {
+            "title": "HEAVY METAL TESTED",
+            "short_label": "HEAVY METAL"
+          }
+        }
+      },
+      "block_order": [
+        "principle_Cm7LCR",
+        "principle_NPBVyJ",
+        "principle_iWD7LT",
+        "principle_wLKdrU",
+        "principle_iRtPQR",
+        "principle_PYyFQ7",
+        "principle_QXgRb4",
+        "principle_6yedeC"
+      ],
+      "name": "Our Standard - Butcher Quality",
+      "settings": {
+        "heading": "<p>THE BUTCHER QUALITY™ STANDARD</p>",
+        "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p>",
+        "principles_label": "EVERY YUMWOOF RECIPE IS GUIDED BY THESE 8 PRINCIPLES:",
+        "desktop_background_color": "#0B0B0B",
+        "mobile_background_color": "#0B0B0B",
+        "text_color": "#FFFFFF",
+        "line_color": "#5B5B5B"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "butcher_quality_standard_MiRc3R"
   ]
 }
