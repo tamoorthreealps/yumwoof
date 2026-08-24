@@ -53,7 +53,7 @@
   flex: 1;
 }
 
-.butcher-quality-standard__heading {
+.butcher-quality-standard__heading h1 {
   max-width: 430px;
   margin: 0;
   color: var(--bqs-text-color);
