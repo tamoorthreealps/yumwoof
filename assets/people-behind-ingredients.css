@@ -14,9 +14,9 @@
 }
 
 .people-behind-ingredients__inner {
-    max-width: 1368px;
-    margin: 0 auto;
-    padding: var(--pbi-desktop-padding-top) 24px var(--pbi-desktop-padding-bottom);
+  max-width: 1368px;
+  margin: 0 auto;
+  padding: var(--pbi-desktop-padding-top) 24px var(--pbi-desktop-padding-bottom);
 }
 
 .people-behind-ingredients__heading {
@@ -42,18 +42,18 @@
 }
 
 .people-behind-ingredients__slide {
-    display: grid;
-    grid-template-columns: minmax(0,1.05452fr) minmax(0,.85fr);
-    align-items: center;
-    column-gap: 128px;
-    box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05452fr) minmax(0, .85fr);
+  align-items: center;
+  column-gap: 128px;
+  box-sizing: border-box;
 }
 
 .people-behind-ingredients__media {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 24px;
+  width: 100%;
+  height: var(--pbi-media-height, 560px);
+  overflow: hidden;
+  border-radius: 24px;
 }
 
 .people-behind-ingredients__image {
@@ -71,21 +71,21 @@
 }
 
 .people-behind-ingredients__title {
-    margin-bottom: 24px;
-    color: var(--pbi-text-color);
-    font-family: TAY Birdie;
-    font-size: 32px;
-    line-height: 32px;
-    letter-spacing: -0.32px;
-    text-transform: uppercase;
+  margin-bottom: 24px;
+  color: var(--pbi-text-color);
+  font-family: 'TAY Birdie';
+  font-size: 32px;
+  line-height: 32px;
+  letter-spacing: -0.32px;
+  text-transform: uppercase;
 }
 
 .people-behind-ingredients__description {
-    color: var(--pbi-text-color);
-    font-family: Matter;
-    font-size: 18px;
-    line-height: 28px;
-    letter-spacing: 0;
+  color: var(--pbi-text-color);
+  font-family: Matter;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0;
 }
 
 .people-behind-ingredients__description p {
@@ -93,41 +93,66 @@
 }
 
 .people-behind-ingredients__pagination {
-    display: flex;
-    align-items: baseline;
-    gap: 23px;
-    margin-top: 48px;
+  display: flex;
+  align-items: baseline;
+  gap: 23px;
+  margin-top: 48px;
 }
 
 .people-behind-ingredients__progress {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    max-width: 100%;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 100%;
+  gap: 16px;
 }
 
+/* 2px visual bar, ~26px invisible hit area via ::after */
 .people-behind-ingredients__progress-item {
+  position: relative;
   flex: 1;
   height: 2px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
   background: var(--pbi-text-color);
   opacity: 0.12;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-.people-behind-ingredients__progress-item.is-active {
+.people-behind-ingredients__progress-item::after {
+  content: '';
+  position: absolute;
+  inset: -12px -8px;
+}
+
+.people-behind-ingredients__progress-item:hover {
+  opacity: 0.45;
+}
+
+.people-behind-ingredients__progress-item:focus-visible {
+  outline: 2px solid var(--pbi-text-color);
+  outline-offset: 8px;
+}
+
+.people-behind-ingredients__progress-item.is-active,
+.people-behind-ingredients__progress-item.is-active:hover {
   opacity: 1;
 }
 
 .people-behind-ingredients__counter {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--pbi-text-color);
-    font-family: 'TAY Birdie';
-    font-size: 16px;
-    line-height: 16px;
-    letter-spacing: -0.16px;
-    white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--pbi-text-color);
+  font-family: 'TAY Birdie';
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: -0.16px;
+  white-space: nowrap;
 }
 
 .people-behind-ingredients__slider .splide__track {
@@ -136,6 +161,23 @@
 
 .people-behind-ingredients__slider .splide__list {
   align-items: center;
+}
+
+/* Soft crossfade */
+.people-behind-ingredients__slider .splide__slide {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.people-behind-ingredients__slider .splide__slide.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .people-behind-ingredients__slider .splide__slide,
+  .people-behind-ingredients__progress-item {
+    transition: none;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -159,13 +201,13 @@
   }
 
   .people-behind-ingredients__media {
+    height: auto;
     aspect-ratio: 1 / 0.85;
   }
 
   .people-behind-ingredients__content {
     max-width: 100%;
   }
-  
 
   .people-behind-ingredients__title {
     margin-bottom: 10px;
@@ -184,5 +226,9 @@
 
   .people-behind-ingredients__progress {
     max-width: 150px;
+  }
+
+  .people-behind-ingredients__progress-item::after {
+    inset: -14px -8px;
   }
 }

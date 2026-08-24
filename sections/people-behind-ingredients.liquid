@@ -7,6 +7,7 @@
     --pbi-bg: {{ section.settings.background_color }};
     --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
     --pbi-text-color: {{ section.settings.text_color }};
+    --pbi-media-height: {{ section.settings.media_height }}px;
     --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
     --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
     --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
@@ -65,7 +66,11 @@
                   <div class="people-behind-ingredients__pagination">
                     <div class="people-behind-ingredients__progress">
                       {% for item in section.blocks %}
-                        <span class="people-behind-ingredients__progress-item"></span>
+                        <button
+                          type="button"
+                          class="people-behind-ingredients__progress-item"
+                          aria-label="Go to slide {{ forloop.index }}"
+                        ></button>
                       {% endfor %}
                     </div>
 
@@ -94,21 +99,22 @@
     if (!section || typeof Splide === 'undefined') return;
 
     const slider = section.querySelector('.people-behind-ingredients__slider');
-    const current = section.querySelector('.people-behind-ingredients__current');
-    const progressItems = section.querySelectorAll('.people-behind-ingredients__progress-item');
+    const currentEls = section.querySelectorAll('.people-behind-ingredients__current');
+    const progressGroups = section.querySelectorAll('.people-behind-ingredients__progress');
 
     if (!slider) return;
 
     const splide = new Splide(slider, {
-      type: 'loop',
+      /* 'fade' gives the soft crossfade. Note: fade mode has no drag —
+         to bring swipe back, use type: 'loop' and rewind: false instead. */
+      type: 'fade',
+      rewind: true,
       perPage: 1,
       perMove: 1,
       arrows: false,
       pagination: false,
-      drag: true,
-      speed: 900,
-      easing: 'ease',
-      rewind: false,
+      speed: 700,
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
       autoplay: false,
       gap: 0
     });
@@ -117,16 +123,27 @@
       const index = splide.index;
       const number = String(index + 1).padStart(2, '0');
 
-      if (current) {
-        current.textContent = number;
-      }
+      currentEls.forEach(function (el) {
+        el.textContent = number;
+      });
 
-      progressItems.forEach(function (item, itemIndex) {
-        item.classList.toggle('is-active', itemIndex === index);
+      progressGroups.forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (item, itemIndex) {
+          item.classList.toggle('is-active', itemIndex === index);
+          item.setAttribute('aria-current', itemIndex === index ? 'true' : 'false');
+        });
       });
     });
 
     splide.mount();
+
+    progressGroups.forEach(function (group) {
+      Array.prototype.forEach.call(group.children, function (item, itemIndex) {
+        item.addEventListener('click', function () {
+          splide.go(itemIndex);
+        });
+      });
+    });
   });
 </script>
 
@@ -158,6 +175,16 @@
       "id": "text_color",
       "label": "Text color",
       "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "media_height",
+      "label": "Image height (desktop)",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 560
     },
     {
       "type": "header",
