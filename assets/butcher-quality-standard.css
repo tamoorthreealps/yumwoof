@@ -155,7 +155,7 @@
     padding: 31px 10px 43px;
   }
 
-  .butcher-quality-standard__heading {
+  .butcher-quality-standard__heading h1 {
     max-width: 245px;
     font-size: clamp(29px, 8.2vw, 42px);
     line-height: 0.91;
