@@ -16,7 +16,7 @@
 .whats-not-included__inner {
   max-width: 1368px;
   margin: 0 auto;
-  padding: var(--wni-desktop-padding-top) 0 var(--wni-desktop-padding-bottom);
+  padding: var(--wni-desktop-padding-top) 24px var(--wni-desktop-padding-bottom);
   box-sizing: border-box;
 }
 
@@ -168,7 +168,7 @@
 
 @media screen and (max-width: 767px) {
   .whats-not-included__inner {
-    padding: var(--wni-mobile-padding-top) 0 var(--wni-mobile-padding-bottom);
+    padding: var(--wni-mobile-padding-top) 24px var(--wni-mobile-padding-bottom);
   }
 
   .whats-not-included__heading h1,
