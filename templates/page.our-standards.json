@@ -384,14 +384,14 @@
       ],
       "name": "Testing Standard",
       "settings": {
-        "desktop_background_color": "#3F8F5B",
+        "desktop_background_color": "#3f8f5b",
         "desktop_background_image": "shopify://shop_images/Rectangle_109_1.jpg",
-        "mobile_background_color": "#3F8F5B",
+        "mobile_background_color": "#3f8f5b",
         "mobile_background_image": "shopify://shop_images/Rectangle_110_1.jpg",
         "text_color": "#000000",
         "heading": "TRUST IS GOOD.\nTESTING IS BETTER.",
         "description": "<p>Every Yummoof product undergoes testing across multiple parameters to ensure safety, compliance, and purity exceeding industry standards.</p>",
-        "list_type": "bulleted"
+        "list_type": "none"
       }
     }
   },
