@@ -100,8 +100,13 @@
 }
 
 .butcher-quality-standard__principles {
-    border-top: 1px solid var(--bqs-line-color);
-    padding-top: 16px;
+  border-top: 1px solid var(--bqs-line-color);
+  padding-top: 16px;
+}
+
+.butcher-quality-standard__principles--image-divider {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .butcher-quality-standard__principles-label {

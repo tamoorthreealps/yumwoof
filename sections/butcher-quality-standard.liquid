@@ -29,7 +29,7 @@
       {% endif %}
     </div>
 
-    <div class="butcher-quality-standard__principles">
+    <div class="butcher-quality-standard__principles{% if section.settings.divider_image != blank %} butcher-quality-standard__principles--image-divider{% endif %}">
       {% if section.settings.principles_label != blank %}
         <div class="butcher-quality-standard__principles-label">
           {{ section.settings.principles_label | escape }}
@@ -136,6 +136,11 @@
       "id": "line_color",
       "label": "Divider color",
       "default": "#5B5B5B"
+    },
+    {
+      "type": "image_picker",
+      "id": "divider_image",
+      "label": "Divider Image (optional)"
     }
   ],
   "blocks": [
