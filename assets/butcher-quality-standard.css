@@ -84,10 +84,6 @@
   display: none;
 }
 
-.butcher-quality-standard__description p:not(:empty):last-of-type {
-  margin-bottom: 0;
-}
-
 .butcher-quality-standard__principles {
   border-top: 1px solid var(--bqs-line-color);
   padding-top: 10px;
