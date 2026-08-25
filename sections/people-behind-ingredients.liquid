@@ -1,0 +1,353 @@
+{{ 'people-behind-ingredients.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="PeopleBehindIngredientsTrack-{{ section.id }}"
+  class="people-behind-ingredients__track"
+  style="--pbi-slides: {{ section.blocks.size }};"
+>
+  <section
+    id="PeopleBehindIngredients-{{ section.id }}"
+    class="people-behind-ingredients"
+    style="
+      --pbi-bg: {{ section.settings.background_color }};
+      --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+      --pbi-text-color: {{ section.settings.text_color }};
+      --pbi-media-height: {{ section.settings.media_height }}px;
+      --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+      --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+      --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+      --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    "
+  >
+    <div class="people-behind-ingredients__inner">
+
+      {% if section.settings.heading != blank %}
+        <div class="people-behind-ingredients__heading">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div
+          id="PeopleBehindIngredientsSlider-{{ section.id }}"
+          class="splide people-behind-ingredients__slider"
+          aria-label="{{ section.settings.heading | strip_html | escape }}"
+        >
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                <li
+                  class="splide__slide people-behind-ingredients__slide"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="people-behind-ingredients__media">
+                    {% if block.settings.image != blank %}
+                      {{
+                        block.settings.image
+                        | image_url: width: 1200
+                        | image_tag:
+                          class: 'people-behind-ingredients__image',
+                          loading: 'lazy',
+                          widths: '500,700,900,1200',
+                          sizes: '(max-width: 767px) 100vw, 50vw',
+                          alt: block.settings.title
+                      }}
+                    {% endif %}
+                  </div>
+
+                  <div class="people-behind-ingredients__content">
+                    {% if block.settings.title != blank %}
+                      <div class="people-behind-ingredients__title">
+                        {{ block.settings.title | escape }}
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.description != blank %}
+                      <div class="people-behind-ingredients__description">
+                        {{ block.settings.description }}
+                      </div>
+                    {% endif %}
+
+                    <div class="people-behind-ingredients__pagination">
+                      <div class="people-behind-ingredients__progress">
+                        {% for item in section.blocks %}
+                          <button
+                            type="button"
+                            class="people-behind-ingredients__progress-item"
+                            aria-label="Go to slide {{ forloop.index }}"
+                          ></button>
+                        {% endfor %}
+                      </div>
+
+                      <div class="people-behind-ingredients__counter">
+                        <span class="people-behind-ingredients__current">01</span>
+                        <span>/</span>
+                        <span class="people-behind-ingredients__total">
+                          {{ section.blocks.size | prepend: '00' | slice: -2, 2 }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </section>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const track = document.querySelector('#PeopleBehindIngredientsTrack-{{ section.id }}');
+    const section = document.querySelector('#PeopleBehindIngredients-{{ section.id }}');
+    if (!track || !section || typeof Splide === 'undefined') return;
+
+    const slider = section.querySelector('.people-behind-ingredients__slider');
+    const currentEls = section.querySelectorAll('.people-behind-ingredients__current');
+    const progressGroups = section.querySelectorAll('.people-behind-ingredients__progress');
+
+    if (!slider) return;
+
+    const splide = new Splide(slider, {
+      /* 'fade' gives the soft crossfade. Slide changes are driven entirely by
+         scroll position below — no drag, no autoplay, no arrows. */
+      type: 'fade',
+      rewind: false,
+      perPage: 1,
+      perMove: 1,
+      arrows: false,
+      pagination: false,
+      speed: 700,
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      autoplay: false,
+      gap: 0
+    });
+
+    splide.on('mounted move', function () {
+      const index = splide.index;
+      const number = String(index + 1).padStart(2, '0');
+
+      currentEls.forEach(function (el) {
+        el.textContent = number;
+      });
+
+      progressGroups.forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (item, itemIndex) {
+          item.classList.toggle('is-active', itemIndex === index);
+          item.setAttribute('aria-current', itemIndex === index ? 'true' : 'false');
+        });
+      });
+    });
+
+    splide.mount();
+
+    /* ---------- Scroll-driven slider (native scroll, sticky track) ---------- */
+
+    const total = splide.length;
+    let current = splide.index;
+    let ticking = false;
+
+    /* Position within the track expressed as a 0..(total - 1) float. */
+    function progress() {
+      const rect = track.getBoundingClientRect();
+      const travel = track.offsetHeight - window.innerHeight;
+      if (travel <= 0 || total < 2) return 0;
+      const scrolled = Math.min(Math.max(-rect.top, 0), travel);
+      return (scrolled / travel) * (total - 1);
+    }
+
+    function update() {
+      ticking = false;
+
+      const raw = progress();
+
+      /* Hysteresis: only commit once we're clearly inside the next band, so a
+         scroll position sitting on a boundary can't flicker between slides. */
+      let index = current;
+      if (raw > current + 0.55) index = Math.ceil(raw - 0.45);
+      else if (raw < current - 0.55) index = Math.floor(raw + 0.45);
+
+      index = Math.min(Math.max(index, 0), total - 1);
+
+      if (index !== current) {
+        current = index;
+        splide.go(index);
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    /* Clicking a progress bar scrolls the page to that slide's band, so the
+       scroll position and the visible slide never disagree. */
+    progressGroups.forEach(function (group) {
+      Array.prototype.forEach.call(group.children, function (item, itemIndex) {
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          const travel = track.offsetHeight - window.innerHeight;
+          if (travel <= 0 || total < 2) return;
+          const top = track.offsetTop + travel * (itemIndex / (total - 1));
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+      });
+    });
+
+    update();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "People Behind Ingredients",
+  "tag": "section",
+  "class": "section-people-behind-ingredients",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>THE PEOPLE BEHIND OUR INGREDIENTS</h2>"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "media_height",
+      "label": "Image height (desktop)",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "person",
+      "name": "Ingredient Partner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "GROWERS"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "People Behind Ingredients",
+      "blocks": [
+        {
+          "type": "person",
+          "settings": {
+            "title": "GROWERS"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "title": "FISHERMEN"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "title": "RANCHERS"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "title": "SUPPLIERS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
