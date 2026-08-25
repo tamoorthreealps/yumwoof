@@ -11,13 +11,420 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "butcher_quality_standard_MiRc3R": {
+      "type": "butcher-quality-standard",
+      "blocks": {
+        "principle_Cm7LCR": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/Group_207.svg",
+            "title": "WHOLE FOOD INGREDIENTS",
+            "short_label": "WHOLE FOOD"
+          }
+        },
+        "principle_NPBVyJ": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/seed_oli_free.svg",
+            "title": "SEED OIL FREE",
+            "short_label": "SEED OIL"
+          }
+        },
+        "principle_iWD7LT": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/non-GMO.svg",
+            "title": "NON GMO",
+            "short_label": "NON GMO"
+          }
+        },
+        "principle_wLKdrU": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/trusted-partners.svg",
+            "title": "ROASTED & AIR-DRIED",
+            "short_label": "AIR DRIED"
+          }
+        },
+        "principle_iRtPQR": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/wild-caught-fish.svg",
+            "title": "INDEPENDENTLY TESTED",
+            "short_label": "TESTED"
+          }
+        },
+        "principle_PYyFQ7": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/gently-air-dried.svg",
+            "title": "GENTLY AIR-DRIED",
+            "short_label": "AIR DRIED"
+          }
+        },
+        "principle_QXgRb4": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/third-party-tested.svg",
+            "title": "THIRD-PARTY TESTED",
+            "short_label": "3RD PARTY"
+          }
+        },
+        "principle_6yedeC": {
+          "type": "principle",
+          "settings": {
+            "icon": "shopify://shop_images/heavy-metal-tested.svg",
+            "title": "HEAVY METAL TESTED",
+            "short_label": "HEAVY METAL"
+          }
+        }
+      },
+      "block_order": [
+        "principle_Cm7LCR",
+        "principle_NPBVyJ",
+        "principle_iWD7LT",
+        "principle_wLKdrU",
+        "principle_iRtPQR",
+        "principle_PYyFQ7",
+        "principle_QXgRb4",
+        "principle_6yedeC"
+      ],
+      "name": "Our Standard - Butcher Quality",
+      "settings": {
+        "heading": "<h1>THE BUTCHER QUALITY™ STANDARD</h1>",
+        "description_1": "<p>Butcher Quality™ is our commitment to whole food ingredients, healthy fats, air-dried preparation, and independent testing.</p><p>Because dogs deserve food made with the same care we'd expect for our family.</p>",
+        "principles_label": "Every Yumwoof recipe is guided by these 8 principles:",
+        "desktop_background_color": "#fff9ef",
+        "desktop_background_image": "shopify://shop_images/Quality-Section-Img-Desktop.jpg",
+        "mobile_background_color": "#fff9ef",
+        "mobile_background_image": "shopify://shop_images/Quality-Section-Img-Mobile.jpg",
+        "text_color": "#fff9ef",
+        "line_color": "#fff9ef"
+      }
+    },
+    "butcher_quality_promise_mgrPzc": {
+      "type": "butcher-quality-promise",
+      "blocks": {
+        "promise_JjzJe4": {
+          "type": "promise",
+          "settings": {
+            "image": "shopify://shop_images/Feature_Item_Image.jpg",
+            "title": "Trusted Farms & Fishermen",
+            "description": "<p>We partner with farmers, ranchers, and fishermen we trust. Nearly all of our ingredients are sourced within 50 miles of our kitchen.</p>"
+          }
+        },
+        "promise_bVYKyc": {
+          "type": "promise",
+          "settings": {
+            "image": "shopify://shop_images/Feature_Item_Image_1.jpg",
+            "title": "PREMIUM PROTEINS",
+            "description": "<p>From pasture to ocean, we prioritize responsibly sourced meats raised without antibiotics or hormones, and wild-caught fish.</p>"
+          }
+        },
+        "promise_YhXhGx": {
+          "type": "promise",
+          "settings": {
+            "image": "shopify://shop_images/Feature_Item_Image_2.jpg",
+            "title": "WHOLE FOOD NUTRITION",
+            "description": "<p>We prioritize organ meats and non-GMO whole food ingredients to provide vitamins and minerals from real food sources.</p>"
+          }
+        },
+        "promise_YxwpD3": {
+          "type": "promise",
+          "settings": {
+            "image": "shopify://shop_images/Feature_Item_Image_3.jpg",
+            "title": "HEALTHY FATS BY DESIGN",
+            "description": "<p>We prioritize organ meats and non-GMO whole food ingredients to provide vitamins and minerals from real food sources.</p>"
+          }
+        },
+        "promise_VhJeyp": {
+          "type": "promise",
+          "settings": {
+            "image": "shopify://shop_images/Feature_Item_Image_4.jpg",
+            "title": "GENTLY AIR-DRIED",
+            "description": "<p>We prioritize organ meats and non-GMO whole food ingredients to provide vitamins and minerals from real food sources.</p>"
+          }
+        },
+        "promise_r3VwUW": {
+          "type": "promise",
+          "settings": {
+            "image": "shopify://shop_images/Feature_Item_Image_5.jpg",
+            "title": "INDEPENDENT TESTING",
+            "description": "<p>Every product is tested by an accredited third-party laboratory to verify safety, nutritional compliance, and ingredient quality.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "promise_JjzJe4",
+        "promise_bVYKyc",
+        "promise_YhXhGx",
+        "promise_YxwpD3",
+        "promise_VhJeyp",
+        "promise_r3VwUW"
+      ],
+      "name": "Butcher Quality Promise",
+      "settings": {
+        "heading": "<h2>OUR BUTCHER QUALITY PROMISE</h2>",
+        "description": "<p>From sourcing to testing, these commitments guide every YUMWOOF recipe.</p>",
+        "desktop_background_color": "#fff9ef",
+        "mobile_background_color": "#fff9ef",
+        "text_color": "#000000",
+        "card_text_color": "#fff9ef",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 125,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 45
+      }
+    },
+    "whats_not_included_Kdz67G": {
+      "type": "whats-not-included",
+      "blocks": {
+        "ingredient_btTdze": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO GMO INGREDIENTS"
+          }
+        },
+        "ingredient_3NeFVQ": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO SYNTHETICS"
+          }
+        },
+        "ingredient_8VxqWA": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO SEED OILS"
+          }
+        },
+        "ingredient_dCMRk3": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO MEAT MEALS"
+          }
+        },
+        "ingredient_HCxHCW": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO BY-PRODUCTS"
+          }
+        },
+        "ingredient_6jkMf6": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO NATURAL FLAVORS"
+          }
+        },
+        "ingredient_tHaApF": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO PRESERVATIVES"
+          }
+        },
+        "ingredient_N9kaBY": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO FILLERS"
+          }
+        },
+        "ingredient_a9CLQa": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO ADDED SUGAR"
+          }
+        },
+        "ingredient_HCpa6W": {
+          "type": "ingredient",
+          "settings": {
+            "text": "NO CARRAGEENAN"
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_btTdze",
+        "ingredient_3NeFVQ",
+        "ingredient_8VxqWA",
+        "ingredient_dCMRk3",
+        "ingredient_HCxHCW",
+        "ingredient_6jkMf6",
+        "ingredient_tHaApF",
+        "ingredient_N9kaBY",
+        "ingredient_a9CLQa",
+        "ingredient_HCpa6W"
+      ],
+      "name": "What's Not Included",
+      "settings": {
+        "heading": "<h2>WHAT'S NOT INCLUDED MATTERS TOO</h2>",
+        "mobile_heading": "<h2>The no-no list</h2>",
+        "description": "<p>Every Yumwoof recipe is free from ingredients we believe don't belong in your dog's bowl.</p>",
+        "mobile_description": "<p>Every recipe. Every batch. Every bag.</p>",
+        "background_color": "#fff9ef",
+        "heading_color": "#000000",
+        "description_color": "#000000",
+        "pill_text_color": "#000000",
+        "pill_border_color": "#000000",
+        "pill_background_color": "#ffffff",
+        "marquee_speed": 300,
+        "reverse_second_row": true,
+        "link_text": "+ See Banned Ingredients List",
+        "link_url": "#",
+        "link_color": "#661d1d",
+        "link_hover_color": "#000000",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 160,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 100
+      }
+    },
+    "people_behind_ingredients_d4UwGE": {
+      "type": "people-behind-ingredients",
+      "blocks": {
+        "person_hneLbJ": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_108.webp",
+            "title": "GROWERS",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world. We prioritize non-GMO ingredients selected for both nutrition and quality.</p>"
+          }
+        },
+        "person_7QgVwY": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_108_1.webp",
+            "title": "FISHERMEN",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        },
+        "person_7M8qKh": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_108.webp",
+            "title": "RANCHERS",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        },
+        "person_a7Mp37": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_108_1.webp",
+            "title": "SUPPLIERS",
+            "description": "<p>Sweet potatoes, blueberries, kelp, thyme, ginger, cumin, and rose hips bring naturally occurring nutrients from the plant world.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "person_hneLbJ",
+        "person_7QgVwY",
+        "person_7M8qKh",
+        "person_a7Mp37"
+      ],
+      "name": "People Behind Ingredients",
+      "settings": {
+        "heading": "<h2>THE PEOPLE BEHIND OUR INGREDIENTS</h2>",
+        "background_color": "#fff9ef",
+        "text_color": "#000000",
+        "media_height": 560,
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 160,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 120
+      }
+    },
+    "testing_standard_ywnhmD": {
+      "type": "testing-standard",
+      "blocks": {
+        "list_item_AYAGia": {
+          "type": "list_item",
+          "settings": {
+            "text": "HEAVY METALS"
+          }
+        },
+        "list_item_R3hwxH": {
+          "type": "list_item",
+          "settings": {
+            "text": "LABEL CLAIMS"
+          }
+        },
+        "list_item_PxyKFN": {
+          "type": "list_item",
+          "settings": {
+            "text": "PATHOGENS"
+          }
+        },
+        "list_item_MA8iwM": {
+          "type": "list_item",
+          "settings": {
+            "text": "PESTICIDES"
+          }
+        },
+        "list_item_33fyRQ": {
+          "type": "list_item",
+          "settings": {
+            "text": "NON-GMO"
+          }
+        },
+        "list_item_YJUgiV": {
+          "type": "list_item",
+          "settings": {
+            "text": "NUTRITIONAL COMPLIANCE"
+          }
+        }
+      },
+      "block_order": [
+        "list_item_AYAGia",
+        "list_item_R3hwxH",
+        "list_item_PxyKFN",
+        "list_item_MA8iwM",
+        "list_item_33fyRQ",
+        "list_item_YJUgiV"
+      ],
+      "name": "Testing Standard",
+      "settings": {
+        "desktop_background_color": "#3f8f5b",
+        "desktop_background_image": "shopify://shop_images/Rectangle_109_1.jpg",
+        "mobile_background_color": "#3f8f5b",
+        "mobile_background_image": "shopify://shop_images/Rectangle_110_1.jpg",
+        "text_color": "#000000",
+        "heading": "TRUST IS GOOD.\nTESTING IS BETTER.",
+        "description": "<p>Every Yummoof product undergoes testing across multiple parameters to ensure safety, compliance, and purity exceeding industry standards.</p>",
+        "list_type": "none"
+      }
+    },
+    "standard_in_every_bag_NXD6YH": {
+      "type": "standard-in-every-bag",
+      "name": "Standard In Every Bag",
+      "settings": {
+        "desktop_background_color": "#fff9ef",
+        "mobile_background_color": "#fff9ef",
+        "desktop_padding_top": 0,
+        "desktop_padding_bottom": 100,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 100,
+        "heading": "THE STANDARD\nIS IN EVERY BAG",
+        "description": "<p>Every ingredient is chosen for a reason.</p>",
+        "button_text": "SHOP YUMWOOF",
+        "button_url": "#",
+        "image": "shopify://shop_images/Membership_Background.jpg",
+        "heading_color": "#000000",
+        "description_color": "#000000",
+        "button_color": "#f8b95b",
+        "button_hover_color": "#000000"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "butcher_quality_standard_MiRc3R",
+    "butcher_quality_promise_mgrPzc",
+    "whats_not_included_Kdz67G",
+    "people_behind_ingredients_d4UwGE",
+    "testing_standard_ywnhmD",
+    "standard_in_every_bag_NXD6YH"
   ]
 }
