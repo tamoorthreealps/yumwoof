@@ -17,7 +17,6 @@
   padding: 64px 2.4rem 72px;
   max-width: 1244px;
     margin: 0 auto;
-    position:relative;
 }
 
 .quiz__inner {
@@ -201,20 +200,20 @@ font-size: 18px;
 
   .quiz__decor--left {
         width: 132px;
-        left: 0;
+        left: -54px;
         bottom: auto;
-        top: -65px;
+        top: -94px;
         right:auto;
   }
 
   .quiz__decor--right {
 width: 132px;
         height: 132px;
-        right: 0;
-        top: auto;
-        bottom: -60px;
-        left:auto;
-                overflow: hidden;
+        right: -40px;
+        top: 34px;
+        bottom: auto;
+        left: auto;
+        overflow: hidden;
 
   }
   .quiz__offer {
