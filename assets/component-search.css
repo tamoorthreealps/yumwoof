@@ -7,6 +7,7 @@
   top: var(--inputs-border-width);
 }
 
+
 .reset__button {
   right: calc(var(--inputs-border-width) + 4.4rem);
   top: var(--inputs-border-width);
