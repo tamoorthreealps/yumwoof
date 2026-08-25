@@ -16,6 +16,14 @@
 {%- assign recipes_parts = section.settings.metafield_recipes_link | split: '.' -%}
 {%- assign products = section.settings.products -%}
 
+{%- comment -%}
+  Hover media is not downloaded on page load. Each hover image ships with a
+  transparent placeholder src plus data-fp-hover-src / data-fp-hover-srcset,
+  and is hydrated by JS on the card's first hover / focus / touch.
+{%- endcomment -%}
+{%- assign hover_placeholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" -%}
+{%- assign hover_sizes = '(max-width: 749px) 80vw, 30vw' -%}
+
 <section class="fp{% if section.settings.uppercase_heading %} fp--uppercase{% endif %}">
   <div class="fp__inner">
     <div class="fp__inner__head">
@@ -90,11 +98,17 @@
                   ></a>
                   <div class="fp__hover-media">
                     {%- if v_hover != blank -%}
-                      {{
-                        v_hover
-                        | image_url: width: 600
-                        | image_tag: class: 'fp__hover-image', alt: 'card hover image'
-                      }}
+                      <img
+                        class="fp__hover-image"
+                        alt=""
+                        src="{{ hover_placeholder }}"
+                        data-fp-hover-src="{{ v_hover | image_url: width: 600 }}"
+                        data-fp-hover-srcset="{{ v_hover | image_url: width: 200 }} 200w, {{ v_hover | image_url: width: 300 }} 300w, {{ v_hover | image_url: width: 460 }} 460w, {{ v_hover | image_url: width: 600 }} 600w"
+                        sizes="{{ hover_sizes }}"
+                        decoding="async"
+                        loading="lazy"
+                        fetchpriority="low"
+                      >
                     {%- endif -%}
                   </div>
                   <h3 class="fp__title">{{ product.title }}</h3>
@@ -118,6 +132,7 @@
                   {%- if v_desc != blank -%}
                     <p class="fp__desc">{{ v_desc }}</p>
                   {%- endif -%}
+
                   {%- comment -%} Only render the trigger when the product actually has popup data. {%- endcomment -%}
                   {%- if section.settings.recipes_label != blank and popup != blank -%}
                     <a
@@ -149,15 +164,31 @@
                 <div class="fp__hover-media">
                   {% if hover_media %}
                     {% if hover_media.media_type == 'image' %}
-                      {{ hover_media | image_url: width: 600 | image_tag: class: 'fp__hover-image' }}
+                      <img
+                        class="fp__hover-image"
+                        alt=""
+                        src="{{ hover_placeholder }}"
+                        data-fp-hover-src="{{ hover_media | image_url: width: 600 }}"
+                        data-fp-hover-srcset="{{ hover_media | image_url: width: 200 }} 200w, {{ hover_media | image_url: width: 300 }} 300w, {{ hover_media | image_url: width: 460 }} 460w, {{ hover_media | image_url: width: 600 }} 600w"
+                        sizes="{{ hover_sizes }}"
+                        decoding="async"
+                        loading="lazy"
+                        fetchpriority="low"
+                      >
                     {% elsif hover_media.media_type == 'video' %}
+                      {%- comment -%}
+                        preload: none + autoplay: false keeps the video (and its poster)
+                        off the initial load; JS starts playback on first hover.
+                      {%- endcomment -%}
                       {{
                         hover_media
                         | video_tag:
-                          autoplay: true,
+                          autoplay: false,
                           loop: true,
                           muted: true,
                           playsinline: true,
+                          preload: 'none',
+                          image_size: '1x1',
                           class: 'fp__hover-video'
                       }}
                     {% endif %}
@@ -429,7 +460,7 @@
                   {%- assign tab_image = popup[ik] | default: fallback_image -%}
                   <div class="fp-popup__tab-img{% if i == active_tab %} active{% endif %}" data-image="{{ i }}">
                     {%- if tab_image != blank -%}
-                      <img src="{{ tab_image | image_url: width: 492 }}" width="492" height="400" alt="{{ popup[tk] | escape }}">
+                      <img src="{{ tab_image | image_url: width: 492 }}" width="492" height="400" alt="{{ popup[tk] | escape }}" loading="lazy" decoding="async">
                     {%- endif -%}
                   </div>
                 {%- endif -%}
@@ -441,6 +472,8 @@
                 width="436"
                 height="436"
                 alt="Ingridients Bowl Image"
+                loading="lazy"
+                decoding="async"
               >
             </div>
           </div>
@@ -808,6 +841,48 @@
       root.querySelectorAll('.fp').forEach(initCarouselWhenVisible);
     }
 
+    /* ---------- hover media (downloaded on first hover, not on page load) ---------- */
+
+    function loadHoverMedia(card) {
+      if (!card || card.dataset.fpHoverLoaded) return;
+      card.dataset.fpHoverLoaded = 'true';
+
+      card.querySelectorAll('img[data-fp-hover-src]').forEach(function (img) {
+        if (img.dataset.fpHoverSrcset) {
+          img.setAttribute('srcset', img.dataset.fpHoverSrcset);
+          img.removeAttribute('data-fp-hover-srcset');
+        }
+        img.setAttribute('src', img.dataset.fpHoverSrc);
+        img.removeAttribute('data-fp-hover-src');
+      });
+
+      card.querySelectorAll('video.fp__hover-video').forEach(function (video) {
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = 'auto';
+        var played = video.play();
+        if (played && played.catch) played.catch(function () {});
+      });
+    }
+
+    function initHoverMedia() {
+      if (document.body.dataset.fpHoverReady) return;
+      document.body.dataset.fpHoverReady = 'true';
+
+      function onEnter(e) {
+        if (!e.target || !e.target.closest) return;
+        var card = e.target.closest('.fp__card__hover');
+        if (card) loadHoverMedia(card);
+      }
+
+      // mouseover / focusin / touchstart all bubble (pointerenter does not),
+      // so delegation covers cloned loop slides too.
+      document.addEventListener('mouseover', onEnter, { passive: true });
+      document.addEventListener('focusin', onEnter);
+      document.addEventListener('touchstart', onEnter, { passive: true });
+    }
+
     /* ---------- popups (delegated — works for cloned cards too) ---------- */
 
     function initPopups() {
@@ -894,6 +969,7 @@
     function boot() {
       init(document);
       initPopups();
+      initHoverMedia();
     }
 
     if (document.readyState !== 'loading') {
@@ -904,6 +980,7 @@
     document.addEventListener('shopify:section:load', function (event) {
       init(event.target);
       initPopups();
+      initHoverMedia();
     });
   })();
 </script>
