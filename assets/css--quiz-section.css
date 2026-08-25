@@ -14,8 +14,8 @@
   /* Clips the kibble overhang + bag image.
      Without this the negatively-positioned children widen the document
      and create horizontal scroll. `clip` avoids making a scroll container. */
-  overflow: hidden;
-  overflow: clip;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .quiz__inner__container {
