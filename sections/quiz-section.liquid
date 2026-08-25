@@ -7,7 +7,7 @@
 
     {% if section.settings.background_image != blank %}
       background-image: url('{{ section.settings.background_image | image_url: width: 2500 }}');
-      background-size: 100% 100%;
+      background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     {% endif %}
@@ -24,27 +24,30 @@
   }
 {%- endstyle -%}
 
-<section class="quiz{% if section.settings.uppercase_heading %} quiz--uppercase{% endif %}">
-  <div class="quiz__inner__container">
-    {%- if section.settings.decor_left != blank -%}
-      <span class="quiz__decor quiz__decor--left">
-        {{
-          section.settings.decor_left
-          | image_url: width: 220
-          | image_tag: alt: 'quiz decor icon', widths: '72, 120, 220', loading: 'lazy'
-        }}
-      </span>
-    {%- endif -%}
-    {%- if section.settings.decor_right != blank -%}
-      <span class="quiz__decor quiz__decor--right">
-        {{
-          section.settings.decor_right
-          | image_url: width: 220
-          | image_tag: alt: 'quiz decor icon', widths: '84, 140, 220', loading: 'lazy'
-        }}
-      </span>
-    {%- endif -%}
+<section
+  class="quiz{% if section.settings.uppercase_heading %} quiz--uppercase{% endif %}"
+  data-quiz-cta
+>
+  {%- if section.settings.decor_left != blank -%}
+    <span class="quiz__decor quiz__decor--left" aria-hidden="true">
+      {{
+        section.settings.decor_left
+        | image_url: width: 264
+        | image_tag: alt: '', widths: '64, 132, 264', loading: 'lazy'
+      }}
+    </span>
+  {%- endif -%}
+  {%- if section.settings.decor_right != blank -%}
+    <span class="quiz__decor quiz__decor--right" aria-hidden="true">
+      {{
+        section.settings.decor_right
+        | image_url: width: 264
+        | image_tag: alt: '', widths: '64, 132, 264', loading: 'lazy'
+      }}
+    </span>
+  {%- endif -%}
 
+  <div class="quiz__inner__container">
     <div class="quiz__inner">
       {%- if section.settings.heading != blank -%}
         <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
@@ -62,7 +65,68 @@
       {%- endif -%}
     </div>
   </div>
+
+  {%- if section.settings.bag_left != blank
+      or section.settings.bag_center != blank
+      or section.settings.bag_right != blank
+  -%}
+    <div class="quiz__bags" aria-hidden="true">
+      {%- if section.settings.bag_left != blank -%}
+        <span class="quiz__bag quiz__bag--left">
+          {{
+            section.settings.bag_left
+            | image_url: width: 640
+            | image_tag: alt: '', widths: '160, 320, 640', loading: 'lazy'
+          }}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.bag_right != blank -%}
+        <span class="quiz__bag quiz__bag--right">
+          {{
+            section.settings.bag_right
+            | image_url: width: 640
+            | image_tag: alt: '', widths: '160, 320, 640', loading: 'lazy'
+          }}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.bag_center != blank -%}
+        <span class="quiz__bag quiz__bag--center">
+          {{
+            section.settings.bag_center
+            | image_url: width: 720
+            | image_tag: alt: '', widths: '180, 360, 720', loading: 'lazy'
+          }}
+        </span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </section>
+
+<script>
+  (function () {
+    var sections = document.querySelectorAll('#shopify-section-{{ section.id }} [data-quiz-cta]');
+    if (!sections.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      sections.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    sections.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
 
 {% schema %}
 {
@@ -117,18 +181,40 @@
     },
     {
       "type": "header",
+      "content": "Product images"
+    },
+    {
+      "type": "image_picker",
+      "id": "bag_left",
+      "label": "Bag — left",
+      "info": "Sits behind the centre bag."
+    },
+    {
+      "type": "image_picker",
+      "id": "bag_center",
+      "label": "Bag — centre",
+      "info": "Front bag. Overhangs the top of the image strip."
+    },
+    {
+      "type": "image_picker",
+      "id": "bag_right",
+      "label": "Bag — right"
+    },
+    {
+      "type": "header",
       "content": "Decoration"
     },
     {
       "type": "image_picker",
       "id": "decor_left",
-      "label": "Decorative image (left)",
-      "info": "Optional. Overhangs the left edge."
+      "label": "Kibble (top)",
+      "info": "Top-left on desktop, top-right on mobile."
     },
     {
       "type": "image_picker",
       "id": "decor_right",
-      "label": "Decorative image (right)"
+      "label": "Kibble (side)",
+      "info": "Right edge on desktop, left edge on mobile."
     },
     {
       "type": "header",
@@ -138,13 +224,13 @@
       "type": "color",
       "id": "background_color",
       "label": "Background",
-      "default": "#1A1A1A"
+      "default": "#7BA6DD"
     },
     {
       "type": "color",
       "id": "text_color",
       "label": "Text",
-      "default": "#FFF9EF"
+      "default": "#000000"
     }
   ],
   "presets": [
