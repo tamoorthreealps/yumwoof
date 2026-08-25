@@ -246,6 +246,7 @@ max-width: 254px;
     margin: 1.2rem 0 0;
     font-size: 16px;
     line-height: 24px;
+    padding-left:7px;
   }
 
   /* Bags anchored to the right edge of the 1196px content column */
