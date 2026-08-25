@@ -68,11 +68,23 @@
 
   {%- if section.settings.bags_image != blank -%}
     <div class="quiz__bags" aria-hidden="true">
-      {{
-        section.settings.bags_image
-        | image_url: width: 1600
-        | image_tag: alt: '', widths: '400, 800, 1200, 1600', loading: 'lazy', class: 'quiz__bags-img'
-      }}
+      <picture>
+        {%- if section.settings.bags_image_mobile != blank -%}
+          <source
+            media="(max-width: 989px)"
+            srcset="
+              {{ section.settings.bags_image_mobile | image_url: width: 400 }} 400w,
+              {{ section.settings.bags_image_mobile | image_url: width: 800 }} 800w,
+              {{ section.settings.bags_image_mobile | image_url: width: 1200 }} 1200w
+            "
+          >
+        {%- endif -%}
+        {{
+          section.settings.bags_image
+          | image_url: width: 1600
+          | image_tag: alt: '', widths: '400, 800, 1200, 1600', loading: 'lazy', class: 'quiz__bags-img'
+        }}
+      </picture>
     </div>
   {%- endif -%}
 </section>
@@ -83,7 +95,9 @@
     if (!sections.length) return;
 
     if (!('IntersectionObserver' in window)) {
-      sections.forEach(function (el) { el.classList.add('is-visible'); });
+      sections.forEach(function (el) {
+        el.classList.add('is-visible');
+      });
       return;
     }
 
@@ -99,7 +113,9 @@
       { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
     );
 
-    sections.forEach(function (el) { observer.observe(el); });
+    sections.forEach(function (el) {
+      observer.observe(el);
+    });
   })();
 </script>
 
@@ -163,6 +179,12 @@
       "id": "bags_image",
       "label": "Product bags",
       "info": "Single image of the three bags. The bottom is clipped by the section, matching the Figma mask."
+    },
+    {
+      "type": "image_picker",
+      "id": "bags_image_mobile",
+      "label": "Product bags - Mobile",
+      "info": "Optional. If no mobile image is selected, the desktop product image will be used."
     },
     {
       "type": "header",
