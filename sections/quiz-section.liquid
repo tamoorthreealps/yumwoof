@@ -66,38 +66,13 @@
     </div>
   </div>
 
-  {%- if section.settings.bag_left != blank
-      or section.settings.bag_center != blank
-      or section.settings.bag_right != blank
-  -%}
+  {%- if section.settings.bags_image != blank -%}
     <div class="quiz__bags" aria-hidden="true">
-      {%- if section.settings.bag_left != blank -%}
-        <span class="quiz__bag quiz__bag--left">
-          {{
-            section.settings.bag_left
-            | image_url: width: 640
-            | image_tag: alt: '', widths: '160, 320, 640', loading: 'lazy'
-          }}
-        </span>
-      {%- endif -%}
-      {%- if section.settings.bag_right != blank -%}
-        <span class="quiz__bag quiz__bag--right">
-          {{
-            section.settings.bag_right
-            | image_url: width: 640
-            | image_tag: alt: '', widths: '160, 320, 640', loading: 'lazy'
-          }}
-        </span>
-      {%- endif -%}
-      {%- if section.settings.bag_center != blank -%}
-        <span class="quiz__bag quiz__bag--center">
-          {{
-            section.settings.bag_center
-            | image_url: width: 720
-            | image_tag: alt: '', widths: '180, 360, 720', loading: 'lazy'
-          }}
-        </span>
-      {%- endif -%}
+      {{
+        section.settings.bags_image
+        | image_url: width: 1600
+        | image_tag: alt: '', widths: '400, 800, 1200, 1600', loading: 'lazy', class: 'quiz__bags-img'
+      }}
     </div>
   {%- endif -%}
 </section>
@@ -181,24 +156,13 @@
     },
     {
       "type": "header",
-      "content": "Product images"
+      "content": "Product image"
     },
     {
       "type": "image_picker",
-      "id": "bag_left",
-      "label": "Bag — left",
-      "info": "Sits behind the centre bag."
-    },
-    {
-      "type": "image_picker",
-      "id": "bag_center",
-      "label": "Bag — centre",
-      "info": "Front bag. Overhangs the top of the image strip."
-    },
-    {
-      "type": "image_picker",
-      "id": "bag_right",
-      "label": "Bag — right"
+      "id": "bags_image",
+      "label": "Product bags",
+      "info": "Single image of the three bags. The bottom is clipped by the section, matching the Figma mask."
     },
     {
       "type": "header",

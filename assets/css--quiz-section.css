@@ -11,7 +11,7 @@
   background-color: var(--quiz-bg);
   color: var(--quiz-text);
 
-  /* Clips the kibble overhang + bag masks.
+  /* Clips the kibble overhang + bag image.
      Without this the negatively-positioned children widen the document
      and create horizontal scroll. `clip` avoids making a scroll container. */
   overflow: hidden;
@@ -98,7 +98,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Product bags — clipped strip along the bottom of the section
+   Product bags — single image, clipped at the section's bottom edge
    -------------------------------------------------------------------------- */
 .quiz__bags {
   position: relative;
@@ -107,38 +107,37 @@
   height: 175px;
   margin-top: 40px;
   overflow: hidden; /* mirrors the Figma mask group */
-}
-
-.quiz__bag {
-  position: absolute;
-  bottom: auto;
-  line-height: 0;
   pointer-events: none;
 }
 
-.quiz__bag img {
+.quiz__bags-img {
+  position: absolute;
+  left: 50%;
+  top: 0;
   display: block;
   width: 100%;
   height: auto;
+
+  /* Scroll-in animation start state.
+     translateX(-50%) stays inside the transform on both states
+     so the slide-up never knocks the centring off. */
+  opacity: 0;
+  transform: translate(-50%, 48px);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.quiz__bag--left {
-  left: 5.25%;
-  top: 35px;
-  width: 29%;
+.quiz.is-visible .quiz__bags-img {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
-.quiz__bag--right {
-  left: 65.75%;
-  top: 35px;
-  width: 29%;
-}
-
-.quiz__bag--center {
-  left: 32.75%;
-  top: 0;
-  width: 34.5%;
-  filter: drop-shadow(0 4px 16.3px rgba(0, 0, 0, 0.5));
+@media (prefers-reduced-motion: reduce) {
+  .quiz__bags-img {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -170,38 +169,6 @@
   left: -20px;
   top: 209px;
   right: auto;
-}
-
-/* --------------------------------------------------------------------------
-   Scroll-in animation
-   -------------------------------------------------------------------------- */
-.quiz__bag {
-  opacity: 0;
-  transform: translateY(48px);
-  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-.quiz.is-visible .quiz__bag {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.quiz.is-visible .quiz__bag--center {
-  transition-delay: 0.08s;
-}
-
-.quiz.is-visible .quiz__bag--left,
-.quiz.is-visible .quiz__bag--right {
-  transition-delay: 0.18s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .quiz__bag {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -256,33 +223,15 @@
     line-height: 24px;
   }
 
-  /* Bags anchored to the right of the 1196px content column */
+  /* Bags anchored to the right edge of the 1196px content column */
   .quiz__bags {
     position: absolute;
     right: max(0px, calc((100% - 1196px) / 2));
-    bottom: 0;
     top: 54px;
+    bottom: 0;
     width: 708px;
     height: auto;
     margin-top: 0;
-  }
-
-  .quiz__bag--left {
-    left: 1.7%;
-    top: 86px;
-    width: 43.1%;
-  }
-
-  .quiz__bag--right {
-    left: 55.1%;
-    top: 87px;
-    width: 43.2%;
-  }
-
-  .quiz__bag--center {
-    left: 25.8%;
-    top: 0;
-    width: 48.3%;
   }
 
   .quiz__decor--left {
