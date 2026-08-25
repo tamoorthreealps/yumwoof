@@ -1,0 +1,351 @@
+{{ 'whats-not-included.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="WhatsNotIncluded-{{ section.id }}"
+  class="whats-not-included"
+  style="
+    --wni-bg: {{ section.settings.background_color }};
+    --wni-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+    --wni-heading-color: {{ section.settings.heading_color }};
+    --wni-description-color: {{ section.settings.description_color }};
+    --wni-pill-text-color: {{ section.settings.pill_text_color }};
+    --wni-pill-border-color: {{ section.settings.pill_border_color }};
+    --wni-pill-bg-color: {{ section.settings.pill_background_color }};
+    --wni-link-color: {{ section.settings.link_color }};
+    --wni-link-hover-color: {{ section.settings.link_hover_color }};
+    --wni-marquee-speed: {{ section.settings.marquee_speed }}s;
+    --wni-row2-direction: {% if section.settings.reverse_second_row %}reverse{% else %}normal{% endif %};
+    --wni-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --wni-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --wni-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --wni-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  "
+>
+  <div class="whats-not-included__inner">
+    <div class="whats-not-included__heading">
+      <div class="whats-not-included__heading-desktop">
+        {{ section.settings.heading }}
+      </div>
+
+      <div class="whats-not-included__heading-mobile">
+        {% if section.settings.mobile_heading != blank %}
+          {{ section.settings.mobile_heading }}
+        {% else %}
+          {{ section.settings.heading }}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="whats-not-included__description">
+      <div class="whats-not-included__description-desktop">
+        {{ section.settings.description }}
+      </div>
+
+      <div class="whats-not-included__description-mobile">
+        {% if section.settings.mobile_description != blank %}
+          {{ section.settings.mobile_description }}
+        {% else %}
+          {{ section.settings.description }}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      {%- assign half = section.blocks.size | divided_by: 2.0 | ceil -%}
+      {%- comment -%}
+        8 copies per track. The animation moves 50% (4 copies), so the loop is
+        seamless and 4 copies of a row are always wider than any viewport.
+      {%- endcomment -%}
+      {%- assign copies = 8 -%}
+
+      <div class="whats-not-included__marquee">
+        {%- comment -%} Row 1 — first half of the blocks {%- endcomment -%}
+        <div class="whats-not-included__row">
+          <div class="whats-not-included__track">
+            {% for i in (1..copies) %}
+              <div
+                class="whats-not-included__group"
+                {% unless forloop.first %}
+                  aria-hidden="true"
+                {% endunless %}
+              >
+                {% for block in section.blocks %}
+                  {% if forloop.index0 < half %}
+                    <div
+                      class="whats-not-included__pill"
+                      {% if i == 1 %}
+                        {{- block.shopify_attributes -}}
+                      {% endif %}
+                    >
+                      <span>
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.60156 0.125C9.75209 0.120631 9.90054 0.161924 10.0273 0.243164C10.1544 0.324684 10.2547 0.443027 10.3135 0.582031C10.3722 0.720963 10.3873 0.874596 10.3574 1.02246C10.3276 1.16989 10.2531 1.30412 10.1455 1.40918L10.1465 1.41016L6.30859 5.24805L10.1465 9.08691H10.1455C10.2169 9.15573 10.2741 9.23808 10.3135 9.3291C10.3529 9.42045 10.374 9.51867 10.375 9.61816C10.376 9.71781 10.357 9.81692 10.3193 9.90918C10.2817 10.0014 10.2257 10.0848 10.1553 10.1553C10.0848 10.2257 10.0014 10.2817 9.90918 10.3193C9.81694 10.357 9.7178 10.376 9.61816 10.375C9.51868 10.3739 9.42044 10.3529 9.3291 10.3135C9.23848 10.2743 9.15651 10.2175 9.08789 10.1465L5.25 6.30859L1.41211 10.1465C1.34349 10.2175 1.26152 10.2743 1.1709 10.3135C1.07956 10.3529 0.981324 10.3739 0.881836 10.375C0.782203 10.376 0.683065 10.357 0.59082 10.3193C0.49861 10.2817 0.415156 10.2257 0.344727 10.1553C0.274319 10.0848 0.21832 10.0014 0.180664 9.90918C0.143007 9.81692 0.123986 9.71781 0.125 9.61816C0.126027 9.51867 0.147097 9.42046 0.186523 9.3291C0.225761 9.23829 0.282381 9.15563 0.353516 9.08691L4.19043 5.24805L0.353516 1.41016V1.40918C0.24766 1.30552 0.173985 1.17336 0.143555 1.02832C0.11303 0.882629 0.1267 0.730717 0.182617 0.592773C0.23867 0.454723 0.335415 0.336161 0.458984 0.25293C0.582496 0.169816 0.728082 0.125039 0.876953 0.125C0.976966 0.125023 1.07583 0.145659 1.16797 0.18457C1.26016 0.223516 1.34428 0.279818 1.41406 0.351562H1.41309L5.25 4.18848L9.08789 0.350586C9.22338 0.211905 9.40772 0.130777 9.60156 0.125Z" fill="black" stroke="black" stroke-width="0.25"/>
+                        </svg>
+                      </span>
+                      {{ block.settings.text | escape }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {%- comment -%} Row 2 — second half of the blocks {%- endcomment -%}
+        <div class="whats-not-included__row whats-not-included__row--reverse">
+          <div class="whats-not-included__track">
+            {% for i in (1..copies) %}
+              <div
+                class="whats-not-included__group"
+                {% unless forloop.first %}
+                  aria-hidden="true"
+                {% endunless %}
+              >
+                {% for block in section.blocks %}
+                  {% if forloop.index0 >= half %}
+                    <div
+                      class="whats-not-included__pill"
+                      {% if i == 1 %}
+                        {{- block.shopify_attributes -}}
+                      {% endif %}
+                    >
+                      <span>
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.60156 0.125C9.75209 0.120631 9.90054 0.161924 10.0273 0.243164C10.1544 0.324684 10.2547 0.443027 10.3135 0.582031C10.3722 0.720963 10.3873 0.874596 10.3574 1.02246C10.3276 1.16989 10.2531 1.30412 10.1455 1.40918L10.1465 1.41016L6.30859 5.24805L10.1465 9.08691H10.1455C10.2169 9.15573 10.2741 9.23808 10.3135 9.3291C10.3529 9.42045 10.374 9.51867 10.375 9.61816C10.376 9.71781 10.357 9.81692 10.3193 9.90918C10.2817 10.0014 10.2257 10.0848 10.1553 10.1553C10.0848 10.2257 10.0014 10.2817 9.90918 10.3193C9.81694 10.357 9.7178 10.376 9.61816 10.375C9.51868 10.3739 9.42044 10.3529 9.3291 10.3135C9.23848 10.2743 9.15651 10.2175 9.08789 10.1465L5.25 6.30859L1.41211 10.1465C1.34349 10.2175 1.26152 10.2743 1.1709 10.3135C1.07956 10.3529 0.981324 10.3739 0.881836 10.375C0.782203 10.376 0.683065 10.357 0.59082 10.3193C0.49861 10.2817 0.415156 10.2257 0.344727 10.1553C0.274319 10.0848 0.21832 10.0014 0.180664 9.90918C0.143007 9.81692 0.123986 9.71781 0.125 9.61816C0.126027 9.51867 0.147097 9.42046 0.186523 9.3291C0.225761 9.23829 0.282381 9.15563 0.353516 9.08691L4.19043 5.24805L0.353516 1.41016V1.40918C0.24766 1.30552 0.173985 1.17336 0.143555 1.02832C0.11303 0.882629 0.1267 0.730717 0.182617 0.592773C0.23867 0.454723 0.335415 0.336161 0.458984 0.25293C0.582496 0.169816 0.728082 0.125039 0.876953 0.125C0.976966 0.125023 1.07583 0.145659 1.16797 0.18457C1.26016 0.223516 1.34428 0.279818 1.41406 0.351562H1.41309L5.25 4.18848L9.08789 0.350586C9.22338 0.211905 9.40772 0.130777 9.60156 0.125Z" fill="black" stroke="black" stroke-width="0.25"/>
+                        </svg>
+                      </span>
+                      {{ block.settings.text | escape }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if section.settings.link_text != blank %}
+      <div class="whats-not-included__link-wrap">
+        <a
+          href="{{ section.settings.link_url | default: '#' }}"
+          class="whats-not-included__link"
+        >
+          {{- section.settings.link_text | escape -}}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "What's Not Included",
+  "tag": "section",
+  "class": "section-whats-not-included",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>WHAT'S NOT INCLUDED MATTERS TOO</h2>"
+    },
+    {
+      "type": "richtext",
+      "id": "mobile_heading",
+      "label": "Mobile Heading (Optional)"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every Yumwoof recipe is free from ingredients we believe don't belong in your dog's bowl.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "mobile_description",
+      "label": "Mobile Description (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Main Text Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Pill Colors"
+    },
+    {
+      "type": "color",
+      "id": "pill_text_color",
+      "label": "Pill text color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "pill_border_color",
+      "label": "Pill border color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "pill_background_color",
+      "label": "Pill background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Marquee"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Scroll duration",
+      "info": "Higher = slower scroll.",
+      "min": 10,
+      "max": 400,
+      "step": 10,
+      "unit": "s",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_second_row",
+      "label": "Reverse second row direction",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "+ See Banned Ingredients List"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#8D4B42"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "NO GMO INGREDIENTS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "What's Not Included",
+      "blocks": [
+        { "type": "ingredient", "settings": { "text": "NO GMO INGREDIENTS" } },
+        { "type": "ingredient", "settings": { "text": "NO SYNTHETICS" } },
+        { "type": "ingredient", "settings": { "text": "NO SEED OILS" } },
+        { "type": "ingredient", "settings": { "text": "NO MEAT MEALS" } },
+        { "type": "ingredient", "settings": { "text": "NO BY-PRODUCTS" } },
+        { "type": "ingredient", "settings": { "text": "NO NATURAL FLAVORS" } },
+        { "type": "ingredient", "settings": { "text": "NO PRESERVATIVES" } },
+        { "type": "ingredient", "settings": { "text": "NO FILLERS" } },
+        { "type": "ingredient", "settings": { "text": "NO ADDED SUGAR" } },
+        { "type": "ingredient", "settings": { "text": "NO CARRAGEENAN" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
