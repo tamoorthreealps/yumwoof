@@ -1,0 +1,194 @@
+{{ 'testing-standard.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="TestingStandard-{{ section.id }}"
+  class="testing-standard"
+  style="
+    --ts-desktop-bg-color: {{ section.settings.desktop_background_color }};
+    --ts-mobile-bg-color: {{ section.settings.mobile_background_color }};
+    --ts-text-color: {{ section.settings.text_color }};
+    {% if section.settings.desktop_background_image != blank %}
+      --ts-desktop-bg-image: url('{{ section.settings.desktop_background_image | image_url }}');
+    {% endif %}
+    {% if section.settings.mobile_background_image != blank %}
+      --ts-mobile-bg-image: url('{{ section.settings.mobile_background_image | image_url }}');
+    {% endif %}
+  "
+>
+  <div class="testing-standard__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="testing-standard__heading">
+        {{ section.settings.heading | newline_to_br }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="testing-standard__description">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      {% if section.settings.list_type == 'numbered' %}
+        <ol class="testing-standard__list">
+          {% for block in section.blocks %}
+            <li class="testing-standard__item" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </li>
+          {% endfor %}
+        </ol>
+      {% elsif section.settings.list_type == 'bulleted' %}
+        <ul class="testing-standard__list">
+          {% for block in section.blocks %}
+            <li class="testing-standard__item" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="testing-standard__list testing-standard__list--none">
+          {% for block in section.blocks %}
+            <div class="testing-standard__item" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testing Standard",
+  "tag": "section",
+  "class": "section-testing-standard",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "desktop_background_color",
+      "label": "Desktop background color",
+      "default": "#3F8F5B"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_background_image",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "color",
+      "id": "mobile_background_color",
+      "label": "Mobile background color",
+      "default": "#3F8F5B"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "TRUST IS GOOD.\nTESTING IS BETTER."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Every Yummoof product undergoes testing across multiple parameters to ensure safety, compliance, and purity exceeding industry standards.</p>"
+    },
+    {
+      "type": "select",
+      "id": "list_type",
+      "label": "List type",
+      "options": [
+        {
+          "value": "bulleted",
+          "label": "Bullets"
+        },
+        {
+          "value": "numbered",
+          "label": "Numbers"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "bulleted"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "list_item",
+      "name": "List item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "HEAVY METALS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testing Standard",
+      "blocks": [
+        {
+          "type": "list_item",
+          "settings": {
+            "text": "HEAVY METALS"
+          }
+        },
+        {
+          "type": "list_item",
+          "settings": {
+            "text": "LABEL CLAIMS"
+          }
+        },
+        {
+          "type": "list_item",
+          "settings": {
+            "text": "PATHOGENS"
+          }
+        },
+        {
+          "type": "list_item",
+          "settings": {
+            "text": "PESTICIDES"
+          }
+        },
+        {
+          "type": "list_item",
+          "settings": {
+            "text": "NON-GMO"
+          }
+        },
+        {
+          "type": "list_item",
+          "settings": {
+            "text": "NUTRITIONAL COMPLIANCE"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
