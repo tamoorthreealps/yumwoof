@@ -150,7 +150,7 @@
                 <div class="fp__hover-media">
                   {% if hover_media %}
                     {% if hover_media.media_type == 'image' %}
-                      {{ hover_media | image_url: width: 1200 | image_tag: class: 'fp__hover-image' }}
+                      {{ hover_media | image_url: width: 600 | image_tag: class: 'fp__hover-image' }}
                     {% elsif hover_media.media_type == 'video' %}
                       {{
                         hover_media
