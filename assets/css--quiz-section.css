@@ -21,7 +21,7 @@
 .quiz__inner__container {
   position: relative;
   z-index: 2;
-  max-width: 1196px;
+  max-width: 1244px;
   margin: 0 auto;
   padding: 64px 2.4rem 0;
 }
@@ -205,7 +205,7 @@
   }
 
   .quiz__inner__container {
-    padding: 80px 2rem 76px;
+    padding: 80px 2.4rem 76px;
   }
 
   .quiz__inner {
