@@ -155,8 +155,20 @@
   display: block;
   width: 100%;
   height: auto;
+  animation: bowlRotate 120s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+  object-fit: contain;
 }
 
+@keyframes bowlRotate {
+  0% {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 /* Mobile: top-right + mid-left, per node 3489-1366 / 3489-1369 */
 .quiz__decor--left {
   width: 64px;
@@ -171,7 +183,19 @@
   top: 209px;
   right: auto;
 }
-
+.quiz__decor--right img {
+  animation: bottomaicon 120s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+@keyframes bottomaicon {
+  0% {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
 /* --------------------------------------------------------------------------
    Desktop
    -------------------------------------------------------------------------- */
