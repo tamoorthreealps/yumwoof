@@ -1,0 +1,303 @@
+{{ 'butcher-quality-promise.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="ButcherQualityPromise-{{ section.id }}"
+  class="butcher-quality-promise"
+  style="
+    --bqp-desktop-bg: {{ section.settings.desktop_background_color }};
+    --bqp-mobile-bg: {{ section.settings.mobile_background_color }};
+    --bqp-text-color: {{ section.settings.text_color }};
+    --bqp-card-text-color: {{ section.settings.card_text_color }};
+    --bqp-desktop-image: {% if section.settings.desktop_background_image != blank %}url('{{ section.settings.desktop_background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+    --bqp-mobile-image: {% if section.settings.mobile_background_image != blank %}url('{{ section.settings.mobile_background_image | image_url: width: 1600 }}'){% else %}none{% endif %};
+    --bqp-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --bqp-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --bqp-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --bqp-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  "
+>
+  <div class="butcher-quality-promise__inner">
+    {% if section.settings.heading != blank %}
+      <div class="butcher-quality-promise__heading">
+        {{ section.settings.heading }}
+      </div>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="butcher-quality-promise__description">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
+    <div class="butcher-quality-promise__grid">
+      {% for block in section.blocks %}
+        <div
+          class="butcher-quality-promise__card"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image != blank %}
+            {{
+              block.settings.image
+              | image_url: width: 1000
+              | image_tag:
+                class: 'butcher-quality-promise__card-image',
+                loading: 'lazy',
+                widths: '400,600,800,1000',
+                sizes: '(max-width: 767px) 100vw, 33.333vw',
+                alt: block.settings.title
+            }}
+          {% endif %}
+
+          <div class="butcher-quality-promise__overlay"></div>
+
+          <div class="butcher-quality-promise__card-content">
+            {% if block.settings.title != blank %}
+              <div class="butcher-quality-promise__card-title">
+                {{ block.settings.title | escape }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <div class="butcher-quality-promise__card-description">
+                {{ block.settings.description }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('.butcher-quality-promise');
+
+  sections.forEach(section => {
+    const cards = section.querySelectorAll('.butcher-quality-promise__card');
+
+    if (cards.length < 2) return;
+
+    const updateCards = () => {
+      if (window.innerWidth > 767) return;
+
+      const stickyTop = 100;
+
+      cards.forEach((card, index) => {
+        if (index === cards.length - 1) {
+          card.style.transform = '';
+          return;
+        }
+
+        const nextCard = cards[index + 1];
+        const nextRect = nextCard.getBoundingClientRect();
+
+        const progress = Math.max(
+          0,
+          Math.min(
+            1,
+            (stickyTop + card.offsetHeight - nextRect.top) / card.offsetHeight
+          )
+        );
+
+        const scale = 1 - (progress * 0.06);
+        const translateY = progress * -18;
+
+        card.style.transform = `translateY(${translateY}px) scale(${scale})`;
+      });
+    };
+
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (ticking) return;
+
+      requestAnimationFrame(() => {
+        updateCards();
+        ticking = false;
+      });
+
+      ticking = true;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateCards);
+
+    updateCards();
+  });
+});
+</script>
+{% schema %}
+{
+  "name": "Butcher Quality Promise",
+  "tag": "section",
+  "class": "section-butcher-quality-promise",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<h2>OUR BUTCHER QUALITY PROMISE</h2>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>From sourcing to testing, these commitments guide every YUMWOOF recipe.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "desktop_background_color",
+      "label": "Desktop background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_background_image",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "color",
+      "id": "mobile_background_color",
+      "label": "Mobile background color",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Head text color",
+      "default": "#000000"
+    },
+    {
+    "type": "color",
+    "id": "card_text_color",
+    "label": "Card text color",
+    "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise",
+      "name": "Promise Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "TRUSTED FARMS & FISHERMEN"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>We partner with farmers, ranchers, and fishermen we trust.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Butcher Quality Promise",
+      "blocks": [
+        {
+          "type": "promise",
+          "settings": {
+            "title": "TRUSTED FARMS & FISHERMEN"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "PREMIUM PROTEINS"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "WHOLE FOOD NUTRITION"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "HEALTHY FATS BY DESIGN"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "GENTLY AIR-DRIED"
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "INDEPENDENT TESTING"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
