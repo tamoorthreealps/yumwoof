@@ -1,6 +1,7 @@
 /* ==========================================================================
    Yumwoof quiz call to action
-   Figma: desktop node 3319-566 area · mobile node 3501-40
+   Desktop: 2 columns (text left / bags right, flush to bottom)
+   Mobile:  stacked (text above, bags below)
    ========================================================================== */
 
 .quiz {
@@ -11,9 +12,8 @@
   background-color: var(--quiz-bg);
   color: var(--quiz-text);
 
-  /* Clips the kibble overhang + bag image.
-     Without this the negatively-positioned children widen the document
-     and create horizontal scroll. `clip` avoids making a scroll container. */
+  /* Only the kibble decor can overhang now; the bags image is fully in flow.
+     `clip` keeps the overhang trimmed without creating a scroll container. */
   overflow: hidden;
   overflow: clip;
 }
@@ -26,16 +26,32 @@
   padding: 64px 2.4rem 0;
 }
 
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+.quiz__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: end;
+}
+
+.quiz__col--text {
+  display: flex;
+  justify-content: center;
+}
+
 .quiz__inner {
-  position: relative;
   max-width: 344px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
 .quiz__heading {
   margin: 0 0 0.4rem;
   max-width: 300px;
@@ -55,7 +71,6 @@
   max-width: 246px;
   font-size: 14px;
   line-height: 24px;
-  letter-spacing: 0;
   color: var(--quiz-text);
 }
 
@@ -93,55 +108,52 @@
   margin: 1.2rem 0 0;
   font-size: 13px;
   line-height: 20px;
-  letter-spacing: 0;
   color: var(--quiz-text);
 }
 
 /* --------------------------------------------------------------------------
-   Product bags — single image, clipped at the section's bottom edge
+   Product bags — fully in flow, flush with the bottom of the section
    -------------------------------------------------------------------------- */
+.quiz__col--media {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0; /* lets the image shrink instead of forcing overflow */
+}
+
 .quiz__bags {
-  position: relative;
-  z-index: 1;
   width: 100%;
-  height: 175px;
-  margin-top: 40px;
-  overflow: hidden; /* mirrors the Figma mask group */
+  max-width: 708px;
   pointer-events: none;
 }
 
 .quiz__bags-img {
-  position: absolute;
-  left: 50%;
-  top: 0;
   display: block;
   width: 100%;
   height: auto;
+  margin-bottom: -1px; /* kills the inline-image gap under the section edge */
 
-  /* Scroll-in animation start state.
-     translateX(-50%) stays inside the transform on both states
-     so the slide-up never knocks the centring off. */
   opacity: 0;
-  transform: translate(-50%, 48px);
+  transform: translateY(48px);
   transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
     transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .quiz.is-visible .quiz__bags-img {
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .quiz__bags-img {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: none;
     transition: none;
   }
 }
 
 /* --------------------------------------------------------------------------
-   Kibble overhangs
+   Kibble decor — kept inside the section so nothing is clipped
    -------------------------------------------------------------------------- */
 .quiz__decor {
   position: absolute;
@@ -156,17 +168,17 @@
   height: auto;
 }
 
-/* Mobile: top-right + mid-left, per node 3489-1366 / 3489-1369 */
+/* Mobile: top-right + mid-left */
 .quiz__decor--left {
   width: 64px;
-  right: -16px;
-  top: -16px;
+  right: 8px;
+  top: 8px;
   left: auto;
 }
 
 .quiz__decor--right {
   width: 64px;
-  left: -20px;
+  left: 0;
   top: 209px;
   right: auto;
 }
@@ -175,17 +187,25 @@
    Desktop
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 990px) {
-  .quiz {
-    min-height: 480px;
+  .quiz__inner__container {
+    padding: 80px 2rem 0;
   }
 
-  .quiz__inner__container {
-    padding: 80px 2rem 76px;
+  .quiz__grid {
+    grid-template-columns: minmax(320px, 470px) minmax(0, 1fr);
+    gap: 40px;
+    align-items: end;
+  }
+
+  .quiz__col--text {
+    justify-content: flex-start;
+    /* Bottom padding lives here so the text never touches the section edge
+       while the bags column stays flush. */
+    padding-bottom: 76px;
   }
 
   .quiz__inner {
     max-width: 470px;
-    margin: 0;
     align-items: flex-start;
     text-align: left;
   }
@@ -223,27 +243,20 @@
     line-height: 24px;
   }
 
-  /* Bags anchored to the right edge of the 1196px content column */
-  .quiz__bags {
-    position: absolute;
-    right: max(0px, calc((100% - 1196px) / 2));
-    top: 54px;
-    bottom: 0;
-    width: 708px;
-    height: auto;
-    margin-top: 0;
+  .quiz__col--media {
+    justify-content: flex-end;
   }
 
   .quiz__decor--left {
     width: 132px;
-    left: -44px;
+    left: 0;
     right: auto;
-    top: -91px;
+    top: 0;
   }
 
   .quiz__decor--right {
     width: 132px;
-    right: -38px;
+    right: 0;
     left: auto;
     top: 47px;
   }

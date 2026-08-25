@@ -48,33 +48,39 @@
   {%- endif -%}
 
   <div class="quiz__inner__container">
-    <div class="quiz__inner">
-      {%- if section.settings.heading != blank -%}
-        <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.subheading != blank -%}
-        <p class="quiz__subheading">{{ section.settings.subheading }}</p>
-      {%- endif -%}
-      {%- if section.settings.button_label != blank -%}
-        <a class="quiz__button" href="{{ section.settings.button_link | default: '#' }}">
-          <span class="quiz__button-label">{{ section.settings.button_label }}</span>
-        </a>
-      {%- endif -%}
-      {%- if section.settings.offer_text != blank -%}
-        <p class="quiz__offer">{{ section.settings.offer_text }}</p>
+    <div class="quiz__grid">
+      <div class="quiz__col quiz__col--text">
+        <div class="quiz__inner">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="quiz__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="quiz__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+          {%- if section.settings.button_label != blank -%}
+            <a class="quiz__button" href="{{ section.settings.button_link | default: '#' }}">
+              <span class="quiz__button-label">{{ section.settings.button_label }}</span>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.offer_text != blank -%}
+            <p class="quiz__offer">{{ section.settings.offer_text }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if section.settings.bags_image != blank -%}
+        <div class="quiz__col quiz__col--media">
+          <div class="quiz__bags" aria-hidden="true">
+            {{
+              section.settings.bags_image
+              | image_url: width: 1600
+              | image_tag: alt: '', widths: '400, 800, 1200, 1600', loading: 'lazy', class: 'quiz__bags-img'
+            }}
+          </div>
+        </div>
       {%- endif -%}
     </div>
   </div>
-
-  {%- if section.settings.bags_image != blank -%}
-    <div class="quiz__bags" aria-hidden="true">
-      {{
-        section.settings.bags_image
-        | image_url: width: 1600
-        | image_tag: alt: '', widths: '400, 800, 1200, 1600', loading: 'lazy', class: 'quiz__bags-img'
-      }}
-    </div>
-  {%- endif -%}
 </section>
 
 <script>
@@ -162,7 +168,7 @@
       "type": "image_picker",
       "id": "bags_image",
       "label": "Product bags",
-      "info": "Single image of the three bags. The bottom is clipped by the section, matching the Figma mask."
+      "info": "Single image of the three bags. Sits flush with the bottom of the section."
     },
     {
       "type": "header",
