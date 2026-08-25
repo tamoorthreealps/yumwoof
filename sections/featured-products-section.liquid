@@ -460,7 +460,14 @@
                   {%- assign tab_image = popup[ik] | default: fallback_image -%}
                   <div class="fp-popup__tab-img{% if i == active_tab %} active{% endif %}" data-image="{{ i }}">
                     {%- if tab_image != blank -%}
-                      <img src="{{ tab_image | image_url: width: 492 }}" width="492" height="400" alt="{{ popup[tk] | escape }}" loading="lazy" decoding="async">
+                      <img
+                        src="{{ tab_image | image_url: width: 492 }}"
+                        width="492"
+                        height="400"
+                        alt="{{ popup[tk] | escape }}"
+                        loading="lazy"
+                        decoding="async"
+                      >
                     {%- endif -%}
                   </div>
                 {%- endif -%}
@@ -468,10 +475,15 @@
             </div>
             <div class="fp-popup__right_img_bowl">
               <img
-                src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.webp?v=1787063651"
-                width="436"
-                height="436"
-                alt="Ingridients Bowl Image"
+                src="https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.webp?v=1787063651&width=688"
+                srcset="
+                  https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.webp?v=1787063651&width=436 436w,
+                  https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Yumwoof_Ancestral_Blend_Dog_Food_Image_2.webp?v=1787063651&width=688 688w
+                "
+                sizes="(min-width: 990px) 688px, 100vw"
+                width="688"
+                height="684"
+                alt="Ingredients Bowl Image"
                 loading="lazy"
                 decoding="async"
               >
