@@ -117,6 +117,7 @@
   display: block;
   width: 100%;
   height: auto;
+  padding:0 17px;
 
   /* Scroll-in animation start state.
      translateX(-50%) stays inside the transform on both states
@@ -232,6 +233,10 @@ max-width: 254px;
     width: 708px;
     height: auto;
     margin-top: 0;
+  }
+
+  .quiz__bags-img {
+    padding:0;
   }
 
   .quiz__decor--left {
