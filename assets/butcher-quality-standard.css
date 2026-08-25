@@ -1,0 +1,243 @@
+.section-butcher-quality-standard {
+  margin: 0 0 120px;
+  padding: 0;
+}
+
+.butcher-quality-standard {
+  --bqs-content-width: 100%;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--bqs-text-color);
+
+  background-color: var(--bqs-desktop-bg);
+  background-image: var(--bqs-desktop-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* .butcher-quality-standard::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  right: -2%;
+  bottom: -1px;
+  left: -2%;
+  height: 13px;
+  background: var(--bqs-desktop-bg);
+  clip-path: polygon(
+    0 55%, 2% 40%, 4% 58%, 6% 44%, 8% 62%, 10% 43%, 12% 58%,
+    14% 42%, 16% 60%, 18% 44%, 20% 58%, 22% 43%, 24% 61%, 26% 45%,
+    28% 59%, 30% 42%, 32% 61%, 34% 44%, 36% 58%, 38% 43%, 40% 60%,
+    42% 44%, 44% 59%, 46% 42%, 48% 60%, 50% 43%, 52% 59%, 54% 44%,
+    56% 61%, 58% 43%, 60% 58%, 62% 42%, 64% 60%, 66% 44%, 68% 59%,
+    70% 43%, 72% 61%, 74% 44%, 76% 58%, 78% 42%, 80% 60%, 82% 44%,
+    84% 59%, 86% 43%, 88% 61%, 90% 44%, 92% 58%, 94% 42%, 96% 60%,
+    98% 44%, 100% 57%, 100% 100%, 0 100%
+  );
+} */
+
+.butcher-quality-standard__inner {
+    width: min(var(--bqs-content-width), 100%);
+    min-height: 610px;
+    padding: 232px 24px 128px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-width: 1368px;
+    margin: 0 auto;
+}
+
+.butcher-quality-standard__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 264px;
+  margin-bottom:152px;
+}
+
+.butcher-quality-standard__heading h1 {
+    max-width: 920px;
+    margin: 0;
+    color: var(--bqs-text-color);
+    font-size: 104px;
+    line-height: 104px;
+    letter-spacing: -1.04px;
+    text-transform: uppercase;
+    font-family: TAYRosemary;
+}
+
+.trademark {
+    font-family: 'TAY Birdie' !important;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0;
+    position: relative;
+    left: 16px;
+    top: -56px;
+}
+
+.butcher-quality-standard__description {
+    max-width: 592px;
+    margin-top: auto;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0;
+    font-family: 'Matter';
+}
+
+.butcher-quality-standard__description p {
+  margin: 0 0 28px;
+  color: var(--bqs-text-color);
+  font-weight: 400;
+}
+
+.butcher-quality-standard__description p:empty {
+  display: none;
+}
+
+.butcher-quality-standard__description p:not(:empty):last-of-type {
+  margin-bottom: 0;
+}
+
+.butcher-quality-standard__principles {
+  border-top: 1px solid var(--bqs-line-color);
+  padding-top: 16px;
+}
+
+.butcher-quality-standard__principles--image-divider {
+  border-top: 0;
+}
+
+.butcher-quality-standard__principles-label {
+    margin-bottom: 44px;
+    color: var(--bqs-text-color);
+    font-size: 20px;
+    line-height: 32px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    font-family: 'TAY Birdie';
+}
+
+.butcher-quality-standard__grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.butcher-quality-standard__item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.butcher-quality-standard__circle {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bqs-circle-border);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.butcher-quality-standard__icon {
+display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.butcher-quality-standard__fallback-icon {
+  padding: 8px;
+  color: var(--bqs-text-color);
+  font-size: 8px;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.butcher-quality-standard__item-title {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .section-butcher-quality-standard {
+    margin:0 0 64px;
+  }
+
+  .butcher-quality-standard {
+    background-color: var(--bqs-mobile-bg);
+    background-image: var(--bqs-mobile-image);
+  }
+
+  /* .butcher-quality-standard::after {
+    background: var(--bqs-mobile-bg);
+  } */
+
+  .butcher-quality-standard__inner {
+    min-height: 0;
+    padding: 144px 24px 96px;
+  }
+
+  .butcher-quality-standard__content {
+      gap: 305px;
+      margin-bottom: 63px;
+  }
+
+  .butcher-quality-standard__heading h1 {
+      max-width: 334px;
+      font-size: 64px;
+      line-height: 59px;
+      letter-spacing: -0.64px;
+  }
+  .trademark {
+      display: none;
+  }
+    .butcher-quality-standard__description {
+        max-width: 100%;
+        margin-top: auto;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+  .butcher-quality-standard__description p {
+    margin-bottom: 28px;
+  }
+
+  .butcher-quality-standard__principles {
+    padding-top: 22px;
+  }
+
+  .butcher-quality-standard__principles-label {
+    margin-bottom: 12px;
+    font-size: 6px;
+    letter-spacing: 0.08em;
+    display:none;
+  }
+
+  .butcher-quality-standard__grid {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22.38px 26px;
+        justify-items: start;
+  }
+
+  .butcher-quality-standard__item {
+    width: 100%;
+    align-items: center;
+  }
+
+  .butcher-quality-standard__circle {
+    width: 100%;
+  }
+
+  .butcher-quality-standard__item-title {
+    display: none;
+  }
+}
