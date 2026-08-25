@@ -62,8 +62,8 @@
     position: absolute;
     top: -4rem;
     left: auto;
-    right: 22px;
-    width: 80px;
+    right: 20px;
+    width: 104px;
     line-height: 0;
 }
 
@@ -201,7 +201,7 @@
             top: 56px;
         left: -6rem;
         right:auto;
-        width: 120px;
+        width: 156px;
   }
 
   .cocomega--image-left .cocomega__badge {
