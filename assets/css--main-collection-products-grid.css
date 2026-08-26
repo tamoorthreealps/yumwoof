@@ -349,6 +349,10 @@ background: #FFF9EF;
     line-height: 16px;
     letter-spacing: .24px;
     margin: 0 0 12px;
+            display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
 }
 
 .yw-pcard-opinew-stars {
