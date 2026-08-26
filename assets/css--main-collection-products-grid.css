@@ -419,6 +419,11 @@ background: #FFF9EF;
 }
 }
 
+@media screen and (max-width: 449px) {
+.yw-pcard__imgwrap {
+  height: 164px;
+}
+}
 
 /* review--stars--css */
 .yw-pcard-opinew-stars .rating-summary {
