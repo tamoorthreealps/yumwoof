@@ -75,6 +75,12 @@
     document.querySelectorAll('.mcg__promo-mobile').forEach(function (promo) {
       const slides = promo.querySelectorAll('.mcg__promo-slide');
 
+      if (!slides.length) return;
+
+      slides.forEach(function (slide, index) {
+        slide.style.display = index === 0 ? 'block' : 'none';
+      });
+
       if (slides.length <= 1) return;
 
       let current = 0;
