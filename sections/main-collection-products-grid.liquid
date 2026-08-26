@@ -13,6 +13,12 @@
       {%- assign group_products = block.settings.products -%}
       {%- if group_products.count > 0 -%}
         <div class="mcg__group mcg__group--{{ block.settings.heading | handleize }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h2 class="mcg__group-heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if block.settings.subheading != blank -%}
+            <p class="mcg__group-sub">{{ block.settings.subheading }}</p>
+          {%- endif -%}
           {%- if block.settings.promo_text != blank -%}
             <div class="mcg__promo">
               <div class="mcg__promo-desktop">
@@ -34,12 +40,6 @@
                 </div>
               </div>
             </div>
-          {%- endif -%}
-          {%- if block.settings.heading != blank -%}
-            <h2 class="mcg__group-heading">{{ block.settings.heading }}</h2>
-          {%- endif -%}
-          {%- if block.settings.subheading != blank -%}
-            <p class="mcg__group-sub">{{ block.settings.subheading }}</p>
           {%- endif -%}
           <div class="mcg__grid">
             {%- for product in group_products -%}
@@ -70,7 +70,23 @@
     </div>
   {%- endif -%}
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.mcg__promo-mobile').forEach(function (promo) {
+      const slides = promo.querySelectorAll('.mcg__promo-slide');
 
+      if (slides.length <= 1) return;
+
+      let current = 0;
+
+      setInterval(function () {
+        slides[current].style.display = 'none';
+        current = (current + 1) % slides.length;
+        slides[current].style.display = 'block';
+      }, 3000);
+    });
+  });
+</script>
 {% schema %}
 {
   "name": "Collection products",
