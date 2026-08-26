@@ -1523,41 +1523,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!sticky || !footer) return;
 
-  var chatButton = null;
+  function updateChatButton() {
+    var chatButton = document.querySelector('#chat-button');
+    if (!chatButton) return;
 
-  function findChatButton() {
-    chatButton = document.querySelector('#chat-button');
+    var footerVisible = footer.getBoundingClientRect().top <= window.innerHeight;
+
+    chatButton.classList.toggle('chat--visible', footerVisible);
   }
 
-  findChatButton();
+  window.addEventListener('scroll', updateChatButton, { passive: true });
+  window.addEventListener('resize', updateChatButton);
 
-  var chatObserver = new MutationObserver(function () {
-    if (!chatButton) findChatButton();
-  });
+  var observer = new MutationObserver(updateChatButton);
 
-  chatObserver.observe(document.body, {
+  observer.observe(document.body, {
     childList: true,
     subtree: true
   });
 
-  function checkFooter() {
-    var footerVisible = footer.getBoundingClientRect().top <= window.innerHeight;
-
-    if (footerVisible) {
-      sticky.classList.remove('is-visible');
-
-      if (chatButton) {
-        chatButton.classList.add('chat--visible');
-      }
-    } else {
-      if (chatButton) {
-        chatButton.classList.remove('chat--visible');
-      }
-    }
-  }
-
-  window.addEventListener('scroll', checkFooter, { passive: true });
-  window.addEventListener('resize', checkFooter);
-
-  checkFooter();
+  updateChatButton();
 });
