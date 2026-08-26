@@ -225,18 +225,17 @@
     <div class="sticky-atc__inner">
       <div class="sticky-atc__info">
         {%- if st_thumb != blank -%}
-          {{
-            st_thumb
-            | image_url: width: 120
-            | image_tag:
-              class: 'sticky-atc__thumb',
-              widths: '60, 120, 180',
-              width: 60,
-              height: 60,
-              alt: product.title | escape,
-              loading: 'lazy',
-              data-sticky-thumb: ''
-          }}
+          <img
+            class="sticky-atc__thumb"
+            src="{{ st_thumb | image_url: width: 120 }}"
+            srcset="{{ st_thumb | image_url: width: 60 }} 60w, {{ st_thumb | image_url: width: 120 }} 120w, {{ st_thumb | image_url: width: 180 }} 180w"
+            sizes="60px"
+            width="60"
+            height="60"
+            alt="{{ product.title | escape }}"
+            loading="lazy"
+            data-sticky-thumb
+          >
         {%- endif -%}
         <div class="sticky-atc__text">
           <p class="sticky-atc__title" data-sticky-title>{{ product.title | escape }}</p>
