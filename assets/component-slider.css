@@ -37,6 +37,7 @@ slider-component.slider-component-full-width {
     position: relative;
     flex-wrap: inherit;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scroll-padding-left: 1.5rem;
