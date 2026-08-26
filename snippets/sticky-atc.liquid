@@ -292,6 +292,10 @@
           this.btnLabel = this.querySelector('[data-sticky-btn-label]');
           this.btnPrice = this.querySelector('[data-sticky-btn-price]');
 
+          // Stable server-rendered base for the desktop meta (recipe · size),
+          // captured before any sync so appended frequency never accumulates.
+          this.baseDesktopMeta = text(this.metaDesktopEl);
+
           // Live PDP elements this bar mirrors
           this.mainBtn = document.getElementById('ProductSubmitButton-' + this.sectionId);
           this.priceHost = document.getElementById('price-' + this.sectionId);
@@ -379,14 +383,16 @@
             }
           }
 
-          // Desktop meta: variant option values + frequency.
+          // Desktop meta: variant option values + frequency. Always rebuilt from
+          // a stable base (fresh variant options, else the server-rendered base)
+          // — never from the element's own text, so frequency never accumulates.
           var desktopParts = [];
           if (options && options.length) {
             for (var i = 0; i < options.length; i++) {
               if (options[i]) desktopParts.push(options[i]);
             }
-          } else if (this.metaDesktopEl) {
-            desktopParts.push(text(this.metaDesktopEl));
+          } else if (this.baseDesktopMeta) {
+            desktopParts.push(this.baseDesktopMeta);
           }
           if (freq) desktopParts.push(freq);
           if (this.metaDesktopEl) this.metaDesktopEl.textContent = desktopParts.join(' · ');
