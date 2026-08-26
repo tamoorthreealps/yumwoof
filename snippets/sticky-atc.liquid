@@ -528,43 +528,18 @@ max-width: 904px;
 
           // Show the bar only while the main ATC is out of the viewport.
           if ('IntersectionObserver' in window) {
-              this.mainAtcVisible = false;
-              this.footerVisible = false;
-
-              var updateVisibility = function () {
-                self.setVisible(self.mainAtcVisible && !self.footerVisible);
-              };
-
-              var atcObserver = new IntersectionObserver(
-                function (entries) {
-                  entries.forEach(function (entry) {
-                    self.mainAtcVisible = !entry.isIntersecting;
-                    updateVisibility();
-                  });
-                },
-                { root: null, threshold: 0 }
-              );
-
-              atcObserver.observe(this.mainBtn);
-
-              var footer = document.querySelector('footer');
-
-              if (footer) {
-                var footerObserver = new IntersectionObserver(
-                  function (entries) {
-                    entries.forEach(function (entry) {
-                      self.footerVisible = entry.isIntersecting;
-                      updateVisibility();
-                    });
-                  },
-                  { root: null, threshold: 0 }
-                );
-
-                footerObserver.observe(footer);
-              }
-            } else {
-              this.setVisible(true);
-            }
+            var io = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  self.setVisible(!entry.isIntersecting);
+                });
+              },
+              { root: null, threshold: 0 }
+            );
+            io.observe(this.mainBtn);
+          } else {
+            this.setVisible(true);
+          }
         }
 
         setVisible(show) {
