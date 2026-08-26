@@ -20,17 +20,18 @@
     font-family: "TAYRosemary", var(--font-heading-family, serif);
     font-weight: 400;
     text-transform: uppercase;
-    font-size: 40px;
-    line-height: 40px;
-    letter-spacing: -0.40px;
-    color: #000000;
+    font-size: 48px;
+    line-height: 48px;
+    letter-spacing: -.48px;
+    color: #000;
+    transform: translateY(-5px);
 }
 
 .mcg__group-sub {
     margin: 0 0 32px;
     font-family: Matter, sans-serif;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 28px;
     color: #000000;
     max-width: 60rem;
     letter-spacing: 0;
@@ -296,9 +297,10 @@ background: #FFF9EF;
     font-size: 32px;
     line-height: 32px;
     letter-spacing: -.32px;
+    transform: translateY(-4px);
 }
 .mcg__group-sub {
-    margin: 0 0 24px;
+    margin: 0 0 20px;
     font-size: 14px;
     line-height: 20px;
 }
