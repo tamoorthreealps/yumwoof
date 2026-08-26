@@ -491,20 +491,22 @@ background: #FFF9EF;
   .mcg__promo-desktop {
     display: none;
   }
+  .mcg__promo {
+    margin: 0px 0 24px;
+}
 
-  .mcg__promo-mobile {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 52px;
-    padding: 5px 8px;
-  }
+    .mcg__promo-mobile {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 8px 28px 8px 12px;
+    }
 
   .mcg__promo-slide {
     display: none;
-    flex: 0 0 55px;
-    width: 55px;
-    height: 42px;
+        flex: 0 0 76px;
+        width: 76px;
+        height: 72px;
   }
 
   .mcg__promo-slide:first-child {
@@ -519,10 +521,12 @@ background: #FFF9EF;
   }
 
   .mcg__promo-mobile-text {
-    flex: 1;
-    font-size: 9px;
-    line-height: 1.2;
-    font-weight: 600;
-    letter-spacing: .6px;
+        flex: 1;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.32px;
+        font-family: 'TAY Birdie';
+        color: #000;
+        text-transform: uppercase;
   }
 }
