@@ -33,7 +33,7 @@
   </nav>
 
   {%- comment -%} Dark banner band {%- endcomment -%}
-  <div class="mcb__band{% if section.settings.band_image != blank or section.settings.mobile_band_image != blank %} mcb__band--image{% endif %}">
+  <div class="mcb__band mcb__band__{{ collection.title | default: section.settings.heading }}  {% if section.settings.band_image != blank or section.settings.mobile_band_image != blank %} mcb__band--image{% endif %}">
     <div class="mcb__band-inner">
       <nav class="mcb__crumbs mobile_mcb__crumbs" aria-label="Breadcrumb">
         <a href="{{ routes.root_url }}">Home</a>
