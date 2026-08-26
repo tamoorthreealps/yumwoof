@@ -1519,24 +1519,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   var sticky = document.querySelector('sticky-atc-bar');
-  var footer = document.querySelector('footer.yf');
+  if (!sticky) return;
 
-  if (!sticky || !footer) return;
+  var chatButton = null;
 
-  function checkFooter() {
-    var footerTop = footer.getBoundingClientRect().top;
-    var footerVisible = footerTop <= window.innerHeight;
-    var chatButton = document.querySelector('#chat-button');
-
-    sticky.classList.toggle('footer-visible', footerVisible);
-
-    if (chatButton) {
-      chatButton.classList.toggle('chat--visible', footerVisible);
+  function syncChatButton() {
+    if (!chatButton) {
+      chatButton = document.querySelector('#chat-button');
+      if (!chatButton) return false;
     }
+    var shouldShowChat =
+      !sticky.classList.contains('is-visible') ||
+      sticky.classList.contains('footer-visible');
+    chatButton.classList.toggle('chat--visible', shouldShowChat);
+    return true;
   }
 
-  window.addEventListener('scroll', checkFooter, { passive: true });
-  window.addEventListener('resize', checkFooter);
+  new MutationObserver(syncChatButton).observe(sticky, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
 
-  checkFooter();
+  if (!syncChatButton()) {
+    var finder = new MutationObserver(function () {
+      if (syncChatButton()) finder.disconnect();
+    });
+    finder.observe(document.body, { childList: true, subtree: true });
+  }
 });
