@@ -30,7 +30,7 @@
                   {%- assign image_key = 'promo_image_' | append: i -%}
                   {%- if block.settings[image_key] != blank -%}
                     <div class="mcg__promo-slide">
-                      {{ block.settings[image_key] | image_url: width: 200 | image_tag: loading: 'lazy' }}
+                      {{ block.settings[image_key] | image_url: width: 200 | image_tag: loading: 'eager' }}
                     </div>
                   {%- endif -%}
                 {%- endfor -%}
