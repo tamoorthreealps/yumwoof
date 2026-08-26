@@ -83,7 +83,10 @@
     line-height: 2.8rem;
     color: var(--mcb-band-text, #fff9ef);
     letter-spacing: 0;
-    max-width: 336px;
+}
+
+.mcb__band__shop-yumwoof .mcb__subheading {
+	max-width: 336px;
 }
 
 /* Category tabs */
