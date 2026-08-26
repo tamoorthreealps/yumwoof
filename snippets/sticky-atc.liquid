@@ -542,6 +542,24 @@ max-width: 904px;
           }
         }
 
+        var footer = document.querySelector('footer');
+
+if (footer) {
+  var footerObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        self.classList.toggle('footer-visible', entry.isIntersecting);
+      });
+    },
+    {
+      root: null,
+      threshold: 0
+    }
+  );
+
+  footerObserver.observe(footer);
+}
+
         setVisible(show) {
           this.classList.toggle('is-visible', !!show);
           this.setAttribute('aria-hidden', show ? 'false' : 'true');
