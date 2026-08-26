@@ -487,7 +487,7 @@ background: #FFF9EF;
         transparent
     );
     transform: skewX(-20deg);
-    animation: promoShine 4s ease-in-out infinite;
+    animation: promoShine 7s ease-in-out infinite;
     pointer-events: none;
     z-index: 2;
 }
@@ -514,7 +514,7 @@ background: #FFF9EF;
         left: -30%;
     }
 
-    25%,
+    45%,
     100% {
         left: 130%;
     }
