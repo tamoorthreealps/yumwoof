@@ -420,18 +420,31 @@
           this.syncButton();
         }
 
+        bindVariantSync() {
+          if (this._variantBound) return true;
+          if (typeof subscribe !== 'function' || typeof PUB_SUB_EVENTS === 'undefined' || !PUB_SUB_EVENTS.variantChange) {
+            return false;
+          }
+          var self = this;
+          this._variantBound = true;
+          subscribe(PUB_SUB_EVENTS.variantChange, function (event) {
+            self._variant = event && event.data && event.data.variant;
+            self.syncThumb();
+            window.requestAnimationFrame(function () { self.syncAll(); });
+          });
+          return true;
+        }
+
         bindObservers() {
           var self = this;
           var raf = function () { window.requestAnimationFrame(function () { self.syncAll(); }); };
 
           // Variant / swatch change → get the fresh variant object, then re-sync
-          // after Appstle has swapped its widget (deferred a frame).
-          if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined' && PUB_SUB_EVENTS.variantChange) {
-            subscribe(PUB_SUB_EVENTS.variantChange, function (event) {
-              self._variant = event && event.data && event.data.variant;
-              self.syncThumb();
-              raf();
-            });
+          // after Appstle has swapped its widget (deferred a frame). pubsub.js is
+          // deferred, so on the initial parse `subscribe` may not exist yet; retry
+          // on DOMContentLoaded (same pattern as appstle-subscription.liquid).
+          if (!this.bindVariantSync()) {
+            document.addEventListener('DOMContentLoaded', this.bindVariantSync.bind(this), { once: true });
           }
 
           // Main add-to-cart button: label + disabled state.
