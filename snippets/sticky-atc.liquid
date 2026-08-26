@@ -58,12 +58,23 @@
       assign st_size = st_variant.options[size_index]
     endif
 
-    # Initial meta lines (JS keeps these in sync afterwards)
-    assign st_meta_desktop = st_variant.options | join: ' · '
-    assign st_meta_mobile = product.title
-    if st_size != blank
-      assign st_meta_mobile = product.title | append: ' · ' | append: st_size
-    endif
+    # Initial meta line (JS keeps this in sync afterwards). Built from the
+    # variant option values (recipe · size), skipping blanks and the Shopify
+    # "Default Title" that single-variant products carry. Desktop and mobile
+    # share the same line — the product title only shows as the desktop heading.
+    assign st_meta = ''
+    for ov in st_variant.options
+      assign ov_clean = ov | strip
+      if ov_clean != blank and ov_clean != 'Default Title'
+        if st_meta == ''
+          assign st_meta = ov_clean
+        else
+          assign st_meta = st_meta | append: ' · ' | append: ov_clean
+        endif
+      endif
+    endfor
+    assign st_meta_desktop = st_meta
+    assign st_meta_mobile = st_meta
   -%}
 
   {%- style -%}
@@ -316,7 +327,12 @@
           this.syncAll();
         }
 
-        aswWidget() { return document.querySelector('appstle-subscription-widget'); }
+        // Scope to THIS section's product-info so a product with no subscription
+        // widget reports no frequency (rather than borrowing another section's).
+        aswWidget() {
+          if (this.productInfo) return this.productInfo.querySelector('appstle-subscription-widget');
+          return document.querySelector('appstle-subscription-widget');
+        }
 
         // ----- Price (mirror the selected purchase option) -----
         syncPrice() {
@@ -357,14 +373,10 @@
           }
         }
 
-        // ----- Recipe / Size / frequency meta line -----
+        // ----- Variant title + frequency meta line (desktop and mobile share it) -----
         syncMeta() {
           var variant = this._variant;
           var options = variant && variant.options ? variant.options : null;
-
-          var sizeVal = '';
-          if (options && this.sizeIndex >= 0) sizeVal = options[this.sizeIndex] || '';
-          if (!sizeVal) sizeVal = this.initialSize;
 
           // Frequency from the Appstle widget (subscription vs one-time).
           var freq = '';
@@ -383,25 +395,24 @@
             }
           }
 
-          // Desktop meta: variant option values + frequency. Always rebuilt from
-          // a stable base (fresh variant options, else the server-rendered base)
+          // Variant title = option values (recipe · size), skipping blanks and the
+          // Shopify "Default Title" that single-variant products carry. Rebuilt from
+          // fresh variant options, else the server-rendered base (already filtered)
           // — never from the element's own text, so frequency never accumulates.
-          var desktopParts = [];
+          var parts = [];
           if (options && options.length) {
             for (var i = 0; i < options.length; i++) {
-              if (options[i]) desktopParts.push(options[i]);
+              var v = (options[i] || '').trim();
+              if (v && v !== 'Default Title') parts.push(v);
             }
           } else if (this.baseDesktopMeta) {
-            desktopParts.push(this.baseDesktopMeta);
+            parts.push(this.baseDesktopMeta);
           }
-          if (freq) desktopParts.push(freq);
-          if (this.metaDesktopEl) this.metaDesktopEl.textContent = desktopParts.join(' · ');
+          if (freq) parts.push(freq);
 
-          // Mobile meta: product title + size + frequency.
-          var mobileParts = [this.productTitle];
-          if (sizeVal) mobileParts.push(sizeVal);
-          if (freq) mobileParts.push(freq);
-          if (this.metaMobileEl) this.metaMobileEl.textContent = mobileParts.join(' · ');
+          var metaStr = parts.join(' · ');
+          if (this.metaDesktopEl) this.metaDesktopEl.textContent = metaStr;
+          if (this.metaMobileEl) this.metaMobileEl.textContent = metaStr;
         }
 
         syncThumb() {
