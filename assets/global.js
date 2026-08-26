@@ -1519,22 +1519,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   var sticky = document.querySelector('sticky-atc-bar');
-  var footer = document.querySelector('footer.yf');
 
-  if (!sticky || !footer) return;
+  if (!sticky) return;
 
-  function checkFooter() {
-    var footerTop = footer.getBoundingClientRect().top;
-
-    if (footerTop <= window.innerHeight) {
-      sticky.classList.add('footer-visible');
-    } else {
-      sticky.classList.remove('footer-visible');
+  var observer = new MutationObserver(function () {
+    if (sticky.classList.contains('is-visible')) {
+      sticky.classList.remove('is-visible');
     }
-  }
+  });
 
-  window.addEventListener('scroll', checkFooter, { passive: true });
-  window.addEventListener('resize', checkFooter);
+  observer.observe(sticky, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
 
-  checkFooter();
+  sticky.classList.remove('is-visible');
 });
