@@ -222,10 +222,10 @@
 
 	.mcb__crumbs {
 		font-size: 1.2rem;
-		line-height: 100%;
+		line-height: 1.4rem;
 		letter-spacing: 0.96px;
 		color: rgba(255, 249, 239, 0.6);
-		margin-bottom: 4.6rem;
+		margin-bottom: 2.6rem;
 	}
 
 	.mcb__crumbs a {
@@ -239,16 +239,17 @@
 
 	.mcb__heading {
 		font-size: 40px;
-		line-height: 100%;
+		line-height: 40px;
 		letter-spacing: 0;
 		transform: translateY(-4px);
 	}
 
 	.mcb__subheading {
-		margin: 4px 0 0;
+		margin: 1px 0 0;
 		font-size: 1.4rem;
 		line-height: 2rem;
 		letter-spacing: 0;
+		max-width: 284px;
 	}
 
 	.mcb__tabs .mcb__tabs__hold {
