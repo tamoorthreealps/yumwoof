@@ -1519,31 +1519,52 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   var sticky = document.querySelector('sticky-atc-bar');
-  if (!sticky) return;
+  var footer = document.querySelector('footer.yf');
+
+  if (!sticky || !footer) return;
 
   var chatButton = null;
 
   function syncChatButton() {
-    if (!chatButton) {
-      chatButton = document.querySelector('#chat-button');
-      if (!chatButton) return false;
-    }
-    var shouldShowChat =
+    chatButton = document.querySelector('#chat-button');
+
+    if (!chatButton) return;
+
+    var showChat =
       !sticky.classList.contains('is-visible') ||
       sticky.classList.contains('footer-visible');
-    chatButton.classList.toggle('chat--visible', shouldShowChat);
-    return true;
+
+    chatButton.classList.toggle('chat--visible', showChat);
   }
 
-  new MutationObserver(syncChatButton).observe(sticky, {
+  function checkFooter() {
+    var footerVisible = footer.getBoundingClientRect().top <= window.innerHeight;
+
+    sticky.classList.toggle('footer-visible', footerVisible);
+
+    syncChatButton();
+  }
+
+  window.addEventListener('scroll', checkFooter, { passive: true });
+  window.addEventListener('resize', checkFooter);
+
+  var chatObserver = new MutationObserver(function () {
+    syncChatButton();
+  });
+
+  chatObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  var stickyObserver = new MutationObserver(function () {
+    syncChatButton();
+  });
+
+  stickyObserver.observe(sticky, {
     attributes: true,
     attributeFilter: ['class']
   });
 
-  if (!syncChatButton()) {
-    var finder = new MutationObserver(function () {
-      if (syncChatButton()) finder.disconnect();
-    });
-    finder.observe(document.body, { childList: true, subtree: true });
-  }
+  checkFooter();
 });
