@@ -528,18 +528,46 @@ max-width: 904px;
 
           // Show the bar only while the main ATC is out of the viewport.
           if ('IntersectionObserver' in window) {
-            var io = new IntersectionObserver(
-              function (entries) {
-                entries.forEach(function (entry) {
-                  self.setVisible(!entry.isIntersecting);
-                });
-              },
-              { root: null, threshold: 0 }
-            );
-            io.observe(this.mainBtn);
-          } else {
-            this.setVisible(true);
-          }
+  var mainAtcOut = false;
+  var footerVisible = false;
+
+  var updateSticky = function () {
+    self.setVisible(mainAtcOut && !footerVisible);
+  };
+
+  var io = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        mainAtcOut = !entry.isIntersecting;
+        updateSticky();
+      });
+    },
+    { root: null, threshold: 0 }
+  );
+
+  io.observe(this.mainBtn);
+
+  this.footer =
+    document.querySelector('.yf') ||
+    document.querySelector('#shopify-section-footer') ||
+    document.querySelector('footer');
+
+  if (this.footer) {
+    var footerIo = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          footerVisible = entry.isIntersecting;
+          updateSticky();
+        });
+      },
+      { root: null, threshold: 0 }
+    );
+
+    footerIo.observe(this.footer);
+  }
+} else {
+  this.setVisible(true);
+}
 
           // Hide the bar once the footer comes into view so it never sits over it.
           this.footer =
