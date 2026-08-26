@@ -181,6 +181,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      position: relative;
       transition: background .2s ease, color .2s ease, opacity .2s ease;
     }
     .sticky-atc__btn:hover { background: #1A1A1A; color: #FFF9EF; }
@@ -193,6 +194,23 @@
     .sticky-atc__btn[disabled]:hover { background: #E6E0D7; color: #1A1A1A; }
     /* In-button price is mobile-only; desktop shows the standalone price. */
     .sticky-atc__btn-price { display: none; }
+
+    /* Loading spinner — same behaviour as the main add-to-cart button. */
+    .sticky-atc__btn .loading__spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2rem;
+      height: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .sticky-atc__btn .loading__spinner .path { stroke: #1A1A1A; }
+    .sticky-atc__btn.is-loading { color: transparent; cursor: default; }
+    .sticky-atc__btn.is-loading:hover { background: #FFC069; color: transparent; }
+    .sticky-atc__btn.is-loading [data-sticky-btn-label],
+    .sticky-atc__btn.is-loading .sticky-atc__btn-price { visibility: hidden; }
 
     @media screen and (max-width: 749px) {
       .sticky-atc { padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); }
@@ -269,6 +287,7 @@
         >
           <span data-sticky-btn-label>{{ label | default: 'Add to Bag' }}</span>
           <span class="sticky-atc__btn-price" data-sticky-btn-price></span>
+          {%- render 'loading-spinner' -%}
         </button>
       </div>
     </div>
@@ -302,6 +321,7 @@
           this.btn = this.querySelector('[data-sticky-btn]');
           this.btnLabel = this.querySelector('[data-sticky-btn-label]');
           this.btnPrice = this.querySelector('[data-sticky-btn-price]');
+          this.spinnerEl = this.querySelector('.loading__spinner');
 
           // Stable server-rendered base for the desktop meta (recipe · size),
           // captured before any sync so appended frequency never accumulates.
@@ -356,7 +376,7 @@
           this._now = now || this._now || '';
         }
 
-        // ----- Button label / disabled state (mirror the main ATC) -----
+        // ----- Button label / disabled / loading state (mirror the main ATC) -----
         syncButton() {
           if (!this.mainBtn) return;
           var disabled = this.mainBtn.hasAttribute('disabled') || this.mainBtn.disabled;
@@ -371,6 +391,15 @@
             // Mobile: show the price inside the button ("ADD TO BAG | $129.99").
             this.btnPrice.textContent = this._now ? '| ' + this._now : '';
           }
+          this.syncSpinner();
+        }
+
+        // Mirror the main button's loading spinner while an add is in flight.
+        syncSpinner() {
+          if (!this.mainBtn) return;
+          var loading = this.mainBtn.classList.contains('loading');
+          this.btn.classList.toggle('is-loading', loading);
+          if (this.spinnerEl) this.spinnerEl.classList.toggle('hidden', !loading);
         }
 
         // ----- Variant title + frequency meta line (desktop and mobile share it) -----
@@ -458,11 +487,11 @@
             document.addEventListener('DOMContentLoaded', this.bindVariantSync.bind(this), { once: true });
           }
 
-          // Main add-to-cart button: label + disabled state.
+          // Main add-to-cart button: label + disabled + loading (class) state.
           if (this.mainBtn) {
             new MutationObserver(function () { self.syncButton(); }).observe(this.mainBtn, {
               attributes: true,
-              attributeFilter: ['disabled'],
+              attributeFilter: ['disabled', 'class'],
               childList: true,
               subtree: true,
               characterData: true,
