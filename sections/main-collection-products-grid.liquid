@@ -41,7 +41,7 @@
               </div>
             </div>
           {%- endif -%}
-          <div class="mcg__grid">
+          <div class="mcg__grid 1">
             {%- for product in group_products -%}
               {% render 'card-product-yw', product: product, short_desc_mf: section.settings.short_desc_metafield %}
             {%- endfor -%}
@@ -58,7 +58,7 @@
         <h2 class="mcg__group-heading">{{ section.settings.collection_heading }}</h2>
       {%- endif -%}
       {%- paginate collection.products by section.settings.products_per_page -%}
-        <div class="mcg__grid">
+        <div class="mcg__grid 2">
           {%- for product in collection.products -%}
             {% render 'card-product-yw', product: product, short_desc_mf: section.settings.short_desc_metafield %}
           {%- endfor -%}
