@@ -467,6 +467,18 @@ background: #FFF9EF;
     background: #fec068;
     border-radius: 12px;
     margin: -8px 0 32px;
+    animation: promoPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes promoPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 .mcg__promo-desktop {
