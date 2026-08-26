@@ -463,10 +463,10 @@ background: #FFF9EF;
 
 
 .mcg__promo {
-  width: 100%;
-  margin-bottom: 32px;
-  background: #FEC068;
-  border-radius: 12px;
+    width: 100%;
+    background: #fec068;
+    border-radius: 12px;
+    margin: -8px 0 32px;
 }
 
 .mcg__promo-desktop {
