@@ -544,7 +544,7 @@ max-width: 904px;
           // Hide the bar once the footer comes into view so it never sits over it.
           this.footer =
             document.querySelector('.yf') ||
-            document.querySelector('#shopify-section-footer') ||
+            document.querySelector('.shopify-section-group-footer-group') ||
             document.querySelector('footer');
 
           if (this.footer && 'IntersectionObserver' in window) {
