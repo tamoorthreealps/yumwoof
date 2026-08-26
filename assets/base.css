@@ -3727,6 +3727,9 @@ details-disclosure > details {
 }
 }
 @media screen and (max-width: 749px) {
+  #chat-button{
+    bottom:110px !important;
+}
   .card_new_badge{
     right: 8px;
     top: 8px;
