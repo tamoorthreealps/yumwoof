@@ -1523,14 +1523,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!sticky || !footer) return;
 
-  function checkFooter() {
-    var footerTop = footer.getBoundingClientRect().top;
+  var chatButton = null;
 
-    sticky.classList.toggle('footer-visible', footerTop <= window.innerHeight);
+  function syncChat() {
+    chatButton = document.querySelector('#chat-button');
+
+    if (!chatButton) return;
+
+    chatButton.classList.toggle(
+      'chat--visible',
+      sticky.classList.contains('is-visible')
+    );
   }
 
-  window.addEventListener('scroll', checkFooter, { passive: true });
-  window.addEventListener('resize', checkFooter);
+  var stickyObserver = new MutationObserver(function () {
+    syncChat();
+  });
 
-  checkFooter();
+  stickyObserver.observe(sticky, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  var footerObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          sticky.classList.remove('is-visible');
+
+          if (chatButton) {
+            chatButton.classList.remove('chat--visible');
+          }
+        }
+      });
+    },
+    {
+      root: null,
+      threshold: 0
+    }
+  );
+
+  footerObserver.observe(footer);
+
+  var chatObserver = new MutationObserver(function () {
+    syncChat();
+  });
+
+  chatObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  syncChat();
 });
