@@ -464,20 +464,23 @@ background: #FFF9EF;
 
 .mcg__promo {
   width: 100%;
-  margin-bottom: 14px;
-  background: #ffbf61;
+  margin-bottom: 32px;
+  background: #FEC068;
+  border-radius: 12px;
 }
 
 .mcg__promo-desktop {
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 20px;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 20px 12px;
+    text-align: center;
+    font-family: 'TAY Birdie';
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.40px;
+    color: #000;
+    text-transform: uppercase;
 }
 
 .mcg__promo-mobile {
