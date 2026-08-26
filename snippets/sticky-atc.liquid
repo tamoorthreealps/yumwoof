@@ -264,13 +264,14 @@ max-width: 904px;
         {%- if st_thumb != blank -%}
           <img
             class="sticky-atc__thumb"
-            src="{{ st_thumb | image_url: width: 120 }}"
-            srcset="{{ st_thumb | image_url: width: 60 }} 60w, {{ st_thumb | image_url: width: 120 }} 120w, {{ st_thumb | image_url: width: 180 }} 180w"
+            src="{{ st_thumb | image_url: width: 240 }}"
+            srcset="{{ st_thumb | image_url: width: 120 }} 120w, {{ st_thumb | image_url: width: 180 }} 180w, {{ st_thumb | image_url: width: 240 }} 240w, {{ st_thumb | image_url: width: 300 }} 300w"
             sizes="60px"
             width="60"
             height="60"
             alt="{{ product.title | escape }}"
             loading="lazy"
+            decoding="async"
             data-sticky-thumb
           >
         {%- endif -%}
@@ -458,7 +459,11 @@ max-width: 904px;
           var img = variant.featured_image || (variant.featured_media && variant.featured_media.preview_image);
           var src = img && img.src;
           if (!src) return;
-          this.thumbEl.src = src + (src.indexOf('?') === -1 ? '?' : '&') + 'width=120';
+          // High-DPI crisp: request 240px (4x the 60px box) and rebuild srcset.
+          var base = src.split('?')[0];
+          var sized = function (w) { return base + '?width=' + w; };
+          this.thumbEl.src = sized(240);
+          this.thumbEl.srcset = sized(120) + ' 120w, ' + sized(180) + ' 180w, ' + sized(240) + ' 240w, ' + sized(300) + ' 300w';
           if (variant.featured_media && variant.featured_media.alt) this.thumbEl.alt = variant.featured_media.alt;
         }
 
