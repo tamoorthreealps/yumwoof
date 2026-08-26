@@ -1519,24 +1519,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   var sticky = document.querySelector('sticky-atc-bar');
-  var footer = document.querySelector('footer.yf');
 
-  if (!sticky || !footer) return;
+  if (!sticky) return;
 
-  function checkFooter() {
-    var footerTop = footer.getBoundingClientRect().top;
-    var footerVisible = footerTop <= window.innerHeight;
+  function syncChatButton() {
     var chatButton = document.querySelector('#chat-button');
 
-    sticky.classList.toggle('footer-visible', footerVisible);
+    if (!chatButton) return;
 
-    if (chatButton) {
-      chatButton.classList.toggle('chat--visible', footerVisible);
-    }
+    var shouldShowChat =
+      !sticky.classList.contains('is-visible') ||
+      sticky.classList.contains('footer-visible');
+
+    chatButton.classList.toggle('chat--visible', shouldShowChat);
   }
 
-  window.addEventListener('scroll', checkFooter, { passive: true });
-  window.addEventListener('resize', checkFooter);
+  var stickyObserver = new MutationObserver(function () {
+    syncChatButton();
+  });
 
-  checkFooter();
+  stickyObserver.observe(sticky, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  var bodyObserver = new MutationObserver(function () {
+    syncChatButton();
+  });
+
+  bodyObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  syncChatButton();
 });
