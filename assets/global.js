@@ -1523,10 +1523,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!sticky || !footer) return;
 
-  function checkFooter() {
-    var footerTop = footer.getBoundingClientRect().top;
+  var chatButton = null;
 
-    sticky.classList.toggle('footer-visible', footerTop <= window.innerHeight);
+  function findChatButton() {
+    chatButton = document.querySelector('#chat-button');
+  }
+
+  findChatButton();
+
+  var chatObserver = new MutationObserver(function () {
+    if (!chatButton) findChatButton();
+  });
+
+  chatObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  function checkFooter() {
+    var footerVisible = footer.getBoundingClientRect().top <= window.innerHeight;
+
+    if (footerVisible) {
+      sticky.classList.remove('is-visible');
+
+      if (chatButton) {
+        chatButton.classList.add('chat--visible');
+      }
+    } else {
+      if (chatButton) {
+        chatButton.classList.remove('chat--visible');
+      }
+    }
   }
 
   window.addEventListener('scroll', checkFooter, { passive: true });
