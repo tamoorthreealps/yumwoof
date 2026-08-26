@@ -491,36 +491,26 @@ background: #FFF9EF;
   .mcg__promo-desktop {
     display: none;
   }
-
   .mcg__promo {
-    margin: 0 0 24px;
-  }
+    margin: 0px 0 24px;
+}
 
-  .mcg__promo-mobile {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 8px 28px 8px 12px;
-  }
-
-  .mcg__promo-slides {
-    position: relative;
-    flex: 0 0 76px;
-    width: 76px;
-    height: 72px;
-  }
+    .mcg__promo-mobile {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 8px 28px 8px 12px;
+    }
 
   .mcg__promo-slide {
-    position: absolute;
-    inset: 0;
-    width: 76px;
-    height: 72px;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    display: none;
+        flex: 0 0 76px;
+        width: 76px;
+        height: 72px;
   }
 
   .mcg__promo-slide:first-child {
-    opacity: 1;
+    display: block;
   }
 
   .mcg__promo-slide img {
@@ -531,12 +521,12 @@ background: #FFF9EF;
   }
 
   .mcg__promo-mobile-text {
-    flex: 1;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -0.32px;
-    font-family: 'TAY Birdie';
-    color: #000;
-    text-transform: uppercase;
+        flex: 1;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.32px;
+        font-family: 'TAY Birdie';
+        color: #000;
+        text-transform: uppercase;
   }
 }
