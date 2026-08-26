@@ -37,7 +37,10 @@
               "ancestral-blend",
               "perfect-kibble"
             ],
-            "promo_text": "Perfect Superfood is now Ancestral BLEND!"
+            "promo_text": "Perfect Superfood is now Ancestral BLEND!",
+            "promo_image_1": "shopify://shop_images/land-sea-recipe-promo_img.png",
+            "promo_image_2": "shopify://shop_images/wild-caught-fish-recipe-promo_img.png",
+            "promo_image_3": "shopify://shop_images/turkey-recipe-promo_img.png"
           }
         },
         "product_group_bT4yhm": {
