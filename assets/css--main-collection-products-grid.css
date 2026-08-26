@@ -489,7 +489,7 @@ background: #FFF9EF;
 @keyframes promoPulse {
     0%,
     100% {
-        opacity: 0.6;
+        opacity: 0.5;
     }
 
     50% {
