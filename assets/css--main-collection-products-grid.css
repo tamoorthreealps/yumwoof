@@ -469,6 +469,8 @@ background: #FFF9EF;
     border-radius: 12px;
     margin: -8px 0 32px;
     overflow: hidden;
+    isolation: isolate;
+    animation: promoPulse 3.5s ease-in-out infinite;
 }
 
 .mcg__promo::after {
@@ -494,6 +496,17 @@ background: #FFF9EF;
 .mcg__promo-mobile {
     position: relative;
     z-index: 1;
+}
+
+@keyframes promoPulse {
+    0%,
+    100% {
+        background-color: rgba(254, 192, 104, 0.65);
+    }
+
+    50% {
+        background-color: rgba(254, 192, 104, 1);
+    }
 }
 
 @keyframes promoShine {
