@@ -1519,14 +1519,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   var sticky = document.querySelector('sticky-atc-bar');
+  var chatButton = document.querySelector('#chat-button');
   var footer = document.querySelector('footer.yf');
 
   if (!sticky || !footer) return;
 
   function checkFooter() {
-    var footerTop = footer.getBoundingClientRect().top;
+    var footerVisible = footer.getBoundingClientRect().top <= window.innerHeight;
 
-    sticky.classList.toggle('footer-visible', footerTop <= window.innerHeight);
+    if (footerVisible) {
+      sticky.classList.remove('is-visible');
+      chatButton.classList.add('footer-visible');
+    } else {
+      sticky.classList.add('is-visible');
+      chatButton.classList.remove('footer-visible');
+    }
   }
 
   window.addEventListener('scroll', checkFooter, { passive: true });
