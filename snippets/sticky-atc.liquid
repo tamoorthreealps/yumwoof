@@ -215,16 +215,21 @@ max-width: 904px;
 
     @media screen and (max-width: 749px) {
       .sticky-atc { padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); }
-      .sticky-atc__inner { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; border-radius: 12px; }
+      .sticky-atc__inner { flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 16px;
+        border-radius: 8px; }
       .sticky-atc__thumb { display: none; }
       .sticky-atc__title { display: none; }
       .sticky-atc__meta--desktop { display: none; }
-      .sticky-atc__info { justify-content: center; }
+      .sticky-atc__info { justify-content: ; }
       .sticky-atc__meta--mobile {
         display: block;
         text-align: center;
-        font-size: 13px;
-        color: #1A1A1A;
+        font-size: 12px;
+        line-height: 20px;
+        color: #000000;
         white-space: normal;
         max-width: none;
       }
@@ -234,10 +239,12 @@ max-width: 904px;
       .sticky-atc__btn-price:empty { display: none; }
       .sticky-atc__btn {
         width: 100%;
-        font-size: 17px;
-        padding: 14px 20px;
-        min-height: 52px;
-      }
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.96px;
+        padding: 7.2px;
+    }
+      
     }
   {%- endstyle -%}
 
