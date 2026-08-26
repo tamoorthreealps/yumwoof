@@ -540,24 +540,6 @@ max-width: 904px;
           } else {
             this.setVisible(true);
           }
-
-          // Hide the bar once the footer comes into view so it never sits over it.
-          this.footer =
-            document.querySelector('.yf') ||
-            document.querySelector('#shopify-section-footer') ||
-            document.querySelector('footer');
-
-          if (this.footer && 'IntersectionObserver' in window) {
-            var footerIo = new IntersectionObserver(
-              function (entries) {
-                entries.forEach(function (entry) {
-                  self.setAtFooter(entry.isIntersecting);
-                });
-              },
-              { root: null, threshold: 0 }
-            );
-            footerIo.observe(this.footer);
-          }
         }
 
         setVisible(show) {
