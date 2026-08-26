@@ -6,131 +6,158 @@
   }
 {%- endstyle -%}
 
+{%- assign current_collection_promo = blank -%}
+
+{%- for promo in shop.metaobjects.collection_promo.values -%}
+  {%- if promo.collection.value != blank and promo.collection.value.handle == collection.handle -%}
+    {%- assign current_collection_promo = promo -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
 <div class="mcg page-width" style="--mcg-cols: {{ section.settings.columns_desktop }};">
-  {%- comment -%} Curated groups: each block = heading + subheading + selected products {%- endcomment -%}
-  {%- for block in section.blocks -%}
-    {%- if block.type == 'product_group' -%}
-      {%- assign group_products = block.settings.products -%}
-      {%- if group_products.count > 0 -%}
-        <div class="mcg__group mcg__group--{{ block.settings.heading | handleize }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.heading != blank -%}
-            <h2 class="mcg__group-heading">{{ block.settings.heading }}</h2>
-          {%- endif -%}
-          {%- if block.settings.subheading != blank -%}
-            <p class="mcg__group-sub">{{ block.settings.subheading }}</p>
-          {%- endif -%}
-          {%- if block.settings.promo_text != blank -%}
-            <div class="mcg__promo">
-              <div class="mcg__promo-desktop">
-                {{ block.settings.promo_text }}
-              </div>
 
-              <div class="mcg__promo-mobile">
-                {%- for i in (1..3) -%}
-                  {%- assign image_key = 'promo_image_' | append: i -%}
-                  {%- if block.settings[image_key] != blank -%}
-                    <div class="mcg__promo-slide">
-                      {{ block.settings[image_key] | image_url: width: 200 | image_tag: loading: 'eager' }}
-                    </div>
-                  {%- endif -%}
-                {%- endfor -%}
+  {%- if collection.handle == section.settings.all_collection_handle -%}
 
-                <div class="mcg__promo-mobile-text">
-                  {{ block.settings.promo_text }}
-                </div>
-              </div>
-            </div>
-          {%- endif -%}
-          <div class="mcg__grid 1">
-            {%- for product in group_products -%}
-              {% render 'card-product-yw', product: product, short_desc_mf: section.settings.short_desc_metafield %}
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
-    {%- endif -%}
-  {%- endfor -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'product_group' -%}
 
-  {%- comment -%} Optionally show the collection's own products below the curated groups {%- endcomment -%}
-  {% comment %} {%- if section.settings.show_collection_products and collection.products.size > 0 -%}
-    <div class="mcg__group mcg__group--collection">
-      {%- if section.settings.collection_heading != blank -%}
-        <h2 class="mcg__group-heading">{{ section.settings.collection_heading }}</h2>
-      {%- endif -%}
-      {%- paginate collection.products by section.settings.products_per_page -%}
-        <div class="mcg__grid 2">
-          {%- for product in collection.products -%}
-            {% render 'card-product-yw', product: product, short_desc_mf: section.settings.short_desc_metafield %}
+        {%- assign group_products = block.settings.products -%}
+        {%- assign group_collection = block.settings.collection -%}
+        {%- assign group_promo = blank -%}
+
+        {%- if group_collection != blank -%}
+          {%- for promo in shop.metaobjects.collection_promo.values -%}
+            {%- if promo.collection.value != blank and promo.collection.value.handle == group_collection.handle -%}
+              {%- assign group_promo = promo -%}
+              {%- break -%}
+            {%- endif -%}
           {%- endfor -%}
-        </div>
-        {%- if paginate.pages > 1 -%}
-          {% render 'pagination', paginate: paginate, anchor: '' %}
         {%- endif -%}
-      {%- endpaginate -%}
-    </div>
-  {%- endif -%} {% endcomment %}
-  {%- if section.settings.show_collection_products and collection.products.size > 0 -%}
 
-  {%- assign current_collection_block = blank -%}
+        {%- if group_products.count > 0 -%}
 
-  {%- for block in section.blocks -%}
-    {%- if block.type == 'product_group' and block.settings.collection != blank -%}
-      {%- if block.settings.collection.handle == collection.handle -%}
-        {%- assign current_collection_block = block -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endif -%}
-  {%- endfor -%}
+          <div class="mcg__group mcg__group--{{ block.settings.heading | handleize }}" {{ block.shopify_attributes }}>
 
-  <div class="mcg__group mcg__group--collection">
+            {%- if block.settings.heading != blank -%}
+              <h2 class="mcg__group-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
 
-    {%- if current_collection_block != blank and current_collection_block.settings.promo_text != blank -%}
-      <div class="mcg__promo">
+            {%- if block.settings.subheading != blank -%}
+              <p class="mcg__group-sub">{{ block.settings.subheading }}</p>
+            {%- endif -%}
 
-        <div class="mcg__promo-desktop">
-          {{ current_collection_block.settings.promo_text }}
-        </div>
+            {%- if group_promo != blank and group_promo.promo_text.value != blank -%}
+              <div class="mcg__promo">
 
-        <div class="mcg__promo-mobile">
+                <div class="mcg__promo-desktop">
+                  {{ group_promo.promo_text.value }}
+                </div>
 
-          {%- for i in (1..3) -%}
-            {%- assign image_key = 'promo_image_' | append: i -%}
+                <div class="mcg__promo-mobile">
 
-            {%- if current_collection_block.settings[image_key] != blank -%}
-              <div class="mcg__promo-slide">
-                {{ current_collection_block.settings[image_key] | image_url: width: 200 | image_tag: loading: 'eager' }}
+                  {%- assign promo_images = group_promo.images.value -%}
+
+                  {%- if promo_images != blank -%}
+                    {%- for image in promo_images -%}
+                      <div class="mcg__promo-slide">
+                        {{ image | image_url: width: 400 | image_tag: loading: 'eager' }}
+                      </div>
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                  <div class="mcg__promo-mobile-text">
+                    {{ group_promo.promo_text.value }}
+                  </div>
+
+                </div>
+
               </div>
             {%- endif -%}
 
-          {%- endfor -%}
+            <div class="mcg__grid">
+              {%- for product in group_products -%}
+                {% render 'card-product-yw',
+                  product: product,
+                  short_desc_mf: section.settings.short_desc_metafield
+                %}
+              {%- endfor -%}
+            </div>
 
-          <div class="mcg__promo-mobile-text">
-            {{ current_collection_block.settings.promo_text }}
           </div>
 
-        </div>
+        {%- endif -%}
+
+      {%- endif -%}
+    {%- endfor -%}
+
+  {%- else -%}
+
+    {%- if collection.products.size > 0 -%}
+
+      <div class="mcg__group mcg__group--collection">
+
+        {%- if current_collection_promo != blank and current_collection_promo.promo_text.value != blank -%}
+
+          <div class="mcg__promo">
+
+            <div class="mcg__promo-desktop">
+              {{ current_collection_promo.promo_text.value }}
+            </div>
+
+            <div class="mcg__promo-mobile">
+
+              {%- assign promo_images = current_collection_promo.images.value -%}
+
+              {%- if promo_images != blank -%}
+                {%- for image in promo_images -%}
+                  <div class="mcg__promo-slide">
+                    {{ image | image_url: width: 400 | image_tag: loading: 'eager' }}
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
+
+              <div class="mcg__promo-mobile-text">
+                {{ current_collection_promo.promo_text.value }}
+              </div>
+
+            </div>
+
+          </div>
+
+        {%- endif -%}
+
+        {%- if section.settings.collection_heading != blank -%}
+          <h2 class="mcg__group-heading">
+            {{ section.settings.collection_heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- paginate collection.products by section.settings.products_per_page -%}
+
+          <div class="mcg__grid">
+            {%- for product in collection.products -%}
+              {% render 'card-product-yw',
+                product: product,
+                short_desc_mf: section.settings.short_desc_metafield
+              %}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate, anchor: '' %}
+          {%- endif -%}
+
+        {%- endpaginate -%}
 
       </div>
+
     {%- endif -%}
 
-    {%- paginate collection.products by section.settings.products_per_page -%}
+  {%- endif -%}
 
-      <div class="mcg__grid">
-        {%- for product in collection.products -%}
-          {% render 'card-product-yw', product: product, short_desc_mf: section.settings.short_desc_metafield %}
-        {%- endfor -%}
-      </div>
-
-      {%- if paginate.pages > 1 -%}
-        {% render 'pagination', paginate: paginate, anchor: '' %}
-      {%- endif -%}
-
-    {%- endpaginate -%}
-
-  </div>
-
-{%- endif -%}
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.mcg__promo-mobile').forEach(function (promo) {
@@ -154,6 +181,7 @@
     });
   });
 </script>
+
 {% schema %}
 {
   "name": "Collection products",
@@ -161,13 +189,22 @@
   "class": "section-main-collection-products",
   "settings": [
     {
+      "type": "text",
+      "id": "all_collection_handle",
+      "label": "Catch-all collection handle",
+      "default": "all"
+    },
+    {
       "type": "checkbox",
       "id": "show_collection_products",
       "label": "Show this collection's products",
-      "default": false,
-      "info": "When on, the collection's own products are shown (paginated) below the curated groups."
+      "default": false
     },
-    { "type": "text", "id": "collection_heading", "label": "Collection products heading" },
+    {
+      "type": "text",
+      "id": "collection_heading",
+      "label": "Collection products heading"
+    },
     {
       "type": "range",
       "id": "products_per_page",
@@ -199,17 +236,39 @@
       "type": "product_group",
       "name": "Product group",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Air dried food" },
-        { "type": "textarea", "id": "subheading", "label": "Subheading" },
-        { "type": "product_list", "id": "products", "label": "Products", "limit": 12 },
-        { "type": "text", "id": "promo_text", "label": "Promo text" },
-        { "type": "image_picker", "id": "promo_image_1", "label": "Promo image 1" },
-        { "type": "image_picker", "id": "promo_image_2", "label": "Promo image 2" },
-        { "type": "image_picker", "id": "promo_image_3", "label": "Promo image 3" }
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Select the collection this product group belongs to."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Air dried food"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "product_list",
+          "id": "products",
+          "label": "Products",
+          "limit": 12
+        }
       ]
     }
   ],
-  "presets": [{ "name": "Collection products" }],
-  "enabled_on": { "templates": ["collection"] }
+  "presets": [
+    {
+      "name": "Collection products"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
 }
 {% endschema %}
