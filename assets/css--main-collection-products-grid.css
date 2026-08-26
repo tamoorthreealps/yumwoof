@@ -349,20 +349,22 @@ background: #FFF9EF;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
+        transform: translateY(-6px);
     }
 
       .yw-pcard__body {
         padding: 1.2rem 1.6rem 2rem;
     }
     .yw-pcard__recipe {
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: .24px;
-    margin: 0 0 12px;
-            display: -webkit-box;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: .24px;
+        margin: 0 0 4px;
+        display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
+        transform: translateY(-6px);
 }
 
 .yw-pcard-opinew-stars {
