@@ -36,10 +36,7 @@
     {% endif %}
 
     {% render 'meta-tags' %}
-    {%- comment -%} Customers.ai / AddShoppers / OpenAI-ads pixels moved to just before </body> for performance. {%- endcomment -%}
 
-{%- comment -%} REMOVED-PIXEL (TriplePixel) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
     <script>
       /* >> TriplePixel :: start*/
       (window.TriplePixelData = {
@@ -111,14 +108,10 @@
                 O('https://whale.camera/live/dot.txt', 5)));
           }
         })('', 'TriplePixel', localStorage);
-      /* << TriplePixel :: end*/
     </script>
-{% endcomment %}
 
     {% render 'replo-head' %}
 
-{%- comment -%} REMOVED-PIXEL (TriplePixel) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
     <script>
       /* >> TriplePixel :: start*/
       ~(function (W, H, A, L, E, _, B, N) {
@@ -157,9 +150,7 @@
               O('//triplewhale-pixel.web.app/triplefw.txt?', 5)));
         }
       })('', 'TriplePixel', localStorage);
-      /* << TriplePixel :: end*/
     </script>
-{% endcomment %}
 
     <!-- Added by AVADA Joy -->
     {% render 'avada-joy' %}
@@ -201,10 +192,7 @@
     <script src="{{ 'standard-actions-override.js' | asset_url }}" defer="defer"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js" defer></script>
 
-{%- comment -%} REMOVED-PIXEL (gsf-conversion-pixels) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
     {% render 'gsf-conversion-pixels' %}
-{% endcomment %}
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
@@ -464,8 +452,6 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-{%- comment -%} REMOVED-PIXEL (GTM-loader) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
     <!-- Google Tag Manager -->
     <script>
       (function (w, d, s, l, i) {
@@ -480,12 +466,9 @@
       })(window, document, 'script', 'dataLayer', 'GTM-TR3RM44');
     </script>
     <!-- End Google Tag Manager -->
-{% endcomment %}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-{%- comment -%} REMOVED-PIXEL (GTM-noscript) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
     <noscript
       ><iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-TR3RM44"
@@ -494,7 +477,6 @@
         style="display:none;visibility:hidden"
       ></iframe
     ></noscript>
-{% endcomment %}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -605,14 +587,9 @@
       {%- render 'qck-schema-breadcrumbs', article: article, blog: blog -%}
     {%- endif -%}
 
-    {%- comment -%} Non-essential marketing pixels — moved out of <head> to keep them off the critical render path. {%- endcomment -%}
-{%- comment -%} REMOVED-PIXEL (Customers.ai) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
+
     <!-- Customers.ai Pixel -->
     <script async="async" src="https://mm-uxrv.com/js/mm_1d4ef5e1-1d66-4a2d-ad37-aa0e33537fc5-35044943.js"></script>
-{% endcomment %}
-{%- comment -%} REMOVED-PIXEL (AddShoppers) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
     <!-- AddShoppers / shop.pe (CPG Pixel) -->
     <script type="text/javascript">
       var AddShoppersWidgetOptions = { loadCss: false, pushResponse: false };
@@ -625,9 +602,7 @@
           document.getElementsByTagName('head')[0].appendChild(t);
       })();
     </script>
-{% endcomment %}
-{%- comment -%} REMOVED-PIXEL (OpenAI-ads) — perf test; restore by deleting this comment wrapper. See docs/removed-pixels.md {%- endcomment -%}
-{% comment %}
+
     <!-- OpenAI ads pixel -->
     <script>
       !(function (w, d, s, u) {
@@ -646,7 +621,6 @@
       oaiq('init', 'TeQ6wbNgBfSLAUECcnegb2');
       oaiq('track', 'page_viewed');
     </script>
-{% endcomment %}
 
 <script>
 (function () {

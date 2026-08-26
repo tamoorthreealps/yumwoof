@@ -6,12 +6,32 @@
   }
 {%- endstyle -%}
 
+{%- comment -%}
+  Decide whether we are on the catch-all collection (/collections/all) or a specific collection.
+  On /collections/all  -> render every product group.
+  On a collection      -> render only the group whose Collection setting matches collection.handle.
+{%- endcomment -%}
+{%- assign current_handle = collection.handle -%}
+{%- assign show_all_groups = false -%}
+{%- if current_handle == blank or current_handle == 'all' -%}
+  {%- assign show_all_groups = true -%}
+{%- endif -%}
+
 <div class="mcg page-width" style="--mcg-cols: {{ section.settings.columns_desktop }};">
   {%- comment -%} Curated groups: each block = heading + subheading + selected products {%- endcomment -%}
   {%- for block in section.blocks -%}
     {%- if block.type == 'product_group' -%}
       {%- assign group_products = block.settings.products -%}
-      {%- if group_products.count > 0 -%}
+      {%- assign block_collection = block.settings.collection -%}
+
+      {%- assign render_group = false -%}
+      {%- if show_all_groups -%}
+        {%- assign render_group = true -%}
+      {%- elsif block_collection != blank and block_collection.handle == current_handle -%}
+        {%- assign render_group = true -%}
+      {%- endif -%}
+
+      {%- if render_group and group_products.count > 0 -%}
         <div class="mcg__group mcg__group--{{ block.settings.heading | handleize }}" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
             <h2 class="mcg__group-heading">{{ block.settings.heading }}</h2>
@@ -132,6 +152,12 @@
       "type": "product_group",
       "name": "Product group",
       "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "This group only shows on its own collection page. All groups show on /collections/all."
+        },
         { "type": "text", "id": "heading", "label": "Heading", "default": "Air dried food" },
         { "type": "textarea", "id": "subheading", "label": "Subheading" },
         { "type": "product_list", "id": "products", "label": "Products", "limit": 12 },
