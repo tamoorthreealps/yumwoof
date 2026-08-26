@@ -1525,9 +1525,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function checkFooter() {
     var footerTop = footer.getBoundingClientRect().top;
+    var footerVisible = footerTop <= window.innerHeight;
 
-    if (footerTop <= window.innerHeight) {
+    if (footerVisible) {
       sticky.classList.remove('is-visible');
+    } else {
+      sticky.classList.add('is-visible');
     }
   }
 
