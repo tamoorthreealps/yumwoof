@@ -36,7 +36,8 @@
             "products": [
               "ancestral-blend",
               "perfect-kibble"
-            ]
+            ],
+            "promo_text": "Perfect Superfood is now Ancestral BLEND!"
           }
         },
         "product_group_bT4yhm": {
@@ -46,7 +47,8 @@
             "subheading": "One base mix. Add your own fresh meat.",
             "products": [
               "perfect-dog-food-mix"
-            ]
+            ],
+            "promo_text": ""
           }
         },
         "product_group_h6PEX3": {
@@ -58,7 +60,8 @@
               "perfect-digestion",
               "perfect-immunity",
               "perfect-probiotics"
-            ]
+            ],
+            "promo_text": ""
           }
         }
       },
