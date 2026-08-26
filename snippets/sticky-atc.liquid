@@ -540,9 +540,8 @@ max-width: 904px;
           } else {
             this.setVisible(true);
           }
-        }
 
-        var footer = document.querySelector('footer');
+          var footer = document.querySelector('footer');
 
 if (footer) {
   var footerObserver = new IntersectionObserver(
@@ -559,6 +558,9 @@ if (footer) {
 
   footerObserver.observe(footer);
 }
+        }
+
+        
 
         setVisible(show) {
           this.classList.toggle('is-visible', !!show);
