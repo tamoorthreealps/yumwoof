@@ -540,6 +540,22 @@ max-width: 904px;
           } else {
             this.setVisible(true);
           }
+          var footer = document.querySelector('footer.yf');
+
+if (footer) {
+  window.addEventListener('scroll', function () {
+    var footerRect = footer.getBoundingClientRect();
+    var sticky = document.querySelector('sticky-atc-bar');
+
+    if (!sticky) return;
+
+    if (footerRect.top <= window.innerHeight) {
+      sticky.classList.add('footer-visible');
+    } else {
+      sticky.classList.remove('footer-visible');
+    }
+  }, { passive: true });
+}
         }
 
         
