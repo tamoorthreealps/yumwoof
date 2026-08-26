@@ -1515,3 +1515,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  var sticky = document.querySelector('sticky-atc-bar');
+  var footer = document.querySelector('footer.yf');
+
+  if (!sticky || !footer) return;
+
+  function checkFooter() {
+    var footerTop = footer.getBoundingClientRect().top;
+
+    if (footerTop <= window.innerHeight) {
+      sticky.classList.add('footer-visible');
+    } else {
+      sticky.classList.remove('footer-visible');
+    }
+  }
+
+  window.addEventListener('scroll', checkFooter, { passive: true });
+  window.addEventListener('resize', checkFooter);
+
+  checkFooter();
+});
