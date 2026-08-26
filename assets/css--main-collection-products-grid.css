@@ -349,7 +349,7 @@ background: #FFF9EF;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
-        transform: translateY(-6px);
+        transform: translateY(-2px);
     }
 
       .yw-pcard__body {
@@ -359,12 +359,12 @@ background: #FFF9EF;
         font-size: 12px;
         line-height: 16px;
         letter-spacing: .24px;
-        margin: 0 0 4px;
+        margin: 0 0 8px;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
         overflow: hidden;
-        transform: translateY(-6px);
+        transform: translateY(-2px);
 }
 
 .yw-pcard-opinew-stars {
