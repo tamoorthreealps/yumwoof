@@ -878,6 +878,14 @@
   </product-component>
 </product-info>
 
+{%- if section.settings.enable_sticky_atc -%}
+  {% render 'sticky-atc',
+    product: product,
+    section_id: section.id,
+    label: section.settings.sticky_atc_button_label
+  %}
+{%- endif -%}
+
 {% render 'ingridients-popup' %}
 
 {% comment %} videos--reviews--popup--html {% endcomment %}
@@ -2688,6 +2696,23 @@
       "id": "enable_video_looping",
       "default": false,
       "label": "t:sections.main-product.settings.enable_video_looping.label"
+    },
+    {
+      "type": "header",
+      "content": "Sticky add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_atc",
+      "default": true,
+      "label": "Enable sticky add to cart",
+      "info": "Shows a sticky add-to-cart bar (desktop + mobile) while the main button is scrolled out of view. Hidden automatically when the product is unavailable in the visitor's market."
+    },
+    {
+      "type": "text",
+      "id": "sticky_atc_button_label",
+      "default": "Add to Bag",
+      "label": "Sticky button label"
     },
     {
       "type": "header",

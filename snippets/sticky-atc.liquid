@@ -1,0 +1,483 @@
+{% comment %}
+  Sticky add-to-cart bar for the product page (desktop + mobile).
+
+  - Mirrors the main PDP add-to-cart button: price (selected plan), compare price,
+    label and disabled/sold-out/unavailable state, and updates on variant / swatch /
+    subscription changes.
+  - The sticky button proxies a click to the real #ProductSubmitButton so the live
+    form (selling plan, quantity, cart drawer) handles the add.
+  - Shows only while the main add-to-cart button is scrolled out of the viewport.
+  - Not rendered at all when the product is unavailable in the current market
+    (custom.unavailable_markets), matching snippets/buy-buttons.liquid.
+
+  Accepts:
+  - product: {Object} product object
+  - section_id: {String} id of the main-product section
+  - label: {String} (optional) button label, defaults to "Add to Bag"
+
+  Usage:
+  {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label %}
+{% endcomment %}
+
+{%- liquid
+  # ----- Market availability (same rule as buy-buttons.liquid) -----
+  assign is_market_unavailable = false
+  assign unavailable_markets = product.metafields.custom.unavailable_markets.value
+  if unavailable_markets != blank
+    assign cur_market_handle = localization.market.handle | downcase | strip
+    assign cur_country_code = localization.country.iso_code | downcase | strip
+    for um in unavailable_markets
+      assign um_key = um | downcase | strip | replace: ' ', '-'
+      if um_key == cur_market_handle or um_key == cur_country_code
+        assign is_market_unavailable = true
+      endif
+    endfor
+  endif
+-%}
+
+{%- if product != blank and is_market_unavailable == false -%}
+  {%- liquid
+    assign st_variant = product.selected_or_first_available_variant | default: product.variants.first
+
+    # Locate the Recipe / Size option indexes (used to build the meta line in JS)
+    assign recipe_index = -1
+    assign size_index = -1
+    for opt in product.options
+      assign optn = opt | downcase | strip
+      if optn == 'recipe'
+        assign recipe_index = forloop.index0
+      endif
+      if optn == 'size'
+        assign size_index = forloop.index0
+      endif
+    endfor
+
+    assign st_thumb = st_variant.featured_image | default: product.featured_image
+    assign st_size = ''
+    if size_index >= 0
+      assign st_size = st_variant.options[size_index]
+    endif
+
+    # Initial meta lines (JS keeps these in sync afterwards)
+    assign st_meta_desktop = st_variant.options | join: ' · '
+    assign st_meta_mobile = product.title
+    if st_size != blank
+      assign st_meta_mobile = product.title | append: ' · ' | append: st_size
+    endif
+  -%}
+
+  {%- style -%}
+    .sticky-atc {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 998;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(120%);
+      transition: transform .32s cubic-bezier(.22,.61,.36,1), opacity .32s ease, visibility 0s linear .32s;
+      pointer-events: none;
+    }
+    .sticky-atc.is-visible {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform .32s cubic-bezier(.22,.61,.36,1), opacity .32s ease, visibility 0s;
+      pointer-events: auto;
+    }
+    .sticky-atc__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: #FCE8DD;
+      border: 1px solid #1A1A1A;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.14);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 12px;
+    }
+    .sticky-atc__info { display: flex; align-items: center; gap: 14px; min-width: 0; flex: 1 1 auto; }
+    .sticky-atc__thumb {
+      flex: 0 0 auto;
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .sticky-atc__text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .sticky-atc__title {
+      margin: 0;
+      font-family: var(--font-heading-family, 'TAYRosemary', serif);
+      font-weight: var(--font-heading-weight, 500);
+      text-transform: uppercase;
+      color: #1A1A1A;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 46ch;
+    }
+    .sticky-atc__meta {
+      margin: 0;
+      font-family: 'Matter', var(--font-body-family, sans-serif);
+      color: rgba(0,0,0,.72);
+      font-size: 14px;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 52ch;
+    }
+    .sticky-atc__meta--mobile { display: none; }
+    .sticky-atc__buy { display: flex; align-items: center; gap: 18px; flex: 0 0 auto; }
+    .sticky-atc__price { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+    .sticky-atc__was {
+      font-family: 'Matter', var(--font-body-family, sans-serif);
+      font-size: 16px;
+      color: rgba(0,0,0,.45);
+      text-decoration: line-through;
+    }
+    .sticky-atc__was:empty { display: none; }
+    .sticky-atc__now {
+      font-family: 'Matter', var(--font-body-family, sans-serif);
+      font-size: 18px;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+    .sticky-atc__btn {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      border: 1px solid #1A1A1A;
+      border-radius: 12px;
+      background: #FFC069;
+      color: #1A1A1A;
+      font-family: 'FFBlurProMedium', var(--font-body-family, sans-serif);
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      min-height: 56px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .2s ease, color .2s ease, opacity .2s ease;
+    }
+    .sticky-atc__btn:hover { background: #1A1A1A; color: #FFF9EF; }
+    .sticky-atc__btn[disabled] {
+      cursor: not-allowed;
+      opacity: .5;
+      background: #E6E0D7;
+      color: #1A1A1A;
+    }
+    .sticky-atc__btn[disabled]:hover { background: #E6E0D7; color: #1A1A1A; }
+    /* In-button price is mobile-only; desktop shows the standalone price. */
+    .sticky-atc__btn-price { display: none; }
+
+    @media screen and (max-width: 749px) {
+      .sticky-atc { padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)); }
+      .sticky-atc__inner { flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; border-radius: 12px; }
+      .sticky-atc__thumb { display: none; }
+      .sticky-atc__title { display: none; }
+      .sticky-atc__meta--desktop { display: none; }
+      .sticky-atc__info { justify-content: center; }
+      .sticky-atc__meta--mobile {
+        display: block;
+        text-align: center;
+        font-size: 13px;
+        color: #1A1A1A;
+        white-space: normal;
+        max-width: none;
+      }
+      .sticky-atc__buy { width: 100%; }
+      .sticky-atc__price--standalone { display: none; }
+      .sticky-atc__btn-price { display: inline; }
+      .sticky-atc__btn-price:empty { display: none; }
+      .sticky-atc__btn {
+        width: 100%;
+        font-size: 17px;
+        padding: 14px 20px;
+        min-height: 52px;
+      }
+    }
+  {%- endstyle -%}
+
+  <sticky-atc-bar
+    id="StickyAtc-{{ section_id }}"
+    class="sticky-atc"
+    data-section-id="{{ section_id }}"
+    data-product-title="{{ product.title | escape }}"
+    data-recipe-index="{{ recipe_index }}"
+    data-size-index="{{ size_index }}"
+    data-size-value="{{ st_size | escape }}"
+    data-label="{{ label | default: 'Add to Bag' | escape }}"
+    aria-hidden="true"
+  >
+    <div class="sticky-atc__inner">
+      <div class="sticky-atc__info">
+        {%- if st_thumb != blank -%}
+          {{
+            st_thumb
+            | image_url: width: 120
+            | image_tag:
+              class: 'sticky-atc__thumb',
+              widths: '60, 120, 180',
+              width: 60,
+              height: 60,
+              alt: product.title | escape,
+              loading: 'lazy',
+              data-sticky-thumb: ''
+          }}
+        {%- endif -%}
+        <div class="sticky-atc__text">
+          <p class="sticky-atc__title" data-sticky-title>{{ product.title | escape }}</p>
+          <p class="sticky-atc__meta sticky-atc__meta--desktop" data-sticky-meta-desktop>{{ st_meta_desktop }}</p>
+          <p class="sticky-atc__meta sticky-atc__meta--mobile" data-sticky-meta-mobile>{{ st_meta_mobile }}</p>
+        </div>
+      </div>
+      <div class="sticky-atc__buy">
+        <div class="sticky-atc__price sticky-atc__price--standalone" data-sticky-price>
+          <s class="sticky-atc__was" data-sticky-was>
+            {%- if st_variant.compare_at_price > st_variant.price -%}{{ st_variant.compare_at_price | money }}{%- endif -%}
+          </s>
+          <span class="sticky-atc__now" data-sticky-now>{{ st_variant.price | money }}</span>
+        </div>
+        <button
+          type="button"
+          class="sticky-atc__btn"
+          data-sticky-btn
+          aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}"
+        >
+          <span data-sticky-btn-label>{{ label | default: 'Add to Bag' }}</span>
+          <span class="sticky-atc__btn-price" data-sticky-btn-price></span>
+        </button>
+      </div>
+    </div>
+  </sticky-atc-bar>
+
+  <script>
+    (function () {
+      if (!('customElements' in window) || customElements.get('sticky-atc-bar')) return;
+
+      var capitalize = function (s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; };
+      var text = function (el) { return el ? (el.textContent || '').trim() : ''; };
+
+      class StickyAtcBar extends HTMLElement {
+        connectedCallback() {
+          if (this._bound) return;
+          this._bound = true;
+
+          this.sectionId = this.dataset.sectionId;
+          this.productTitle = this.dataset.productTitle || '';
+          this.recipeIndex = parseInt(this.dataset.recipeIndex, 10);
+          this.sizeIndex = parseInt(this.dataset.sizeIndex, 10);
+          this.initialSize = this.dataset.sizeValue || '';
+          this.enabledLabel = this.dataset.label || 'Add to Bag';
+
+          // Elements owned by the bar
+          this.thumbEl = this.querySelector('[data-sticky-thumb]');
+          this.metaDesktopEl = this.querySelector('[data-sticky-meta-desktop]');
+          this.metaMobileEl = this.querySelector('[data-sticky-meta-mobile]');
+          this.wasEl = this.querySelector('[data-sticky-was]');
+          this.nowEl = this.querySelector('[data-sticky-now]');
+          this.btn = this.querySelector('[data-sticky-btn]');
+          this.btnLabel = this.querySelector('[data-sticky-btn-label]');
+          this.btnPrice = this.querySelector('[data-sticky-btn-price]');
+
+          // Live PDP elements this bar mirrors
+          this.mainBtn = document.getElementById('ProductSubmitButton-' + this.sectionId);
+          this.priceHost = document.getElementById('price-' + this.sectionId);
+          this.productInfo = document.getElementById('MainProduct-' + this.sectionId);
+
+          if (!this.mainBtn) {
+            // No purchasable form on the page — nothing to mirror.
+            this.remove();
+            return;
+          }
+
+          // Proxy the sticky click to the real add-to-cart button.
+          this.btn.addEventListener('click', function () {
+            if (this.mainBtn && !this.mainBtn.hasAttribute('disabled')) this.mainBtn.click();
+          }.bind(this));
+
+          this.bindObservers();
+          this.syncAll();
+        }
+
+        aswWidget() { return document.querySelector('appstle-subscription-widget'); }
+
+        // ----- Price (mirror the selected purchase option) -----
+        syncPrice() {
+          var was = '';
+          var now = '';
+          var asw = this.aswWidget();
+          var selected = asw && asw.querySelector('.asw-option.is-selected');
+          if (selected) {
+            was = text(selected.querySelector('.asw-option__price-was'));
+            now = text(selected.querySelector('.asw-option__price-now'));
+          }
+          if (!now && this.priceHost) {
+            now =
+              text(this.priceHost.querySelector('.price-item--sale')) ||
+              text(this.priceHost.querySelector('.price-item--regular'));
+            var cmp = this.priceHost.querySelector('.price__sale s .price-item, s.price-item--regular');
+            was = text(cmp);
+          }
+          if (this.wasEl) this.wasEl.textContent = was || '';
+          if (this.nowEl && now) this.nowEl.textContent = now;
+          this._now = now || this._now || '';
+        }
+
+        // ----- Button label / disabled state (mirror the main ATC) -----
+        syncButton() {
+          if (!this.mainBtn) return;
+          var disabled = this.mainBtn.hasAttribute('disabled') || this.mainBtn.disabled;
+          var mainText = text(this.mainBtn.querySelector('span')) || text(this.mainBtn);
+          this.btn.disabled = disabled;
+          this.btn.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+          if (disabled) {
+            this.btnLabel.textContent = (mainText || 'Sold out').toUpperCase();
+            this.btnPrice.textContent = '';
+          } else {
+            this.btnLabel.textContent = this.enabledLabel.toUpperCase();
+            // Mobile: show the price inside the button ("ADD TO BAG | $129.99").
+            this.btnPrice.textContent = this._now ? '| ' + this._now : '';
+          }
+        }
+
+        // ----- Recipe / Size / frequency meta line -----
+        syncMeta() {
+          var variant = this._variant;
+          var options = variant && variant.options ? variant.options : null;
+
+          var sizeVal = '';
+          if (options && this.sizeIndex >= 0) sizeVal = options[this.sizeIndex] || '';
+          if (!sizeVal) sizeVal = this.initialSize;
+
+          // Frequency from the Appstle widget (subscription vs one-time).
+          var freq = '';
+          var asw = this.aswWidget();
+          if (asw) {
+            var sub = asw.querySelector('input[value="subsave"]');
+            var isSub = !!(sub && sub.checked);
+            if (isSub) {
+              var sel = asw.querySelector('[data-asw-freq]');
+              if (sel && sel.options.length) {
+                var t = (sel.options[sel.selectedIndex] || {}).text || '';
+                freq = capitalize(t.trim());
+              }
+            } else {
+              freq = 'One-Time';
+            }
+          }
+
+          // Desktop meta: variant option values + frequency.
+          var desktopParts = [];
+          if (options && options.length) {
+            for (var i = 0; i < options.length; i++) {
+              if (options[i]) desktopParts.push(options[i]);
+            }
+          } else if (this.metaDesktopEl) {
+            desktopParts.push(text(this.metaDesktopEl));
+          }
+          if (freq) desktopParts.push(freq);
+          if (this.metaDesktopEl) this.metaDesktopEl.textContent = desktopParts.join(' · ');
+
+          // Mobile meta: product title + size + frequency.
+          var mobileParts = [this.productTitle];
+          if (sizeVal) mobileParts.push(sizeVal);
+          if (freq) mobileParts.push(freq);
+          if (this.metaMobileEl) this.metaMobileEl.textContent = mobileParts.join(' · ');
+        }
+
+        syncThumb() {
+          var variant = this._variant;
+          if (!variant || !this.thumbEl) return;
+          var img = variant.featured_image || (variant.featured_media && variant.featured_media.preview_image);
+          var src = img && img.src;
+          if (!src) return;
+          this.thumbEl.src = src + (src.indexOf('?') === -1 ? '?' : '&') + 'width=120';
+          if (variant.featured_media && variant.featured_media.alt) this.thumbEl.alt = variant.featured_media.alt;
+        }
+
+        syncAll() {
+          this.syncPrice();
+          this.syncMeta();
+          this.syncButton();
+        }
+
+        bindObservers() {
+          var self = this;
+          var raf = function () { window.requestAnimationFrame(function () { self.syncAll(); }); };
+
+          // Variant / swatch change → get the fresh variant object, then re-sync
+          // after Appstle has swapped its widget (deferred a frame).
+          if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined' && PUB_SUB_EVENTS.variantChange) {
+            subscribe(PUB_SUB_EVENTS.variantChange, function (event) {
+              self._variant = event && event.data && event.data.variant;
+              self.syncThumb();
+              raf();
+            });
+          }
+
+          // Main add-to-cart button: label + disabled state.
+          if (this.mainBtn) {
+            new MutationObserver(function () { self.syncButton(); }).observe(this.mainBtn, {
+              attributes: true,
+              attributeFilter: ['disabled'],
+              childList: true,
+              subtree: true,
+              characterData: true,
+            });
+          }
+
+          // Main price block re-renders on variant change.
+          if (this.priceHost) {
+            new MutationObserver(function () { self.syncPrice(); self.syncButton(); }).observe(this.priceHost, {
+              childList: true,
+              subtree: true,
+              characterData: true,
+            });
+          }
+
+          // Subscription / frequency selection (Appstle widget). Delegated because
+          // the widget element is replaced on variant change.
+          document.addEventListener('change', function (e) {
+            if (e.target && e.target.closest && e.target.closest('appstle-subscription-widget')) raf();
+          });
+
+          // Show the bar only while the main ATC is out of the viewport.
+          if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  self.setVisible(!entry.isIntersecting);
+                });
+              },
+              { root: null, threshold: 0 }
+            );
+            io.observe(this.mainBtn);
+          } else {
+            this.setVisible(true);
+          }
+        }
+
+        setVisible(show) {
+          this.classList.toggle('is-visible', !!show);
+          this.setAttribute('aria-hidden', show ? 'false' : 'true');
+        }
+      }
+
+      customElements.define('sticky-atc-bar', StickyAtcBar);
+    })();
+  </script>
+{%- endif -%}
