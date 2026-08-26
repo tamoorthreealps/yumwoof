@@ -420,7 +420,7 @@ div#rich-text-01M0AD92650E77PVY1B0D97VX8 span {
   color: #000;
   font-family: "Matter";
   outline: none !important;
-  text-transform: capitalize;
+  text-transform: lowercase;
   margin: 25px 0 0;
   background: #fff9ef;
 }
