@@ -1525,8 +1525,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function checkFooter() {
     var footerTop = footer.getBoundingClientRect().top;
+    var footerVisible = footerTop <= window.innerHeight;
+    var chatButton = document.querySelector('#chat-button');
 
-    sticky.classList.toggle('footer-visible', footerTop <= window.innerHeight);
+    sticky.classList.toggle('footer-visible', footerVisible);
+
+    if (chatButton) {
+      chatButton.classList.toggle('chat--visible', footerVisible);
+    }
   }
 
   window.addEventListener('scroll', checkFooter, { passive: true });
