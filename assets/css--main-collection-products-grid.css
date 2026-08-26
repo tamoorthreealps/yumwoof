@@ -420,7 +420,7 @@ background: #FFF9EF;
 }
 
 @media screen and (max-width: 449px) {
-.yw-pcard__imgwrap {
+.yw-pcard__imgwrap, .yw-pcard__media {
   height: 164px;
 }
 }
