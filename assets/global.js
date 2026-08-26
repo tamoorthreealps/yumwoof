@@ -1517,3 +1517,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+  var sticky = document.querySelector('sticky-atc-bar');
+  var footer = document.querySelector('footer.yf');
+
+  if (!sticky || !footer) return;
+
+  function checkFooter() {
+    var footerTop = footer.getBoundingClientRect().top;
+
+    sticky.classList.toggle('footer-visible', footerTop <= window.innerHeight);
+  }
+
+  window.addEventListener('scroll', checkFooter, { passive: true });
+  window.addEventListener('resize', checkFooter);
+
+  checkFooter();
+});
