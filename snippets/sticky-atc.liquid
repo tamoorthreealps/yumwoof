@@ -276,8 +276,8 @@ max-width: 904px;
         {%- endif -%}
         <div class="sticky-atc__text">
           <p class="sticky-atc__title" data-sticky-title>{{ product.title | escape }}</p>
-          <p class="sticky-atc__meta sticky-atc__meta--desktop" data-sticky-meta-desktop>{{ st_meta_desktop }}</p>
-          <p class="sticky-atc__meta sticky-atc__meta--mobile" data-sticky-meta-mobile>{{ st_meta_mobile }}</p>
+          {% comment %} <p class="sticky-atc__meta sticky-atc__meta--desktop" data-sticky-meta-desktop>{{ st_meta_desktop }}</p>
+          <p class="sticky-atc__meta sticky-atc__meta--mobile" data-sticky-meta-mobile>{{ st_meta_mobile }}</p> {% endcomment %}
         </div>
       </div>
       <div class="sticky-atc__buy">
