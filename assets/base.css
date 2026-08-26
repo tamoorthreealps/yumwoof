@@ -3742,8 +3742,8 @@ details-disclosure > details {
   top:8px;
   right:8px;
 }
-button#bubbleWrapper {
-    display: none;
+button#bubbleWrapper, #proof-factor-app {
+    display: none !important;
 }
 }
 @keyframes indeterminateAnimation {

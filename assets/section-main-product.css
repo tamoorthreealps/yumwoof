@@ -955,6 +955,9 @@ a.product__text {
 }
 
 @media screen and (max-width: 749px) {
+  .slider-mobile-gutter{
+    overflow:hidden;
+  }
   .product__media-item {
     display: flex;
     align-items: center;
