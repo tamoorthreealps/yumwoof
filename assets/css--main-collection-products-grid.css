@@ -345,10 +345,14 @@ background: #FFF9EF;
         line-height: 2.4rem;
         letter-spacing: -0.20px;
         margin:0;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
     }
 
       .yw-pcard__body {
-        padding: 1.2rem 1.2rem 2rem;
+        padding: 1.2rem 1.6rem 2rem;
     }
     .yw-pcard__recipe {
     font-size: 12px;
