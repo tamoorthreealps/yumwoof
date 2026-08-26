@@ -3724,7 +3724,6 @@ details-disclosure > details {
 
 @media screen and (max-width: 991px) {
 #chat-button{
-  position:absolute !important;
 }
 }
 @media screen and (max-width: 749px) {
