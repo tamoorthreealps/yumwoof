@@ -12,7 +12,7 @@
     {%- if block.type == 'product_group' -%}
       {%- assign group_products = block.settings.products -%}
       {%- if group_products.count > 0 -%}
-        <div class="mcg__group" {{ block.shopify_attributes }}>
+        <div class="mcg__group mcg__group--{{ block.settings.collection.handle }}" {{ block.shopify_attributes }}>
           {%- if block.settings.heading != blank -%}
             <h2 class="mcg__group-heading">{{ block.settings.heading }}</h2>
           {%- endif -%}
