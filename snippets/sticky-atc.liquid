@@ -253,7 +253,7 @@
   >
     <div class="sticky-atc__inner">
       <div class="sticky-atc__info">
-        {% comment %} {%- if st_thumb != blank -%}
+        {%- if st_thumb != blank -%}
           <img
             class="sticky-atc__thumb"
             src="{{ st_thumb | image_url: width: 120 }}"
@@ -265,11 +265,11 @@
             loading="lazy"
             data-sticky-thumb
           >
-        {%- endif -%} {% endcomment %}
+        {%- endif -%}
         <div class="sticky-atc__text">
           <p class="sticky-atc__title" data-sticky-title>{{ product.title | escape }}</p>
-          {% comment %} <p class="sticky-atc__meta sticky-atc__meta--desktop" data-sticky-meta-desktop>{{ st_meta_desktop }}</p>
-          <p class="sticky-atc__meta sticky-atc__meta--mobile" data-sticky-meta-mobile>{{ st_meta_mobile }}</p> {% endcomment %}
+          <p class="sticky-atc__meta sticky-atc__meta--desktop" data-sticky-meta-desktop>{{ st_meta_desktop }}</p>
+          <p class="sticky-atc__meta sticky-atc__meta--mobile" data-sticky-meta-mobile>{{ st_meta_mobile }}</p>
         </div>
       </div>
       <div class="sticky-atc__buy">
