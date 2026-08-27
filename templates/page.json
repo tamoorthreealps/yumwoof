@@ -12,8 +12,10 @@
     "main": {
       "type": "main-page",
       "settings": {
-        "padding_top": 100,
-        "padding_bottom": 100
+        "mobile_padding_top": 128,
+        "mobile_padding_bottom": 80,
+        "desktop_padding_top": 196,
+        "desktop_padding_bottom": 120
       }
     },
     "yumwoof_faqs_CrRpFc": {
