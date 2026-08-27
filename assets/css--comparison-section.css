@@ -87,7 +87,12 @@
     text-transform: uppercase;
     font-family: 'TAY Birdie';
 }
-
+@supports (-webkit-touch-callout: none) {
+		.asw__save-pill {
+			padding-top: 5.4px;
+			padding-bottom: 7px;
+		}
+	}
 .cmp__tab[aria-selected='true'], .cmp__tab[aria-selected='true'] span {
   background: var(--cmp-text);
   color: #FFF9EF;
