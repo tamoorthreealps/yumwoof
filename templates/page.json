@@ -11,7 +11,6 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -19,6 +18,7 @@
     },
     "yumwoof_faqs_CrRpFc": {
       "type": "yumwoof-faqs",
+      "disabled": true,
       "name": "FAQs",
       "settings": {
         "title": "FAQs",
@@ -27,9 +27,9 @@
         "show_all_option": true,
         "all_label": "All",
         "filter_label": "Filter questions by topic",
-        "color_bg": "#FFF9EF",
+        "color_bg": "#fff9ef",
         "color_text": "#000000",
-        "color_link": "#661D1D",
+        "color_link": "#661d1d",
         "color_rule": "#000000",
         "padding_top": 192,
         "padding_bottom": 160,
