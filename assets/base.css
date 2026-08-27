@@ -83,9 +83,7 @@ collection-component {
 /*----- custom--font-families----- */
 @font-face {
     font-family: 'TAY Birdie';
-    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.eot?v=1784897700');
-    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.eot?v=1784897700?#iefix') format('embedded-opentype'),
-        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.woff2?v=1784897699') format('woff2'),
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.woff2?v=1784897699') format('woff2'),
         url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYBirdieRegular.woff?v=1784897699') format('woff');
     font-weight: normal;
     font-style: normal;
@@ -94,9 +92,7 @@ collection-component {
 
 @font-face {
     font-family: 'Matter';
-    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.eot?v=1784897700');
-    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.eot?v=1784897700?#iefix') format('embedded-opentype'),
-        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.woff2?v=1784897700') format('woff2'),
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.woff2?v=1784897700') format('woff2'),
         url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/Matter-Medium.woff?v=1784897700') format('woff');
     font-weight: 500;
     font-style: normal;
@@ -105,9 +101,7 @@ collection-component {
 
 @font-face {
     font-family: 'TAYRosemary';
-    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.eot?v=1784897699');
-    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.eot?v=1784897699?#iefix') format('embedded-opentype'),
-        url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.woff2?v=1784897699') format('woff2'),
+    src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.woff2?v=1784897699') format('woff2'),
         url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.woff?v=1784897699') format('woff');
     font-weight: normal;
     font-style: normal;
@@ -118,11 +112,34 @@ collection-component {
   font-family: "FFBlurProMedium";
   src: url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/font.woff2?v=1784897699') format('woff2'), url('https://cdn.shopify.com/s/files/1/1001/2976/7709/files/font.woff?v=1784897699') format('woff');
 }
+
+/* Metric-matched fallbacks: while the real face loads (or if it swaps late) the
+   system fallback occupies the SAME space, so the swap causes no layout shift
+   (CLS). Overrides computed from the actual font metrics (capsize method):
+   Matter vs Arial, TAYRosemary vs Times New Roman. */
+@font-face {
+  font-family: 'Matter Fallback';
+  src: local('Arial');
+  size-adjust: 101.9%;
+  ascent-override: 93.25%;
+  descent-override: 23.57%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'TAYRosemary Fallback';
+  src: local('Times New Roman');
+  /* size-adjust tuned empirically to uppercase heading width (TAYRosemary is a
+     display serif set in caps, so the lowercase-average metric overshoots). */
+  size-adjust: 74.7%;
+  ascent-override: 95.31%;
+  descent-override: 26.93%;
+  line-gap-override: 0%;
+}
   html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: 'Matter', sans-serif;
+  font-family: 'Matter', 'Matter Fallback', Arial, sans-serif;
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -379,7 +396,7 @@ h5,
 .h4,
 .h5 {
   font-family: var(--font-heading-family);
-  font-family: TAYRosemary;
+  font-family: 'TAYRosemary', 'TAYRosemary Fallback', Georgia, serif;
   font-style: var(--font-heading-style);
   font-weight: var(--font-heading-weight);
   letter-spacing: calc(var(--font-heading-scale) * 0.06rem);

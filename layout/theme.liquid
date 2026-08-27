@@ -433,6 +433,17 @@
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
+    {%- comment -%}
+      Preload the custom heading face (TAYRosemary, ~14 KB woff2) — it renders the
+      above-the-fold headings that are often the LCP text, so getting it in early
+      removes the swap window without hurting the LCP image. The body face
+      (Matter) is intentionally NOT preloaded: at ~101 KB (full charset) it would
+      compete with the LCP image; its metric-matched fallback (base.css) paints
+      body text instantly and swaps with no layout shift. Subset Matter to Latin,
+      then it can be preloaded too.
+    {%- endcomment -%}
+    <link rel="preload" as="font" href="https://cdn.shopify.com/s/files/1/1001/2976/7709/files/TAYRosemaryRegular.woff2?v=1784897699" type="font/woff2" crossorigin>
+
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
       <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
