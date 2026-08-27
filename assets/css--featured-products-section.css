@@ -361,8 +361,8 @@ position: absolute !important;
 
 /* 24x24 tap target (a11y target-size) with an 8px visual dot centered inside. */
 .fp__dot {
-	width: 24px;
-	height: 24px;
+	width: 8px;
+	height: 8px;
 	padding: 0;
 	border: 0;
 	background: transparent;
