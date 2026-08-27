@@ -20,6 +20,7 @@
     media="(min-width: 750px)"
   >
 {%- endif -%}
+
 {%- if img_m != blank -%}
   <link
     rel="preload"
@@ -38,6 +39,8 @@
     --ywmb-focal: {{ focal_d }};
     --ywmb-focal-mobile: {{ focal_m }};
     --ywmb-scrim-opacity: {{ s.scrim_opacity | default: 100 | divided_by: 100.0 }};
+    --ywmb-parallax-y: 0px;
+
     {%- if img_d != blank %}
     --ywmb-bg: image-set(
       url("{{ img_d | image_url: width: 1200 }}") 1x,
@@ -77,6 +80,7 @@
           {%- if s.heading_line_1 != blank -%}
             <span class="ywmb__line ywmb__line--1">{{ s.heading_line_1 | escape }}</span>
           {%- endif -%}
+
           {%- if s.heading_line_2 != blank -%}
             <span class="ywmb__line ywmb__line--2">{{ s.heading_line_2 | escape }}</span>
           {%- endif -%}
@@ -101,46 +105,45 @@
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const banners = document.querySelectorAll('.ywmb');
+  document.addEventListener('DOMContentLoaded', function () {
+    const banners = document.querySelectorAll('.ywmb');
 
-  if (!banners.length) return;
+    if (!banners.length) return;
 
-  function updateParallax() {
-    const viewportHeight = window.innerHeight;
+    let ticking = false;
 
-    banners.forEach(function (banner) {
-      const rect = banner.getBoundingClientRect();
+    function updateParallax() {
+      const viewportHeight = window.innerHeight;
 
-      if (rect.bottom < 0 || rect.top > viewportHeight) return;
+      banners.forEach(function (banner) {
+        const rect = banner.getBoundingClientRect();
 
-      const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-      const offset = (progress - 0.5) * 120;
+        if (rect.bottom < -100 || rect.top > viewportHeight + 100) return;
 
-      banner.style.setProperty('--ywmb-parallax-y', offset + 'px');
-    });
-  }
+        const viewportCenter = viewportHeight / 2;
+        const bannerCenter = rect.top + rect.height / 2;
+        const distance = viewportCenter - bannerCenter;
+        const offset = Math.max(-70, Math.min(70, distance * 0.12));
 
-  let ticking = false;
+        banner.style.setProperty('--ywmb-parallax-y', offset + 'px');
+      });
 
-  function requestParallax() {
-    if (ticking) return;
-
-    ticking = true;
-
-    requestAnimationFrame(function () {
-      updateParallax();
       ticking = false;
-    });
-  }
+    }
 
-  window.addEventListener('scroll', requestParallax, { passive: true });
-  window.addEventListener('resize', requestParallax);
+    function requestParallax() {
+      if (ticking) return;
 
-  updateParallax();
-});
+      ticking = true;
+      requestAnimationFrame(updateParallax);
+    }
+
+    window.addEventListener('scroll', requestParallax, { passive: true });
+    window.addEventListener('resize', requestParallax);
+
+    updateParallax();
+  });
 </script>
-
 
 {% schema %}
 {
@@ -148,7 +151,10 @@ document.addEventListener('DOMContentLoaded', function () {
   "tag": "section",
   "class": "yw-membership-banner-section",
   "settings": [
-    { "type": "header", "content": "Background image" },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
     {
       "type": "image_picker",
       "id": "image",
@@ -165,17 +171,19 @@ document.addEventListener('DOMContentLoaded', function () {
       "id": "focal_desktop",
       "label": "Desktop focal point",
       "default": "center center",
-      "info": "CSS object-position, e.g. 'center center' or '60% 40%'."
+      "info": "CSS background-position, e.g. 'center center' or '60% 40%'."
     },
     {
       "type": "text",
       "id": "focal_mobile",
       "label": "Mobile focal point",
       "default": "center 60%",
-      "info": "The mobile crop sits lower so the bowl stays in frame."
+      "info": "Controls the mobile background crop."
     },
-
-    { "type": "header", "content": "Heading" },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
     {
       "type": "text",
       "id": "heading_line_1",
@@ -188,16 +196,20 @@ document.addEventListener('DOMContentLoaded', function () {
       "label": "Line 2",
       "default": "PAY LESS FOR IT."
     },
-
-    { "type": "header", "content": "Badge" },
+    {
+      "type": "header",
+      "content": "Badge"
+    },
     {
       "type": "image_picker",
       "id": "badge",
       "label": "Badge / sticker",
-      "info": "The 'EXTRA 25% OFF' sticker. Decorative — leave the alt text empty in the media library unless it carries meaning."
+      "info": "The 'EXTRA 25% OFF' sticker."
     },
-
-    { "type": "header", "content": "Layout" },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
     {
       "type": "text",
       "id": "height_desktop",
@@ -222,6 +234,10 @@ document.addEventListener('DOMContentLoaded', function () {
       "info": "Darkens the top of the image so the cream heading stays legible."
     }
   ],
-  "presets": [{ "name": "YM-Membership banner" }]
+  "presets": [
+    {
+      "name": "YM-Membership banner"
+    }
+  ]
 }
 {% endschema %}
