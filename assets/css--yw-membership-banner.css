@@ -198,6 +198,7 @@ top: 484px;
     --ywmb-size-1: 42px;
     --ywmb-size-2: 31px;
     --ywmb-leading: 44px;
+    background-attachment: scroll;
   }
 
   .ywmb .ywmb__image {
