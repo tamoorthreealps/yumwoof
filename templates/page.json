@@ -1,14 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "yumwoof_faqs_CrRpFc": {
+      "type": "yumwoof-faqs",
+      "name": "FAQs",
+      "settings": {
+        "title": "FAQs",
+        "lede": "<p>Don't see the answer you're looking for? Reach out to woof@yumwoof.com and we'll get back to you in a flash.</p>",
+        "show_filters": true,
+        "show_all_option": true,
+        "all_label": "All",
+        "filter_label": "Filter questions by topic",
+        "color_bg": "#FFF9EF",
+        "color_text": "#000000",
+        "color_link": "#661D1D",
+        "color_rule": "#000000",
+        "padding_top": 76,
+        "padding_bottom": 160,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 80
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "yumwoof_faqs_CrRpFc"
   ]
 }
