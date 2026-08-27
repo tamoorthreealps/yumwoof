@@ -100,6 +100,48 @@
   {%- endif -%}
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const banners = document.querySelectorAll('.ywmb');
+
+  if (!banners.length) return;
+
+  function updateParallax() {
+    const viewportHeight = window.innerHeight;
+
+    banners.forEach(function (banner) {
+      const rect = banner.getBoundingClientRect();
+
+      if (rect.bottom < 0 || rect.top > viewportHeight) return;
+
+      const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+      const offset = (progress - 0.5) * 120;
+
+      banner.style.setProperty('--ywmb-parallax-y', offset + 'px');
+    });
+  }
+
+  let ticking = false;
+
+  function requestParallax() {
+    if (ticking) return;
+
+    ticking = true;
+
+    requestAnimationFrame(function () {
+      updateParallax();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener('scroll', requestParallax, { passive: true });
+  window.addEventListener('resize', requestParallax);
+
+  updateParallax();
+});
+</script>
+
+
 {% schema %}
 {
   "name": "Membership banner",
