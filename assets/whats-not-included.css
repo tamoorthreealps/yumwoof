@@ -126,7 +126,7 @@
 
 .whats-not-included__link {
     display: inline-block;
-    padding-bottom: 12px;
+    padding-bottom: 7.2px;
     border-bottom: 1.5px solid currentColor;
     color: var(--wni-link-color);
     font-family: Matter;
