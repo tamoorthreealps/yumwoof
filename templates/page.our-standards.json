@@ -179,7 +179,7 @@
         "text_color": "#000000",
         "card_text_color": "#fff9ef",
         "desktop_padding_top": 0,
-        "desktop_padding_bottom": 125,
+        "desktop_padding_bottom": 120,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 45
       }
