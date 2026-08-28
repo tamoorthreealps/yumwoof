@@ -77,8 +77,8 @@ document.addEventListener('scroll', () => {
 
   logos.forEach(logo => {
     const rect = logo.getBoundingClientRect();
-    const move = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.03;
-    logo.style.transform = `translateY(${move}px)`;
+    const rotation = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.015;
+    logo.style.transform = `rotate(${Math.max(-3, Math.min(3, rotation))}deg)`;
   });
 });
 </script>
