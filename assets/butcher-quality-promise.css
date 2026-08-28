@@ -26,7 +26,7 @@
     color: var(--bqp-text-color);
     font-family: TAYRosemary;
     font-size: 80px;
-    line-height: 80px;
+    line-height: 88px;
     letter-spacing: -0.80px;
     text-transform: uppercase;
     transform: translateY(-8px);
@@ -38,7 +38,7 @@
     font-size: 18px;
     line-height: 28px;
     letter-spacing: 0;
-    margin: 0 0 48px;
+    margin: 0 0 40px;
 }
 
 .butcher-quality-promise__description p {
@@ -84,7 +84,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 34px 35px 32px;
+  padding: 40px 32px;
   box-sizing: border-box;
   color:var(--bqp-text-color);
 }
