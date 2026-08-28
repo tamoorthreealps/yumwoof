@@ -114,6 +114,7 @@
 @media screen and (min-width: 767px) {
   .butcher-quality-promise__card {
     transform:inherit !important;
+    aspect-ratio: auto;
   }
 }
 
