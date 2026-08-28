@@ -333,7 +333,7 @@
         "text_color": "#000000",
         "media_height": 560,
         "desktop_padding_top": 0,
-        "desktop_padding_bottom": 160,
+        "desktop_padding_bottom": 120,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 120
       }
@@ -406,7 +406,7 @@
         "desktop_background_color": "#fff9ef",
         "mobile_background_color": "#fff9ef",
         "desktop_padding_top": 0,
-        "desktop_padding_bottom": 100,
+        "desktop_padding_bottom": 120,
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 100,
         "heading": "THE STANDARD\nIS IN EVERY BAG",
