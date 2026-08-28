@@ -59,8 +59,8 @@
   background: #222;
 }
 
-.butcher-quality-promise__card:nth-child(3) {
-
+.butcher-quality-promise__card:nth-child(3) .butcher-quality-promise__card-description p {
+  padding-right:10px;
 }
 
 .butcher-quality-promise__card-image {
