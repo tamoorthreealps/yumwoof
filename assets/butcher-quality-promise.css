@@ -59,6 +59,10 @@
   background: #222;
 }
 
+.butcher-quality-promise__card:nth-child(3) {
+
+}
+
 .butcher-quality-promise__card-image {
   display: block;
   width: 100%;
