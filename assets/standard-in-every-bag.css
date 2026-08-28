@@ -8,13 +8,13 @@
 }
 
 .standard-in-every-bag__inner {
-  max-width: 1224px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1.35099fr);
-  align-items: center;
-  gap: 111px;
+    max-width: 1306px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6176fr);
+    align-items: center;
+    gap: 108px;
 }
 
 .standard-in-every-bag__content {
