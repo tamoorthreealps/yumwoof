@@ -22,19 +22,20 @@
 }
 
 .standard-in-every-bag__heading {
-    margin: 0 0 6px;
+margin: 0;
     color: var(--sieb-heading-color);
     font-family: TAYRosemary;
-    font-size: 88px;
+    font-size: 80px;
     line-height: 88px;
     letter-spacing: -.8px;
+    transform: translateY(-6px);
 }
 
 .standard-in-every-bag__description {
-    margin: 0 0 21px;
+margin: 0 0 24px;
     color: var(--sieb-description-color);
     font-family: Matter;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 28px;
 }
 
@@ -46,7 +47,7 @@
 display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 19.2px 41.42px;
+    padding: 19.2px 30.1px;
     border: 1px solid #000;
     border-radius: 999px;
     background: var(--sieb-button-color);
