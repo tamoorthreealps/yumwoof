@@ -97,6 +97,10 @@
     text-transform: uppercase;
 }
 
+.butcher-quality-promise__card-title p {
+  margin:0;
+}
+
 .butcher-quality-promise__card-description {
     font-family: Matter;
     font-size: 16px;
