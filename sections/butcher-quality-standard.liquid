@@ -86,7 +86,7 @@
   </div>
 </section>
 
-<script>
+{% comment %} <script>
 (() => {
   const SPEED = 0.3;
 
@@ -120,7 +120,7 @@
 
   document.addEventListener('shopify:section:load', (e) => init(e.target));
 })();
-</script>
+</script> {% endcomment %}
 {% schema %}
 {
   "name": "Butcher Quality Standard",
