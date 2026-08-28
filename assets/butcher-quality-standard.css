@@ -103,6 +103,39 @@
 }
 
 .butcher-quality-standard__principles {
+  border: 0;
+  background:
+    repeating-linear-gradient(
+      to right,
+      #fff9ef 0,
+      #fff9ef 10px,
+      transparent 10px,
+      transparent 20px
+    ) top / 100% 1px no-repeat,
+    repeating-linear-gradient(
+      to right,
+      #fff9ef 0,
+      #fff9ef 10px,
+      transparent 10px,
+      transparent 20px
+    ) bottom / 100% 1px no-repeat,
+    repeating-linear-gradient(
+      to bottom,
+      #fff9ef 0,
+      #fff9ef 10px,
+      transparent 10px,
+      transparent 20px
+    ) left / 1px 100% no-repeat,
+    repeating-linear-gradient(
+      to bottom,
+      #fff9ef 0,
+      #fff9ef 10px,
+      transparent 10px,
+      transparent 20px
+    ) right / 1px 100% no-repeat;
+}
+
+.butcher-quality-standard__principles {
   border-top: 1px solid var(--bqs-line-color);
   padding-top: 20px;
 }
