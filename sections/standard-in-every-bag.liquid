@@ -71,7 +71,17 @@
     </div>
   </div>
 </section>
+<script>
+document.addEventListener('scroll', () => {
+  const logos = document.querySelectorAll('.standard-in-every-bag__logo-image');
 
+  logos.forEach(logo => {
+    const rect = logo.getBoundingClientRect();
+    const move = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.04;
+    logo.style.transform = `translateY(${move}px)`;
+  });
+});
+</script>
 {% schema %}
 {
   "name": "Standard In Every Bag",

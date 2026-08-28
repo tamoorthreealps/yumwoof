@@ -30,6 +30,7 @@
   height: auto;
   display: block;
   margin: 0 auto;
+  transition: transform 0.1s linear;
 }
 
 .standard-in-every-bag__heading {
