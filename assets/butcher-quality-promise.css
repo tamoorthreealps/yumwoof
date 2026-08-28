@@ -22,7 +22,7 @@
 .butcher-quality-promise__heading h1,
 .butcher-quality-promise__heading h2,
 .butcher-quality-promise__heading h3 {
-    margin: 0 0 4px;
+    margin: 0;
     color: var(--bqp-text-color);
     font-family: TAYRosemary;
     font-size: 80px;
