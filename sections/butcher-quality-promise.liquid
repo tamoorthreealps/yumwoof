@@ -242,10 +242,10 @@ document.addEventListener('DOMContentLoaded', () => {
           "label": "Image"
         },
         {
-          "type": "text",
+          "type": "richtext",
           "id": "title",
           "label": "Title",
-          "default": "TRUSTED FARMS & FISHERMEN"
+          "default": "<p>TRUSTED FARMS & FISHERMEN</p>"
         },
         {
           "type": "richtext",
@@ -257,47 +257,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ],
   "presets": [
-    {
-      "name": "Butcher Quality Promise",
-      "blocks": [
-        {
-          "type": "promise",
-          "settings": {
-            "title": "TRUSTED FARMS & FISHERMEN"
-          }
-        },
-        {
-          "type": "promise",
-          "settings": {
-            "title": "PREMIUM PROTEINS"
-          }
-        },
-        {
-          "type": "promise",
-          "settings": {
-            "title": "WHOLE FOOD NUTRITION"
-          }
-        },
-        {
-          "type": "promise",
-          "settings": {
-            "title": "HEALTHY FATS BY DESIGN"
-          }
-        },
-        {
-          "type": "promise",
-          "settings": {
-            "title": "GENTLY AIR-DRIED"
-          }
-        },
-        {
-          "type": "promise",
-          "settings": {
-            "title": "INDEPENDENT TESTING"
-          }
+  {
+    "name": "Butcher Quality Promise",
+    "blocks": [
+      {
+        "type": "promise",
+        "settings": {
+          "title": "<p>TRUSTED FARMS & FISHERMEN</p>"
         }
-      ]
-    }
-  ]
+      },
+      {
+        "type": "promise",
+        "settings": {
+          "title": "<p>PREMIUM PROTEINS</p>"
+        }
+      },
+      {
+        "type": "promise",
+        "settings": {
+          "title": "<p>WHOLE FOOD NUTRITION</p>"
+        }
+      },
+      {
+        "type": "promise",
+        "settings": {
+          "title": "<p>HEALTHY FATS BY DESIGN</p>"
+        }
+      },
+      {
+        "type": "promise",
+        "settings": {
+          "title": "<p>GENTLY AIR-DRIED</p>"
+        }
+      },
+      {
+        "type": "promise",
+        "settings": {
+          "title": "<p>INDEPENDENT TESTING</p>"
+        }
+      }
+    ]
+  }
+]
 }
 {% endschema %}
