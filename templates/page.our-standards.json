@@ -25,7 +25,7 @@
         "principle_Cm7LCR": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/Group_207.svg",
+            "icon": "shopify://shop_images/whole_food_ingredients.svg",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
@@ -33,7 +33,7 @@
         "principle_NPBVyJ": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/seed_oli_free.svg",
+            "icon": "shopify://shop_images/seed_oil_free.svg",
             "title": "SEED OIL FREE",
             "short_label": "SEED OIL"
           }
@@ -41,7 +41,7 @@
         "principle_iWD7LT": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/non-GMO.svg",
+            "icon": "shopify://shop_images/non_gmo_94712017-c756-4782-91e9-6653d00c3cac.svg",
             "title": "NON GMO",
             "short_label": "NON GMO"
           }
@@ -49,7 +49,7 @@
         "principle_wLKdrU": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/trusted-partners.svg",
+            "icon": "shopify://shop_images/trusted_farm_partners.svg",
             "title": "ROASTED & AIR-DRIED",
             "short_label": "AIR DRIED"
           }
@@ -57,7 +57,7 @@
         "principle_iRtPQR": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/wild-caught-fish.svg",
+            "icon": "shopify://shop_images/wild_caught_fish.svg",
             "title": "INDEPENDENTLY TESTED",
             "short_label": "TESTED"
           }
@@ -65,7 +65,7 @@
         "principle_PYyFQ7": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/gently-air-dried.svg",
+            "icon": "shopify://shop_images/gently_air_dried.svg",
             "title": "GENTLY AIR-DRIED",
             "short_label": "AIR DRIED"
           }
@@ -73,7 +73,7 @@
         "principle_QXgRb4": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/third-party-tested.svg",
+            "icon": "shopify://shop_images/third_party_tested.svg",
             "title": "THIRD-PARTY TESTED",
             "short_label": "3RD PARTY"
           }
@@ -81,7 +81,7 @@
         "principle_6yedeC": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/heavy-metal-tested.svg",
+            "icon": "shopify://shop_images/heavy_metal_tested.svg",
             "title": "HEAVY METAL TESTED",
             "short_label": "HEAVY METAL"
           }
