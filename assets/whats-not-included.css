@@ -34,6 +34,7 @@
     line-height: 40px;
     letter-spacing: 0;
     text-transform: uppercase;
+    transform:translateY(6px);
 }
 
 .whats-not-included__description {
