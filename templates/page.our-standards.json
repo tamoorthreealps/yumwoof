@@ -13,8 +13,10 @@
       "type": "main-page",
       "disabled": true,
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "mobile_padding_top": 100,
+        "mobile_padding_bottom": 100,
+        "desktop_padding_top": 100,
+        "desktop_padding_bottom": 100
       }
     },
     "butcher_quality_standard_MiRc3R": {
@@ -384,6 +386,7 @@
         "list_item_33fyRQ",
         "list_item_YJUgiV"
       ],
+      "disabled": true,
       "name": "Testing Standard",
       "settings": {
         "desktop_background_color": "#3f8f5b",
