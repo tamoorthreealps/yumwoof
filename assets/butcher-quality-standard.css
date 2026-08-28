@@ -42,7 +42,7 @@
 .butcher-quality-standard__inner {
     width: min(var(--bqs-content-width), 100%);
     min-height: 610px;
-    padding: 232px 24px 128px;
+    padding: 232px 24px 120px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -51,11 +51,11 @@
 }
 
 .butcher-quality-standard__content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 264px;
-  margin-bottom:152px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 296px;
+    margin-bottom: 120px;
 }
 
 .butcher-quality-standard__heading h1 {
@@ -104,7 +104,7 @@
 
 .butcher-quality-standard__principles {
   border-top: 1px solid var(--bqs-line-color);
-  padding-top: 16px;
+  padding-top: 20px;
 }
 
 .butcher-quality-standard__principles--image-divider {
@@ -112,13 +112,13 @@
 }
 
 .butcher-quality-standard__principles-label {
-    margin-bottom: 44px;
-    color: var(--bqs-text-color);
-    font-size: 20px;
-    line-height: 32px;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    font-family: 'TAY Birdie';
+  margin-bottom: 48px;
+  color: var(--bqs-text-color);
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  font-family: TAY Birdie;
 }
 
 .butcher-quality-standard__grid {
