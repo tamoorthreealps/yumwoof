@@ -31,17 +31,11 @@
     </div>
 
     <div class="butcher-quality-standard__principles{% if section.settings.divider_image != blank %} butcher-quality-standard__principles--image-divider{% endif %}">
-        {% if section.settings.divider_image != blank %}
-    <div class="butcher-quality-standard__divider-image">
-      {{
-        section.settings.divider_image
-        | image_url: width: 2000
-        | image_tag:
-          loading: 'lazy',
-          alt: ''
-      }}
-    </div>
-  {% endif %}
+      {% if section.settings.divider_image != blank %}
+        <div class="butcher-quality-standard__divider-image">
+          {{ section.settings.divider_image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '' }}
+        </div>
+      {% endif %}
 
       {% if section.settings.principles_label != blank %}
         <div class="butcher-quality-standard__principles-label">
@@ -86,41 +80,43 @@
   </div>
 </section>
 
-{% comment %} <script>
-(() => {
-  const SPEED = 0.3;
+{% comment %}
+  <script>
+  (() => {
+    const SPEED = 0.3;
 
-  const init = (root = document) => {
-    const sections = root.querySelectorAll('[data-bqs-parallax]');
-    if (!sections.length) return;
+    const init = (root = document) => {
+      const sections = root.querySelectorAll('[data-bqs-parallax]');
+      if (!sections.length) return;
 
-    const update = () => {
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-        section.style.backgroundPositionY = (-rect.top * SPEED) + 'px';
-      });
+      const update = () => {
+        sections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+          section.style.backgroundPositionY = (-rect.top * SPEED) + 'px';
+        });
+      };
+
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { update(); ticking = false; });
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      update();
     };
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { update(); ticking = false; });
-    };
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', () => init())
+      : init();
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    update();
-  };
-
-  document.readyState === 'loading'
-    ? document.addEventListener('DOMContentLoaded', () => init())
-    : init();
-
-  document.addEventListener('shopify:section:load', (e) => init(e.target));
-})();
-</script> {% endcomment %}
+    document.addEventListener('shopify:section:load', (e) => init(e.target));
+  })();
+  </script>
+{% endcomment %}
 {% schema %}
 {
   "name": "Butcher Quality Standard",
