@@ -24,6 +24,16 @@
 >
   <div class="standard-in-every-bag__inner">
     <div class="standard-in-every-bag__content">
+      {% if section.settings.logo != blank %}
+        <div class="standard-in-every-bag__logo">
+          {{
+            section.settings.logo
+            | image_url: width: 600
+            | image_tag: loading: 'lazy', class: 'standard-in-every-bag__logo-image'
+          }}
+        </div>
+      {% endif %}
+
       {% if section.settings.heading != blank %}
         <h2 class="standard-in-every-bag__heading">
           {{ section.settings.heading | newline_to_br }}
@@ -141,6 +151,31 @@
     {
       "type": "header",
       "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Add Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Image width",
+      "min": 20,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Image height",
+      "min": 20,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 160
     },
     {
       "type": "textarea",

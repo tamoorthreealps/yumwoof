@@ -21,6 +21,18 @@
   text-align: center;
 }
 
+.standard-in-every-bag__logo {
+  margin-bottom: 28px;
+}
+
+.standard-in-every-bag__logo-image {
+  width: var(--sieb-logo-width);
+  height: var(--sieb-logo-height);
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
 .standard-in-every-bag__heading {
 margin: 0;
     color: var(--sieb-heading-color);
