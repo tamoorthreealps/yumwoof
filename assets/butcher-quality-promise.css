@@ -111,6 +111,12 @@
   margin: 0;
 }
 
+@media screen and (min-width: 767px) {
+  .butcher-quality-promise__card {
+    transform:inherit !important;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .butcher-quality-promise {
     background-color: var(--bqp-mobile-bg);
