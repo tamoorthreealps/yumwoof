@@ -431,7 +431,7 @@
         "heading": "THE STANDARD\nIS IN EVERY BAG",
         "description": "<p>Every ingredient is chosen for a reason.</p>",
         "button_text": "SHOP NOW",
-        "button_url": "#",
+        "button_url": "shopify://products/ancestral-blend",
         "image": "shopify://shop_images/Membership_Background_1.webp",
         "mobile_image": "shopify://shop_images/Membership_Background.webp",
         "mobile_logo_width": 126,
