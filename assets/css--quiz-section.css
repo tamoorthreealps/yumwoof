@@ -184,7 +184,7 @@
   right: auto;
 }
 .quiz__decor--right img {
-  animation: bottomaicon 120s linear infinite;
+  animation: bottomaicon 80s linear infinite;
   transform-origin: center center;
   will-change: transform;
 }
