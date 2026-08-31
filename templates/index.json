@@ -374,8 +374,8 @@
       "name": "FAQs",
       "settings": {
         "heading": "Any Questions?",
-        "subheading": "Every dog is different. <br>Find the recipe that's right for yours.",
-        "open_first": true,
+        "subheading": "Every dog is different. Find the recipe that's right for yours.",
+        "open_first": false,
         "background_color": "#fff9ef",
         "text_color": "#000000",
         "line_color": "#000000",
