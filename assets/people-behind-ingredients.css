@@ -13,7 +13,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   min-height: calc(
-    var(--pbi-section-height, 0px) + (var(--pbi-slides, 1) - 1) * var(--pbi-step, 70vh)
+    var(--pbi-section-height, 0px) + var(--pbi-slides, 1) * var(--pbi-step, 70vh)
   );
 }
 
