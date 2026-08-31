@@ -77,16 +77,28 @@
 document.addEventListener('DOMContentLoaded', () => {
   const section = document.querySelector('.cocomega');
   const image = section?.querySelector('.cocomega__image');
+  const badge = section?.querySelector('.cocomega__badge');
 
   if (!section || !image) return;
 
   let currentScale = 1;
   let targetScale = 1;
 
-  function updateScale() {
+  let currentBadgeX = 0;
+  let targetBadgeX = 0;
+
+  function animate() {
+    // Image scale
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
-    requestAnimationFrame(updateScale);
+
+    // Badge horizontal movement
+    if (badge) {
+      currentBadgeX += (targetBadgeX - currentBadgeX) * 0.08;
+      badge.style.transform = `translateX(${currentBadgeX}px)`;
+    }
+
+    requestAnimationFrame(animate);
   }
 
   function onScroll() {
@@ -98,13 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     progress = Math.max(0, Math.min(progress, 1));
 
+    // Image zoom
     targetScale = 1 + progress * 0.08;
+
+    // Badge: left → right → left
+    targetBadgeX = Math.sin(progress * Math.PI * 2) * 45;
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
   onScroll();
-  updateScale();
+  animate();
 });
 </script>
 {% schema %}
