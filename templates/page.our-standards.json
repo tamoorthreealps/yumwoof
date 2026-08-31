@@ -27,7 +27,7 @@
           "settings": {
             "icon": "shopify://shop_images/whole_food_ingredients.svg",
             "center_icon": "shopify://shop_images/image_30.png",
-            "center_icon_width": 40,
+            "center_icon_width": 64,
             "mobile_center_icon_width": 0,
             "short_label": "WHOLE FOOD"
           }
