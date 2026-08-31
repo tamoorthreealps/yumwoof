@@ -81,33 +81,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!section || !image) return;
 
+  /* ==============================
+     Image Scale
+     ============================== */
+
   let currentScale = 1;
   let targetScale = 1;
+
+  /* ==============================
+     Badge Rotation
+     ============================== */
 
   let currentRotation = 0;
   let targetRotation = 0;
 
   let lastScrollY = window.scrollY;
 
+  /* ==============================
+     Smooth Animation
+     ============================== */
+
   function animate() {
-    // Image scale
+    // Smooth image scaling
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
 
-    // Badge rotation
+    // Smooth badge rotation
     if (badge) {
-      currentRotation += (targetRotation - currentRotation) * 0.12;
+      currentRotation += (targetRotation - currentRotation) * 0.08;
       badge.style.transform = `rotate(${currentRotation}deg)`;
     }
 
     requestAnimationFrame(animate);
   }
 
+  /* ==============================
+     Scroll
+     ============================== */
+
   function onScroll() {
     const scrollY = window.scrollY;
     const delta = scrollY - lastScrollY;
 
-    // Image parallax/scale
+    /* Image scale */
     const rect = section.getBoundingClientRect();
 
     let progress =
@@ -118,9 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     targetScale = 1 + progress * 0.08;
 
-    // Badge rotates according to scroll direction
+    /* Badge rotation
+       Down = clockwise
+       Up   = counter-clockwise
+       Same amount in both directions
+    */
     if (Math.abs(delta) > 0) {
-      targetRotation += delta * 0.15;
+      targetRotation += delta * 0.025;
     }
 
     lastScrollY = scrollY;
