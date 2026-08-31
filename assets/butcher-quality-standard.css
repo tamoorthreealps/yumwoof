@@ -249,7 +249,7 @@ font-family: TAY Birdie !important;
   }
 
   .butcher-quality-standard__bg {
-    top: -80px;
+    top: -160px;
     background-image: var(--bqs-mobile-image);
     background-size: cover;
     background-position: center bottom;
