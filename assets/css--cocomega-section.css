@@ -79,30 +79,7 @@
     animation: badgeRotate 50s linear infinite;
     transform-origin: center;
 }
-.cocomega__badge.is-rotating {
-  animation: badgeRock 0.9s ease-in-out;
-}
-@keyframes badgeRock {
-  0% {
-    transform: rotate(0deg);
-  }
 
-  25% {
-    transform: rotate(8deg);
-  }
-
-  50% {
-    transform: rotate(-6deg);
-  }
-
-  75% {
-    transform: rotate(4deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
 /* @keyframes badgeRotate{
     from{
         transform: rotate(0deg);

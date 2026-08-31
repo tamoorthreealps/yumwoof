@@ -75,71 +75,81 @@
 </section>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const sections = document.querySelectorAll('.cocomega');
+  const section = document.querySelector('.cocomega');
+  const image = section?.querySelector('.cocomega__image');
+  const badge = section?.querySelector('.cocomega__badge');
 
-  if (!sections.length) return;
+  if (!section || !image) return;
 
-  sections.forEach((section) => {
-    const badge = section.querySelector('.cocomega__badge');
-    const image = section.querySelector('.cocomega__image');
+  /* ==============================
+     Image Scale
+     ============================== */
 
-    if (!badge) return;
+  let currentScale = 1;
+  let targetScale = 1;
 
-    // Image scale
-    let currentScale = 1;
-    let targetScale = 1;
+  /* ==============================
+     Badge Rotation
+     ============================== */
 
-    function animateImage() {
-      if (image) {
-        currentScale += (targetScale - currentScale) * 0.08;
-        image.style.transform = `scale(${currentScale})`;
-      }
+  let currentRotation = 0;
+  let targetRotation = 0;
 
-      requestAnimationFrame(animateImage);
+  let lastScrollY = window.scrollY;
+
+  /* ==============================
+     Smooth Animation
+     ============================== */
+
+  function animate() {
+    // Smooth image scaling
+    currentScale += (targetScale - currentScale) * 0.08;
+    image.style.transform = `scale(${currentScale})`;
+
+    // Smooth badge rotation
+    if (badge) {
+      currentRotation += (targetRotation - currentRotation) * 0.08;
+      badge.style.transform = `rotate(${currentRotation}deg)`;
     }
 
-    function updateImageScale() {
-      const rect = section.getBoundingClientRect();
+    requestAnimationFrame(animate);
+  }
 
-      let progress =
-        (window.innerHeight - rect.top) /
-        (window.innerHeight + rect.height);
+  /* ==============================
+     Scroll
+     ============================== */
 
-      progress = Math.max(0, Math.min(progress, 1));
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const delta = scrollY - lastScrollY;
 
-      targetScale = 1 + progress * 0.08;
+    /* Image scale */
+    const rect = section.getBoundingClientRect();
+
+    let progress =
+      (window.innerHeight - rect.top) /
+      (window.innerHeight + rect.height);
+
+    progress = Math.max(0, Math.min(progress, 1));
+
+    targetScale = 1 + progress * 0.06;
+
+    /* Badge rotation
+       Down = clockwise
+       Up   = counter-clockwise
+       Same amount in both directions
+    */
+    if (Math.abs(delta) > 0) {
+      targetRotation += delta * 0.025;
     }
 
-    window.addEventListener('scroll', updateImageScale, {
-      passive: true
-    });
+    lastScrollY = scrollY;
+  }
 
-    updateImageScale();
-    animateImage();
+  window.addEventListener('scroll', onScroll, { passive: true });
 
-
-    // Badge animation when section enters viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-
-            // Restart animation every time section enters
-            badge.classList.remove('is-rotating');
-
-            void badge.offsetWidth;
-
-            badge.classList.add('is-rotating');
-          }
-        });
-      },
-      {
-        threshold: 0.25
-      }
-    );
-
-    observer.observe(section);
-  });
+  onScroll();
+  animate();
 });
 </script>
 {% schema %}
