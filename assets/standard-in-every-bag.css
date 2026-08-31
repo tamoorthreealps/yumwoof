@@ -128,7 +128,7 @@
     letter-spacing: -0.48px;
     transform: none;
     text-align: center;
-    margin: 0 0 28px;
+    margin: 0 0 24px;
   }
 
   .standard-in-every-bag__media {
@@ -136,9 +136,9 @@
     position: relative;
     width: 100%;
     height: auto;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: auto;
     overflow: visible;
-    border-radius: 20px;
+    border-radius: 16px;
     margin-bottom: 24px;
   }
 
@@ -148,23 +148,23 @@
 
   .standard-in-every-bag__image--mobile {
     display: block;
-    border-radius: 20px;
+    border-radius: 16px;
   }
 
   .standard-in-every-bag__description {
     order: 3;
     text-align: center;
-    font-size: 16px;
-    line-height: 24px;
-    margin: 0 0 24px;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 16px;
   }
 
   .standard-in-every-bag__button {
-    order: 4;
-    font-size: 16px;
-    line-height: 20px;
-    letter-spacing: 1.6px;
-    padding: 18px 32px;
+      order: 4;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.56px;
+      padding: 13.2px 31.5px;
   }
 
   /* Badge overlapping the top-right corner of the image card */
