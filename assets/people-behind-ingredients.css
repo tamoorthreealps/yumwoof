@@ -3,10 +3,23 @@
   padding: 0 !important;
 }
 
-/* ---------- Wrapper (no longer a sticky scroll track) ---------- */
+/* ---------- Scroll track: section height + one scroll length per extra slide ---------- */
 
 .people-behind-ingredients__track {
   position: relative;
+  background-color: var(--pbi-bg);
+  background-image: var(--pbi-bg-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: calc(
+    var(--pbi-section-height, 0px) + (var(--pbi-slides, 1) - 1) * var(--pbi-step, 70vh)
+  );
+}
+
+.people-behind-ingredients__track > .people-behind-ingredients {
+  position: sticky;
+  top: var(--pbi-sticky-top, 0px);
 }
 
 /* ---------- Section ---------- */
@@ -202,6 +215,10 @@
 }
 
 @media screen and (max-width: 767px) {
+  .people-behind-ingredients__track {
+    --pbi-step: var(--pbi-step-mobile, 60vh);
+  }
+
   .people-behind-ingredients__inner {
     padding: var(--pbi-mobile-padding-top) 28px var(--pbi-mobile-padding-bottom);
   }

@@ -3,22 +3,23 @@
 <div
   id="PeopleBehindIngredientsTrack-{{ section.id }}"
   class="people-behind-ingredients__track"
-  style="--pbi-slides: {{ section.blocks.size }};"
+  style="
+    --pbi-slides: {{ section.blocks.size }};
+    --pbi-bg: {{ section.settings.background_color }};
+    --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
+    --pbi-text-color: {{ section.settings.text_color }};
+    --pbi-media-height: {{ section.settings.media_height }}px;
+    --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
+    --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
+    --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    --pbi-step: {{ section.settings.scroll_step }}vh;
+    --pbi-step-mobile: {{ section.settings.scroll_step_mobile }}vh;
+  "
 >
   <section
     id="PeopleBehindIngredients-{{ section.id }}"
     class="people-behind-ingredients"
-    style="
-      --pbi-bg: {{ section.settings.background_color }};
-      --pbi-bg-image: {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 2400 }}'){% else %}none{% endif %};
-      --pbi-text-color: {{ section.settings.text_color }};
-      --pbi-media-height: {{ section.settings.media_height }}px;
-      --pbi-desktop-padding-top: {{ section.settings.desktop_padding_top }}px;
-      --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
-      --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
-      --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
-      --pbi-scroll-span: {{ section.settings.scroll_span | divided_by: 100.0 }};
-    "
   >
     <div class="people-behind-ingredients__inner">
 
@@ -115,7 +116,7 @@
 
     const splide = new Splide(slider, {
       /* Slides are stacked and swapped instantly — no fade, no drag, no autoplay.
-         Position within the section is what drives which slide is shown. */
+         Scroll position within the track is what drives which slide is shown. */
       type: 'fade',
       rewind: false,
       perPage: 1,
@@ -137,35 +138,40 @@
 
     splide.mount();
 
-    /* ---------- Natural scroll → slide progress (no pinning) ---------- */
+    /* ---------- Scroll-tied slide progress ---------- */
 
     const total = splide.length;
     const last = Math.max(total - 1, 0);
-
-    /* How much of the section's pass through the viewport is used to run through
-       all the slides. 0.7 = the middle 70% of the pass. Exposed as a setting. */
-    const spanSetting = parseFloat(
-      getComputedStyle(section).getPropertyValue('--pbi-scroll-span')
-    );
-    const span = isNaN(spanSetting) ? 0.7 : Math.min(Math.max(spanSetting, 0.3), 0.95);
-    const startAt = 0.5 + span / 2; /* section centre this far down the viewport = slide 1 */
-    const endAt = 0.5 - span / 2;   /* section centre this far up = last slide */
 
     let targetRaw = 0;   /* 0 .. last, straight from scroll position */
     let shownRaw = -1;   /* eased value actually rendered */
     let current = -1;
     let running = false;
-    let inView = true;
+
+    /* The track is taller than the section by exactly the slide travel. The
+       section holds at its resting position while that travel is consumed,
+       then the whole thing scrolls away normally. */
+    function layout() {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const h = section.offsetHeight;
+
+      track.style.setProperty('--pbi-section-height', h + 'px');
+      track.style.setProperty('--pbi-sticky-top', Math.max((vh - h) / 2, 0) + 'px');
+    }
+
+    function stickyTop() {
+      return parseFloat(getComputedStyle(track).getPropertyValue('--pbi-sticky-top')) || 0;
+    }
 
     function measure() {
       if (total < 2) return 0;
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      if (!vh) return 0;
 
-      const centre = (rect.top + rect.height / 2) / vh;
-      const p = (startAt - centre) / (startAt - endAt);
-      return Math.min(Math.max(p, 0), 1) * last;
+      const travel = track.offsetHeight - section.offsetHeight;
+      if (travel <= 0) return 0;
+
+      const rect = track.getBoundingClientRect();
+      const scrolled = Math.min(Math.max(stickyTop() - rect.top, 0), travel);
+      return (scrolled / travel) * last;
     }
 
     function paint(raw) {
@@ -211,40 +217,40 @@
       requestAnimationFrame(loop);
     }
 
-    window.addEventListener('scroll', kick, { passive: true });
-    window.addEventListener('resize', kick, { passive: true });
-
-    /* Only run the easing loop while the section is anywhere near the viewport. */
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(
-        function (entries) {
-          inView = entries[0].isIntersecting;
-          if (inView) kick();
-        },
-        { rootMargin: '100% 0px' }
-      ).observe(section);
+    function relayout() {
+      layout();
+      kick();
     }
 
-    /* Clicking a bar scrolls the page to the point where that slide is showing —
-       still a normal smooth page scroll, nothing is locked. */
+    window.addEventListener('scroll', kick, { passive: true });
+    window.addEventListener('resize', relayout, { passive: true });
+
+    if (window.ResizeObserver) {
+      new ResizeObserver(relayout).observe(section);
+    }
+
+    /* Clicking a bar scrolls the page to that slide's position in the track —
+       still a normal smooth page scroll. */
     progressGroups.forEach(function (group) {
       Array.prototype.forEach.call(group.children, function (item, i) {
         item.addEventListener('click', function (e) {
           e.preventDefault();
           if (total < 2) return;
 
-          const vh = window.innerHeight || document.documentElement.clientHeight;
-          const rect = section.getBoundingClientRect();
-          const pageTop = rect.top + window.pageYOffset;
-          const wanted = i / last;
-          const centreRatio = startAt - wanted * (startAt - endAt);
-          const top = pageTop + rect.height / 2 - centreRatio * vh;
+          const travel = track.offsetHeight - section.offsetHeight;
+          if (travel <= 0) return;
 
-          window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+          const pageTop = track.getBoundingClientRect().top + window.pageYOffset;
+
+          window.scrollTo({
+            top: Math.max(pageTop - stickyTop() + travel * (i / last), 0),
+            behavior: 'smooth'
+          });
         });
       });
     });
 
+    layout();
     kick();
   });
 </script>
@@ -290,14 +296,24 @@
     },
     {
       "type": "range",
-      "id": "scroll_span",
-      "label": "Scroll range used for slide changes",
-      "info": "Lower = slides change over a shorter stretch of scrolling.",
+      "id": "scroll_step",
+      "label": "Scroll length per slide (desktop)",
+      "info": "How much scrolling each slide takes, as a share of the screen height.",
       "min": 30,
-      "max": 95,
+      "max": 120,
       "step": 5,
       "unit": "%",
       "default": 70
+    },
+    {
+      "type": "range",
+      "id": "scroll_step_mobile",
+      "label": "Scroll length per slide (mobile)",
+      "min": 30,
+      "max": 120,
+      "step": 5,
+      "unit": "%",
+      "default": 60
     },
     {
       "type": "header",
