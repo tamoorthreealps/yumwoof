@@ -69,8 +69,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 296px;
-  margin-bottom: 120px;
+  gap: 348px;
+  margin-bottom: 84px;
 }
 
 .butcher-quality-standard__heading h1 {
