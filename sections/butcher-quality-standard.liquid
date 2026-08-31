@@ -106,29 +106,31 @@
               {% if center_desktop != blank or center_mobile != blank %}
                 <span class="butcher-quality-standard__center">
                   {% if center_desktop != blank %}
-                    {{
-                      center_desktop
-                      | image_url: width: 300
-                      | image_tag:
-                        class: 'butcher-quality-standard__center-icon butcher-quality-standard__center-icon--desktop',
-                        loading: 'lazy',
-                        widths: '80,150,300',
-                        sizes: '80px',
-                        alt: ''
-                    }}
+                    <img
+                      src="{{ center_desktop | image_url: width: 1200 }}"
+                      srcset="{{ center_desktop | image_url: width: 1200 }} 1200w"
+                      sizes="1200px"
+                      width="{{ center_desktop.width }}"
+                      height="{{ center_desktop.height }}"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      class="butcher-quality-standard__center-icon butcher-quality-standard__center-icon--desktop"
+                    >
                   {% endif %}
 
                   {% if center_mobile != blank %}
-                    {{
-                      center_mobile
-                      | image_url: width: 300
-                      | image_tag:
-                        class: 'butcher-quality-standard__center-icon butcher-quality-standard__center-icon--mobile',
-                        loading: 'lazy',
-                        widths: '80,150,300',
-                        sizes: '60px',
-                        alt: ''
-                    }}
+                    <img
+                      src="{{ center_mobile | image_url: width: 1200 }}"
+                      srcset="{{ center_mobile | image_url: width: 1200 }} 1200w"
+                      sizes="1200px"
+                      width="{{ center_mobile.width }}"
+                      height="{{ center_mobile.height }}"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      class="butcher-quality-standard__center-icon butcher-quality-standard__center-icon--mobile"
+                    >
                   {% endif %}
                 </span>
               {% endif %}
@@ -192,8 +194,7 @@
             item.current += (item.target - item.current) * EASE;
           }
           if (Math.abs(item.target - item.current) > 0.1) active = true;
-          item.layer.style.transform =
-            'translate3d(0,' + item.current.toFixed(2) + 'px,0)';
+          item.layer.style.transform = 'translate3d(0,' + item.current.toFixed(2) + 'px,0)';
         });
 
         if (active) {
@@ -222,9 +223,7 @@
       start();
     };
 
-    document.readyState === 'loading'
-      ? document.addEventListener('DOMContentLoaded', () => init())
-      : init();
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', () => init()) : init();
 
     document.addEventListener('shopify:section:load', (e) => init(e.target));
   })();
