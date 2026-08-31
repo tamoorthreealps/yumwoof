@@ -88,14 +88,27 @@ document.addEventListener('DOMContentLoaded', () => {
   let targetRotation = 0;
 
   let lastScrollY = window.scrollY;
-  let rotationDirection = 1;
+
+  // Alternate left / right
+  let direction = 1;
+
+  // Prevent too many rotations during one fast scroll
+  let lastRotationTime = 0;
 
   function animate() {
+    // Smooth image scale
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
 
+    // Very smooth badge rotation
+    currentRotation += (targetRotation - currentRotation) * 0.08;
+
+    // Stop tiny floating/glitching
+    if (Math.abs(targetRotation - currentRotation) < 0.05) {
+      currentRotation = targetRotation;
+    }
+
     if (badge) {
-      currentRotation += (targetRotation - currentRotation) * 0.15;
       badge.style.transform = `rotate(${currentRotation}deg)`;
     }
 
@@ -108,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rect = section.getBoundingClientRect();
 
-    // Section viewport mein hai?
+    // Only work while section is visible
     const sectionVisible =
       rect.top < window.innerHeight &&
       rect.bottom > 0;
@@ -122,19 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     targetScale = 1 + progress * 0.06;
 
-    // Badge rotation
-    // Scroll UP/DOWN dono ko ignore karo.
-    // Har scroll movement par LEFT -> RIGHT -> LEFT -> RIGHT
+    // Badge
     if (badge && sectionVisible && Math.abs(delta) > 0) {
-      targetRotation = rotationDirection * 25;
+      const now = performance.now();
 
-      rotationDirection *= -1;
+      // Small cooldown so one scroll gesture doesn't glitch
+      if (now - lastRotationTime > 120) {
+
+        // Alternate direction regardless of scroll UP/DOWN
+        targetRotation = direction * 28;
+
+        direction *= -1;
+
+        lastRotationTime = now;
+      }
     }
 
     lastScrollY = scrollY;
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('scroll', onScroll, {
+    passive: true
+  });
 
   onScroll();
   animate();
