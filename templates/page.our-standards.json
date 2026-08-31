@@ -43,7 +43,7 @@
         "principle_iWD7LT": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/non_gmo_94712017-c756-4782-91e9-6653d00c3cac.svg",
+            "icon": "shopify://shop_images/Group_200.png",
             "center_icon_width": 40,
             "mobile_center_icon_width": 0,
             "short_label": "NON GMO"
@@ -52,7 +52,7 @@
         "principle_wLKdrU": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/trusted_farm_partners.svg",
+            "icon": "shopify://shop_images/Group_201.png",
             "center_icon_width": 40,
             "mobile_center_icon_width": 0,
             "short_label": "AIR DRIED"
@@ -61,7 +61,7 @@
         "principle_iRtPQR": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/wild_caught_fish.svg",
+            "icon": "shopify://shop_images/Group_216.png",
             "center_icon_width": 40,
             "mobile_center_icon_width": 0,
             "short_label": "TESTED"
@@ -70,7 +70,7 @@
         "principle_PYyFQ7": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/gently_air_dried.svg",
+            "icon": "shopify://shop_images/Group_203.png",
             "center_icon_width": 40,
             "mobile_center_icon_width": 0,
             "short_label": "AIR DRIED"
@@ -79,7 +79,7 @@
         "principle_QXgRb4": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/third_party_tested.svg",
+            "icon": "shopify://shop_images/Group_204.png",
             "center_icon_width": 40,
             "mobile_center_icon_width": 0,
             "short_label": "3RD PARTY"
@@ -88,7 +88,7 @@
         "principle_6yedeC": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/heavy_metal_tested.svg",
+            "icon": "shopify://shop_images/Group_205.png",
             "center_icon_width": 40,
             "mobile_center_icon_width": 0,
             "short_label": "HEAVY METAL"
