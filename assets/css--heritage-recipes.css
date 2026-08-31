@@ -233,7 +233,7 @@
 	display: block;
 	width: 100%;
 	height: auto;
-	animation: bowlRotate 150s linear infinite;
+	animation: bowlRotate 80s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
 }
@@ -272,7 +272,7 @@
 }
 
 .heritage__kibble--3 img {
-	animation: iconRotate 10s linear infinite;
+	animation: iconRotate 80s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
 }
