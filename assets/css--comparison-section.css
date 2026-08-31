@@ -174,7 +174,7 @@
 }
 
 .cmp__col--brand .cmp__col-icon {
-  	animation: bowlRotate 100s linear infinite;
+  	animation: bowlRotate 80s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
 }
