@@ -175,8 +175,8 @@
   .standard-in-every-bag__logo--mobile {
       display: block;
       position: absolute;
-      top: 8px;
-      right: 20px;
+      top: 16px;
+      right: 24px;
       width: var(--sieb-mobile-logo-width, 104px);
       margin: 0;
       transform: translate(28%, -32%);
