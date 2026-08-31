@@ -260,6 +260,66 @@ window.addEventListener('scroll', () => {
   lastScroll = window.scrollY;
 });
   {% endif %}
+
+{% comment %} image--bowl--animation {% endcomment %}
+document.addEventListener('DOMContentLoaded', function () {
+  const bowls = document.querySelectorAll('.heritage__bowl');
+
+  if (!bowls.length) return;
+
+  let ticking = false;
+
+  function updateBowlAnimation() {
+    bowls.forEach(function (bowl) {
+      const rect = bowl.getBoundingClientRect();
+
+      /*
+       * 0 = section/image viewport se neeche
+       * 1 = image viewport ke center ke qareeb
+       */
+      let progress =
+        (window.innerHeight - rect.top) /
+        (window.innerHeight * 0.85 + rect.height);
+
+      progress = Math.max(0, Math.min(1, progress));
+
+      /*
+       * Start:
+       *   translateY(70px)
+       *   scale(0.96)
+       *
+       * End:
+       *   translateY(0)
+       *   scale(1)
+       */
+      const translateY = 70 - (70 * progress);
+      const scale = 0.96 + (0.04 * progress);
+
+      bowl.style.transform =
+        `translateY(${translateY}px) scale(${scale})`;
+    });
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) return;
+
+    ticking = true;
+
+    requestAnimationFrame(updateBowlAnimation);
+  }
+
+  window.addEventListener('scroll', onScroll, {
+    passive: true
+  });
+
+  window.addEventListener('resize', updateBowlAnimation, {
+    passive: true
+  });
+
+  updateBowlAnimation();
+});
 </script>
 
 {% schema %}

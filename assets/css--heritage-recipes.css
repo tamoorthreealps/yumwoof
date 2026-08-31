@@ -98,6 +98,9 @@
 	right: 0;
 	width: 312.64px;
 	margin: 0 auto;
+	will-change: transform;
+	transform: translateY(70px) scale(0.96);
+	transition: transform 0.08s linear;
 }
 
 
