@@ -14,6 +14,7 @@
     --sieb-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
     --sieb-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
     --sieb-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    --sieb-mobile-logo-width: {{ section.settings.mobile_logo_width }}px;
     {% if section.settings.desktop_background_image != blank %}
       --sieb-desktop-bg-image: url('{{ section.settings.desktop_background_image | image_url }}');
     {% endif %}
@@ -25,7 +26,7 @@
   <div class="standard-in-every-bag__inner">
     <div class="standard-in-every-bag__content">
       {% if section.settings.logo != blank %}
-        <div class="standard-in-every-bag__logo">
+        <div class="standard-in-every-bag__logo standard-in-every-bag__logo--desktop">
           {{
             section.settings.logo
             | image_url: width: 600
@@ -47,7 +48,7 @@
       {% endif %}
 
       {% if section.settings.button_text != blank %}
-        <a
+        
           href="{{ section.settings.button_url }}"
           class="standard-in-every-bag__button"
         >
@@ -63,25 +64,79 @@
           | image_url: width: 1600
           | image_tag:
             loading: 'lazy',
-            class: 'standard-in-every-bag__image',
+            class: 'standard-in-every-bag__image standard-in-every-bag__image--desktop',
             widths: '400, 600, 800, 1000, 1200, 1600',
             sizes: '(max-width: 749px) 100vw, 50vw'
         }}
       {% endif %}
+
+      {%- liquid
+        assign sieb_mobile_image = section.settings.mobile_image
+        if sieb_mobile_image == blank
+          assign sieb_mobile_image = section.settings.image
+        endif
+      -%}
+
+      {% if sieb_mobile_image != blank %}
+        {{
+          sieb_mobile_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            class: 'standard-in-every-bag__image standard-in-every-bag__image--mobile',
+            widths: '400, 600, 800, 1000, 1200',
+            sizes: '100vw'
+        }}
+      {% endif %}
+
+      {% if section.settings.logo != blank %}
+        <div class="standard-in-every-bag__logo standard-in-every-bag__logo--mobile">
+          {{
+            section.settings.logo
+            | image_url: width: 600
+            | image_tag: loading: 'lazy', class: 'standard-in-every-bag__logo-image'
+          }}
+        </div>
+      {% endif %}
     </div>
   </div>
 </section>
-<script>
-document.addEventListener('scroll', () => {
-  const logos = document.querySelectorAll('.standard-in-every-bag__logo-image');
 
-  logos.forEach(logo => {
-    const rect = logo.getBoundingClientRect();
-    const rotation = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.015;
-    logo.style.transform = `rotate(${Math.max(-3, Math.min(3, rotation))}deg)`;
-  });
-});
+<script>
+  (function () {
+    var sieb_ticking = false;
+
+    function siebRotateLogos() {
+      var logos = document.querySelectorAll('.standard-in-every-bag__logo-image');
+
+      for (var i = 0; i < logos.length; i++) {
+        var logo = logos[i];
+
+        if (logo.offsetParent === null) {
+          continue;
+        }
+
+        var rect = logo.getBoundingClientRect();
+        var rotation = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.015;
+        logo.style.transform = 'rotate(' + Math.max(-3, Math.min(3, rotation)) + 'deg)';
+      }
+
+      sieb_ticking = false;
+    }
+
+    function siebOnScroll() {
+      if (!sieb_ticking) {
+        sieb_ticking = true;
+        window.requestAnimationFrame(siebRotateLogos);
+      }
+    }
+
+    document.addEventListener('scroll', siebOnScroll, { passive: true });
+    window.addEventListener('resize', siebOnScroll, { passive: true });
+    siebRotateLogos();
+  })();
 </script>
+
 {% schema %}
 {
   "name": "Standard In Every Bag",
@@ -194,6 +249,26 @@ document.addEventListener('scroll', () => {
       "type": "image_picker",
       "id": "image",
       "label": "Right side image"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Used in place of the right side image on mobile. If left empty, the desktop image is used."
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_width",
+      "label": "Mobile logo width",
+      "min": 60,
+      "max": 180,
+      "step": 2,
+      "unit": "px",
+      "default": 104
     },
     {
       "type": "header",
