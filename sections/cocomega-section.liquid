@@ -90,11 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastScrollY = window.scrollY;
 
   function animate() {
-    // Image scale
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
 
-    // Badge rotation
     if (badge) {
       currentRotation += (targetRotation - currentRotation) * 0.12;
       badge.style.transform = `rotate(${currentRotation}deg)`;
@@ -107,9 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollY = window.scrollY;
     const delta = scrollY - lastScrollY;
 
-    // Image scale
     const rect = section.getBoundingClientRect();
 
+    // Section visibility
+    const sectionVisible =
+      rect.top < window.innerHeight &&
+      rect.bottom > 0;
+
+    // Image scale
     let progress =
       (window.innerHeight - rect.top) /
       (window.innerHeight + rect.height);
@@ -118,13 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     targetScale = 1 + progress * 0.06;
 
-    // Badge rotation
-    if (badge && Math.abs(delta) > 0) {
+    // Badge ONLY rotates while section is visible
+    if (badge && sectionVisible && Math.abs(delta) > 0) {
       // Down = clockwise
-      // Up   = counter-clockwise
+      // Up = counter-clockwise
       targetRotation += delta * 0.04;
 
-      // Never allow full 360° rotation
+      // Keep it like a clock movement, never full 360°
       targetRotation = Math.max(-35, Math.min(35, targetRotation));
     }
 
