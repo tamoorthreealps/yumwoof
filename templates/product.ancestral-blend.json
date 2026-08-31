@@ -154,7 +154,9 @@
         "media_position": "left",
         "image_zoom": "none",
         "hide_variants": true,
-        "enable_video_looping": false
+        "enable_video_looping": false,
+        "enable_sticky_atc": true,
+        "sticky_atc_button_label": "Add to Bag"
       }
     },
     "disclosures": {
@@ -228,8 +230,8 @@
           "settings": {
             "label": "Minimally Processed",
             "brand_value": "check",
-            "comp1_value": "check",
-            "comp2_value": "cross",
+            "comp1_value": "cross",
+            "comp2_value": "check",
             "comp3_value": "cross"
           }
         },
@@ -248,9 +250,9 @@
           "settings": {
             "label": "Fridge Free",
             "brand_value": "check",
-            "comp1_value": "cross",
+            "comp1_value": "check",
             "comp2_value": "cross",
-            "comp3_value": "check"
+            "comp3_value": "cross"
           }
         },
         "row-5": {
