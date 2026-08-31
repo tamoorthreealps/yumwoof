@@ -257,18 +257,18 @@
 
   .butcher-quality-standard__inner {
     min-height: 0;
-    padding: 144px 24px 96px;
+    padding: 144px 28px 80px;
   }
 
   .butcher-quality-standard__content {
-    gap: 305px;
-    margin-bottom: 63px;
+    gap: 272px;
+    margin-bottom: 80px;
   }
 
   .butcher-quality-standard__heading h1 {
     max-width: 334px;
     font-size: 64px;
-    line-height: 59px;
+    line-height: 64px;
     letter-spacing: -0.64px;
   }
 
@@ -279,23 +279,23 @@
   .butcher-quality-standard__description {
     max-width: 100%;
     margin-top: auto;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 15px;
+    line-height: 20px;
   }
 
   .butcher-quality-standard__description p {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
 
   .butcher-quality-standard__principles {
-    padding-top: 22px;
+    padding-top: 16px;
   }
 
   .butcher-quality-standard__principles-label {
-    margin-bottom: 12px;
-    font-size: 6px;
-    letter-spacing: 0.08em;
-    display: none;
+      max-width: 270px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      line-height: 20px;
   }
 
   .butcher-quality-standard__grid {
