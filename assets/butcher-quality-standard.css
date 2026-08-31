@@ -26,7 +26,7 @@
   background-image: var(--bqs-desktop-image);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center bottom;
+  background-position: center;
   transform: translate3d(0, 0, 0);
   will-change: transform;
   backface-visibility: hidden;
