@@ -25,7 +25,6 @@
         "principle_Cm7LCR": {
           "type": "principle",
           "settings": {
-            "icon": "shopify://shop_images/whole_food_ingredients.png",
             "title": "WHOLE FOOD INGREDIENTS",
             "short_label": "WHOLE FOOD"
           }
