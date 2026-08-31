@@ -88,13 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let targetRotation = 0;
 
   let lastScrollY = window.scrollY;
+  let rotationDirection = 1;
 
   function animate() {
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
 
     if (badge) {
-      currentRotation += (targetRotation - currentRotation) * 0.12;
+      currentRotation += (targetRotation - currentRotation) * 0.15;
       badge.style.transform = `rotate(${currentRotation}deg)`;
     }
 
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rect = section.getBoundingClientRect();
 
-    // Section visibility
+    // Section viewport mein hai?
     const sectionVisible =
       rect.top < window.innerHeight &&
       rect.bottom > 0;
@@ -121,14 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     targetScale = 1 + progress * 0.06;
 
-    // Badge ONLY rotates while section is visible
+    // Badge rotation
+    // Scroll UP/DOWN dono ko ignore karo.
+    // Har scroll movement par LEFT -> RIGHT -> LEFT -> RIGHT
     if (badge && sectionVisible && Math.abs(delta) > 0) {
-      // Down = clockwise
-      // Up = counter-clockwise
-      targetRotation += delta * 0.04;
+      targetRotation = rotationDirection * 25;
 
-      // Keep it like a clock movement, never full 360°
-      targetRotation = Math.max(-35, Math.min(35, targetRotation));
+      rotationDirection *= -1;
     }
 
     lastScrollY = scrollY;
