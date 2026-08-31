@@ -155,7 +155,7 @@
   display: block;
   width: 100%;
   height: auto;
-  animation: bowlRotate 120s linear infinite;
+  animation: bowlRotate 80s linear infinite;
   transform-origin: center center;
   will-change: transform;
   object-fit: contain;
