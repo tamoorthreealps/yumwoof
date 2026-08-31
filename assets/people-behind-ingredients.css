@@ -229,7 +229,7 @@
   }
 
   .people-behind-ingredients__media {
-height: auto;
+height: 256px;
         aspect-ratio: auto;
                 border-radius: 16px;
   }
