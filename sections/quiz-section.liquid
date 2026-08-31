@@ -91,112 +91,30 @@
 
 <script>
   (function () {
-    var sections = document.querySelectorAll(
-      '#shopify-section-{{ section.id }} [data-quiz-cta]'
-    );
-
+    var sections = document.querySelectorAll('#shopify-section-{{ section.id }} [data-quiz-cta]');
     if (!sections.length) return;
 
-    sections.forEach(function (section) {
-      var image = section.querySelector('.quiz__bags-img');
-
-      if (!image) return;
-
-      var currentY = 48;
-      var targetY = 48;
-      var ticking = false;
-
-      /*
-       * Calculate how much of the section has entered
-       * the viewport.
-       *
-       * 0 = section is outside / not entered
-       * 1 = section is fully in the viewport
-       */
-      function updateTarget() {
-        var rect = section.getBoundingClientRect();
-        var viewportHeight = window.innerHeight;
-
-        /*
-         * Start animation when the section starts entering
-         * the viewport and finish when it reaches roughly
-         * the middle of the viewport.
-         */
-        var progress =
-          (viewportHeight - rect.top) /
-          (viewportHeight * 0.75);
-
-        progress = Math.max(0, Math.min(1, progress));
-
-        /*
-         * Image starts 48px lower and smoothly moves to 0px.
-         */
-        targetY = 48 * (1 - progress);
-      }
-
-      /*
-       * Smooth interpolation.
-       * This prevents the image from jumping directly
-       * to the scroll position.
-       */
-      function animate() {
-        currentY += (targetY - currentY) * 0.1;
-
-        /*
-         * Stop tiny unnecessary movements.
-         */
-        if (Math.abs(targetY - currentY) < 0.05) {
-          currentY = targetY;
-        }
-
-        image.style.transform =
-          'translate3d(-50%, ' + currentY + 'px, 0)';
-
-        ticking = false;
-
-        /*
-         * Keep running while the image is still settling.
-         */
-        if (Math.abs(targetY - currentY) > 0.05) {
-          ticking = true;
-          requestAnimationFrame(animate);
-        }
-      }
-
-      function onScroll() {
-        updateTarget();
-
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(animate);
-        }
-      }
-
-      function onResize() {
-        updateTarget();
-
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(animate);
-        }
-      }
-
-      /*
-       * Initial position.
-       */
-      updateTarget();
-      currentY = targetY;
-
-      image.style.transform =
-        'translate3d(-50%, ' + currentY + 'px, 0)';
-
-      window.addEventListener('scroll', onScroll, {
-        passive: true
+    if (!('IntersectionObserver' in window)) {
+      sections.forEach(function (el) {
+        el.classList.add('is-visible');
       });
+      return;
+    }
 
-      window.addEventListener('resize', onResize, {
-        passive: true
-      });
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    sections.forEach(function (el) {
+      observer.observe(el);
     });
   })();
 </script>
