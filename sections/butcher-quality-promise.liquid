@@ -78,46 +78,111 @@ document.addEventListener('DOMContentLoaded', () => {
       section.querySelectorAll('.butcher-quality-promise__card')
     );
 
-    if (cards.length < 2) return;
+    if (!cards.length) return;
 
-    const SCALE_STEP = 0.04;   // how much each card shrinks per card stacked on top
-    const SHIFT_STEP = 6;      // extra px each card lifts per card stacked on top
-    const MAX_DEPTH = 4;       // stop shrinking past this many cards deep
+    const SCALE_STEP = 0.04;
+    const SHIFT_STEP = 6;
+    const MAX_DEPTH = 4;
 
     const updateCards = () => {
-      if (window.innerWidth > 767) {
-        cards.forEach(card => { card.style.transform = ''; });
-        return;
-      }
+      const isMobile = window.innerWidth <= 767;
 
-      // progress[i] = how far card i+1 has covered card i (0 -> 1)
-      const progress = cards.map((card, index) => {
-        if (index === cards.length - 1) return 0;
-
-        const cardTop = parseFloat(getComputedStyle(card).top) || 0;
-        const nextRect = cards[index + 1].getBoundingClientRect();
-
-        return Math.max(
-          0,
-          Math.min(
-            1,
-            (cardTop + card.offsetHeight - nextRect.top) / card.offsetHeight
-          )
+      cards.forEach((card, index) => {
+        const image = card.querySelector(
+          '.butcher-quality-promise__card-image'
         );
+
+        /* -------------------------
+           Desktop
+        ------------------------- */
+        if (!isMobile) {
+          card.style.transform = '';
+
+          if (image) {
+            const rect = card.getBoundingClientRect();
+
+            let progress =
+              (window.innerHeight - rect.top) /
+              (window.innerHeight + rect.height);
+
+            progress = Math.max(0, Math.min(progress, 1));
+
+            const imageScale = 1 + progress * 0.06;
+
+            image.style.transform =
+              `scale(${imageScale})`;
+          }
+
+          return;
+        }
+
+        /* -------------------------
+           Mobile card stacking
+        ------------------------- */
+
+        if (index === cards.length - 1) {
+          card.style.transform = '';
+        }
+
+        const progress = cards.map((card, index) => {
+          if (index === cards.length - 1) return 0;
+
+          const cardTop =
+            parseFloat(getComputedStyle(card).top) || 0;
+
+          const nextRect =
+            cards[index + 1].getBoundingClientRect();
+
+          return Math.max(
+            0,
+            Math.min(
+              1,
+              (cardTop + card.offsetHeight - nextRect.top) /
+                card.offsetHeight
+            )
+          );
+        });
+
+        let depth = 0;
+
+        for (let i = cards.length - 1; i >= 0; i--) {
+          const cappedDepth = Math.min(depth, MAX_DEPTH);
+
+          const scale =
+            1 - (cappedDepth * SCALE_STEP);
+
+          const translateY =
+            cappedDepth * -SHIFT_STEP;
+
+          cards[i].style.transform =
+            `translateY(${translateY}px) scale(${scale})`;
+
+          depth += progress[i];
+        }
+
+        /* -------------------------
+           Mobile image zoom
+        ------------------------- */
+
+        if (image) {
+          const rect = card.getBoundingClientRect();
+
+          let imageProgress =
+            (window.innerHeight - rect.top) /
+            (window.innerHeight + rect.height);
+
+          imageProgress = Math.max(
+            0,
+            Math.min(imageProgress, 1)
+          );
+
+          const imageScale =
+            1 + imageProgress * 0.06;
+
+          image.style.transform =
+            `scale(${imageScale})`;
+        }
       });
-
-      // depth[i] = accumulated progress of every card stacked on top of card i
-      let depth = 0;
-      for (let i = cards.length - 1; i >= 0; i--) {
-        const cappedDepth = Math.min(depth, MAX_DEPTH);
-        const scale = 1 - (cappedDepth * SCALE_STEP);
-        const translateY = cappedDepth * -SHIFT_STEP;
-
-        cards[i].style.transform =
-          `translateY(${translateY}px) scale(${scale})`;
-
-        depth += progress[i];
-      }
     };
 
     let ticking = false;
@@ -133,8 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
       ticking = true;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', updateCards);
+    window.addEventListener(
+      'scroll',
+      handleScroll,
+      { passive: true }
+    );
+
+    window.addEventListener(
+      'resize',
+      updateCards
+    );
 
     updateCards();
   });
