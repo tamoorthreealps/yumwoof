@@ -272,7 +272,7 @@
 }
 
 .heritage__kibble--3 img {
-	animation: iconRotate 100s linear infinite;
+	animation: iconRotate 10s linear infinite;
 	transform-origin: center center;
 	will-change: transform;
 }
