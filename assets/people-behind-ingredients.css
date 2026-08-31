@@ -212,15 +212,15 @@
   }
 
   .people-behind-ingredients__heading {
-            margin-bottom: 22px;
-        text-align: left;
+            margin-bottom: 28px;
   }
 
   .people-behind-ingredients__heading h1,
   .people-behind-ingredients__heading h2,
   .people-behind-ingredients__heading h3 {
     font-size: 48px;
-        line-height: 52px;
+        line-height: 48px;
+        letter-spacing:-0.48px;
   }
 
   .people-behind-ingredients__slide {
