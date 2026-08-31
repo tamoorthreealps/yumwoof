@@ -225,7 +225,7 @@
 
   .people-behind-ingredients__slide {
     grid-template-columns: 1fr;
-    row-gap: 18px;
+    row-gap: 20px;
   }
 
   .people-behind-ingredients__media {
@@ -234,26 +234,30 @@ height: 256px;
                 border-radius: 16px;
   }
 
+  .people-behind-ingredients__counter {
+    font-size:12px;
+  }
+
   .people-behind-ingredients__content {
             max-width: 100%;
         position: relative;
   }
 
   .people-behind-ingredients__title {
-        font-size: 24px;
-        letter-spacing: -0.24px;
-        line-height: 28px;
+        font-size: 20px;
+        letter-spacing: -0.20px;
+        line-height: 24px;
         margin: 28px 0 11px;
   }
 
   .people-behind-ingredients__description {
-        max-width: 343px;
-        font-size: 16px;
-        line-height: 24px;
+        max-width: 340px;
+        font-size: 14px;
+        line-height: 20px;
   }
 
   .people-behind-ingredients__pagination {
-            margin-top: 54px;
+            margin-top: 65px;
   }
 
   .people-behind-ingredients__progress {
