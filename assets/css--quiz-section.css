@@ -275,6 +275,7 @@ max-width: 254px;
     width: 132px;
     right: -38px;
     left: auto;
-    top: 47px;
+    top: auto;
+    bottom:-72px;
   }
 }
