@@ -162,7 +162,7 @@
     aspect-ratio: auto;
     position: sticky;
     top: calc(100px + (var(--bqp-card-index, 0) * 14px));
-    z-index: calc(var(--bqp-card-index, 0) + 1);
+    /* z-index: calc(var(--bqp-card-index, 0) + 1); */
     transform-origin: top center;
     transition: transform 0.15s linear;
     border-radius: 16px;
