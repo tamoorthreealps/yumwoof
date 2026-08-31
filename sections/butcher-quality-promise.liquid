@@ -176,11 +176,14 @@ document.addEventListener('DOMContentLoaded', () => {
             Math.min(imageProgress, 1)
           );
 
-          const imageScale =
-            1 + imageProgress * 0.12;
+          let imageProgress =
+  (window.innerHeight - rect.top) /
+  (window.innerHeight + rect.height);
 
-          image.style.transform =
-            `scale(${imageScale})`;
+imageProgress = Math.max(
+  0,
+  Math.min(imageProgress, 1)
+);
         }
       });
     };
