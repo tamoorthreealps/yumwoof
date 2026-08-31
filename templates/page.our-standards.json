@@ -37,6 +37,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_206.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_192.png",
             "mobile_center_icon_width": 0,
             "short_label": "SEED OIL"
           }
@@ -46,6 +47,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_200.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_223.png",
             "mobile_center_icon_width": 0,
             "short_label": "NON GMO"
           }
@@ -55,6 +57,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_201.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_224.png",
             "mobile_center_icon_width": 0,
             "short_label": "AIR DRIED"
           }
@@ -64,6 +67,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_216.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_225.png",
             "mobile_center_icon_width": 0,
             "short_label": "TESTED"
           }
@@ -73,6 +77,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_203.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_226.png",
             "mobile_center_icon_width": 0,
             "short_label": "AIR DRIED"
           }
@@ -82,6 +87,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_204.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_227.png",
             "mobile_center_icon_width": 0,
             "short_label": "3RD PARTY"
           }
@@ -91,6 +97,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_205.png",
             "center_icon_width": 40,
+            "mobile_icon": "shopify://shop_images/Group_228.png",
             "mobile_center_icon_width": 0,
             "short_label": "HEAVY METAL"
           }
