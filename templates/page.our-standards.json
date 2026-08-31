@@ -26,7 +26,9 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/whole_food_ingredients.svg",
-            "title": "WHOLE FOOD INGREDIENTS",
+            "center_icon": "shopify://shop_images/image_30.png",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "WHOLE FOOD"
           }
         },
@@ -34,7 +36,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/seed_oil_free.svg",
-            "title": "SEED OIL FREE",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "SEED OIL"
           }
         },
@@ -42,7 +45,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/non_gmo_94712017-c756-4782-91e9-6653d00c3cac.svg",
-            "title": "NON GMO",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "NON GMO"
           }
         },
@@ -50,7 +54,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/trusted_farm_partners.svg",
-            "title": "ROASTED & AIR-DRIED",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "AIR DRIED"
           }
         },
@@ -58,7 +63,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/wild_caught_fish.svg",
-            "title": "INDEPENDENTLY TESTED",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "TESTED"
           }
         },
@@ -66,7 +72,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/gently_air_dried.svg",
-            "title": "GENTLY AIR-DRIED",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "AIR DRIED"
           }
         },
@@ -74,7 +81,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/third_party_tested.svg",
-            "title": "THIRD-PARTY TESTED",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "3RD PARTY"
           }
         },
@@ -82,7 +90,8 @@
           "type": "principle",
           "settings": {
             "icon": "shopify://shop_images/heavy_metal_tested.svg",
-            "title": "HEAVY METAL TESTED",
+            "center_icon_width": 40,
+            "mobile_center_icon_width": 0,
             "short_label": "HEAVY METAL"
           }
         }
