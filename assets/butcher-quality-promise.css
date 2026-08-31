@@ -159,7 +159,7 @@
   }
 
   .butcher-quality-promise__card {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: auto;
       position: sticky;
       top: 100px;
          transform-origin: top center;
