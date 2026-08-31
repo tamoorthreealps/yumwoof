@@ -33,6 +33,7 @@
       {% for block in section.blocks %}
         <div
           class="butcher-quality-promise__card"
+          style="--bqp-card-index: {{ forloop.index0 }}; --bqp-card-count: {{ section.blocks.size }};"
           {{ block.shopify_attributes }}
         >
           {% if block.settings.image != blank %}
@@ -73,37 +74,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('.butcher-quality-promise');
 
   sections.forEach(section => {
-    const cards = section.querySelectorAll('.butcher-quality-promise__card');
+    const cards = Array.from(
+      section.querySelectorAll('.butcher-quality-promise__card')
+    );
 
     if (cards.length < 2) return;
 
+    const SCALE_STEP = 0.04;   // how much each card shrinks per card stacked on top
+    const SHIFT_STEP = 6;      // extra px each card lifts per card stacked on top
+    const MAX_DEPTH = 4;       // stop shrinking past this many cards deep
+
     const updateCards = () => {
-      if (window.innerWidth > 767) return;
+      if (window.innerWidth > 767) {
+        cards.forEach(card => { card.style.transform = ''; });
+        return;
+      }
 
-      const stickyTop = 100;
+      // progress[i] = how far card i+1 has covered card i (0 -> 1)
+      const progress = cards.map((card, index) => {
+        if (index === cards.length - 1) return 0;
 
-      cards.forEach((card, index) => {
-        if (index === cards.length - 1) {
-          card.style.transform = '';
-          return;
-        }
+        const cardTop = parseFloat(getComputedStyle(card).top) || 0;
+        const nextRect = cards[index + 1].getBoundingClientRect();
 
-        const nextCard = cards[index + 1];
-        const nextRect = nextCard.getBoundingClientRect();
-
-        const progress = Math.max(
+        return Math.max(
           0,
           Math.min(
             1,
-            (stickyTop + card.offsetHeight - nextRect.top) / card.offsetHeight
+            (cardTop + card.offsetHeight - nextRect.top) / card.offsetHeight
           )
         );
-
-        const scale = 1 - (progress * 0.06);
-        const translateY = progress * -18;
-
-        card.style.transform = `translateY(${translateY}px) scale(${scale})`;
       });
+
+      // depth[i] = accumulated progress of every card stacked on top of card i
+      let depth = 0;
+      for (let i = cards.length - 1; i >= 0; i--) {
+        const cappedDepth = Math.min(depth, MAX_DEPTH);
+        const scale = 1 - (cappedDepth * SCALE_STEP);
+        const translateY = cappedDepth * -SHIFT_STEP;
+
+        cards[i].style.transform =
+          `translateY(${translateY}px) scale(${scale})`;
+
+        depth += progress[i];
+      }
     };
 
     let ticking = false;

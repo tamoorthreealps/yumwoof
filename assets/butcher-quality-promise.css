@@ -159,14 +159,15 @@
   }
 
   .butcher-quality-promise__card {
-      aspect-ratio: auto;
-      position: sticky;
-      top: 100px;
-         transform-origin: top center;
-  transition: transform 0.15s linear;
-  border-radius: 16px;
+    aspect-ratio: auto;
+    position: sticky;
+    top: calc(100px + (var(--bqp-card-index, 0) * 14px));
+    z-index: calc(var(--bqp-card-index, 0) + 1);
+    transform-origin: top center;
+    transition: transform 0.15s linear;
+    border-radius: 16px;
+    will-change: transform;
   }
-
   .butcher-quality-promise__card-content {
     padding: 24px 24px 40px;
   }
