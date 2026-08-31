@@ -27,6 +27,7 @@
           "settings": {
             "icon": "shopify://shop_images/Group_207.png",
             "center_icon_width": 64,
+            "mobile_icon": "shopify://shop_images/Group_207_8784eae8-9173-49ef-b88f-d4ee667aab40.png",
             "mobile_center_icon_width": 0,
             "short_label": "WHOLE FOOD"
           }
