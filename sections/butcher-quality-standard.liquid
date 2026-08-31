@@ -67,7 +67,7 @@
 
           <div
             class="butcher-quality-standard__item"
-            style="--bqs-center-w: {{ center_w }}%; --bqs-center-w-mobile: {{ center_w_mobile }}%;"
+            style="--bqs-center-w: {{ center_w }}px; --bqs-center-w-mobile: {{ center_w_mobile }}px;"
             {{ block.shopify_attributes }}
           >
             <div class="butcher-quality-standard__circle">
@@ -323,10 +323,10 @@
           "type": "range",
           "id": "center_icon_width",
           "label": "Center icon width",
-          "unit": "%",
-          "min": 5,
-          "max": 90,
-          "step": 1,
+          "unit": "px",
+          "min": 40,
+          "max": 150,
+          "step": 2,
           "default": 40
         },
         {
@@ -348,10 +348,10 @@
           "type": "range",
           "id": "mobile_center_icon_width",
           "label": "Center icon width (mobile)",
-          "unit": "%",
+          "unit": "px",
           "min": 0,
-          "max": 90,
-          "step": 1,
+          "max": 150,
+          "step": 2,
           "default": 0,
           "info": "0 = use the desktop width."
         },
