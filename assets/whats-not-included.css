@@ -221,13 +221,13 @@ margin-top: 24px;
     height: auto;
 }
       .whats-not-included__link-wrap {
-        margin-top: 30px;
+        margin-top: 28px;
     }
 
       .whats-not-included__link {
-        font-size: 16px;
+        font-size: 14px;
         line-height: 28px;
-        padding-bottom: 8px;
+        padding-bottom: 4px;
     }
       .whats-not-included__heading-desktop,
   .whats-not-included__description-desktop {
