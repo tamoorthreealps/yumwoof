@@ -3,24 +3,10 @@
   padding: 0 !important;
 }
 
-/* ---------- Sticky scroll track ---------- */
+/* ---------- Wrapper (no longer a sticky scroll track) ---------- */
 
 .people-behind-ingredients__track {
   position: relative;
-  /* One viewport to read the section, plus one scroll length per extra slide. */
-  height: calc(100vh + (var(--pbi-slides, 1) - 1) * var(--pbi-step, 90vh));
-}
-
-.people-behind-ingredients__track > .people-behind-ingredients {
-  position: sticky;
-  top: 0;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-}
-
-.people-behind-ingredients__track > .people-behind-ingredients > .people-behind-ingredients__inner {
-  width: 100%;
 }
 
 /* ---------- Section ---------- */
@@ -129,7 +115,8 @@
   gap: 16px;
 }
 
-/* 2px visual bar, ~26px invisible hit area via ::after */
+/* 2px bar: ::before is the dim rail, the inner span is the fill that grows
+   left-to-right as you scroll. ::after is the invisible hit area. */
 .people-behind-ingredients__progress-item {
   position: relative;
   flex: 1;
@@ -137,12 +124,30 @@
   padding: 0;
   border: 0;
   border-radius: 0;
-  background: var(--pbi-text-color);
-  opacity: 0.12;
+  background: transparent;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  overflow: visible;
   -webkit-appearance: none;
   appearance: none;
+}
+
+.people-behind-ingredients__progress-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--pbi-text-color);
+  opacity: 0.12;
+  transition: opacity 0.3s ease;
+}
+
+.people-behind-ingredients__progress-fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: var(--pbi-text-color);
+  transform: scaleX(var(--pbi-fill, 0));
+  transform-origin: left center;
+  will-change: transform;
 }
 
 .people-behind-ingredients__progress-item::after {
@@ -151,18 +156,13 @@
   inset: -12px -8px;
 }
 
-.people-behind-ingredients__progress-item:hover {
+.people-behind-ingredients__progress-item:hover::before {
   opacity: 0.45;
 }
 
 .people-behind-ingredients__progress-item:focus-visible {
   outline: 2px solid var(--pbi-text-color);
   outline-offset: 8px;
-}
-
-.people-behind-ingredients__progress-item.is-active,
-.people-behind-ingredients__progress-item.is-active:hover {
-  opacity: 1;
 }
 
 .people-behind-ingredients__counter {
@@ -185,10 +185,10 @@
   align-items: center;
 }
 
-/* Soft crossfade */
+/* Stacked slides, no fade: the active slide is fully opaque immediately. */
 .people-behind-ingredients__slider .splide__slide {
   opacity: 0;
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
 }
 
 .people-behind-ingredients__slider .splide__slide.is-active {
@@ -196,31 +196,26 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .people-behind-ingredients__slider .splide__slide,
-  .people-behind-ingredients__progress-item {
+  .people-behind-ingredients__progress-fill {
     transition: none;
   }
 }
 
 @media screen and (max-width: 767px) {
-  .people-behind-ingredients__track {
-    --pbi-step: 75vh;
-  }
-
   .people-behind-ingredients__inner {
     padding: var(--pbi-mobile-padding-top) 28px var(--pbi-mobile-padding-bottom);
   }
 
   .people-behind-ingredients__heading {
-            margin-bottom: 28px;
+    margin-bottom: 28px;
   }
 
   .people-behind-ingredients__heading h1,
   .people-behind-ingredients__heading h2,
   .people-behind-ingredients__heading h3 {
     font-size: 48px;
-        line-height: 48px;
-        letter-spacing:-0.48px;
+    line-height: 48px;
+    letter-spacing: -0.48px;
   }
 
   .people-behind-ingredients__slide {
@@ -229,48 +224,48 @@
   }
 
   .people-behind-ingredients__media {
-height: 256px;
-        aspect-ratio: auto;
-                border-radius: 16px;
+    height: 256px;
+    aspect-ratio: auto;
+    border-radius: 16px;
   }
 
   .people-behind-ingredients__counter {
-    font-size:12px;
+    font-size: 12px;
   }
 
   .people-behind-ingredients__content {
-            max-width: 100%;
-        position: relative;
+    max-width: 100%;
+    position: relative;
   }
 
   .people-behind-ingredients__title {
-        font-size: 20px;
-        letter-spacing: -0.20px;
-        line-height: 24px;
-        margin: 28px 0 11px;
+    font-size: 20px;
+    letter-spacing: -0.20px;
+    line-height: 24px;
+    margin: 28px 0 11px;
   }
 
   .people-behind-ingredients__description {
-        max-width: 340px;
-        font-size: 14px;
-        line-height: 20px;
+    max-width: 340px;
+    font-size: 14px;
+    line-height: 20px;
   }
 
   .people-behind-ingredients__pagination {
-            margin-top: 65px;
+    margin-top: 65px;
   }
 
   .people-behind-ingredients__progress {
-           max-width: 100%;
-        gap: 0;
+    max-width: 100%;
+    gap: 0;
   }
 
   .people-behind-ingredients__counter {
-        position: absolute;
+    position: absolute;
     top: 0;
   }
 
   .people-behind-ingredients__progress-item::after {
-    display:none;
+    display: none;
   }
 }
