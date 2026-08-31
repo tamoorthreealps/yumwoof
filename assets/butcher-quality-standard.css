@@ -30,6 +30,7 @@
   transform: translate3d(0, 0, 0);
   will-change: transform;
   backface-visibility: hidden;
+  display: block !important;
 }
 
 /* Very wide screens: keep the artwork anchored to the bottom edge and let it
