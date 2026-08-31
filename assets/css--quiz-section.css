@@ -117,15 +117,16 @@
   display: block;
   width: 100%;
   height: auto;
-  padding:0 17px;
+  padding: 0 17px;
 
-  /* Scroll-in animation start state.
-     translateX(-50%) stays inside the transform on both states
-     so the slide-up never knocks the centring off. */
-  opacity: 0;
-  transform: translate(-50%, 48px);
-  transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  /*
+   * JS controls the translateY based on scroll.
+   * No opacity animation.
+   */
+  transform: translate3d(-50%, 48px, 0);
+
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .quiz.is-visible .quiz__bags-img {
