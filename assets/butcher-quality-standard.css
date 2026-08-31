@@ -203,7 +203,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: var(--bqs-center-w, 40%);
+  width: var(--bqs-center-w, 40px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -328,7 +328,7 @@
   }
 
   .butcher-quality-standard__center {
-    width: var(--bqs-center-w-mobile, var(--bqs-center-w, 40%));
+    width: var(--bqs-center-w-mobile, var(--bqs-center-w, 40px));
   }
 
   .butcher-quality-standard__item-title {
