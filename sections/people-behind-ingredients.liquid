@@ -17,6 +17,7 @@
       --pbi-desktop-padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
       --pbi-mobile-padding-top: {{ section.settings.mobile_padding_top }}px;
       --pbi-mobile-padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+      --pbi-scroll-span: {{ section.settings.scroll_span | divided_by: 100.0 }};
     "
   >
     <div class="people-behind-ingredients__inner">
@@ -75,7 +76,9 @@
                             type="button"
                             class="people-behind-ingredients__progress-item"
                             aria-label="Go to slide {{ forloop.index }}"
-                          ></button>
+                          >
+                            <span class="people-behind-ingredients__progress-fill"></span>
+                          </button>
                         {% endfor %}
                       </div>
 
@@ -108,100 +111,141 @@
     const slider = section.querySelector('.people-behind-ingredients__slider');
     const currentEls = section.querySelectorAll('.people-behind-ingredients__current');
     const progressGroups = section.querySelectorAll('.people-behind-ingredients__progress');
-
     if (!slider) return;
 
     const splide = new Splide(slider, {
-      /* 'fade' gives the soft crossfade. Slide changes are driven entirely by
-         scroll position below — no drag, no autoplay, no arrows. */
+      /* Slides are stacked and swapped instantly — no fade, no drag, no autoplay.
+         Position within the section is what drives which slide is shown. */
       type: 'fade',
       rewind: false,
       perPage: 1,
       perMove: 1,
       arrows: false,
       pagination: false,
-      speed: 700,
-      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      drag: false,
+      speed: 0,
       autoplay: false,
       gap: 0
     });
 
     splide.on('mounted move', function () {
-      const index = splide.index;
-      const number = String(index + 1).padStart(2, '0');
-
+      const number = String(splide.index + 1).padStart(2, '0');
       currentEls.forEach(function (el) {
         el.textContent = number;
-      });
-
-      progressGroups.forEach(function (group) {
-        Array.prototype.forEach.call(group.children, function (item, itemIndex) {
-          item.classList.toggle('is-active', itemIndex === index);
-          item.setAttribute('aria-current', itemIndex === index ? 'true' : 'false');
-        });
       });
     });
 
     splide.mount();
 
-    /* ---------- Scroll-driven slider (native scroll, sticky track) ---------- */
+    /* ---------- Natural scroll → slide progress (no pinning) ---------- */
 
     const total = splide.length;
-    let current = splide.index;
-    let ticking = false;
+    const last = Math.max(total - 1, 0);
 
-    /* Position within the track expressed as a 0..(total - 1) float. */
-    function progress() {
-      const rect = track.getBoundingClientRect();
-      const travel = track.offsetHeight - window.innerHeight;
-      if (travel <= 0 || total < 2) return 0;
-      const scrolled = Math.min(Math.max(-rect.top, 0), travel);
-      return (scrolled / travel) * (total - 1);
+    /* How much of the section's pass through the viewport is used to run through
+       all the slides. 0.7 = the middle 70% of the pass. Exposed as a setting. */
+    const spanSetting = parseFloat(
+      getComputedStyle(section).getPropertyValue('--pbi-scroll-span')
+    );
+    const span = isNaN(spanSetting) ? 0.7 : Math.min(Math.max(spanSetting, 0.3), 0.95);
+    const startAt = 0.5 + span / 2; /* section centre this far down the viewport = slide 1 */
+    const endAt = 0.5 - span / 2;   /* section centre this far up = last slide */
+
+    let targetRaw = 0;   /* 0 .. last, straight from scroll position */
+    let shownRaw = -1;   /* eased value actually rendered */
+    let current = -1;
+    let running = false;
+    let inView = true;
+
+    function measure() {
+      if (total < 2) return 0;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      if (!vh) return 0;
+
+      const centre = (rect.top + rect.height / 2) / vh;
+      const p = (startAt - centre) / (startAt - endAt);
+      return Math.min(Math.max(p, 0), 1) * last;
     }
 
-    function update() {
-      ticking = false;
-
-      const raw = progress();
-
-      /* Hysteresis: only commit once we're clearly inside the next band, so a
-         scroll position sitting on a boundary can't flicker between slides. */
-      let index = current;
-      if (raw > current + 0.55) index = Math.ceil(raw - 0.45);
-      else if (raw < current - 0.55) index = Math.floor(raw + 0.45);
-
-      index = Math.min(Math.max(index, 0), total - 1);
+    function paint(raw) {
+      const index = Math.min(Math.floor(raw + 0.0001), last);
 
       if (index !== current) {
         current = index;
         splide.go(index);
       }
+
+      progressGroups.forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (item, i) {
+          const fill = Math.min(Math.max(raw - i, 0), 1);
+          item.style.setProperty('--pbi-fill', fill.toFixed(4));
+          item.classList.toggle('is-active', i === index);
+          item.setAttribute('aria-current', i === index ? 'true' : 'false');
+        });
+      });
     }
 
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
+    /* Easing loop: the rendered value chases the scroll value, which smooths out
+       both coarse wheel steps and momentum scrolling. */
+    function loop() {
+      const diff = targetRaw - shownRaw;
+
+      if (Math.abs(diff) < 0.0008) {
+        shownRaw = targetRaw;
+        paint(shownRaw);
+        running = false;
+        return;
+      }
+
+      shownRaw += diff * 0.16;
+      paint(shownRaw);
+      requestAnimationFrame(loop);
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+    function kick() {
+      targetRaw = measure();
+      if (shownRaw < 0) shownRaw = targetRaw;
+      if (running) return;
+      running = true;
+      requestAnimationFrame(loop);
+    }
 
-    /* Clicking a progress bar scrolls the page to that slide's band, so the
-       scroll position and the visible slide never disagree. */
+    window.addEventListener('scroll', kick, { passive: true });
+    window.addEventListener('resize', kick, { passive: true });
+
+    /* Only run the easing loop while the section is anywhere near the viewport. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        function (entries) {
+          inView = entries[0].isIntersecting;
+          if (inView) kick();
+        },
+        { rootMargin: '100% 0px' }
+      ).observe(section);
+    }
+
+    /* Clicking a bar scrolls the page to the point where that slide is showing —
+       still a normal smooth page scroll, nothing is locked. */
     progressGroups.forEach(function (group) {
-      Array.prototype.forEach.call(group.children, function (item, itemIndex) {
+      Array.prototype.forEach.call(group.children, function (item, i) {
         item.addEventListener('click', function (e) {
           e.preventDefault();
-          const travel = track.offsetHeight - window.innerHeight;
-          if (travel <= 0 || total < 2) return;
-          const top = track.offsetTop + travel * (itemIndex / (total - 1));
-          window.scrollTo({ top: top, behavior: 'smooth' });
+          if (total < 2) return;
+
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          const rect = section.getBoundingClientRect();
+          const pageTop = rect.top + window.pageYOffset;
+          const wanted = i / last;
+          const centreRatio = startAt - wanted * (startAt - endAt);
+          const top = pageTop + rect.height / 2 - centreRatio * vh;
+
+          window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
         });
       });
     });
 
-    update();
+    kick();
   });
 </script>
 
@@ -243,6 +287,17 @@
       "step": 10,
       "unit": "px",
       "default": 560
+    },
+    {
+      "type": "range",
+      "id": "scroll_span",
+      "label": "Scroll range used for slide changes",
+      "info": "Lower = slides change over a shorter stretch of scrolling.",
+      "min": 30,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 70
     },
     {
       "type": "header",
@@ -322,30 +377,10 @@
     {
       "name": "People Behind Ingredients",
       "blocks": [
-        {
-          "type": "person",
-          "settings": {
-            "title": "GROWERS"
-          }
-        },
-        {
-          "type": "person",
-          "settings": {
-            "title": "FISHERMEN"
-          }
-        },
-        {
-          "type": "person",
-          "settings": {
-            "title": "RANCHERS"
-          }
-        },
-        {
-          "type": "person",
-          "settings": {
-            "title": "SUPPLIERS"
-          }
-        }
+        { "type": "person", "settings": { "title": "GROWERS" } },
+        { "type": "person", "settings": { "title": "FISHERMEN" } },
+        { "type": "person", "settings": { "title": "RANCHERS" } },
+        { "type": "person", "settings": { "title": "SUPPLIERS" } }
       ]
     }
   ]
