@@ -8,13 +8,13 @@
 }
 
 .standard-in-every-bag__inner {
-    max-width: 1306px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: minmax(0,1fr) minmax(0,1.3469fr);
-    align-items: center;
-    gap: 108px;
+  max-width: 1306px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3469fr);
+  align-items: center;
+  gap: 108px;
 }
 
 .standard-in-every-bag__content {
@@ -34,21 +34,21 @@
 }
 
 .standard-in-every-bag__heading {
-margin: 0;
-    color: var(--sieb-heading-color);
-    font-family: TAYRosemary;
-    font-size: 80px;
-    line-height: 88px;
-    letter-spacing: -.8px;
-    transform: translateY(-6px);
+  margin: 0;
+  color: var(--sieb-heading-color);
+  font-family: TAYRosemary;
+  font-size: 80px;
+  line-height: 88px;
+  letter-spacing: -0.8px;
+  transform: translateY(-6px);
 }
 
 .standard-in-every-bag__description {
-margin: 0 0 24px;
-    color: var(--sieb-description-color);
-    font-family: Matter;
-    font-size: 18px;
-    line-height: 28px;
+  margin: 0 0 24px;
+  color: var(--sieb-description-color);
+  font-family: Matter;
+  font-size: 18px;
+  line-height: 28px;
 }
 
 .standard-in-every-bag__description p {
@@ -56,20 +56,20 @@ margin: 0 0 24px;
 }
 
 .standard-in-every-bag__button {
-display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 19.2px 31.1px;
-    border: 1px solid #000;
-    border-radius: 999px;
-    background: var(--sieb-button-color);
-    color: #000;
-    text-decoration: none;
-    font-family: Matter;
-    transition: background-color .3s ease, color .3s ease;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0.72px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 19.2px 31.1px;
+  border: 1px solid #000;
+  border-radius: 999px;
+  background: var(--sieb-button-color);
+  color: #000;
+  text-decoration: none;
+  font-family: Matter;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.72px;
 }
 
 .standard-in-every-bag__button:hover {
@@ -92,6 +92,12 @@ display: inline-flex;
   object-fit: cover;
 }
 
+/* Desktop: hide the mobile-only nodes */
+.standard-in-every-bag__image--mobile,
+.standard-in-every-bag__logo--mobile {
+  display: none;
+}
+
 @media screen and (max-width: 749px) {
   .standard-in-every-bag {
     background-color: var(--sieb-mobile-bg-color);
@@ -100,17 +106,87 @@ display: inline-flex;
     padding-bottom: var(--sieb-mobile-padding-bottom);
   }
 
+  /* Flatten content children into the column so they can be re-ordered */
   .standard-in-every-bag__inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-template-columns: none;
+    gap: 0;
+    padding: 0 28px;
   }
 
+  .standard-in-every-bag__content {
+    display: contents;
+  }
+
+  /* Figma stacking order: heading → image → description → button */
   .standard-in-every-bag__heading {
+    order: 1;
     font-size: 48px;
     line-height: 48px;
+    letter-spacing: -0.48px;
+    transform: none;
+    text-align: center;
+    margin: 0 0 28px;
   }
 
   .standard-in-every-bag__media {
+    order: 2;
+    position: relative;
+    width: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
+    overflow: visible;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .standard-in-every-bag__image--desktop {
+    display: none;
+  }
+
+  .standard-in-every-bag__image--mobile {
+    display: block;
+    border-radius: 20px;
+  }
+
+  .standard-in-every-bag__description {
+    order: 3;
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 0 24px;
+  }
+
+  .standard-in-every-bag__button {
+    order: 4;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 1.6px;
+    padding: 18px 32px;
+  }
+
+  /* Badge overlapping the top-right corner of the image card */
+  .standard-in-every-bag__logo--desktop {
+    display: none;
+  }
+
+  .standard-in-every-bag__logo--mobile {
+      display: block;
+      position: absolute;
+      top: 8px;
+      right: 20px;
+      width: var(--sieb-mobile-logo-width, 104px);
+      margin: 0;
+      transform: translate(28%, -32%);
+      z-index: 2;
+      pointer-events: none;
+  }
+
+  .standard-in-every-bag__logo--mobile .standard-in-every-bag__logo-image {
+    width: 100%;
+    height: auto;
+    margin: 0;
   }
 }
