@@ -84,121 +84,202 @@ document.addEventListener('DOMContentLoaded', () => {
     const SHIFT_STEP = 6;
     const MAX_DEPTH = 4;
 
+    const IMAGE_MAX_ZOOM = 0.14;
+    const IMAGE_SMOOTHING = 0.12;
+
+    // Keep separate smooth scale values for every image
+    const imageScales = new Map();
+
+    cards.forEach(card => {
+      const image = card.querySelector(
+        '.butcher-quality-promise__card-image'
+      );
+
+      if (image) {
+        imageScales.set(image, 1);
+      }
+    });
+
     const updateCards = () => {
       const isMobile = window.innerWidth <= 767;
 
-      cards.forEach((card, index) => {
+      /* --------------------------------
+         DESKTOP
+      -------------------------------- */
+
+      if (!isMobile) {
+        cards.forEach(card => {
+          card.style.transform = '';
+
+          const image = card.querySelector(
+            '.butcher-quality-promise__card-image'
+          );
+
+          if (!image) return;
+
+          const rect = card.getBoundingClientRect();
+
+          let progress =
+            (window.innerHeight - rect.top) /
+            (window.innerHeight + rect.height);
+
+          progress = Math.max(
+            0,
+            Math.min(progress, 1)
+          );
+
+          const targetScale =
+            1 + progress * IMAGE_MAX_ZOOM;
+
+          const currentScale =
+            imageScales.get(image) || 1;
+
+          const newScale =
+            currentScale +
+            (targetScale - currentScale) *
+            IMAGE_SMOOTHING;
+
+          imageScales.set(image, newScale);
+
+          image.style.transform =
+            `scale(${newScale})`;
+        });
+
+        return;
+      }
+
+      /* --------------------------------
+         MOBILE CARD STACKING PROGRESS
+      -------------------------------- */
+
+      const progress = cards.map((card, index) => {
+        if (index === cards.length - 1) {
+          return 0;
+        }
+
+        const cardTop =
+          parseFloat(getComputedStyle(card).top) || 0;
+
+        const nextRect =
+          cards[index + 1].getBoundingClientRect();
+
+        return Math.max(
+          0,
+          Math.min(
+            1,
+            (
+              cardTop +
+              card.offsetHeight -
+              nextRect.top
+            ) / card.offsetHeight
+          )
+        );
+      });
+
+      /* --------------------------------
+         APPLY CARD STACKING
+      -------------------------------- */
+
+      let depth = 0;
+
+      for (let i = cards.length - 1; i >= 0; i--) {
+        const card = cards[i];
+
+        const cappedDepth =
+          Math.min(depth, MAX_DEPTH);
+
+        const scale =
+          1 - (
+            cappedDepth *
+            SCALE_STEP
+          );
+
+        const translateY =
+          cappedDepth *
+          -SHIFT_STEP;
+
+        card.style.transform =
+          `translateY(${translateY}px) scale(${scale})`;
+
+        depth += progress[i];
+      }
+
+      /* --------------------------------
+         MOBILE IMAGE ZOOM
+      -------------------------------- */
+
+      cards.forEach(card => {
         const image = card.querySelector(
           '.butcher-quality-promise__card-image'
         );
 
-        /* -------------------------
-           Desktop
-        ------------------------- */
-        if (!isMobile) {
-          card.style.transform = '';
+        if (!image) return;
 
-          if (image) {
-            const rect = card.getBoundingClientRect();
+        const rect =
+          card.getBoundingClientRect();
 
-            let progress =
-              (window.innerHeight - rect.top) /
-              (window.innerHeight + rect.height);
+        /*
+         * Image starts at 100% when the card
+         * enters the viewport and gradually
+         * zooms to 114% as it moves through.
+         */
 
-            progress = Math.max(0, Math.min(progress, 1));
+        let imageProgress =
+          (window.innerHeight - rect.top) /
+          (window.innerHeight + rect.height);
 
-            const imageScale = 1 + progress * 0.06;
+        imageProgress = Math.max(
+          0,
+          Math.min(
+            imageProgress,
+            1
+          )
+        );
 
-            image.style.transform =
-              `scale(${imageScale})`;
-          }
+        const targetScale =
+          1 +
+          imageProgress *
+          IMAGE_MAX_ZOOM;
 
-          return;
-        }
+        const currentScale =
+          imageScales.get(image) || 1;
 
-        /* -------------------------
-           Mobile card stacking
-        ------------------------- */
+        /*
+         * Smooth interpolation.
+         * Scrolling down = zoom in.
+         * Scrolling back up = zoom out.
+         */
 
-        if (index === cards.length - 1) {
-          card.style.transform = '';
-        }
+        const newScale =
+          currentScale +
+          (targetScale - currentScale) *
+          IMAGE_SMOOTHING;
 
-        const progress = cards.map((card, index) => {
-          if (index === cards.length - 1) return 0;
+        imageScales.set(
+          image,
+          newScale
+        );
 
-          const cardTop =
-            parseFloat(getComputedStyle(card).top) || 0;
-
-          const nextRect =
-            cards[index + 1].getBoundingClientRect();
-
-          return Math.max(
-            0,
-            Math.min(
-              1,
-              (cardTop + card.offsetHeight - nextRect.top) /
-                card.offsetHeight
-            )
-          );
-        });
-
-        let depth = 0;
-
-        for (let i = cards.length - 1; i >= 0; i--) {
-          const cappedDepth = Math.min(depth, MAX_DEPTH);
-
-          const scale =
-            1 - (cappedDepth * SCALE_STEP);
-
-          const translateY =
-            cappedDepth * -SHIFT_STEP;
-
-          cards[i].style.transform =
-            `translateY(${translateY}px) scale(${scale})`;
-
-          depth += progress[i];
-        }
-
-        /* -------------------------
-           Mobile image zoom
-        ------------------------- */
-
-        if (image) {
-          const rect = card.getBoundingClientRect();
-
-          let imageProgress =
-            (window.innerHeight - rect.top) /
-            (window.innerHeight + rect.height);
-
-          imageProgress = Math.max(
-            0,
-            Math.min(imageProgress, 1)
-          );
-
-          let imageProgress =
-  (window.innerHeight - rect.top) /
-  (window.innerHeight + rect.height);
-
-imageProgress = Math.max(
-  0,
-  Math.min(imageProgress, 1)
-);
-        }
+        image.style.transform =
+          `scale(${newScale})`;
       });
     };
+
+    /* --------------------------------
+       SMOOTH SCROLL LOOP
+    -------------------------------- */
 
     let ticking = false;
 
     const handleScroll = () => {
       if (ticking) return;
 
+      ticking = true;
+
       requestAnimationFrame(() => {
         updateCards();
         ticking = false;
       });
-
-      ticking = true;
     };
 
     window.addEventListener(
