@@ -164,10 +164,11 @@
       top: 100px;
          transform-origin: top center;
   transition: transform 0.15s linear;
+  border-radius: 16px;
   }
 
   .butcher-quality-promise__card-content {
-    padding: 33px 28px 38px;
+    padding: 24px 24px 40px;
   }
 
   .butcher-quality-promise__card-title {
