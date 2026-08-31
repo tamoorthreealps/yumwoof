@@ -81,82 +81,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!section || !image) return;
 
+  /* ==============================
+     Image Scale
+     ============================== */
+
   let currentScale = 1;
   let targetScale = 1;
+
+  /* ==============================
+     Badge Rotation
+     ============================== */
 
   let currentRotation = 0;
   let targetRotation = 0;
 
   let lastScrollY = window.scrollY;
 
-  // Alternate left / right
-  let direction = 1;
-
-  // Prevent too many rotations during one fast scroll
-  let lastRotationTime = 0;
+  /* ==============================
+     Smooth Animation
+     ============================== */
 
   function animate() {
-    // Smooth image scale
+    // Smooth image scaling
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
 
-    // Very smooth badge rotation
-    currentRotation += (targetRotation - currentRotation) * 0.08;
-
-    // Stop tiny floating/glitching
-    if (Math.abs(targetRotation - currentRotation) < 0.05) {
-      currentRotation = targetRotation;
-    }
-
+    // Smooth badge rotation
     if (badge) {
+      currentRotation += (targetRotation - currentRotation) * 0.08;
       badge.style.transform = `rotate(${currentRotation}deg)`;
     }
 
     requestAnimationFrame(animate);
   }
 
+  /* ==============================
+     Scroll
+     ============================== */
+
   function onScroll() {
     const scrollY = window.scrollY;
     const delta = scrollY - lastScrollY;
 
+    /* Image scale */
     const rect = section.getBoundingClientRect();
 
-    // Only work while section is visible
-    const sectionVisible =
-      rect.top < window.innerHeight &&
-      rect.bottom > 0;
-
-    // Image scale
     let progress =
       (window.innerHeight - rect.top) /
       (window.innerHeight + rect.height);
 
     progress = Math.max(0, Math.min(progress, 1));
 
-    targetScale = 1 + progress * 0.06;
+    targetScale = 1 + progress * 0.0;
 
-    // Badge
-    if (badge && sectionVisible && Math.abs(delta) > 0) {
-      const now = performance.now();
-
-      // Small cooldown so one scroll gesture doesn't glitch
-      if (now - lastRotationTime > 120) {
-
-        // Alternate direction regardless of scroll UP/DOWN
-        targetRotation = direction * 28;
-
-        direction *= -1;
-
-        lastRotationTime = now;
-      }
+    /* Badge rotation
+       Down = clockwise
+       Up   = counter-clockwise
+       Same amount in both directions
+    */
+    if (Math.abs(delta) > 0) {
+      targetRotation += delta * 0.025;
     }
 
     lastScrollY = scrollY;
   }
 
-  window.addEventListener('scroll', onScroll, {
-    passive: true
-  });
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   onScroll();
   animate();
