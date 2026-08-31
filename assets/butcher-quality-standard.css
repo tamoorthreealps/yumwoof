@@ -293,6 +293,12 @@ font-family: TAY Birdie !important;
 
   .butcher-quality-standard__principles {
     padding-top: 16px;
+    background: repeating-linear-gradient(
+    to right,
+    #fff9ef 0,
+    #fff9ef 8px,
+    transparent 8px,
+    transparent 16px )
   }
 
   .butcher-quality-standard__principles-label {
