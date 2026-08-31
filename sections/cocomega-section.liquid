@@ -89,27 +89,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let lastScrollY = window.scrollY;
 
+  let isVisible = false;
+  let animationFrame = null;
+
+  // Check whether the section is actually visible
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+
+      isVisible = entry.isIntersecting;
+
+      if (isVisible) {
+        lastScrollY = window.scrollY;
+
+        if (!animationFrame) {
+          animationFrame = requestAnimationFrame(animate);
+        }
+      } else {
+        // Stop the animation completely when section is out of view
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        }
+      }
+    },
+    {
+      // Animation starts when even a small part of the section enters viewport
+      threshold: 0
+    }
+  );
+
+  observer.observe(section);
+
   function animate() {
-    // Image scale
+    if (!isVisible) {
+      animationFrame = null;
+      return;
+    }
+
+    // Smooth image scale
     currentScale += (targetScale - currentScale) * 0.08;
+
     image.style.transform = `scale(${currentScale})`;
 
-    // Badge rotation
+    // Smooth badge rotation
     if (badge) {
       currentRotation += (targetRotation - currentRotation) * 0.12;
+
       badge.style.transform = `rotate(${currentRotation}deg)`;
     }
 
-    requestAnimationFrame(animate);
+    animationFrame = requestAnimationFrame(animate);
   }
 
   function onScroll() {
+    // Do absolutely nothing when section isn't visible
+    if (!isVisible) {
+      lastScrollY = window.scrollY;
+      return;
+    }
+
     const scrollY = window.scrollY;
     const delta = scrollY - lastScrollY;
 
-    // Image scale
     const rect = section.getBoundingClientRect();
 
+    // Image scale based on section's position
     let progress =
       (window.innerHeight - rect.top) /
       (window.innerHeight + rect.height);
@@ -118,23 +163,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     targetScale = 1 + progress * 0.06;
 
-    // Badge rotation
-    if (badge && Math.abs(delta) > 0) {
-      // Down = clockwise
-      // Up   = counter-clockwise
+    // Badge rotation based ONLY on scroll direction
+    if (badge && delta !== 0) {
+      // Scroll down = clockwise
+      // Scroll up = counter-clockwise
       targetRotation += delta * 0.04;
 
-      // Never allow full 360° rotation
-      targetRotation = Math.max(-35, Math.min(35, targetRotation));
+      // Keep rotation within limits
+      targetRotation = Math.max(
+        -35,
+        Math.min(35, targetRotation)
+      );
     }
 
     lastScrollY = scrollY;
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  onScroll();
-  animate();
+  window.addEventListener('scroll', onScroll, {
+    passive: true
+  });
 });
 </script>
 {% schema %}
