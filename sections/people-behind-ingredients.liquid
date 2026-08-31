@@ -143,14 +143,14 @@
     const total = splide.length;
     const last = Math.max(total - 1, 0);
 
-    let targetRaw = 0;   /* 0 .. last, straight from scroll position */
+    let targetRaw = 0;   /* 0 .. total, straight from scroll position */
     let shownRaw = -1;   /* eased value actually rendered */
     let current = -1;
     let running = false;
 
-    /* The track is taller than the section by exactly the slide travel. The
-       section holds at its resting position while that travel is consumed,
-       then the whole thing scrolls away normally. */
+    /* The track is taller than the section by exactly the slide travel — one
+       band per slide, including the last. The section holds at its resting
+       position while that travel is consumed, then scrolls away normally. */
     function layout() {
       const vh = window.innerHeight || document.documentElement.clientHeight;
       const h = section.offsetHeight;
@@ -171,11 +171,12 @@
 
       const rect = track.getBoundingClientRect();
       const scrolled = Math.min(Math.max(stickyTop() - rect.top, 0), travel);
-      return (scrolled / travel) * last;
+      /* 0 .. total — each slide gets a full band, so the last bar can reach 1. */
+      return (scrolled / travel) * total;
     }
 
     function paint(raw) {
-      const index = Math.min(Math.floor(raw + 0.0001), last);
+      const index = Math.min(Math.floor(raw), last);
 
       if (index !== current) {
         current = index;
@@ -229,7 +230,7 @@
       new ResizeObserver(relayout).observe(section);
     }
 
-    /* Clicking a bar scrolls the page to that slide's position in the track —
+    /* Clicking a bar scrolls the page to the start of that slide's band —
        still a normal smooth page scroll. */
     progressGroups.forEach(function (group) {
       Array.prototype.forEach.call(group.children, function (item, i) {
@@ -243,7 +244,7 @@
           const pageTop = track.getBoundingClientRect().top + window.pageYOffset;
 
           window.scrollTo({
-            top: Math.max(pageTop - stickyTop() + travel * (i / last), 0),
+            top: Math.max(pageTop - stickyTop() + travel * (i / total), 0),
             behavior: 'smooth'
           });
         });
