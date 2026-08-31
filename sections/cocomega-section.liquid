@@ -34,7 +34,7 @@
       </div>
 
       {%- if section.settings.badge_image != blank -%}
-        <span class="">
+        <span class="cocomega__badge">
           {{
             section.settings.badge_image
             | image_url: width: 220
@@ -79,30 +79,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const image = section?.querySelector('.cocomega__image');
   const badge = section?.querySelector('.cocomega__badge');
 
-  if (!section || !image || !badge) return;
+  if (!section || !image) return;
+
+  /* ==============================
+     Image Scale
+     ============================== */
 
   let currentScale = 1;
   let targetScale = 1;
+
+  /* ==============================
+     Badge Rotation
+     ============================== */
 
   let currentRotation = 0;
   let targetRotation = 0;
 
   let lastScrollY = window.scrollY;
 
+  /* ==============================
+     Smooth Animation
+     ============================== */
+
   function animate() {
+    // Smooth image scaling
     currentScale += (targetScale - currentScale) * 0.08;
     image.style.transform = `scale(${currentScale})`;
 
-    currentRotation += (targetRotation - currentRotation) * 0.1;
-    badge.style.transform = `rotate(${currentRotation}deg)`;
+    // Smooth badge rotation
+    if (badge) {
+      currentRotation += (targetRotation - currentRotation) * 0.08;
+      badge.style.transform = `rotate(${currentRotation}deg)`;
+    }
 
     requestAnimationFrame(animate);
   }
+
+  /* ==============================
+     Scroll
+     ============================== */
 
   function onScroll() {
     const scrollY = window.scrollY;
     const delta = scrollY - lastScrollY;
 
+    /* Image scale */
     const rect = section.getBoundingClientRect();
 
     let progress =
@@ -111,15 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     progress = Math.max(0, Math.min(progress, 1));
 
-    // Existing image zoom
-    targetScale = 1 + progress * 0.08;
+    targetScale = 1 + progress * 0.06;
 
-    // Badge rotation
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
+    /* Badge rotation
+       Down = clockwise
+       Up   = counter-clockwise
+       Same amount in both directions
+    */
+    if (Math.abs(delta) > 0) {
       targetRotation += delta * 0.025;
-
-      // Keep rotation between -10deg and +10deg
-      targetRotation = Math.max(-10, Math.min(10, targetRotation));
     }
 
     lastScrollY = scrollY;
