@@ -37,6 +37,7 @@
         </div>
       {% endif %}
 
+
       {% if section.settings.principles_label != blank %}
         <div class="butcher-quality-standard__principles-label">
           {{ section.settings.principles_label | escape }}
@@ -61,12 +62,6 @@
                     sizes: '80px',
                     alt: block.settings.title
                 }}
-
-              {% elsif block.settings.icon_svg != blank %}
-                <div class="butcher-quality-standard__icon butcher-quality-standard__icon--svg">
-                  {{ block.settings.icon_svg }}
-                </div>
-
               {% else %}
                 <span class="butcher-quality-standard__fallback-icon">
                   {{ block.settings.short_label | escape }}
@@ -86,7 +81,7 @@
   </div>
 </section>
 
-<script>
+  <script>
   (() => {
     const SPEED = 0.3;
 
@@ -98,7 +93,7 @@
         sections.forEach((section) => {
           const rect = section.getBoundingClientRect();
           if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-          section.style.backgroundPositionY = -rect.top * SPEED + 'px';
+          section.style.backgroundPositionY = (-rect.top * SPEED) + 'px';
         });
       };
 
@@ -106,10 +101,7 @@
       const onScroll = () => {
         if (ticking) return;
         ticking = true;
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
+        requestAnimationFrame(() => { update(); ticking = false; });
       };
 
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -117,11 +109,13 @@
       update();
     };
 
-    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', () => init()) : init();
+    document.readyState === 'loading'
+      ? document.addEventListener('DOMContentLoaded', () => init())
+      : init();
 
     document.addEventListener('shopify:section:load', (e) => init(e.target));
   })();
-</script>
+  </script>
 
 {% schema %}
 {
@@ -202,12 +196,6 @@
           "type": "image_picker",
           "id": "icon",
           "label": "Icon"
-        },
-        {
-          "type": "textarea",
-          "id": "icon_svg",
-          "label": "SVG Icon Code",
-          "info": "Optional. Paste the complete SVG code here. Used only when no icon image is selected."
         },
         {
           "type": "text",
