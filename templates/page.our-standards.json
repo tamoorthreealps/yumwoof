@@ -295,9 +295,9 @@
         "link_color": "#661d1d",
         "link_hover_color": "#000000",
         "desktop_padding_top": 0,
-        "desktop_padding_bottom": 0,
+        "desktop_padding_bottom": 90,
         "mobile_padding_top": 0,
-        "mobile_padding_bottom": 20
+        "mobile_padding_bottom": 75
       }
     },
     "people_behind_ingredients_d4UwGE": {
@@ -350,9 +350,9 @@
         "media_height": 560,
         "scroll_step": 70,
         "scroll_step_mobile": 60,
-        "desktop_padding_top": 120,
+        "desktop_padding_top": 30,
         "desktop_padding_bottom": 120,
-        "mobile_padding_top": 75,
+        "mobile_padding_top": 20,
         "mobile_padding_bottom": 95
       }
     },
