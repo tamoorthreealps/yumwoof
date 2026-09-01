@@ -108,7 +108,7 @@
         "announcement_link": "",
         "announcement_bg": "#661d1d",
         "announcement_text_color": "#fff9ef",
-        "menu": "",
+        "menu": "header-menu-part3",
         "enable_sticky": true,
         "navbar_text_color": "#000000",
         "navbar_border_color": "#000000",
