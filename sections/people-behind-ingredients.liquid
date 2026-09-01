@@ -109,6 +109,21 @@
     const section = document.querySelector('#PeopleBehindIngredients-{{ section.id }}');
     if (!track || !section || typeof Splide === 'undefined') return;
 
+    /* ---------- Body visibility class ---------- */
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      document.body.classList.toggle(
+        'pbi-is-visible',
+        entry.isIntersecting
+      );
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  observer.observe(track);
+
     const slider = section.querySelector('.people-behind-ingredients__slider');
     const currentEls = section.querySelectorAll('.people-behind-ingredients__current');
     const progressGroups = section.querySelectorAll('.people-behind-ingredients__progress');
