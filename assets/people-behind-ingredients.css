@@ -107,6 +107,7 @@
   font-size: 18px;
   line-height: 28px;
   letter-spacing: 0;
+  min-height:140px;
 }
 
 .people-behind-ingredients__description p {
@@ -266,6 +267,7 @@
     max-width: 340px;
     font-size: 14px;
     line-height: 20px;
+    min-height:auto;
   }
 
   .people-behind-ingredients__pagination {
