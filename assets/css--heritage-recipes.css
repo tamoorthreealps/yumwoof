@@ -483,6 +483,10 @@
 		margin-bottom: 24px;
 	}
 
+	.heritage--product .heritage__subheading {
+		max-width:437px;
+	}
+
 	.heritage__bowl {
 		bottom: -280px;
         top: auto;
