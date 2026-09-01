@@ -115,8 +115,6 @@
     if (!slider) return;
 
     const splide = new Splide(slider, {
-      /* Slides are stacked and swapped instantly — no fade, no drag, no autoplay.
-         Scroll position within the track is what drives which slide is shown. */
       type: 'fade',
       rewind: false,
       perPage: 1,
@@ -138,25 +136,67 @@
 
     splide.mount();
 
+    /* ---------- Sticky header measurement ---------- */
+
+    const HEADER_SELECTORS = [
+      '.shopify-section-header-sticky',
+      '.shopify-section-group-header-group',
+      '#shopify-section-header',
+      '.section-header',
+      'sticky-header',
+      'header.header',
+      'header[role="banner"]'
+    ];
+
+    /* Only count a header that is actually pinned to the top of the viewport.
+       Themes that scroll their header away should give us 0 here. */
+    function findHeader() {
+      for (let i = 0; i < HEADER_SELECTORS.length; i++) {
+        const el = document.querySelector(HEADER_SELECTORS[i]);
+        if (!el) continue;
+        const pos = getComputedStyle(el).position;
+        if (pos === 'sticky' || pos === 'fixed') return el;
+      }
+      return null;
+    }
+
+    let headerEl = findHeader();
+
+    function headerHeight() {
+      if (!headerEl || !headerEl.isConnected) headerEl = findHeader();
+      if (headerEl) {
+        const h = headerEl.getBoundingClientRect().height;
+        if (h > 0) return Math.round(h);
+      }
+      /* Fall back to a theme-provided variable if there is one. */
+      const varH = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+      );
+      return isNaN(varH) ? 0 : Math.round(varH);
+    }
+
     /* ---------- Scroll-tied slide progress ---------- */
 
     const total = splide.length;
     const last = Math.max(total - 1, 0);
 
-    let targetRaw = 0;   /* 0 .. total, straight from scroll position */
-    let shownRaw = -1;   /* eased value actually rendered */
+    let targetRaw = 0;
+    let shownRaw = -1;
     let current = -1;
     let running = false;
 
-    /* The track is taller than the section by exactly the slide travel — one
-       band per slide, including the last. The section holds at its resting
-       position while that travel is consumed, then scrolls away normally. */
+    /* The section fills the viewport below the header and pins there. The track
+       is taller than the section by exactly the slide travel, so the section
+       holds while the slides advance, then scrolls away normally. */
     function layout() {
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const h = section.offsetHeight;
+      const header = headerHeight();
+      const available = Math.max(vh - header, 320);
 
-      track.style.setProperty('--pbi-section-height', h + 'px');
-      track.style.setProperty('--pbi-sticky-top', Math.max((vh - h) / 2, 0) + 'px');
+      track.style.setProperty('--pbi-header', header + 'px');
+      track.style.setProperty('--pbi-viewport', available + 'px');
+      track.style.setProperty('--pbi-sticky-top', header + 'px');
+      track.style.setProperty('--pbi-section-height', section.offsetHeight + 'px');
     }
 
     function stickyTop() {
@@ -170,8 +210,9 @@
       if (travel <= 0) return 0;
 
       const rect = track.getBoundingClientRect();
+      /* Nothing advances until the track's top has reached the underside of the
+         header — before that, scrolled clamps to 0. */
       const scrolled = Math.min(Math.max(stickyTop() - rect.top, 0), travel);
-      /* 0 .. total — each slide gets a full band, so the last bar can reach 1. */
       return (scrolled / travel) * total;
     }
 
@@ -193,8 +234,6 @@
       });
     }
 
-    /* Easing loop: the rendered value chases the scroll value, which smooths out
-       both coarse wheel steps and momentum scrolling. */
     function loop() {
       const diff = targetRaw - shownRaw;
 
@@ -225,13 +264,15 @@
 
     window.addEventListener('scroll', kick, { passive: true });
     window.addEventListener('resize', relayout, { passive: true });
+    window.addEventListener('orientationchange', relayout, { passive: true });
 
     if (window.ResizeObserver) {
-      new ResizeObserver(relayout).observe(section);
+      const ro = new ResizeObserver(relayout);
+      ro.observe(section);
+      /* Headers that shrink on scroll (condensed sticky bars) re-fire this. */
+      if (headerEl) ro.observe(headerEl);
     }
 
-    /* Clicking a bar scrolls the page to the start of that slide's band —
-       still a normal smooth page scroll. */
     progressGroups.forEach(function (group) {
       Array.prototype.forEach.call(group.children, function (item, i) {
         item.addEventListener('click', function (e) {
@@ -253,6 +294,9 @@
 
     layout();
     kick();
+
+    /* Fonts and lazy images can change the section height after load. */
+    window.addEventListener('load', relayout);
   });
 </script>
 

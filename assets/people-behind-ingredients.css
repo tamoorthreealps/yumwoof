@@ -3,7 +3,7 @@
   padding: 0 !important;
 }
 
-/* ---------- Scroll track: section height + one scroll length per extra slide ---------- */
+/* ---------- Scroll track: section height + one scroll length per slide ---------- */
 
 .people-behind-ingredients__track {
   position: relative;
@@ -32,9 +32,16 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  /* Exactly the viewport below the sticky header — no leftover dead space. */
+  min-height: var(--pbi-viewport, calc(100vh - var(--pbi-header, 0px)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .people-behind-ingredients__inner {
+  width: 100%;
   max-width: 1368px;
   margin: 0 auto;
   padding: var(--pbi-desktop-padding-top) 24px var(--pbi-desktop-padding-bottom);
@@ -241,7 +248,7 @@
   }
 
   .people-behind-ingredients__media {
-    height: 256px;
+    height: clamp(180px, 28vh, 256px);
     aspect-ratio: auto;
     border-radius: 16px;
   }
@@ -269,7 +276,7 @@
   }
 
   .people-behind-ingredients__pagination {
-    margin-top: 65px;
+    margin-top: clamp(28px, 6vh, 65px);
   }
 
   .people-behind-ingredients__progress {
