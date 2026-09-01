@@ -34,6 +34,10 @@
   position:fixed;
 }
 
+body.pbi-is-visible .yw-header {
+  position:static;
+}
+
 .yw-header--sticky.yw-header--hidden, .yw-header--fixed.yw-header--hidden {
   transform: translateY(-32px);
 }
