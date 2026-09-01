@@ -304,9 +304,10 @@ font-family: TAY Birdie !important;
 
   .butcher-quality-standard__principles-label {
       max-width: 270px;
-      margin-bottom: 24px;
       font-size: 14px;
       line-height: 20px;
+      text-align: center;
+      margin: 0 auto 24px;
   }
 
   .butcher-quality-standard__grid {
