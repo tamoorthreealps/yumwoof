@@ -272,7 +272,7 @@
     max-width: 340px;
     font-size: 14px;
     line-height: 20px;
-    min-height:auto;
+    min-height:100px;
   }
 
   .people-behind-ingredients__pagination {
