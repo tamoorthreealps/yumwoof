@@ -37,7 +37,7 @@
   </svg>
 {%- endcapture -%}
 
-<section class="heritage{% if section.settings.uppercase_heading %} heritage--uppercase{% endif %}" data-marquee>
+<section class="heritage{% if section.settings.uppercase_heading %} heritage--uppercase{% endif %} {% if request.page_type == 'product' %} heritage--product{% endif %}" data-marquee>
   <div class="heritage__container">
     {%- comment -%} -------- Left: intro + bowl -------- {%- endcomment -%}
     {%- if section.settings.bowl_image != blank -%}
