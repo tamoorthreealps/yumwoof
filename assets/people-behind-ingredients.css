@@ -99,6 +99,9 @@
   line-height: 32px;
   letter-spacing: -0.32px;
   text-transform: uppercase;
+  min-height: 64px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .people-behind-ingredients__description {
@@ -261,6 +264,8 @@
     letter-spacing: -0.20px;
     line-height: 24px;
     margin: 28px 0 11px;
+    min-height:auto;
+    display:block;
   }
 
   .people-behind-ingredients__description {
