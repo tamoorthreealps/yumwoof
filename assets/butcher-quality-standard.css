@@ -311,12 +311,14 @@ font-family: TAY Birdie !important;
   }
 
   .butcher-quality-standard__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 12px;
-    justify-items: center;
   }
 
   .butcher-quality-standard__item {
+    flex: 0 0 calc((100% - 24px) / 3);
     width: 100%;
     align-items: center;
   }
