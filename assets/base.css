@@ -226,7 +226,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   padding-left: 3rem;
   padding-right: 3rem;
 }
-@media screen and (min-width: 992x) {
+@media screen and (min-width: 992px) {
 .main-blog.page-width{
   padding-top:150px !important;
 }
