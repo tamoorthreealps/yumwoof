@@ -227,8 +227,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   padding-right: 3rem;
 }
 @media screen and (min-width: 992x) {
-.main-blog{
-  padding-top:150px;
+.main-blog.page-width{
+  padding-top:150px !important;
 }
 }
 @media screen and (min-width: 750px) {
