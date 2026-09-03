@@ -32,7 +32,7 @@
     transform: translateY(-8px);
 }
 
-.butcher-quality-promise__heading .trademark {
+.butcher-quality-promise__heading .bq-trademark {
   font-family: Arial, sans-serif;
   font-size: 0.5em;
   vertical-align: super;
