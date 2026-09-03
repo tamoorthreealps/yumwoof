@@ -40,7 +40,11 @@
 }
 
 .research__eyebrow .trademark {
-  font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    font-size: 0.6em;
+    vertical-align: super;
+    position: relative;
+    top: 1px;
 }
 
 .research__heading {
