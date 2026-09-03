@@ -361,32 +361,39 @@ display: inline-flex;
       </div>
       
       {%- comment -%} ---------- One-time option ---------- {%- endcomment -%}
-       {% unless product.handle == 'membership' %}
-      <div class="asw-option asw-option--one">
-        <label class="asw-option__label">
-          <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="onetime">
-          <span class="asw-option__radio-icon" aria-hidden="true">
-            <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5"/>
-              <circle class="asw-fill" cx="12" cy="12" r="5.5" fill="#000"/>
-            </svg>
+       {% liquid
+  assign hide_onetime_for_pdfm_gf_us = false
+  if localization.country.iso_code == 'US' and product.handle == 'perfect-dog-food-mix' and current_variant.sku == 'PDFM-GF'
+    assign hide_onetime_for_pdfm_gf_us = true
+  endif
+%}
+
+{% unless product.handle == 'membership' or hide_onetime_for_pdfm_gf_us %}
+  <div class="asw-option asw-option--one">
+    <label class="asw-option__label">
+      <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="onetime">
+      <span class="asw-option__radio-icon" aria-hidden="true">
+        <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5"/>
+          <circle class="asw-fill" cx="12" cy="12" r="5.5" fill="#000"/>
+        </svg>
+      </span>
+      <span class="asw-option__body">
+        <span class="asw-option__head">
+          <span class="asw-option__titles">
+            <span class="asw-option__title">One-Time Purchase</span>
+            {%- if onetime_subtitle != blank -%}
+              <span class="asw-option__subtitle">{{ onetime_subtitle }}</span>
+            {%- endif -%}
           </span>
-          <span class="asw-option__body">
-            <span class="asw-option__head">
-              <span class="asw-option__titles">
-                <span class="asw-option__title">One-Time Purchase</span>
-                {%- if onetime_subtitle != blank -%}
-                  <span class="asw-option__subtitle">{{ onetime_subtitle }}</span>
-                {%- endif -%}
-              </span>
-              <span class="asw-option__price">
-                <span class="asw-option__price-now">{{ one_time_price | money_without_trailing_zeros }}</span>
-              </span>
-            </span>
+          <span class="asw-option__price">
+            <span class="asw-option__price-now">{{ one_time_price | money_without_trailing_zeros }}</span>
           </span>
-        </label>
-      </div>
-      {% endunless %}
+        </span>
+      </span>
+    </label>
+  </div>
+{% endunless %}
     </appstle-subscription-widget>
 
     <script>
