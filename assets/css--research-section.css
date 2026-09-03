@@ -44,7 +44,7 @@
     font-size: 0.6em;
     vertical-align: super;
     position: relative;
-    top: 1px;
+    top: 2px;
 }
 
 .research__heading {
@@ -160,6 +160,10 @@
 		font-size: 20px;
 		line-height: 24px;
 		letter-spacing: -0.40px;
+	}
+
+	.research__eyebrow .trademark {
+		top: 1px;
 	}
 
 	.research__heading {
