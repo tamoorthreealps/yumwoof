@@ -601,7 +601,7 @@
                       -%}
                     </div>
                   {%- when 'nutritional-information' -%}
-                    <div {{ block.shopify_attributes }}>
+                    <div class="nutritional--info--wrapper" {{ block.shopify_attributes }}>
                       {%- render 'variant-metafield-text',
                         product: product,
                         key: 'complete_balanced',
