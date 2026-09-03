@@ -158,6 +158,12 @@ font-family: Arial, sans-serif;
     max-width: 330px;
   }
 
+  .butcher-quality-promise__heading .bq-trademark {
+      font-size: 16px;
+      top: -9px;
+      left: 2px;
+  }
+
   .butcher-quality-promise__description {
     font-size: 14px;
     line-height: 20px;
