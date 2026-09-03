@@ -717,6 +717,10 @@ quantity-input.quantity::before {
   display: none;
 }
 
+.nutritional--info--wrapper {
+  margin:0;
+}
+
 .nutritional--info {
     margin: 3.2rem 0 0;
 }
