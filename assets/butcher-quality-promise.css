@@ -32,6 +32,12 @@
     transform: translateY(-8px);
 }
 
+.butcher-quality-promise__heading .trademark {
+  font-family: Arial, sans-serif;
+  font-size: 0.5em;
+  vertical-align: super;
+}
+
 .butcher-quality-promise__description {
     color: var(--bqp-text-color);
     font-family: Matter;
