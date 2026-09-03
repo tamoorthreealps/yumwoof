@@ -47,7 +47,7 @@
     <div class="research__intro">
       <div class="research__intro__top">
         {%- if section.settings.eyebrow_1 != blank -%}
-          <p class="research__eyebrow">{{ section.settings.eyebrow_1 }}</p>
+          <p class="research__eyebrow">{{ section.settings.eyebrow_1 | replace: '™', '<span class="trademark">™</span>' }}</p>
         {%- endif -%}
         {%- if section.settings.heading_1 != blank -%}
           <h2 class="research__heading">{{ section.settings.heading_1 }}</h2>
