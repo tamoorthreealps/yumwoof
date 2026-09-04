@@ -259,3 +259,33 @@
     </option>
   {%- endif -%}
 {%- endfor -%}
+{%- comment -%}
+  US Ancestral Blend: if page loaded a forced-OOS 7 lb variant, redirect to matching 1 lb
+  so price / Appstle / ATC match the selected size. Turkey has no 1 lb fallback.
+{%- endcomment -%}
+{%- if localization.country.iso_code == 'US'
+  and product.handle == 'ancestral-blend'
+  and option.name == 'Size'
+-%}
+  {%- assign cur = product.selected_or_first_available_variant -%}
+  {%- if cur.option2 == '7 Pound Bag' and cur.option1 != 'Turkey' -%}
+    {%- assign ab_fallback_1lb = null -%}
+    {%- for v in product.variants -%}
+      {%- if v.option1 == cur.option1 and v.option2 == '1 Pound Bag' -%}
+        {%- assign ab_fallback_1lb = v -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if ab_fallback_1lb != null -%}
+      <script>
+        (function () {
+          var targetId = '{{ ab_fallback_1lb.id }}';
+          var params = new URLSearchParams(window.location.search);
+          if (params.get('variant') === String(targetId)) return;
+          params.set('variant', String(targetId));
+          window.location.replace(window.location.pathname + '?' + params.toString());
+        })();
+      </script>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
