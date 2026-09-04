@@ -41,6 +41,15 @@
       if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
         assign show_dynamic_checkout = true
       endif
+
+      # US Ancestral Blend forced OOS SKUs (theme-level)
+      assign force_oos = false
+      if localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
+        assign force_sku = product.selected_or_first_available_variant.sku
+        if force_sku == 'AB-LANDSEA-7LB' or force_sku == 'AB-TURKEY-7LB' or force_sku == 'AB-FISH-7LB' or force_sku == 'AB-TURKEY-1LB'
+          assign force_oos = true
+        endif
+      endif
     -%}
 
     {%- if is_market_unavailable -%}
@@ -146,20 +155,30 @@
         novalidate: 'novalidate',
         data-type: 'add-to-cart-form'
       -%}
+        {%- liquid
+          assign check_against_inventory = true
+          if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+            assign check_against_inventory = false
+          endif
+          assign quantity_rule_soldout = false
+          if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+            assign quantity_rule_soldout = true
+          endif
+        -%}
         <input
           type="hidden"
           name="id"
           value="{{ product.selected_or_first_available_variant.id }}"
           {% if product.selected_or_first_available_variant.available == false
-  or quantity_rule_soldout
-  or product.selected_or_first_available_variant == null
-  or force_oos
-%}
-  disabled
-{% endif %}
+            or quantity_rule_soldout
+            or product.selected_or_first_available_variant == null
+            or force_oos
+          %}
+            disabled
+          {% endif %}
           class="product-variant-id"
         >
-          <input
+        <input
           type="hidden"
           name="selling_plan"
           id="selling-plan-input"
@@ -170,15 +189,6 @@
         {%- endif -%}
 
         <div class="product-form__buttons">
-          {%- liquid
-            assign check_against_inventory = true
-            if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
-              assign check_against_inventory = false
-            endif
-            if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
-              assign quantity_rule_soldout = true
-            endif
-          -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
@@ -187,6 +197,7 @@
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
+              or force_oos
             %}
               disabled
             {% endif %}
@@ -194,7 +205,7 @@
             <span>
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout or force_oos -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
                 {{ 'products.product.add_to_cart' | t }}
