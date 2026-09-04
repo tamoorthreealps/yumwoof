@@ -151,11 +151,12 @@
           name="id"
           value="{{ product.selected_or_first_available_variant.id }}"
           {% if product.selected_or_first_available_variant.available == false
-            or quantity_rule_soldout
-            or product.selected_or_first_available_variant == null
-          %}
-            disabled
-          {% endif %}
+  or quantity_rule_soldout
+  or product.selected_or_first_available_variant == null
+  or force_oos
+%}
+  disabled
+{% endif %}
           class="product-variant-id"
         >
           <input
