@@ -126,27 +126,9 @@ endif
         name="{{ input_name | escape }}"
         value="{{ escaped_value }}"
         form="{{ product_form_id }}"
-        {% liquid
-  assign should_check = false
-  if value.selected and option_disabled == false
-    assign should_check = true
-  elsif option_disabled == false and option.name == 'Size' and value == '1 Pound Bag' and localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
-    assign selected_size = null
-    for opt in product.options_with_values
-      assign opt_name_down = opt.name | downcase
-      if opt_name_down == 'size'
-        assign selected_size = opt.selected_value
-        break
-      endif
-    endfor
-    if selected_size == '7 Pound Bag'
-      assign should_check = true
-    endif
-  endif
-%}
-{% if should_check %}
-  checked
-{% endif %}
+        {% if value.selected %}
+          checked
+        {% endif %}
         {{ input_dataset }}
       >
       <label class="recipe-swatch__label" for="{{ input_id }}">
