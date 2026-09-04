@@ -5,14 +5,13 @@
   - product: {Object} product object.
   - option: {Object} current product_option object.
   - block: {Object} block object.
-  - picker_type: {String} type of picker to dispay
-
+  - picker_type: {String} type of picker to display
 
   Usage:
   {% render 'product-variant-options',
     product: product,
     option: option,
-    block: block
+    block: block,
     picker_type: picker_type
   %}
 {% endcomment %}
@@ -33,34 +32,52 @@
       assign swatch_value = null
     endif
 
-      assign option_disabled = true
-if value.available
-  assign option_disabled = false
-endif
-
-# US only: Ancestral Blend forced OOS sizes
-if localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
-  # All 7 lb SKUs: AB-LANDSEA-7LB, AB-TURKEY-7LB, AB-FISH-7LB
-  if option.name == 'Size' and value == '7 Pound Bag'
     assign option_disabled = true
-  endif
-
-  # Existing: AB-TURKEY-1LB only
-  if option.name == 'Size' and value == '1 Pound Bag'
-    assign selected_recipe = null
-    for opt in product.options_with_values
-      assign opt_name_down = opt.name | downcase
-      if opt_name_down == 'recipe' or opt_name_down == 'recipes'
-        assign selected_recipe = opt.selected_value
-        break
-      endif
-    endfor
-    if selected_recipe == 'Turkey'
-      assign option_disabled = true
+    if value.available
+      assign option_disabled = false
     endif
-  endif
-endif
--%}
+
+    # US only: Ancestral Blend forced OOS sizes
+    if localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
+      # All 7 lb SKUs: AB-LANDSEA-7LB, AB-TURKEY-7LB, AB-FISH-7LB
+      if option.name == 'Size' and value == '7 Pound Bag'
+        assign option_disabled = true
+      endif
+
+      # Existing: AB-TURKEY-1LB only
+      if option.name == 'Size' and value == '1 Pound Bag'
+        assign selected_recipe = null
+        for opt in product.options_with_values
+          assign opt_name_down = opt.name | downcase
+          if opt_name_down == 'recipe' or opt_name_down == 'recipes'
+            assign selected_recipe = opt.selected_value
+            break
+          endif
+        endfor
+        if selected_recipe == 'Turkey'
+          assign option_disabled = true
+        endif
+      endif
+    endif
+
+    # If selected size is forced OOS, select first available size instead
+    assign should_check = false
+    if value.selected and option_disabled == false
+      assign should_check = true
+    elsif option_disabled == false and option.name == 'Size' and localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
+      assign selected_size = null
+      for opt in product.options_with_values
+        assign opt_name_down = opt.name | downcase
+        if opt_name_down == 'size'
+          assign selected_size = opt.selected_value
+          break
+        endif
+      endfor
+      if selected_size == '7 Pound Bag' and value == '1 Pound Bag'
+        assign should_check = true
+      endif
+    endif
+  -%}
 
   {%- capture input_id -%}
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
@@ -118,51 +135,65 @@ endif
       {%- endif -%}
     {%- endfor -%}
     {% unless value == 'Healthy Grains (Original)' %}
-    <div class="recipe-swatch">
-      <input
-        type="radio"
-        class="recipe-swatch__input{% if option_disabled %} disabled{% endif %}"
-        id="{{ input_id }}"
-        name="{{ input_name | escape }}"
-        value="{{ escaped_value }}"
-        form="{{ product_form_id }}"
-        {% if value.selected %}
-          checked
-        {% endif %}
-        {{ input_dataset }}
-      >
-      <label class="recipe-swatch__label" for="{{ input_id }}">
-        {%- if recipe_desktop_src != blank -%}
-          <img class="recipe-swatch__img recipe-swatch__img--desktop" src="{{ recipe_desktop_src | image_url: width: 128 }}" alt="Recipe Swatch Image" loading="lazy" width="64" height="64">
-          <img class="recipe-swatch__img recipe-swatch__img--mobile" src="{{ recipe_mobile_src | image_url: width: 128 }}" alt="Recipe Swatch Image" loading="lazy" width="64" height="64">
+      <div class="recipe-swatch">
+        <input
+          type="radio"
+          class="recipe-swatch__input{% if option_disabled %} disabled{% endif %}"
+          id="{{ input_id }}"
+          name="{{ input_name | escape }}"
+          value="{{ escaped_value }}"
+          form="{{ product_form_id }}"
+          {% if value.selected %}
+            checked
+          {% endif %}
+          {{ input_dataset }}
+        >
+        <label class="recipe-swatch__label" for="{{ input_id }}">
+          {%- if recipe_desktop_src != blank -%}
+            <img
+              class="recipe-swatch__img recipe-swatch__img--desktop"
+              src="{{ recipe_desktop_src | image_url: width: 128 }}"
+              alt="Recipe Swatch Image"
+              loading="lazy"
+              width="64"
+              height="64"
+            >
+            <img
+              class="recipe-swatch__img recipe-swatch__img--mobile"
+              src="{{ recipe_mobile_src | image_url: width: 128 }}"
+              alt="Recipe Swatch Image"
+              loading="lazy"
+              width="64"
+              height="64"
+            >
+          {%- endif -%}
+          <span class="recipe-swatch__title">{{ value }}</span>
+          {{ label_unavailable }}
+        </label>
+        {%- if swatch_badge != blank -%}
+          <span class="recipe-swatch__badge">{{ swatch_badge }}</span>
         {%- endif -%}
-        <span class="recipe-swatch__title">{{ value }}</span>
-        {{ label_unavailable }}
-      </label>
-      {%- if swatch_badge != blank -%}
-        <span class="recipe-swatch__badge">{{ swatch_badge }}</span>
-      {%- endif -%}
-    </div>
-  {% endunless %}
+      </div>
+    {% endunless %}
   {%- elsif picker_type == 'swatch' -%}
     {%- capture help_text -%}
       <span class="visually-hidden">{{ escaped_value }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
-{% unless value == '3.5 Pound Bag' or value == '1.75 Pound Box' %}
-    {% render 'swatch-input',
-      id: input_id,
-      name: input_name,
-      value: escaped_value,
-      swatch: value.swatch,
-      product_form_id: product_form_id,
-      checked: value.selected,
-      visually_disabled: option_disabled,
-      shape: block.settings.swatch_shape,
-      help_text: help_text,
-      additional_props: input_dataset
-    %}
-  {% endunless %}
+    {% unless value == '3.5 Pound Bag' or value == '1.75 Pound Box' %}
+      {% render 'swatch-input',
+        id: input_id,
+        name: input_name,
+        value: escaped_value,
+        swatch: value.swatch,
+        product_form_id: product_form_id,
+        checked: value.selected,
+        visually_disabled: option_disabled,
+        shape: block.settings.swatch_shape,
+        help_text: help_text,
+        additional_props: input_dataset
+      %}
+    {% endunless %}
   {%- elsif picker_type == 'button' -%}
     {%- comment -%}
       Optional per-value subtitle (e.g. bag size "Everyday feeding" / "Trial or topper"),
@@ -181,35 +212,35 @@ endif
       {%- endif -%}
     {%- endfor -%}
     {% unless value == '3.5 Pound Bag' or value == '1.75 Pound Box' %}
-    <input
-      type="radio"
-      id="{{ input_id }}"
-      name="{{ input_name | escape }}"
-      value="{{ escaped_value }}"
-      form="{{ product_form_id }}"
-      {% if value.selected %}
-        checked
-      {% endif %}
-      {% if option_disabled %}
-        class="disabled"
-      {% endif %}
-      {{ input_dataset }}
-    >
-    <label for="{{ input_id }}"{% if swatch_subtitle != blank %} class="has-subtitle"{% endif %}>
-      {%- if swatch_subtitle != blank -%}
-        <span class="pill__title">{{ value }}</span>
-        <span class="pill__subtitle">{{ swatch_subtitle }}</span>
-      {%- else -%}
-        {{ value -}}
-      {%- endif -%}
-      {{ label_unavailable }}
-    </label>
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ input_name | escape }}"
+        value="{{ escaped_value }}"
+        form="{{ product_form_id }}"
+        {% if should_check %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+        {{ input_dataset }}
+      >
+      <label for="{{ input_id }}"{% if swatch_subtitle != blank %} class="has-subtitle"{% endif %}>
+        {%- if swatch_subtitle != blank -%}
+          <span class="pill__title">{{ value }}</span>
+          <span class="pill__subtitle">{{ swatch_subtitle }}</span>
+        {%- else -%}
+          {{ value -}}
+        {%- endif -%}
+        {{ label_unavailable }}
+      </label>
     {% endunless %}
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
     <option
       id="{{ input_id }}"
       value="{{ escaped_value }}"
-      {% if value.selected %}
+      {% if should_check %}
         selected="selected"
       {% endif %}
       {% if swatch_value and picker_type == 'swatch_dropdown' %}
