@@ -1,261 +1,190 @@
 {% comment %}
-  Renders product variant options
+  Renders product variant-picker
 
   Accepts:
   - product: {Object} product object.
-  - option: {Object} current product_option object.
-  - block: {Object} block object.
-  - picker_type: {String} type of picker to display
-
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
   Usage:
-  {% render 'product-variant-options',
-    product: product,
-    option: option,
-    block: block,
-    picker_type: picker_type
-  %}
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
+{% assign popup = product.metafields.custom.ingredient_popup.value %}
 {%- liquid
-  assign product_form_id = 'product-form-' | append: section.id
+  assign nl = product.selected_or_first_available_variant.metafields.custom.nutrition_label.value
+  assign has_nl_ingredients = false
+  for v in product.variants
+    assign vnl = v.metafields.custom.nutrition_label.value
+    if vnl.ingredients != blank
+      assign has_nl_ingredients = true
+      break
+    endif
+  endfor
 -%}
+{{ 'css--swatch-subtitle.css' | asset_url | stylesheet_tag }}
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title | escape }}"
+    data-product-id="{{ product.id }}"
+    data-currency-code="{{ cart.currency.iso_code }}"
+    {% # theme-check-disable %}
+    data-selected-price-amount="{{ product.selected_or_first_available_variant.price | default: 0 | money_amount | escape }}"
+    {% # theme-check-enable %}
+    {{ block.shopify_attributes }}
+  >
+    {% assign has_swatch_badge = false %}
 
-{%- for value in option.values -%}
-  {%- liquid
-    assign swatch_focal_point = null
-    if value.swatch.image
-      assign image_url = value.swatch.image | image_url: width: 50
-      assign swatch_value = 'url(' | append: image_url | append: ')'
-      assign swatch_focal_point = value.swatch.image.presentation.focal_point
-    elsif value.swatch.color
-      assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
-    else
-      assign swatch_value = null
-    endif
+    {% for v in product.variants %}
+      {% if v.metafields.custom.swatch_badge.value != blank %}
+        {% assign has_swatch_badge = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign picker_type = block.settings.picker_type
 
-    assign option_disabled = true
-    if value.available
-      assign option_disabled = false
-    endif
-
-    # US only: Ancestral Blend forced OOS sizes
-    if localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
-      # All 7 lb SKUs: AB-LANDSEA-7LB, AB-TURKEY-7LB, AB-FISH-7LB
-      if option.name == 'Size' and value == '7 Pound Bag'
-        assign option_disabled = true
-      endif
-
-      # Existing: AB-TURKEY-1LB only
-      if option.name == 'Size' and value == '1 Pound Bag'
-        assign selected_recipe = null
-        for opt in product.options_with_values
-          assign opt_name_down = opt.name | downcase
-          if opt_name_down == 'recipe' or opt_name_down == 'recipes'
-            assign selected_recipe = opt.selected_value
-            break
+        if swatch_count > 0 and block.settings.swatch_shape != 'none'
+          if block.settings.picker_type == 'dropdown'
+            assign picker_type = 'swatch_dropdown'
+          else
+            assign picker_type = 'swatch'
           endif
-        endfor
-        if selected_recipe == 'Turkey'
-          assign option_disabled = true
         endif
-      endif
-    endif
 
-    # If selected size is forced OOS, select first available size instead
-    assign should_check = false
-    if value.selected and option_disabled == false
-      assign should_check = true
-    elsif option_disabled == false and option.name == 'Size' and localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
-      assign selected_size = null
-      for opt in product.options_with_values
-        assign opt_name_down = opt.name | downcase
-        if opt_name_down == 'size'
-          assign selected_size = opt.selected_value
-          break
+        # Recipe option renders image + title cards (image = value handle + .png, from Files).
+        assign option_name_down = option.name | downcase
+        if option_name_down == 'recipe' or option_name_down == 'recipes'
+          assign picker_type = 'recipe_image'
         endif
-      endfor
-      if selected_size == '7 Pound Bag' and value == '1 Pound Bag'
-        assign should_check = true
-      endif
-    endif
-  -%}
-
-  {%- capture input_id -%}
-    {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
-  {%- endcapture -%}
-
-  {%- capture input_name -%}
-    {{ option.name }}-{{ option.position }}
-  {%- endcapture -%}
-
-  {%- capture input_dataset -%}
-    data-product-url="{{ value.product_url }}"
-    data-option-value-id="{{ value.id }}"
-    data-option-name="{{ option.name | escape }}"
-  {%- endcapture -%}
-
-  {%- capture label_unavailable -%}
-    <span class="visually-hidden label-unavailable">
-      {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
-    </span>
-  {%- endcapture -%}
-
-  {% assign escaped_value = value | escape %}
-
-  {%- if picker_type == 'recipe_image' -%}
-    {%- comment -%}
-      Recipe swatch images come from the "recipe_swatches" metaobject: match its
-      swatch_title to this option value, then use its desktop/mobile image fields.
-      If no entry matches, no image is shown (title/badge only).
-    {%- endcomment -%}
-    {%- assign value_key = value | strip | downcase -%}
-    {%- assign swatch_desktop = null -%}
-    {%- assign swatch_mobile = null -%}
-    {%- for rs in shop.metaobjects.recipe_swatches.values -%}
-      {%- assign rs_title = rs.swatch_title | strip | downcase -%}
-      {%- if rs_title == value_key -%}
-        {%- assign swatch_desktop = rs.swatch_desktop_image -%}
-        {%- assign swatch_mobile = rs.swatch_mobile_image -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {%- comment -%} Each falls back to the other if only one image is set. {%- endcomment -%}
-    {%- assign recipe_desktop_src = swatch_desktop | default: swatch_mobile -%}
-    {%- assign recipe_mobile_src = swatch_mobile | default: swatch_desktop -%}
-    {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
-    {%- assign swatch_badge = '' -%}
-    {%- assign value_name = value | strip -%}
-    {%- assign recipe_opt_idx = option.position | minus: 1 -%}
-    {%- for v in product.variants -%}
-      {%- if v.options[recipe_opt_idx] == value_name -%}
-        {%- assign vb = v.metafields.custom.swatch_badge.value -%}
-        {%- if vb != blank -%}
-          {%- assign swatch_badge = vb -%}
-        {%- endif -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {% unless value == 'Healthy Grains (Original)' %}
-      <div class="recipe-swatch">
-        <input
-          type="radio"
-          class="recipe-swatch__input{% if option_disabled %} disabled{% endif %}"
-          id="{{ input_id }}"
-          name="{{ input_name | escape }}"
-          value="{{ escaped_value }}"
-          form="{{ product_form_id }}"
-          {% if value.selected %}
-            checked
-          {% endif %}
-          {{ input_dataset }}
-        >
-        <label class="recipe-swatch__label" for="{{ input_id }}">
-          {%- if recipe_desktop_src != blank -%}
-            <img
-              class="recipe-swatch__img recipe-swatch__img--desktop"
-              src="{{ recipe_desktop_src | image_url: width: 128 }}"
-              alt="Recipe Swatch Image"
-              loading="lazy"
-              width="64"
-              height="64"
-            >
-            <img
-              class="recipe-swatch__img recipe-swatch__img--mobile"
-              src="{{ recipe_mobile_src | image_url: width: 128 }}"
-              alt="Recipe Swatch Image"
-              loading="lazy"
-              width="64"
-              height="64"
-            >
-          {%- endif -%}
-          <span class="recipe-swatch__title">{{ value }}</span>
-          {{ label_unavailable }}
-        </label>
-        {%- if swatch_badge != blank -%}
-          <span class="recipe-swatch__badge">{{ swatch_badge }}</span>
-        {%- endif -%}
-      </div>
-    {% endunless %}
-  {%- elsif picker_type == 'swatch' -%}
-    {%- capture help_text -%}
-      <span class="visually-hidden">{{ escaped_value }}</span>
-      {{ label_unavailable }}
-    {%- endcapture -%}
-    {% unless value == '3.5 Pound Bag' or value == '1.75 Pound Box' %}
-      {% render 'swatch-input',
-        id: input_id,
-        name: input_name,
-        value: escaped_value,
-        swatch: value.swatch,
-        product_form_id: product_form_id,
-        checked: value.selected,
-        visually_disabled: option_disabled,
-        shape: block.settings.swatch_shape,
-        help_text: help_text,
-        additional_props: input_dataset
-      %}
-    {% endunless %}
-  {%- elsif picker_type == 'button' -%}
-    {%- comment -%}
-      Optional per-value subtitle (e.g. bag size "Everyday feeding" / "Trial or topper"),
-      read from the matching variant's custom.swatch_subtitle metafield.
-    {%- endcomment -%}
-    {%- assign swatch_subtitle = '' -%}
-    {%- assign value_name = value | strip -%}
-    {%- assign opt_idx = option.position | minus: 1 -%}
-    {%- for v in product.variants -%}
-      {%- if v.options[opt_idx] == value_name -%}
-        {%- assign vs = v.metafields.custom.swatch_subtitle.value -%}
-        {%- if vs != blank -%}
-          {%- assign swatch_subtitle = vs -%}
-        {%- endif -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {% unless value == '3.5 Pound Bag' or value == '1.75 Pound Box' %}
-      <input
-        type="radio"
-        id="{{ input_id }}"
-        name="{{ input_name | escape }}"
-        value="{{ escaped_value }}"
-        form="{{ product_form_id }}"
-        {% if should_check %}
-          checked
-        {% endif %}
-        {% if option_disabled %}
-          class="disabled"
-        {% endif %}
-        {{ input_dataset }}
-      >
-      <label for="{{ input_id }}"{% if swatch_subtitle != blank %} class="has-subtitle"{% endif %}>
-        {%- if swatch_subtitle != blank -%}
-          <span class="pill__title">{{ value }}</span>
-          <span class="pill__subtitle">{{ swatch_subtitle }}</span>
-        {%- else -%}
-          {{ value -}}
-        {%- endif -%}
-        {{ label_unavailable }}
-      </label>
-    {% endunless %}
-  {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
-    <option
-      id="{{ input_id }}"
-      value="{{ escaped_value }}"
-      {% if should_check %}
-        selected="selected"
-      {% endif %}
-      {% if swatch_value and picker_type == 'swatch_dropdown' %}
-        data-option-swatch-value="{{ swatch_value }}"
-        {% if swatch_focal_point %}
-          data-option-swatch-focal-point="{{ swatch_focal_point }}"
-        {% endif %}
-      {% endif %}
-      {{ input_dataset }}
-    >
-      {% if option_disabled -%}
-        {{- 'products.product.value_unavailable' | t: option_value: value -}}
+      -%}
+      {%- if picker_type == 'recipe_image' -%}
+        <fieldset class="js product-form__input product-form__input--recipe">
+          <div class="recipe-heading  {% unless has_swatch_badge %} recipe-heading_nobadge{% endunless %} ">
+            <legend class="form__label form__label--numbered">{{ option.name }}</legend>
+            {% if popup %}
+              <button class="recipe-view-ingredients" data-popup="ingredients-popup-1" type="button">
+                + View Ingredients
+              </button>
+            {% elsif has_nl_ingredients %}
+              <button class="recipe-view-ingredients--drawer" type="button">+ View Ingredients</button>
+            {% endif %}
+          </div>
+          <div class="recipe-swatches {% if product.handle == 'perfect-kibble' or product.handle == 'perfect-dog-food-mix' %}recipe-swatches_kibble{% endif %}">
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
+        </fieldset>
+      {%- elsif picker_type == 'swatch' -%}
+        <fieldset class="js product-form__input product-form__input--swatch">
+          <legend class="form__label">
+            {{ option.name }}:
+            <span data-selected-value>
+              {{- option.selected_value -}}
+            </span>
+          </legend>
+          {% render 'product-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+        </fieldset>
+      {%- elsif picker_type == 'button' -%}
+        <fieldset class="js product-form__input product-form__input--pill">
+          <legend class="form__label form__label--numbered">{{ option.name }}</legend>
+          <div class="form--label--options">
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
+        </fieldset>
       {%- else -%}
-        {{- value -}}
-      {%- endif %}
-    </option>
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+          </label>
+          <div class="select">
+            {%- if picker_type == 'swatch_dropdown' -%}
+              <span
+                data-selected-value
+                class="dropdown-swatch"
+              >
+                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+              </span>
+            {%- endif -%}
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options',
+                product: product,
+                option: option,
+                block: block,
+                picker_type: picker_type
+              %}
+            </select>
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+  </variant-selects>
+{%- endunless -%}
+
+<script>
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.recipe-view-ingredients--drawer');
+    if (!btn) return;
+    const root = document.querySelector('nutrition-label');
+    const launcher = root && root.querySelector('[data-nlabel-open="ingredients"]');
+    if (launcher) launcher.click();
+  });
+</script>
+
+{%- comment -%}
+  US Ancestral Blend: all 7 lb bags are forced OOS in product-variant-options.
+  If the page still loads a 7 lb variant, redirect to the matching 1 lb variant
+  so price / Appstle / ATC sync correctly. Turkey has no 1 lb fallback (also OOS).
+{%- endcomment -%}
+{%- if localization.country.iso_code == 'US' and product.handle == 'ancestral-blend' -%}
+  {%- assign cur = product.selected_or_first_available_variant -%}
+  {%- if cur.option2 == '7 Pound Bag' and cur.option1 != 'Turkey' -%}
+    {%- assign ab_fallback_1lb = null -%}
+    {%- for v in product.variants -%}
+      {%- if v.option1 == cur.option1 and v.option2 == '1 Pound Bag' -%}
+        {%- assign ab_fallback_1lb = v -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if ab_fallback_1lb != null -%}
+      <script>
+        (function () {
+          var targetId = '{{ ab_fallback_1lb.id }}';
+          var params = new URLSearchParams(window.location.search);
+          if (params.get('variant') === String(targetId)) return;
+          params.set('variant', String(targetId));
+          window.location.replace(window.location.pathname + '?' + params.toString());
+        })();
+      </script>
+    {%- endif -%}
   {%- endif -%}
-{%- endfor -%}
+{%- endif -%}
