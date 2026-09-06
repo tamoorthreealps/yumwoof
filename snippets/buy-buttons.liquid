@@ -41,15 +41,6 @@
       if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
         assign show_dynamic_checkout = true
       endif
-
-      # US Ancestral Blend forced OOS SKUs (theme-level)
-      assign force_oos = false
-      if localization.country.iso_code == 'US' and product.handle == 'ancestral-blend'
-        assign force_sku = product.selected_or_first_available_variant.sku
-        if force_sku == 'AB-LANDSEA-7LB' or force_sku == 'AB-TURKEY-7LB' or force_sku == 'AB-FISH-7LB' or force_sku == 'AB-TURKEY-1LB'
-          assign force_oos = true
-        endif
-      endif
     -%}
 
     {%- if is_market_unavailable -%}
@@ -172,7 +163,6 @@
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
-            or force_oos
           %}
             disabled
           {% endif %}
@@ -197,7 +187,6 @@
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
-              or force_oos
             %}
               disabled
             {% endif %}
@@ -205,7 +194,7 @@
             <span>
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout or force_oos -%}
+              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
                 {{ 'products.product.add_to_cart' | t }}
