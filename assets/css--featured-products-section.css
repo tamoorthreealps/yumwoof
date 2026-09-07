@@ -242,7 +242,7 @@ position: absolute !important;
 	width: auto;
 	height: auto;
 	object-fit: contain;
-	transition: opacity var(.15s ease);
+	transition: opacity .15s ease;
 }
 
 /* .fp__card:hover .fp__img {
