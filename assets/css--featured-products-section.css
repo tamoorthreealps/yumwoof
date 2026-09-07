@@ -305,11 +305,12 @@ position: absolute !important;
     justify-content: center;
     border: 1px solid #000;
     border-radius: 100px;
-	transition: all .25s ease;
+	transition: all .35s ease;
 	padding: 10px 22px 8.4px;
     margin: 24px 0 -64px;
 }
-.fp__shop:hover {
+.fp__shop:hover,
+.fp__card__hover.fp__card--hover-ready:hover .fp__shop {
     background: #000;
     color: #FFF9EF;
 }
