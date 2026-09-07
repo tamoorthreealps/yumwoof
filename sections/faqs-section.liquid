@@ -33,7 +33,7 @@
       </div>
 
       {%- if faq_blocks.size > 0 -%}
-        <div class="faqs__list">
+        <div class="faqs__list {% if section.settings.hide_first_divider %}faqs__list--hide-first-divider{% endif %}">
           {%- for block in faq_blocks -%}
             <div
               class="faqs__item {% if forloop.first and section.settings.open_first %}is-open{% endif %}"
@@ -210,6 +210,12 @@
       "id": "open_first",
       "label": "Open first question by default",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_first_divider",
+      "label": "Hide first divider",
+      "default": false
     },
     {
       "type": "header",
