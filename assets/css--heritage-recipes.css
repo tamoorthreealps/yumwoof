@@ -93,7 +93,7 @@
 .heritage__button:hover {
 	background-color: var(--hr-text);
 	color: var(--hr-bg);
-	border-color:#661d1d;
+	border-color:var(--hr-text);
 }
 
 .heritage__bowl {
