@@ -52,6 +52,10 @@ margin: 0;
   border-top: 1px solid var(--faq-line);
 }
 
+.faqs__list--hide-first-divider .faqs__item:first-child {
+  border-top: 0;
+}
+
 .faqs__question {
     display: flex;
     align-items: center;
