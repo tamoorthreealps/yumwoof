@@ -375,6 +375,8 @@
       "settings": {
         "heading": "Any Questions?",
         "subheading": "",
+        "head_spacing_desktop": 0,
+        "head_spacing_mobile": 0,
         "open_first": false,
         "hide_first_divider": true,
         "background_color": "#fff9ef",
