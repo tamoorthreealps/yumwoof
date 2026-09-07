@@ -19,7 +19,7 @@
 }
 
 .faqs__head {
-  margin-bottom: 2.4rem;
+  margin-bottom: var(--faq-head-spacing-mobile);
 }
 
 .faqs__heading {
@@ -153,7 +153,7 @@ font-size: 16px;
   }
 
   .faqs__head {
-    margin-bottom: 3.8rem;
+    margin-bottom: var(--faq-head-spacing-desktop);
   }
 
   .faqs__heading {

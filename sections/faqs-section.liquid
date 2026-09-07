@@ -5,6 +5,8 @@
     --faq-bg: {{ section.settings.background_color }};
     --faq-text: {{ section.settings.text_color }};
     --faq-line: {{ section.settings.line_color }};
+    --faq-head-spacing-desktop: {{ section.settings.head_spacing_desktop }}px;
+    --faq-head-spacing-mobile: {{ section.settings.head_spacing_mobile }}px;
 
     padding-top: {{ section.settings.padding_top_desktop }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
@@ -194,6 +196,26 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Every dog is different. Find the recipe that's right for yours."
+    },
+    {
+      "type": "range",
+      "id": "head_spacing_desktop",
+      "label": "Head Bottom Spacing (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "head_spacing_mobile",
+      "label": "Head Bottom Spacing (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
     },
     {
       "type": "image_picker",
