@@ -71,9 +71,10 @@
 	align-items: center;
 	text-align: center;
 	padding: .72rem 2.4rem;
-	border: 1px solid var(--hr-text);
+	border: 1px solid #661d1d;
+	background-color:#661d1d;
 	border-radius: 100px;
-	color: var(--hr-text);
+	color: #fff9ef;
 	font-size: 13px;
 	line-height: 24px;
 	font-weight: 500;
@@ -92,6 +93,7 @@
 .heritage__button:hover {
 	background-color: var(--hr-text);
 	color: var(--hr-bg);
+	border-color:#661d1d;
 }
 
 .heritage__bowl {
