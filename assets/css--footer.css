@@ -813,6 +813,9 @@ button.yf__questions-link {
 @media screen and (max-width: 749px) {
   .country-pill__panel {
   }
+  .yf__address {
+    max-width:160px;
+  }
 }
 
 /* --------------------------------------------------------------------------
