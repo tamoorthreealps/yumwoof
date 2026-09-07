@@ -1,0 +1,38 @@
+{%- comment -%}
+  Per-market, variant-level availability check.
+
+  Outputs the literal string "true" when the given variant is flagged for the
+  CURRENT market in the requested list metafield, otherwise outputs nothing.
+  Consume with capture:
+    {%- capture is_oos %}{% render 'variant-market-availability', variant: v, list: 'oos' %}{% endcapture -%}
+    {%- if is_oos contains 'true' -%} ... {%- endif -%}
+
+  Matching mirrors snippets/buy-buttons.liquid: each entry is compared
+  case-insensitively (spaces -> hyphens) against the visitor's market HANDLE
+  (localization.market.handle) or country code (localization.country.iso_code).
+
+  Accepts:
+  - variant: {Object} the variant to test
+  - list: {String} 'oos' -> custom.oos_markets, 'notify' -> custom.notify_markets
+{%- endcomment -%}
+{%- liquid
+  assign vma_markets = variant.metafields.custom.oos_markets.value
+  if list == 'notify'
+    assign vma_markets = variant.metafields.custom.notify_markets.value
+  endif
+
+  assign vma_hit = false
+  if vma_markets != blank
+    assign vma_market_handle = localization.market.handle | downcase | strip
+    assign vma_country_code = localization.country.iso_code | downcase | strip
+    for vma_m in vma_markets
+      assign vma_key = vma_m | downcase | strip | replace: ' ', '-'
+      if vma_key == vma_market_handle or vma_key == vma_country_code
+        assign vma_hit = true
+      endif
+    endfor
+  endif
+  if vma_hit
+    echo 'true'
+  endif
+-%}
