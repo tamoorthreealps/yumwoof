@@ -10,6 +10,7 @@
 	--fp-card-bg: #ffffff;
 	--fp-card-border: #000000;
 	--fp-label: #661d1d;
+	--fp-hover-t: .35s ease;
 
 	background-color: var(--fp-bg);
 	color: var(--fp-text);
@@ -161,7 +162,7 @@ position: absolute !important;
 	position: absolute !important;
 	inset: 0;
 	opacity: 0;
-	transition: .35s ease;
+	transition: opacity var(--fp-hover-t);
 	z-index: 0;
 	overflow: hidden;
 	border-radius: 24px;
@@ -180,7 +181,7 @@ position: absolute !important;
 	object-fit: cover;
 	border-radius: 20px;
 	transform: scale(1);
-	transition: transform .5s ease;
+	transition: transform var(--fp-hover-t);
 }
 
 
@@ -241,7 +242,7 @@ position: absolute !important;
 	width: auto;
 	height: auto;
 	object-fit: contain;
-	transition: opacity .35s ease;
+	transition: opacity var(--fp-hover-t);
 }
 
 /* .fp__card:hover .fp__img {
@@ -465,22 +466,30 @@ position: absolute !important;
 		border-radius: 24px;
 	}
 
-	.fp__card__hover:hover .fp__title,
-	.fp__card__hover:hover .fp__label,
-	.fp__card__hover:hover .fp__desc,
-	.fp__card__hover:hover .fp__recipes {
+	.fp__title,
+	.fp__label,
+	.fp__desc,
+	.fp__recipes {
+		transition: color var(--fp-hover-t), border-color var(--fp-hover-t);
+	}
+
+	.fp__card__hover.fp__card--hover-ready:hover .fp__title,
+	.fp__card__hover.fp__card--hover-ready:hover .fp__label,
+	.fp__card__hover.fp__card--hover-ready:hover .fp__desc,
+	.fp__card__hover.fp__card--hover-ready:hover .fp__recipes {
 		color: #FFF9EF;
 		border-color: #FFF9EF;
 	}
 
-	.fp__card__hover:hover .fp__img {
+	.fp__card__hover.fp__card--hover-ready:hover .fp__img {
 		opacity: 0;
 	}
 
-	.fp__card__hover:hover .fp__hover-media img {
+	.fp__card__hover.fp__card--hover-ready:hover .fp__hover-media img {
 		transform: scale(1.04);
 	}
-	.fp__card__hover:hover .fp__hover-media {
+
+	.fp__card__hover.fp__card--hover-ready:hover .fp__hover-media {
 		opacity: 1;
 	}
 
