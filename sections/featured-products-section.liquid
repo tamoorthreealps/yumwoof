@@ -883,11 +883,17 @@
       if (document.body.dataset.fpHoverReady) return;
       document.body.dataset.fpHoverReady = 'true';
 
-      document.querySelectorAll('.fp__hover-image[data-fp-hover-src]').forEach(function (img) {
-        var preload = new Image();
-        preload.src = img.dataset.fpHoverSrc;
-      });
-      
+document.querySelectorAll('.fp__hover-image[data-fp-hover-src]').forEach(function (img) {
+  var preload = new Image();
+
+  if (img.dataset.fpHoverSrcset) {
+    preload.srcset = img.dataset.fpHoverSrcset;
+  }
+
+  preload.sizes = img.getAttribute('sizes') || '';
+  preload.src = img.dataset.fpHoverSrc;
+});
+
       function onEnter(e) {
         if (!e.target || !e.target.closest) return;
         var card = e.target.closest('.fp__card__hover');
