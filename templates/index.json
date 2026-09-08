@@ -61,7 +61,7 @@
       ],
       "name": "Reviews Membership bar",
       "settings": {
-        "rating_text": "Over 2,500 5-star reviews",
+        "rating_text": "2,500+ 5-STAR REVIEWS",
         "enable_marquee": true,
         "marquee_speed": 35,
         "background_color": "#661c1c",
