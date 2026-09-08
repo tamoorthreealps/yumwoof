@@ -349,11 +349,6 @@
         "disabled": false,
         "settings": {}
       },
-      "12509190167029697241": {
-        "type": "shopify://apps/blotout-edgetag/blocks/app-embed/ae22d985-ba57-41f5-94c5-18d3dd98ea3c",
-        "disabled": false,
-        "settings": {}
-      },
       "17676059084223943535": {
         "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
         "disabled": false,
@@ -436,6 +431,11 @@
       },
       "1074493345574519553": {
         "type": "shopify://apps/one-ai-email-sms-marketing/blocks/embed-pixel/e2660a3c-4398-468f-b8cb-e4e470225df5",
+        "disabled": true,
+        "settings": {}
+      },
+      "12509190167029697241": {
+        "type": "shopify://apps/blotout-edgetag/blocks/app-embed/ae22d985-ba57-41f5-94c5-18d3dd98ea3c",
         "disabled": true,
         "settings": {}
       }
