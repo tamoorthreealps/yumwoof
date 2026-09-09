@@ -74,25 +74,53 @@
     });
   }
 
-  // Tag Klaviyo submissions with the variant / market / page they came from.
-  window.addEventListener('klaviyo:forms:submit', function () {
+  // The Klaviyo form id for the notify form (from its klaviyo-form-XXXX class),
+  // so we only tag submissions of OUR form and not other Klaviyo forms.
+  function notifyFormId() {
+    if (!notifyEl) return null;
+    var div = notifyEl.querySelector('[class*="klaviyo-form-"]');
+    var m = div && (div.className || '').match(/klaviyo-form-([A-Za-z0-9]+)/);
+    return m ? m[1] : null;
+  }
+
+  function tagSubmission() {
     try {
       var vid = notifyEl ? notifyEl.getAttribute('data-variant-id') : current;
       if (!vid) return;
       var state = map[vid] || {};
-      if (window.klaviyo && typeof window.klaviyo.push === 'function') {
-        window.klaviyo.push([
-          'track',
-          'Back in Stock Requested',
-          {
-            ProductTitle: productTitle,
-            VariantID: vid,
-            VariantTitle: state.title || '',
-            Market: market,
-            SourceURL: window.location.href,
-          },
-        ]);
-      }
+      if (!(window.klaviyo && typeof window.klaviyo.push === 'function')) return;
+      // Event (for the back-in-stock flow / segments), with per-signup context.
+      window.klaviyo.push([
+        'track',
+        'Back in Stock Requested',
+        {
+          ProductTitle: productTitle,
+          VariantID: vid,
+          VariantTitle: state.title || '',
+          Market: market,
+          SourceURL: window.location.href,
+        },
+      ]);
+      // Profile custom properties (visible on the Klaviyo profile).
+      window.klaviyo.push([
+        'identify',
+        {
+          'Last OOS Product': productTitle,
+          'Last OOS Variant': state.title || '',
+          'Last OOS Variant ID': vid,
+          'Last OOS Market': market,
+          'Last OOS URL': window.location.href,
+        },
+      ]);
     } catch (e) {}
+  }
+
+  // Klaviyo onsite forms dispatch a single `klaviyoForms` event on window; the
+  // submit is e.detail.type === 'submit'. Only tag our notify form's submit.
+  window.addEventListener('klaviyoForms', function (e) {
+    if (!e || !e.detail || e.detail.type !== 'submit') return;
+    var fid = notifyFormId();
+    if (fid && e.detail.formId && String(e.detail.formId) !== String(fid)) return;
+    tagSubmission();
   });
 })();
