@@ -3891,6 +3891,7 @@ button#bubbleWrapper, #proof-factor-app {
   width: 100% !important;
   margin: 24px 0 0 !important;
   padding: 0 !important;
+  min-width: auto;
 }
 
 /* Reset both action buttons */
