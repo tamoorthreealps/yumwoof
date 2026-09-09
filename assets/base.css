@@ -3803,7 +3803,7 @@ button#bubbleWrapper, #proof-factor-app {
   margin: 0 !important;
   /* top | right | bottom | left — left leaves room for the cookie icon (24 + 52 + 20) */
   padding: 24px 48px 20px 104px!important;
-  background: rgba(255, 249, 239, 0.9) !important;
+  background: #fff9efcc !important;
   -webkit-backdrop-filter: blur(6px) !important;
   backdrop-filter: blur(6px) !important;
   border: 0 !important;
