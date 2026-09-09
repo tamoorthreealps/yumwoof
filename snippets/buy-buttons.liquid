@@ -248,13 +248,30 @@
       {%- if v_any_notify contains 'true' -%}{%- assign any_notify = true -%}{%- endif -%}
     {%- endfor -%}
 
-    <style>
+    {% style %}
       [data-variant-notify] { margin-top: 1.6rem; }
       .pdp--variant-oos .product-form__input.product-form__quantity,
       .pdp--variant-oos .qty.freq { display: none !important; }
       /* When the notify form is the CTA, hide the Sold Out button entirely. */
       .pdp--variant-notify .product-form__buttons { display: none !important; }
-    </style>
+
+      /* Notify form styled to match the Coming Soon Klaviyo form (unchanged). */
+      .variant-notify .klaviyo-form.klaviyo-form.klaviyo-form { background: transparent !important; padding: 0 !important; border: 0 !important; }
+      .variant-notify .needsclick { padding: 0 !important; min-height: auto !important; }
+      .variant-notify .needsclick.kl-private-reset-css-Xuajs1 h1 { text-align: left !important; margin: 0 0 12px !important; }
+      .variant-notify .needsclick.kl-private-reset-css-Xuajs1 h1 span { color: #000; font-size: 16px !important; line-height: 24px; letter-spacing: -.64px; font-family: TAY Birdie !important; text-transform: uppercase; margin: 0 !important; text-align: left !important; }
+      .variant-notify .klaviyo-emailinput input { background: #FFF !important; border: 1px solid #000 !important; border-radius: 12px !important; padding: 16px 28px !important; height: 64px !important; color: #000 !important; font-size: 18px !important; line-height: 24px !important; letter-spacing: 0 !important; font-family: 'Matter' !important; }
+      .variant-notify .klaviyo-emailinput input::placeholder { color: #000 !important; font-family: 'Matter' !important; letter-spacing: 0 !important; font-size: 18px !important; opacity: 1; }
+      .variant-notify .klaviyo-form-button { background: #000 !important; font-weight:500 !important; color: #FFF9EF !important; font-size: 22px !important; line-height: 24px !important; letter-spacing: 1.32px !important; font-family: 'FFBlurProMedium' !important; border: 1px solid #000 !important; border-radius: 12px !important; margin: 12px 0 0; height: 63px !important; }
+      .variant-notify .klaviyo-form-button:hover { background: transparent !important; color: #000 !important; transition: all .25s ease; }
+
+      @media screen and (max-width: 990px) {
+        .variant-notify .needsclick.kl-private-reset-css-Xuajs1 h1 { margin: 0 0 8px !important; }
+        .variant-notify .klaviyo-emailinput input { border-radius: 8px !important; padding: 12px 16px !important; height: 48px !important; font-size: 15px !important; line-height: 24px !important; letter-spacing: 0 !important; }
+        .variant-notify .klaviyo-emailinput input::placeholder { font-size: 15px !important; }
+        .variant-notify .klaviyo-form-button { font-size: 18px !important; letter-spacing: .96px !important; border-radius: 8px !important; height: 54px !important; }
+      }
+    {% endstyle %}
 
     <script type="application/json" data-variant-oos-map data-section-id="{{ section_id }}" data-product-title="{{ product.title | escape }}" data-market="{{ localization.country.iso_code | default: localization.market.handle | escape }}">
       { {%- for v in product.variants -%}
@@ -265,10 +282,8 @@
     </script>
 
     {%- if any_notify -%}
-      <div class="variant-notify" data-variant-notify data-section-id="{{ section_id }}" hidden>
-        {%- if block.settings.notify_heading != blank -%}
-          <p class="variant-notify__heading">{{ block.settings.notify_heading }}</p>
-        {%- endif -%}
+      {%- comment -%} Same markup shape as the Coming Soon form: just the Klaviyo embed. {%- endcomment -%}
+      <div class="variant-notify product-form--coming-soon" data-variant-notify data-section-id="{{ section_id }}" hidden>
         {%- if notify_form_class != blank -%}
           <div class="{{ notify_form_class }}"></div>
         {%- endif -%}
