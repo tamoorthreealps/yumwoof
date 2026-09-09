@@ -151,7 +151,11 @@
           {%- endif -%}
         </div>
       </div>
-      {%- if card_variant.available -%}
+      {%- comment -%} Variant-level per-market OOS (custom.oos_markets) — forced Sold Out. {%- endcomment -%}
+      {%- capture cd_variant_oos %}{% render 'variant-market-availability', variant: card_variant, list: 'oos' %}{% endcapture -%}
+      {%- assign cd_is_oos = false -%}
+      {%- if cd_variant_oos contains 'true' -%}{%- assign cd_is_oos = true -%}{%- endif -%}
+      {%- if card_variant.available and cd_is_oos == false -%}
         <button
           type="button"
           class="cd-hex-btn cd-rec-card__add"
