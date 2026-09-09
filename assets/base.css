@@ -4041,8 +4041,8 @@ flex-wrap: wrap !important;
 
   #shopify-pc__banner #shopify-pc__banner__btn-decline,
   #shopify-pc__banner #shopify-pc__banner__btn-accept {
-        flex: 1 1 calc(50% - 0px) !important;
-        width: calc(50% - 0px) !important;
+        flex: 0 1 calc(50% - 4px) !important;
+        width: calc(50% - 4px) !important;
         max-width: 160px !important;
         height: 32px !important;
         border-width: 1px !important;
