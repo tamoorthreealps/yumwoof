@@ -120,8 +120,10 @@
             {%- endif -%}
           {%- endfor -%}
 
-          {%- if recipe_value != blank -%}
-            <p class="cd-rec-card__subtitle">{{ recipe_value }}</p>
+          {%- assign display_recipe = recipe_value | default: product.metafields.custom.subheading.value -%}
+
+          {%- if display_recipe != blank -%}
+            <p class="cd-rec-card__subtitle">{{ display_recipe }}</p>
           {%- endif -%}
           {%- assign rec_variant = product.selected_or_first_available_variant -%}
           {%- assign rec_variant = product.selected_or_first_available_variant -%}
