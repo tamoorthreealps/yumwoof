@@ -40,17 +40,25 @@
     if (!vid) return;
     current = vid;
     var state = map[vid] || {};
+    var notifyActive = !!(state.oos && state.notify);
 
-    // Hide qty + subscription for OOS variants (button handled by product-info.js).
-    if (productInfo) productInfo.classList.toggle('pdp--variant-oos', !!state.oos);
+    if (productInfo) {
+      // Hide qty + subscription for OOS variants (button label handled by product-info.js).
+      productInfo.classList.toggle('pdp--variant-oos', !!state.oos);
+      // When the notify form is the CTA, hide the Sold Out button too.
+      productInfo.classList.toggle('pdp--variant-notify', notifyActive);
+    }
 
     // Show the notify form only when this variant is OOS AND flagged for notify.
     if (notifyEl) {
-      var show = !!(state.oos && state.notify);
-      notifyEl.hidden = !show;
+      notifyEl.hidden = !notifyActive;
       notifyEl.setAttribute('data-variant-id', vid);
       notifyEl.setAttribute('data-variant-title', state.title || '');
     }
+
+    // Suppress the sticky ATC bar for notify variants — the form is the CTA.
+    var sticky = document.getElementById('StickyAtc-' + sectionId);
+    if (sticky) sticky.hidden = notifyActive;
   }
 
   apply(currentVariantId());
