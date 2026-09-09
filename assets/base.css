@@ -3810,8 +3810,6 @@ button#bubbleWrapper, #proof-factor-app {
   border-radius: 20px 20px 0 0 !important;
   box-shadow: none !important;
   color: #000 !important;
-  z-index: 999999 !important;
-  animation: cookieBannerSlideUp 0.45s ease-out both !important;
 }
 #shopify-pc__banner.shopify-pc__banner__dialog::after {
   content: "" !important;
@@ -3822,17 +3820,6 @@ button#bubbleWrapper, #proof-factor-app {
   -webkit-backdrop-filter: blur(4px) !important;
   z-index: -1 !important;
   pointer-events: none !important;
-}
-@keyframes cookieBannerSlideUp {
-  from {
-    transform: translate(-50%, 100%);
-    opacity: 0;
-  }
-
-  to {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
 }
 /* Cookie icon — upload the PNG exported from Figma (layer "Subtract", node 8010-711 @2x)
    to theme assets as cookie-icon.png and adjust the path below if needed */
