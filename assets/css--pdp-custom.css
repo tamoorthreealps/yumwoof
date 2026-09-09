@@ -222,6 +222,7 @@
     letter-spacing: -.48px;
     text-transform: uppercase;
     white-space: nowrap;
+    min-height:18px;
 }
 
 .recipe-swatch__input.disabled + .recipe-swatch__label {
