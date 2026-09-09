@@ -4009,45 +4009,46 @@ order: 1 !important;
 
   /* 44px cookie sits left of the title */
   #shopify-pc__banner.shopify-pc__banner__dialog::before {
-    top: 16px !important;
-    left: 29px !important;
-    width: 44px !important;
-    height: 44px !important;
+        top: 12px !important;
+        left: 32px !important;
+        width: 32px !important;
+        height: 32px !important;
   }
 
   #shopify-pc__banner #shopify-pc__banner__body-title {
-    margin: 0 0 18px !important;
-    padding-left: 57px !important; /* 29 + 44 + 12 gap − 28 side padding */
-    min-height: 24px !important;
-    font-size: 16px !important;
-    line-height: 24px !important;
-    letter-spacing: -0.16px !important;
+        margin: 0 0 12px !important;
+        padding-left: 40px !important;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        letter-spacing: -.16px !important;
+        transform: translateY(1px);
   }
 
   #shopify-pc__banner .shopify-pc__banner__body p {
-    max-width: none !important;
-    font-size: 13px !important;
-    line-height: 20px !important;
+max-width: none !important;
+        font-size: 10px !important;
+        line-height: 16px !important;
   }
 
   #shopify-pc__banner .shopify-pc__banner__btns,
   #shopify-pc__banner .shopify-pc__banner__btns-granular {
-    flex-wrap: wrap !important;
-    justify-content: space-between !important;
-    gap: 8px !important;
-    margin-top: 16px !important;
+flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        margin-top: 12px !important;
+        flex-direction: row;
   }
 
   #shopify-pc__banner #shopify-pc__banner__btn-decline,
   #shopify-pc__banner #shopify-pc__banner__btn-accept {
-    flex: 1 1 calc(50% - 4px) !important;
-    width: calc(50% - 4px) !important;
-    max-width: 156px !important;
-    height: 32px !important;
-    border-width: 1px !important;
-    font-size: 12px !important;
-    line-height: 20px !important;
-    letter-spacing: 0.48px !important;
+        flex: 1 1 calc(50% - 0px) !important;
+        width: calc(50% - 0px) !important;
+        max-width: 160px !important;
+        height: 32px !important;
+        border-width: 1px !important;
+        font-size: 12px !important;
+        line-height: 20px !important;
+        letter-spacing: .48px !important;
   }
 
   #shopify-pc__banner #shopify-pc__banner__btn-decline {
@@ -4059,14 +4060,14 @@ order: 1 !important;
   }
 
   #shopify-pc__banner #shopify-pc__banner__btn-manage-prefs {
-    order: 3 !important;
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    margin: 8px 0 0 !important; /* 8px + 8px row gap = 16px per Figma */
-    text-align: left !important;
-    justify-content: flex-start !important;
-    font-size: 12px !important;
-    line-height: 16px !important;
+        order: 3 !important;
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        margin: 0px 0 0 !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        font-size: 12px !important;
+        line-height: 16px !important;
   }
 }
 
