@@ -224,6 +224,11 @@
     white-space: nowrap;
 }
 
+html.mac-os .recipe-swatch__badge {
+    padding-top: 0.4px !important;
+    padding-bottom: 0 !important;
+}
+
 .recipe-swatch__input.disabled + .recipe-swatch__label {
   opacity: 0.4;
   cursor: not-allowed;
