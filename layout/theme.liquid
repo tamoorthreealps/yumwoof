@@ -657,6 +657,31 @@
     subtree: true
   });
 })();
+
+(function () {
+  var CLS = 'yw-cookie-open', root = document.documentElement, raf = 0;
+
+  function bannerVisible() {
+    var el = document.getElementById('shopify-pc__banner');
+    if (!el || !el.isConnected) return false;
+    var cs = getComputedStyle(el);
+    return cs.display !== 'none' && cs.visibility !== 'hidden' && !el.hidden;
+  }
+
+  function sync() {
+    raf = 0;
+    root.classList.toggle(CLS, bannerVisible());
+  }
+
+  function schedule() { if (!raf) raf = requestAnimationFrame(sync); }
+
+  new MutationObserver(schedule).observe(root, {
+    childList: true, subtree: true,
+    attributes: true, attributeFilter: ['style', 'class', 'hidden', 'aria-hidden']
+  });
+
+  sync();
+})();
 </script>
   </body>
 </html>
