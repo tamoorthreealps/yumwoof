@@ -3811,16 +3811,7 @@ button#bubbleWrapper, #proof-factor-app {
   box-shadow: none !important;
   color: #000 !important;
 }
-#shopify-pc__banner.shopify-pc__banner__dialog::after {
-  content: "" !important;
-  position: fixed !important;
-  inset: 0 !important;
-  background: rgba(0, 0, 0, 0.35) !important;
-  backdrop-filter: blur(4px) !important;
-  -webkit-backdrop-filter: blur(4px) !important;
-  z-index: -1 !important;
-  pointer-events: none !important;
-}
+
 /* Cookie icon — upload the PNG exported from Figma (layer "Subtract", node 8010-711 @2x)
    to theme assets as cookie-icon.png and adjust the path below if needed */
 #shopify-pc__banner.shopify-pc__banner__dialog::before {
