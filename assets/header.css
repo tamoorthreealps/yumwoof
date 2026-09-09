@@ -924,6 +924,12 @@ display: flex;
   }
 }
 
+@media screen and (max-width: 375px) {
+  .yw-nav__logo {
+    margin: 0 0 0 10px;
+  }
+}
+
 @media screen and (min-width: 990px) {
   /* Overlay only exists on mobile */
   .yw-mobile-menu {
