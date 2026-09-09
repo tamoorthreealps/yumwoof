@@ -36,7 +36,37 @@
     if value.available
       assign option_disabled = false
     endif
+
+    # Variant-level per-market OOS: find the variant this value maps to (holding
+    # the other options at their selected value) so a forced-OOS variant renders
+    # "cut off" in the picker, exactly like a genuinely unavailable one.
+    assign cur_idx = option.position | minus: 1
+    assign value_str = value | strip
+    assign vmo_target = null
+    for v in product.variants
+      assign vmo_match = true
+      for optv in product.options_with_values
+        assign j = forloop.index0
+        if j == cur_idx
+          unless v.options[j] == value_str
+            assign vmo_match = false
+          endunless
+        else
+          unless v.options[j] == optv.selected_value
+            assign vmo_match = false
+          endunless
+        endif
+      endfor
+      if vmo_match and vmo_target == null
+        assign vmo_target = v
+      endif
+    endfor
   -%}
+
+  {%- if vmo_target != null -%}
+    {%- capture vmo_oos %}{% render 'variant-market-availability', variant: vmo_target, list: 'oos' %}{% endcapture -%}
+    {%- if vmo_oos contains 'true' -%}{%- assign option_disabled = true -%}{%- endif -%}
+  {%- endif -%}
 
   {%- capture input_id -%}
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
