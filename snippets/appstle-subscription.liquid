@@ -22,32 +22,32 @@
       .asw-option.is-selected { background: #E6E0D7; }
 
       .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .asw__save-pill {
-  display: inline-flex;
-      align-items: center;
-      background: #FFC069;
-      color: #000000;
-      font-size: 16px;
-      line-height: 16px;
-      letter-spacing: -1.28px;
-      text-transform: uppercase;
-      padding: 3px 6.58px 0;
-      border-radius: 999px;
-      white-space: nowrap;
-      border: 1px solid #000000;
-      font-family: 'TAY Birdie';
-      min-height: 20px;
-    }
-  @supports (-webkit-touch-callout: none) {
-  		.asw__save-pill {
-  			padding-top: 0;
-  			padding-bottom: 2px;
-  		}
-  	}
+.asw__save-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 
-/* iPhone / iPad */
+    background: #FFC069;
+    color: #000000;
+
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: -1.28px;
+    text-transform: uppercase;
+
+    padding: 3px 6.58px 0;
+
+    border-radius: 999px;
+    white-space: nowrap;
+    border: 1px solid #000000;
+
+    font-family: 'TAY Birdie';
+    min-height: 20px;
+}
+/* iOS only */
 @supports (-webkit-touch-callout: none) {
-    @media (max-width: 1024px) {
+    @media (hover: none) and (pointer: coarse) {
         .asw__save-pill {
             padding-top: 0;
             padding-bottom: 2px;
