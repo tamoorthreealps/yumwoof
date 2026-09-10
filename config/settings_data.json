@@ -436,7 +436,7 @@
       },
       "12509190167029697241": {
         "type": "shopify://apps/blotout-edgetag/blocks/app-embed/ae22d985-ba57-41f5-94c5-18d3dd98ea3c",
-        "disabled": true,
+        "disabled": false,
         "settings": {}
       }
     },
