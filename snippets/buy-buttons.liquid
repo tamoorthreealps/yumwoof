@@ -268,25 +268,23 @@
       .variant-notify .klaviyo-form-button:hover { background: transparent !important; color: #000 !important; transition: all .25s ease; }
 
       /* ----- Success message (post-submit "You're on the list.") -----
-         Klaviyo's success view is the form once the email field is gone. Styled as
-         the blue confirmation box from the design. Desktop sizes here; mobile below. */
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) {
+         Klaviyo's success view = the <form> element once the email field + submit
+         button are gone. Only the <form> is styled as the blue box (the outer
+         .klaviyo-form div stays transparent, so it doesn't nest). The heading/body
+         are .klaviyo-form-richtext <p><span> in two form-rows, not h1/h2 — Klaviyo
+         sets their font inline, so these override with !important. Desktop sizes here. */
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) {
         background: #7BA6DD !important; border: 1px solid #000 !important;
-        border-radius: 16px !important; padding: 32px 24px !important; text-align: center !important;
+        border-radius: 16px !important; padding: 28px 24px !important;
       }
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) .needsclick { text-align: center !important; }
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) h1,
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) h2 { text-align: center !important; margin: 0 0 8px !important; }
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) h1 span,
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) h2 span {
-        color: #000 !important; font-size: 29px !important; line-height: 1.05 !important;
-        letter-spacing: -1.16px !important; font-family: 'TAY Birdie' !important;
-        text-transform: uppercase !important; text-align: center !important;
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) > div { min-height: 0 !important; }
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(1) .klaviyo-form-richtext span {
+        color: #000 !important; font-family: 'TAY Birdie' !important; font-size: 29px !important;
+        line-height: 1.05 !important; letter-spacing: -1.16px !important; text-transform: uppercase !important;
       }
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) p span,
-      .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) p {
-        color: #000 !important; font-size: 18px !important; line-height: 24px !important;
-        font-family: 'Matter' !important; text-align: center !important;
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(2) .klaviyo-form-richtext span {
+        color: #000 !important; font-family: 'Matter' !important; font-size: 18px !important;
+        line-height: 24px !important; letter-spacing: 0 !important;
       }
 
       @media screen and (max-width: 990px) {
@@ -295,10 +293,8 @@
         .variant-notify .klaviyo-emailinput input::placeholder { font-size: 15px !important; }
         .variant-notify .klaviyo-form-button { font-size: 18px !important; letter-spacing: .96px !important; border-radius: 8px !important; height: 54px !important; }
         /* Success message: mobile sizes (heading 24, body 16). */
-        .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) h1 span,
-        .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) h2 span { font-size: 24px !important; letter-spacing: -.96px !important; }
-        .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) p span,
-        .variant-notify .klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) p { font-size: 16px !important; }
+        .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(1) .klaviyo-form-richtext span { font-size: 24px !important; letter-spacing: -.96px !important; }
+        .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(2) .klaviyo-form-richtext span { font-size: 16px !important; }
       }
     {% endstyle %}
 
