@@ -879,11 +879,7 @@
 </product-info>
 
 {%- if section.settings.enable_sticky_atc -%}
-  {% render 'sticky-atc',
-    product: product,
-    section_id: section.id,
-    label: section.settings.sticky_atc_button_label
-  %}
+  {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label %}
 {%- endif -%}
 
 {% render 'ingridients-popup' %}
