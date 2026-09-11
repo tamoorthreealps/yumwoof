@@ -13,13 +13,10 @@
 
   Accepts:
   - variant: {Object} the variant to test
-  - list: {String} 'oos' -> custom.oos_markets, 'notify' -> custom.notify_markets
+  - list: {String} kept for backwards compatibility; only custom.oos_markets is used.
 {%- endcomment -%}
 {%- liquid
   assign vma_markets = variant.metafields.custom.oos_markets.value
-  if list == 'notify'
-    assign vma_markets = variant.metafields.custom.notify_markets.value
-  endif
 
   assign vma_hit = false
   if vma_markets != blank
