@@ -761,7 +761,18 @@ quantity-input.quantity::before {
 }
 
 a.pdp--promo--banner_link {
-    background: #661c1c26;
+    background: linear-gradient(
+      110deg,
+      #D3EAF3 0%,
+      #E8E8E0 25%,
+      #FFE6C3 50%,
+      #E8E8E0 75%,
+      #D3EAF3 100%
+    );
+
+    background-size: 300% 100%;
+    animation: smoothBannerGradient 12s ease-in-out infinite;
+    will-change: background-position;
     border-radius: 6px;
     display: flex;
     align-items: center;
@@ -769,6 +780,20 @@ a.pdp--promo--banner_link {
     gap: 8px;
     text-decoration: none;
     padding: 9px 15px;
+}
+
+@keyframes smoothBannerGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 a.pdp--promo--banner_link p {
