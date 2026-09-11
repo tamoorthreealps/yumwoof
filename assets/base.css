@@ -3807,7 +3807,7 @@ button#bubbleWrapper, #proof-factor-app {
   -webkit-backdrop-filter: blur(6px) !important;
   backdrop-filter: blur(6px) !important;
   border: 0 !important;
-  border-radius: 20px 20px 0 0 !important;
+  border-radius: 0 20px 0 0 !important;
   box-shadow: none !important;
   color: #000 !important;
 }
@@ -4005,6 +4005,7 @@ order: 1 !important;
         width: 392px !important;
         max-width: calc(100% - 0px) !important;
         padding: 16px 32px !important;
+        border-radius: 20px 20px 0 0 !important;
     }
 
   /* 44px cookie sits left of the title */
