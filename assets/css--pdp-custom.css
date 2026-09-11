@@ -814,6 +814,31 @@ a.pdp--promo--banner_link svg {
     width: 8px;
 }
 
+.promo-banner-arrow {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+  transform: translateX(0);
+  animation: promoArrowAttention 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes promoArrowAttention {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+
+  72% {
+    transform: translateX(7px);
+  }
+
+  82% {
+    transform: translateX(0);
+  }
+}
+
 .rating-wrap {
     display: flex;
     flex-wrap: wrap;
