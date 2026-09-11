@@ -4004,7 +4004,7 @@ order: 1 !important;
         width: 392px !important;
         max-width: calc(100% - 0px) !important;
         padding: 16px 32px !important;
-        border-radius: 20px 20px 0 0 !important;
+        border-radius: 24px 24px 0 0 !important;
         transform: translateX(-50%) !important;
         left: 50% !important;
     }
