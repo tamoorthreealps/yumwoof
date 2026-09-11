@@ -43,6 +43,29 @@
       endif
     -%}
 
+    {%- comment -%}
+      Variant-level per-market OOS. When the selected variant's custom.oos_markets
+      lists the current market, force a "Sold Out" state (frontend only — backend
+      stock is untouched) AND show the Klaviyo notify form for that market. A single
+      metafield drives both. Product-level "Coming Soon" (is_market_unavailable) still
+      takes precedence, so this only applies when the product is otherwise for sale.
+    {%- endcomment -%}
+    {%- assign cur_variant = product.selected_or_first_available_variant -%}
+    {%- capture v_oos_check %}{% render 'variant-market-availability', variant: cur_variant, list: 'oos' %}{% endcapture -%}
+    {%- liquid
+      assign variant_oos = false
+      assign variant_notify = false
+      if v_oos_check contains 'true'
+        assign variant_oos = true
+        assign variant_notify = true
+      endif
+      if is_market_unavailable
+        assign variant_oos = false
+        assign variant_notify = false
+      endif
+      assign notify_form_class = block.settings.notify_form_class | default: '' | strip
+    -%}
+
     {%- if is_market_unavailable -%}
       <style>
         .product-form__input.product-form__quantity, .qty.freq{
@@ -163,6 +186,7 @@
           {% if product.selected_or_first_available_variant.available == false
             or quantity_rule_soldout
             or product.selected_or_first_available_variant == null
+            or variant_oos
           %}
             disabled
           {% endif %}
@@ -187,6 +211,7 @@
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
+              or variant_oos
             %}
               disabled
             {% endif %}
@@ -194,7 +219,7 @@
             <span>
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout or variant_oos -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
                 {{ 'products.product.add_to_cart' | t }}
@@ -208,6 +233,86 @@
         </div>
       {%- endform -%}
     </product-form>
+
+    {%- comment -%}
+      Variant-level per-market OOS support: a per-variant state map (for JS to react
+      to variant changes without a page reload) and, when any variant is OOS in this
+      market, the Klaviyo notify form (shown/hidden by assets/oos-notify.js).
+    {%- endcomment -%}
+    {%- assign any_notify = false -%}
+    {%- for v in product.variants -%}
+      {%- capture v_any_notify %}{% render 'variant-market-availability', variant: v, list: 'oos' %}{% endcapture -%}
+      {%- if v_any_notify contains 'true' -%}{%- assign any_notify = true -%}{%- endif -%}
+    {%- endfor -%}
+
+    {% style %}
+      [data-variant-notify] { margin-top: 1.6rem; }
+      .pdp--variant-oos .product-form__input.product-form__quantity,
+      .pdp--variant-oos .qty.freq { display: none !important; }
+      /* When the notify form is the CTA, hide the Sold Out button entirely. */
+      .pdp--variant-notify .product-form__buttons { display: none !important; }
+      /* ...and hide the guarantee ribbon while the notify form is showing. */
+      .pdp--variant-notify .ym-guarantee-ribbon { display: none !important; }
+
+      /* Notify form styled to match the Coming Soon Klaviyo form (unchanged). */
+      .variant-notify .klaviyo-form.klaviyo-form.klaviyo-form { background: transparent !important; padding: 0 !important; border: 0 !important; }
+      .variant-notify .needsclick { padding: 0 !important; min-height: auto !important; }
+      .variant-notify .needsclick.kl-private-reset-css-Xuajs1 h1 { text-align: left !important; margin: 0 0 12px !important; }
+      .variant-notify .needsclick.kl-private-reset-css-Xuajs1 h1 span { color: #000; font-size: 16px !important; line-height: 24px; letter-spacing: -.64px; font-family: TAY Birdie !important; text-transform: uppercase; margin: 0 !important; text-align: left !important; }
+      .variant-notify .klaviyo-emailinput input { background: #FFF !important; border: 1px solid #000 !important; border-radius: 12px !important; padding: 16px 28px !important; height: 64px !important; color: #000 !important; font-size: 18px !important; line-height: 24px !important; letter-spacing: 0 !important; font-family: 'Matter' !important; }
+      .variant-notify .klaviyo-emailinput input::placeholder { color: #000 !important; font-family: 'Matter' !important; letter-spacing: 0 !important; font-size: 18px !important; opacity: 1; }
+      .variant-notify .klaviyo-form-button { background: #7BA6DD !important; font-weight:500 !important; color: #000 !important; font-size: 22px !important; line-height: 24px !important; letter-spacing: 1.32px !important; font-family: 'FFBlurProMedium' !important; border: 1px solid #000 !important; border-radius: 12px !important; margin: 12px 0 0; height: 63px !important; }
+      .variant-notify .klaviyo-form-button:hover { background: transparent !important; color: #000 !important; transition: all .25s ease; }
+
+      /* ----- Success message (post-submit "You're on the list.") -----
+         Klaviyo's success view = the <form> element once the email field + submit
+         button are gone. Only the <form> is styled as the blue box (the outer
+         .klaviyo-form div stays transparent, so it doesn't nest). The heading/body
+         are .klaviyo-form-richtext <p><span> in two form-rows, not h1/h2 — Klaviyo
+         sets their font inline, so these override with !important. Desktop sizes here. */
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) {
+        background: #7BA6DD !important; border: 1px solid #000 !important;
+        border-radius: 16px !important; padding: 40px 53px !important;
+      }
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) > div { min-height: 0 !important; }
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(1) .klaviyo-form-richtext span {
+        color: #000 !important; font-family: 'TAY Birdie' !important; font-size: 29px !important; margin:0 0 8px !important;
+        line-height: 25px !important; font-weight:400 !important; letter-spacing: -1.16px !important; text-transform: uppercase !important; display: block !important;
+      }
+      .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(2) .klaviyo-form-richtext span {
+        color: #000 !important; font-family: 'Matter' !important; font-size: 18px !important;
+        line-height: 24px !important; letter-spacing: 0 !important; font-weight:500 !important;
+      }
+
+      @media screen and (max-width: 990px) {
+        .variant-notify .needsclick.kl-private-reset-css-Xuajs1 h1 { margin: 0 0 8px !important; }
+        .variant-notify .klaviyo-emailinput input { border-radius: 8px !important; padding: 12px 16px !important; height: 48px !important; font-size: 15px !important; line-height: 24px !important; letter-spacing: 0 !important; }
+        .variant-notify .klaviyo-emailinput input::placeholder { font-size: 15px !important; }
+        .variant-notify .klaviyo-form-button { font-size: 18px !important; letter-spacing: .96px !important; border-radius: 8px !important; height: 54px !important; }
+        /* Success message: mobile sizes (heading 24, body 16). */
+        .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(1) .klaviyo-form-richtext span { font-size: 24px !important; letter-spacing: -.96px !important; line-height: 20px !important; }
+        .variant-notify form.klaviyo-form:not(:has(.klaviyo-emailinput)):not(:has(.klaviyo-form-button)) [data-testid="form-row"]:nth-of-type(2) .klaviyo-form-richtext span { font-size: 16px !important; max-width:201px !important; margin:0 auto !important; display: block !important; }
+      }
+    {% endstyle %}
+
+    <script type="application/json" data-variant-oos-map data-section-id="{{ section_id }}" data-product-title="{{ product.title | escape }}" data-market="{{ localization.country.iso_code | default: localization.market.handle | escape }}">
+      { {%- for v in product.variants -%}
+          {%- capture v_o %}{% render 'variant-market-availability', variant: v, list: 'oos' %}{% endcapture -%}
+          {%- assign v_is_oos = false -%}{%- if v_o contains 'true' -%}{%- assign v_is_oos = true -%}{%- endif -%}
+          "{{ v.id }}": { "oos": {{ v_is_oos }}, "notify": {{ v_is_oos }}, "title": {{ v.title | json }} }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%} }
+    </script>
+
+    {%- if any_notify -%}
+      {%- comment -%} Same markup shape as the Coming Soon form: just the Klaviyo embed. {%- endcomment -%}
+      <div class="variant-notify product-form--coming-soon" data-variant-notify data-section-id="{{ section_id }}" hidden>
+        {%- if notify_form_class != blank -%}
+          <div class="{{ notify_form_class }}"></div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <script src="{{ 'oos-notify.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
   {%- else -%}
     <div class="product-form">

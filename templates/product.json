@@ -76,7 +76,8 @@
             "show_gift_card_recipient": false,
             "coming_soon_heading": "Coming Soon",
             "coming_soon_text": "",
-            "klaviyo_form_class": "klaviyo-form-Ry6Yff"
+            "klaviyo_form_class": "klaviyo-form-Ry6Yff",
+            "notify_form_class": "klaviyo-form-U4VcBG"
           }
         },
         "guarantee_ribbon_NUFwfW": {
@@ -152,7 +153,7 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "promo_banner_content": "<p>New to Yumwoof? <strong>Get a Personalized Meal Plan + 30% off</strong></p>",
+        "promo_banner_content": "<p>New here? <strong>Get a Personalized Plan + 30% off</strong></p>",
         "promo_banner_link": "https://my.yumwoof.com/",
         "media_size": "large",
         "constrain_to_viewport": true,
@@ -162,7 +163,9 @@
         "media_position": "left",
         "image_zoom": "none",
         "hide_variants": true,
-        "enable_video_looping": false
+        "enable_video_looping": false,
+        "enable_sticky_atc": true,
+        "sticky_atc_button_label": "Add to Bag"
       }
     },
     "pdp_faqs_section_k4GtF3": {

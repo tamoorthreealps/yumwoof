@@ -230,6 +230,11 @@ html.mac-os .recipe-swatch__badge {
     padding-bottom: 0 !important;
 }
 
+html.mac-os .recipe-swatch__badge {
+    padding-top: 0.4px !important;
+    padding-bottom: 0 !important;
+}
+
 .recipe-swatch__input.disabled + .recipe-swatch__label {
   opacity: 0.4;
   cursor: not-allowed;
@@ -762,7 +767,18 @@ quantity-input.quantity::before {
 }
 
 a.pdp--promo--banner_link {
-    background: #661c1c26;
+    background: linear-gradient(
+      110deg,
+      #D3EAF3 0%,
+      #E8E8E0 25%,
+      #FFE6C3 50%,
+      #E8E8E0 75%,
+      #D3EAF3 100%
+    );
+
+    background-size: 300% 100%;
+    animation: smoothBannerGradient 8s ease-in-out infinite;
+    will-change: background-position;
     border-radius: 6px;
     display: flex;
     align-items: center;
@@ -772,21 +788,57 @@ a.pdp--promo--banner_link {
     padding: 9px 15px;
 }
 
+@keyframes smoothBannerGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 a.pdp--promo--banner_link p {
     margin: 0;
     color: #000;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 18px;
-    letter-spacing: -.13px;
+    letter-spacing: -.14px;
 }
 
 a.pdp--promo--banner_link p strong {
   color: #661d1d;
   font-weight: 500;
+  text-decoration: underline;
 }
 
 a.pdp--promo--banner_link svg {
-    width: 8px;
+    width: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateX(0);
+    animation: promoArrowAttention 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes promoArrowAttention {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+
+  72% {
+    transform: translateX(7px);
+  }
+
+  82% {
+    transform: translateX(0);
+  }
 }
 
 .rating-wrap {
@@ -910,7 +962,7 @@ display: flex;
 
 a.pdp--promo--banner_link {
   border-radius: 8px;
-  gap: 16px;
+  gap: 8px;
   padding: 12px;
 }
 

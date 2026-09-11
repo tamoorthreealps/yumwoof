@@ -3779,3 +3779,357 @@ button#bubbleWrapper, #proof-factor-app {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+
+
+/***** cookie--banner--css *****/
+/* ==========================================================================
+   Yumwoof — Shopify Cookie Consent banner overrides (CSS only)
+   Targets Shopify's default #shopify-pc__banner markup. No DOM changes.
+   Figma: desktop 8013-763 (624×196) / mobile 8013-779 (376×228)
+   ========================================================================== */
+
+/* ---------- Banner container ---------- */
+#shopify-pc__banner.shopify-pc__banner__dialog {
+  position: fixed !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left:0 !important;
+  right: auto !important;
+  box-sizing: border-box !important;
+  width: 616px !important;
+  max-width: calc(100% - 16px) !important;
+  margin: 0 !important;
+  /* top | right | bottom | left — left leaves room for the cookie icon (24 + 52 + 20) */
+  padding: 24px 48px 20px 104px!important;
+  background: #fff9efcc !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  backdrop-filter: blur(6px) !important;
+  border: 0 !important;
+  border-radius: 0 20px 0 0 !important;
+  box-shadow: none !important;
+  color: #000 !important;
+}
+
+/* Cookie icon — upload the PNG exported from Figma (layer "Subtract", node 8010-711 @2x)
+   to theme assets as cookie-icon.png and adjust the path below if needed */
+#shopify-pc__banner.shopify-pc__banner__dialog::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 24px !important;
+  left: 36px !important;
+  width: 52px !important;
+  height: 52px !important;
+  background: url("https://cdn.shopify.com/s/files/1/0317/2827/1419/files/Cookie_Image.png?v=1788964369") no-repeat center / contain !important;
+  pointer-events: none !important;
+}
+
+#shopify-pc__banner .shopify-pc__banner__wrapper {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#shopify-pc__banner .shopify-pc__banner__body {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* ---------- Title ---------- */
+#shopify-pc__banner #shopify-pc__banner__body-title {
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  font-family: "TAY Birdie", "Matter", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 20px !important;
+  line-height: 28px !important;
+  letter-spacing: -0.2px !important;
+  text-transform: uppercase !important;
+  color: #000 !important;
+  transform: translateY(5px);
+}
+
+/* ---------- Body copy ---------- */
+#shopify-pc__banner .shopify-pc__banner__body p {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: "Matter", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  letter-spacing: 0 !important;
+  color: #000 !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__body-policy-link {
+  color: #661d1d !important;
+  font: inherit !important;
+  text-decoration: underline !important;
+  text-underline-position: from-font !important;
+  text-decoration-skip-ink: none !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__body-policy-link:hover {
+  color: #661d1d !important;
+  text-decoration: none !important;
+}
+
+/* ---------- Button row ---------- */
+#shopify-pc__banner .shopify-pc__banner__btns,
+#shopify-pc__banner .shopify-pc__banner__btns-granular {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin: 16px 0 0 !important;
+  padding: 0 !important;
+  min-width: auto;
+}
+
+/* Reset both action buttons */
+#shopify-pc__banner .shopify-pc__banner__btns button,
+#shopify-pc__banner #shopify-pc__banner__btn-accept,
+#shopify-pc__banner #shopify-pc__banner__btn-decline {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* Decline — outlined pill (Figma order: Decline, then Accept) */
+#shopify-pc__banner #shopify-pc__banner__btn-decline {
+  order: 2 !important;
+  width: 148px !important;
+  height: 32px !important;
+  border: 1px solid #000 !important;
+  border-radius: 100px !important;
+  background: transparent !important;
+  color: #000 !important;
+  font-family: 'FFBlurProMedium';
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  letter-spacing: 0.51px !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__btn-decline:hover {
+  background: #000 !important;
+  color: #fff9ef !important;
+}
+
+/* Accept — solid black pill */
+#shopify-pc__banner #shopify-pc__banner__btn-accept {
+  order: 3 !important;
+  width: 148px !important;
+  height: 32px !important;
+  border: 1px solid #000 !important;
+  border-radius: 100px !important;
+  background: #FFC069!important;
+  color: #000000 !important;
+  font-family: 'FFBlurProMedium';
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  letter-spacing: 0.56px !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__btn-accept:hover {
+  background: #000000 !important;
+  color: #FFF9EF !important;
+}
+
+/* Manage preferences — plain underlined text link, pushed to the left */
+#shopify-pc__banner #shopify-pc__banner__btn-manage-prefs {
+order: 1 !important;
+    margin-right: auto !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    font-family: Matter, sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    line-height: 16px !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: underline !important;
+    text-underline-position: from-font !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__btn-manage-prefs span {
+  font: inherit !important;
+  color: inherit !important;
+  text-decoration: inherit !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__btn-manage-prefs:hover {
+  color: #000 !important;
+}
+
+/* Keyboard focus (keeps accessibility without Shopify's default ring styles) */
+#shopify-pc__banner button:focus-visible {
+  outline: 2px solid #000 !important;
+  outline-offset: 2px !important;
+}
+
+/* ==========================================================================
+   Mobile (Figma 8013-779): 376px card, 28px side padding, cookie beside title,
+   copy full width, Decline/Accept 2-up, Manage cookies on its own row below
+   ========================================================================== */
+@media screen and (max-width: 767px) {
+    #shopify-pc__banner.shopify-pc__banner__dialog {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 16px 32px !important;
+        border-radius: 24px 24px 0 0 !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
+    }
+
+  /* 44px cookie sits left of the title */
+  #shopify-pc__banner.shopify-pc__banner__dialog::before {
+        top: 12px !important;
+        left: 32px !important;
+        width: 32px !important;
+        height: 32px !important;
+  }
+
+  #shopify-pc__banner #shopify-pc__banner__body-title {
+        margin: 0 0 12px !important;
+        padding-left: 40px !important;
+        font-size: 16px !important;
+        line-height: 24px !important;
+        letter-spacing: -.16px !important;
+        transform: translateY(1px);
+  }
+
+  #shopify-pc__banner .shopify-pc__banner__body p {
+        max-width: none !important;
+        font-size: 10px !important;
+        line-height: 16px !important;
+  }
+
+  #shopify-pc__banner .shopify-pc__banner__btns,
+  #shopify-pc__banner .shopify-pc__banner__btns-granular {
+flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        margin-top: 12px !important;
+        flex-direction: row;
+  }
+
+  #shopify-pc__banner #shopify-pc__banner__btn-decline,
+  #shopify-pc__banner #shopify-pc__banner__btn-accept {
+        flex: 1 1 0 !important;
+        width: 50% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        height: 32px !important;
+        border-width: 1px !important;
+        font-size: 12px !important;
+        line-height: 20px !important;
+        letter-spacing: .48px !important;
+  }
+
+  #shopify-pc__banner #shopify-pc__banner__btn-decline {
+    order: 1 !important;
+  }
+
+  #shopify-pc__banner #shopify-pc__banner__btn-accept {
+    order: 2 !important;
+  }
+
+  #shopify-pc__banner #shopify-pc__banner__btn-manage-prefs {
+        order: 3 !important;
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        margin: 0px 0 0 !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        font-size: 12px !important;
+        line-height: 16px !important;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #shopify-pc__banner .shopify-pc__banner__body p {
+        max-width: 328px !important;
+  }
+}
+
+/* ==========================================================================
+   OPTIONAL — Figma label is "Manage cookies", Shopify renders "Manage preferences".
+   This swaps the visible label with CSS only. Remove if you'd rather keep
+   Shopify's wording.
+   ========================================================================== */
+#shopify-pc__banner #shopify-pc__banner__btn-manage-prefs span {
+  display: none !important;
+}
+
+#shopify-pc__banner #shopify-pc__banner__btn-manage-prefs::after {
+  content: "Manage cookies" !important;
+  font: inherit !important;
+  color: inherit !important;
+  text-decoration: inherit !important;
+}
+
+/* ---------- Slide-in from bottom ---------- */
+@keyframes yw-cookie-in {
+  from { translate: 0 110%; opacity: 0; }
+  to   { translate: 0 0;    opacity: 1; }
+}
+
+#shopify-pc__banner.shopify-pc__banner__dialog {
+  z-index: 999999 !important;   /* one above the overlay */
+  animation: yw-cookie-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+}
+
+/* ---------- Full-page overlay (class set by the JS below) ---------- */
+@keyframes yw-cookie-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+html.yw-cookie-open::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: yw-cookie-overlay-in 0.3s ease-out both;
+  /* Remove this line if the page behind should stay clickable/scrollable */
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #shopify-pc__banner.shopify-pc__banner__dialog,
+  html.yw-cookie-open::before {
+    animation: none !important;
+  }
+}
