@@ -4001,8 +4001,8 @@ order: 1 !important;
    ========================================================================== */
 @media screen and (max-width: 767px) {
     #shopify-pc__banner.shopify-pc__banner__dialog {
-        width: 392px !important;
-        max-width: calc(100% - 0px) !important;
+        width: 100% !important;
+        max-width: 100% !important;
         padding: 16px 32px !important;
         border-radius: 24px 24px 0 0 !important;
         transform: translateX(-50%) !important;
@@ -4027,7 +4027,7 @@ order: 1 !important;
   }
 
   #shopify-pc__banner .shopify-pc__banner__body p {
-max-width: none !important;
+        max-width: none !important;
         font-size: 10px !important;
         line-height: 16px !important;
   }
@@ -4072,6 +4072,12 @@ flex-wrap: wrap !important;
         justify-content: flex-start !important;
         font-size: 12px !important;
         line-height: 16px !important;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  #shopify-pc__banner .shopify-pc__banner__body p {
+        max-width: 328px !important;
   }
 }
 
