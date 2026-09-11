@@ -46,20 +46,17 @@
     {%- comment -%}
       Variant-level per-market OOS. When the selected variant's custom.oos_markets
       lists the current market, force a "Sold Out" state (frontend only — backend
-      stock is untouched). If custom.notify_markets also lists the market, a Klaviyo
-      notify form is shown. Product-level "Coming Soon" (is_market_unavailable) still
+      stock is untouched) AND show the Klaviyo notify form for that market. A single
+      metafield drives both. Product-level "Coming Soon" (is_market_unavailable) still
       takes precedence, so this only applies when the product is otherwise for sale.
     {%- endcomment -%}
     {%- assign cur_variant = product.selected_or_first_available_variant -%}
     {%- capture v_oos_check %}{% render 'variant-market-availability', variant: cur_variant, list: 'oos' %}{% endcapture -%}
-    {%- capture v_notify_check %}{% render 'variant-market-availability', variant: cur_variant, list: 'notify' %}{% endcapture -%}
     {%- liquid
       assign variant_oos = false
       assign variant_notify = false
       if v_oos_check contains 'true'
         assign variant_oos = true
-      endif
-      if variant_oos and v_notify_check contains 'true'
         assign variant_notify = true
       endif
       if is_market_unavailable
@@ -239,12 +236,12 @@
 
     {%- comment -%}
       Variant-level per-market OOS support: a per-variant state map (for JS to react
-      to variant changes without a page reload) and, when any variant has a notify
+      to variant changes without a page reload) and, when any variant is OOS in this
       market, the Klaviyo notify form (shown/hidden by assets/oos-notify.js).
     {%- endcomment -%}
     {%- assign any_notify = false -%}
     {%- for v in product.variants -%}
-      {%- capture v_any_notify %}{% render 'variant-market-availability', variant: v, list: 'notify' %}{% endcapture -%}
+      {%- capture v_any_notify %}{% render 'variant-market-availability', variant: v, list: 'oos' %}{% endcapture -%}
       {%- if v_any_notify contains 'true' -%}{%- assign any_notify = true -%}{%- endif -%}
     {%- endfor -%}
 
@@ -301,8 +298,8 @@
     <script type="application/json" data-variant-oos-map data-section-id="{{ section_id }}" data-product-title="{{ product.title | escape }}" data-market="{{ localization.country.iso_code | default: localization.market.handle | escape }}">
       { {%- for v in product.variants -%}
           {%- capture v_o %}{% render 'variant-market-availability', variant: v, list: 'oos' %}{% endcapture -%}
-          {%- capture v_n %}{% render 'variant-market-availability', variant: v, list: 'notify' %}{% endcapture -%}
-          "{{ v.id }}": { "oos": {% if v_o contains 'true' %}true{% else %}false{% endif %}, "notify": {% if v_n contains 'true' %}true{% else %}false{% endif %}, "title": {{ v.title | json }} }{% unless forloop.last %},{% endunless %}
+          {%- assign v_is_oos = false -%}{%- if v_o contains 'true' -%}{%- assign v_is_oos = true -%}{%- endif -%}
+          "{{ v.id }}": { "oos": {{ v_is_oos }}, "notify": {{ v_is_oos }}, "title": {{ v.title | json }} }{% unless forloop.last %},{% endunless %}
         {%- endfor -%} }
     </script>
 
