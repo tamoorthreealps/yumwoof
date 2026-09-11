@@ -4096,7 +4096,7 @@ flex-wrap: wrap !important;
 }
 
 #shopify-pc__banner.shopify-pc__banner__dialog {
-  z-index: 2147483001 !important;   /* one above the overlay */
+  z-index: 999999 !important;   /* one above the overlay */
   animation: yw-cookie-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both !important;
 }
 
@@ -4110,7 +4110,7 @@ html.yw-cookie-open::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 2147483000;
+  z-index: 999999;
   background: rgba(0, 0, 0, 0.35);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
