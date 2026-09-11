@@ -3794,9 +3794,8 @@ button#bubbleWrapper, #proof-factor-app {
   position: fixed !important;
   top: auto !important;
   bottom: 0 !important;
-  left: 50% !important;
+  left:0 !important;
   right: auto !important;
-  transform: translateX(-50%) !important;
   box-sizing: border-box !important;
   width: 616px !important;
   max-width: calc(100% - 16px) !important;
@@ -4006,6 +4005,8 @@ order: 1 !important;
         max-width: calc(100% - 0px) !important;
         padding: 16px 32px !important;
         border-radius: 20px 20px 0 0 !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
     }
 
   /* 44px cookie sits left of the title */
