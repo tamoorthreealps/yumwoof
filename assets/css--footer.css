@@ -1145,10 +1145,13 @@ a.yf__site-credit {
   .yf__badge {
     order: 8;
     grid-column: 2;
+    /* Span the Follow-us row + the currency row so the logo sits on the right,
+       centred against the stacked Follow-us + country selector on the left. */
+    grid-row: span 2;
   }
   .yf__currency {
     order: 9;
-    grid-column: 1 / -1;
+    grid-column: 1;
   }
   .mobile--yf__marquee {
     /* Reset the base `.yf__marquee { grid-area: marquee }` — that named area
@@ -1192,13 +1195,13 @@ a.yf__site-credit {
     margin-bottom: 28px;
   }
 
-  /* Badge sits beside the Follow-us block (right of column 2), smaller. */
+  /* Badge sits to the right, vertically centred against Follow-us + currency. */
   .yf__badge {
     --yf-badge-w: 132px !important;
-    justify-self: self-start;
+    justify-self: center;
     align-self: center;
-    justify-content: flex-end;
-    margin-top: 32px;
+    justify-content: center;
+    margin-top: 0;
   }
   .yf__badge img {
     margin-inline: 0;
