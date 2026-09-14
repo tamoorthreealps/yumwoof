@@ -1110,50 +1110,62 @@ a.yf__site-credit {
     display: contents;
   }
 
+  /* Mobile order (matches the mobile footer design):
+     signup -> Shop/Explore/Legal accordions -> Dogquarters | Questions ->
+     Follow us | Badge -> currency -> marquee (bottom). */
   .yf__signup {
     order: 1;
     grid-column: 1 / -1;
+        margin: 0 0 38px;
   }
-  .mobile--yf__marquee {
+  .yf__col--shop {
     order: 2;
     grid-column: 1 / -1;
   }
-  .yf__col--shop {
+  .yf__col--explore {
     order: 3;
     grid-column: 1 / -1;
   }
-  .yf__col--explore {
-    order: 4;
-    grid-column: 1 / -1;
-  }
   .yf__col--legal {
-    order: 5;
+    order: 4;
     grid-column: 1 / -1;
     border-bottom: 1px solid var(--yf-line);
   }
   .yf__dogquarters {
-    order: 6;
+    order: 5;
     grid-column: 1;
   }
   .yf__questions {
-    order: 7;
+    order: 6;
     grid-column: 2;
   }
   .yf__social {
+    order: 7;
+    grid-column: 1;
+  }
+  .yf__badge {
     order: 8;
-    grid-column: 1 / -1;
+    grid-column: 2;
+    /* Span the Follow-us row + the currency row so the logo sits on the right,
+       centred against the stacked Follow-us + country selector on the left. */
+    grid-row: span 2;
   }
   .yf__currency {
     order: 9;
-    grid-column: 1 / -1;
+    grid-column: 1;
   }
-  .yf__badge {
+  .mobile--yf__marquee {
+    /* Reset the base `.yf__marquee { grid-area: marquee }` — that named area
+       doesn't exist in this grid and pins the item, making it ignore `order`.
+       With grid-area:auto it is auto-placed and `order: 10` sends it to the bottom. */
+    grid-area: auto;
     order: 10;
     grid-column: 1 / -1;
   }
 
   .yf__marquee {
-    padding: 80px 0 20px;
+    padding: 12px 0 0;
+        margin-bottom: -14px;
   }
 
   /* Accordion stack */
@@ -1184,12 +1196,16 @@ a.yf__site-credit {
     margin-bottom: 28px;
   }
 
+  /* Badge sits to the right, vertically centred against Follow-us + currency. */
   .yf__badge {
+    --yf-badge-w: 132px !important;
+    justify-self: center;
+    align-self: center;
     justify-content: center;
     margin-top: 0;
   }
   .yf__badge img {
-    margin-inline: auto;
+    margin-inline: 0;
   }
 
   /* Bottom bar: copyright left, site credit right */
@@ -1274,5 +1290,19 @@ a.yf__site-credit {
     line-height: 20px;
     max-width: 100%;
     padding: 0 10px;
+  }
+      .yf__badge {
+        justify-self: flex-start;
+      }
+  .yf__badge-inner{
+        max-width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+@media screen and (max-width: 479px) {
+  .yf__badge-inner{
+    max-width:100%;
   }
 }
