@@ -1151,6 +1151,10 @@ a.yf__site-credit {
     grid-column: 1 / -1;
   }
   .mobile--yf__marquee {
+    /* Reset the base `.yf__marquee { grid-area: marquee }` — that named area
+       doesn't exist in this grid and pins the item, making it ignore `order`.
+       With grid-area:auto it is auto-placed and `order: 10` sends it to the bottom. */
+    grid-area: auto;
     order: 10;
     grid-column: 1 / -1;
   }
