@@ -1145,13 +1145,10 @@ a.yf__site-credit {
   .yf__badge {
     order: 8;
     grid-column: 2;
-    /* Span the Follow-us row + the currency row so the logo sits on the right,
-       centred against the stacked Follow-us + country selector on the left. */
-    grid-row: span 2;
   }
   .yf__currency {
     order: 9;
-    grid-column: 1;
+    grid-column: 1 / -1;
   }
   .mobile--yf__marquee {
     /* Reset the base `.yf__marquee { grid-area: marquee }` — that named area
@@ -1195,13 +1192,13 @@ a.yf__site-credit {
     margin-bottom: 28px;
   }
 
-  /* Badge sits to the right, vertically centred against Follow-us + currency. */
+  /* Badge sits beside the Follow-us block (right of column 2), smaller. */
   .yf__badge {
     --yf-badge-w: 132px !important;
-    justify-self: center;
+    justify-self: self-start;
     align-self: center;
-    justify-content: center;
-    margin-top: 0;
+    justify-content: flex-end;
+    margin-top: 32px;
   }
   .yf__badge img {
     margin-inline: 0;
@@ -1289,5 +1286,10 @@ a.yf__site-credit {
     line-height: 20px;
     max-width: 100%;
     padding: 0 10px;
+  }
+}
+@media screen and (max-width: 479px) {
+  .yf__badge-inner{
+    max-width:100%;
   }
 }
