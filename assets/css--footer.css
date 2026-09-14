@@ -1116,6 +1116,7 @@ a.yf__site-credit {
   .yf__signup {
     order: 1;
     grid-column: 1 / -1;
+        margin: 0 0 38px;
   }
   .yf__col--shop {
     order: 2;
