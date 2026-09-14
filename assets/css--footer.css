@@ -1290,6 +1290,12 @@ a.yf__site-credit {
     max-width: 100%;
     padding: 0 10px;
   }
+  .yf__badge-inner{
+        max-width: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
 @media screen and (max-width: 479px) {
   .yf__badge-inner{
