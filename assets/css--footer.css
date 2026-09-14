@@ -1195,7 +1195,7 @@ a.yf__site-credit {
   /* Badge sits beside the Follow-us block (right of column 2), smaller. */
   .yf__badge {
     --yf-badge-w: 132px !important;
-    justify-self: end;
+    justify-self: self-start;
     align-self: center;
     justify-content: flex-end;
     margin-top: 32px;
