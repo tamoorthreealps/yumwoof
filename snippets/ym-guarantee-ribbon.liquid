@@ -37,6 +37,57 @@
 </div>
 
 
+{% if template.suffix == 'ancestral-blend-v2' %}
+<script>
+  (() => {
+    const ribbons = document.querySelectorAll('.ym-guarantee-ribbon');
+    const mobileQuery = window.matchMedia('(max-width: 990px)');
+
+    const timers = new WeakMap();
+
+    function startRibbonAnimation(ribbon) {
+      const title = ribbon.querySelector('.ym-guarantee-ribbon__title');
+      const text = ribbon.querySelector('.ym-guarantee-ribbon__text');
+
+      if (!title || !text) return;
+
+      // Clear existing timer
+      if (timers.has(ribbon)) {
+        clearInterval(timers.get(ribbon));
+      }
+
+      // Reset state
+      ribbon.classList.remove('is-text-slide');
+
+      // Only animate on mobile
+      if (!mobileQuery.matches) return;
+
+      const timer = setInterval(() => {
+        ribbon.classList.toggle('is-text-slide');
+      }, 3000);
+
+      timers.set(ribbon, timer);
+    }
+
+    function handleBreakpointChange() {
+      ribbons.forEach((ribbon) => {
+        startRibbonAnimation(ribbon);
+      });
+    }
+
+    // Initial setup
+    handleBreakpointChange();
+
+    // Works when resizing without page refresh
+    if (mobileQuery.addEventListener) {
+      mobileQuery.addEventListener('change', handleBreakpointChange);
+    } else {
+      mobileQuery.addListener(handleBreakpointChange);
+    }
+  })();
+</script>
+{% endif %}
+
 <style>
     .ym-guarantee-ribbon {
         position: relative;
@@ -143,5 +194,48 @@
             line-height: 20px;
             color: #000;
         }
+
+  .product__info-wrapper_v2 .ym-guarantee-ribbon__content {
+      position: relative;
+      min-height: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .product__info-wrapper_v2 .ym-guarantee-ribbon__title,
+    .product__info-wrapper_v2 .ym-guarantee-ribbon__text {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+
+     .product__info-wrapper_v2 .ym-guarantee-ribbon__title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+     .product__info-wrapper_v2 .ym-guarantee-ribbon__text {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        opacity: 0;
+        transform: translateY(100%);
+      }
+
+      .product__info-wrapper_v2 .ym-guarantee-ribbon.is-text-slide .ym-guarantee-ribbon__title {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
+
+     .product__info-wrapper_v2 .ym-guarantee-ribbon.is-text-slide .ym-guarantee-ribbon__text {
+        opacity: 1;
+        transform: translateY(-50%);
+      }
     }
 </style>
