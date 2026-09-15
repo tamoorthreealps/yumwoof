@@ -931,4 +931,7 @@
  .product__info-wrapper_v2 .qcalc__cta-text u {
     color:#661D1D;
  }
+ .product__info-wrapper_v2 .qcalc__cta-arrow svg path {
+  fill:#661D1D;
+ }
 }
