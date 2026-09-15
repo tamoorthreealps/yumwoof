@@ -1180,31 +1180,36 @@ width: 140px;
 
 
 @media screen and (max-width: 990px) {
-  .nutritional--info,
-  .component--nutrition--btns {
-      margin: 4rem 0 0;
-  }
-  .nlabel__btn {
-      padding: 1.12rem 1.6rem;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-  }
-  .nlabel__label {
-        font-size: 1.4rem;
-        line-height: 2rem;
-        letter-spacing: .84px;
-    }
-  .nlabel__plus {
-    font-size:19px;
-    color:#000000;
-  }
-  .nlabel__title {
-      font-size: 2rem;
-      line-height: 2.8rem;
-      letter-spacing: -.20px;
-      transform: translateY(4px);
-  }
-  .nutritional--info--heading {
+.product__info-wrapper_v2 .nutritional--info,
+.product__info-wrapper_v2 .component--nutrition--btns {
+    margin: 4rem 0 0;
+}
+
+.product__info-wrapper_v2 .nlabel__btn {
+    padding: 1.12rem 1.6rem;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.product__info-wrapper_v2 .nlabel__label {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: .84px;
+}
+
+.product__info-wrapper_v2 .nlabel__plus {
+    font-size: 19px;
+    color: #000000;
+}
+
+.product__info-wrapper_v2 .nlabel__title {
+    font-size: 2rem;
+    line-height: 2.8rem;
+    letter-spacing: -.20px;
+    transform: translateY(4px);
+}
+
+.product__info-wrapper_v2 .nutritional--info--heading {
     margin: 0 0 16px;
     font-size: 20px;
     line-height: 20px;
