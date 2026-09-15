@@ -140,7 +140,7 @@
         "promise_bVYKyc": {
           "type": "promise",
           "settings": {
-            "image": "shopify://shop_images/Premium_Proteins.jpg",
+            "image": "shopify://shop_images/Feature_Item_Image_9f2a9a6d-1c21-4cbb-be03-309942d314b8.jpg",
             "title": "<p>Premium<br/>Proteins</p>",
             "description": "<p>From pasture to ocean, we prioritize responsibly sourced meats raised without antibiotics or hormones, and wild-caught fish.</p>"
           }
@@ -290,8 +290,8 @@
         "pill_background_color": "#ffffff",
         "marquee_speed": 300,
         "reverse_second_row": true,
-        "link_text": "+ See Banned Ingredients List",
-        "link_url": "#",
+        "link_text": "",
+        "link_url": "",
         "link_color": "#661d1d",
         "link_hover_color": "#000000",
         "desktop_padding_top": 0,
