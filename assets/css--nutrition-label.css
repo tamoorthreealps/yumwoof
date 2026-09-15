@@ -78,6 +78,7 @@
     font-size: 2rem;
 	line-height: 2.8rem;
     letter-spacing: -.20px;
+	transform: translateY(4px);
 }
 	.component--nutrition--btns {
     margin: 3.2rem 0 0;
@@ -95,6 +96,9 @@
     border-radius: .6rem;
 	flex-direction: row-reverse;
     justify-content: space-between;
+}
+.nlabel__plus {
+    font-size: 19px;
 }
 .nlabel__label {
     font-size: 1.4rem;
