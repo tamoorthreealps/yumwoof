@@ -1181,7 +1181,7 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
-  .product__info-wrapper_v2 a.pdp--promo--banner_link p strong {
+  a.pdp--promo--banner_link p strong {
     text-decoration: none;
   }
 .product__info-wrapper_v2 .product__title+.product__text.caption-with-letter-spacing,
