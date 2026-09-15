@@ -1181,6 +1181,32 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
+.product__info-wrapper_v2 .product__short-info,
+.product__info-wrapper_v2 .rating-wrap {
+    display: inline-flex;
+    align-items: center;
+}
+
+.product__info-wrapper_v2 .product__short-info {
+    margin: 0;
+}
+
+.product__info-wrapper_v2 .rating-wrap {
+    margin-left: 16px;
+    padding-left: 16px;
+    position: relative;
+}
+
+.product__info-wrapper_v2 .rating-wrap::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1px;
+    height: 24px;
+    background: #000;
+    transform: translateY(-50%);
+}
   .product__info-wrapper_v2 .product--short--info {
     margin:1.2rem 0 1.6rem;
   }
