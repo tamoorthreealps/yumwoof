@@ -1202,14 +1202,14 @@ width: 140px;
 .product__info-wrapper_v2 .opw-noci-star-full:before,
 .product__info-wrapper_v2 .opw-noci-star-half:before,
 .product__info-wrapper_v2 .opw-noci-star-empty:before {
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
 }
 
 .product__info-wrapper_v2 .rating-wrap::before {
     content: "";
     position: absolute;
-    left: -4px;
+    left: -1px;
     top: 50%;
     width: 1px;
     height: 16px;
@@ -1217,7 +1217,7 @@ width: 140px;
     transform: translateY(-50%);
 }
   .product__info-wrapper_v2 .product--short--info {
-    margin:0.3rem 0 1.6rem;
+    margin:0.6rem 0 1.6rem;
   }
  .product__info-wrapper_v2 .product-form__submit {
     font-size: 22px;
