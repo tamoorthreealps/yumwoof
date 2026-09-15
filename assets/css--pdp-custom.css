@@ -1210,7 +1210,6 @@ width: 140px;
     font-size: 2rem;
     line-height: 2.8rem;
     letter-spacing: -.20px;
-    transform: translateY(4px);
 }
 
 .product__info-wrapper_v2 .nutritional--info--heading {
@@ -1218,6 +1217,5 @@ width: 140px;
     font-size: 20px;
     line-height: 20px;
     letter-spacing: -.20px;
-    transform: translateY(4px);
 }
 }
