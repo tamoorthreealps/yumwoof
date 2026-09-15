@@ -73,16 +73,21 @@
 	color: #000;
 }
 
+.mobile_nlabel__plus {
+	display:none;
+}
 @media screen and (max-width: 990px) {
 	.nlabel__title {
-    font-size: 1.4rem;
-    letter-spacing: -.14px;
+    font-size: 2rem;
+	line-height: 2.8rem;
+    letter-spacing: -.20px;
+	transform: translateY(4px);
 }
 	.component--nutrition--btns {
     margin: 3.2rem 0 0;
 }
     .nlabel {
-        gap: 1.2rem;
+        gap: 1.6rem;
     }
 	.nlabel__grid {
     grid-template-columns: none;
@@ -90,12 +95,26 @@
 }
 .nlabel__btn {
     gap: .8rem;
-    padding: .52rem 1.2rem;
+    padding: 1.12rem 1.6rem;
     border-radius: .6rem;
+	flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.nlabel__plus {
+	font-size: inherit;
+	color: #000;
+	font-family: none;
+	line-height: normal;
 }
 .nlabel__label {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 2rem;
-    letter-spacing: .56px;
+    letter-spacing: .84px;
+}
+.desktop_nlabel__plus {
+	display:none;
+}
+.mobile_nlabel__plus {
+	display:block;
 }
 }
