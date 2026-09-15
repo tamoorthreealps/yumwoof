@@ -922,3 +922,13 @@
     line-height: 24px;
   }
 }
+
+
+@media screen and (max-width: 990px) {
+ .product__info-wrapper_v2 .qcalc__cta{
+    background: rgba(203, 137, 0, 0.2);
+ }
+ .product__info-wrapper_v2 .qcalc__cta-text u {
+    color:#661D1D;
+ }
+}
