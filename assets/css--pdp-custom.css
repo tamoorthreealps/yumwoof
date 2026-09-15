@@ -1180,6 +1180,17 @@ width: 140px;
 
 
 @media screen and (max-width: 990px) {
+.product__info-wrapper_v2 section.yumw-video-testimonials {
+        margin: 4.8rem 0 0;
+}
+
+.product__info-wrapper_v2 p.yumw-video--title {
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: -0.20px;
+    margin: 0 0 2rem;
+}
+
 .product__info-wrapper_v2 .nutritional--info,
 .product__info-wrapper_v2 .component--nutrition--btns {
     margin: 4rem 0 0;
