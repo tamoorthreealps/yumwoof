@@ -1217,7 +1217,7 @@ width: 140px;
     transform: translateY(-50%);
 }
   .product__info-wrapper_v2 .product--short--info {
-    margin:1.2rem 0 1.6rem;
+    margin:0.3rem 0 1.6rem;
   }
  .product__info-wrapper_v2 .product-form__submit {
     font-size: 22px;
