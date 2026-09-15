@@ -1189,12 +1189,21 @@ width: 140px;
 
 .product__info-wrapper_v2 .product__title+.product__text.caption-with-letter-spacing {
     margin: 0;
+    position: relative;
+        top: -1px;
 }
 
 .product__info-wrapper_v2 .rating-wrap {
     margin-left: 12px;
     padding-left: 12px;
     position: relative;
+}
+
+.product__info-wrapper_v2 .opw-noci-star-full:before,
+.product__info-wrapper_v2 .opw-noci-star-half:before,
+.product__info-wrapper_v2 .opw-noci-star-empty:before {
+    width: 12px;
+    height: 12px;
 }
 
 .product__info-wrapper_v2 .rating-wrap::before {
