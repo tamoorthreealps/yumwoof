@@ -1,5 +1,5 @@
 <div
-  class="yw-butcher-quality {{ custom_class }}"
+  class="yw-butcher-quality {% if block.settings.bq_bg_image_desktop != blank or block.settings.bq_bg_image_mobile != blank %} has-background-image{% endif %} {{ custom_class }}"
   style="
     --bq-bg-desktop: {{ block.settings.bq_bg_color_desktop }};
     --bq-text-desktop: {{ block.settings.bq_text_color_desktop }};
