@@ -1185,6 +1185,10 @@ width: 140px;
     margin: 4rem 0 0;
 }
 
+.product__info-wrapper_v .nlabel {
+    gap: 1.6rem;
+}
+
 .product__info-wrapper_v2 .nlabel__btn {
     padding: 1.12rem 1.6rem;
     flex-direction: row-reverse;
