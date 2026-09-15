@@ -621,7 +621,7 @@ body.is-open::after {
   background: transparent;
 }
 .yw-mobile-menu__body {
-  padding: 1.6rem 2.4rem 7.4rem;
+  padding: 1.6rem 2.4rem 9rem;
 }
 
 .yw-mobile-menu__cta {
