@@ -565,6 +565,11 @@ html.mac-os .asw__save-pill {
             if (this.freqCurrent) this.freqCurrent.textContent = label;
             this.closeFreqList();
             this.apply();
+            // The native <select> fired a bubbling "change" on selection; keep that
+            // contract so external mirrors that listen for it — the sticky add-to-cart
+            // bar and the quantity calculator — re-sync on a frequency change. Fire it
+            // on [data-asw-freq] so their `closest('[data-asw-freq]')` guards match.
+            this.freqEl.dispatchEvent(new Event('change', { bubbles: true }));
           }
 
           freqValue() {
