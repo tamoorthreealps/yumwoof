@@ -190,7 +190,7 @@
                         {%- endif -%}
                       </div>
                     {%- endif -%}
-                    <div {{ block.shopify_attributes }}>
+                    <div class="product-form_wrapper_v2" {{ block.shopify_attributes }}>
                       {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                       {%- form 'product',
                         product,
