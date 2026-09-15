@@ -464,10 +464,14 @@
             var sub = asw.querySelector('input[value="subsave"]');
             var isSub = !!(sub && sub.checked);
             if (isSub) {
+              // Frequency is a custom ul/li dropdown (not a native <select>): read
+              // the current label from the trigger, falling back to the selected li.
               var sel = asw.querySelector('[data-asw-freq]');
-              if (sel && sel.options.length) {
-                var t = (sel.options[sel.selectedIndex] || {}).text || '';
-                freq = capitalize(t.trim());
+              if (sel) {
+                var cur =
+                  sel.querySelector('[data-asw-freq-current]') ||
+                  sel.querySelector('.asw-freq__opt.is-selected');
+                if (cur) freq = capitalize((cur.textContent || '').trim());
               }
             } else {
               freq = 'One-Time';
