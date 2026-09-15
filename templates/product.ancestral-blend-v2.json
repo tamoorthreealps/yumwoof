@@ -80,6 +80,7 @@
             "heading": "21-Day First Bag Guarantee",
             "text": "Money back if your dog doesn't love it",
             "background_image": "shopify://shop_images/Background.png",
+            "background_image_mobile": "shopify://shop_images/Guarantee_Background.png",
             "background_color": "#cb890040",
             "ribbon_color": "#fff9ef"
           }
