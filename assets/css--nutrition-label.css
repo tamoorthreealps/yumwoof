@@ -101,8 +101,10 @@
     justify-content: space-between;
 }
 .nlabel__plus {
-    font-size: 19px;
-	color:#000000;
+	font-size: inherit;
+	color: #000;
+	font-family: none;
+	line-height: normal;
 }
 .nlabel__label {
     font-size: 1.4rem;
