@@ -717,7 +717,7 @@ quantity-input.quantity::before {
 }
 
 .product-form__submit:hover {
-  background: #000000;
+  background: #000000 !important;
   color: #fff9ef;
 }
 
