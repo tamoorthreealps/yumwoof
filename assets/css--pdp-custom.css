@@ -1181,6 +1181,9 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
+  .product__info-wrapper_v2 .product--short--info {
+    margin:1.2rem 0 1.6rem;
+  }
  .product__info-wrapper_v2 .product-form__submit {
     font-size: 22px;
     letter-spacing: 1.32px;
