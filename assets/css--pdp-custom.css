@@ -1190,7 +1190,7 @@ width: 140px;
 .product__info-wrapper_v2 .product__title+.product__text.caption-with-letter-spacing {
     margin: 0;
     position: relative;
-        top: -1px;
+    top: -1px;
 }
 
 .product__info-wrapper_v2 .rating-wrap {
