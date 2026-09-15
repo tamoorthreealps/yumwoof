@@ -7,7 +7,7 @@
       background-position: center;
       background-repeat: no-repeat;
     {% else %}
-     --ribbon-color: {{ block.settings.ribbon_color }};
+      --ribbon-color: {{ block.settings.ribbon_color }};
       background-color: {{ block.settings.background_color }};
     {% endif %}
   "
@@ -49,11 +49,15 @@
         overflow: hidden;
         box-sizing: border-box;
         border-radius: 2px;
-        background-size: cover;
+
+        background-size: 100% 100%;
         background-position: center;
+        background-repeat: no-repeat;
     }
+
     {% if block.settings.background_image == blank %}
-    .ym-guarantee-ribbon::before, .ym-guarantee-ribbon::after {
+    .ym-guarantee-ribbon::before,
+    .ym-guarantee-ribbon::after {
         content: "";
         position: absolute;
         top: 0;
@@ -73,12 +77,12 @@
         clip-path: polygon(100% 0, 0 50%, 100% 100%);
         border-radius: 0 2px 2px 0;
     }
-   {% endif %}
+    {% endif %}
 
     .ym-guarantee-ribbon__content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
+        position: relative;
+        z-index: 2;
+        text-align: center;
     }
 
     .ym-guarantee-ribbon__title {
@@ -92,34 +96,40 @@
         transform: translateY(2px);
     }
 
-  .ym-guarantee-ribbon__text {
-      margin: 4px 0 0;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      color: rgba(0, 0, 0, 0.5);
-      letter-spacing: 0;
-      font-family: 'Matter';
-  }
+    .ym-guarantee-ribbon__text {
+        margin: 4px 0 0;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.5);
+        letter-spacing: 0;
+        font-family: 'Matter';
+    }
 
     @media (max-width: 990px) {
-      .ym-guarantee-ribbon {
-        padding: 12px 16px 16px;
-      }
+        .ym-guarantee-ribbon {
+            padding: 12px 16px 16px;
 
-      .ym-guarantee-ribbon::before,
-      .ym-guarantee-ribbon::after {
-        width: 28px;
-      }
+            {% if block.settings.background_image_mobile != blank %}
+                background-image: url('{{ block.settings.background_image_mobile | image_url: width: 1200 }}');
+            {% elsif block.settings.background_image != blank %}
+                background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
+            {% endif %}
+        }
 
-      .ym-guarantee-ribbon__title {
-        font-size: 14px;
-      }
+        .ym-guarantee-ribbon::before,
+        .ym-guarantee-ribbon::after {
+            width: 28px;
+        }
 
-      .ym-guarantee-ribbon__text {
-                margin-top: 4px;
-          font-size: 12px;
-          line-height: 16px;
-      }
+        .ym-guarantee-ribbon__title {
+            font-size: 14px;
+        }
+
+        .ym-guarantee-ribbon__text {
+            margin-top: 4px;
+            font-size: 12px;
+            line-height: 16px;
+        }
     }
 </style>
