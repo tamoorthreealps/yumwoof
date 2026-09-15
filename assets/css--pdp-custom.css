@@ -819,6 +819,7 @@ a.pdp--promo--banner_link p strong {
   color: #661d1d;
   font-weight: 500;
   text-decoration: underline;
+  padding-left: 4px;
 }
 
 a.pdp--promo--banner_link svg {
