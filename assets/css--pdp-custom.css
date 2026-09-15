@@ -1203,8 +1203,8 @@ width: 140px;
     left: 0;
     top: 50%;
     width: 1px;
-    height: 24px;
-    background: #000;
+    height: 16px;
+    background: rgba(0, 0, 0, 0.2);
     transform: translateY(-50%);
 }
   .product__info-wrapper_v2 .product--short--info {
