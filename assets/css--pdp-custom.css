@@ -1180,6 +1180,16 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
+ .product__info-wrapper_v2 .product-form__submit {
+    font-size: 22px;
+    letter-spacing: 1.32px;
+    background: linear-gradient(
+  90deg,
+  #FFC069 0%,
+  #FFD8A2 50%,
+  #FFC069 100%
+);
+  }
 .product__info-wrapper_v2 section.yumw-video-testimonials {
         margin: 4.8rem 0 0;
 }
