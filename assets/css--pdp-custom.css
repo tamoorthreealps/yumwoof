@@ -1209,7 +1209,7 @@ width: 140px;
 .product__info-wrapper_v2 .rating-wrap::before {
     content: "";
     position: absolute;
-    left: 0;
+    left: -4px;
     top: 50%;
     width: 1px;
     height: 16px;
