@@ -66,45 +66,46 @@
     <div class="nlabel__grid" role="list">
       {%- if nl.ingredients != blank -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="ingredients">
-          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus desktop_nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus mobile_nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Ingredients</span>
         </button>
       {%- endif -%}
 
       {%- if nl.guaranteed_analysis != blank -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="analysis">
-          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus desktop_nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus mobile_nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Guaranteed Analysis</span>
         </button>
       {%- endif -%}
 
       {%- if nl.full_data != blank -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="full">
-          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus desktop_nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus mobile_nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Full Nutritional Data</span>
         </button>
       {%- endif -%}
 
       {%- if ft -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="feeding">
-          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus desktop_nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus mobile_nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">Feeding Guidelines</span>
         </button>
       {%- endif -%}
 
       {%- if tp -%}
         <button type="button" class="nlabel__btn" role="listitem" data-nlabel-open="transition">
-          <span class="nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus desktop_nlabel__plus" aria-hidden="true">+</span>
+          <span class="nlabel__plus mobile_nlabel__plus" aria-hidden="true">+</span>
           <span class="nlabel__label">How to Transition</span>
         </button>
       {%- endif -%}
     </div>
 
-    {%- render 'nutrition-label-drawer',
-      product: product,
-      section_id: section_id,
-      brand_label: brand_label
-    -%}
+    {%- render 'nutrition-label-drawer', product: product, section_id: section_id, brand_label: brand_label -%}
   </nutrition-label>
 
   <script src="{{ 'nutrition-label.js' | asset_url }}" defer="defer"></script>

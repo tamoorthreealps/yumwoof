@@ -73,6 +73,9 @@
 	color: #000;
 }
 
+.mobile_nlabel__plus {
+	display:none;
+}
 @media screen and (max-width: 990px) {
 	.nlabel__title {
     font-size: 2rem;
@@ -105,5 +108,11 @@
     font-size: 1.4rem;
     line-height: 2rem;
     letter-spacing: .84px;
+}
+.desktop_nlabel__plus {
+	display:none;
+}
+.mobile_nlabel__plus {
+	display:block;
 }
 }
