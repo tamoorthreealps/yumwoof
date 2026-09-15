@@ -1218,6 +1218,7 @@ width: 140px;
 }
   .product__info-wrapper_v2 .product--short--info {
     margin:0.6rem 0 1.6rem;
+    font-size: 13px;
   }
  .product__info-wrapper_v2 .product-form__submit {
     font-size: 22px;
