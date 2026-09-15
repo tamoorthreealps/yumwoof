@@ -122,6 +122,27 @@
 .qcalc__cta-arrow svg {
   width: 14px;
   height: 7px;
+  display: inline-block;
+  vertical-align: middle;
+  transform: translateX(0);
+  animation: promoArrowAttention_v2 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes promoArrowAttention_v2 {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+
+  72% {
+    transform: translateX(7px);
+  }
+
+  82% {
+    transform: translateX(0);
+  }
 }
 
 /* saved-dogs summary card */
