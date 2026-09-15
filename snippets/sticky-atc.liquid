@@ -251,12 +251,31 @@
             padding: 7.2px;
         }
 
+
+        
+        /*------- v2--css--code -------*/
+            .sticky-atc.sticky-atc_v2 {
+        padding: 0;
+    }
+        .sticky-atc_v2 .sticky-atc__inner {
+        padding: 12px 24px 16px;
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
+        border: 0;
+    }
+    .sticky-atc_v2 .sticky-atc__meta--mobile {
+      font-size:13px;
+    }
+     .sticky-atc_v2 .sticky-atc__btn {
+        padding: 9.2px 20px;
+        justify-content: center;
+    }
         }
   {%- endstyle -%}
 
   <sticky-atc-bar
     id="StickyAtc-{{ section_id }}"
-    class="sticky-atc"
+    class="sticky-atc {% if template.suffix == 'ancestral-blend-v2' %}sticky-atc_v2{% endif %}"
     data-section-id="{{ section_id }}"
     data-product-title="{{ product.title | escape }}"
     data-recipe-index="{{ recipe_index }}"
