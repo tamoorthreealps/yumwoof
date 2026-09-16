@@ -307,7 +307,7 @@ a.product__text {
   .product__info-container .product-form {
   margin:2.4rem 0 1.6rem;
 }
-.product__info-container.product__info-wrapper_v2 .product-form {
+.product__info-container .product__info-wrapper_v2 .product-form {
   margin:2.4rem 0 1.2rem;
 }
 }
