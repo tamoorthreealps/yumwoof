@@ -1181,6 +1181,21 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
+  .product__info-wrapper_v2 .qty.freq {
+    margin:0 0 2rem;
+  }
+     .product__info-wrapper_v2 .asw__save-pill {
+        padding: 4px 6.72px 1px;
+        background: #296900;
+        color: #fff;
+        border: 0;
+    }
+      .product__info-wrapper_v2  .asw-select__field {
+        font-size: 14px;
+        letter-spacing: 0.28px;
+        border: 0;
+    }
+
   a.pdp--promo--banner_link p strong {
     text-decoration: none;
   }
