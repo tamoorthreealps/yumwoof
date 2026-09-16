@@ -81,14 +81,17 @@
     {%- assign recipe_desktop_src = swatch_desktop | default: swatch_mobile -%}
     {%- assign recipe_mobile_src = swatch_mobile | default: swatch_desktop -%}
 
+    {% assign v2_mobile_image = blank %}
+
     {% if template.suffix == 'ancestral-blend-v2' %}
-      {% if value == 'Land & Sea' %}
-        {% assign recipe_mobile_src = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Land_Sea.png?v=1789564120' %}
-      {% elsif value == 'Wild Caught Fish' %}
-        {% assign recipe_mobile_src = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-WildCaughtFish.png?v=1789564120' %}
-      {% elsif value == 'Turkey' %}
-        {% assign recipe_mobile_src = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Turkey.png?v=1789564120' %}
-      {% endif %}
+      {% case value %}
+        {% when 'Land & Sea' %}
+          {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Land_Sea.png?v=1789564120' %}
+        {% when 'Wild Caught Fish' %}
+          {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-WildCaughtFish.png?v=1789564120' %}
+        {% when 'Turkey' %}
+          {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Turkey.png?v=1789564120' %}
+      {% endcase %}
     {% endif %}
     {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
     {%- assign swatch_badge = '' -%}
@@ -129,7 +132,7 @@
             >
             <img
               class="recipe-swatch__img recipe-swatch__img--mobile"
-              src="{{ recipe_mobile_src | image_url: width: 128 }}"
+              src="{% if v2_mobile_image != blank %}{{ v2_mobile_image }}{% else %}{{ recipe_mobile_src | image_url: width: 128 }}{% endif %}"
               alt="Recipe Swatch Image"
               loading="lazy"
               width="64"
