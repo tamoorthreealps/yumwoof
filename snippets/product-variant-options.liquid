@@ -80,6 +80,16 @@
     {%- comment -%} Each falls back to the other if only one image is set. {%- endcomment -%}
     {%- assign recipe_desktop_src = swatch_desktop | default: swatch_mobile -%}
     {%- assign recipe_mobile_src = swatch_mobile | default: swatch_desktop -%}
+
+    {% if template.suffix == 'ancestral-blend-v2' %}
+      {% if value == 'Land & Sea' %}
+        {% assign recipe_mobile_src = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Land_Sea.png?v=1789564120' %}
+      {% elsif value == 'Wild Caught Fish' %}
+        {% assign recipe_mobile_src = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-WildCaughtFish.png?v=1789564120' %}
+      {% elsif value == 'Turkey' %}
+        {% assign recipe_mobile_src = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Turkey.png?v=1789564120' %}
+      {% endif %}
+    {% endif %}
     {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
     {%- assign swatch_badge = '' -%}
     {%- assign value_name = value | strip -%}
