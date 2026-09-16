@@ -1,0 +1,706 @@
+{% comment %}
+  Appstle subscription selector (Online Store 2.0 compatible).
+
+  Renders a Subscribe / One-time purchase widget styled to the Yumwoof design.
+  It drives the product form's hidden #selling-plan-input (in snippets/buy-buttons.liquid):
+    - Subscription (default): input = selected frequency's selling plan id
+    - One-time: input = "" (empty)
+
+  Wrapped in a <appstle-subscription-widget> custom element so it re-initialises
+  when the product section re-renders on a variant change.
+  Accepts:
+  - product: {Object} product object
+{% endcomment %}
+<style>
+          .asw { display: block; width: 100%; color: #000; }
+          .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
+
+          .asw-option { background: #fff9ef; border: 1px solid #000; }
+          .asw-option--sub { border-radius: 12px 12px 0 0; }
+          .qty.freq.qrt_freq_membership .asw-option--sub {border-radius: 12px;}
+          .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
+          .asw-option.is-selected { background: #E6E0D7; }
+
+          .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .asw__save-pill {
+      display: inline-flex;
+          align-items: center;
+          background: #FFC069;
+          color: #000000;
+          font-size: 16px;
+          line-height: 16px;
+          letter-spacing: -1.28px;
+          text-transform: uppercase;
+          padding: 3px 6.58px 0;
+          border-radius: 999px;
+          white-space: nowrap;
+          border: 1px solid #000000;
+          font-family: 'TAY Birdie';
+          min-height: 20px;
+        }
+    /* =========================
+       MACBOOK / macOS ONLY
+       ========================= */
+
+    html.mac-os .asw__save-pill {
+        padding-top: 0 !important;
+        padding-bottom: 2px !important;
+    }
+          .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
+          .asw-option--one .asw-option__label {padding-bottom:20px;}
+          .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+          .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
+          .asw-diamond { display: block;max-width: 100%;height: auto; }
+          .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
+          .asw-option .asw-fill {fill: #FFF9EF;}
+          .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
+
+          .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+          .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+          .asw-option__titles { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+          .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
+        .asw-option__subtitle {
+            font-size: 14px;
+            line-height: 24px;
+            color: rgba(0, 0, 0, 0.5);
+            letter-spacing: 0;
+            font-family: Matter, sans-serif;
+        }
+          .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
+          .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
+          .asw-option__price-now { color: #000; }
+
+          .asw-option__delivery { display: block;
+          position: relative; }
+          .asw-option__delivery:after {
+          content: "";
+          position: absolute;
+          left: 106px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1px;
+          height: 16px;
+          background: #000;
+          z-index: 2;
+          pointer-events: none;
+          border-radius:2px;
+      }
+          .asw-option__delivery-label {
+            position: absolute;
+            left: 18px;
+            top: 55%;
+            transform: translateY(-50%);
+            z-index: 2;
+            pointer-events: none;
+            font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+            font-size: 14px;
+            line-height: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0;
+          }
+          .asw-select { position: relative; display: block; }
+          .asw-select__field {
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            width: 100%; height: 44px; padding: 0 40px 0 126px;
+            background: #fff; border: 1px solid #000; border-radius: 8px;
+            font-family: inherit; font-size: 14px; line-height: 20px; font-weight: 500;
+            color: #000; cursor: pointer; text-transform: capitalize; outline: none;
+            box-shadow: inherit;
+          }
+          .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; transition: transform .2s ease; }
+
+          /* ----- Custom frequency dropdown (ul/li) replacing the native <select> ----- */
+          .asw-freq { position: relative; display: block; }
+          .asw-freq__trigger {
+            display: flex; align-items: center; text-align: left; gap: 8px;
+            appearance: none; -webkit-appearance: none;
+          }
+          .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+          .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
+          .asw-freq__list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 30;
+      margin: 0;
+      padding: 4px;
+      list-style: none;
+      background: rgba(255, 255, 255, 0.95);
+      border: 0;
+      border-radius: 4px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+      max-height: 212px;
+      overflow: auto;
+      margin-left: auto;
+      width: calc(100% - 96px);
+  }
+          .asw-freq__list[hidden] { display: none; }
+          .asw-freq__opt {
+            font-family: 'Matter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500;
+            color: #000; padding: 8px 12px; border-radius: 4px; cursor: pointer;
+            text-transform: capitalize; user-select: none;
+          }
+          .asw-freq__opt + .asw-freq__opt { border-top: 1px solid #000;border-radius: 0; }
+          .asw-freq__opt:hover:not(.is-selected) { background: rgba(0, 0, 0, 0.05); }
+          .asw-freq__opt.is-selected { background: #000; color: #fff9ef;    border-radius: 4px; }
+          /* No divider line touching the selected (black) pill. */
+          .asw-freq__opt.is-selected,
+          .asw-freq__opt.is-selected + .asw-freq__opt { border-top-color: transparent; }
+
+          .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
+          .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
+          .asw-benefit__check { flex: 0 0 auto; margin-top: 7px; display: flex; }
+
+          /* Collapse the subscription details when the shopper picks one-time */
+          .asw-option--sub:not(.is-selected) .asw-option__delivery,
+          .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+
+          @media (max-width: 990px) {
+            .asw-option__label {
+          gap: 12px;
+          padding: 12px 12px 15px;
+      }
+      .asw-option--one .asw-option__label {
+          padding: 12px;
+      }
+          .asw-option__radio-icon {
+              flex: 0 0 20px;
+              width: 20px;
+              height: 20px;
+              position: absolute;
+          }
+              .asw-option__body {
+              gap: 12px;
+          }
+          .asw-option__head {
+          padding-left: 28px;
+      }
+          .asw-option__titles {
+          gap: 4px;
+      }
+      .asw-option__title-row {
+          gap: 6px;
+      }
+      .asw-option__title {
+          font-size: 16px;
+          line-height: 20px;
+      }
+      .asw__save-pill {
+          font-size: 13px;
+          line-height: 13px;
+          letter-spacing: -1.04px;
+          padding: 4px 5.92px 1px;
+      }
+      @supports (-webkit-touch-callout: none) {
+      		.asw__save-pill {
+      			padding-top: 0;
+      			padding-bottom: 2px;
+      		}
+      	}
+        html.mac-os .asw__save-pill {
+        padding-top: 0 !important;
+        padding-bottom: 1px !important;
+    }
+      .asw-option__subtitle {
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0;
+      }
+      .asw-option__price {
+          gap: 6px;
+          font-size: 14px;
+          line-height: 20px;
+      }
+      .asw-option__delivery-label {
+          left: 16px;
+          font-size: 12px;
+          line-height: 12px;
+          letter-spacing: 0;
+          top: 52%;
+      }
+      .asw-select__field {
+          height: 36px;
+          padding: 0 24px 0 107px;
+          border-radius: 6px;
+          font-size: 12px;
+          line-height: 20px;
+          letter-spacing: 0.24px;
+      }
+      .asw-select__chevron {
+          width: 8px;
+          height: 4px;
+      }
+      .asw-freq__opt {
+                  font-family: 'Matter';
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: 0;
+          padding: 8px 12px;
+      }
+      .asw-option__delivery:after {
+          left: 91px;
+          height: 12px;
+      }
+          .asw-option__benefits {
+              grid-template-columns: 1fr 1fr;
+              gap: 8px;
+              margin: 4px 8px 8px;
+          }
+          .asw-benefit {
+          gap: 6px;
+          font-size: 11px;
+          line-height: 16px;
+          letter-spacing: 0;
+      }
+      .asw-benefit__check {
+          margin-top: 4px;
+          width: 12px;
+          height: 12px;
+      }
+          }
+</style>
+{%- liquid
+  assign appstle_app_id = 'appstle'
+  assign current_variant = product.selected_or_first_available_variant | default: product.variants.first
+
+  # Pick the BASE "Subscribe & Save" group, skipping Appstle's bundle / member
+  # combined groups (Extra n% / 25% member) — those are switched by the cart engine.
+  assign base_group = null
+  for spg in product.selling_plan_groups
+    if base_group == null and spg.app_id == appstle_app_id and spg.name contains 'Subscribe & Save'
+      assign base_group = spg
+    endif
+  endfor
+  if base_group == null
+    for spg in product.selling_plan_groups
+      assign is_bundle = false
+      if spg.name contains 'Extra' or spg.name contains 'member' or spg.name contains 'Bundle'
+        assign is_bundle = true
+      endif
+      if base_group == null and spg.app_id == appstle_app_id and is_bundle == false
+        assign base_group = spg
+      endif
+    endfor
+  endif
+  if base_group == null and product.selling_plan_groups.size > 0
+    assign base_group = product.selling_plan_groups.first
+  endif
+-%}
+
+{%- if base_group != null -%}
+  {%- liquid
+    # Default allocation for the current variant within the base group
+    assign default_alloc = null
+    for alloc in current_variant.selling_plan_allocations
+      if alloc.selling_plan_group_id == base_group.id and default_alloc == null
+        assign default_alloc = alloc
+      endif
+    endfor
+    assign selected_alloc = current_variant.selected_selling_plan_allocation
+    if selected_alloc != null and selected_alloc.selling_plan_group_id == base_group.id
+      assign default_alloc = selected_alloc
+    endif
+  -%}
+
+  {%- if default_alloc != null -%}
+    {%- liquid
+      assign sub_percent = 0
+      assign adj = default_alloc.selling_plan.price_adjustments.first
+      if adj.value_type == 'percentage'
+        assign sub_percent = adj.value
+      endif
+
+      assign one_time_price = current_variant.price
+      assign sub_price = default_alloc.price
+      assign saving_per_bag = one_time_price | minus: sub_price
+
+      assign exclude_freq = 'Delivery every 1 week,Delivery every 2 weeks,Delivery every 5 weeks,Delivery every 1 month,Delivery every 2 months,Delivery every 3 months' | split: ','
+
+      assign benefits = product.metafields.custom.subscription_benefits.value
+      if benefits == blank
+        assign benefits = 'Modify or Cancel Anytime' | split: ','
+      endif
+
+      assign sub_title = product.metafields.custom.subscription_title.value | default: 'Autoship'
+      assign sub_subtitle = product.metafields.custom.subscription_subtitle.value | default: 'Arrives before it runs out.'
+      assign onetime_subtitle = product.metafields.custom.onetime_subtitle.value | default: 'A single order.'
+      assign currency_symbol = localization.country.currency.symbol | default: '$'
+    -%}
+
+    <appstle-subscription-widget
+      class="asw is-sub"
+      data-product-id="{{ product.id }}"
+      data-default-plan="{{ default_alloc.selling_plan.id }}"
+      data-saving-cents="{{ saving_per_bag }}"
+      data-currency-symbol="{{ currency_symbol }}"
+    >
+      {%- comment -%} ---------- Subscription option ---------- {%- endcomment -%}
+      <div class="asw-option asw-option--sub is-selected">
+        <label class="asw-option__label">
+          <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="subsave" checked>
+          <span class="asw-option__radio-icon" aria-hidden="true">
+            <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5"/>
+              <circle class="asw-fill" cx="12" cy="12" r="5.5" fill="#000"/>
+            </svg>
+          </span>
+          <span class="asw-option__body">
+            <span class="asw-option__head">
+              <span class="asw-option__titles">
+                <span class="asw-option__title-row">
+                  <span class="asw-option__title">{{ sub_title }}</span>
+                  {%- if sub_percent > 0 -%}
+                    <span class="asw__save-pill"
+                      ><span class="asw__save-pill_inner">Save {{ sub_percent }}%</span></span
+                    >
+                  {%- endif -%}
+                </span>
+                {%- if sub_subtitle != blank -%}
+                  <span class="asw-option__subtitle">
+                    {% if template.suffix == 'ancestral-blend-v2' %}
+                      Modify or Cancel Anytime
+                    {% else %}
+                      {{ sub_subtitle }}
+                    {% endif %}
+                  </span>
+                {%- endif -%}
+              </span>
+              <span class="asw-option__price">
+                {%- if one_time_price > sub_price -%}
+                  <s class="asw-option__price-was">{{ one_time_price | money_without_trailing_zeros }}</s>
+                {%- endif -%}
+                <span class="asw-option__price-now">{{ sub_price | money_without_trailing_zeros }}</span>
+              </span>
+            </span>
+
+            <span class="asw-option__delivery">
+              <span class="asw-option__delivery-label">Delivery</span>
+              {%- assign default_freq_label = default_alloc.selling_plan.name | remove_first: 'Delivery ' -%}
+              <span class="asw-select asw-freq" data-asw-freq data-value="{{ default_alloc.selling_plan.id }}">
+                <button
+                  type="button"
+                  class="asw-select__field asw-freq__trigger"
+                  data-asw-freq-trigger
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-label="Delivery frequency"
+                >
+                  <span class="asw-freq__current" data-asw-freq-current>{{ default_freq_label }}</span>
+                </button>
+                <span class="asw-select__chevron" aria-hidden="true">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.79171 5.22723C4.68019 5.22723 4.56868 5.18454 4.48374 5.09959L0.127714 0.743573C0.00313165 0.618991 -0.0343301 0.431682 0.0331882 0.268766C0.100271 0.105851 0.259701 0 0.435685 0H9.14773C9.32371 0 9.48314 0.105851 9.55022 0.268766C9.61774 0.431682 9.58028 0.618991 9.4557 0.743573L5.09968 5.09959C5.01473 5.18454 4.90322 5.22723 4.79171 5.22723Z" fill="black"/>
+                  </svg>
+                </span>
+                <ul class="asw-freq__list" role="listbox" aria-label="Delivery frequency" hidden>
+                  {%- for alloc in current_variant.selling_plan_allocations -%}
+                    {%- if alloc.selling_plan_group_id == base_group.id -%}
+                      {%- unless exclude_freq contains alloc.selling_plan.name -%}
+                        {%- assign opt_label = alloc.selling_plan.name | remove_first: 'Delivery ' -%}
+                        {%- assign is_default = false -%}
+                        {%- if alloc.selling_plan.id == default_alloc.selling_plan.id -%}
+                          {%- assign is_default = true -%}
+                        {%- endif -%}
+                        <li
+                          class="asw-freq__opt{% if is_default %} is-selected{% endif %}"
+                          role="option"
+                          tabindex="0"
+                          data-value="{{ alloc.selling_plan.id }}"
+                          aria-selected="{% if is_default %}true{% else %}false{% endif %}"
+                        >
+                          {{ opt_label }}
+                        </li>
+                      {%- endunless -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </span>
+            </span>
+
+            {%- if benefits.size > 0 -%}
+              <span class="asw-option__benefits">
+                {%- for b in benefits limit: 4 -%}
+                  {%- assign bt = b | strip -%}
+                  {%- if bt != blank -%}
+                    <span class="asw-benefit">
+                      <span class="asw-benefit__check" aria-hidden="true">
+                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M13.6642 0C13.8339 0.00219528 13.9072 0.0972231 13.9966 0.227983C13.9996 0.325936 14.016 0.424169 13.9366 0.495877C13.3254 1.04129 12.4992 1.50301 11.833 1.97663C8.43276 4.39418 5.67369 7.69773 3.6665 11.3592C3.33852 11.9575 2.01104 12.2578 1.46527 11.7192C0.469308 10.7364 0.149357 8.93597 0.022637 7.57851C-0.00648618 6.82084 -0.0497088 5.81936 0.199456 5.09854C0.291853 4.83131 0.696688 4.56507 0.973647 4.72271C1.33809 4.93021 1.39518 5.58751 1.50994 5.96194C1.81082 7.22335 2.0905 8.47414 2.50735 9.70379C4.55025 5.92469 9.52366 1.24929 13.6642 0Z" fill="black"/>
+                        </svg>
+                      </span>
+                      <span class="asw-benefit__text">{{ bt }}</span>
+                    </span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </span>
+            {%- endif -%}
+          </span>
+        </label>
+      </div>
+
+      {%- comment -%} ---------- One-time option ---------- {%- endcomment -%}
+      {% liquid
+        assign hide_onetime_for_pdfm_gf_us = false
+        if localization.country.iso_code == 'US' and product.handle == 'perfect-dog-food-mix' and current_variant.sku == 'PDFM-GF'
+          assign hide_onetime_for_pdfm_gf_us = true
+        endif
+      %}
+
+      {% unless product.handle == 'membership' or hide_onetime_for_pdfm_gf_us %}
+        <div class="asw-option asw-option--one">
+          <label class="asw-option__label">
+            <input class="asw-option__radio" type="radio" name="asw_plan_{{ product.id }}" value="onetime">
+            <span class="asw-option__radio-icon" aria-hidden="true">
+              <svg class="asw-diamond" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#000" stroke-width="1.5"/>
+                <circle class="asw-fill" cx="12" cy="12" r="5.5" fill="#000"/>
+              </svg>
+            </span>
+            <span class="asw-option__body">
+              <span class="asw-option__head">
+                <span class="asw-option__titles">
+                  <span class="asw-option__title">One-Time Purchase</span>
+                  {%- if onetime_subtitle != blank -%}
+                    <span class="asw-option__subtitle">{{ onetime_subtitle }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="asw-option__price">
+                  <span class="asw-option__price-now">{{ one_time_price | money_without_trailing_zeros }}</span>
+                </span>
+              </span>
+            </span>
+          </label>
+        </div>
+      {% endunless %}
+    </appstle-subscription-widget>
+
+    <script>
+      (function () {
+        if (!('customElements' in window) || customElements.get('appstle-subscription-widget')) return;
+
+        class AppstleSubscriptionWidget extends HTMLElement {
+          connectedCallback() {
+            if (this._bound) return;
+            this._bound = true;
+            this.subOption = this.querySelector('.asw-option--sub');
+            this.oneOption = this.querySelector('.asw-option--one');
+            this.freqEl = this.querySelector('[data-asw-freq]');
+            this.yearEl = this.querySelector('[data-asw-year]');
+            this.addEventListener('change', this.apply.bind(this));
+
+            this.initFreqDropdown();
+            this.apply();
+            // #selling-plan-input lives further down the page (buy-buttons); on the
+            // initial parse it may not exist yet, so re-sync once the DOM is ready.
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', this.apply.bind(this), { once: true });
+            }
+          }
+
+          disconnectedCallback() {
+            if (this._onDocClick) {
+              document.removeEventListener('click', this._onDocClick);
+              this._onDocClick = null;
+            }
+          }
+
+          sellingPlanInput() {
+            return document.getElementById('selling-plan-input');
+          }
+
+          /* ----- Custom frequency dropdown (ul/li) ----- */
+          initFreqDropdown() {
+            var self = this;
+            var el = this.freqEl;
+            if (!el) return;
+            this.freqTrigger = el.querySelector('[data-asw-freq-trigger]');
+            this.freqList = el.querySelector('.asw-freq__list');
+            this.freqCurrent = el.querySelector('[data-asw-freq-current]');
+            if (!this.freqTrigger || !this.freqList) return;
+
+            this.freqTrigger.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              self.toggleFreqList();
+            });
+
+            this.freqList.addEventListener('click', function (e) {
+              var li = e.target.closest('.asw-freq__opt');
+              if (li) self.selectFreq(li);
+            });
+
+            // Keyboard: Enter/Space selects a focused option, Escape closes.
+            this.freqList.addEventListener('keydown', function (e) {
+              var li = e.target.closest('.asw-freq__opt');
+              if (li && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                self.selectFreq(li);
+              }
+            });
+            el.addEventListener('keydown', function (e) {
+              if (e.key === 'Escape') {
+                self.closeFreqList();
+                if (self.freqTrigger) self.freqTrigger.focus();
+              }
+            });
+
+            // Close when clicking anywhere outside the dropdown.
+            this._onDocClick = function (e) {
+              if (!el.contains(e.target)) self.closeFreqList();
+            };
+            document.addEventListener('click', this._onDocClick);
+          }
+
+          toggleFreqList() {
+            if (!this.freqList) return;
+            if (this.freqList.hidden) this.openFreqList();
+            else this.closeFreqList();
+          }
+
+          openFreqList() {
+            if (!this.freqList) return;
+            this.freqList.hidden = false;
+            if (this.freqEl) this.freqEl.setAttribute('data-open', '');
+            if (this.freqTrigger) this.freqTrigger.setAttribute('aria-expanded', 'true');
+          }
+
+          closeFreqList() {
+            if (!this.freqList) return;
+            this.freqList.hidden = true;
+            if (this.freqEl) this.freqEl.removeAttribute('data-open');
+            if (this.freqTrigger) this.freqTrigger.setAttribute('aria-expanded', 'false');
+          }
+
+          selectFreq(li) {
+            if (!li || !this.freqEl) return;
+            var val = li.getAttribute('data-value');
+            var label = (li.textContent || '').trim();
+            var opts = this.freqList ? this.freqList.querySelectorAll('.asw-freq__opt') : [];
+            Array.prototype.forEach.call(opts, function (o) {
+              var sel = o === li;
+              o.classList.toggle('is-selected', sel);
+              o.setAttribute('aria-selected', sel ? 'true' : 'false');
+            });
+            this.freqEl.setAttribute('data-value', val);
+            if (this.freqCurrent) this.freqCurrent.textContent = label;
+            this.closeFreqList();
+            this.apply();
+            // The native <select> fired a bubbling "change" on selection; keep that
+            // contract so external mirrors that listen for it — the sticky add-to-cart
+            // bar and the quantity calculator — re-sync on a frequency change. Fire it
+            // on [data-asw-freq] so their `closest('[data-asw-freq]')` guards match.
+            this.freqEl.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+
+          freqValue() {
+            return this.freqEl ? this.freqEl.getAttribute('data-value') || '' : '';
+          }
+
+          freqLabel() {
+            if (this.freqCurrent) return (this.freqCurrent.textContent || '').trim();
+            var sel = this.freqEl && this.freqEl.querySelector('.asw-freq__opt.is-selected');
+            return sel ? (sel.textContent || '').trim() : '';
+          }
+
+          apply() {
+            var sub = this.querySelector('input[value="subsave"]');
+            var isSub = !!(sub && sub.checked);
+
+            if (this.subOption) this.subOption.classList.toggle('is-selected', isSub);
+            if (this.oneOption) this.oneOption.classList.toggle('is-selected', !isSub);
+            this.classList.toggle('is-sub', isSub);
+
+            var input = this.sellingPlanInput();
+            if (input) {
+              input.value = isSub ? this.freqValue() : '';
+            }
+            this.updateYear();
+          }
+
+          updateYear() {
+            if (!this.yearEl) return;
+            var savingCents = parseInt(this.dataset.savingCents, 10) || 0;
+            var sym = this.dataset.currencySymbol || '$';
+            var weeks = 0;
+            var txt = this.freqLabel();
+            if (txt) {
+              var mWeek = txt.match(/(\d+)\s*week/i);
+              var mMonth = txt.match(/(\d+)\s*month/i);
+              if (mWeek) weeks = parseInt(mWeek[1], 10);
+              else if (mMonth) weeks = parseInt(mMonth[1], 10) * 4;
+            }
+            if (weeks > 0 && savingCents > 0) {
+              var perYear = Math.round(52 / weeks) * savingCents;
+              this.yearEl.textContent = ' · save ' + sym + Math.round(perYear / 100) + '/year';
+            } else {
+              this.yearEl.textContent = '';
+            }
+          }
+        }
+
+        customElements.define('appstle-subscription-widget', AppstleSubscriptionWidget);
+
+        /* ----- Keep prices in sync on variant / swatch change -----
+           Dawn's product-info re-renders only the price + buy-buttons on a variant
+           change; this widget (whose sub/one-time prices are server-rendered per
+           variant) is left stale. product-info publishes variantChange with the
+           freshly-fetched section HTML for the NEW variant, so swap in that widget's
+           markup (new prices, freq options, saving) while preserving the shopper's
+           subscribe/one-time + frequency choice. */
+        function syncAswOnVariantChange(event) {
+          var html = event && event.data && event.data.html;
+          if (!html) return;
+          var current = document.querySelector('appstle-subscription-widget');
+          var incoming = html.querySelector('appstle-subscription-widget');
+          if (!current || !incoming) return;
+
+          var checked = current.querySelector('input[name^="asw_plan_"]:checked');
+          var prevPlan = checked ? checked.value : null;
+          var freqEl = current.querySelector('[data-asw-freq]');
+          // Selling-plan ids are shared across variants within a group, so the
+          // previously-chosen frequency id still matches an option on the new variant.
+          var prevFreq = freqEl ? freqEl.getAttribute('data-value') : null;
+
+          current.replaceWith(incoming); // adoption + upgrade runs connectedCallback()
+
+          if (prevPlan) {
+            var radio = incoming.querySelector('input[value="' + prevPlan + '"]');
+            if (radio) radio.checked = true;
+          }
+          var newFreqEl = incoming.querySelector('[data-asw-freq]');
+          if (newFreqEl && prevFreq) {
+            var li = newFreqEl.querySelector('.asw-freq__opt[data-value="' + prevFreq + '"]');
+            if (li && typeof incoming.selectFreq === 'function') incoming.selectFreq(li);
+          }
+          if (typeof incoming.apply === 'function') incoming.apply();
+        }
+
+        function bindAswVariantSync() {
+          if (
+            typeof subscribe !== 'function' ||
+            typeof PUB_SUB_EVENTS === 'undefined' ||
+            !PUB_SUB_EVENTS.variantChange
+          ) {
+            return false;
+          }
+          subscribe(PUB_SUB_EVENTS.variantChange, syncAswOnVariantChange);
+          return true;
+        }
+        if (!bindAswVariantSync()) {
+          document.addEventListener('DOMContentLoaded', bindAswVariantSync, { once: true });
+        }
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
+<script>
+  (function () {
+    const isMac =
+      navigator.platform === 'MacIntel' || navigator.platform === 'MacPPC' || navigator.platform === 'Mac68K';
+
+    if (isMac) {
+      document.documentElement.classList.add('mac-os');
+    }
+  })();
+</script>
