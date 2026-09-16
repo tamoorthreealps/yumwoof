@@ -1111,6 +1111,7 @@ width: 140px;
 
   .qty.freq h2.selector-title {
     font-size: 16px;
+    letter-spacing: -0.64px;
   }
 
   .product-form__submit {
@@ -1181,6 +1182,9 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
+  .product__info-wrapper_v2 .qty.freq h2.selector-title {
+    letter-spacing: 0;
+  }
   .product__info-wrapper_v2 .qty.freq {
     margin:0 0 2rem;
   }
