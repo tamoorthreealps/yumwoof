@@ -82,7 +82,12 @@
           }
         }
       },
-      "block_order": ["entry_1", "entry_2", "entry_3", "entry_4"],
+      "block_order": [
+        "entry_1",
+        "entry_2",
+        "entry_3",
+        "entry_4"
+      ],
       "settings": {
         "heading": "The Origin",
         "color_bg": "#fff9ef",
@@ -117,34 +122,12 @@
         "padding_top_mobile": 56,
         "padding_bottom_mobile": 56
       }
-    },
-    "yumwoof_faqs_CrRpFc": {
-      "type": "yumwoof-faqs",
-      "disabled": true,
-      "name": "FAQs",
-      "settings": {
-        "title": "FAQs",
-        "lede": "<p>Don't see the answer you're looking for? Reach out to woof@yumwoof.com and we'll get back to you in a flash.</p>",
-        "show_filters": true,
-        "show_all_option": true,
-        "all_label": "All",
-        "filter_label": "Filter questions by topic",
-        "color_bg": "#fff9ef",
-        "color_text": "#000000",
-        "color_link": "#661d1d",
-        "color_rule": "#000000",
-        "padding_top": 192,
-        "padding_bottom": 160,
-        "padding_top_mobile": 128,
-        "padding_bottom_mobile": 56
-      }
     }
   },
   "order": [
     "about_hero",
     "about_solution",
     "about_timeline",
-    "about_cta",
-    "yumwoof_faqs_CrRpFc"
+    "about_cta"
   ]
 }
