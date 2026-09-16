@@ -42,35 +42,53 @@
   (() => {
     const ribbons = document.querySelectorAll('.ym-guarantee-ribbon');
     const mobileQuery = window.matchMedia('(max-width: 990px)');
-
     const animations = new WeakMap();
 
-    function fade(ribbon, showText) {
+    function animateRibbon(ribbon, showText) {
       const title = ribbon.querySelector('.ym-guarantee-ribbon__title');
       const text = ribbon.querySelector('.ym-guarantee-ribbon__text');
 
       if (!title || !text) return;
 
-      const duration = 700;
+      if (animations.has(ribbon)) {
+        cancelAnimationFrame(animations.get(ribbon));
+      }
+
+      const duration = 900;
       const start = performance.now();
 
       const startTitleOpacity = parseFloat(getComputedStyle(title).opacity);
       const startTextOpacity = parseFloat(getComputedStyle(text).opacity);
 
-      const endTitleOpacity = showText ? 0 : 1;
-      const endTextOpacity = showText ? 1 : 0;
-
       function animate(currentTime) {
         const progress = Math.min((currentTime - start) / duration, 1);
-        const eased = progress * (2 - progress);
 
-        title.style.opacity =
-          startTitleOpacity +
-          (endTitleOpacity - startTitleOpacity) * eased;
+        const eased =
+          progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
-        text.style.opacity =
-          startTextOpacity +
-          (endTextOpacity - startTextOpacity) * eased;
+        const titleOpacity = showText
+          ? startTitleOpacity * (1 - eased)
+          : startTitleOpacity + (1 - startTitleOpacity) * eased;
+
+        const textOpacity = showText
+          ? startTextOpacity + (1 - startTextOpacity) * eased
+          : startTextOpacity * (1 - eased);
+
+        const titleBlur = showText
+          ? eased * 5
+          : (1 - eased) * 5;
+
+        const textBlur = showText
+          ? (1 - eased) * 5
+          : eased * 5;
+
+        title.style.opacity = titleOpacity;
+        title.style.filter = `blur(${titleBlur}px)`;
+
+        text.style.opacity = textOpacity;
+        text.style.filter = `blur(${textBlur}px)`;
 
         if (progress < 1) {
           const frame = requestAnimationFrame(animate);
@@ -94,7 +112,10 @@
       }
 
       title.style.opacity = '1';
+      title.style.filter = 'blur(0px)';
+
       text.style.opacity = '0';
+      text.style.filter = 'blur(5px)';
 
       if (!mobileQuery.matches) return;
 
@@ -102,7 +123,7 @@
 
       const interval = setInterval(() => {
         showingText = !showingText;
-        fade(ribbon, showingText);
+        animateRibbon(ribbon, showingText);
       }, 3000);
 
       animations.set(ribbon, interval);
@@ -243,16 +264,18 @@
       overflow: hidden;
     }
 
-    .product__info-wrapper_v2 .ym-guarantee-ribbon__title,
+.product__info-wrapper_v2 .ym-guarantee-ribbon__title,
 .product__info-wrapper_v2 .ym-guarantee-ribbon__text {
     margin: 0;
     width: 100%;
     text-align: center;
     transition: none;
+    will-change: opacity, filter;
 }
 
 .product__info-wrapper_v2 .ym-guarantee-ribbon__title {
     opacity: 1;
+    filter: blur(0);
     transform: none;
 }
 
@@ -261,6 +284,7 @@
     left: 0;
     top: 50%;
     opacity: 0;
+    filter: blur(5px);
     transform: translateY(-50%);
 }
 
