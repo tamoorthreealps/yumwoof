@@ -12,240 +12,240 @@
   - product: {Object} product object
 {% endcomment %}
 <style>
-      .asw { display: block; width: 100%; color: #000; }
-      .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
+        .asw { display: block; width: 100%; color: #000; }
+        .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
 
-      .asw-option { background: #fff9ef; border: 1px solid #000; }
-      .asw-option--sub { border-radius: 12px 12px 0 0; }
-      .qty.freq.qrt_freq_membership .asw-option--sub {border-radius: 12px;}
-      .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
-      .asw-option.is-selected { background: #E6E0D7; }
+        .asw-option { background: #fff9ef; border: 1px solid #000; }
+        .asw-option--sub { border-radius: 12px 12px 0 0; }
+        .qty.freq.qrt_freq_membership .asw-option--sub {border-radius: 12px;}
+        .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
+        .asw-option.is-selected { background: #E6E0D7; }
 
-      .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .asw__save-pill {
-  display: inline-flex;
-      align-items: center;
-      background: #FFC069;
-      color: #000000;
-      font-size: 16px;
-      line-height: 16px;
-      letter-spacing: -1.28px;
-      text-transform: uppercase;
-      padding: 3px 6.58px 0;
-      border-radius: 999px;
-      white-space: nowrap;
-      border: 1px solid #000000;
-      font-family: 'TAY Birdie';
-      min-height: 20px;
-    }
-/* =========================
-   MACBOOK / macOS ONLY
-   ========================= */
+        .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .asw__save-pill {
+    display: inline-flex;
+        align-items: center;
+        background: #FFC069;
+        color: #000000;
+        font-size: 16px;
+        line-height: 16px;
+        letter-spacing: -1.28px;
+        text-transform: uppercase;
+        padding: 3px 6.58px 0;
+        border-radius: 999px;
+        white-space: nowrap;
+        border: 1px solid #000000;
+        font-family: 'TAY Birdie';
+        min-height: 20px;
+      }
+  /* =========================
+     MACBOOK / macOS ONLY
+     ========================= */
 
-html.mac-os .asw__save-pill {
-    padding-top: 0 !important;
-    padding-bottom: 2px !important;
-}
-      .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
-      .asw-option--one .asw-option__label {padding-bottom:20px;}
-      .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-      .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
-      .asw-diamond { display: block;max-width: 100%;height: auto; }
-      .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
-      .asw-option .asw-fill {fill: #FFF9EF;}
-      .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
-
-      .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
-      .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-      .asw-option__titles { display: flex; flex-direction: column; gap: 0; min-width: 0; }
-      .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
-    .asw-option__subtitle {
-        font-size: 14px;
-        line-height: 24px;
-        color: rgba(0, 0, 0, 0.5);
-        letter-spacing: 0;
-        font-family: Matter, sans-serif;
-    }
-      .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
-      .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
-      .asw-option__price-now { color: #000; }
-
-      .asw-option__delivery { display: block;
-      position: relative; }
-      .asw-option__delivery:after {
-      content: "";
-      position: absolute;
-      left: 106px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 16px;
-      background: #000;
-      z-index: 2;
-      pointer-events: none;
-      border-radius:2px;
+  html.mac-os .asw__save-pill {
+      padding-top: 0 !important;
+      padding-bottom: 2px !important;
   }
-      .asw-option__delivery-label {
+        .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px; margin: 0; cursor: pointer; }
+        .asw-option--one .asw-option__label {padding-bottom:20px;}
+        .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+        .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
+        .asw-diamond { display: block;max-width: 100%;height: auto; }
+        .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
+        .asw-option .asw-fill {fill: #FFF9EF;}
+        .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
+
+        .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+        .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+        .asw-option__titles { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+        .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
+      .asw-option__subtitle {
+          font-size: 14px;
+          line-height: 24px;
+          color: rgba(0, 0, 0, 0.5);
+          letter-spacing: 0;
+          font-family: Matter, sans-serif;
+      }
+        .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
+        .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
+        .asw-option__price-now { color: #000; }
+
+        .asw-option__delivery { display: block;
+        position: relative; }
+        .asw-option__delivery:after {
+        content: "";
         position: absolute;
-        left: 18px;
-        top: 55%;
+        left: 106px;
+        top: 50%;
         transform: translateY(-50%);
+        width: 1px;
+        height: 16px;
+        background: #000;
         z-index: 2;
         pointer-events: none;
-        font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+        border-radius:2px;
+    }
+        .asw-option__delivery-label {
+          position: absolute;
+          left: 18px;
+          top: 55%;
+          transform: translateY(-50%);
+          z-index: 2;
+          pointer-events: none;
+          font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+          font-size: 14px;
+          line-height: 20px;
+          text-transform: uppercase;
+          letter-spacing: 0;
+        }
+        .asw-select { position: relative; display: block; }
+        .asw-select__field {
+          -webkit-appearance: none; -moz-appearance: none; appearance: none;
+          width: 100%; height: 44px; padding: 0 40px 0 126px;
+          background: #fff; border: 1px solid #000; border-radius: 8px;
+          font-family: inherit; font-size: 14px; line-height: 20px; font-weight: 500;
+          color: #000; cursor: pointer; text-transform: capitalize; outline: none;
+          box-shadow: inherit;
+        }
+        .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; transition: transform .2s ease; }
+
+        /* ----- Custom frequency dropdown (ul/li) replacing the native <select> ----- */
+        .asw-freq { position: relative; display: block; }
+        .asw-freq__trigger {
+          display: flex; align-items: center; text-align: left; gap: 8px;
+          appearance: none; -webkit-appearance: none;
+        }
+        .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
+        .asw-freq__list {
+          position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 30;
+          margin: 0; padding: 4px; list-style: none;
+          background: rgba(255, 255, 255, 0.95); border: 1px solid #000; border-radius: 8px;
+          box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+          max-height: 260px; overflow: auto;
+        }
+        .asw-freq__list[hidden] { display: none; }
+        .asw-freq__opt {
+          font-family: 'Matter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500;
+          color: #000; padding: 8px 12px; border-radius: 4px; cursor: pointer;
+          text-transform: capitalize; user-select: none;
+        }
+        .asw-freq__opt + .asw-freq__opt { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+        .asw-freq__opt:hover:not(.is-selected) { background: rgba(0, 0, 0, 0.05); }
+        .asw-freq__opt.is-selected { background: #000; color: #fff9ef; }
+        /* No divider line touching the selected (black) pill. */
+        .asw-freq__opt.is-selected,
+        .asw-freq__opt.is-selected + .asw-freq__opt { border-top-color: transparent; }
+
+        .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
+        .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
+        .asw-benefit__check { flex: 0 0 auto; margin-top: 7px; display: flex; }
+
+        /* Collapse the subscription details when the shopper picks one-time */
+        .asw-option--sub:not(.is-selected) .asw-option__delivery,
+        .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+
+        @media (max-width: 990px) {
+          .asw-option__label {
+        gap: 12px;
+        padding: 12px;
+    }
+    .asw-option--one .asw-option__label {
+        padding: 12px;
+    }
+        .asw-option__radio-icon {
+            flex: 0 0 20px;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+        }
+            .asw-option__body {
+            gap: 12px;
+        }
+        .asw-option__head {
+        padding-left: 28px;
+    }
+        .asw-option__titles {
+        gap: 4px;
+    }
+    .asw-option__title-row {
+        gap: 6px;
+    }
+    .asw-option__title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .asw__save-pill {
+        font-size: 13px;
+        line-height: 13px;
+        letter-spacing: -1.04px;
+        padding: 4px 5.92px 1px;
+    }
+    @supports (-webkit-touch-callout: none) {
+    		.asw__save-pill {
+    			padding-top: 0;
+    			padding-bottom: 2px;
+    		}
+    	}
+      html.mac-os .asw__save-pill {
+      padding-top: 0 !important;
+      padding-bottom: 1px !important;
+  }
+    .asw-option__subtitle {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0;
+    }
+    .asw-option__price {
+        gap: 6px;
         font-size: 14px;
         line-height: 20px;
-        text-transform: uppercase;
+    }
+    .asw-option__delivery-label {
+        left: 16px;
+        font-size: 12px;
+        line-height: 12px;
         letter-spacing: 0;
-      }
-      .asw-select { position: relative; display: block; }
-      .asw-select__field {
-        -webkit-appearance: none; -moz-appearance: none; appearance: none;
-        width: 100%; height: 44px; padding: 0 40px 0 126px;
-        background: #fff; border: 1px solid #000; border-radius: 8px;
-        font-family: inherit; font-size: 14px; line-height: 20px; font-weight: 500;
-        color: #000; cursor: pointer; text-transform: capitalize; outline: none;
-        box-shadow: inherit;
-      }
-      .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; transition: transform .2s ease; }
-
-      /* ----- Custom frequency dropdown (ul/li) replacing the native <select> ----- */
-      .asw-freq { position: relative; display: block; }
-      .asw-freq__trigger {
-        display: flex; align-items: center; text-align: left; gap: 8px;
-        appearance: none; -webkit-appearance: none;
-      }
-      .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
-      .asw-freq__list {
-        position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 30;
-        margin: 0; padding: 4px; list-style: none;
-        background: rgba(255, 255, 255, 0.95); border: 1px solid #000; border-radius: 8px;
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
-        max-height: 260px; overflow: auto;
-      }
-      .asw-freq__list[hidden] { display: none; }
-      .asw-freq__opt {
-        font-family: 'Matter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500;
-        color: #000; padding: 8px 12px; border-radius: 4px; cursor: pointer;
-        text-transform: capitalize; user-select: none;
-      }
-      .asw-freq__opt + .asw-freq__opt { border-top: 1px solid rgba(0, 0, 0, 0.12); }
-      .asw-freq__opt:hover:not(.is-selected) { background: rgba(0, 0, 0, 0.05); }
-      .asw-freq__opt.is-selected { background: #000; color: #fff9ef; }
-      /* No divider line touching the selected (black) pill. */
-      .asw-freq__opt.is-selected,
-      .asw-freq__opt.is-selected + .asw-freq__opt { border-top-color: transparent; }
-
-      .asw-option__benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
-      .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
-      .asw-benefit__check { flex: 0 0 auto; margin-top: 7px; display: flex; }
-
-      /* Collapse the subscription details when the shopper picks one-time */
-      .asw-option--sub:not(.is-selected) .asw-option__delivery,
-      .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
-
-      @media (max-width: 990px) {
-        .asw-option__label {
-      gap: 12px;
-      padding: 12px;
-  }
-  .asw-option--one .asw-option__label {
-      padding: 12px;
-  }
-      .asw-option__radio-icon {
-          flex: 0 0 20px;
-          width: 20px;
-          height: 20px;
-          position: absolute;
-      }
-          .asw-option__body {
-          gap: 12px;
-      }
-      .asw-option__head {
-      padding-left: 28px;
-  }
-      .asw-option__titles {
-      gap: 4px;
-  }
-  .asw-option__title-row {
-      gap: 6px;
-  }
-  .asw-option__title {
-      font-size: 16px;
-      line-height: 20px;
-  }
-  .asw__save-pill {
-      font-size: 13px;
-      line-height: 13px;
-      letter-spacing: -1.04px;
-      padding: 4px 5.92px 1px;
-  }
-  @supports (-webkit-touch-callout: none) {
-  		.asw__save-pill {
-  			padding-top: 0;
-  			padding-bottom: 2px;
-  		}
-  	}
-    html.mac-os .asw__save-pill {
-    padding-top: 0 !important;
-    padding-bottom: 1px !important;
-}
-  .asw-option__subtitle {
-      font-size: 12px;
-      line-height: 16px;
-      letter-spacing: 0;
-  }
-  .asw-option__price {
-      gap: 6px;
-      font-size: 14px;
-      line-height: 20px;
-  }
-  .asw-option__delivery-label {
-      left: 16px;
-      font-size: 12px;
-      line-height: 12px;
-      letter-spacing: 0;
-      top: 52%;
-  }
-  .asw-select__field {
-      height: 36px;
-      padding: 0 24px 0 107px;
-      border-radius: 6px;
-      font-size: 12px;
-      line-height: 20px;
-      letter-spacing: 0.24px;
-  }
-  .asw-select__chevron {
-      width: 8px;
-      height: 4px;
-  }
-  .asw-freq__opt {
-      font-size: 12px;
-      line-height: 16px;
-      padding: 8px 10px;
-  }
-  .asw-option__delivery:after {
-      left: 91px;
-      height: 12px;
-  }
-      .asw-option__benefits {
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
-          margin: 4px 8px 8px;
-      }
-      .asw-benefit {
-      gap: 6px;
-      font-size: 11px;
-      line-height: 16px;
-      letter-spacing: 0;
-  }
-  .asw-benefit__check {
-      margin-top: 4px;
-      width: 12px;
-      height: 12px;
-  }
-      }
+        top: 52%;
+    }
+    .asw-select__field {
+        height: 36px;
+        padding: 0 24px 0 107px;
+        border-radius: 6px;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.24px;
+    }
+    .asw-select__chevron {
+        width: 8px;
+        height: 4px;
+    }
+    .asw-freq__opt {
+        font-size: 12px;
+        line-height: 16px;
+        padding: 8px 10px;
+    }
+    .asw-option__delivery:after {
+        left: 91px;
+        height: 12px;
+    }
+        .asw-option__benefits {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 4px 8px 8px;
+        }
+        .asw-benefit {
+        gap: 6px;
+        font-size: 11px;
+        line-height: 16px;
+        letter-spacing: 0;
+    }
+    .asw-benefit__check {
+        margin-top: 4px;
+        width: 12px;
+        height: 12px;
+    }
+        }
 </style>
 {%- liquid
   assign appstle_app_id = 'appstle'
@@ -389,7 +389,9 @@ html.mac-os .asw__save-pill {
                           tabindex="0"
                           data-value="{{ alloc.selling_plan.id }}"
                           aria-selected="{% if is_default %}true{% else %}false{% endif %}"
-                        >{{ opt_label }}</li>
+                        >
+                          {{ opt_label }}
+                        </li>
                       {%- endunless -%}
                     {%- endif -%}
                   {%- endfor -%}
@@ -674,14 +676,12 @@ html.mac-os .asw__save-pill {
   {%- endif -%}
 {%- endif -%}
 <script>
-(function () {
+  (function () {
     const isMac =
-        navigator.platform === 'MacIntel' ||
-        navigator.platform === 'MacPPC' ||
-        navigator.platform === 'Mac68K';
+      navigator.platform === 'MacIntel' || navigator.platform === 'MacPPC' || navigator.platform === 'Mac68K';
 
     if (isMac) {
-        document.documentElement.classList.add('mac-os');
+      document.documentElement.classList.add('mac-os');
     }
-})();
+  })();
 </script>
