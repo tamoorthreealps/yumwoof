@@ -11,11 +11,40 @@
   "sections": {
     "about_hero": {
       "type": "about-hero",
-      "settings": {}
+      "settings": {
+        "headline": "Dogs Deserve Real Food",
+        "intro": "Yumwoof was founded by my wife Ana and me after years spent researching nutrition, inflammation, and gut health.",
+        "lede": "Along the way, we became increasingly frustrated by how much of the pet food industry relied on heavily processed ingredients, synthetic additives, and manufacturing shortcuts.",
+        "badge_text": "Family Owned",
+        "closing": "Today, Yumwoof creates air-dried recipes built around premium proteins, healthy fats, and whole food nutrition. Rather than formulating around cost or convenience, we focus on creating food we would proudly feed our own dog, Sherlock.",
+        "attribution": "Jaron & Ana, Founders",
+        "color_grad_top": "#cfe0f4",
+        "color_grad_bottom": "#fff9ef",
+        "color_text": "#0d0d0d",
+        "color_muted": "#4d4d4d",
+        "color_stroke": "#661d1d",
+        "color_badge_bg": "#ffc069",
+        "color_badge_text": "#0d0d0d",
+        "padding_top": 228,
+        "padding_bottom": 132,
+        "padding_top_mobile": 112,
+        "padding_bottom_mobile": 64
+      }
     },
     "about_solution": {
       "type": "about-solution",
-      "settings": {}
+      "settings": {
+        "heading": "We designed the food we couldn't find.",
+        "body": "<p>Like many pet parents, we wanted food we could trust. What began as a personal search for better nutrition eventually led us to develop some of the first air-dried recipes of their kind, publish a book on canine nutrition, build relationships with trusted farmers, ranchers, and fishermen, and serve millions of meals to dogs through better food.</p>",
+        "color_bg": "#0d0d0d",
+        "color_text": "#fff9ef",
+        "scrim_opacity": 55,
+        "min_height": 744,
+        "padding_top": 124,
+        "padding_bottom": 124,
+        "padding_top_mobile": 72,
+        "padding_bottom_mobile": 72
+      }
     },
     "about_timeline": {
       "type": "about-timeline",
@@ -54,11 +83,40 @@
         }
       },
       "block_order": ["entry_1", "entry_2", "entry_3", "entry_4"],
-      "settings": {}
+      "settings": {
+        "heading": "The Origin",
+        "color_bg": "#fff9ef",
+        "color_text": "#0d0d0d",
+        "color_eyebrow": "#661d1d",
+        "color_body": "#1a1a1a",
+        "color_line": "#bfbbb3",
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80
+      }
     },
     "about_cta": {
       "type": "about-cta",
-      "settings": {}
+      "settings": {
+        "heading": "Feed them well.",
+        "body": "<p>Millions of meals later, our mission remains the same: create food we would proudly feed our own dog every day.</p>",
+        "button_text": "Shop Air-Dried Food",
+        "button_url": "shopify://collections/all",
+        "color_bg": "#0d0d0d",
+        "color_text": "#fff9ef",
+        "scrim_opacity": 45,
+        "color_button_bg": "#fff9ef",
+        "color_button_text": "#0d0d0d",
+        "color_button_border": "#fff9ef",
+        "color_button_hover_bg": "#ffc069",
+        "color_button_hover_text": "#0d0d0d",
+        "min_height": 688,
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 56
+      }
     },
     "yumwoof_faqs_CrRpFc": {
       "type": "yumwoof-faqs",
