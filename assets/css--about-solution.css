@@ -1,0 +1,87 @@
+/* ==========================================================================
+   About — Solution
+   Full-width dark block (optional background image + scrim) with a display
+   heading and body copy pinned to the left.
+   Mobile-first; desktop layer at min-width: 768px.
+   ========================================================================== */
+
+.about-solution {
+  padding: 0 8px;
+}
+.about-solution * { box-sizing: border-box; }
+
+.about-solution__inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: var(--as-bg);
+  color: var(--as-text);
+  padding: var(--as-pad-top-mobile) 28px var(--as-pad-bottom-mobile);
+}
+
+/* Decorative background image (emitted via inline style in the section) */
+.about-solution__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+.about-solution__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--as-bg);
+  opacity: var(--as-scrim);
+  z-index: 1;
+}
+
+.about-solution__content {
+  position: relative;
+  z-index: 2;
+  max-width: 336px;
+}
+
+.about-solution__heading {
+  margin: 0;
+  font-family: 'TAY Birdie', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--as-text);
+  font-size: 34px;
+  line-height: 1.0;
+  letter-spacing: 0;
+}
+
+.about-solution__body {
+  margin: 16px 0 0;
+  font-family: 'Matter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--as-text);
+}
+
+/* ==========================================================================
+   Desktop
+   ========================================================================== */
+@media (min-width: 768px) {
+  .about-solution {
+    padding: 0 36px;
+  }
+  .about-solution__inner {
+    border-radius: 40px;
+    padding: var(--as-pad-top) 122px var(--as-pad-bottom);
+    min-height: var(--as-min-height);
+  }
+  .about-solution__content {
+    max-width: 576px;
+  }
+  .about-solution__heading {
+    font-size: clamp(48px, 5vw, 64px);
+  }
+  .about-solution__body {
+    margin-top: 24px;
+    font-size: 16px;
+  }
+}

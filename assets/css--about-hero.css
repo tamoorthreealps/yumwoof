@@ -1,0 +1,217 @@
+/* ==========================================================================
+   About — Hero
+   Founder intro: headline + brush underline, intro copy, tilted image collage
+   with a "Family Owned" badge, closing copy, signature + attribution.
+   Mobile-first; desktop layer at min-width: 768px.
+   ========================================================================== */
+
+.about-hero {
+  background: linear-gradient(180deg, var(--ah-grad-top) 0%, var(--ah-grad-bottom) 100%);
+  color: var(--ah-text);
+  padding: var(--ah-pad-top-mobile) 20px var(--ah-pad-bottom-mobile);
+  overflow: hidden;
+}
+.about-hero * { box-sizing: border-box; }
+
+.about-hero__inner {
+  max-width: 1156px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ----- Headline + brush underline ----- */
+.about-hero__headline {
+  margin: 0;
+  font-family: 'TAY Birdie', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--ah-text);
+  font-size: 40px;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+.about-hero__stroke {
+  display: block;
+  width: min(224px, 70%);
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 4px;
+  background: var(--ah-stroke);
+}
+.about-hero__stroke img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ----- Intro copy ----- */
+.about-hero__intro {
+  margin: 24px 0 0;
+  max-width: 336px;
+  font-family: 'Matter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.28;
+  color: var(--ah-text);
+}
+.about-hero__lede {
+  margin: 16px 0 0;
+  max-width: 336px;
+  font-family: 'Matter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ah-muted);
+}
+
+/* ----- Image collage ----- */
+.about-hero__collage {
+  position: relative;
+  width: 100%;
+  max-width: 336px;
+  margin: 40px auto 0;
+  aspect-ratio: 336 / 360;
+}
+.about-hero__photo {
+  position: absolute;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.16);
+}
+.about-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.about-hero__photo--1 {
+  left: 0;
+  top: 32%;
+  width: 68%;
+  transform: rotate(-5deg);
+  z-index: 1;
+}
+.about-hero__photo--2 {
+  right: 0;
+  top: 4%;
+  width: 60%;
+  transform: rotate(4deg);
+  z-index: 2;
+}
+
+/* Family Owned badge */
+.about-hero__badge {
+  position: absolute;
+  left: 4%;
+  top: 22%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  background: var(--ah-badge-bg);
+  color: var(--ah-badge-text);
+  border: 1px solid #000;
+  border-radius: 10px;
+  transform: rotate(-8deg);
+  font-family: 'TAY Birdie', sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1.05;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+/* ----- Closing copy + signature ----- */
+.about-hero__closing {
+  margin: 40px 0 0;
+  max-width: 336px;
+  font-family: 'Matter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ah-text);
+}
+.about-hero__signature {
+  margin: 24px auto 0;
+  width: 200px;
+  max-width: 60%;
+}
+.about-hero__signature img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.about-hero__attribution {
+  margin: 8px 0 0;
+  font-family: 'Matter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ah-text);
+}
+
+/* ==========================================================================
+   Desktop
+   ========================================================================== */
+@media (min-width: 768px) {
+  .about-hero {
+    padding: var(--ah-pad-top) 40px var(--ah-pad-bottom);
+  }
+  .about-hero__headline {
+    font-size: clamp(72px, 8vw, 112px);
+  }
+  .about-hero__stroke {
+    width: min(1088px, 82%);
+    height: 8px;
+    margin-top: 8px;
+  }
+  .about-hero__intro {
+    margin-top: 40px;
+    max-width: 962px;
+    font-size: 32px;
+    line-height: 1.25;
+  }
+  .about-hero__lede {
+    margin-top: 20px;
+    max-width: 620px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .about-hero__collage {
+    max-width: 872px;
+    aspect-ratio: 872 / 567;
+    margin-top: 56px;
+  }
+  .about-hero__photo--1 {
+    width: 62%;
+    top: 15%;
+  }
+  .about-hero__photo--2 {
+    width: 51%;
+    top: 0;
+  }
+  .about-hero__badge {
+    left: 18%;
+    top: 26%;
+    padding: 12px 20px;
+    font-size: 20px;
+    border-radius: 14px;
+  }
+  .about-hero__closing {
+    margin-top: 64px;
+    max-width: 726px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .about-hero__signature {
+    width: 286px;
+    margin-top: 40px;
+  }
+  .about-hero__attribution {
+    font-size: 16px;
+  }
+}

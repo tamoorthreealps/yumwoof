@@ -9,14 +9,56 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "mobile_padding_top": 128,
-        "mobile_padding_bottom": 80,
-        "desktop_padding_top": 196,
-        "desktop_padding_bottom": 120
-      }
+    "about_hero": {
+      "type": "about-hero",
+      "settings": {}
+    },
+    "about_solution": {
+      "type": "about-solution",
+      "settings": {}
+    },
+    "about_timeline": {
+      "type": "about-timeline",
+      "blocks": {
+        "entry_1": {
+          "type": "entry",
+          "settings": {
+            "date": "2017–2018",
+            "title": "Food was the problem",
+            "body": "<p>We were dealing with our own health challenges when our dog Sherlock started showing similar signs. The connection between food and long-term health became impossible to ignore. That sent us searching for food we could actually trust — and deep into the research behind why so few options seemed to exist for dogs.</p>"
+          }
+        },
+        "entry_2": {
+          "type": "entry",
+          "settings": {
+            "date": "2019–2020",
+            "title": "We couldn't find it, so we made it",
+            "body": "<p>Unable to find a dog food that reflected our standards, we decided to create one ourselves. We set out to combine premium proteins, healthy fats, nutrient-dense organ meats, and minimal processing into a food inspired by nature and informed by science. In 2020, we launched one of the first cluster-style air-dried dog foods.</p>"
+          }
+        },
+        "entry_3": {
+          "type": "entry",
+          "settings": {
+            "date": "2021–2023",
+            "title": "The same patterns kept emerging",
+            "body": "<p>As more families joined the Yumwoof community, we spent hundreds of hours speaking directly with dog parents about the health challenges they were facing. The same concerns surfaced again and again — allergies, digestive issues, skin problems, and picky eating. Those conversations reinforced the research, helping shape The Canine Cocomega™ Effect and the nutritional philosophy behind every Yumwoof recipe.</p>"
+          }
+        },
+        "entry_4": {
+          "type": "entry",
+          "settings": {
+            "date": "2024–Today",
+            "title": "One bowl became something bigger",
+            "body": "<p>As more families joined us, our recipes expanded, our network of trusted farmers, ranchers, and fishermen deepened, and our standards continued to evolve. What never changed was our commitment to creating food we would proudly feed our own dog. What began with a single bowl has grown into multiple ways to help dogs eat better.</p>"
+          }
+        }
+      },
+      "block_order": ["entry_1", "entry_2", "entry_3", "entry_4"],
+      "settings": {}
+    },
+    "about_cta": {
+      "type": "about-cta",
+      "settings": {}
     },
     "yumwoof_faqs_CrRpFc": {
       "type": "yumwoof-faqs",
@@ -41,7 +83,10 @@
     }
   },
   "order": [
-    "main",
+    "about_hero",
+    "about_solution",
+    "about_timeline",
+    "about_cta",
     "yumwoof_faqs_CrRpFc"
   ]
 }
