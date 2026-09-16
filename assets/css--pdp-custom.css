@@ -1307,6 +1307,9 @@ width: 140px;
     background-position: 0% 0;
   }
 }
+.product__info-container.product__info-wrapper_v2 .product-form {
+  padding:2.4rem 0 1.2rem;
+}
 @media screen and (max-width: 990px) {
 .product__info-wrapper_v2 .product__title h1,
 .product__info-wrapper_v2 .product__title h2,
