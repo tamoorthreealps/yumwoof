@@ -1,0 +1,92 @@
+{{ 'css--about-cta.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+  assign scrim = s.scrim_opacity | divided_by: 100.0
+-%}
+
+{%- style -%}
+  {%- if s.bg_image != blank -%}
+    #about-cta-{{ uid }} .about-cta__bg {
+      background-image: url("{{ s.bg_image | image_url: width: 1600 }}");
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section
+  class="about-cta"
+  id="about-cta-{{ uid }}"
+  style="
+    --ac-bg: {{ s.color_bg }};
+    --ac-text: {{ s.color_text }};
+    --ac-scrim: {{ scrim }};
+    --ac-min-height: {{ s.min_height }}px;
+    --ac-button-bg: {{ s.color_button_bg }};
+    --ac-button-text: {{ s.color_button_text }};
+    --ac-button-border: {{ s.color_button_border }};
+    --ac-button-hover-bg: {{ s.color_button_hover_bg }};
+    --ac-button-hover-text: {{ s.color_button_hover_text }};
+    --ac-pad-top: {{ s.padding_top }}px;
+    --ac-pad-bottom: {{ s.padding_bottom }}px;
+    --ac-pad-top-mobile: {{ s.padding_top_mobile }}px;
+    --ac-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="about-cta__inner">
+    {%- if s.bg_image != blank -%}
+      <div class="about-cta__bg" aria-hidden="true"></div>
+      <div class="about-cta__scrim" aria-hidden="true"></div>
+    {%- endif -%}
+
+    {%- if s.heading != blank -%}
+      <h2 class="about-cta__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if s.body != blank -%}
+      <div class="about-cta__body">{{ s.body }}</div>
+    {%- endif -%}
+
+    {%- if s.button_text != blank -%}
+      <a class="about-cta__button" href="{{ s.button_url | default: '#' }}">{{ s.button_text | escape }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About CTA",
+  "tag": "section",
+  "class": "about-cta-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Feed them well." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Millions of meals later, our mission remains the same: create food we would proudly feed our own dog every day.</p>" },
+
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop Air-Dried Food" },
+    { "type": "url", "id": "button_url", "label": "Button link" },
+
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "color_bg", "label": "Background color", "default": "#0d0d0d" },
+    { "type": "color", "id": "color_text", "label": "Text color", "default": "#fff9ef" },
+    { "type": "image_picker", "id": "bg_image", "label": "Background image (optional)" },
+    { "type": "range", "id": "scrim_opacity", "label": "Scrim strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 45 },
+
+    { "type": "header", "content": "Button colors" },
+    { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#fff9ef" },
+    { "type": "color", "id": "color_button_text", "label": "Button text", "default": "#0d0d0d" },
+    { "type": "color", "id": "color_button_border", "label": "Button border", "default": "#fff9ef" },
+    { "type": "color", "id": "color_button_hover_bg", "label": "Button background (hover)", "default": "#ffc069" },
+    { "type": "color", "id": "color_button_hover_text", "label": "Button text (hover)", "default": "#0d0d0d" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "min_height", "label": "Min height (desktop)", "min": 320, "max": 900, "step": 8, "unit": "px", "default": 688 },
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "presets": [{ "name": "About CTA" }]
+}
+{% endschema %}

@@ -1,0 +1,157 @@
+{{ 'css--about-timeline.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+-%}
+
+<section
+  class="about-timeline"
+  id="about-timeline-{{ uid }}"
+  style="
+    --at-bg: {{ s.color_bg }};
+    --at-text: {{ s.color_text }};
+    --at-eyebrow: {{ s.color_eyebrow }};
+    --at-body: {{ s.color_body }};
+    --at-line: {{ s.color_line }};
+    --at-pad-top: {{ s.padding_top }}px;
+    --at-pad-bottom: {{ s.padding_bottom }}px;
+    --at-pad-top-mobile: {{ s.padding_top_mobile }}px;
+    --at-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="about-timeline__inner">
+    {%- if s.heading != blank -%}
+      <h2 class="about-timeline__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="about-timeline__list">
+        {%- for block in section.blocks -%}
+          {%- assign b = block.settings -%}
+          <div class="about-timeline__item" {{ block.shopify_attributes }}>
+            <div class="about-timeline__text">
+              {%- if b.date != blank -%}
+                <p class="about-timeline__date">{{ b.date }}</p>
+              {%- endif -%}
+              {%- if b.title != blank -%}
+                <h3 class="about-timeline__title">{{ b.title }}</h3>
+              {%- endif -%}
+              {%- if b.body != blank -%}
+                <div class="about-timeline__body">{{ b.body }}</div>
+              {%- endif -%}
+            </div>
+
+            {%- if b.image_a != blank or b.image_b != blank -%}
+              <div class="about-timeline__photos" aria-hidden="true">
+                {%- if b.image_a != blank -%}
+                  <div class="about-timeline__photo about-timeline__photo--a">
+                    {{
+                      b.image_a
+                      | image_url: width: 600
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '160, 266, 400, 532',
+                        sizes: '(min-width: 768px) 266px, 46vw',
+                        alt: b.image_a.alt | default: ''
+                    }}
+                  </div>
+                {%- endif -%}
+                {%- if b.image_b != blank -%}
+                  <div class="about-timeline__photo about-timeline__photo--b">
+                    {{
+                      b.image_b
+                      | image_url: width: 600
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '160, 266, 400, 532',
+                        sizes: '(min-width: 768px) 266px, 46vw',
+                        alt: b.image_b.alt | default: ''
+                    }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Timeline",
+  "tag": "section",
+  "class": "about-timeline-section",
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Origin" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "color_bg", "label": "Background", "default": "#fff9ef" },
+    { "type": "color", "id": "color_text", "label": "Heading / title", "default": "#0d0d0d" },
+    { "type": "color", "id": "color_eyebrow", "label": "Date eyebrow", "default": "#661d1d" },
+    { "type": "color", "id": "color_body", "label": "Body text", "default": "#1a1a1a" },
+    { "type": "color", "id": "color_line", "label": "Connector line", "default": "rgba(0,0,0,0.25)" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "entry",
+      "name": "Timeline entry",
+      "settings": [
+        { "type": "text", "id": "date", "label": "Date / period", "default": "2017–2018" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Food was the problem" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>We were dealing with our own health challenges when our dog Sherlock started showing similar signs. The connection between food and long-term health became impossible to ignore.</p>" },
+        { "type": "image_picker", "id": "image_a", "label": "Photo (left)" },
+        { "type": "image_picker", "id": "image_b", "label": "Photo (right)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Timeline",
+      "blocks": [
+        {
+          "type": "entry",
+          "settings": {
+            "date": "2017–2018",
+            "title": "Food was the problem",
+            "body": "<p>We were dealing with our own health challenges when our dog Sherlock started showing similar signs. The connection between food and long-term health became impossible to ignore. That sent us searching for food we could actually trust — and deep into the research behind why so few options seemed to exist for dogs.</p>"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "date": "2019–2020",
+            "title": "We couldn't find it, so we made it",
+            "body": "<p>Unable to find a dog food that reflected our standards, we decided to create one ourselves. We set out to combine premium proteins, healthy fats, nutrient-dense organ meats, and minimal processing into a food inspired by nature and informed by science. In 2020, we launched one of the first cluster-style air-dried dog foods.</p>"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "date": "2021–2023",
+            "title": "The same patterns kept emerging",
+            "body": "<p>As more families joined the Yumwoof community, we spent hundreds of hours speaking directly with dog parents about the health challenges they were facing. The same concerns surfaced again and again — allergies, digestive issues, skin problems, and picky eating. Those conversations reinforced the research, helping shape The Canine Cocomega™ Effect and the nutritional philosophy behind every Yumwoof recipe.</p>"
+          }
+        },
+        {
+          "type": "entry",
+          "settings": {
+            "date": "2024–Today",
+            "title": "One bowl became something bigger",
+            "body": "<p>As more families joined us, our recipes expanded, our network of trusted farmers, ranchers, and fishermen deepened, and our standards continued to evolve. What never changed was our commitment to creating food we would proudly feed our own dog. What began with a single bowl has grown into multiple ways to help dogs eat better.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

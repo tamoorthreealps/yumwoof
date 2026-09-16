@@ -1,0 +1,73 @@
+{{ 'css--about-solution.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+  assign scrim = s.scrim_opacity | divided_by: 100.0
+-%}
+
+{%- style -%}
+  {%- if s.bg_image != blank -%}
+    #about-solution-{{ uid }} .about-solution__bg {
+      background-image: url("{{ s.bg_image | image_url: width: 1600 }}");
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section
+  class="about-solution"
+  id="about-solution-{{ uid }}"
+  style="
+    --as-bg: {{ s.color_bg }};
+    --as-text: {{ s.color_text }};
+    --as-scrim: {{ scrim }};
+    --as-min-height: {{ s.min_height }}px;
+    --as-pad-top: {{ s.padding_top }}px;
+    --as-pad-bottom: {{ s.padding_bottom }}px;
+    --as-pad-top-mobile: {{ s.padding_top_mobile }}px;
+    --as-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+  "
+>
+  <div class="about-solution__inner">
+    {%- if s.bg_image != blank -%}
+      <div class="about-solution__bg" aria-hidden="true"></div>
+      <div class="about-solution__scrim" aria-hidden="true"></div>
+    {%- endif -%}
+
+    <div class="about-solution__content">
+      {%- if s.heading != blank -%}
+        <h2 class="about-solution__heading">{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.body != blank -%}
+        <div class="about-solution__body">{{ s.body }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Solution",
+  "tag": "section",
+  "class": "about-solution-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "We designed the food we couldn't find." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Like many pet parents, we wanted food we could trust. What began as a personal search for better nutrition eventually led us to develop some of the first air-dried recipes of their kind, publish a book on canine nutrition, build relationships with trusted farmers, ranchers, and fishermen, and serve millions of meals to dogs through better food.</p>" },
+
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "color_bg", "label": "Background color", "default": "#0d0d0d" },
+    { "type": "color", "id": "color_text", "label": "Text color", "default": "#fff9ef" },
+    { "type": "image_picker", "id": "bg_image", "label": "Background image (optional)" },
+    { "type": "range", "id": "scrim_opacity", "label": "Scrim strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 55, "info": "Darkens the image so the light text stays legible." },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "min_height", "label": "Min height (desktop)", "min": 320, "max": 900, "step": 8, "unit": "px", "default": 744 },
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 124 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 124 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "presets": [{ "name": "About Solution" }]
+}
+{% endschema %}
