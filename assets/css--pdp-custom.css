@@ -1135,7 +1135,7 @@ width: 140px;
   }
 
   .form--label--options {
-    gap: 12px;
+    gap: 10px;
   }
   
   .product-form__input--pill .form--label--options input[type="radio"] + label {
