@@ -1322,6 +1322,15 @@ width: 140px;
   line-height: 2rem;
   letter-spacing: -0.2px;
 }
+.product__info-wrapper_v2 .nlabel__grid {
+  gap:.8rem 1rem;
+}
+.product__info-wrapper_v2 .nutritional--info--heading {
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: -0.2px;
+}
 @media screen and (max-width: 990px) {
 .product__info-wrapper_v2 .product__title h1,
 .product__info-wrapper_v2 .product__title h2,
@@ -1429,7 +1438,9 @@ a.pdp--promo--banner_link p strong {
 .product__info-wrapper_v2 .component--nutrition--btns {
   margin: 4rem 0 0;
 }
-
+.product__info-wrapper_v2 .nlabel__grid {
+  gap:.8rem;
+}
 .product__info-wrapper_v .nlabel {
   gap: 1.6rem;
 }
@@ -1454,13 +1465,6 @@ a.pdp--promo--banner_link p strong {
 .product__info-wrapper_v2 .nlabel__title {
   font-size: 2rem;
   line-height: 2.8rem;
-  letter-spacing: -0.2px;
-}
-
-.product__info-wrapper_v2 .nutritional--info--heading {
-  margin: 0 0 16px;
-  font-size: 20px;
-  line-height: 20px;
   letter-spacing: -0.2px;
 }
 
