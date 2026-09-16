@@ -207,6 +207,7 @@
 
 .product__info-wrapper_v2 .recipe-swatch__title {
   padding: 9.6px 16px 0;
+  line-height: 16px;
 }
 
 .recipe-swatch__badge {
@@ -1083,6 +1084,7 @@ a.pdp--promo--banner_link svg {
 
   .product__info-wrapper_v2 .recipe-swatch__title {
     padding: 8px 12px 8px 8px;
+    line-height: 20px;
   }
 
   .recipe-swatch__badge {
