@@ -966,6 +966,9 @@ display: flex;
   .pdp--promo--banner {
   margin: 0 0 3.2rem;
 }
+.pdp--promo--banner.pdp--promo--banner_v2 {
+  margin: 0 0 2.8rem;
+}
 
 a.pdp--promo--banner_link {
   border-radius: 8px;
@@ -977,6 +980,10 @@ a.pdp--promo--banner_link p {
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.16px;
+}
+.pdp--promo--banner.pdp--promo--banner_v2 a.pdp--promo--banner_link p {
+  font-size: 18px;
+  letter-spacing: 0.18px;
 }
 
 a.pdp--promo--banner_link svg {
