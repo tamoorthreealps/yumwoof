@@ -206,7 +206,7 @@
 }
 
 .product__info-wrapper_v2 .recipe-swatch__title {
-  padding: 9.6px 16px 0;
+  padding: 9.6px 15px 0;
   line-height: 16px;
 }
 
@@ -1197,15 +1197,22 @@ width: 140px;
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
   .product__info-wrapper_v2 .recipe-swatch__label {
-    min-height: 96px;
+            min-height: 96px;
+        flex-direction: inherit;
+        overflow: hidden;
+        position: relative;
   }
   .product__info-wrapper_v2 .recipe-swatch__img {
-    height: 64px;
-            position: absolute;
+        height: 64px;
+        position: absolute;
         left: 0;
         right: 0;
         margin: 0 auto;
+        bottom: 0;
   }
+  .product__info-wrapper_v2 .recipe-swatch:first-child .recipe-swatch__img {
+    height:60px;
+}
   .product__info-wrapper_v2 .qty.freq h2.selector-title {
     letter-spacing: 0;
   }
