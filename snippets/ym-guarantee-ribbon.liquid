@@ -42,7 +42,45 @@
   (() => {
     const ribbons = document.querySelectorAll('.ym-guarantee-ribbon');
     const mobileQuery = window.matchMedia('(max-width: 990px)');
-    const timers = new WeakMap();
+
+    const animations = new WeakMap();
+
+    function fade(ribbon, showText) {
+      const title = ribbon.querySelector('.ym-guarantee-ribbon__title');
+      const text = ribbon.querySelector('.ym-guarantee-ribbon__text');
+
+      if (!title || !text) return;
+
+      const duration = 700;
+      const start = performance.now();
+
+      const startTitleOpacity = parseFloat(getComputedStyle(title).opacity);
+      const startTextOpacity = parseFloat(getComputedStyle(text).opacity);
+
+      const endTitleOpacity = showText ? 0 : 1;
+      const endTextOpacity = showText ? 1 : 0;
+
+      function animate(currentTime) {
+        const progress = Math.min((currentTime - start) / duration, 1);
+        const eased = progress * (2 - progress);
+
+        title.style.opacity =
+          startTitleOpacity +
+          (endTitleOpacity - startTitleOpacity) * eased;
+
+        text.style.opacity =
+          startTextOpacity +
+          (endTextOpacity - startTextOpacity) * eased;
+
+        if (progress < 1) {
+          const frame = requestAnimationFrame(animate);
+          animations.set(ribbon, frame);
+        }
+      }
+
+      const frame = requestAnimationFrame(animate);
+      animations.set(ribbon, frame);
+    }
 
     function startRibbonAnimation(ribbon) {
       const title = ribbon.querySelector('.ym-guarantee-ribbon__title');
@@ -50,20 +88,24 @@
 
       if (!title || !text) return;
 
-      if (timers.has(ribbon)) {
-        clearInterval(timers.get(ribbon));
-        timers.delete(ribbon);
+      if (animations.has(ribbon)) {
+        cancelAnimationFrame(animations.get(ribbon));
+        animations.delete(ribbon);
       }
 
-      ribbon.classList.remove('is-text-slide');
+      title.style.opacity = '1';
+      text.style.opacity = '0';
 
       if (!mobileQuery.matches) return;
 
-      const timer = setInterval(() => {
-        ribbon.classList.toggle('is-text-slide');
+      let showingText = false;
+
+      const interval = setInterval(() => {
+        showingText = !showingText;
+        fade(ribbon, showingText);
       }, 3000);
 
-      timers.set(ribbon, timer);
+      animations.set(ribbon, interval);
     }
 
     function handleBreakpointChange() {
@@ -206,7 +248,7 @@
     margin: 0;
     width: 100%;
     text-align: center;
-    transition: opacity 0.6s ease;
+    transition: none;
 }
 
 .product__info-wrapper_v2 .ym-guarantee-ribbon__title {
