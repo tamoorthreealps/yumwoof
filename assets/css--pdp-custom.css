@@ -1276,6 +1276,35 @@ width: 140px;
     background-position: 100% 50%;
   }
 }
+.product__info-wrapper_v2 .product-form__submit {
+  font-size: 22px;
+  letter-spacing: 1.32px;
+  background: linear-gradient(
+    90deg,
+    #ffc069 0%,
+    #ffc069 35%,
+    #ffd8a2 50%,
+    #ffc069 65%,
+    #ffc069 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  animation: buttonShine 4s linear infinite;
+}
+
+@keyframes buttonShine {
+  0% {
+    background-position: 100% 0;
+  }
+
+  45% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
+}
 @media screen and (max-width: 990px) {
 .product__info-wrapper_v2 .product__title h1,
 .product__info-wrapper_v2 .product__title h2,
@@ -1369,32 +1398,8 @@ a.pdp--promo--banner_link p strong {
 .product__info-wrapper_v2 .product-form__submit {
   font-size: 22px;
   letter-spacing: 1.32px;
-  background: linear-gradient(
-    90deg,
-    #ffc069 0%,
-    #ffc069 35%,
-    #ffd8a2 50%,
-    #ffc069 65%,
-    #ffc069 100%
-  );
-  background-size: 250% 100%;
-  background-position: 100% 0;
-  animation: buttonShine 4s linear infinite;
 }
 
-@keyframes buttonShine {
-  0% {
-    background-position: 100% 0;
-  }
-
-  45% {
-    background-position: 0% 0;
-  }
-
-  100% {
-    background-position: 0% 0;
-  }
-}
 .product__info-wrapper_v2 section.yumw-video-testimonials {
   margin: 4.8rem 0 0;
 }
