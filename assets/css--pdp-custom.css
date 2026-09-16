@@ -1277,8 +1277,9 @@ width: 140px;
   }
 }
 .product__info-wrapper_v2 .product-form__submit {
-  font-size: 22px;
-  letter-spacing: 1.32px;
+  font-size: 24px;
+  line-height:14px;
+  letter-spacing: 1.44px;
   background: linear-gradient(
     90deg,
     #ffc069 0%,
