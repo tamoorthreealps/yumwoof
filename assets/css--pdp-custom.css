@@ -1307,7 +1307,12 @@ width: 140px;
     background-position: 0% 0;
   }
 }
-
+.product__info-wrapper_v2 p.yumw-video--title {
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: -0.2px;
+  margin: 0 0 2.4rem;
+}
 @media screen and (max-width: 990px) {
 .product__info-wrapper_v2 .product__title h1,
 .product__info-wrapper_v2 .product__title h2,
@@ -1408,9 +1413,6 @@ a.pdp--promo--banner_link p strong {
 }
 
 .product__info-wrapper_v2 p.yumw-video--title {
-  font-size: 20px;
-  line-height: 20px;
-  letter-spacing: -0.2px;
   margin: 0 0 2rem;
 }
 
