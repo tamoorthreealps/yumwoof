@@ -1066,6 +1066,10 @@ a.pdp--promo--banner_link svg {
     margin: 0 0 20px;
   }
 
+  .product__info-wrapper_v2 .recipe-heading {
+    margin: 0 0 16px;
+  }
+
   .product-form__input .form__label.form__label--numbered {
     font-size: 16px;
     line-height: 20px;
