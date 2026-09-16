@@ -313,7 +313,7 @@ html.mac-os .recipe-swatch__badge {
     background: transparent;
 }
 .product-media-container.constrain-height .media {
-    padding-top: 376px;
+    padding-top: 100%;
 }
 .slider.slider--mobile {
     margin: 0 !important;
