@@ -1313,6 +1313,15 @@ width: 140px;
   letter-spacing: -0.2px;
   margin: 0 0 2.4rem;
 }
+.product__info-wrapper_v2 .nutritional--info,
+.product__info-wrapper_v2 .component--nutrition--btns {
+  margin: 4.8rem 0 0;
+}
+.product__info-wrapper_v2 .nlabel__title {
+  font-size: 2rem;
+  line-height: 2rem;
+  letter-spacing: -0.2px;
+}
 @media screen and (max-width: 990px) {
 .product__info-wrapper_v2 .product__title h1,
 .product__info-wrapper_v2 .product__title h2,
