@@ -890,7 +890,7 @@
 </product-info>
 
 {%- if section.settings.enable_sticky_atc -%}
-  {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label %}
+  {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label, mode: section.settings.sticky_atc_mode %}
 {%- endif -%}
 
 {% render 'ingridients-popup' %}
@@ -2793,6 +2793,17 @@
       "id": "sticky_atc_button_label",
       "default": "Add to Bag",
       "label": "Sticky button label"
+    },
+    {
+      "type": "select",
+      "id": "sticky_atc_mode",
+      "label": "Sticky bar visibility",
+      "default": "default",
+      "options": [
+        { "value": "default", "label": "Whenever the main button is out of view" },
+        { "value": "scrolled-past", "label": "Only after scrolling past the main button" }
+      ],
+      "info": "\"Whenever out of view\" shows it on load if the button is below the fold. \"Only after scrolling past\" keeps it hidden until the main button has scrolled above the viewport."
     },
     {
       "type": "header",
