@@ -1112,6 +1112,7 @@ a.pdp--promo--banner_link svg {
     padding: 8px 12px 8px 8px;
     line-height: 20px;
     max-width:100%;
+    letter-spacing: 0;
   }
 
   .recipe-swatch__badge {
