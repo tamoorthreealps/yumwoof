@@ -36,7 +36,7 @@
   </div>
 </div>
 
-{% comment %} {% if template.suffix == 'ancestral-blend-v2' %}
+{% if template.suffix == 'ancestral-blend-v2' %}
 <script>
   (() => {
     const ribbons = document.querySelectorAll('.ym-guarantee-ribbon');
@@ -55,7 +55,7 @@
     });
   })();
 </script>
-{% endif %} {% endcomment %}
+{% endif %}
 
 <style>
     .ym-guarantee-ribbon {
@@ -158,6 +158,10 @@
     transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     animation: ribbonTextLight 2.5s ease-in-out infinite;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    font-family: 'Matter';
 }
 
 @keyframes ribbonTextLight {
