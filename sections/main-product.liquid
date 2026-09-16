@@ -81,7 +81,7 @@
     <div class="product--main">
       <div class="custom--page-width">
         {% if section.settings.promo_banner_content != blank %}
-          <div class="pdp--promo--banner">
+          <div class="pdp--promo--banner {% if template.suffix == 'ancestral-blend-v2' %}pdp--promo--banner_v2{% endif %}">
             <a href="{{ section.settings.promo_banner_link }}" class="pdp--promo--banner_link" target="_blank">
               {{ section.settings.promo_banner_content }}
               <svg
