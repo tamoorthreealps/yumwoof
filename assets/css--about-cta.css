@@ -98,6 +98,9 @@
 @media (min-width: 768px) {
   .about-cta {
     padding: var(--ac-wash-pt) 36px var(--ac-wash-pb);
+    /* Desktop: the cream→blue fade lives in the timeline above, so the CTA sits
+       on the solid wash colour it hands off to (no second gradient). */
+    background: var(--ac-wash-bottom);
   }
   .about-cta__inner {
     border-radius: 40px;

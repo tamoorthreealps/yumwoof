@@ -3,6 +3,13 @@
 {%- liquid
   assign s = section.settings
   assign uid = section.id
+
+  # Bottom wash (desktop): the cream fades to this colour so the CTA's blue
+  # background starts in this section. Disabled → keep the base colour (no fade).
+  assign wash_bottom = s.color_wash_bottom
+  unless s.enable_wash
+    assign wash_bottom = s.color_bg
+  endunless
 -%}
 
 <section
@@ -14,6 +21,8 @@
     --at-eyebrow: {{ s.color_eyebrow }};
     --at-body: {{ s.color_body }};
     --at-line: {{ s.color_line }};
+    --at-wash-bottom: {{ wash_bottom }};
+    --at-wash-band: {{ s.wash_band }}px;
     --at-pad-top: {{ s.padding_top }}px;
     --at-pad-bottom: {{ s.padding_bottom }}px;
     --at-pad-top-mobile: {{ s.padding_top_mobile }}px;
@@ -94,6 +103,11 @@
     { "type": "color", "id": "color_eyebrow", "label": "Date eyebrow", "default": "#661d1d" },
     { "type": "color", "id": "color_body", "label": "Body text", "default": "#1a1a1a" },
     { "type": "color", "id": "color_line", "label": "Connector line", "default": "#bfbbb3" },
+
+    { "type": "header", "content": "Bottom wash (desktop)", "info": "Fades the background to the CTA's wash colour across the bottom of this section, so the blue background starts here rather than in the CTA. Desktop only." },
+    { "type": "checkbox", "id": "enable_wash", "label": "Enable bottom wash", "default": true },
+    { "type": "color", "id": "color_wash_bottom", "label": "Wash bottom color", "default": "#cfe0f4" },
+    { "type": "range", "id": "wash_band", "label": "Fade height", "min": 120, "max": 800, "step": 8, "unit": "px", "default": 400 },
 
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
