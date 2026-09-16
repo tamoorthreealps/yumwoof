@@ -146,7 +146,7 @@ product-info {
 
 /* Product form */
 .product-form__wrapper {
-    margin: 0;
+    margin: 0 !important;
 }
 .product-form {
   display: block;
