@@ -1185,11 +1185,35 @@ width: 140px;
     margin:0 0 2rem;
   }
      .product__info-wrapper_v2 .asw__save-pill {
-        padding: 4px 6.72px 1px;
-        background: #296900;
-        color: #fff;
-        border: 0;
+    padding: 4px 6.72px 1px;
+    background: linear-gradient(
+        90deg,
+        #296900 0%,
+        #296900 35%,
+        #4A8A24 50%,
+        #296900 65%,
+        #296900 100%
+    );
+    background-size: 250% 100%;
+    background-position: 0% 0;
+    color: #fff;
+    border: 0;
+    animation: savePillShine 4s linear infinite;
+}
+
+@keyframes savePillShine {
+    0% {
+        background-position: 0% 0;
     }
+
+    45% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 100% 0;
+    }
+}
       .product__info-wrapper_v2  .asw-select__field {
         font-size: 14px;
         letter-spacing: 0.28px;
