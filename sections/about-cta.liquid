@@ -31,6 +31,12 @@
     --ac-pad-bottom: {{ s.padding_bottom }}px;
     --ac-pad-top-mobile: {{ s.padding_top_mobile }}px;
     --ac-pad-bottom-mobile: {{ s.padding_bottom_mobile }}px;
+    --ac-wash-top: {{ s.color_wash_top }};
+    --ac-wash-bottom: {{ s.color_wash_bottom }};
+    --ac-wash-pt: {{ s.wash_pad_top }}px;
+    --ac-wash-pb: {{ s.wash_pad_bottom }}px;
+    --ac-wash-pt-m: {{ s.wash_pad_top_mobile }}px;
+    --ac-wash-pb-m: {{ s.wash_pad_bottom_mobile }}px;
   "
 >
   <div class="about-cta__inner">
@@ -72,6 +78,14 @@
     { "type": "color", "id": "color_text", "label": "Text color", "default": "#fff9ef" },
     { "type": "image_picker", "id": "bg_image", "label": "Background image (optional)" },
     { "type": "range", "id": "scrim_opacity", "label": "Scrim strength", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 45 },
+
+    { "type": "header", "content": "Background wash", "info": "Full-width gradient behind the card. Set the top color to match the section above and the bottom color to match the footer so it blends across both." },
+    { "type": "color", "id": "color_wash_top", "label": "Wash top color", "default": "#fff9ef" },
+    { "type": "color", "id": "color_wash_bottom", "label": "Wash bottom color", "default": "#cfe0f4" },
+    { "type": "range", "id": "wash_pad_top", "label": "Wash space above card (desktop)", "min": 0, "max": 320, "step": 4, "unit": "px", "default": 160 },
+    { "type": "range", "id": "wash_pad_bottom", "label": "Wash space below card (desktop)", "min": 0, "max": 320, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "wash_pad_top_mobile", "label": "Wash space above card (mobile)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "wash_pad_bottom_mobile", "label": "Wash space below card (mobile)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 72 },
 
     { "type": "header", "content": "Button colors" },
     { "type": "color", "id": "color_button_bg", "label": "Button background", "default": "#fff9ef" },
