@@ -1188,30 +1188,23 @@ width: 140px;
     padding: 4px 6.72px 1px;
     background: linear-gradient(
         90deg,
-        #296900 0%,
-        #296900 35%,
-        #4A8A24 50%,
-        #296900 65%,
-        #296900 100%
+        #296900,
+        #4A8A24,
+        #296900
     );
-    background-size: 250% 100%;
-    background-position: 0% 0;
+    background-size: 200% 100%;
+    animation: savePillGradient 3s ease-in-out infinite alternate;
     color: #fff;
     border: 0;
-    animation: savePillShine 4s linear infinite;
 }
 
-@keyframes savePillShine {
+@keyframes savePillGradient {
     0% {
-        background-position: 0% 0;
-    }
-
-    45% {
-        background-position: 100% 0;
+        background-position: 0% 50%;
     }
 
     100% {
-        background-position: 100% 0;
+        background-position: 100% 50%;
     }
 }
       .product__info-wrapper_v2  .asw-select__field {
