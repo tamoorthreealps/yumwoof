@@ -1200,6 +1200,14 @@ width: 140px;
 
 /*-------- v2-css-code --------*/
 @media screen and (max-width: 990px) {
+  .product__info-wrapper_v2 .product__title h1,
+.product__info-wrapper_v2 .product__title h2,
+.product__info-wrapper_v2 .product__title h3,
+.product__info-wrapper_v2 .product__title h4,
+.product__info-wrapper_v2 .product__title h5,
+.product__info-wrapper_v2 .product__title h6 {
+    margin: 0;
+}
   .product__info-wrapper_v2 .recipe-swatch__badge {
     top: -11px;
   }
