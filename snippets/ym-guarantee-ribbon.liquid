@@ -180,7 +180,7 @@
             color: #000;
         }
 
-  .product__info-wrapper_v2 .ym-guarantee-ribbon__content {
+.product__info-wrapper_v2 .ym-guarantee-ribbon__content {
     position: relative;
     min-height: 20px;
     width: 100%;
@@ -195,35 +195,27 @@
     margin: 0;
     width: 100%;
     text-align: center;
-    transition:
-        opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-        filter 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: opacity, filter;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
 .product__info-wrapper_v2 .ym-guarantee-ribbon__title {
-    opacity: 1;
-    filter: blur(0);
-    transform: none;
+    transform: translateY(0);
 }
 
 .product__info-wrapper_v2 .ym-guarantee-ribbon__text {
     position: absolute;
     left: 0;
     top: 50%;
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateY(-50%);
+    transform: translateY(100%);
 }
 
 .product__info-wrapper_v2 .ym-guarantee-ribbon.is-text-slide .ym-guarantee-ribbon__title {
-    opacity: 0;
-    filter: blur(6px);
+    transform: translateY(-100%);
 }
 
 .product__info-wrapper_v2 .ym-guarantee-ribbon.is-text-slide .ym-guarantee-ribbon__text {
-    opacity: 1;
-    filter: blur(0);
+    transform: translateY(-50%);
 }
     }
 </style>
