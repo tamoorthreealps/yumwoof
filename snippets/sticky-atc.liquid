@@ -317,6 +317,7 @@
     data-size-index="{{ size_index }}"
     data-size-value="{{ st_size | escape }}"
     data-label="{{ label | default: 'Add to Bag' | escape }}"
+    data-mode="{{ mode | default: 'default' }}"
     aria-hidden="true"
   >
     <div class="sticky-atc__inner">
@@ -386,6 +387,13 @@
           this.sizeIndex = parseInt(this.dataset.sizeIndex, 10);
           this.initialSize = this.dataset.sizeValue || '';
           this.enabledLabel = this.dataset.label || 'Add to Bag';
+          // Visibility mode:
+          //   'default'       → visible whenever the main button is out of view
+          //                     (above OR below — the original behaviour).
+          //   'scrolled-past' → visible only once the main button has scrolled
+          //                     ABOVE the viewport; stays hidden on load when the
+          //                     button is still below the fold.
+          this.mode = this.dataset.mode || 'default';
 
           // Elements owned by the bar
           this.thumbEl = this.querySelector('[data-sticky-thumb]');
@@ -617,18 +625,27 @@
             if (e.target && e.target.closest && e.target.closest('appstle-subscription-widget')) raf();
           });
 
-          // Show the bar only while the main ATC is out of the viewport.
+          // Show the bar based on the main ATC's position relative to the viewport.
           if ('IntersectionObserver' in window) {
             var io = new IntersectionObserver(
               function (entries) {
                 entries.forEach(function (entry) {
-                  self.setVisible(!entry.isIntersecting);
+                  if (self.mode === 'scrolled-past') {
+                    // Only once the button has scrolled ABOVE the viewport top
+                    // (its bottom edge is at/above the top). Below the fold → hidden.
+                    var top = entry.rootBounds ? entry.rootBounds.top : 0;
+                    self.setVisible(!entry.isIntersecting && entry.boundingClientRect.bottom <= top);
+                  } else {
+                    self.setVisible(!entry.isIntersecting);
+                  }
                 });
               },
               { root: null, threshold: 0 }
             );
             io.observe(this.mainBtn);
-          } else {
+          } else if (self.mode !== 'scrolled-past') {
+            // No IntersectionObserver: default mode shows; scrolled-past can't be
+            // detected cheaply, so it stays hidden.
             this.setVisible(true);
           }
         }
