@@ -206,8 +206,9 @@
 }
 
 .product__info-wrapper_v2 .recipe-swatch__title {
-  padding: 9.6px 15px 0;
+  padding: 9.6px 14px 0;
   line-height: 16px;
+  letter-spacing: 0.28px;
 }
 
 .product__info-wrapper_v2 .recipe-swatch__title.recipe-swatch-title-pop {
