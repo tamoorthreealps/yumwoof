@@ -357,7 +357,13 @@
                   {%- endif -%}
                 </span>
                 {%- if sub_subtitle != blank -%}
-                  <span class="asw-option__subtitle">{{ sub_subtitle }}</span>
+                  <span class="asw-option__subtitle">
+                    {% if template.suffix == 'ancestral-blend-v2' %}
+                      Modify or Cancel Anytime
+                    {% else %}
+                    {{ sub_subtitle }}
+                    {% endif %}
+                  </span>
                 {%- endif -%}
               </span>
               <span class="asw-option__price">
