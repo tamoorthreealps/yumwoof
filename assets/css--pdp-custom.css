@@ -1227,31 +1227,31 @@ width: 140px;
   + .product__text.caption-with-letter-spacing {
   margin: 0;
   position: relative;
-  top: -1px;
+  top: -3px;
 }
 
 .product__info-wrapper_v2 .rating-wrap {
-  margin-left: 12px;
-  padding-left: 12px;
-  position: relative;
+    margin-left: 14px;
+    padding-left: 16px;
+    position: relative;
 }
 
 .product__info-wrapper_v2 .opw-noci-star-full:before,
 .product__info-wrapper_v2 .opw-noci-star-half:before,
 .product__info-wrapper_v2 .opw-noci-star-empty:before {
-  width: 11px;
-  height: 11px;
+  width: 16px;
+  height: 16px;
 }
 
 .product__info-wrapper_v2 .rating-wrap::before {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: 50%;
-  width: 1px;
-  height: 16px;
-  background: rgba(0, 0, 0, 0.2);
-  transform: translateY(-50%);
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    width: 1px;
+    height: 20px;
+    background: #000;
+    transform: translateY(-50%);
 }
 @media screen and (max-width: 990px) {
 .product__info-wrapper_v2 .product__title h1,
