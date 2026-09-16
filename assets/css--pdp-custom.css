@@ -1236,7 +1236,7 @@ width: 140px;
 }
 
 .product__info-wrapper_v2 .rating-wrap {
-    margin-left: 14px;
+    margin-left: 13px;
     padding-left: 16px;
     position: relative;
 }
@@ -1275,6 +1275,9 @@ width: 140px;
   100% {
     background-position: 100% 50%;
   }
+}
+.product__info-wrapper_v2 .product--short--info {
+  margin: 1rem 0 2.4rem;
 }
 .product__info-wrapper_v2 .product-form__submit {
   font-size: 24px;
