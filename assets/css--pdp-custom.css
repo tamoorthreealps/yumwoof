@@ -1235,25 +1235,17 @@ width: 140px;
         #FFC069 100%
     );
     background-size: 250% 100%;
-    background-position: 100% 0;
-    animation: buttonShine 4s ease-in-out infinite;
+    background-position: 0% 0;
+    animation: buttonShine 4s linear infinite;
 }
 
 @keyframes buttonShine {
     0% {
-        background-position: 100% 0;
-    }
-
-    15% {
-        background-position: 100% 0;
-    }
-
-    50% {
         background-position: 0% 0;
     }
 
-    65% {
-        background-position: 0% 0;
+    45% {
+        background-position: 100% 0;
     }
 
     100% {
