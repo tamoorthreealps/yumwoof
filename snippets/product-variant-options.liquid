@@ -126,7 +126,9 @@
               height="64"
             >
           {%- endif -%}
-          <span class="recipe-swatch__title">{{ value }}</span>
+          <span class="recipe-swatch__title {% if swatch_badge != blank %} recipe-swatch__title_with_badge{% endif %}">
+            {{ value }}
+          </span>
           {{ label_unavailable }}
         </label>
         {%- if swatch_badge != blank -%}
@@ -185,7 +187,12 @@
         {% endif %}
         {{ input_dataset }}
       >
-      <label for="{{ input_id }}"{% if swatch_subtitle != blank %} class="has-subtitle"{% endif %}>
+      <label
+        for="{{ input_id }}"
+        {% if swatch_subtitle != blank %}
+          class="has-subtitle"
+        {% endif %}
+      >
         {%- if swatch_subtitle != blank -%}
           <span class="pill__title">{{ value }}</span>
           <span class="pill__subtitle">{{ swatch_subtitle }}</span>
