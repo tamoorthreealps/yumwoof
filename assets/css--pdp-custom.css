@@ -1280,6 +1280,7 @@ width: 140px;
   font-size: 24px;
   line-height:24px;
   letter-spacing: 1.44px;
+  border-radius:12px;
   background: linear-gradient(
     90deg,
     #ffc069 0%,
