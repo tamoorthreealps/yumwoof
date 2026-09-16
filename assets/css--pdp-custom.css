@@ -1264,6 +1264,7 @@ width: 140px;
   animation: savePillGradient 3s ease-in-out infinite alternate;
   color: #fff;
   border: 0;
+  padding:3px 7.4px 0;
 }
 
 @keyframes savePillGradient {
