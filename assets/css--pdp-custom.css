@@ -205,6 +205,10 @@
   text-align: center;
 }
 
+.product__info-wrapper_v2 .recipe-swatch__title {
+  padding: 9.6px 16px 0;
+}
+
 .recipe-swatch__badge {
     position: absolute;
     top: -9px;
@@ -1075,6 +1079,10 @@ a.pdp--promo--banner_link svg {
   .recipe-swatch__title {
     padding: 8px 12px 8px 8px;
     text-align: left;
+  }
+
+  .product__info-wrapper_v2 .recipe-swatch__title {
+    padding: 8px 12px 8px 8px;
   }
 
   .recipe-swatch__badge {
