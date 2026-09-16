@@ -107,6 +107,15 @@
 @media (min-width: 768px) {
   .about-timeline {
     padding: var(--at-pad-top) 60px var(--at-pad-bottom);
+    /* The page's cream fades to the CTA wash colour across the bottom band, so
+       the blue background begins in this (second-to-last) section on desktop
+       and hands off seamlessly to the solid CTA wash below. */
+    background: linear-gradient(
+      180deg,
+      var(--at-bg) 0%,
+      var(--at-bg) calc(100% - var(--at-wash-band)),
+      var(--at-wash-bottom) 100%
+    );
   }
   .about-timeline__heading {
     font-size: clamp(72px, 8vw, 112px);
