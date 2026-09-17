@@ -310,7 +310,7 @@
         chars.forEach(function (char, index) {
           var timer = setTimeout(function () {
             char.classList.add('bq-char-visible');
-          }, index * 28);
+          }, index * 40);
 
           typingTimers.push(timer);
         });
@@ -328,18 +328,13 @@
         section.style.marginRight = '0';
       };
 
-      var resetSection = function () {
-        section.classList.remove('bq-animate');
-        resetTyping();
-        setFullWidth();
-      };
-
       var playSection = function () {
+        if (section.dataset.bqAnimated === 'true') return;
+
+        section.dataset.bqAnimated = 'true';
         section.classList.add('bq-animate');
         playTyping();
       };
-
-      var wasVisible = false;
 
       var updateSection = function () {
         var rect = section.getBoundingClientRect();
@@ -353,19 +348,11 @@
           sectionTop < viewportHeight;
 
         if (!visible) {
-          if (wasVisible) {
-            resetSection();
-          }
-
-          wasVisible = false;
           setFullWidth();
           return;
         }
 
-        if (!wasVisible) {
-          wasVisible = true;
-          playSection();
-        }
+        playSection();
 
         var stickyHeight = 100;
 
@@ -405,7 +392,7 @@
 
       window.addEventListener('resize', update);
 
-      resetSection();
+      setFullWidth();
       updateSection();
     });
   });
