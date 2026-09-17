@@ -322,13 +322,24 @@
         section.style.marginRight = '-24px';
       };
 
-      var playSection = function () {
-        if (section.dataset.bqAnimated === 'true') return;
+      var setContainerWidth = function () {
+        section.style.width = '100%';
+        section.style.marginLeft = '0';
+        section.style.marginRight = '0';
+      };
 
-        section.dataset.bqAnimated = 'true';
+      var resetSection = function () {
+        section.classList.remove('bq-animate');
+        resetTyping();
+        setFullWidth();
+      };
+
+      var playSection = function () {
         section.classList.add('bq-animate');
         playTyping();
       };
+
+      var wasVisible = false;
 
       var updateSection = function () {
         var rect = section.getBoundingClientRect();
@@ -342,11 +353,19 @@
           sectionTop < viewportHeight;
 
         if (!visible) {
+          if (wasVisible) {
+            resetSection();
+          }
+
+          wasVisible = false;
           setFullWidth();
           return;
         }
 
-        playSection();
+        if (!wasVisible) {
+          wasVisible = true;
+          playSection();
+        }
 
         var stickyHeight = 100;
 
@@ -386,7 +405,7 @@
 
       window.addEventListener('resize', update);
 
-      setFullWidth();
+      resetSection();
       updateSection();
     });
   });
