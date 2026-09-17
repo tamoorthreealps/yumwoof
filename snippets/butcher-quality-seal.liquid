@@ -179,11 +179,7 @@
     margin: 40px -24px 0;
     padding: 35px 26px;
     gap: 15px;
-
-    transition:
-      width 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
-      margin-left 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
-      margin-right 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: none;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate {
@@ -257,9 +253,7 @@
     sections.forEach(function (section) {
       var description = section.querySelector('.yw-butcher-quality__description');
 
-      if (!description) {
-        return;
-      }
+      if (!description) return;
 
       var walker = document.createTreeWalker(
         description,
@@ -332,7 +326,7 @@
         });
       };
 
-      var observer = new IntersectionObserver(
+      var sectionObserver = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
             if (entry.isIntersecting) {
@@ -347,7 +341,43 @@
         }
       );
 
-      observer.observe(section);
+      sectionObserver.observe(section);
+
+      var updateWidth = function () {
+        var rect = section.getBoundingClientRect();
+        var viewportHeight = window.innerHeight;
+
+        var start = viewportHeight;
+        var end = viewportHeight * 0.45;
+
+        var progress = (start - rect.top) / (start - end);
+
+        progress = Math.max(0, Math.min(1, progress));
+
+        var sideSpace = 24 * progress;
+
+        section.style.width = 'calc(100% + ' + (48 - sideSpace * 2) + 'px)';
+        section.style.marginLeft = '-' + (24 - sideSpace) + 'px';
+        section.style.marginRight = '-' + (24 - sideSpace) + 'px';
+      };
+
+      var ticking = false;
+
+      var onScroll = function () {
+        if (ticking) return;
+
+        ticking = true;
+
+        requestAnimationFrame(function () {
+          updateWidth();
+          ticking = false;
+        });
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', updateWidth);
+
+      updateWidth();
     });
   });
 </script>
