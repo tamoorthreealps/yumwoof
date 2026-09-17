@@ -105,37 +105,24 @@
     # variant option values (recipe · size), skipping blanks and the Shopify
     # "Default Title" that single-variant products carry. Desktop and mobile
     # share the same line — the product title only shows as the desktop heading.
-assign st_meta_desktop = ''
-assign st_meta_mobile = ''
+    assign st_meta = ''
+    for ov in st_variant.options
+      assign ov_index = forloop.index0
+      assign ov_clean = ov | strip
 
-for ov in st_variant.options
-  assign ov_index = forloop.index0
-  assign ov_clean = ov | strip
-
-  if ov_clean != blank and ov_clean != 'Default Title'
-
-    if ov_index != recipe_index or st_is_v2 == false
-      if st_meta_desktop == ''
-        assign st_meta_desktop = ov_clean
-      else
-        assign st_meta_desktop = st_meta_desktop | append: ' · ' | append: ov_clean
+      if ov_clean != blank and ov_clean != 'Default Title'
+        if ov_index != recipe_index or st_is_v2 == false
+          if st_meta == ''
+            assign st_meta = ov_clean
+          else
+            assign st_meta = st_meta | append: ' · ' | append: ov_clean
+          endif
+        endif
       endif
-    endif
+    endfor
 
-    assign mobile_value = ov_clean
-
-    if st_is_v2 and ov_index == recipe_index
-      assign mobile_value = ov_clean | append: ' Recipe'
-    endif
-
-    if st_meta_mobile == ''
-      assign st_meta_mobile = mobile_value
-    else
-      assign st_meta_mobile = st_meta_mobile | append: ' · ' | append: mobile_value
-    endif
-
-  endif
-endfor
+    assign st_meta_desktop = st_meta
+    assign st_meta_mobile = st_meta
   -%}
 
   <sticky-atc-bar
@@ -407,29 +394,9 @@ endfor
               this.metaDesktopEl.textContent = metaStr;
             }
 
-            var mobileParts = [];
-
-if (options && options.length) {
-  for (var i = 0; i < options.length; i++) {
-    var v = (options[i] || '').trim();
-
-    if (v && v !== 'Default Title') {
-      if (this.isV2 && i === this.recipeIndex) {
-        v += ' Recipe';
-      }
-
-      mobileParts.push(v);
-    }
-  }
-} else if (this.baseDesktopMeta) {
-  mobileParts.push(this.baseDesktopMeta);
-}
-
-if (freq) mobileParts.push(freq);
-
-if (this.metaMobileEl) {
-  this.metaMobileEl.textContent = mobileParts.join(' · ');
-}
+            if (this.metaMobileEl) {
+              this.metaMobileEl.textContent = parts.join(' · ');
+            }
         }
 
         // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
