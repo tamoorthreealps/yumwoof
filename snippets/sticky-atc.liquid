@@ -135,7 +135,7 @@
 
   <sticky-atc-bar
     id="StickyAtc-{{ section_id }}"
-    class="sticky-atc sticky-atc_v2"
+    class="sticky-atc sticky-atc_v2 sticky-atc__loading"
     data-section-id="{{ section_id }}"
     data-product-title="{{ product.title | escape }}"
     data-recipe-index="{{ recipe_index }}"
@@ -280,6 +280,21 @@
 
           this.bindObservers();
           this.syncAll();
+          this.releaseLoadGuard();
+        }
+
+                // `.sticky-atc__loading` hides the bar on first paint. Remove ONLY that
+        // class once the page has fully loaded.
+        releaseLoadGuard() {
+          var self = this;
+          var release = function () {
+            self.classList.remove('sticky-atc__loading');
+          };
+          if (document.readyState === 'complete') {
+            release();
+          } else {
+            window.addEventListener('load', release, { once: true });
+          }
         }
 
         // Scope to THIS section's product-info so a product with no subscription
