@@ -246,6 +246,31 @@
     line-height: 24px;
     letter-spacing: 1.20px;
     padding: 11.2px 46.29px;
+        background: linear-gradient(
+        90deg,
+        #FFC069 0%,
+        #FFC069 35%,
+        #FFD8A2 50%,
+        #FFC069 65%,
+        #FFC069 100%
+    );
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    animation: buttonShine_sticky 4s linear infinite;
+}
+
+@keyframes buttonShine_sticky {
+    0% {
+        background-position: 100% 0;
+    }
+
+    45% {
+        background-position: 0% 0;
+    }
+
+    100% {
+        background-position: 0% 0;
+    }
 }
 .sticky-atc.sticky-atc_v2.in-product-main {
     padding: 0;
@@ -346,31 +371,6 @@
     .sticky-atc.sticky-atc_v2 .sticky-atc__btn {
     padding: 9.2px 20px;
         justify-content: space-between;
-    background: linear-gradient(
-        90deg,
-        #FFC069 0%,
-        #FFC069 35%,
-        #FFD8A2 50%,
-        #FFC069 65%,
-        #FFC069 100%
-    );
-    background-size: 250% 100%;
-    background-position: 100% 0;
-    animation: buttonShine_sticky 4s linear infinite;
-}
-
-@keyframes buttonShine_sticky {
-    0% {
-        background-position: 100% 0;
-    }
-
-    45% {
-        background-position: 0% 0;
-    }
-
-    100% {
-        background-position: 0% 0;
-    }
 }
         .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price {
         font-size: 14px;
