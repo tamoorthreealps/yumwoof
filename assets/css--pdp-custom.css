@@ -1391,6 +1391,12 @@ html.mac-os .product__info-wrapper_v2 .asw__save-pill {
     padding-top: 0 !important;
     padding-bottom: 2px !important;
 }
+@supports (-webkit-touch-callout: none) {
+      		.asw__save-pill {
+      			padding-top: 0;
+      			padding-bottom: 2px;
+      		}
+      	}
 .product__info-wrapper_v2 .asw-select__field {
   font-size: 14px;
   letter-spacing: 0.28px;
