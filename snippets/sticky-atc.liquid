@@ -605,15 +605,12 @@ if (self.isV2) {
     atcObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          var top = entry.rootBounds ? entry.rootBounds.top : 0;
           var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
-
-          var aboveViewport = entry.boundingClientRect.bottom <= top;
           var belowViewport = entry.boundingClientRect.top >= bottom;
 
           self.classList.toggle(
             'in-product-main',
-            !entry.isIntersecting && aboveViewport
+            !entry.isIntersecting && belowViewport
           );
         });
       },
