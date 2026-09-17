@@ -583,46 +583,63 @@
           // ancestral-blend-v2 only: track whether the bar overlaps .product--main on
           // desktop. One observer at a time; (re)built only when the 749px breakpoint
           // is actually crossed, so resize never stacks observers.
-          if (self.isV2) {
-            var productMainObserver = null;
-            var productMainMq = window.matchMedia('(min-width: 749px)');
-            var productMainDesktop = null;
+if (self.isV2) {
+  var atcObserver = null;
+  var atcMq = window.matchMedia('(min-width: 749px)');
+  var atcDesktop = null;
 
-            var disconnectProductMain = function () {
-              if (productMainObserver) {
-                productMainObserver.disconnect();
-                productMainObserver = null;
-              }
-              self.classList.remove('in-product-main');
-            };
+  var disconnectAtcObserver = function () {
+    if (atcObserver) {
+      atcObserver.disconnect();
+      atcObserver = null;
+    }
+    self.classList.remove('in-product-main');
+  };
 
-            var initProductMain = function () {
-              disconnectProductMain();
-              if (!('IntersectionObserver' in window)) return;
-              var productMain = document.querySelector('.product--main');
-              if (!productMain) return;
-              productMainObserver = new IntersectionObserver(
-                function (entries) {
-                  entries.forEach(function (entry) {
-                    self.classList.toggle('in-product-main', entry.isIntersecting);
-                  });
-                },
-                { root: null, threshold: 0 }
-              );
-              productMainObserver.observe(productMain);
-            };
+  var initAtcObserver = function () {
+    disconnectAtcObserver();
 
-            var syncProductMain = function () {
-              var desktop = productMainMq.matches;
-              if (desktop === productMainDesktop) return;
-              productMainDesktop = desktop;
-              if (desktop) initProductMain();
-              else disconnectProductMain();
-            };
+    if (!('IntersectionObserver' in window)) return;
+    if (!self.mainBtn) return;
 
-            syncProductMain();
-            window.addEventListener('resize', syncProductMain);
-          }
+    atcObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var top = entry.rootBounds ? entry.rootBounds.top : 0;
+          var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
+
+          var aboveViewport = entry.boundingClientRect.bottom <= top;
+          var belowViewport = entry.boundingClientRect.top >= bottom;
+
+          self.classList.toggle(
+            'in-product-main',
+            !entry.isIntersecting && aboveViewport
+          );
+        });
+      },
+      { root: null, threshold: 0 }
+    );
+
+    atcObserver.observe(self.mainBtn);
+  };
+
+  var syncAtcObserver = function () {
+    var desktop = atcMq.matches;
+
+    if (desktop === atcDesktop) return;
+
+    atcDesktop = desktop;
+
+    if (desktop) {
+      initAtcObserver();
+    } else {
+      disconnectAtcObserver();
+    }
+  };
+
+  syncAtcObserver();
+  window.addEventListener('resize', syncAtcObserver);
+}
         }
 
         setVisible(show) {
