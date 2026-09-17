@@ -175,28 +175,42 @@
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile {
+    position: relative;
     width: calc(100% + 48px);
     margin: 40px -24px 0;
     padding: 35px 26px;
     gap: 15px;
-
-    transition:
-      width 0.45s ease-out,
-      margin-left 0.45s ease-out,
-      margin-right 0.45s ease-out;
+    background-color: transparent;
+    background-image: none;
+    overflow: hidden;
   }
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--bq-bg-mobile);
+    background-image: var(--bq-bg-image-mobile);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(0.92);
+    transform-origin: center;
+    z-index: 0;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate::before {
+    animation: bqBoxScale 0.7s ease-out forwards;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile > * {
+    position: relative;
+    z-index: 1;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__image {
     width: 166px;
-    animation: bqLogoFloat 2.8s ease-in-out infinite;
-    will-change: transform;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
@@ -232,14 +246,13 @@
     display: none;
   }
 
-  @keyframes bqLogoFloat {
-    0%,
-    100% {
-      transform: translateY(0);
+  @keyframes bqBoxScale {
+    from {
+      transform: scale(0.92);
     }
 
-    50% {
-      transform: translateY(-6px);
+    to {
+      transform: scale(1);
     }
   }
 }
@@ -256,7 +269,6 @@
 
     sections.forEach(function (section) {
       var description = section.querySelector('.yw-butcher-quality__description');
-      var typingTimers = [];
       var chars = [];
 
       if (description) {
@@ -296,129 +308,34 @@
         });
       }
 
-      var resetTyping = function () {
-        typingTimers.forEach(function (timer) {
-          clearTimeout(timer);
-        });
-
-        typingTimers = [];
-
-        if (description) {
-          description.classList.remove('bq-typing');
-        }
-
-        chars.forEach(function (char) {
-          char.classList.remove('bq-char-visible');
-        });
-      };
-
       var playTyping = function () {
-        resetTyping();
-
         if (!description) return;
 
         description.classList.add('bq-typing');
 
         chars.forEach(function (char, index) {
-          var timer = setTimeout(function () {
+          setTimeout(function () {
             char.classList.add('bq-char-visible');
-          }, index * 28);
-
-          typingTimers.push(timer);
+          }, index * 40);
         });
       };
 
-      var setFullWidth = function () {
-        section.style.width = 'calc(100% + 48px)';
-        section.style.marginLeft = '-24px';
-        section.style.marginRight = '-24px';
-      };
-
-      var setContainerWidth = function () {
-        section.style.width = '100%';
-        section.style.marginLeft = '0';
-        section.style.marginRight = '0';
-      };
-
-      var resetSection = function () {
-        section.classList.remove('bq-animate');
-        resetTyping();
-        setFullWidth();
-      };
-
-      var playSection = function () {
-        section.classList.add('bq-animate');
-        playTyping();
-      };
-
-      var wasVisible = false;
-
-      var updateSection = function () {
-        var rect = section.getBoundingClientRect();
-        var viewportHeight = window.innerHeight;
-
-        var sectionTop = rect.top;
-        var sectionBottom = rect.bottom;
-
-        var visible =
-          sectionBottom > 0 &&
-          sectionTop < viewportHeight;
-
-        if (!visible) {
-          if (wasVisible) {
-            resetSection();
-          }
-
-          wasVisible = false;
-          setFullWidth();
-          return;
+      var observer = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              section.classList.add('bq-animate');
+              playTyping();
+              observer.unobserve(section);
+            }
+          });
+        },
+        {
+          threshold: 0.2
         }
+      );
 
-        if (!wasVisible) {
-          wasVisible = true;
-          playSection();
-        }
-
-        var stickyHeight = 100;
-
-        var startPoint = viewportHeight - stickyHeight;
-        var endPoint = (viewportHeight * 0.5) - stickyHeight;
-
-        var progress =
-          (startPoint - sectionTop) /
-          (startPoint - endPoint);
-
-        progress = Math.max(0, Math.min(1, progress));
-
-        var sideSpace = 24 * progress;
-        var widthExtra = 48 - sideSpace * 2;
-
-        section.style.width = 'calc(100% + ' + widthExtra + 'px)';
-        section.style.marginLeft = '-' + (24 - sideSpace) + 'px';
-        section.style.marginRight = '-' + (24 - sideSpace) + 'px';
-      };
-
-      var ticking = false;
-
-      var update = function () {
-        if (ticking) return;
-
-        ticking = true;
-
-        requestAnimationFrame(function () {
-          updateSection();
-          ticking = false;
-        });
-      };
-
-      window.addEventListener('scroll', update, {
-        passive: true
-      });
-
-      window.addEventListener('resize', update);
-
-      resetSection();
-      updateSection();
+      observer.observe(section);
     });
   });
 </script>
