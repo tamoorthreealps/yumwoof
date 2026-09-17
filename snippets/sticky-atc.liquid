@@ -105,24 +105,37 @@
     # variant option values (recipe · size), skipping blanks and the Shopify
     # "Default Title" that single-variant products carry. Desktop and mobile
     # share the same line — the product title only shows as the desktop heading.
-    assign st_meta = ''
-    for ov in st_variant.options
-      assign ov_index = forloop.index0
-      assign ov_clean = ov | strip
+assign st_meta_desktop = ''
+assign st_meta_mobile = ''
 
-      if ov_clean != blank and ov_clean != 'Default Title'
-        if ov_index != recipe_index or st_is_v2 == false
-          if st_meta == ''
-            assign st_meta = ov_clean
-          else
-            assign st_meta = st_meta | append: ' · ' | append: ov_clean
-          endif
-        endif
+for ov in st_variant.options
+  assign ov_index = forloop.index0
+  assign ov_clean = ov | strip
+
+  if ov_clean != blank and ov_clean != 'Default Title'
+
+    if ov_index != recipe_index or st_is_v2 == false
+      if st_meta_desktop == ''
+        assign st_meta_desktop = ov_clean
+      else
+        assign st_meta_desktop = st_meta_desktop | append: ' · ' | append: ov_clean
       endif
-    endfor
+    endif
 
-    assign st_meta_desktop = st_meta
-    assign st_meta_mobile = st_meta
+    assign mobile_value = ov_clean
+
+    if st_is_v2 and ov_index == recipe_index
+      assign mobile_value = ov_clean | append: ' Recipe'
+    endif
+
+    if st_meta_mobile == ''
+      assign st_meta_mobile = mobile_value
+    else
+      assign st_meta_mobile = st_meta_mobile | append: ' · ' | append: mobile_value
+    endif
+
+  endif
+endfor
   -%}
 
   <sticky-atc-bar
@@ -133,6 +146,7 @@
     data-recipe-index="{{ recipe_index }}"
     data-size-index="{{ size_index }}"
     data-size-value="{{ st_size | escape }}"
+    data-initial-mobile-meta="{{ st_meta_mobile | escape }}"
     data-label="{{ label | default: 'Add to Bag' | escape }}"
     data-mode="{{ mode | default: 'default' }}"
     aria-hidden="true"
@@ -206,6 +220,7 @@
           this.recipeIndex = parseInt(this.dataset.recipeIndex, 10);
           this.sizeIndex = parseInt(this.dataset.sizeIndex, 10);
           this.initialSize = this.dataset.sizeValue || '';
+          this.initialMobileMeta = this.dataset.initialMobileMeta || '';
           this.enabledLabel = this.dataset.label || 'Add to Bag';
           // Visibility mode:
           //   'default'       → visible whenever the main button is out of view
@@ -390,12 +405,33 @@
 
               metaStr = desktopParts.join(' · ');
             }
+
             if (this.metaDesktopEl) {
               this.metaDesktopEl.textContent = metaStr;
             }
 
+            var mobileParts = [];
+
+            if (options && options.length) {
+              for (var i = 0; i < options.length; i++) {
+                var v = (options[i] || '').trim();
+
+                if (v && v !== 'Default Title') {
+                  if (this.isV2 && i === this.recipeIndex) {
+                    v += ' Recipe';
+                  }
+
+                  mobileParts.push(v);
+                }
+              }
+            } else if (this.initialMobileMeta) {
+              mobileParts.push(this.initialMobileMeta);
+            }
+
+            if (freq) mobileParts.push(freq);
+
             if (this.metaMobileEl) {
-              this.metaMobileEl.textContent = parts.join(' · ');
+              this.metaMobileEl.textContent = mobileParts.join(' · ');
             }
         }
 
