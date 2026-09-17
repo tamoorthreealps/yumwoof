@@ -390,13 +390,25 @@
 
               metaStr = desktopParts.join(' · ');
             }
-            if (this.metaDesktopEl) {
-              this.metaDesktopEl.textContent = metaStr;
-            }
+if (this.metaDesktopEl) {
+  this.metaDesktopEl.textContent = metaStr;
+}
 
-            if (this.metaMobileEl) {
-              this.metaMobileEl.textContent = parts.join(' · ');
-            }
+if (this.metaMobileEl) {
+  var mobileMeta = parts.slice();
+
+  if (
+    this.isV2 &&
+    this.recipeIndex >= 0 &&
+    options &&
+    options[this.recipeIndex]
+  ) {
+    mobileMeta[this.recipeIndex] =
+      options[this.recipeIndex].trim() + ' Recipe';
+  }
+
+  this.metaMobileEl.textContent = mobileMeta.join(' · ');
+}
         }
 
         // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
