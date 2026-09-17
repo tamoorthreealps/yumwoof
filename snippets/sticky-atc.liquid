@@ -107,15 +107,20 @@
     # share the same line — the product title only shows as the desktop heading.
     assign st_meta = ''
     for ov in st_variant.options
+      assign ov_index = forloop.index0
       assign ov_clean = ov | strip
+
       if ov_clean != blank and ov_clean != 'Default Title'
-        if st_meta == ''
-          assign st_meta = ov_clean
-        else
-          assign st_meta = st_meta | append: ' · ' | append: ov_clean
+        if ov_index != recipe_index or st_is_v2 == false
+          if st_meta == ''
+            assign st_meta = ov_clean
+          else
+            assign st_meta = st_meta | append: ' · ' | append: ov_clean
+          endif
         endif
       endif
     endfor
+
     assign st_meta_desktop = st_meta
     assign st_meta_mobile = st_meta
   -%}
