@@ -580,15 +580,25 @@
           openFreqList() {
             if (!this.freqList) return;
             this.freqList.hidden = false;
-            if (this.freqEl) this.freqEl.setAttribute('data-open', '');
+
+            requestAnimationFrame(function () {
+              if (this.freqEl) this.freqEl.setAttribute('data-open', '');
+            }.bind(this));
+
             if (this.freqTrigger) this.freqTrigger.setAttribute('aria-expanded', 'true');
           }
 
           closeFreqList() {
             if (!this.freqList) return;
-            this.freqList.hidden = true;
+
             if (this.freqEl) this.freqEl.removeAttribute('data-open');
             if (this.freqTrigger) this.freqTrigger.setAttribute('aria-expanded', 'false');
+
+            setTimeout(function () {
+              if (!this.freqEl || !this.freqEl.hasAttribute('data-open')) {
+                this.freqList.hidden = true;
+              }
+            }.bind(this), 250);
           }
 
           selectFreq(li) {
