@@ -197,7 +197,7 @@
     {%- endif -%}
   </sticky-atc-bar>
 
-    <script>
+  <script>
     (function () {
       if (!('customElements' in window) || customElements.get('sticky-atc-bar')) return;
 
@@ -220,9 +220,12 @@
           this.initialSize = this.dataset.sizeValue || '';
           this.initialMobileMeta = this.dataset.initialMobileMeta || '';
           this.enabledLabel = this.dataset.label || 'Add to Bag';
-          // Kept for backwards compatibility with existing markup. Visibility no
-          // longer depends on it: the bar shows whenever the main button is out
-          // of view (above OR below the viewport).
+          // Visibility mode:
+          //   'default'       → visible whenever the main button is out of view
+          //                     (above OR below — the original behaviour).
+          //   'scrolled-past' → visible only once the main button has scrolled
+          //                     ABOVE the viewport; stays hidden on load when the
+          //                     button is still below the fold.
           this.mode = this.dataset.mode || 'default';
 
           // Elements owned by the bar
@@ -277,22 +280,6 @@
 
           this.bindObservers();
           this.syncAll();
-          this.releaseLoadGuard();
-        }
-
-        // `.sticky_load` hides the bar on first paint. Remove ONLY that class once
-        // the page has fully loaded; `is-visible` / `in-product-main` stay managed
-        // by the observers.
-        releaseLoadGuard() {
-          var self = this;
-          var release = function () {
-            self.classList.remove('sticky_load');
-          };
-          if (document.readyState === 'complete') {
-            release();
-          } else {
-            window.addEventListener('load', release, { once: true });
-          }
         }
 
         // Scope to THIS section's product-info so a product with no subscription
@@ -566,112 +553,118 @@
             if (e.target && e.target.closest && e.target.closest('appstle-subscription-widget')) raf();
           });
 
-          // Show the bar whenever the main ATC is outside the viewport — scrolled
-          // past it (button above) OR not reached yet (button below). Hide it while
-          // the main ATC is in view.
+          // Show the bar based on the main ATC's position relative to the viewport.
           if ('IntersectionObserver' in window) {
             var io = new IntersectionObserver(
               function (entries) {
                 entries.forEach(function (entry) {
-                  self.setVisible(!entry.isIntersecting);
+                  if (self.mode === 'scrolled-past') {
+                    // Only once the button has scrolled ABOVE the viewport top
+                    // (its bottom edge is at/above the top). Below the fold → hidden.
+                    var top = entry.rootBounds ? entry.rootBounds.top : 0;
+                    self.setVisible(!entry.isIntersecting && entry.boundingClientRect.bottom <= top);
+                  } else {
+                    self.setVisible(!entry.isIntersecting);
+                  }
                 });
               },
               { root: null, threshold: 0 }
             );
             io.observe(this.mainBtn);
-          } else {
-            // No IntersectionObserver: can't track the button, so keep the bar shown.
+          } else if (self.mode !== 'scrolled-past') {
+            // No IntersectionObserver: default mode shows; scrolled-past can't be
+            // detected cheaply, so it stays hidden.
             this.setVisible(true);
           }
 
           // ancestral-blend-v2 only: track whether the bar overlaps .product--main on
           // desktop. One observer at a time; (re)built only when the 749px breakpoint
           // is actually crossed, so resize never stacks observers.
-          if (self.isV2) {
-            var atcObserver = null;
-            var atcMq = window.matchMedia('(min-width: 749px)');
-            var atcDesktop = null;
-            var atcRemoveTimer = null;
-            var ATC_REMOVE_DELAY = 1000;
+if (self.isV2) {
+  var atcObserver = null;
+  var atcMq = window.matchMedia('(min-width: 749px)');
+  var atcDesktop = null;
+  var atcRemoveTimer = null;
+  var ATC_REMOVE_DELAY = 1000;
 
-            var clearAtcRemoveTimer = function () {
-              if (atcRemoveTimer) {
-                window.clearTimeout(atcRemoveTimer);
-                atcRemoveTimer = null;
-              }
-            };
+  var clearAtcRemoveTimer = function () {
+    if (atcRemoveTimer) {
+      window.clearTimeout(atcRemoveTimer);
+      atcRemoveTimer = null;
+    }
+  };
 
-            var removeInProductMain = function (delayed) {
-              if (!delayed) {
-                clearAtcRemoveTimer();
-                self.classList.remove('in-product-main');
-                return;
-              }
-              if (atcRemoveTimer || !self.classList.contains('in-product-main')) return;
-              atcRemoveTimer = window.setTimeout(function () {
-                atcRemoveTimer = null;
-                self.classList.remove('in-product-main');
-              }, ATC_REMOVE_DELAY);
-            };
+  var removeInProductMain = function (delayed) {
+    if (!delayed) {
+      clearAtcRemoveTimer();
+      self.classList.remove('in-product-main');
+      return;
+    }
+    if (atcRemoveTimer || !self.classList.contains('in-product-main')) return;
+    atcRemoveTimer = window.setTimeout(function () {
+      atcRemoveTimer = null;
+      self.classList.remove('in-product-main');
+    }, ATC_REMOVE_DELAY);
+  };
 
-            var disconnectAtcObserver = function () {
-              if (atcObserver) {
-                atcObserver.disconnect();
-                atcObserver = null;
-              }
-              removeInProductMain(false);
-            };
+  var disconnectAtcObserver = function () {
+    if (atcObserver) {
+      atcObserver.disconnect();
+      atcObserver = null;
+    }
+    removeInProductMain(false);
+  };
 
-            var initAtcObserver = function () {
-              disconnectAtcObserver();
+  var initAtcObserver = function () {
+    disconnectAtcObserver();
 
-              if (!('IntersectionObserver' in window)) return;
-              if (!self.mainBtn) return;
+    if (!('IntersectionObserver' in window)) return;
+    if (!self.mainBtn) return;
 
-              atcObserver = new IntersectionObserver(
-                function (entries) {
-                  entries.forEach(function (entry) {
-                    var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
-                    var belowViewport = entry.boundingClientRect.top >= bottom;
+    atcObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
+          var belowViewport = entry.boundingClientRect.top >= bottom;
 
-                    if (!entry.isIntersecting && belowViewport) {
-                      // Main button is below the fold → compact layout, cancel any pending removal.
-                      clearAtcRemoveTimer();
-                      self.classList.add('in-product-main');
-                    } else if (entry.isIntersecting) {
-                      // Main button in view → is-visible is removed now (bar slides out);
-                      // keep in-product-main for 1s so the layout doesn't change mid-animation.
-                      removeInProductMain(true);
-                    } else {
-                      // Main button scrolled ABOVE the viewport → bar is showing in its full
-                      // layout, so drop the class right away.
-                      removeInProductMain(false);
-                    }
-                  });
-                },
-                { root: null, threshold: 0 }
-              );
-
-              atcObserver.observe(self.mainBtn);
-            };
-
-            var syncAtcObserver = function () {
-              var desktop = atcMq.matches;
-
-              if (desktop === atcDesktop) return;
-
-              atcDesktop = desktop;
-
-              if (desktop) {
-                initAtcObserver();
-              } else {
-                disconnectAtcObserver();
-              }
-            };
-
-            syncAtcObserver();
-            window.addEventListener('resize', syncAtcObserver);
+          if (!entry.isIntersecting && belowViewport) {
+            // Main button is below the fold → compact layout, cancel any pending removal.
+            clearAtcRemoveTimer();
+            self.classList.add('in-product-main');
+          } else if (entry.isIntersecting) {
+            // Main button in view → is-visible is removed now (bar slides out);
+            // keep in-product-main for 1s so the layout doesn't change mid-animation.
+            removeInProductMain(true);
+          } else {
+            // Main button scrolled ABOVE the viewport → bar is showing in its full
+            // layout, so drop the class right away.
+            removeInProductMain(false);
           }
+        });
+      },
+      { root: null, threshold: 0 }
+    );
+
+    atcObserver.observe(self.mainBtn);
+  };
+
+  var syncAtcObserver = function () {
+    var desktop = atcMq.matches;
+
+    if (desktop === atcDesktop) return;
+
+    atcDesktop = desktop;
+
+    if (desktop) {
+      initAtcObserver();
+    } else {
+      disconnectAtcObserver();
+    }
+  };
+
+  syncAtcObserver();
+  window.addEventListener('resize', syncAtcObserver);
+}
         }
 
         setVisible(show) {
@@ -683,7 +676,6 @@
       customElements.define('sticky-atc-bar', StickyAtcBar);
     })();
   </script>
-
 
   {%- style -%}
     .sticky-atc {
