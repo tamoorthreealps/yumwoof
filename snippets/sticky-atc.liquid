@@ -791,59 +791,25 @@
             // detected cheaply, so it stays hidden.
             this.setVisible(true);
           }
+          if (
+            window.matchMedia('(min-width: 749px)').matches &&
+            'IntersectionObserver' in window
+          ) {
+            var productMain = document.querySelector('.product--main');
 
-          this.productMainMedia = window.matchMedia('(min-width: 749px)');
-
-            this.setupProductMainObserver = function () {
-              if (this.productMainObserver) {
-                this.productMainObserver.disconnect();
-                this.productMainObserver = null;
-              }
-
-              var productMain = document.querySelector('.product--main');
-
-              if (
-                !productMain ||
-                !this.productMainMedia.matches ||
-                !('IntersectionObserver' in window)
-              ) {
-                this.classList.remove('in-product-main');
-                return;
-              }
-
-              var self = this;
-
-              this.productMainObserver = new IntersectionObserver(
+            if (productMain) {
+              var productMainObserver = new IntersectionObserver(
                 function (entries) {
                   entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                      self.classList.add('in-product-main');
-                    } else {
-                      self.classList.remove('in-product-main');
-
-                      self.classList.remove('is-visible');
-
-                      requestAnimationFrame(function () {
-                        self.classList.add('is-visible');
-                      });
-                    }
+                    self.classList.toggle('in-product-main', entry.isIntersecting);
                   });
                 },
-                {
-                  root: null,
-                  threshold: 0
-                }
+                { root: null, threshold: 0 }
               );
 
-              this.productMainObserver.observe(productMain);
-            };
-
-            this.setupProductMainObserver();
-
-            this.productMainMedia.addEventListener(
-              'change',
-              this.setupProductMainObserver.bind(this)
-            );
+              productMainObserver.observe(productMain);
+            }
+          }
         }
 
         setVisible(show) {
