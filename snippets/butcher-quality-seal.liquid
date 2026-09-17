@@ -379,8 +379,10 @@
           playSection();
         }
 
-        var startPoint = viewportHeight;
-        var endPoint = viewportHeight * 0.5;
+        var stickyHeight = 100;
+
+        var startPoint = viewportHeight - stickyHeight;
+        var endPoint = (viewportHeight * 0.5) - stickyHeight;
 
         var progress =
           (startPoint - sectionTop) /
