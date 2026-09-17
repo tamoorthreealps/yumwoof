@@ -256,6 +256,7 @@
 
     sections.forEach(function (section) {
       var description = section.querySelector('.yw-butcher-quality__description');
+      var typingTimers = [];
       var chars = [];
 
       if (description) {
@@ -295,34 +296,129 @@
         });
       }
 
+      var resetTyping = function () {
+        typingTimers.forEach(function (timer) {
+          clearTimeout(timer);
+        });
+
+        typingTimers = [];
+
+        if (description) {
+          description.classList.remove('bq-typing');
+        }
+
+        chars.forEach(function (char) {
+          char.classList.remove('bq-char-visible');
+        });
+      };
+
       var playTyping = function () {
+        resetTyping();
+
         if (!description) return;
 
         description.classList.add('bq-typing');
 
         chars.forEach(function (char, index) {
-          setTimeout(function () {
+          var timer = setTimeout(function () {
             char.classList.add('bq-char-visible');
-          }, index * 40);
+          }, index * 28);
+
+          typingTimers.push(timer);
         });
       };
 
-      var observer = new IntersectionObserver(
-        function (entries, observer) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              section.classList.add('bq-animate');
-              playTyping();
-              observer.unobserve(section);
-            }
-          });
-        },
-        {
-          threshold: 0.2
-        }
-      );
+      var setFullWidth = function () {
+        section.style.width = 'calc(100% + 48px)';
+        section.style.marginLeft = '-24px';
+        section.style.marginRight = '-24px';
+      };
 
-      observer.observe(section);
+      var setContainerWidth = function () {
+        section.style.width = '100%';
+        section.style.marginLeft = '0';
+        section.style.marginRight = '0';
+      };
+
+      var resetSection = function () {
+        section.classList.remove('bq-animate');
+        resetTyping();
+        setFullWidth();
+      };
+
+      var playSection = function () {
+        section.classList.add('bq-animate');
+        playTyping();
+      };
+
+      var wasVisible = false;
+
+      var updateSection = function () {
+        var rect = section.getBoundingClientRect();
+        var viewportHeight = window.innerHeight;
+
+        var sectionTop = rect.top;
+        var sectionBottom = rect.bottom;
+
+        var visible =
+          sectionBottom > 0 &&
+          sectionTop < viewportHeight;
+
+        if (!visible) {
+          if (wasVisible) {
+            resetSection();
+          }
+
+          wasVisible = false;
+          setFullWidth();
+          return;
+        }
+
+        if (!wasVisible) {
+          wasVisible = true;
+          playSection();
+        }
+
+        var stickyHeight = 100;
+
+        var startPoint = viewportHeight - stickyHeight;
+        var endPoint = (viewportHeight * 0.5) - stickyHeight;
+
+        var progress =
+          (startPoint - sectionTop) /
+          (startPoint - endPoint);
+
+        progress = Math.max(0, Math.min(1, progress));
+
+        var sideSpace = 24 * progress;
+        var widthExtra = 48 - sideSpace * 2;
+
+        section.style.width = 'calc(100% + ' + widthExtra + 'px)';
+        section.style.marginLeft = '-' + (24 - sideSpace) + 'px';
+        section.style.marginRight = '-' + (24 - sideSpace) + 'px';
+      };
+
+      var ticking = false;
+
+      var update = function () {
+        if (ticking) return;
+
+        ticking = true;
+
+        requestAnimationFrame(function () {
+          updateSection();
+          ticking = false;
+        });
+      };
+
+      window.addEventListener('scroll', update, {
+        passive: true
+      });
+
+      window.addEventListener('resize', update);
+
+      resetSection();
+      updateSection();
     });
   });
 </script>
