@@ -275,11 +275,18 @@
         isSub = !!(planInput && planInput.value);
       }
       if (!isSub) return def;
-      // interval of the selected delivery frequency (option text e.g. "Every 4 Weeks")
+      // interval of the selected delivery frequency. The frequency is a custom
+      // ul/li dropdown (not a native <select>): read the current label from the
+      // trigger, falling back to the selected list item (e.g. "every 4 weeks").
       var freq = root.querySelector('[data-asw-freq]');
-      if (freq && freq.options && freq.options[freq.selectedIndex]) {
-        var days = parseIntervalDays(freq.options[freq.selectedIndex].text);
-        if (days) return days;
+      if (freq) {
+        var cur =
+          freq.querySelector('[data-asw-freq-current]') ||
+          freq.querySelector('.asw-freq__opt.is-selected');
+        if (cur) {
+          var days = parseIntervalDays(cur.textContent || '');
+          if (days) return days;
+        }
       }
       return def;
     }

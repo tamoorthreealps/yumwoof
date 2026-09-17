@@ -1,13 +1,57 @@
-<div class="yw-butcher-quality {{ custom_class }}">
-  {% if block.settings.seal_image != blank %}
-    <div class="yw-butcher-quality__image">
-      {{
-        block.settings.seal_image
-        | image_url: width: 220
-        | image_tag: loading: 'lazy', widths: '110,220', alt: 'Butcher quality seal'
-      }}
-    </div>
+<div
+  class="yw-butcher-quality {% if block.settings.bq_bg_image_desktop != blank or block.settings.bq_bg_image_mobile != blank %}has-background-image{% endif %} {{ custom_class }}"
+  style="
+    --bq-bg-desktop: {{ block.settings.bq_bg_color_desktop }};
+    --bq-text-desktop: {{ block.settings.bq_text_color_desktop }};
+    --bq-bg-mobile: {{ block.settings.bq_bg_color_mobile }};
+    --bq-text-mobile: {{ block.settings.bq_text_color_mobile }};
+    {% if block.settings.bq_bg_image_desktop != blank %}
+      --bq-bg-image-desktop: url('{{ block.settings.bq_bg_image_desktop | image_url: width: 2000 }}');
+    {% endif %}
+    {% if block.settings.bq_bg_image_mobile != blank %}
+      --bq-bg-image-mobile: url('{{ block.settings.bq_bg_image_mobile | image_url: width: 1200 }}');
+    {% endif %}
+  "
+>
+  <div class="yw-butcher-quality__background"></div>
+
+  {% assign seal_image = block.settings.seal_image %}
+
+  {% if block.settings.seal_image_mobile != blank %}
+    {% if request.design_mode %}
+      {% assign seal_image_mobile = block.settings.seal_image_mobile %}
+    {% endif %}
   {% endif %}
+
+  <div class="yw-butcher-quality__image">
+    {% if block.settings.seal_image_mobile != blank %}
+      <picture>
+        <source
+          media="(max-width: 990px)"
+          srcset="{{ block.settings.seal_image_mobile | image_url: width: 220 }}"
+        >
+        {% if seal_image != blank %}
+          {{
+            seal_image
+            | image_url: width: 220
+            | image_tag:
+              loading: 'lazy',
+              widths: '110,220',
+              alt: 'Butcher quality seal'
+          }}
+        {% endif %}
+      </picture>
+    {% elsif seal_image != blank %}
+      {{
+        seal_image
+        | image_url: width: 220
+        | image_tag:
+          loading: 'lazy',
+          widths: '110,220',
+          alt: 'Butcher quality seal'
+      }}
+    {% endif %}
+  </div>
 
   <div class="yw-butcher-quality__content">
     {% if block.settings.bq_heading != blank %}
@@ -27,91 +71,305 @@
 
 <style>
 .yw-butcher-quality {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    margin: 20px 0 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 20px 0 0;
+  background-color: var(--bq-bg-desktop);
+  color: var(--bq-text-desktop);
+  overflow: hidden;
+}
+
+.yw-butcher-quality__background {
+  position: absolute;
+  inset: 0;
+  background-image: var(--bq-bg-image-desktop);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  display:block !important;
 }
 
 .yw-butcher-quality__image {
-    flex: 0 0 128px;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 128px;
 }
 
 .yw-butcher-quality__image img {
-    display: block;
-    width: 100%;
-    height: auto;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .yw-butcher-quality__content {
-    flex: 1;
+  position: relative;
+  z-index: 1;
+  flex: 1;
 }
 
 .yw-butcher-quality__heading {
-    margin: 0 0 8px;
-    font-family: "TAY Birdie";
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #661D1D;
-    font-weight: 400;
+  margin: 0 0 8px;
+  font-family: "TAY Birdie";
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bq-text-desktop);
+  font-weight: 400;
 }
 
 .yw-butcher-quality__description,
 .yw-butcher-quality__description p {
-    margin: 0;
-    font-family: 'TAY Birdie';
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    color: #661D1D;
+  margin: 0;
+  font-family: "TAY Birdie";
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: var(--bq-text-desktop);
 }
 
 .wy-bq-trademark {
-    font-family: Arial, sans-serif;
-    font-size: 0.8em;
-    position: relative;
-    top: -1px;
+  font-family: Arial, sans-serif;
+  font-size: 0.8em;
+  position: relative;
+  top: -1px;
 }
 
 .butcher-quality-mobile {
-    display:none;
+  display: none;
 }
 
+.yw-butcher-quality.has-background-image .yw-butcher-quality__description,
+.yw-butcher-quality.has-background-image .yw-butcher-quality__description p {
+  font-size: 14px;
+  text-align: justify;
+}
 
-@media (max-width:990px){
-    .yw-butcher-quality {
-        display:none;
-        gap:16px;
-        align-items:flex-start;
-    }
+@media (max-width: 990px) {
+  .yw-butcher-quality {
+    display: none;
+    gap: 16px;
+    align-items: flex-start;
+    background-color: var(--bq-bg-mobile);
+    color: var(--bq-text-mobile);
+  }
 
-    .yw-butcher-quality.butcher-quality-mobile {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-        margin: 48px 0;
-    }
+  .yw-butcher-quality.butcher-quality-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
 
+  .yw-butcher-quality__background {
+    background-image: var(--bq-bg-image-mobile);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .yw-butcher-quality__image {
+    width: 128px;
+    flex: auto;
+  }
+
+  .yw-butcher-quality__heading {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: var(--bq-text-mobile);
+  }
+
+  .yw-butcher-quality__description,
+  .yw-butcher-quality__description p {
+    font-size: 12px;
+    line-height: 16px;
+    text-align: justify;
+    color: var(--bq-text-mobile);
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile {
+    width: 100%;
+    margin: 40px 0 0;
+    padding: 35px 26px;
+    gap: 15px;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__image {
-        width: 128px;
-        flex: auto;
-    }
+    width: 166px;
+  }
 
-    .yw-butcher-quality__heading{
-        font-size:13px;
-        letter-spacing:1.5px;
-    }
-
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__description,
-    .yw-butcher-quality__description p{
-        font-size:12px;
-        line-height:16px;
-        text-align: justify;
-    }
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .yw-butcher-quality__description p {
+    font-size: 13px;
+  }
 
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .yw-butcher-quality__description {
+    overflow: hidden;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .yw-butcher-quality__description:not(.bq-typing)
+    > * {
+    visibility: hidden;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .bq-char {
+    visibility: hidden;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .bq-char.bq-char-visible {
+    visibility: visible;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .wy-bq-trademark {
+    display: none;
+  }
 }
 </style>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var sections = document.querySelectorAll(
+      '.yw-butcher-quality.has-background-image.butcher-quality-mobile'
+    );
+
+    if (!sections.length) return;
+
+    sections.forEach(function (section) {
+      var description = section.querySelector('.yw-butcher-quality__description');
+      var typingTimers = [];
+      var chars = [];
+      var hasAnimated = false;
+
+      if (description) {
+        var walker = document.createTreeWalker(
+          description,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function (node) {
+              return node.textContent.trim()
+                ? NodeFilter.FILTER_ACCEPT
+                : NodeFilter.FILTER_REJECT;
+            }
+          }
+        );
+
+        var textNodes = [];
+        var node;
+
+        while ((node = walker.nextNode())) {
+          textNodes.push(node);
+        }
+
+        textNodes.forEach(function (textNode) {
+          var fragment = document.createDocumentFragment();
+
+          Array.from(textNode.textContent).forEach(function (char) {
+            var span = document.createElement('span');
+
+            span.className = 'bq-char';
+            span.textContent = char;
+
+            fragment.appendChild(span);
+            chars.push(span);
+          });
+
+          textNode.parentNode.replaceChild(fragment, textNode);
+        });
+      }
+
+      var resetTyping = function () {
+        typingTimers.forEach(function (timer) {
+          clearTimeout(timer);
+        });
+
+        typingTimers = [];
+
+        if (description) {
+          description.classList.remove('bq-typing');
+        }
+
+        chars.forEach(function (char) {
+          char.classList.remove('bq-char-visible');
+        });
+      };
+
+      var playTyping = function () {
+        resetTyping();
+
+        if (!description) return;
+
+        description.classList.add('bq-typing');
+
+        chars.forEach(function (char, index) {
+          var timer = setTimeout(function () {
+            char.classList.add('bq-char-visible');
+          }, index * 40);
+
+          typingTimers.push(timer);
+        });
+      };
+
+      var playSection = function () {
+        if (hasAnimated) return;
+
+        hasAnimated = true;
+
+        section.classList.add('bq-animate');
+        playTyping();
+      };
+
+      var updateSection = function () {
+        if (hasAnimated) return;
+
+        var rect = section.getBoundingClientRect();
+        var viewportHeight = window.innerHeight;
+
+        var sectionTop = rect.top;
+        var sectionBottom = rect.bottom;
+
+        var visible =
+          sectionBottom > 0 &&
+          sectionTop < viewportHeight;
+
+        if (!visible) return;
+
+        playSection();
+      };
+
+      var ticking = false;
+
+      var update = function () {
+        if (ticking || hasAnimated) return;
+
+        ticking = true;
+
+        requestAnimationFrame(function () {
+          updateSection();
+          ticking = false;
+        });
+      };
+
+      window.addEventListener('scroll', update, {
+        passive: true
+      });
+
+      window.addEventListener('resize', update);
+
+      updateSection();
+    });
+  });
+</script>
