@@ -1273,7 +1273,6 @@ width: 140px;
   background-position: 100% 0;
   color: #fff;
   border: 0;
-  padding: 2px 7.4px 0;
   animation: buttonShine_save 4s linear infinite;
 }
 
@@ -1384,19 +1383,7 @@ width: 140px;
 .product__info-wrapper_v2 .qty.freq {
   margin: 0 0 2rem;
 }
-.product__info-wrapper_v2 .asw__save-pill {
-  padding: 5px 6.72px 1px;
-}
-html.mac-os .product__info-wrapper_v2 .asw__save-pill {
-    padding-top: 0 !important;
-    padding-bottom: 2px !important;
-}
-@supports (-webkit-touch-callout: none) {
-      		.asw__save-pill {
-      			padding-top: 0;
-      			padding-bottom: 2px;
-      		}
-      	}
+
 .product__info-wrapper_v2 .asw-select__field {
   font-size: 14px;
   letter-spacing: 0.28px;
