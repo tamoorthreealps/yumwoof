@@ -349,14 +349,23 @@
           // fresh variant options, else the server-rendered base (already filtered)
           // — never from the element's own text, so frequency never accumulates.
           var parts = [];
+
           if (options && options.length) {
             for (var i = 0; i < options.length; i++) {
               var v = (options[i] || '').trim();
-              if (v && v !== 'Default Title') parts.push(v);
+
+              if (
+                v &&
+                v !== 'Default Title' &&
+                (!this.isV2 || i !== this.recipeIndex)
+              ) {
+                parts.push(v);
+              }
             }
           } else if (this.baseDesktopMeta) {
             parts.push(this.baseDesktopMeta);
           }
+
           if (freq) parts.push(freq);
 
           var metaStr = parts.join(' · ');
