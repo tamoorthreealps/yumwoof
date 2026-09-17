@@ -1261,7 +1261,14 @@ width: 140px;
     transform: translateY(-50%);
 }
 .product__info-wrapper_v2 .asw__save-pill {
-  background: linear-gradient(90deg, #296900 0%, #34802A 50%, #296900 100%);
+  background: linear-gradient(
+    90deg,
+    #296900 0%,
+    #296900 35%,
+    #5a9f45 50%,
+    #296900 65%,
+    #296900 100%
+  );
   background-size: 250% 100%;
   background-position: 100% 0;
   color: #fff;
