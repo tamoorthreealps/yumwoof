@@ -587,13 +587,35 @@ if (self.isV2) {
   var atcObserver = null;
   var atcMq = window.matchMedia('(min-width: 749px)');
   var atcDesktop = null;
+  var atcRemoveTimer = null;
+  var ATC_REMOVE_DELAY = 1000;
+
+  var clearAtcRemoveTimer = function () {
+    if (atcRemoveTimer) {
+      window.clearTimeout(atcRemoveTimer);
+      atcRemoveTimer = null;
+    }
+  };
+
+  var removeInProductMain = function (delayed) {
+    if (!delayed) {
+      clearAtcRemoveTimer();
+      self.classList.remove('in-product-main');
+      return;
+    }
+    if (atcRemoveTimer || !self.classList.contains('in-product-main')) return;
+    atcRemoveTimer = window.setTimeout(function () {
+      atcRemoveTimer = null;
+      self.classList.remove('in-product-main');
+    }, ATC_REMOVE_DELAY);
+  };
 
   var disconnectAtcObserver = function () {
     if (atcObserver) {
       atcObserver.disconnect();
       atcObserver = null;
     }
-    self.classList.remove('in-product-main');
+    removeInProductMain(false);
   };
 
   var initAtcObserver = function () {
@@ -608,10 +630,19 @@ if (self.isV2) {
           var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
           var belowViewport = entry.boundingClientRect.top >= bottom;
 
-          self.classList.toggle(
-            'in-product-main',
-            !entry.isIntersecting && belowViewport
-          );
+          if (!entry.isIntersecting && belowViewport) {
+            // Main button is below the fold → compact layout, cancel any pending removal.
+            clearAtcRemoveTimer();
+            self.classList.add('in-product-main');
+          } else if (entry.isIntersecting) {
+            // Main button in view → is-visible is removed now (bar slides out);
+            // keep in-product-main for 1s so the layout doesn't change mid-animation.
+            removeInProductMain(true);
+          } else {
+            // Main button scrolled ABOVE the viewport → bar is showing in its full
+            // layout, so drop the class right away.
+            removeInProductMain(false);
+          }
         });
       },
       { root: null, threshold: 0 }
