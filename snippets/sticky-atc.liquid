@@ -693,8 +693,10 @@
   </script>
 
   {%- style -%}
-  .sticky-atc__loading {
-    display:none !important;
+   .sticky-atc.sticky-atc__loading {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
   }
     .sticky-atc {
       position: fixed;
