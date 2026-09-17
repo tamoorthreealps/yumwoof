@@ -180,33 +180,26 @@
     background-image: none;
   }
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--bq-bg-image-mobile);
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform: scale(0.8);
-    transform-origin: center;
-    z-index: 0;
-  }
-
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate::before {
-    animation: bq-bg-scale 0.8s ease-out forwards;
-  }
+.yw-butcher-quality.has-background-image.butcher-quality-mobile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bq-bg-image-mobile);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile > * {
     position: relative;
     z-index: 1;
   }
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile
-    .yw-butcher-quality__image {
-    width: 166px;
-    will-change: transform;
-  }
+.yw-butcher-quality.has-background-image.butcher-quality-mobile
+  .yw-butcher-quality__image {
+  width: 166px;
+}
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__description,
@@ -239,16 +232,6 @@
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .wy-bq-trademark {
     display: none;
-  }
-}
-
-@keyframes bq-bg-scale {
-  from {
-    transform: scale(0.8);
-  }
-
-  to {
-    transform: scale(1);
   }
 }
 </style>
