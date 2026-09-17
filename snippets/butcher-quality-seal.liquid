@@ -179,7 +179,11 @@
     margin: 40px -24px 0;
     padding: 35px 26px;
     gap: 15px;
-    transition: none;
+
+    transition:
+      width 0.45s ease-out,
+      margin-left 0.45s ease-out,
+      margin-right 0.45s ease-out;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate {
@@ -252,132 +256,167 @@
 
     sections.forEach(function (section) {
       var description = section.querySelector('.yw-butcher-quality__description');
-
-      if (!description) return;
-
-      var walker = document.createTreeWalker(
-        description,
-        NodeFilter.SHOW_TEXT,
-        {
-          acceptNode: function (node) {
-            return node.textContent.trim()
-              ? NodeFilter.FILTER_ACCEPT
-              : NodeFilter.FILTER_REJECT;
-          }
-        }
-      );
-
-      var textNodes = [];
-      var node;
-
-      while ((node = walker.nextNode())) {
-        textNodes.push(node);
-      }
-
+      var typingTimers = [];
       var chars = [];
 
-      textNodes.forEach(function (textNode) {
-        var fragment = document.createDocumentFragment();
+      if (description) {
+        var walker = document.createTreeWalker(
+          description,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: function (node) {
+              return node.textContent.trim()
+                ? NodeFilter.FILTER_ACCEPT
+                : NodeFilter.FILTER_REJECT;
+            }
+          }
+        );
 
-        Array.from(textNode.textContent).forEach(function (char) {
-          var span = document.createElement('span');
+        var textNodes = [];
+        var node;
 
-          span.className = 'bq-char';
-          span.textContent = char;
+        while ((node = walker.nextNode())) {
+          textNodes.push(node);
+        }
 
-          fragment.appendChild(span);
-          chars.push(span);
+        textNodes.forEach(function (textNode) {
+          var fragment = document.createDocumentFragment();
+
+          Array.from(textNode.textContent).forEach(function (char) {
+            var span = document.createElement('span');
+
+            span.className = 'bq-char';
+            span.textContent = char;
+
+            fragment.appendChild(span);
+            chars.push(span);
+          });
+
+          textNode.parentNode.replaceChild(fragment, textNode);
         });
+      }
 
-        textNode.parentNode.replaceChild(fragment, textNode);
-      });
-
-      var typingTimers = [];
-
-      var resetAnimation = function () {
+      var resetTyping = function () {
         typingTimers.forEach(function (timer) {
           clearTimeout(timer);
         });
 
         typingTimers = [];
 
-        section.classList.remove('bq-animate');
-        description.classList.remove('bq-typing');
+        if (description) {
+          description.classList.remove('bq-typing');
+        }
 
         chars.forEach(function (char) {
           char.classList.remove('bq-char-visible');
         });
       };
 
-      var playAnimation = function () {
-        resetAnimation();
+      var playTyping = function () {
+        resetTyping();
 
-        requestAnimationFrame(function () {
-          section.classList.add('bq-animate');
-          description.classList.add('bq-typing');
+        if (!description) return;
 
-          chars.forEach(function (char, index) {
-            var timer = setTimeout(function () {
-              char.classList.add('bq-char-visible');
-            }, index * 28);
+        description.classList.add('bq-typing');
 
-            typingTimers.push(timer);
-          });
+        chars.forEach(function (char, index) {
+          var timer = setTimeout(function () {
+            char.classList.add('bq-char-visible');
+          }, index * 28);
+
+          typingTimers.push(timer);
         });
       };
 
-      var sectionObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              playAnimation();
-            } else {
-              resetAnimation();
-            }
-          });
-        },
-        {
-          threshold: 0.15
-        }
-      );
+      var setFullWidth = function () {
+        section.style.width = 'calc(100% + 48px)';
+        section.style.marginLeft = '-24px';
+        section.style.marginRight = '-24px';
+      };
 
-      sectionObserver.observe(section);
+      var setContainerWidth = function () {
+        section.style.width = '100%';
+        section.style.marginLeft = '0';
+        section.style.marginRight = '0';
+      };
 
-      var updateWidth = function () {
+      var resetSection = function () {
+        section.classList.remove('bq-animate');
+        resetTyping();
+        setFullWidth();
+      };
+
+      var playSection = function () {
+        section.classList.add('bq-animate');
+        playTyping();
+      };
+
+      var wasVisible = false;
+
+      var updateSection = function () {
         var rect = section.getBoundingClientRect();
         var viewportHeight = window.innerHeight;
 
-        var start = viewportHeight;
-        var end = viewportHeight * 0.45;
+        var sectionTop = rect.top;
+        var sectionBottom = rect.bottom;
 
-        var progress = (start - rect.top) / (start - end);
+        var visible =
+          sectionBottom > 0 &&
+          sectionTop < viewportHeight;
+
+        if (!visible) {
+          if (wasVisible) {
+            resetSection();
+          }
+
+          wasVisible = false;
+          setFullWidth();
+          return;
+        }
+
+        if (!wasVisible) {
+          wasVisible = true;
+          playSection();
+        }
+
+        var startPoint = viewportHeight;
+        var endPoint = viewportHeight * 0.5;
+
+        var progress =
+          (startPoint - sectionTop) /
+          (startPoint - endPoint);
 
         progress = Math.max(0, Math.min(1, progress));
 
         var sideSpace = 24 * progress;
+        var widthExtra = 48 - sideSpace * 2;
 
-        section.style.width = 'calc(100% + ' + (48 - sideSpace * 2) + 'px)';
+        section.style.width = 'calc(100% + ' + widthExtra + 'px)';
         section.style.marginLeft = '-' + (24 - sideSpace) + 'px';
         section.style.marginRight = '-' + (24 - sideSpace) + 'px';
       };
 
       var ticking = false;
 
-      var onScroll = function () {
+      var update = function () {
         if (ticking) return;
 
         ticking = true;
 
         requestAnimationFrame(function () {
-          updateWidth();
+          updateSection();
           ticking = false;
         });
       };
 
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', updateWidth);
+      window.addEventListener('scroll', update, {
+        passive: true
+      });
 
-      updateWidth();
+      window.addEventListener('resize', update);
+
+      resetSection();
+      updateSection();
     });
   });
 </script>
