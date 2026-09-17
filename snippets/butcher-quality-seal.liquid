@@ -198,3 +198,84 @@
     }
 }
 </style>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var sections = document.querySelectorAll(
+      '.yw-butcher-quality.has-background-image.butcher-quality-mobile'
+    );
+
+    if (!sections.length) return;
+
+    sections.forEach(function (section) {
+      var description = section.querySelector('.yw-butcher-quality__description');
+
+      if (!description) {
+        section.classList.add('bq-animate');
+        return;
+      }
+
+      var walker = document.createTreeWalker(
+        description,
+        NodeFilter.SHOW_TEXT,
+        {
+          acceptNode: function (node) {
+            return node.textContent.trim()
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_REJECT;
+          }
+        }
+      );
+
+      var textNodes = [];
+      var node;
+
+      while ((node = walker.nextNode())) {
+        textNodes.push(node);
+      }
+
+      var chars = [];
+
+      textNodes.forEach(function (textNode) {
+        var fragment = document.createDocumentFragment();
+
+        Array.from(textNode.textContent).forEach(function (char) {
+          var span = document.createElement('span');
+
+          span.className = 'bq-char';
+          span.textContent = char;
+
+          fragment.appendChild(span);
+          chars.push(span);
+        });
+
+        textNode.parentNode.replaceChild(fragment, textNode);
+      });
+
+      var observer = new IntersectionObserver(
+        function (entries, obs) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+
+            section.classList.add('bq-animate');
+            description.classList.add('bq-typing');
+
+            chars.forEach(function (char, index) {
+              setTimeout(function () {
+                char.classList.add('bq-char-visible');
+              }, index * 28);
+            });
+
+            obs.unobserve(section);
+          });
+        },
+        {
+          threshold: 0.15
+        }
+      );
+
+      observer.observe(section);
+    });
+  });
+</script>
