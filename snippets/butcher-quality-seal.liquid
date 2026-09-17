@@ -1,5 +1,5 @@
 <div
-  class="yw-butcher-quality {% if block.settings.bq_bg_image_desktop != blank or block.settings.bq_bg_image_mobile != blank %} has-background-image{% endif %} {{ custom_class }}"
+  class="yw-butcher-quality {% if block.settings.bq_bg_image_desktop != blank or block.settings.bq_bg_image_mobile != blank %}has-background-image{% endif %} {{ custom_class }}"
   style="
     --bq-bg-desktop: {{ block.settings.bq_bg_color_desktop }};
     --bq-text-desktop: {{ block.settings.bq_text_color_desktop }};
@@ -13,6 +13,8 @@
     {% endif %}
   "
 >
+  <div class="yw-butcher-quality__background"></div>
+
   {% assign seal_image = block.settings.seal_image %}
 
   {% if block.settings.seal_image_mobile != blank %}
@@ -32,7 +34,10 @@
           {{
             seal_image
             | image_url: width: 220
-            | image_tag: loading: 'lazy', widths: '110,220', alt: 'Butcher quality seal'
+            | image_tag:
+              loading: 'lazy',
+              widths: '110,220',
+              alt: 'Butcher quality seal'
           }}
         {% endif %}
       </picture>
@@ -40,7 +45,10 @@
       {{
         seal_image
         | image_url: width: 220
-        | image_tag: loading: 'lazy', widths: '110,220', alt: 'Butcher quality seal'
+        | image_tag:
+          loading: 'lazy',
+          widths: '110,220',
+          alt: 'Butcher quality seal'
       }}
     {% endif %}
   </div>
@@ -63,75 +71,81 @@
 
 <style>
 .yw-butcher-quality {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    margin: 20px 0 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 20px 0 0;
+  background-color: var(--bq-bg-desktop);
+  color: var(--bq-text-desktop);
+  overflow: hidden;
+}
 
-    background-color: var(--bq-bg-desktop);
-    background-image: var(--bq-bg-image-desktop);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    color: var(--bq-text-desktop);
+.yw-butcher-quality__background {
+  position: absolute;
+  inset: 0;
+  background-image: var(--bq-bg-image-desktop);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
 }
 
 .yw-butcher-quality__image {
-    flex: 0 0 128px;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 128px;
 }
 
 .yw-butcher-quality__image img {
-    display: block;
-    width: 100%;
-    height: auto;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .yw-butcher-quality__content {
-    flex: 1;
+  position: relative;
+  z-index: 1;
+  flex: 1;
 }
 
 .yw-butcher-quality__heading {
-    margin: 0 0 8px;
-    font-family: "TAY Birdie";
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--bq-text-desktop);
-    font-weight: 400;
+  margin: 0 0 8px;
+  font-family: "TAY Birdie";
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bq-text-desktop);
+  font-weight: 400;
 }
 
 .yw-butcher-quality__description,
 .yw-butcher-quality__description p {
-    margin: 0;
-    font-family: "TAY Birdie";
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0;
-    color: var(--bq-text-desktop);
+  margin: 0;
+  font-family: "TAY Birdie";
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: var(--bq-text-desktop);
 }
 
 .wy-bq-trademark {
-    font-family: Arial, sans-serif;
-    font-size: 0.8em;
-    position: relative;
-    top: -1px;
+  font-family: Arial, sans-serif;
+  font-size: 0.8em;
+  position: relative;
+  top: -1px;
 }
 
 .butcher-quality-mobile {
-    display: none;
-}
-
-.yw-butcher-quality.has-background-image .yw-butcher-quality {
-  margin:2.4rem 0 0;
+  display: none;
 }
 
 .yw-butcher-quality.has-background-image .yw-butcher-quality__description,
 .yw-butcher-quality.has-background-image .yw-butcher-quality__description p {
-      font-size: 14px;
-      text-align: justify;
-  }
+  font-size: 14px;
+  text-align: justify;
+}
 
 @media (max-width: 990px) {
   .yw-butcher-quality {
@@ -139,10 +153,6 @@
     gap: 16px;
     align-items: flex-start;
     background-color: var(--bq-bg-mobile);
-    background-image: var(--bq-bg-image-mobile);
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
     color: var(--bq-text-mobile);
   }
 
@@ -153,6 +163,13 @@
     align-items: center;
     gap: 16px;
     margin: 48px 0;
+  }
+
+  .yw-butcher-quality__background {
+    background-image: var(--bq-bg-image-mobile);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   .yw-butcher-quality__image {
@@ -175,13 +192,10 @@
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile {
-    margin: 40px 0 0;
+    width: calc(100% + 48px);
+    margin: 40px -24px 0;
     padding: 35px 26px;
     gap: 15px;
-    background-image: var(--bq-bg-image-mobile);
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
