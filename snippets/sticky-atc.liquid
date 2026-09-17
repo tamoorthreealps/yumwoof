@@ -603,25 +603,17 @@ if (self.isV2) {
     if (!self.mainBtn) return;
 
     atcObserver = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
-        var belowViewport = entry.boundingClientRect.top >= bottom;
-        var shouldAdd = !entry.isIntersecting && belowViewport;
+      function (entries) {
+        entries.forEach(function (entry) {
+          var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
+          var belowViewport = entry.boundingClientRect.top >= bottom;
 
-        clearTimeout(self._inProductMainTimer);
-
-        if (shouldAdd) {
-          self.classList.add('in-product-main');
-
-          self._inProductMainTimer = setTimeout(function () {
-            self.classList.remove('in-product-main');
-          }, 1000);
-        } else {
-          self.classList.remove('in-product-main');
-        }
-      });
-    },
+          self.classList.toggle(
+            'in-product-main',
+            !entry.isIntersecting && belowViewport
+          );
+        });
+      },
       { root: null, threshold: 0 }
     );
 
