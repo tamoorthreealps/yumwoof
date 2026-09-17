@@ -61,10 +61,7 @@
     assign st_thumb = st_variant.featured_image | default: product.featured_image
 
     # ----- ancestral-blend-v2 only -----
-    assign st_is_v2 = false
-    if template.suffix == 'ancestral-blend-v2'
-      assign st_is_v2 = true
-    endif
+    assign st_is_v2 = true
 
     # Initial desktop title: "<Recipe> Recipe", falling back to the product title.
     assign st_title = product.title
