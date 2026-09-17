@@ -79,7 +79,8 @@
           "settings": {
             "heading": "21-Day First Bag Guarantee",
             "text": "Money back if your dog doesn't love it",
-            "background_image": "shopify://shop_images/Background.png",
+            "background_image": "shopify://shop_images/Guarantee_Background_03bae41e-48b5-487f-9db1-6d8c88a7c57f.png",
+            "background_image_mobile": "shopify://shop_images/Guarantee_Background.png",
             "background_color": "#cb890040",
             "ribbon_color": "#fff9ef"
           }
@@ -88,14 +89,6 @@
           "type": "pdp-videos",
           "settings": {
             "show_video": false
-          }
-        },
-        "butcher_quality_KVmFAP": {
-          "type": "butcher-quality",
-          "settings": {
-            "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
-            "bq_heading": "",
-            "bq_description": "<p>THE BUTCHER QUALITY™ SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>"
           }
         },
         "nutrition_label_APTPBb": {
@@ -108,6 +101,20 @@
         "nutritional_information_KCbq7E": {
           "type": "nutritional-information",
           "settings": {}
+        },
+        "butcher_quality_KVmFAP": {
+          "type": "butcher-quality",
+          "settings": {
+            "seal_image": "shopify://shop_images/Vector_10a6fed9-8e19-46d5-8707-02f0a4938dec.svg",
+            "bq_bg_color_desktop": "#f5f0e8",
+            "bq_text_color_desktop": "#661d1d",
+            "seal_image_mobile": "shopify://shop_images/Vector_5a5e000a-55ae-45cc-91fc-345fbf3fe32e.svg",
+            "bq_bg_image_mobile": "shopify://shop_images/butcher_bg.png",
+            "bq_bg_color_mobile": "#f5f0e8",
+            "bq_text_color_mobile": "#661d1d",
+            "bq_heading": "",
+            "bq_description": "<p>THE BUTCHER QUALITY™ SEAL GUARANTEES THE FOOD INSIDE MEETS YUMWOOF’S HIGH STANDARDS FOR INGREDIENT SELECTION, VERIFIED SOURCING AND MINIMAL PROCESSING.</p>"
+          }
         },
         "description": {
           "type": "description",
@@ -136,9 +143,9 @@
         "buy_buttons",
         "guarantee_ribbon_NUFwfW",
         "pdp_videos_azzcwK",
-        "butcher_quality_KVmFAP",
         "nutrition_label_APTPBb",
         "nutritional_information_KCbq7E",
+        "butcher_quality_KVmFAP",
         "description",
         "share"
       ],
@@ -157,7 +164,8 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "enable_sticky_atc": true,
-        "sticky_atc_button_label": "Add to Bag"
+        "sticky_atc_button_label": "Add to Bag",
+        "sticky_atc_mode": "default"
       }
     },
     "disclosures": {
