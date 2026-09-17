@@ -1382,7 +1382,7 @@ width: 140px;
   top: -11px;
 }
 .product__info-wrapper_v2 .recipe-swatch__label {
-  min-height: 96px;
+  min-height: 102px;
   flex-direction: inherit;
   overflow: hidden;
   position: relative;
