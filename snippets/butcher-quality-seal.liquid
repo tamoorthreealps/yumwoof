@@ -258,7 +258,6 @@
       var description = section.querySelector('.yw-butcher-quality__description');
 
       if (!description) {
-        section.classList.add('bq-animate');
         return;
       }
 
@@ -299,21 +298,48 @@
         textNode.parentNode.replaceChild(fragment, textNode);
       });
 
+      var typingTimers = [];
+
+      var resetAnimation = function () {
+        typingTimers.forEach(function (timer) {
+          clearTimeout(timer);
+        });
+
+        typingTimers = [];
+
+        section.classList.remove('bq-animate');
+        description.classList.remove('bq-typing');
+
+        chars.forEach(function (char) {
+          char.classList.remove('bq-char-visible');
+        });
+      };
+
+      var playAnimation = function () {
+        resetAnimation();
+
+        requestAnimationFrame(function () {
+          section.classList.add('bq-animate');
+          description.classList.add('bq-typing');
+
+          chars.forEach(function (char, index) {
+            var timer = setTimeout(function () {
+              char.classList.add('bq-char-visible');
+            }, index * 28);
+
+            typingTimers.push(timer);
+          });
+        });
+      };
+
       var observer = new IntersectionObserver(
-        function (entries, obs) {
+        function (entries) {
           entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-
-            section.classList.add('bq-animate');
-            description.classList.add('bq-typing');
-
-            chars.forEach(function (char, index) {
-              setTimeout(function () {
-                char.classList.add('bq-char-visible');
-              }, index * 28);
-            });
-
-            obs.unobserve(section);
+            if (entry.isIntersecting) {
+              playAnimation();
+            } else {
+              resetAnimation();
+            }
           });
         },
         {
