@@ -231,7 +231,11 @@
       .yw--wholesale--banner__logo img { max-height: 46px; }
       .yw--wholesale--banner__kibble { width: calc(var(--k-w) * .78); }
     }
-
+@media screen and (min-width: 1200px) {
+    .yw--wholesale--banner__text p{
+      min-height: 120px;
+    }
+  }
     /* ---------------- Mobile ---------------- */
     @media screen and (min-width: 1200px) {
     .yw--wholesale--banner__text p{
