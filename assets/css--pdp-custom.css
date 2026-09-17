@@ -1266,6 +1266,23 @@ width: 140px;
   color: #fff;
   border: 0;
   padding:2px 7.4px 0;
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  animation: buttonShine_save 4s linear infinite;
+}
+
+@keyframes buttonShine_save {
+  0% {
+    background-position: 100% 0;
+  }
+
+  45% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
 }
 
 .product__info-wrapper_v2 .product--short--info {
