@@ -81,7 +81,7 @@
     <div class="product--main">
       <div class="custom--page-width">
         {% if section.settings.promo_banner_content != blank %}
-          <div class="pdp--promo--banner {% if template.suffix == 'ancestral-blend-v2' %}pdp--promo--banner_v2{% endif %}">
+          <div class="pdp--promo--banner pdp--promo--banner_v2">
             <a href="{{ section.settings.promo_banner_link }}" class="pdp--promo--banner_link" target="_blank">
               {{ section.settings.promo_banner_content }}
               <svg
@@ -109,7 +109,7 @@
               {%- endcase -%}
             {% endfor %}
           </div>
-          <div class="product__info-wrapper {% if template.suffix == 'ancestral-blend-v2' %}product__info-wrapper_v2{% endif %} grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <div class="product__info-wrapper product__info-wrapper_v2 grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             <section
               id="ProductInfo-{{ section.id }}"
               class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
@@ -311,11 +311,7 @@
                       <div class="frequency_title_container">
                         <h2 class="selector-title">Delivery</h2>
                       </div>
-                      {% if template.suffix == 'ancestral-blend-v2' %}
                       {% render 'appstle-subscription-v2', product: product %}
-                      {% else %}
-                      {% render 'appstle-subscription', product: product %}
-                      {% endif %}
                     </div>
                   {%- when 'custom_liquid' -%}
                     {{ block.settings.custom_liquid }}
