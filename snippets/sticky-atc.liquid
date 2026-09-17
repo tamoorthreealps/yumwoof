@@ -407,9 +407,29 @@ endfor
               this.metaDesktopEl.textContent = metaStr;
             }
 
-            if (this.metaMobileEl) {
-              this.metaMobileEl.textContent = parts.join(' · ');
-            }
+            var mobileParts = [];
+
+if (options && options.length) {
+  for (var i = 0; i < options.length; i++) {
+    var v = (options[i] || '').trim();
+
+    if (v && v !== 'Default Title') {
+      if (this.isV2 && i === this.recipeIndex) {
+        v += ' Recipe';
+      }
+
+      mobileParts.push(v);
+    }
+  }
+} else if (this.baseDesktopMeta) {
+  mobileParts.push(this.baseDesktopMeta);
+}
+
+if (freq) mobileParts.push(freq);
+
+if (this.metaMobileEl) {
+  this.metaMobileEl.textContent = mobileParts.join(' · ');
+}
         }
 
         // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
