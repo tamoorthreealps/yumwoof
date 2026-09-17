@@ -175,42 +175,28 @@
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile {
-    position: relative;
     width: calc(100% + 48px);
     margin: 40px -24px 0;
     padding: 35px 26px;
     gap: 15px;
-    background-color: transparent;
-    background-image: none;
-    overflow: hidden;
+
+    transition:
+      width 0.45s ease-out,
+      margin-left 0.45s ease-out,
+      margin-right 0.45s ease-out;
   }
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: var(--bq-bg-mobile);
-    background-image: var(--bq-bg-image-mobile);
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform: scale(0.92);
-    transform-origin: center;
-    z-index: 0;
-  }
-
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate::before {
-    animation: bqBoxScale 0.7s ease-out forwards;
-  }
-
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile > * {
-    position: relative;
-    z-index: 1;
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__image {
     width: 166px;
+    animation: bqLogoFloat 2.8s ease-in-out infinite;
+    will-change: transform;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
@@ -246,13 +232,14 @@
     display: none;
   }
 
-  @keyframes bqBoxScale {
-    from {
-      transform: scale(0.92);
+  @keyframes bqLogoFloat {
+    0%,
+    100% {
+      transform: translateY(0);
     }
 
-    to {
-      transform: scale(1);
+    50% {
+      transform: translateY(-6px);
     }
   }
 }
