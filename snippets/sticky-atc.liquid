@@ -153,7 +153,7 @@
       <div class="sticky-atc__info">
         {%- if st_thumb != blank -%}
           <img
-            class="sticky-atc__thumb"
+            class="sticky-atc__thumb {% if st_is_v2 and st_v2_img != blank %} sticky-atc__var_thumb{% endif %}"
             src="{{ st_thumb | image_url: width: 240 }}"
             srcset="{{ st_thumb | image_url: width: 120 }} 120w, {{ st_thumb | image_url: width: 180 }} 180w, {{ st_thumb | image_url: width: 240 }} 240w, {{ st_thumb | image_url: width: 300 }} 300w"
             sizes="60px"
