@@ -83,16 +83,18 @@
 
     {% assign v2_mobile_image = blank %}
 
-    {% if template.suffix == 'ancestral-blend-v2' %}
-      {% case value %}
+    {% case value %}
         {% when 'Land & Sea' %}
           {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Land_Sea.png?v=1789564120' %}
         {% when 'Wild Caught Fish' %}
           {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-WildCaughtFish.png?v=1789564120' %}
         {% when 'Turkey' %}
           {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Turkey.png?v=1789564120' %}
+        {% when 'Meat Lovers' %}
+          {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Land_Sea.png?v=1789564120' %}
+        {% when 'Low Fat Turkey' %}
+          {% assign v2_mobile_image = 'https://cdn.shopify.com/s/files/1/0317/2827/1419/files/PDP-Recipe-AB-Turkey.png?v=1789564120' %}
       {% endcase %}
-    {% endif %}
     {%- comment -%} Optional badge (e.g. POPULAR) from the matching variant's swatch_badge metafield. {%- endcomment -%}
     {%- assign swatch_badge = '' -%}
     {%- assign value_name = value | strip -%}
