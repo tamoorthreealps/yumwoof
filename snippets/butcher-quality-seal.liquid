@@ -246,6 +246,7 @@
       var description = section.querySelector('.yw-butcher-quality__description');
       var typingTimers = [];
       var chars = [];
+      var hasAnimated = false;
 
       if (description) {
         var walker = document.createTreeWalker(
@@ -316,32 +317,18 @@
         });
       };
 
-      var setFullWidth = function () {
-        section.style.width = 'calc(100% + 48px)';
-        section.style.marginLeft = '-24px';
-        section.style.marginRight = '-24px';
-      };
-
-      var setContainerWidth = function () {
-        section.style.width = '100%';
-        section.style.marginLeft = '0';
-        section.style.marginRight = '0';
-      };
-
-      var resetSection = function () {
-        section.classList.remove('bq-animate');
-        resetTyping();
-        setFullWidth();
-      };
-
       var playSection = function () {
+        if (hasAnimated) return;
+
+        hasAnimated = true;
+
         section.classList.add('bq-animate');
         playTyping();
       };
 
-      var wasVisible = false;
-
       var updateSection = function () {
+        if (hasAnimated) return;
+
         var rect = section.getBoundingClientRect();
         var viewportHeight = window.innerHeight;
 
@@ -352,44 +339,15 @@
           sectionBottom > 0 &&
           sectionTop < viewportHeight;
 
-        if (!visible) {
-          if (wasVisible) {
-            resetSection();
-          }
+        if (!visible) return;
 
-          wasVisible = false;
-          setFullWidth();
-          return;
-        }
-
-        if (!wasVisible) {
-          wasVisible = true;
-          playSection();
-        }
-
-        var stickyHeight = 100;
-
-        var startPoint = viewportHeight - stickyHeight;
-        var endPoint = (viewportHeight * 0.5) - stickyHeight;
-
-        var progress =
-          (startPoint - sectionTop) /
-          (startPoint - endPoint);
-
-        progress = Math.max(0, Math.min(1, progress));
-
-        var sideSpace = 24 * progress;
-        var widthExtra = 48 - sideSpace * 2;
-
-        section.style.width = 'calc(100% + ' + widthExtra + 'px)';
-        section.style.marginLeft = '-' + (24 - sideSpace) + 'px';
-        section.style.marginRight = '-' + (24 - sideSpace) + 'px';
+        playSection();
       };
 
       var ticking = false;
 
       var update = function () {
-        if (ticking) return;
+        if (ticking || hasAnimated) return;
 
         ticking = true;
 
@@ -405,7 +363,6 @@
 
       window.addEventListener('resize', update);
 
-      resetSection();
       updateSection();
     });
   });
