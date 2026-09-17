@@ -10,6 +10,12 @@
   - Not rendered at all when the product is unavailable in the current market
     (custom.unavailable_markets), matching snippets/buy-buttons.liquid.
 
+  ancestral-blend-v2 template only:
+  - Desktop title shows "<Recipe> Recipe" (falls back to the product title).
+  - Thumb prefers the variant-level custom.sticky_atc_image metafield.
+  - CSS-only slide up/down on show/hide (including footer-visible).
+  - .product--main IntersectionObserver, desktop (>= 749px) only.
+
   Accepts:
   - product: {Object} product object
   - section_id: {String} id of the main-product section
@@ -53,6 +59,43 @@
     endfor
 
     assign st_thumb = st_variant.featured_image | default: product.featured_image
+
+    # ----- ancestral-blend-v2 only -----
+    assign st_is_v2 = false
+    if template.suffix == 'ancestral-blend-v2'
+      assign st_is_v2 = true
+    endif
+
+    # Initial desktop title: "<Recipe> Recipe", falling back to the product title.
+    assign st_title = product.title
+    if st_is_v2 and recipe_index >= 0
+      assign st_recipe = st_variant.options[recipe_index] | strip
+      if st_recipe != blank and st_recipe != 'Default Title'
+        assign st_title = st_recipe | append: ' Recipe'
+      endif
+    endif
+
+    # Variant-level custom.sticky_atc_image: initial thumb + id→url map for JS.
+    assign st_v2_images = ''
+    if st_is_v2
+      assign st_v2_img = st_variant.metafields.custom.sticky_atc_image.value
+      if st_v2_img != blank
+        assign st_thumb = st_v2_img
+      endif
+      for v in product.variants
+        assign vimg = v.metafields.custom.sticky_atc_image.value
+        if vimg != blank
+          assign vurl = vimg | image_url: width: 300 | json
+          assign ventry = '"' | append: v.id | append: '":' | append: vurl
+          if st_v2_images == ''
+            assign st_v2_images = ventry
+          else
+            assign st_v2_images = st_v2_images | append: ',' | append: ventry
+          endif
+        endif
+      endfor
+    endif
+
     assign st_size = ''
     if size_index >= 0
       assign st_size = st_variant.options[size_index]
@@ -106,7 +149,7 @@
           >
         {%- endif -%}
         <div class="sticky-atc__text">
-          <p class="sticky-atc__title" data-sticky-title>{{ product.title | escape }}</p>
+          <p class="sticky-atc__title" data-sticky-title>{{ st_title | escape }}</p>
           <p class="sticky-atc__meta sticky-atc__meta--desktop" data-sticky-meta-desktop>{{ st_meta_desktop }}</p>
           <p class="sticky-atc__meta sticky-atc__meta--mobile" data-sticky-meta-mobile>{{ st_meta_mobile }}</p>
         </div>
@@ -132,6 +175,9 @@
         </button>
       </div>
     </div>
+    {%- if st_is_v2 -%}
+      <script type="application/json" data-sticky-v2-images>{ {{ st_v2_images }} }</script>
+    {%- endif -%}
   </sticky-atc-bar>
 
   <script>
@@ -174,6 +220,21 @@
           this.btnLabel = this.querySelector('[data-sticky-btn-label]');
           this.btnPrice = this.querySelector('[data-sticky-btn-price]');
           this.spinnerEl = this.querySelector('.loading__spinner');
+          this.titleEl = this.querySelector('[data-sticky-title]');
+
+          // ancestral-blend-v2 only — class is set from template.suffix in Liquid.
+          this.isV2 = this.classList.contains('sticky-atc_v2');
+          this.variantImages = null;
+          if (this.isV2) {
+            var mapEl = this.querySelector('[data-sticky-v2-images]');
+            if (mapEl) {
+              try {
+                this.variantImages = JSON.parse(mapEl.textContent || '{}');
+              } catch (err) {
+                this.variantImages = null;
+              }
+            }
+          }
 
           // Stable server-rendered base for the desktop meta (recipe · size),
           // captured before any sync so appended frequency never accumulates.
@@ -183,7 +244,6 @@
           this.mainBtn = document.getElementById('ProductSubmitButton-' + this.sectionId);
           this.priceHost = document.getElementById('price-' + this.sectionId);
           this.productInfo = document.getElementById('MainProduct-' + this.sectionId);
-          
 
           if (!this.mainBtn) {
             // No purchasable form on the page — nothing to mirror.
@@ -304,11 +364,33 @@
           if (this.metaMobileEl) this.metaMobileEl.textContent = metaStr;
         }
 
+        // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
+        syncTitle() {
+          if (!this.isV2 || !this.titleEl) return;
+          var variant = this._variant;
+          if (!variant) return; // keep the server-rendered title until a variant change arrives
+          var title = this.productTitle;
+          if (variant.options && this.recipeIndex >= 0) {
+            var recipe = (variant.options[this.recipeIndex] || '').trim();
+            if (recipe && recipe !== 'Default Title') title = recipe + ' Recipe';
+          }
+          this.titleEl.textContent = title;
+        }
+
         syncThumb() {
           var variant = this._variant;
           if (!variant || !this.thumbEl) return;
-          var img = variant.featured_image || (variant.featured_media && variant.featured_media.preview_image);
-          var src = img && img.src;
+          var src = '';
+          // 1. ancestral-blend-v2 only: variant-level custom.sticky_atc_image.
+          if (this.isV2 && this.variantImages && variant.id != null) {
+            src = this.variantImages[String(variant.id)] || '';
+          }
+          // 2. Variant featured image (existing behaviour).
+          if (!src) {
+            var img = variant.featured_image || (variant.featured_media && variant.featured_media.preview_image);
+            src = img && img.src;
+          }
+          // 3. Nothing available → leave the current image in place (existing behaviour).
           if (!src) return;
           // High-DPI crisp: request 240px (4x the 60px box) and rebuild srcset.
           var base = src.split('?')[0];
@@ -324,6 +406,7 @@
         syncAll() {
           this.syncPrice();
           this.syncMeta();
+          this.syncTitle();
           this.syncButton();
         }
 
@@ -418,45 +501,50 @@
             // detected cheaply, so it stays hidden.
             this.setVisible(true);
           }
-            var productMainObserver;
 
-            function initProductMainObserver() {
+          // ancestral-blend-v2 only: track whether the bar overlaps .product--main on
+          // desktop. One observer at a time; (re)built only when the 749px breakpoint
+          // is actually crossed, so resize never stacks observers.
+          if (self.isV2) {
+            var productMainObserver = null;
+            var productMainMq = window.matchMedia('(min-width: 749px)');
+            var productMainDesktop = null;
+
+            var disconnectProductMain = function () {
               if (productMainObserver) {
                 productMainObserver.disconnect();
                 productMainObserver = null;
               }
-
               self.classList.remove('in-product-main');
+            };
 
-              if (
-                window.matchMedia('(min-width: 749px)').matches &&
-                'IntersectionObserver' in window
-              ) {
-                var productMain = document.querySelector('.product--main');
+            var initProductMain = function () {
+              disconnectProductMain();
+              if (!('IntersectionObserver' in window)) return;
+              var productMain = document.querySelector('.product--main');
+              if (!productMain) return;
+              productMainObserver = new IntersectionObserver(
+                function (entries) {
+                  entries.forEach(function (entry) {
+                    self.classList.toggle('in-product-main', entry.isIntersecting);
+                  });
+                },
+                { root: null, threshold: 0 }
+              );
+              productMainObserver.observe(productMain);
+            };
 
-                if (productMain) {
-                  productMainObserver = new IntersectionObserver(
-                    function (entries) {
-                      entries.forEach(function (entry) {
-                        self.classList.toggle('in-product-main', entry.isIntersecting);
-                      });
-                    },
-                    {
-                      root: null,
-                      threshold: 0
-                    }
-                  );
+            var syncProductMain = function () {
+              var desktop = productMainMq.matches;
+              if (desktop === productMainDesktop) return;
+              productMainDesktop = desktop;
+              if (desktop) initProductMain();
+              else disconnectProductMain();
+            };
 
-                  productMainObserver.observe(productMain);
-                }
-              }
-            }
-
-            initProductMainObserver();
-
-            window.addEventListener('resize', function () {
-              initProductMainObserver();
-            });
+            syncProductMain();
+            window.addEventListener('resize', syncProductMain);
+          }
         }
 
         setVisible(show) {
@@ -666,7 +754,18 @@
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-radius: 24px 24px 0 0;
-    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.45s ease, visibility 0s linear 0.45s;
+  }
+  /* Smooth slide up on show / slide down on hide (is-visible + footer-visible). */
+  .sticky-atc.sticky-atc_v2.is-visible {
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.45s ease, visibility 0s;
+  }
+  .sticky-atc.sticky-atc_v2.is-visible.footer-visible {
+    transform: translateY(120%);
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.45s ease, visibility 0s linear 0.45s;
   }
   .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
     border: 0;
