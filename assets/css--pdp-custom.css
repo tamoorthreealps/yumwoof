@@ -1263,21 +1263,11 @@ width: 140px;
 .product__info-wrapper_v2 .asw__save-pill {
   background: linear-gradient(90deg, #296900 0%, #34802A 50%, #296900 100%);
   background-size: 200% 100%;
-  animation: savePillGradient 3s ease-in-out infinite alternate;
   color: #fff;
   border: 0;
   padding:2px 7.4px 0;
 }
 
-@keyframes savePillGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  100% {
-    background-position: 100% 50%;
-  }
-}
 .product__info-wrapper_v2 .product--short--info {
   margin: 1rem 0 2.4rem;
 }
