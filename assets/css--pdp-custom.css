@@ -1441,6 +1441,13 @@ a.pdp--promo--banner_link p strong {
   letter-spacing: 1.32px;
 }
 
+@supports (-webkit-touch-callout: none) {
+      .product-form__submit {
+        padding-top: 0;
+        padding-bottom: 2px;
+      }
+    }
+
 .product__info-wrapper_v2 section.yumw-video-testimonials {
   margin: 4.8rem 0 0;
 }
