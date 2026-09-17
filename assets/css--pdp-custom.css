@@ -1443,8 +1443,8 @@ a.pdp--promo--banner_link p strong {
 
 @supports (-webkit-touch-callout: none) {
       .product-form__submit {
-        padding-top: 0;
-        padding-bottom: 2px;
+        padding-top: 13.2px;
+        padding-bottom: 15.2px;
       }
     }
 
