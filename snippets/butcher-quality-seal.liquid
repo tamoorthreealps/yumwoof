@@ -134,68 +134,114 @@
   }
 
 @media (max-width: 990px) {
+  .yw-butcher-quality {
+    display: none;
+    gap: 16px;
+    align-items: flex-start;
+    background-color: var(--bq-bg-mobile);
+    background-image: var(--bq-bg-image-mobile);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--bq-text-mobile);
+  }
 
-    .yw-butcher-quality {
-        display: none;
+  .yw-butcher-quality.butcher-quality-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
 
-        gap: 16px;
-        align-items: flex-start;
+  .yw-butcher-quality__image {
+    width: 128px;
+    flex: auto;
+  }
 
-        background-color: var(--bq-bg-mobile);
-        background-image: var(--bq-bg-image-mobile);
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
+  .yw-butcher-quality__heading {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: var(--bq-text-mobile);
+  }
 
-        color: var(--bq-text-mobile);
-    }
+  .yw-butcher-quality__description,
+  .yw-butcher-quality__description p {
+    font-size: 12px;
+    line-height: 16px;
+    text-align: justify;
+    color: var(--bq-text-mobile);
+  }
 
-    .yw-butcher-quality.butcher-quality-mobile {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-        margin: 48px 0;
-    }
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile {
+    width: calc(100% + 48px);
+    margin: 40px -24px 0;
+    padding: 35px 26px;
+    gap: 15px;
 
+    transition:
+      width 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+      margin-left 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+      margin-right 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-animate {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__image {
-        width: 128px;
-        flex: auto;
-    }
+    width: 166px;
+    animation: bqLogoFloat 2.8s ease-in-out infinite;
+    will-change: transform;
+  }
 
-    .yw-butcher-quality__heading {
-        font-size: 13px;
-        letter-spacing: 1.5px;
-        color: var(--bq-text-mobile);
-    }
-
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__description,
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__description p {
-        font-size: 12px;
-        line-height: 16px;
-        text-align: justify;
-        color: var(--bq-text-mobile);
+    font-size: 13px;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .yw-butcher-quality__description {
+    overflow: hidden;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .yw-butcher-quality__description:not(.bq-typing)
+    > * {
+    visibility: hidden;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .bq-char {
+    visibility: hidden;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .bq-char.bq-char-visible {
+    visibility: visible;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .wy-bq-trademark {
+    display: none;
+  }
+
+  @keyframes bqLogoFloat {
+    0%,
+    100% {
+      transform: translateY(0);
     }
 
-    .yw-butcher-quality.has-background-image.butcher-quality-mobile {
-        margin: 40px 0 0;
-        padding: 35px 26px;
-        gap: 15px;
+    50% {
+      transform: translateY(-10px);
     }
-
-    .yw-butcher-quality.has-background-image.butcher-quality-mobile .yw-butcher-quality__image {
-        width: 166px;
-    }
-
-    .yw-butcher-quality.has-background-image.butcher-quality-mobile .yw-butcher-quality__description,
-    .yw-butcher-quality.has-background-image.butcher-quality-mobile .yw-butcher-quality__description p {
-        font-size:13px;
-    }
-
-    .yw-butcher-quality.has-background-image.butcher-quality-mobile .wy-bq-trademark {
-        display: none;
-    }
+  }
 }
 </style>
 
