@@ -6,20 +6,20 @@
     subscription changes.
   - The sticky button proxies a click to the real #ProductSubmitButton so the live
     form (selling plan, quantity, cart drawer) handles the add.
-  - Shows only while the main add-to-cart button is scrolled out of the viewport.
+  - Shows only while the main add-to-cart button is out of the viewport.
   - Not rendered at all when the product is unavailable in the current market
     (custom.unavailable_markets), matching snippets/buy-buttons.liquid.
-
-  ancestral-blend-v2 template only:
   - Desktop title shows "<Recipe> Recipe" (falls back to the product title).
   - Thumb prefers the variant-level custom.sticky_atc_image metafield.
   - CSS-only slide up/down on show/hide (including footer-visible).
-  - .product--main IntersectionObserver, desktop (>= 749px) only.
+  - Desktop (>= 749px) only: compact `in-product-main` layout while the main
+    add-to-cart button is still below the fold.
 
   Accepts:
   - product: {Object} product object
   - section_id: {String} id of the main-product section
   - label: {String} (optional) button label, defaults to "Add to Bag"
+  - mode: {String} (optional) 'default' | 'scrolled-past', defaults to 'default'
 
   Usage:
   {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label %}
@@ -60,12 +60,9 @@
 
     assign st_thumb = st_variant.featured_image | default: product.featured_image
 
-    # ----- ancestral-blend-v2 only -----
-    assign st_is_v2 = true
-
     # Initial desktop title: "<Recipe> Recipe", falling back to the product title.
     assign st_title = product.title
-    if st_is_v2 and recipe_index >= 0
+    if recipe_index >= 0
       assign st_recipe = st_variant.options[recipe_index] | strip
       if st_recipe != blank and st_recipe != 'Default Title'
         assign st_title = st_recipe | append: ' Recipe'
@@ -73,25 +70,23 @@
     endif
 
     # Variant-level custom.sticky_atc_image: initial thumb + id→url map for JS.
-    assign st_v2_images = ''
-    if st_is_v2
-      assign st_v2_img = st_variant.metafields.custom.sticky_atc_image.value
-      if st_v2_img != blank
-        assign st_thumb = st_v2_img
-      endif
-      for v in product.variants
-        assign vimg = v.metafields.custom.sticky_atc_image.value
-        if vimg != blank
-          assign vurl = vimg | image_url: width: 300 | json
-          assign ventry = '"' | append: v.id | append: '":' | append: vurl
-          if st_v2_images == ''
-            assign st_v2_images = ventry
-          else
-            assign st_v2_images = st_v2_images | append: ',' | append: ventry
-          endif
-        endif
-      endfor
+    assign st_variant_images = ''
+    assign st_variant_img = st_variant.metafields.custom.sticky_atc_image.value
+    if st_variant_img != blank
+      assign st_thumb = st_variant_img
     endif
+    for v in product.variants
+      assign vimg = v.metafields.custom.sticky_atc_image.value
+      if vimg != blank
+        assign vurl = vimg | image_url: width: 300 | json
+        assign ventry = '"' | append: v.id | append: '":' | append: vurl
+        if st_variant_images == ''
+          assign st_variant_images = ventry
+        else
+          assign st_variant_images = st_variant_images | append: ',' | append: ventry
+        endif
+      endif
+    endfor
 
     assign st_size = ''
     if size_index >= 0
@@ -99,9 +94,10 @@
     endif
 
     # Initial meta line (JS keeps this in sync afterwards). Built from the
-    # variant option values (recipe · size), skipping blanks and the Shopify
-    # "Default Title" that single-variant products carry. Desktop and mobile
-    # share the same line — the product title only shows as the desktop heading.
+    # variant option values, skipping blanks and the Shopify "Default Title"
+    # that single-variant products carry.
+    #   Desktop: every option except Recipe (Recipe is the desktop heading).
+    #   Mobile:  every option, with Recipe shown as "<Recipe> Recipe".
     assign st_meta_desktop = ''
     assign st_meta_mobile = ''
 
@@ -110,7 +106,7 @@
       assign ov_clean = ov | strip
 
       if ov_clean != blank and ov_clean != 'Default Title'
-        if ov_index != recipe_index or st_is_v2 == false
+        if ov_index != recipe_index
           if st_meta_desktop == ''
             assign st_meta_desktop = ov_clean
           else
@@ -120,7 +116,7 @@
 
         assign mobile_value = ov_clean
 
-        if st_is_v2 and ov_index == recipe_index
+        if ov_index == recipe_index
           assign mobile_value = ov_clean | append: ' Recipe'
         endif
 
@@ -135,7 +131,7 @@
 
   <sticky-atc-bar
     id="StickyAtc-{{ section_id }}"
-    class="sticky-atc sticky-atc_v2"
+    class="sticky-atc"
     data-section-id="{{ section_id }}"
     data-product-title="{{ product.title | escape }}"
     data-recipe-index="{{ recipe_index }}"
@@ -150,7 +146,7 @@
       <div class="sticky-atc__info">
         {%- if st_thumb != blank -%}
           <img
-            class="sticky-atc__thumb {% if st_is_v2 and st_v2_img != blank %} sticky-atc__var_thumb{% endif %}"
+            class="sticky-atc__thumb{% if st_variant_img != blank %} sticky-atc__var_thumb{% endif %}"
             src="{{ st_thumb | image_url: width: 240 }}"
             srcset="{{ st_thumb | image_url: width: 120 }} 120w, {{ st_thumb | image_url: width: 180 }} 180w, {{ st_thumb | image_url: width: 240 }} 240w, {{ st_thumb | image_url: width: 300 }} 300w"
             sizes="60px"
@@ -190,11 +186,9 @@
         </button>
       </div>
     </div>
-    {%- if st_is_v2 -%}
-      <script type="application/json" data-sticky-v2-images>
-        { {{ st_v2_images }} }
-      </script>
-    {%- endif -%}
+    <script type="application/json" data-sticky-variant-images>
+      { {{ st_variant_images }} }
+    </script>
   </sticky-atc-bar>
 
   <script>
@@ -222,10 +216,11 @@
           this.enabledLabel = this.dataset.label || 'Add to Bag';
           // Visibility mode:
           //   'default'       → visible whenever the main button is out of view
-          //                     (above OR below — the original behaviour).
-          //   'scrolled-past' → visible only once the main button has scrolled
-          //                     ABOVE the viewport; stays hidden on load when the
-          //                     button is still below the fold.
+          //                     (above OR below).
+          //   'scrolled-past' → mobile: visible only once the main button has
+          //                     scrolled ABOVE the viewport. Desktop: also visible
+          //                     while the button is still below the fold, in step
+          //                     with the `in-product-main` compact layout.
           this.mode = this.dataset.mode || 'default';
 
           // Elements owned by the bar
@@ -241,22 +236,19 @@
           this.spinnerEl = this.querySelector('.loading__spinner');
           this.titleEl = this.querySelector('[data-sticky-title]');
 
-          // ancestral-blend-v2 only — class is set from template.suffix in Liquid.
-          this.isV2 = this.classList.contains('sticky-atc_v2');
+          // Variant id → custom.sticky_atc_image url map (rendered in Liquid).
           this.variantImages = null;
-          if (this.isV2) {
-            var mapEl = this.querySelector('[data-sticky-v2-images]');
-            if (mapEl) {
-              try {
-                this.variantImages = JSON.parse(mapEl.textContent || '{}');
-              } catch (err) {
-                this.variantImages = null;
-              }
+          var mapEl = this.querySelector('[data-sticky-variant-images]');
+          if (mapEl) {
+            try {
+              this.variantImages = JSON.parse(mapEl.textContent || '{}');
+            } catch (err) {
+              this.variantImages = null;
             }
           }
 
-          // Stable server-rendered base for the desktop meta (recipe · size),
-          // captured before any sync so appended frequency never accumulates.
+          // Stable server-rendered base for the desktop meta, captured before any
+          // sync so appended frequency never accumulates.
           this.baseDesktopMeta = text(this.metaDesktopEl);
 
           // Live PDP elements this bar mirrors
@@ -307,7 +299,7 @@
             was = text(cmp);
           }
           if (this.wasEl) this.wasEl.textContent = was || '';
-          if (this.btnWas) this.btnWas.textContent = this.isV2 ? was || '' : '';
+          if (this.btnWas) this.btnWas.textContent = was || '';
           if (this.nowEl && now) this.nowEl.textContent = now;
 
           this._was = was || '';
@@ -333,7 +325,7 @@
             this.btnPrice.textContent = this._now ? '| ' + this._now : '';
 
             if (this.btnWas) {
-              this.btnWas.textContent = this.isV2 ? this._was || '' : '';
+              this.btnWas.textContent = this._was || '';
             }
           }
           this.syncSpinner();
@@ -347,7 +339,9 @@
           if (this.spinnerEl) this.spinnerEl.classList.toggle('hidden', !loading);
         }
 
-        // ----- Variant title + frequency meta line (desktop and mobile share it) -----
+        // ----- Meta line: option values + frequency -----
+        //   Desktop: every option except Recipe (Recipe is the desktop heading).
+        //   Mobile:  every option, with Recipe shown as "<Recipe> Recipe".
         syncMeta() {
           var variant = this._variant;
           var options = variant && variant.options ? variant.options : null;
@@ -372,76 +366,41 @@
             }
           }
 
-          // Variant title = option values (recipe · size), skipping blanks and the
-          // Shopify "Default Title" that single-variant products carry. Rebuilt from
-          // fresh variant options, else the server-rendered base (already filtered)
-          // — never from the element's own text, so frequency never accumulates.
-          var parts = [];
-
-          if (options && options.length) {
-            for (var i = 0; i < options.length; i++) {
-              var v = (options[i] || '').trim();
-
-              if (v && v !== 'Default Title') {
-                parts.push(v);
-              }
-            }
-          } else if (this.baseDesktopMeta) {
-            parts.push(this.baseDesktopMeta);
-          }
-
-          if (freq) parts.push(freq);
-
-          var metaStr = parts.join(' · ');
-
-          if (this.isV2 && this.recipeIndex >= 0 && options && options.length) {
-            var desktopParts = [];
-
-            for (var i = 0; i < options.length; i++) {
-              var v = (options[i] || '').trim();
-
-              if (v && v !== 'Default Title' && i !== this.recipeIndex) {
-                desktopParts.push(v);
-              }
-            }
-
-            if (freq) desktopParts.push(freq);
-
-            metaStr = desktopParts.join(' · ');
-          }
-
-          if (this.metaDesktopEl) {
-            this.metaDesktopEl.textContent = metaStr;
-          }
-
+          // Rebuilt from fresh variant options, else the server-rendered base
+          // (already filtered) — never from the element's own text, so frequency
+          // never accumulates. Skips blanks and the Shopify "Default Title".
+          var desktopParts = [];
           var mobileParts = [];
 
           if (options && options.length) {
             for (var i = 0; i < options.length; i++) {
               var v = (options[i] || '').trim();
+              if (!v || v === 'Default Title') continue;
 
-              if (v && v !== 'Default Title') {
-                if (this.isV2 && i === this.recipeIndex) {
-                  v += ' Recipe';
-                }
-
+              if (i === this.recipeIndex) {
+                mobileParts.push(v + ' Recipe');
+              } else {
+                desktopParts.push(v);
                 mobileParts.push(v);
               }
             }
-          } else if (this.initialMobileMeta) {
-            mobileParts.push(this.initialMobileMeta);
+          } else {
+            if (this.baseDesktopMeta) desktopParts.push(this.baseDesktopMeta);
+            if (this.initialMobileMeta) mobileParts.push(this.initialMobileMeta);
           }
 
-          if (freq) mobileParts.push(freq);
-
-          if (this.metaMobileEl) {
-            this.metaMobileEl.textContent = mobileParts.join(' · ');
+          if (freq) {
+            desktopParts.push(freq);
+            mobileParts.push(freq);
           }
+
+          if (this.metaDesktopEl) this.metaDesktopEl.textContent = desktopParts.join(' · ');
+          if (this.metaMobileEl) this.metaMobileEl.textContent = mobileParts.join(' · ');
         }
 
-        // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
+        // ----- Desktop title = "<Recipe> Recipe" (falls back to the product title) -----
         syncTitle() {
-          if (!this.isV2 || !this.titleEl) return;
+          if (!this.titleEl) return;
           var variant = this._variant;
           if (!variant) return; // keep the server-rendered title until a variant change arrives
           var title = this.productTitle;
@@ -456,16 +415,16 @@
           var variant = this._variant;
           if (!variant || !this.thumbEl) return;
           var src = '';
-          // 1. ancestral-blend-v2 only: variant-level custom.sticky_atc_image.
-          if (this.isV2 && this.variantImages && variant.id != null) {
+          // 1. Variant-level custom.sticky_atc_image.
+          if (this.variantImages && variant.id != null) {
             src = this.variantImages[String(variant.id)] || '';
           }
-          // 2. Variant featured image (existing behaviour).
+          // 2. Variant featured image.
           if (!src) {
             var img = variant.featured_image || (variant.featured_media && variant.featured_media.preview_image);
             src = img && img.src;
           }
-          // 3. Nothing available → leave the current image in place (existing behaviour).
+          // 3. Nothing available → leave the current image in place.
           if (!src) return;
           // High-DPI crisp: request 240px (4x the 60px box) and rebuild srcset.
           var base = src.split('?')[0];
@@ -508,6 +467,8 @@
 
         bindObservers() {
           var self = this;
+          var hasIO = 'IntersectionObserver' in window;
+          var desktopMq = window.matchMedia('(min-width: 749px)');
           var raf = function () {
             window.requestAnimationFrame(function () {
               self.syncAll();
@@ -553,16 +514,22 @@
             if (e.target && e.target.closest && e.target.closest('appstle-subscription-widget')) raf();
           });
 
-          // Show the bar based on the main ATC's position relative to the viewport.
-          if ('IntersectionObserver' in window) {
-            var io = new IntersectionObserver(
+          // ----- is-visible: main ATC's position relative to the viewport -----
+          var visibilityIo = null;
+          if (hasIO) {
+            visibilityIo = new IntersectionObserver(
               function (entries) {
                 entries.forEach(function (entry) {
                   if (self.mode === 'scrolled-past') {
-                    // Only once the button has scrolled ABOVE the viewport top
-                    // (its bottom edge is at/above the top). Below the fold → hidden.
                     var top = entry.rootBounds ? entry.rootBounds.top : 0;
-                    self.setVisible(!entry.isIntersecting && entry.boundingClientRect.bottom <= top);
+                    var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
+                    // Button scrolled ABOVE the viewport → show.
+                    var above = !entry.isIntersecting && entry.boundingClientRect.bottom <= top;
+                    // Desktop: button still BELOW the fold → show too, together
+                    // with the in-product-main compact layout.
+                    var below =
+                      desktopMq.matches && !entry.isIntersecting && entry.boundingClientRect.top >= bottom;
+                    self.setVisible(above || below);
                   } else {
                     self.setVisible(!entry.isIntersecting);
                   }
@@ -570,101 +537,105 @@
               },
               { root: null, threshold: 0 }
             );
-            io.observe(this.mainBtn);
+            visibilityIo.observe(this.mainBtn);
           } else if (self.mode !== 'scrolled-past') {
             // No IntersectionObserver: default mode shows; scrolled-past can't be
             // detected cheaply, so it stays hidden.
             this.setVisible(true);
           }
 
-          // ancestral-blend-v2 only: track whether the bar overlaps .product--main on
-          // desktop. One observer at a time; (re)built only when the 749px breakpoint
-          // is actually crossed, so resize never stacks observers.
-            if (self.isV2) {
-              var atcObserver = null;
-              var atcMq = window.matchMedia('(min-width: 749px)');
-              var atcDesktop = null;
-              var atcRemoveTimer = null;
-              var ATC_REMOVE_DELAY = 1000;
+          // ----- in-product-main: compact layout, desktop (>= 749px) only -----
+          // One observer at a time; (re)built only when the 749px breakpoint is
+          // actually crossed, so resize never stacks observers.
+          var atcObserver = null;
+          var atcDesktop = null;
+          var atcRemoveTimer = null;
+          var ATC_REMOVE_DELAY = 1000;
 
-              var clearAtcRemoveTimer = function () {
-                if (atcRemoveTimer) {
-                  window.clearTimeout(atcRemoveTimer);
-                  atcRemoveTimer = null;
-                }
-              };
-
-              var removeInProductMain = function (delayed) {
-                if (!delayed) {
-                  clearAtcRemoveTimer();
-                  self.classList.remove('in-product-main');
-                  return;
-                }
-                if (atcRemoveTimer || !self.classList.contains('in-product-main')) return;
-                atcRemoveTimer = window.setTimeout(function () {
-                  atcRemoveTimer = null;
-                  self.classList.remove('in-product-main');
-                }, ATC_REMOVE_DELAY);
-              };
-
-              var disconnectAtcObserver = function () {
-                if (atcObserver) {
-                  atcObserver.disconnect();
-                  atcObserver = null;
-                }
-                removeInProductMain(false);
-              };
-
-              var initAtcObserver = function () {
-                disconnectAtcObserver();
-
-                if (!('IntersectionObserver' in window)) return;
-                if (!self.mainBtn) return;
-
-                atcObserver = new IntersectionObserver(
-                  function (entries) {
-                    entries.forEach(function (entry) {
-                      var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
-                      var belowViewport = entry.boundingClientRect.top >= bottom;
-
-                      if (!entry.isIntersecting && belowViewport) {
-                        // Main button is below the fold → compact layout, cancel any pending removal.
-                        clearAtcRemoveTimer();
-                        self.classList.add('in-product-main');
-                      } else if (entry.isIntersecting) {
-                        // Main button in view → is-visible is removed now (bar slides out);
-                        // keep in-product-main for 1s so the layout doesn't change mid-animation.
-                        removeInProductMain(true);
-                      } else {
-                        // Main button scrolled ABOVE the viewport → bar is showing in its full
-                        // layout, so drop the class right away.
-                        removeInProductMain(false);
-                      }
-                    });
-                  },
-                  { root: null, threshold: 0 }
-                );
-
-                atcObserver.observe(self.mainBtn);
-              };
-
-              var syncAtcObserver = function () {
-                var desktop = atcMq.matches;
-
-                if (desktop === atcDesktop) return;
-
-                atcDesktop = desktop;
-
-                if (desktop) {
-                  initAtcObserver();
-                } else {
-                  disconnectAtcObserver();
-                }
-              };
-
-              syncAtcObserver();
-              window.addEventListener('resize', syncAtcObserver);
+          var clearAtcRemoveTimer = function () {
+            if (atcRemoveTimer) {
+              window.clearTimeout(atcRemoveTimer);
+              atcRemoveTimer = null;
             }
+          };
+
+          var removeInProductMain = function (delayed) {
+            if (!delayed) {
+              clearAtcRemoveTimer();
+              self.classList.remove('in-product-main');
+              return;
+            }
+            if (atcRemoveTimer || !self.classList.contains('in-product-main')) return;
+            atcRemoveTimer = window.setTimeout(function () {
+              atcRemoveTimer = null;
+              self.classList.remove('in-product-main');
+            }, ATC_REMOVE_DELAY);
+          };
+
+          var disconnectAtcObserver = function () {
+            if (atcObserver) {
+              atcObserver.disconnect();
+              atcObserver = null;
+            }
+            removeInProductMain(false);
+          };
+
+          var initAtcObserver = function () {
+            disconnectAtcObserver();
+
+            if (!hasIO) return;
+            if (!self.mainBtn) return;
+
+            atcObserver = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  var bottom = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight;
+                  var belowViewport = entry.boundingClientRect.top >= bottom;
+
+                  if (!entry.isIntersecting && belowViewport) {
+                    // Main button is below the fold → compact layout, cancel any pending removal.
+                    clearAtcRemoveTimer();
+                    self.classList.add('in-product-main');
+                  } else if (entry.isIntersecting) {
+                    // Main button in view → is-visible is removed now (bar slides out);
+                    // keep in-product-main for 1s so the layout doesn't change mid-animation.
+                    removeInProductMain(true);
+                  } else {
+                    // Main button scrolled ABOVE the viewport → bar is showing in its full
+                    // layout, so drop the class right away.
+                    removeInProductMain(false);
+                  }
+                });
+              },
+              { root: null, threshold: 0 }
+            );
+
+            atcObserver.observe(self.mainBtn);
+          };
+
+          var syncAtcObserver = function () {
+            var desktop = desktopMq.matches;
+
+            if (desktop === atcDesktop) return;
+
+            atcDesktop = desktop;
+
+            if (desktop) {
+              initAtcObserver();
+            } else {
+              disconnectAtcObserver();
+            }
+
+            // Breakpoint crossed → make the visibility observer re-evaluate, since
+            // 'scrolled-past' behaves differently on desktop and mobile.
+            if (visibilityIo && self.mainBtn) {
+              visibilityIo.unobserve(self.mainBtn);
+              visibilityIo.observe(self.mainBtn);
+            }
+          };
+
+          syncAtcObserver();
+          window.addEventListener('resize', syncAtcObserver);
         }
 
         setVisible(show) {
@@ -684,41 +655,48 @@
       right: 0;
       bottom: 0;
       z-index: 3;
-      padding: 8px 8px 44px;
+      padding: 0;
+      box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
+      background: #fff9efcc;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-radius: 24px 24px 0 0;
       visibility: hidden;
       opacity: 1;
       transform: translateY(120%);
-      transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.32s ease, visibility 0s linear 0.32s;
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.45s ease, visibility 0s linear 0.45s;
       pointer-events: none;
     }
+    /* Smooth slide up on show / slide down on hide (is-visible + footer-visible). */
     .sticky-atc.is-visible {
       visibility: visible;
       opacity: 1;
       transform: translateY(0);
-      transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.32s ease, visibility 0s;
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.45s ease, visibility 0s;
       pointer-events: auto;
     }
     .sticky-atc.is-visible.footer-visible {
       visibility: hidden;
       opacity: 0;
-      transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.32s ease, visibility 0s linear 0.32s;
+      transform: translateY(120%);
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.45s ease, visibility 0s linear 0.45s;
       pointer-events: none;
     }
     .sticky-atc__inner {
-      max-width: 904px;
+      max-width: 1006px;
       margin: 0 auto;
-      border: 1px solid #1a1a1a;
-      border-radius: 16px;
+      border: 0;
+      border-radius: 0;
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 8px 24px 8px 8px;
-      background: #fff9efcc;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
+      padding: 16px;
+      background: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
     .sticky-atc__info {
       display: flex;
@@ -729,9 +707,12 @@
     }
     .sticky-atc__thumb {
       flex: 0 0 auto;
-      width: 80px;
-      height: 80px;
+      width: 64px;
+      height: 64px;
       border-radius: 8px;
+    }
+    .sticky-atc__thumb.sticky-atc__var_thumb {
+      width: 136px;
     }
     .sticky-atc__text {
       min-width: 0;
@@ -780,7 +761,8 @@
       gap: 11px;
       white-space: nowrap;
     }
-    .sticky-atc__was, s.sticky-atc__btn-was {
+    .sticky-atc__was,
+    s.sticky-atc__btn-was {
       font-family: "Matter";
       font-size: 18px;
       line-height: 24px;
@@ -804,20 +786,44 @@
       cursor: pointer;
       border: 1px solid #000000;
       border-radius: 8px;
-      background: #ffc069;
       color: #000000;
       font-family: "FFBlurProMedium";
-      font-size: 16px;
+      font-size: 20px;
       line-height: 24px;
-      letter-spacing: 0.96px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      padding: 11.2px 26.29px;
+      padding: 11.2px 46.29px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       position: relative;
+      background: linear-gradient(
+        90deg,
+        #ffc069 0%,
+        #ffc069 35%,
+        #ffd8a2 50%,
+        #ffc069 65%,
+        #ffc069 100%
+      );
+      background-size: 250% 100%;
+      background-position: 100% 0;
+      animation: buttonShine_sticky 4s linear infinite;
       transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+
+    @keyframes buttonShine_sticky {
+      0% {
+        background-position: 100% 0;
+      }
+
+      45% {
+        background-position: 0% 0;
+      }
+
+      100% {
+        background-position: 0% 0;
+      }
     }
     .sticky-atc__btn:hover {
       background: #000000 !important;
@@ -830,15 +836,16 @@
     .sticky-atc__btn[disabled] {
       cursor: not-allowed;
       opacity: 0.5;
-      background: #e6e0d7;
       color: #1a1a1a;
     }
     .sticky-atc__btn[disabled]:hover {
-      background: #e6e0d7;
       color: #1a1a1a;
     }
-    /* In-button price is mobile-only; desktop shows the standalone price. */
+    /* In-button price + compare price are mobile-only; desktop shows the standalone price. */
     .sticky-atc__btn-price {
+      display: none;
+    }
+    s.sticky-atc__btn-was {
       display: none;
     }
 
@@ -861,7 +868,6 @@
       cursor: default;
     }
     .sticky-atc__btn.is-loading:hover {
-      background: #ffc069;
       color: transparent;
     }
     .sticky-atc__btn.is-loading [data-sticky-btn-label],
@@ -869,77 +875,8 @@
       visibility: hidden;
     }
 
-    /*------- v2--css--code -------*/
-    .sticky-atc.sticky-atc_v2 {
-      padding: 0;
-      box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
-      background: #fff9efcc;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border-radius: 24px 24px 0 0;
-      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.45s ease, visibility 0s linear 0.45s;
-    }
-    /* Smooth slide up on show / slide down on hide (is-visible + footer-visible). */
-    .sticky-atc.sticky-atc_v2.is-visible {
-      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.45s ease, visibility 0s;
-    }
-    .sticky-atc.sticky-atc_v2.is-visible.footer-visible {
-      transform: translateY(120%);
-      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-        opacity 0.45s ease, visibility 0s linear 0.45s;
-    }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
-      border: 0;
-      background: transparent;
-      border-radius: 0px;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      padding: 16px;
-      max-width: 1006px;
-    }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__thumb {
-      width: 64px;
-      height: 64px;
-    }
-
-    .sticky-atc.sticky-atc_v2 img.sticky-atc__thumb.sticky-atc__var_thumb {
-        width: 136px;
-    }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__btn {
-      font-size: 20px;
-      line-height: 24px;
-      letter-spacing: 1.2px;
-      padding: 11.2px 46.29px;
-      background: linear-gradient(
-        90deg,
-        #ffc069 0%,
-        #ffc069 35%,
-        #ffd8a2 50%,
-        #ffc069 65%,
-        #ffc069 100%
-      );
-      background-size: 250% 100%;
-      background-position: 100% 0;
-      animation: buttonShine_sticky 4s linear infinite;
-    }
-
-    @keyframes buttonShine_sticky {
-      0% {
-        background-position: 100% 0;
-      }
-
-      45% {
-        background-position: 0% 0;
-      }
-
-      100% {
-        background-position: 0% 0;
-      }
-    }
-    .sticky-atc.sticky-atc_v2.in-product-main {
-      padding: 0;
+    /* ----- in-product-main: compact layout while the main ATC is below the fold (desktop) ----- */
+    .sticky-atc.in-product-main {
       box-shadow: none;
       background: transparent;
       -webkit-backdrop-filter: none;
@@ -949,7 +886,7 @@
       margin: 0 auto;
       padding: 0 24px;
     }
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__inner {
+    .sticky-atc.in-product-main .sticky-atc__inner {
       padding: 12px 34px 16px;
       max-width: 532px;
       gap: 12px;
@@ -963,36 +900,44 @@
       flex-direction: column;
       align-items: flex-start;
     }
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__thumb {
+    .sticky-atc.in-product-main .sticky-atc__thumb {
       display: none;
     }
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__price {
+    .sticky-atc.in-product-main .sticky-atc__price {
       position: absolute;
       right: 34px;
       top: 16px;
     }
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__buy,
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
+    .sticky-atc.in-product-main .sticky-atc__buy,
+    .sticky-atc.in-product-main .sticky-atc__btn {
       width: 100%;
     }
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__meta {
+    .sticky-atc.in-product-main .sticky-atc__meta {
       font-size: 14px;
     }
-    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
+    .sticky-atc.in-product-main .sticky-atc__btn {
       font-size: 22px;
       padding: 15.2px;
     }
-    s.sticky-atc__btn-was {display:none;}
+
     @media screen and (max-width: 749px) {
       .sticky-atc {
-        padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+        box-shadow: inherit;
+        background: transparent;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        border-radius: 0;
       }
       .sticky-atc__inner {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
-        padding: 16px;
-        border-radius: 8px;
+        padding: 12px 24px 16px;
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
+        background: #fff9efcc;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
       }
       .sticky-atc__thumb {
         display: none;
@@ -1003,13 +948,10 @@
       .sticky-atc__meta--desktop {
         display: none;
       }
-      .sticky-atc__info {
-        justify-content: ;
-      }
       .sticky-atc__meta--mobile {
         display: block;
         text-align: center;
-        font-size: 12px;
+        font-size: 13px;
         line-height: 20px;
         color: #000000;
         white-space: normal;
@@ -1021,18 +963,13 @@
       .sticky-atc__price--standalone {
         display: none;
       }
-      .sticky-atc__btn-price {
-        display: inline;
-      }
-      .sticky-atc__btn-price:empty {
-        display: none;
-      }
       .sticky-atc__btn {
         width: 100%;
         font-size: 16px;
         line-height: 24px;
         letter-spacing: 0.96px;
-        padding: 7.2px;
+        padding: 8.4px 20px;
+        justify-content: space-between;
       }
 
       .sticky-atc__btn:hover {
@@ -1043,41 +980,21 @@
       .sticky-atc__btn:hover s.sticky-atc__btn-was {
         color: #000000;
       }
-
-      /*------- v2--css--code -------*/
-      .sticky-atc.sticky-atc_v2 {
-        box-shadow: inherit;
-        background: transparent;
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-        border-radius: 0;
-      }
-      .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
-        padding: 12px 24px 16px;
-        border-radius: 24px 24px 0 0;
-        box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
-        border: 0;
-        background: #fff9efcc;
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-      }
-      .sticky-atc.sticky-atc_v2 .sticky-atc__meta--mobile {
-        font-size: 13px;
-      }
-      .sticky-atc.sticky-atc_v2 .sticky-atc__btn {
-        padding: 8.4px 20px;
-        font-size: 16px;
-        letter-spacing: 0.96px;
-        justify-content: space-between;
-      }
-      .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price {
+      .sticky-atc__btn-price {
+        display: inline;
         font-size: 16px;
         line-height: 20px;
         font-family: "Matter";
         letter-spacing: 0;
         transform: translateY(2px);
       }
-      .sticky-atc.sticky-atc_v2 s.sticky-atc__btn-was {
+      .sticky-atc__btn-price:empty {
+        display: none;
+      }
+      .sticky-atc__btn-price::first-letter {
+        font-size: 0;
+      }
+      s.sticky-atc__btn-was {
         display: inline;
         margin-left: auto;
         font-size: 16px;
@@ -1087,9 +1004,6 @@
         letter-spacing: 0;
         text-decoration: line-through;
         white-space: nowrap;
-      }
-      .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price::first-letter {
-        font-size: 0;
       }
     }
   {%- endstyle -%}
