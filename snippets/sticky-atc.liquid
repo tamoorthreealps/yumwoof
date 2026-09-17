@@ -353,29 +353,50 @@
           // Shopify "Default Title" that single-variant products carry. Rebuilt from
           // fresh variant options, else the server-rendered base (already filtered)
           // — never from the element's own text, so frequency never accumulates.
-          var parts = [];
+            var parts = [];
 
-          if (options && options.length) {
-            for (var i = 0; i < options.length; i++) {
-              var v = (options[i] || '').trim();
+            if (options && options.length) {
+              for (var i = 0; i < options.length; i++) {
+                var v = (options[i] || '').trim();
 
-              if (
-                v &&
-                v !== 'Default Title' &&
-                (!this.isV2 || i !== this.recipeIndex)
-              ) {
-                parts.push(v);
+                if (v && v !== 'Default Title') {
+                  parts.push(v);
+                }
               }
+            } else if (this.baseDesktopMeta) {
+              parts.push(this.baseDesktopMeta);
             }
-          } else if (this.baseDesktopMeta) {
-            parts.push(this.baseDesktopMeta);
-          }
 
-          if (freq) parts.push(freq);
+            if (freq) parts.push(freq);
 
-          var metaStr = parts.join(' · ');
-          if (this.metaDesktopEl) this.metaDesktopEl.textContent = metaStr;
-          if (this.metaMobileEl) this.metaMobileEl.textContent = metaStr;
+            var metaStr = parts.join(' · ');
+
+            if (this.isV2 && this.recipeIndex >= 0 && options && options.length) {
+              var desktopParts = [];
+
+              for (var i = 0; i < options.length; i++) {
+                var v = (options[i] || '').trim();
+
+                if (
+                  v &&
+                  v !== 'Default Title' &&
+                  i !== this.recipeIndex
+                ) {
+                  desktopParts.push(v);
+                }
+              }
+
+              if (freq) desktopParts.push(freq);
+
+              metaStr = desktopParts.join(' · ');
+            }
+            if (this.metaDesktopEl) {
+              this.metaDesktopEl.textContent = metaStr;
+            }
+
+            if (this.metaMobileEl) {
+              this.metaMobileEl.textContent = parts.join(' · ');
+            }
         }
 
         // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
