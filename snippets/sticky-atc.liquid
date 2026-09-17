@@ -674,18 +674,14 @@ if (self.isV2) {
       }
 
       customElements.define('sticky-atc-bar', StickyAtcBar);
+      
       window.addEventListener('load', function () {
-  document.querySelectorAll('.sticky_load').forEach(function (el) {
-    el.classList.remove('sticky_load');
-  });
+  document.querySelector('.sticky-atc_v2.sticky_load')?.classList.remove('sticky_load');
 });
     })();
   </script>
 
   {%- style -%}
-  .sticky_load {
-    display:none !important;
-  }
     .sticky-atc {
       position: fixed;
       left: 0;
