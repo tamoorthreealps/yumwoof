@@ -70,6 +70,12 @@ html.mac-os .asw__save-pill {
       .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
       .asw-option__price-now { color: #000; }
 
+      /* Per-cup unit price (feeding table). Autoship = green, one-time = muted. */
+      .asw-option__price-col { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+      .asw-option__unit { font-family: 'Matter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0; white-space: nowrap; }
+      .asw-option__unit--sub { color: #3f7c2f; }
+      .asw-option__unit--one { color: rgba(0, 0, 0, 0.5); }
+
       .asw-option__delivery { display: block;
       position: relative; }
       .asw-option__delivery:after {
@@ -173,6 +179,10 @@ html.mac-os .asw__save-pill {
       font-size: 14px;
       line-height: 20px;
   }
+  .asw-option__unit {
+      font-size: 12px;
+      line-height: 16px;
+  }
   .asw-option__delivery-label {
       left: 16px;
       font-size: 12px;
@@ -269,6 +279,46 @@ html.mac-os .asw__save-pill {
       assign sub_price = default_alloc.price
       assign saving_per_bag = one_time_price | minus: sub_price
 
+      # ----- Per-cup unit price (from the feeding table) -----
+      # cups in THIS variant's bag = cups_per_bag * (variant bag oz / full bag oz),
+      # the same maths as the quantity calculator's variantCups(). Per-cup prices
+      # are then price / cups. Only shown when a feeding table is set and the bag
+      # size can be read from the variant title (e.g. "22 oz", "5 lb").
+      assign ft = product.metafields.custom.feeding_table.value
+      assign variant_cups = 0
+      if ft != blank
+        assign cups_per_bag = ft.cups_per_bag | times: 1.0
+        assign full_bag_oz = ft.full_bag_weight_oz | times: 1.0
+        assign bag_oz = 0
+        assign _t = current_variant.title | downcase | replace: 'ounces', 'oz' | replace: 'ounce', 'oz' | replace: 'pounds', 'lb' | replace: 'pound', 'lb' | replace: 'lbs', 'lb'
+        assign _t = _t | replace: 'oz', ' oz ' | replace: 'lb', ' lb '
+        assign _toks = _t | split: ' '
+        assign _prev = ''
+        for _tok in _toks
+          assign _tt = _tok | strip
+          if _tt == 'oz' and _prev != ''
+            assign bag_oz = _prev | times: 1.0
+          elsif _tt == 'lb' and _prev != ''
+            assign bag_oz = _prev | times: 16.0
+          endif
+          if _tt != ''
+            assign _prev = _tt
+          endif
+        endfor
+        if cups_per_bag > 0 and bag_oz > 0 and full_bag_oz > 0
+          assign variant_cups = cups_per_bag | times: bag_oz | divided_by: full_bag_oz
+        elsif cups_per_bag > 0
+          assign variant_cups = cups_per_bag
+        endif
+      endif
+
+      assign sub_per_cup = 0
+      assign one_per_cup = 0
+      if variant_cups > 0
+        assign sub_per_cup = sub_price | divided_by: variant_cups | round
+        assign one_per_cup = one_time_price | divided_by: variant_cups | round
+      endif
+
       assign exclude_freq = 'Delivery every 1 week,Delivery every 2 weeks,Delivery every 5 weeks,Delivery every 1 month,Delivery every 2 months,Delivery every 3 months' | split: ','
 
       assign benefits = product.metafields.custom.subscription_benefits.value
@@ -314,11 +364,16 @@ html.mac-os .asw__save-pill {
                   <span class="asw-option__subtitle">{{ sub_subtitle }}</span>
                 {%- endif -%}
               </span>
-              <span class="asw-option__price">
-                {%- if one_time_price > sub_price -%}
-                  <s class="asw-option__price-was">{{ one_time_price | money_without_trailing_zeros }}</s>
+              <span class="asw-option__price-col">
+                <span class="asw-option__price">
+                  {%- if one_time_price > sub_price -%}
+                    <s class="asw-option__price-was">{{ one_time_price | money_without_trailing_zeros }}</s>
+                  {%- endif -%}
+                  <span class="asw-option__price-now">{{ sub_price | money_without_trailing_zeros }}</span>
+                </span>
+                {%- if sub_per_cup > 0 -%}
+                  <span class="asw-option__unit asw-option__unit--sub">{{ sub_per_cup | money }}/cup</span>
                 {%- endif -%}
-                <span class="asw-option__price-now">{{ sub_price | money_without_trailing_zeros }}</span>
               </span>
             </span>
 
@@ -397,8 +452,13 @@ html.mac-os .asw__save-pill {
                     <span class="asw-option__subtitle">{{ onetime_subtitle }}</span>
                   {%- endif -%}
                 </span>
-                <span class="asw-option__price">
-                  <span class="asw-option__price-now">{{ one_time_price | money_without_trailing_zeros }}</span>
+                <span class="asw-option__price-col">
+                  <span class="asw-option__price">
+                    <span class="asw-option__price-now">{{ one_time_price | money_without_trailing_zeros }}</span>
+                  </span>
+                  {%- if one_per_cup > 0 -%}
+                    <span class="asw-option__unit asw-option__unit--one">{{ one_per_cup | money }}/cup</span>
+                  {%- endif -%}
                 </span>
               </span>
             </span>

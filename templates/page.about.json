@@ -9,39 +9,134 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
+    "about_hero": {
+      "type": "about-hero",
       "settings": {
-        "mobile_padding_top": 128,
-        "mobile_padding_bottom": 80,
-        "desktop_padding_top": 196,
-        "desktop_padding_bottom": 120
+        "headline": "Dogs Deserve Real Food",
+        "intro": "Yumwoof was founded by my wife Ana and me after years spent researching nutrition, inflammation, and gut health.",
+        "lede": "Along the way, we became increasingly frustrated by how much of the pet food industry relied on heavily processed ingredients, synthetic additives, and manufacturing shortcuts.",
+        "badge_text": "Family Owned",
+        "closing": "Today, Yumwoof creates air-dried recipes built around premium proteins, healthy fats, and whole food nutrition. Rather than formulating around cost or convenience, we focus on creating food we would proudly feed our own dog, Sherlock.",
+        "attribution": "Jaron & Ana, Founders",
+        "color_grad_top": "#cfe0f4",
+        "color_grad_bottom": "#fff9ef",
+        "color_text": "#0d0d0d",
+        "color_muted": "#4d4d4d",
+        "color_stroke": "#661d1d",
+        "color_badge_bg": "#ffc069",
+        "color_badge_text": "#0d0d0d",
+        "padding_top": 228,
+        "padding_bottom": 132,
+        "padding_top_mobile": 112,
+        "padding_bottom_mobile": 64
       }
     },
-    "yumwoof_faqs_CrRpFc": {
-      "type": "yumwoof-faqs",
-      "disabled": true,
-      "name": "FAQs",
+    "about_solution": {
+      "type": "about-solution",
       "settings": {
-        "title": "FAQs",
-        "lede": "<p>Don't see the answer you're looking for? Reach out to woof@yumwoof.com and we'll get back to you in a flash.</p>",
-        "show_filters": true,
-        "show_all_option": true,
-        "all_label": "All",
-        "filter_label": "Filter questions by topic",
+        "heading": "We designed the food we couldn't find.",
+        "body": "<p>Like many pet parents, we wanted food we could trust. What began as a personal search for better nutrition eventually led us to develop some of the first air-dried recipes of their kind, publish a book on canine nutrition, build relationships with trusted farmers, ranchers, and fishermen, and serve millions of meals to dogs through better food.</p>",
+        "color_bg": "#0d0d0d",
+        "color_text": "#fff9ef",
+        "scrim_opacity": 55,
+        "min_height": 744,
+        "padding_top": 124,
+        "padding_bottom": 124,
+        "padding_top_mobile": 72,
+        "padding_bottom_mobile": 72
+      }
+    },
+    "about_timeline": {
+      "type": "about-timeline",
+      "blocks": {
+        "entry_1": {
+          "type": "entry",
+          "settings": {
+            "date": "2017–2018",
+            "title": "Food was the problem",
+            "body": "<p>We were dealing with our own health challenges when our dog Sherlock started showing similar signs. The connection between food and long-term health became impossible to ignore. That sent us searching for food we could actually trust — and deep into the research behind why so few options seemed to exist for dogs.</p>"
+          }
+        },
+        "entry_2": {
+          "type": "entry",
+          "settings": {
+            "date": "2019–2020",
+            "title": "We couldn't find it, so we made it",
+            "body": "<p>Unable to find a dog food that reflected our standards, we decided to create one ourselves. We set out to combine premium proteins, healthy fats, nutrient-dense organ meats, and minimal processing into a food inspired by nature and informed by science. In 2020, we launched one of the first cluster-style air-dried dog foods.</p>"
+          }
+        },
+        "entry_3": {
+          "type": "entry",
+          "settings": {
+            "date": "2021–2023",
+            "title": "The same patterns kept emerging",
+            "body": "<p>As more families joined the Yumwoof community, we spent hundreds of hours speaking directly with dog parents about the health challenges they were facing. The same concerns surfaced again and again — allergies, digestive issues, skin problems, and picky eating. Those conversations reinforced the research, helping shape The Canine Cocomega™ Effect and the nutritional philosophy behind every Yumwoof recipe.</p>"
+          }
+        },
+        "entry_4": {
+          "type": "entry",
+          "settings": {
+            "date": "2024–Today",
+            "title": "One bowl became something bigger",
+            "body": "<p>As more families joined us, our recipes expanded, our network of trusted farmers, ranchers, and fishermen deepened, and our standards continued to evolve. What never changed was our commitment to creating food we would proudly feed our own dog. What began with a single bowl has grown into multiple ways to help dogs eat better.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "entry_1",
+        "entry_2",
+        "entry_3",
+        "entry_4"
+      ],
+      "settings": {
+        "heading": "The Origin",
         "color_bg": "#fff9ef",
-        "color_text": "#000000",
-        "color_link": "#661d1d",
-        "color_rule": "#000000",
-        "padding_top": 192,
-        "padding_bottom": 160,
-        "padding_top_mobile": 128,
+        "color_text": "#0d0d0d",
+        "color_eyebrow": "#661d1d",
+        "color_body": "#1a1a1a",
+        "color_line": "#bfbbb3",
+        "enable_wash": true,
+        "color_wash_bottom": "#cfe0f4",
+        "wash_band": 400,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80
+      }
+    },
+    "about_cta": {
+      "type": "about-cta",
+      "settings": {
+        "heading": "Feed them well.",
+        "body": "<p>Millions of meals later, our mission remains the same: create food we would proudly feed our own dog every day.</p>",
+        "button_text": "Shop Air-Dried Food",
+        "button_url": "shopify://collections/all",
+        "color_bg": "#0d0d0d",
+        "color_text": "#fff9ef",
+        "scrim_opacity": 45,
+        "color_wash_top": "#fff9ef",
+        "color_wash_bottom": "#cfe0f4",
+        "wash_pad_top": 160,
+        "wash_pad_bottom": 120,
+        "wash_pad_top_mobile": 80,
+        "wash_pad_bottom_mobile": 72,
+        "color_button_bg": "#fff9ef",
+        "color_button_text": "#0d0d0d",
+        "color_button_border": "#fff9ef",
+        "color_button_hover_bg": "#ffc069",
+        "color_button_hover_text": "#0d0d0d",
+        "min_height": 688,
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 56,
         "padding_bottom_mobile": 56
       }
     }
   },
   "order": [
-    "main",
-    "yumwoof_faqs_CrRpFc"
+    "about_hero",
+    "about_solution",
+    "about_timeline",
+    "about_cta"
   ]
 }

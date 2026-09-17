@@ -237,6 +237,11 @@
     }
   }
     /* ---------------- Mobile ---------------- */
+    @media screen and (min-width: 1200px) {
+    .yw--wholesale--banner__text p{
+      min-height: 120px;
+    }
+  }
     @media screen and (max-width: 989px) {
       .yw--wholesale--banner {
         overflow: clip;

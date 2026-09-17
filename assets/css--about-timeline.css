@@ -1,0 +1,182 @@
+/* ==========================================================================
+   About — Timeline ("The Origin")
+   Centered display heading, then a vertical list of entries (date + title +
+   body) with a connecting line and decorative, tilted photo pairs.
+   Mobile-first; desktop layer at min-width: 768px.
+   ========================================================================== */
+
+.about-timeline {
+  background: var(--at-bg);
+  color: var(--at-text);
+  padding: var(--at-pad-top-mobile) 28px var(--at-pad-bottom-mobile);
+}
+.about-timeline * { box-sizing: border-box; }
+
+.about-timeline__inner {
+  max-width: 1392px;
+  margin: 0 auto;
+}
+
+.about-timeline__heading {
+  margin: 0;
+  text-align: center;
+  font-family: 'TAY Birdie', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--at-text);
+  font-size: 44px;
+  line-height: 1.0;
+  letter-spacing: 0;
+}
+
+.about-timeline__list {
+  margin: 40px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.about-timeline__item {
+  position: relative;
+}
+
+.about-timeline__text {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-timeline__date {
+  margin: 0;
+  font-family: 'TAY Birdie', sans-serif;
+  text-transform: uppercase;
+  color: var(--at-eyebrow);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 1px;
+}
+
+.about-timeline__title {
+  margin: 12px 0 0;
+  font-family: 'TAY Birdie', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--at-text);
+  font-size: 28px;
+  line-height: 1.0;
+  letter-spacing: 0;
+}
+
+.about-timeline__body {
+  margin: 16px 0 0;
+  font-family: 'Matter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--at-body);
+}
+
+/* ----- Decorative photo pair ----- */
+.about-timeline__photos {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 28px auto 0;
+  max-width: 336px;
+}
+.about-timeline__photo {
+  width: 46%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+}
+.about-timeline__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 151 / 240;
+}
+.about-timeline__photo--a { transform: rotate(-6deg); }
+.about-timeline__photo--b { transform: rotate(6deg); margin-top: 24px; }
+
+/* ==========================================================================
+   Desktop
+   ========================================================================== */
+@media (min-width: 768px) {
+  .about-timeline {
+    padding: var(--at-pad-top) 60px var(--at-pad-bottom);
+    /* The page's cream fades to the CTA wash colour across the bottom band, so
+       the blue background begins in this (second-to-last) section on desktop
+       and hands off seamlessly to the solid CTA wash below. */
+    background: linear-gradient(
+      180deg,
+      var(--at-bg) 0%,
+      var(--at-bg) calc(100% - var(--at-wash-band)),
+      var(--at-wash-bottom) 100%
+    );
+  }
+  .about-timeline__heading {
+    font-size: clamp(72px, 8vw, 112px);
+  }
+  .about-timeline__list {
+    margin-top: 0;
+    gap: 0;
+  }
+
+  .about-timeline__item {
+    padding: 90px 0;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Connecting line segment between entries */
+  .about-timeline__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 1px;
+    height: 110px;
+    background: var(--at-line);
+  }
+
+  .about-timeline__text {
+    max-width: 620px;
+  }
+  .about-timeline__title {
+    margin-top: 16px;
+    font-size: clamp(40px, 4.4vw, 56px);
+  }
+  .about-timeline__body {
+    margin-top: 24px;
+    font-size: 16px;
+  }
+
+  /* Photos scatter to the sides of the centered text column */
+  .about-timeline__photos {
+    display: block;
+    max-width: none;
+    margin: 0;
+  }
+  .about-timeline__photo {
+    position: absolute;
+    top: 50%;
+    width: 266px;
+    margin: 0;
+  }
+  .about-timeline__photo img {
+    aspect-ratio: 266 / 421;
+  }
+  .about-timeline__photo--a {
+    left: 0;
+    transform: translateY(-55%) rotate(-9deg);
+  }
+  .about-timeline__photo--b {
+    right: 0;
+    transform: translateY(-45%) rotate(9deg);
+  }
+}

@@ -8,7 +8,7 @@
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   padding: 1rem 0 0.84rem;
-  margin: 0 0 2.4rem;
+  margin: 0 0 2rem;
 }
 
 .pdp-usps__track {
@@ -181,6 +181,7 @@
 .recipe-swatch__input + .recipe-swatch__label:hover {
   border-color: #000;
   background: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 8px 0 rgba(123, 166, 221, 0.25);
 }
 
 .recipe-swatch__input:focus-visible + .recipe-swatch__label {
@@ -205,6 +206,18 @@
   text-align: center;
 }
 
+.product__info-wrapper_v2 .recipe-swatch__title {
+  padding: 9.6px 0 0;
+  line-height: 16px;
+  letter-spacing: 0.28px;
+  max-width: 82px;
+    margin: 0 auto;
+}
+
+.product__info-wrapper_v2 .recipe-swatch__title.recipe-swatch-title-pop {
+  padding-top:12.52px;
+}
+
 .recipe-swatch__badge {
     position: absolute;
     top: -9px;
@@ -223,6 +236,11 @@
     text-transform: uppercase;
     white-space: nowrap;
     min-height:18px;
+}
+
+html.mac-os .recipe-swatch__badge {
+    padding-top: 0.4px !important;
+    padding-bottom: 0 !important;
 }
 
 html.mac-os .recipe-swatch__badge {
@@ -312,7 +330,7 @@ html.mac-os .recipe-swatch__badge {
     background: transparent;
 }
 .product-media-container.constrain-height .media {
-    padding-top: 376px;
+    padding-top: 100%;
 }
 .slider.slider--mobile {
     margin: 0 !important;
@@ -603,6 +621,7 @@ html.mac-os .recipe-swatch__badge {
   background-color: #00000014;
   color: #000;
   border-color: #000;
+  box-shadow: 0 0 8px 0 rgba(123, 166, 221, 0.25);
 }
 
 .product-form__input.product-form__quantity {
@@ -728,7 +747,7 @@ quantity-input.quantity::before {
 }
 
 .product-form__submit:hover {
-  background: #000000;
+  background: #000000 !important;
   color: #fff9ef;
 }
 
@@ -819,7 +838,7 @@ a.pdp--promo--banner_link p strong {
   color: #661d1d;
   font-weight: 500;
   text-decoration: underline;
-  padding-left: 4px;
+  padding-left: 3px;
 }
 
 a.pdp--promo--banner_link svg {
@@ -867,7 +886,7 @@ a.pdp--promo--banner_link svg {
     color: #000000;
     letter-spacing: 0;
     font-family: 'Matter';
-        text-decoration: underline;
+    text-decoration: underline;
 }
 
 
@@ -965,6 +984,9 @@ display: flex;
   .pdp--promo--banner {
   margin: 0 0 3.2rem;
 }
+.pdp--promo--banner.pdp--promo--banner_v2 {
+  margin: 0 0 2.8rem;
+}
 
 a.pdp--promo--banner_link {
   border-radius: 8px;
@@ -972,10 +994,22 @@ a.pdp--promo--banner_link {
   padding: 12px;
 }
 
+.pdp--promo--banner.pdp--promo--banner_v2 a.pdp--promo--banner_link {
+  gap:12px;
+}
+
 a.pdp--promo--banner_link p {
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.16px;
+}
+.pdp--promo--banner.pdp--promo--banner_v2 a.pdp--promo--banner_link p {
+  font-size: 18px;
+  letter-spacing: 0.18px;
+}
+
+.pdp--promo--banner.pdp--promo--banner_v2 a.pdp--promo--banner_link p strong {
+  padding-left: 5px;
 }
 
 a.pdp--promo--banner_link svg {
@@ -1033,6 +1067,7 @@ a.pdp--promo--banner_link svg {
 
   .pdp-usps {
     padding: 1.12rem 0;
+    margin: 0 0 2.4rem;
   }
 
   .pdp-usps__item {
@@ -1047,6 +1082,10 @@ a.pdp--promo--banner_link svg {
 
   .recipe-heading {
     margin: 0 0 20px;
+  }
+
+  .product__info-wrapper_v2 .recipe-heading {
+    margin: 0 0 16px;
   }
 
   .product-form__input .form__label.form__label--numbered {
@@ -1087,6 +1126,13 @@ a.pdp--promo--banner_link svg {
     text-align: left;
   }
 
+  .product__info-wrapper_v2 .recipe-swatch__title {
+    padding: 8px 12px 8px 8px;
+    line-height: 20px;
+    max-width:100%;
+    letter-spacing: 0;
+  }
+
   .recipe-swatch__badge {
     padding: 3.4px 10.165px 0;
     font-size: 13px;
@@ -1107,7 +1153,7 @@ width: 140px;
   }
 
   .form--label--options {
-    gap: 12px;
+    gap: 10px;
   }
   
   .product-form__input--pill .form--label--options input[type="radio"] + label {
@@ -1121,6 +1167,7 @@ width: 140px;
 
   .qty.freq h2.selector-title {
     font-size: 16px;
+    letter-spacing: -0.64px;
   }
 
   .product-form__submit {
@@ -1189,4 +1236,274 @@ width: 140px;
 }
 
 
+/*-------- v2-css-code --------*/
+.product__info-wrapper_v2
+  .product__title
+  + .product__text.caption-with-letter-spacing,
+.product__info-wrapper_v2 .rating-wrap {
+  display: inline-flex;
+  align-items: center;
+}
 
+.product__info-wrapper_v2
+  .product__title
+  + .product__text.caption-with-letter-spacing {
+  margin: 0;
+  position: relative;
+  top: -3px;
+}
+
+.product__info-wrapper_v2 .rating-wrap {
+    margin-left: 13px;
+    padding-left: 16px;
+    position: relative;
+}
+
+.product__info-wrapper_v2 .opw-noci-star-full:before,
+.product__info-wrapper_v2 .opw-noci-star-half:before,
+.product__info-wrapper_v2 .opw-noci-star-empty:before {
+  width: 16px;
+  height: 16px;
+}
+
+.product__info-wrapper_v2 .rating-wrap::before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    width: 1px;
+    height: 20px;
+    background: #000;
+    transform: translateY(-50%);
+}
+.product__info-wrapper_v2 .asw__save-pill {
+  background: linear-gradient(
+    90deg,
+    #296900 0%,
+    #296900 38%,
+    #4A8D38 50%,
+    #296900 62%,
+    #296900 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  color: #fff;
+  border: 0;
+  animation: buttonShine_save 4s linear infinite;
+}
+
+@keyframes buttonShine_save {
+  0% {
+    background-position: 100% 0;
+  }
+
+  45% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+.product__info-wrapper_v2 .product--short--info {
+  margin: 1rem 0 2.4rem;
+}
+.product__info-wrapper_v2 .product-form__submit {
+  font-size: 24px;
+  line-height:24px;
+  letter-spacing: 1.44px;
+  border-radius:12px;
+  background: linear-gradient(
+    90deg,
+    #ffc069 0%,
+    #ffc069 35%,
+    #ffd8a2 50%,
+    #ffc069 65%,
+    #ffc069 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  animation: buttonShine 4s linear infinite;
+}
+
+@keyframes buttonShine {
+  0% {
+    background-position: 100% 0;
+  }
+
+  45% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
+}
+.product__info-wrapper_v2 p.yumw-video--title {
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: -0.2px;
+  margin: 0 0 2.4rem;
+}
+.product__info-wrapper_v2 .nutritional--info,
+.product__info-wrapper_v2 .component--nutrition--btns {
+  margin: 4.8rem 0 0;
+}
+.product__info-wrapper_v2 .nlabel__title {
+  font-size: 2rem;
+  line-height: 2rem;
+  letter-spacing: -0.2px;
+}
+.product__info-wrapper_v2 .nlabel__grid {
+  gap:.8rem 1rem;
+}
+.product__info-wrapper_v2 .nutritional--info--heading {
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: -0.2px;
+}
+@media screen and (max-width: 990px) {
+.product__info-wrapper_v2 .product__title h1,
+.product__info-wrapper_v2 .product__title h2,
+.product__info-wrapper_v2 .product__title h3,
+.product__info-wrapper_v2 .product__title h4,
+.product__info-wrapper_v2 .product__title h5,
+.product__info-wrapper_v2 .product__title h6 {
+  margin: 0;
+}
+.product__info-wrapper_v2 .recipe-swatch__badge {
+  top: -11px;
+}
+.product__info-wrapper_v2 .recipe-swatch__label {
+  min-height: 96px;
+  flex-direction: inherit;
+  overflow: hidden;
+  position: relative;
+}
+.product__info-wrapper_v2 .recipe-swatch__img {
+  height: 64px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: 0;
+}
+.product__info-wrapper_v2 .recipe-swatch:first-child .recipe-swatch__img {
+  height: 60px;
+}
+.product__info-wrapper_v2 .qty.freq h2.selector-title {
+  letter-spacing: 0;
+}
+.product__info-wrapper_v2 .qty.freq {
+  margin: 0 0 2rem;
+}
+
+.product__info-wrapper_v2 .asw-select__field {
+  font-size: 14px;
+  letter-spacing: 0.28px;
+  border: 0;
+}
+
+a.pdp--promo--banner_link p strong {
+  text-decoration: none;
+}
+.product__info-wrapper_v2
+  .product__title
+  + .product__text.caption-with-letter-spacing,
+.product__info-wrapper_v2 .rating-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.product__info-wrapper_v2
+  .product__title
+  + .product__text.caption-with-letter-spacing {
+  margin: 0;
+  position: relative;
+  top: -1px;
+}
+
+.product__info-wrapper_v2 .rating-wrap {
+  margin-left: 12px;
+  padding-left: 12px;
+  position: relative;
+}
+
+.product__info-wrapper_v2 .opw-noci-star-full:before,
+.product__info-wrapper_v2 .opw-noci-star-half:before,
+.product__info-wrapper_v2 .opw-noci-star-empty:before {
+  width: 11px;
+  height: 11px;
+}
+
+.product__info-wrapper_v2 .rating-wrap::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  width: 1px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%);
+}
+.product__info-wrapper_v2 .product--short--info {
+  margin: 0.6rem 0 1.6rem;
+  font-size: 13px;
+}
+.product__info-wrapper_v2 .product-form__submit {
+  font-size: 22px;
+  letter-spacing: 1.32px;
+}
+
+@supports (-webkit-touch-callout: none) {
+      .product-form__submit {
+        padding-top: 13.2px;
+        padding-bottom: 17.2px;
+      }
+    }
+
+.product__info-wrapper_v2 section.yumw-video-testimonials {
+  margin: 4.8rem 0 0;
+}
+
+.product__info-wrapper_v2 p.yumw-video--title {
+  margin: 0 0 2rem;
+}
+
+.product__info-wrapper_v2 .nutritional--info,
+.product__info-wrapper_v2 .component--nutrition--btns {
+  margin: 4rem 0 0;
+}
+.product__info-wrapper_v2 .nlabel__grid {
+  gap:.8rem;
+}
+.product__info-wrapper_v .nlabel {
+  gap: 1.6rem;
+}
+
+.product__info-wrapper_v2 .nlabel__btn {
+  padding: 1.12rem 1.6rem;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.product__info-wrapper_v2 .nlabel__label {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  letter-spacing: 0.84px;
+}
+
+.product__info-wrapper_v2 .nlabel__plus {
+  font-size: 19px;
+  color: #000000;
+}
+
+.product__info-wrapper_v2 .nlabel__title {
+  font-size: 2rem;
+  line-height: 2.8rem;
+  letter-spacing: -0.2px;
+}
+
+}

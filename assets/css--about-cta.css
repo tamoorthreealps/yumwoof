@@ -1,0 +1,125 @@
+/* ==========================================================================
+   About — CTA ("Feed them well.")
+   Dark rounded block (optional background image + scrim): a centered display
+   headline up top, then centered body copy and a pill button.
+   Mobile-first; desktop layer at min-width: 768px.
+   ========================================================================== */
+
+.about-cta {
+  /* Full-width gradient "wash" that continues the cream of the section above
+     and fades to blue where the footer begins. The dark card floats on it. */
+  padding: var(--ac-wash-pt-m) 8px var(--ac-wash-pb-m);
+  background: linear-gradient(180deg, var(--ac-wash-top) 0%, var(--ac-wash-bottom) 100%);
+}
+.about-cta * { box-sizing: border-box; }
+
+.about-cta__inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: var(--ac-bg);
+  color: var(--ac-text);
+  padding: var(--ac-pad-top-mobile) 28px var(--ac-pad-bottom-mobile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-cta__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+.about-cta__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--ac-bg);
+  opacity: var(--ac-scrim);
+  z-index: 1;
+}
+
+.about-cta__heading {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-family: 'TAY Birdie', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--ac-text);
+  font-size: 32px;
+  line-height: 1.0;
+  letter-spacing: 0.04em;
+}
+
+.about-cta__body {
+  position: relative;
+  z-index: 2;
+  margin: 24px 0 0;
+  max-width: 336px;
+  font-family: 'Matter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ac-text);
+}
+
+.about-cta__button {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0 0;
+  padding: 14px 28px;
+  border: 1px solid var(--ac-button-border);
+  border-radius: 999px;
+  background: var(--ac-button-bg);
+  color: var(--ac-button-text);
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+.about-cta__button:hover {
+  background: var(--ac-button-hover-bg);
+  color: var(--ac-button-hover-text);
+}
+
+/* ==========================================================================
+   Desktop
+   ========================================================================== */
+@media (min-width: 768px) {
+  .about-cta {
+    padding: var(--ac-wash-pt) 36px var(--ac-wash-pb);
+    /* Desktop: the cream→blue fade lives in the timeline above, so the CTA sits
+       on the solid wash colour it hands off to (no second gradient). */
+    background: var(--ac-wash-bottom);
+  }
+  .about-cta__inner {
+    border-radius: 40px;
+    padding: var(--ac-pad-top) 40px var(--ac-pad-bottom);
+    min-height: var(--ac-min-height);
+    justify-content: space-between;
+  }
+  .about-cta__heading {
+    font-size: clamp(48px, 5.6vw, 72px);
+    letter-spacing: 0.08em;
+  }
+  .about-cta__body {
+    margin-top: auto;
+    max-width: 560px;
+    font-size: 16px;
+  }
+  .about-cta__button {
+    margin-top: 24px;
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+}

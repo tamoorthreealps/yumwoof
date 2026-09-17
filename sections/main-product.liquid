@@ -81,10 +81,17 @@
     <div class="product--main">
       <div class="custom--page-width">
         {% if section.settings.promo_banner_content != blank %}
-          <div class="pdp--promo--banner">
+          <div class="pdp--promo--banner {% if template.suffix == 'ancestral-blend-v2' %}pdp--promo--banner_v2{% endif %}">
             <a href="{{ section.settings.promo_banner_link }}" class="pdp--promo--banner_link" target="_blank">
               {{ section.settings.promo_banner_content }}
-              <svg class="promo-banner-arrow" width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                class="promo-banner-arrow"
+                width="14"
+                height="7"
+                viewBox="0 0 14 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path d="M8.25982 6.58508C8.49624 6.04086 8.74175 5.56013 8.99636 5.14289C9.25097 4.70752 9.50558 4.33563 9.7602 4.02724H0V2.55784H9.7602C9.50558 2.23131 9.25097 1.85942 8.99636 1.44219C8.74175 1.00681 8.49624 0.526081 8.25982 0H9.54196C10.6877 1.32427 11.8971 2.30387 13.1702 2.9388V3.64628C11.8971 4.26307 10.6877 5.24267 9.54196 6.58508H8.25982Z" fill="#661D1D"/>
               </svg>
             </a>
@@ -102,7 +109,7 @@
               {%- endcase -%}
             {% endfor %}
           </div>
-          <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <div class="product__info-wrapper {% if template.suffix == 'ancestral-blend-v2' %}product__info-wrapper_v2{% endif %} grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             <section
               id="ProductInfo-{{ section.id }}"
               class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
@@ -304,7 +311,11 @@
                       <div class="frequency_title_container">
                         <h2 class="selector-title">Delivery</h2>
                       </div>
+                      {% if template.suffix == 'ancestral-blend-v2' %}
+                      {% render 'appstle-subscription-v2', product: product %}
+                      {% else %}
                       {% render 'appstle-subscription', product: product %}
+                      {% endif %}
                     </div>
                   {%- when 'custom_liquid' -%}
                     {{ block.settings.custom_liquid }}
@@ -879,7 +890,7 @@
 </product-info>
 
 {%- if section.settings.enable_sticky_atc -%}
-  {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label %}
+  {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label, mode: section.settings.sticky_atc_mode %}
 {%- endif -%}
 
 {% render 'ingridients-popup' %}
@@ -1594,9 +1605,62 @@
       "limit": 1,
       "settings": [
         {
+          "type": "header",
+          "content": "Desktop"
+        },
+        {
           "type": "image_picker",
           "id": "seal_image",
-          "label": "Seal Image"
+          "label": "Seal / Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "bq_bg_image_desktop",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "bq_bg_color_desktop",
+          "label": "Background Color",
+          "default": "#F5F0E8"
+        },
+        {
+          "type": "color",
+          "id": "bq_text_color_desktop",
+          "label": "Content Color",
+          "default": "#661D1D"
+        },
+
+        {
+          "type": "header",
+          "content": "Mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "seal_image_mobile",
+          "label": "Seal / Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "bq_bg_image_mobile",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "bq_bg_color_mobile",
+          "label": "Background Color",
+          "default": "#F5F0E8"
+        },
+        {
+          "type": "color",
+          "id": "bq_text_color_mobile",
+          "label": "Content Color",
+          "default": "#661D1D"
+        },
+
+        {
+          "type": "header",
+          "content": "Content"
         },
         {
           "type": "text",
@@ -1632,6 +1696,11 @@
           "type": "image_picker",
           "id": "background_image",
           "label": "Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image_mobile",
+          "label": "Mobile Background Image (Optional)"
         },
         {
           "type": "color",
@@ -2724,6 +2793,17 @@
       "id": "sticky_atc_button_label",
       "default": "Add to Bag",
       "label": "Sticky button label"
+    },
+    {
+      "type": "select",
+      "id": "sticky_atc_mode",
+      "label": "Sticky bar visibility",
+      "default": "default",
+      "options": [
+        { "value": "default", "label": "Whenever the main button is out of view" },
+        { "value": "scrolled-past", "label": "Only after scrolling past the main button" }
+      ],
+      "info": "\"Whenever out of view\" shows it on load if the button is below the fold. \"Only after scrolling past\" keeps it hidden until the main button has scrolled above the viewport."
     },
     {
       "type": "header",
