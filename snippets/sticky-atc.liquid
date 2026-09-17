@@ -105,37 +105,35 @@
     # variant option values (recipe · size), skipping blanks and the Shopify
     # "Default Title" that single-variant products carry. Desktop and mobile
     # share the same line — the product title only shows as the desktop heading.
-assign st_meta_desktop = ''
-assign st_meta_mobile = ''
+    assign st_meta_desktop = ''
+    assign st_meta_mobile = ''
 
-for ov in st_variant.options
-  assign ov_index = forloop.index0
-  assign ov_clean = ov | strip
+    for ov in st_variant.options
+      assign ov_index = forloop.index0
+      assign ov_clean = ov | strip
 
-  if ov_clean != blank and ov_clean != 'Default Title'
+      if ov_clean != blank and ov_clean != 'Default Title'
+        if ov_index != recipe_index or st_is_v2 == false
+          if st_meta_desktop == ''
+            assign st_meta_desktop = ov_clean
+          else
+            assign st_meta_desktop = st_meta_desktop | append: ' · ' | append: ov_clean
+          endif
+        endif
 
-    if ov_index != recipe_index or st_is_v2 == false
-      if st_meta_desktop == ''
-        assign st_meta_desktop = ov_clean
-      else
-        assign st_meta_desktop = st_meta_desktop | append: ' · ' | append: ov_clean
+        assign mobile_value = ov_clean
+
+        if st_is_v2 and ov_index == recipe_index
+          assign mobile_value = ov_clean | append: ' Recipe'
+        endif
+
+        if st_meta_mobile == ''
+          assign st_meta_mobile = mobile_value
+        else
+          assign st_meta_mobile = st_meta_mobile | append: ' · ' | append: mobile_value
+        endif
       endif
-    endif
-
-    assign mobile_value = ov_clean
-
-    if st_is_v2 and ov_index == recipe_index
-      assign mobile_value = ov_clean | append: ' Recipe'
-    endif
-
-    if st_meta_mobile == ''
-      assign st_meta_mobile = mobile_value
-    else
-      assign st_meta_mobile = st_meta_mobile | append: ' · ' | append: mobile_value
-    endif
-
-  endif
-endfor
+    endfor
   -%}
 
   <sticky-atc-bar
@@ -189,13 +187,16 @@ endfor
           aria-label="{{ 'products.product.add_to_cart' | t }}: {{ product.title | escape }}"
         >
           <span data-sticky-btn-label>{{ label | default: 'Add to Bag' }}</span>
+          <s class="sticky-atc__btn-was" data-sticky-btn-was></s>
           <span class="sticky-atc__btn-price" data-sticky-btn-price></span>
           {%- render 'loading-spinner' -%}
         </button>
       </div>
     </div>
     {%- if st_is_v2 -%}
-      <script type="application/json" data-sticky-v2-images>{ {{ st_v2_images }} }</script>
+      <script type="application/json" data-sticky-v2-images>
+        { {{ st_v2_images }} }
+      </script>
     {%- endif -%}
   </sticky-atc-bar>
 
@@ -239,6 +240,7 @@ endfor
           this.btn = this.querySelector('[data-sticky-btn]');
           this.btnLabel = this.querySelector('[data-sticky-btn-label]');
           this.btnPrice = this.querySelector('[data-sticky-btn-price]');
+          this.btnWas = this.querySelector('[data-sticky-btn-was]');
           this.spinnerEl = this.querySelector('.loading__spinner');
           this.titleEl = this.querySelector('[data-sticky-title]');
 
@@ -308,7 +310,10 @@ endfor
             was = text(cmp);
           }
           if (this.wasEl) this.wasEl.textContent = was || '';
+          if (this.btnWas) this.btnWas.textContent = this.isV2 ? was || '' : '';
           if (this.nowEl && now) this.nowEl.textContent = now;
+
+          this._was = was || '';
           this._now = now || this._now || '';
         }
 
@@ -322,10 +327,17 @@ endfor
           if (disabled) {
             this.btnLabel.textContent = (mainText || 'Sold out').toUpperCase();
             this.btnPrice.textContent = '';
+
+            if (this.btnWas) {
+              this.btnWas.textContent = '';
+            }
           } else {
             this.btnLabel.textContent = this.enabledLabel.toUpperCase();
-            // Mobile: show the price inside the button ("ADD TO BAG | $129.99").
             this.btnPrice.textContent = this._now ? '| ' + this._now : '';
+
+            if (this.btnWas) {
+              this.btnWas.textContent = this.isV2 ? this._was || '' : '';
+            }
           }
           this.syncSpinner();
         }
@@ -355,8 +367,7 @@ endfor
               var sel = asw.querySelector('[data-asw-freq]');
               if (sel) {
                 var cur =
-                  sel.querySelector('[data-asw-freq-current]') ||
-                  sel.querySelector('.asw-freq__opt.is-selected');
+                  sel.querySelector('[data-asw-freq-current]') || sel.querySelector('.asw-freq__opt.is-selected');
                 if (cur) freq = capitalize((cur.textContent || '').trim());
               }
             } else {
@@ -368,71 +379,67 @@ endfor
           // Shopify "Default Title" that single-variant products carry. Rebuilt from
           // fresh variant options, else the server-rendered base (already filtered)
           // — never from the element's own text, so frequency never accumulates.
-            var parts = [];
+          var parts = [];
 
-            if (options && options.length) {
-              for (var i = 0; i < options.length; i++) {
-                var v = (options[i] || '').trim();
+          if (options && options.length) {
+            for (var i = 0; i < options.length; i++) {
+              var v = (options[i] || '').trim();
 
-                if (v && v !== 'Default Title') {
-                  parts.push(v);
-                }
+              if (v && v !== 'Default Title') {
+                parts.push(v);
               }
-            } else if (this.baseDesktopMeta) {
-              parts.push(this.baseDesktopMeta);
             }
+          } else if (this.baseDesktopMeta) {
+            parts.push(this.baseDesktopMeta);
+          }
 
-            if (freq) parts.push(freq);
+          if (freq) parts.push(freq);
 
-            var metaStr = parts.join(' · ');
+          var metaStr = parts.join(' · ');
 
-            if (this.isV2 && this.recipeIndex >= 0 && options && options.length) {
-              var desktopParts = [];
+          if (this.isV2 && this.recipeIndex >= 0 && options && options.length) {
+            var desktopParts = [];
 
-              for (var i = 0; i < options.length; i++) {
-                var v = (options[i] || '').trim();
+            for (var i = 0; i < options.length; i++) {
+              var v = (options[i] || '').trim();
 
-                if (
-                  v &&
-                  v !== 'Default Title' &&
-                  i !== this.recipeIndex
-                ) {
-                  desktopParts.push(v);
-                }
+              if (v && v !== 'Default Title' && i !== this.recipeIndex) {
+                desktopParts.push(v);
               }
-
-              if (freq) desktopParts.push(freq);
-
-              metaStr = desktopParts.join(' · ');
             }
 
-            if (this.metaDesktopEl) {
-              this.metaDesktopEl.textContent = metaStr;
-            }
+            if (freq) desktopParts.push(freq);
 
-            var mobileParts = [];
+            metaStr = desktopParts.join(' · ');
+          }
 
-            if (options && options.length) {
-              for (var i = 0; i < options.length; i++) {
-                var v = (options[i] || '').trim();
+          if (this.metaDesktopEl) {
+            this.metaDesktopEl.textContent = metaStr;
+          }
 
-                if (v && v !== 'Default Title') {
-                  if (this.isV2 && i === this.recipeIndex) {
-                    v += ' Recipe';
-                  }
+          var mobileParts = [];
 
-                  mobileParts.push(v);
+          if (options && options.length) {
+            for (var i = 0; i < options.length; i++) {
+              var v = (options[i] || '').trim();
+
+              if (v && v !== 'Default Title') {
+                if (this.isV2 && i === this.recipeIndex) {
+                  v += ' Recipe';
                 }
+
+                mobileParts.push(v);
               }
-            } else if (this.initialMobileMeta) {
-              mobileParts.push(this.initialMobileMeta);
             }
+          } else if (this.initialMobileMeta) {
+            mobileParts.push(this.initialMobileMeta);
+          }
 
-            if (freq) mobileParts.push(freq);
+          if (freq) mobileParts.push(freq);
 
-            if (this.metaMobileEl) {
-              this.metaMobileEl.textContent = mobileParts.join(' · ');
-            }
+          if (this.metaMobileEl) {
+            this.metaMobileEl.textContent = mobileParts.join(' · ');
+          }
         }
 
         // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
@@ -628,392 +635,391 @@ endfor
     })();
   </script>
 
-
-{%- style -%}
-  .sticky-atc {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 3;
-    padding: 8px 8px 44px;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(120%);
-    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
-      opacity 0.32s ease, visibility 0s linear 0.32s;
-    pointer-events: none;
-  }
-  .sticky-atc.is-visible {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
-      opacity 0.32s ease, visibility 0s;
-    pointer-events: auto;
-  }
-  .sticky-atc.is-visible.footer-visible {
-    visibility: hidden;
-    opacity: 0;
-    transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
-      opacity 0.32s ease, visibility 0s linear 0.32s;
-    pointer-events: none;
-  }
-  .sticky-atc__inner {
-    max-width: 904px;
-    margin: 0 auto;
-    border: 1px solid #1a1a1a;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 8px 24px 8px 8px;
-    background: #fff9efcc;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-  .sticky-atc__info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-  .sticky-atc__thumb {
-    flex: 0 0 auto;
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-  }
-  .sticky-atc__text {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .sticky-atc__title {
-    margin: 0;
-    font-family: "TAY Birdie";
-    text-transform: uppercase;
-    color: #000000;
-    font-size: 20px;
-    line-height: 32px;
-    letter-spacing: -0.4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 46ch;
-    transform: translateY(3px);
-  }
-  .sticky-atc__meta {
-    margin: 0;
-    font-family: "Matter";
-    color: #000000;
-    font-size: 16px;
-    line-height: 24px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 52ch;
-    letter-spacing: 0;
-  }
-  .sticky-atc__meta--mobile {
-    display: none;
-  }
-  .sticky-atc__buy {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex: 0 0 auto;
-  }
-  .sticky-atc__price {
-    display: flex;
-    align-items: baseline;
-    gap: 11px;
-    white-space: nowrap;
-  }
-  .sticky-atc__was {
-    font-family: "Matter";
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0;
-    color: rgba(0, 0, 0, 0.5);
-    text-decoration: line-through;
-  }
-  .sticky-atc__was:empty {
-    display: none;
-  }
-  .sticky-atc__now {
-    font-family: "Matter";
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0;
-    color: #000000;
-  }
-  .sticky-atc__btn {
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-    border: 1px solid #000000;
-    border-radius: 8px;
-    background: #ffc069;
-    color: #000000;
-    font-family: "FFBlurProMedium";
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.96px;
-    text-transform: uppercase;
-    padding: 11.2px 26.29px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    position: relative;
-    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-  }
-  .sticky-atc__btn:hover {
-    background: #000000 !important;
-    color: #fff9ef;
-  }
-  .sticky-atc__btn[disabled] {
-    cursor: not-allowed;
-    opacity: 0.5;
-    background: #e6e0d7;
-    color: #1a1a1a;
-  }
-  .sticky-atc__btn[disabled]:hover {
-    background: #e6e0d7;
-    color: #1a1a1a;
-  }
-  /* In-button price is mobile-only; desktop shows the standalone price. */
-  .sticky-atc__btn-price {
-    display: none;
-  }
-
-  /* Loading spinner — same behaviour as the main add-to-cart button. */
-  .sticky-atc__btn .loading__spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 2rem;
-    height: auto;
-    align-items: center;
-    justify-content: center;
-  }
-  .sticky-atc__btn .loading__spinner .path {
-    stroke: #1a1a1a;
-  }
-  .sticky-atc__btn.is-loading {
-    color: transparent;
-    cursor: default;
-  }
-  .sticky-atc__btn.is-loading:hover {
-    background: #ffc069;
-    color: transparent;
-  }
-  .sticky-atc__btn.is-loading [data-sticky-btn-label],
-  .sticky-atc__btn.is-loading .sticky-atc__btn-price {
-    visibility: hidden;
-  }
-
-  /*------- v2--css--code -------*/
-  .sticky-atc.sticky-atc_v2 {
-    padding: 0;
-    box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
-    background: #fff9efcc;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border-radius: 24px 24px 0 0;
-    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-      opacity 0.45s ease, visibility 0s linear 0.45s;
-  }
-  /* Smooth slide up on show / slide down on hide (is-visible + footer-visible). */
-  .sticky-atc.sticky-atc_v2.is-visible {
-    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-      opacity 0.45s ease, visibility 0s;
-  }
-  .sticky-atc.sticky-atc_v2.is-visible.footer-visible {
-    transform: translateY(120%);
-    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-      opacity 0.45s ease, visibility 0s linear 0.45s;
-  }
-  .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
-    border: 0;
-    background: transparent;
-    border-radius: 0px;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    padding: 16px;
-    max-width: 1006px;
-  }
-  .sticky-atc.sticky-atc_v2 .sticky-atc__thumb {
-    width: 64px;
-    height: 64px;
-  }
-  .sticky-atc.sticky-atc_v2 .sticky-atc__btn {
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 1.2px;
-    padding: 11.2px 46.29px;
-    background: linear-gradient(
-      90deg,
-      #ffc069 0%,
-      #ffc069 35%,
-      #ffd8a2 50%,
-      #ffc069 65%,
-      #ffc069 100%
-    );
-    background-size: 250% 100%;
-    background-position: 100% 0;
-    animation: buttonShine_sticky 4s linear infinite;
-  }
-
-  @keyframes buttonShine_sticky {
-    0% {
-      background-position: 100% 0;
-    }
-
-    45% {
-      background-position: 0% 0;
-    }
-
-    100% {
-      background-position: 0% 0;
-    }
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main {
-    padding: 0;
-    box-shadow: none;
-    background: transparent;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    border-radius: 0;
-    max-width: 1286px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__inner {
-    padding: 12px 34px 16px;
-    max-width: 532px;
-    gap: 12px;
-    margin-left: auto;
-    margin-right: 0;
-    border-radius: 24px 24px 0 0;
-    box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
-    background: #fff9efcc;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__thumb {
-    display: none;
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__price {
-    position: absolute;
-    right: 34px;
-    top: 16px;
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__buy,
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
-    width: 100%;
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__meta {
-    font-size: 14px;
-  }
-  .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
-    font-size: 22px;
-    padding: 15.2px;
-  }
-  @media screen and (max-width: 749px) {
+  {%- style -%}
     .sticky-atc {
-      padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      padding: 8px 8px 44px;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(120%);
+      transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.32s ease, visibility 0s linear 0.32s;
+      pointer-events: none;
+    }
+    .sticky-atc.is-visible {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.32s ease, visibility 0s;
+      pointer-events: auto;
+    }
+    .sticky-atc.is-visible.footer-visible {
+      visibility: hidden;
+      opacity: 0;
+      transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.32s ease, visibility 0s linear 0.32s;
+      pointer-events: none;
     }
     .sticky-atc__inner {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-      padding: 16px;
-      border-radius: 8px;
-    }
-    .sticky-atc__thumb {
-      display: none;
-    }
-    .sticky-atc__title {
-      display: none;
-    }
-    .sticky-atc__meta--desktop {
-      display: none;
-    }
-    .sticky-atc__info {
-      justify-content: ;
-    }
-    .sticky-atc__meta--mobile {
-      display: block;
-      text-align: center;
-      font-size: 12px;
-      line-height: 20px;
-      color: #000000;
-      white-space: normal;
-      max-width: none;
-    }
-    .sticky-atc__buy {
-      width: 100%;
-    }
-    .sticky-atc__price--standalone {
-      display: none;
-    }
-    .sticky-atc__btn-price {
-      display: inline;
-    }
-    .sticky-atc__btn-price:empty {
-      display: none;
-    }
-    .sticky-atc__btn {
-      width: 100%;
-      font-size: 16px;
-      line-height: 24px;
-      letter-spacing: 0.96px;
-      padding: 7.2px;
-    }
-
-    /*------- v2--css--code -------*/
-    .sticky-atc.sticky-atc_v2 {
-      box-shadow: inherit;
-      background: transparent;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      border-radius: 0;
-    }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
-      padding: 12px 24px 16px;
-      border-radius: 24px 24px 0 0;
-      box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
-      border: 0;
+      max-width: 904px;
+      margin: 0 auto;
+      border: 1px solid #1a1a1a;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 24px 8px 8px;
       background: #fff9efcc;
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__meta--mobile {
-      font-size: 13px;
+    .sticky-atc__info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .sticky-atc__thumb {
+      flex: 0 0 auto;
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+    }
+    .sticky-atc__text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .sticky-atc__title {
+      margin: 0;
+      font-family: "TAY Birdie";
+      text-transform: uppercase;
+      color: #000000;
+      font-size: 20px;
+      line-height: 32px;
+      letter-spacing: -0.4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 46ch;
+      transform: translateY(3px);
+    }
+    .sticky-atc__meta {
+      margin: 0;
+      font-family: "Matter";
+      color: #000000;
+      font-size: 16px;
+      line-height: 24px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 52ch;
+      letter-spacing: 0;
+    }
+    .sticky-atc__meta--mobile {
+      display: none;
+    }
+    .sticky-atc__buy {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex: 0 0 auto;
+    }
+    .sticky-atc__price {
+      display: flex;
+      align-items: baseline;
+      gap: 11px;
+      white-space: nowrap;
+    }
+    .sticky-atc__was {
+      font-family: "Matter";
+      font-size: 18px;
+      line-height: 24px;
+      letter-spacing: 0;
+      color: rgba(0, 0, 0, 0.5);
+      text-decoration: line-through;
+    }
+    .sticky-atc__was:empty {
+      display: none;
+    }
+    .sticky-atc__now {
+      font-family: "Matter";
+      font-size: 18px;
+      line-height: 24px;
+      letter-spacing: 0;
+      color: #000000;
+    }
+    .sticky-atc__btn {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      border: 1px solid #000000;
+      border-radius: 8px;
+      background: #ffc069;
+      color: #000000;
+      font-family: "FFBlurProMedium";
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.96px;
+      text-transform: uppercase;
+      padding: 11.2px 26.29px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+    .sticky-atc__btn:hover {
+      background: #000000 !important;
+      color: #fff9ef;
+    }
+    .sticky-atc__btn[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
+      background: #e6e0d7;
+      color: #1a1a1a;
+    }
+    .sticky-atc__btn[disabled]:hover {
+      background: #e6e0d7;
+      color: #1a1a1a;
+    }
+    /* In-button price is mobile-only; desktop shows the standalone price. */
+    .sticky-atc__btn-price {
+      display: none;
+    }
+
+    /* Loading spinner — same behaviour as the main add-to-cart button. */
+    .sticky-atc__btn .loading__spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2rem;
+      height: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .sticky-atc__btn .loading__spinner .path {
+      stroke: #1a1a1a;
+    }
+    .sticky-atc__btn.is-loading {
+      color: transparent;
+      cursor: default;
+    }
+    .sticky-atc__btn.is-loading:hover {
+      background: #ffc069;
+      color: transparent;
+    }
+    .sticky-atc__btn.is-loading [data-sticky-btn-label],
+    .sticky-atc__btn.is-loading .sticky-atc__btn-price {
+      visibility: hidden;
+    }
+
+    /*------- v2--css--code -------*/
+    .sticky-atc.sticky-atc_v2 {
+      padding: 0;
+      box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
+      background: #fff9efcc;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-radius: 24px 24px 0 0;
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.45s ease, visibility 0s linear 0.45s;
+    }
+    /* Smooth slide up on show / slide down on hide (is-visible + footer-visible). */
+    .sticky-atc.sticky-atc_v2.is-visible {
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.45s ease, visibility 0s;
+    }
+    .sticky-atc.sticky-atc_v2.is-visible.footer-visible {
+      transform: translateY(120%);
+      transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 0.45s ease, visibility 0s linear 0.45s;
+    }
+    .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
+      border: 0;
+      background: transparent;
+      border-radius: 0px;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      padding: 16px;
+      max-width: 1006px;
+    }
+    .sticky-atc.sticky-atc_v2 .sticky-atc__thumb {
+      width: 64px;
+      height: 64px;
     }
     .sticky-atc.sticky-atc_v2 .sticky-atc__btn {
-      padding: 9.2px 20px;
-      font-size: 16px;
-      letter-spacing: 0.96px;
-      justify-content: space-between;
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 1.2px;
+      padding: 11.2px 46.29px;
+      background: linear-gradient(
+        90deg,
+        #ffc069 0%,
+        #ffc069 35%,
+        #ffd8a2 50%,
+        #ffc069 65%,
+        #ffc069 100%
+      );
+      background-size: 250% 100%;
+      background-position: 100% 0;
+      animation: buttonShine_sticky 4s linear infinite;
     }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price {
-      font-size: 16px;
-      line-height: 20px;
-      font-family: "Matter";
-      letter-spacing: 0;
-      transform: translateY(2px);
+
+    @keyframes buttonShine_sticky {
+      0% {
+        background-position: 100% 0;
+      }
+
+      45% {
+        background-position: 0% 0;
+      }
+
+      100% {
+        background-position: 0% 0;
+      }
     }
-    .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price::first-letter {
-      font-size: 0;
+    .sticky-atc.sticky-atc_v2.in-product-main {
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      border-radius: 0;
+      max-width: 1286px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
-  }
-{%- endstyle -%}
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__inner {
+      padding: 12px 34px 16px;
+      max-width: 532px;
+      gap: 12px;
+      margin-left: auto;
+      margin-right: 0;
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
+      background: #fff9efcc;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__thumb {
+      display: none;
+    }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__price {
+      position: absolute;
+      right: 34px;
+      top: 16px;
+    }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__buy,
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
+      width: 100%;
+    }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__meta {
+      font-size: 14px;
+    }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
+      font-size: 22px;
+      padding: 15.2px;
+    }
+    @media screen and (max-width: 749px) {
+      .sticky-atc {
+        padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+      }
+      .sticky-atc__inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 16px;
+        border-radius: 8px;
+      }
+      .sticky-atc__thumb {
+        display: none;
+      }
+      .sticky-atc__title {
+        display: none;
+      }
+      .sticky-atc__meta--desktop {
+        display: none;
+      }
+      .sticky-atc__info {
+        justify-content: ;
+      }
+      .sticky-atc__meta--mobile {
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        line-height: 20px;
+        color: #000000;
+        white-space: normal;
+        max-width: none;
+      }
+      .sticky-atc__buy {
+        width: 100%;
+      }
+      .sticky-atc__price--standalone {
+        display: none;
+      }
+      .sticky-atc__btn-price {
+        display: inline;
+      }
+      .sticky-atc__btn-price:empty {
+        display: none;
+      }
+      .sticky-atc__btn {
+        width: 100%;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.96px;
+        padding: 7.2px;
+      }
+
+      /*------- v2--css--code -------*/
+      .sticky-atc.sticky-atc_v2 {
+        box-shadow: inherit;
+        background: transparent;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        border-radius: 0;
+      }
+      .sticky-atc.sticky-atc_v2 .sticky-atc__inner {
+        padding: 12px 24px 16px;
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 0 32px 0 rgba(123, 166, 221, 0.75);
+        border: 0;
+        background: #fff9efcc;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      .sticky-atc.sticky-atc_v2 .sticky-atc__meta--mobile {
+        font-size: 13px;
+      }
+      .sticky-atc.sticky-atc_v2 .sticky-atc__btn {
+        padding: 9.2px 20px;
+        font-size: 16px;
+        letter-spacing: 0.96px;
+        justify-content: space-between;
+      }
+      .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price {
+        font-size: 16px;
+        line-height: 20px;
+        font-family: "Matter";
+        letter-spacing: 0;
+        transform: translateY(2px);
+      }
+      .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price::first-letter {
+        font-size: 0;
+      }
+    }
+  {%- endstyle -%}
 {%- endif -%}
