@@ -13,6 +13,7 @@
       "type": "about-hero",
       "settings": {
         "headline": "Dogs Deserve Real Food",
+        "stroke_image": "shopify://shop_images/Headline_Underline.svg",
         "intro": "Yumwoof was founded by my wife Ana and me after years spent researching nutrition, inflammation, and gut health.",
         "lede": "Along the way, we became increasingly frustrated by how much of the pet food industry relied on heavily processed ingredients, synthetic additives, and manufacturing shortcuts.",
         "badge_text": "Family Owned",
