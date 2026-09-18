@@ -32,7 +32,7 @@
     font-size: 64px;
     line-height: 64px;
     letter-spacing: -0.64px;
-    transform: translateY(-4px);
+    transform: translateY(-6px);
 }
 .about-hero__stroke {
   display: block;
