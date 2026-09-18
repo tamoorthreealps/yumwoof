@@ -153,3 +153,120 @@ animation: aboutCtaGradient 3s ease-in-out infinite;
         letter-spacing: 1.28px;
   }
 }
+
+/* ==========================================================================
+   Motion layer — same system as About Solution (driven by about-motion.js)
+     .as-anim      JS is running and motion is allowed (hidden start states)
+     .as-parallax  background layer is extended + driven by JS
+     .as-in        section has entered the viewport (plays once)
+     .as-done      entrance finished — all temporary styles released
+   Without JS, or with prefers-reduced-motion, the section renders exactly
+   as it did before.
+   ========================================================================== */
+
+.about-cta {
+  --as-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --as-ease-fade: cubic-bezier(0.33, 0, 0.2, 1);
+  --as-line-dur: 1.9s;
+  --as-line-stagger: 0.15s;
+  --as-body-dur: 1.7s;
+  --as-body-delay: 0.55s;   /* both overwritten by JS from the real line count */
+  --as-button-delay: 0.75s;
+}
+
+/* ---- Cinematic depth: faint warm light behind the centred copy + vignette */
+.about-cta__inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 65% at 50% 58%, rgba(255, 249, 239, 0.055) 0%, rgba(255, 249, 239, 0) 60%),
+    radial-gradient(130% 110% at 50% 45%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.26) 100%);
+}
+.about-cta.as-anim .about-cta__inner::after {
+  opacity: 0;
+  transition: opacity 2.8s var(--as-ease-fade) 0.2s;
+}
+.about-cta.as-anim.as-in .about-cta__inner::after {
+  opacity: 1;
+}
+
+/* ---- Parallax: 18% overscan top + bottom so travel never shows a gap */
+.about-cta.as-parallax .about-cta__bg {
+  inset: -18% 0;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ---- Text entrance ------------------------------------------------------- */
+
+.about-cta.as-anim:not(.as-in) .about-cta__heading:not(.as-split) {
+  opacity: 0;
+}
+
+.about-cta__heading .as-line {
+  display: block;
+  white-space: nowrap;
+  clip-path: inset(-0.22em -1em -0.06em -1em);
+}
+.about-cta__heading .as-line__inner {
+  display: block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translate3d(0, 36%, 0);
+  will-change: transform, opacity, filter;
+  transition:
+    transform var(--as-line-dur) var(--as-ease),
+    filter    var(--as-line-dur) var(--as-ease),
+    opacity   calc(var(--as-line-dur) * 0.8) var(--as-ease-fade);
+  transition-delay: calc(var(--as-i, 0) * var(--as-line-stagger));
+}
+.about-cta.as-in .about-cta__heading .as-line__inner {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Body, then button. Scoped to :not(.as-done) so that once the entrance has
+   finished the button falls back to its original hover transition untouched. */
+.about-cta.as-anim:not(.as-done) .about-cta__body,
+.about-cta.as-anim:not(.as-done) .about-cta__button {
+  will-change: transform, opacity, filter;
+  transition:
+    transform var(--as-body-dur) var(--as-ease),
+    filter    var(--as-body-dur) var(--as-ease),
+    opacity   calc(var(--as-body-dur) * 0.85) var(--as-ease-fade);
+  transition-delay: var(--as-body-delay);
+}
+.about-cta.as-anim:not(.as-done) .about-cta__button {
+  transition-delay: var(--as-button-delay);
+}
+.about-cta.as-anim:not(.as-in) .about-cta__body,
+.about-cta.as-anim:not(.as-in) .about-cta__button {
+  opacity: 0;
+  filter: blur(4px);
+  transform: translate3d(0, 14px, 0);
+}
+
+/* Safety net: never hide or move anything for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .about-cta .about-cta__heading,
+  .about-cta .about-cta__body,
+  .about-cta .about-cta__button,
+  .about-cta .about-cta__heading .as-line__inner {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  .about-cta.as-parallax .about-cta__bg {
+    inset: 0;
+    transform: none !important;
+    will-change: auto;
+  }
+  .about-cta .about-cta__inner::after {
+    opacity: 1 !important;
+  }
+}
