@@ -16,27 +16,30 @@
 .about-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -10%;
   z-index: -1;
   background: linear-gradient(
     180deg,
     var(--ah-grad-top) 0%,
     var(--ah-grad-bottom) 100%
   );
-  transform: scaleY(0);
-  transform-origin: top;
-  animation: aboutHeroBackgroundReveal 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  transform: scale(1.08);
+  filter: blur(12px);
+  animation: aboutHeroBackgroundReveal 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes aboutHeroBackgroundReveal {
   0% {
-    transform: scaleY(0);
-    opacity: 0.4;
+    opacity: 0;
+    transform: scale(1.08);
+    filter: blur(12px);
   }
 
   100% {
-    transform: scaleY(1);
     opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
   }
 }
 .about-hero * { box-sizing: border-box; }
