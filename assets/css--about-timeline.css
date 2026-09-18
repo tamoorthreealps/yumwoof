@@ -56,6 +56,10 @@ margin: 0;
     letter-spacing: -0.40px;
 }
 
+.about-timeline__list .about-timeline__item:first-child .about-timeline__title {
+  max-width:540px;
+}
+
 .about-timeline__title {
 margin: 16px 0 0;
     font-family: 'TAYRosemary';
@@ -154,7 +158,8 @@ margin: 16px 0 0;
     max-width: 620px;
   }
   .about-timeline__title {
-margin-top: 24px;
+        margin: 24px auto 0;
+        max-width: 480px;
         font-size: 72px;
         line-height: 80px;
         letter-spacing: -1.44px;
