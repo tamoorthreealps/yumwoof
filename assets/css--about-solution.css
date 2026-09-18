@@ -25,11 +25,18 @@
 /* Decorative background image (emitted via inline style in the section) */
 .about-solution__bg {
   position: absolute;
-  inset: 0;
+  top: -140px;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .about-solution__scrim {
   position: absolute;
@@ -78,6 +85,10 @@
    Desktop
    ========================================================================== */
 @media (min-width: 768px) {
+   .about-solution__bg {
+    top: -220px;
+    background-position: center;
+  }
   .about-solution {
     padding: 0 36px;
   }
@@ -104,16 +115,6 @@
   }
 }
 
-
-.about-solution__bg {
-  transform: scale(1.14);
-  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-.about-solution__inner.is-visible .about-solution__bg {
-  transform: scale(1.14) translate3d(0, 0, 0);
-}
 
 .about-solution__content {
   opacity: 0;
