@@ -219,4 +219,8 @@ margin: 16px 0 0;
 .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-4 {
     top: 44%;
 }
+.about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2,
+.about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2 {
+    display: none;
+}
 }
