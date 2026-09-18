@@ -176,6 +176,7 @@ margin: 40px 0 0;
         font-size: 128px;
         line-height: 128px;
         letter-spacing: 0;
+        transform: translateY(-12px);
   }
   .about-hero__stroke {
     width: min(1088px, 82%);
