@@ -83,12 +83,13 @@ margin: 20px 0 0;
 .about-hero__collage {
     position: relative;
     width: 100%;
-    max-width: 336px;
+    max-width: 100%;
     margin: 40px auto 0;
     display: flex;
+    min-height: 385px;
 }
 .about-hero__photo {
-border-radius: 32px;
+border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 4px 48px 0 rgba(123, 166, 221, 0.5);
 }
@@ -100,15 +101,23 @@ border-radius: 32px;
 }
 .about-hero__photo--1 {
     width: 100%;
-    transform: rotate(-10.25deg);
+    transform: rotate(-3.46deg);
     z-index: 1;
-    position: relative;
+    position: absolute;
+    max-width: 298px;
+    height: 316px;
+    left: -29px;
+    top: 6px;
 }
 .about-hero__photo--2 {
-      transform: rotate(10deg);
+    transform: rotate(10deg);
     z-index: 2;
-    width: 100%;
-    position: relative;
+    position: absolute;
+    max-width: 219.65px;
+    height: 232.91px;
+    right: -42px;
+    bottom: 10px;
+    border-radius: 14px;
 }
 
 /* Family Owned badge */
@@ -218,17 +227,27 @@ margin: 40px 0 0;
   .about-hero__collage {
     max-width: 872px;
         margin-top: 82px;
+        min-height:auto;
   }
+  .about-hero__photo {
+border-radius: 32px;
+}
   .about-hero__photo--1 {
-                    max-width: 464px;
+    position:relative;
+        max-width: 464px;
         height: 492px;
         left: 40px;
+        transform: rotate(-10.25deg);
+        top: auto;
   }
   .about-hero__photo--2 {
     max-width: 382.5px;
         height: 405.58px;
                 top: 24px;
         right: 7px;
+        bottom:auto;
+        position: relative;
+        border-radius: 32px;
   }
   .about-hero__badge {
     left: -24px;
