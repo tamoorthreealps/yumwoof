@@ -90,41 +90,57 @@
         obs.unobserve(entry.target);
       });
     }, {
-      threshold: 0.2
+      threshold: 0.15
     });
 
     sections.forEach(section => observer.observe(section));
 
     let ticking = false;
 
-    window.addEventListener('scroll', function () {
-      if (ticking) return;
+    function updateParallax() {
+      sections.forEach(section => {
+        const bg = section.querySelector('.about-solution__bg');
 
-      window.requestAnimationFrame(() => {
-        sections.forEach(section => {
-          const bg = section.querySelector('.about-solution__bg');
+        if (!bg) return;
 
-          if (!bg) return;
+        const rect = section.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
 
-          const rect = section.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
+        if (rect.bottom < -100 || rect.top > viewportHeight + 100) return;
 
-          if (rect.bottom < 0 || rect.top > viewportHeight) return;
+        const sectionCenter = rect.top + rect.height / 2;
+        const viewportCenter = viewportHeight / 2;
 
-          const progress =
-            (viewportHeight - rect.top) /
-            (viewportHeight + rect.height);
+        const distance = sectionCenter - viewportCenter;
+        const normalized = distance / (viewportHeight + rect.height);
 
-          const movement = (progress - 0.5) * 80;
+        const movement = Math.max(
+          -70,
+          Math.min(70, normalized * -140)
+        );
 
-          bg.style.transform =
-            `scale(1.08) translate3d(0, ${movement}px, 0)`;
-        });
+        const scale = 1.14 + Math.abs(normalized) * 0.025;
 
-        ticking = false;
+        bg.style.transform =
+          `translate3d(0, ${movement}px, 0) scale(${scale})`;
       });
 
+      ticking = false;
+    }
+
+    function requestParallax() {
+      if (ticking) return;
+
       ticking = true;
-    }, { passive: true });
+      requestAnimationFrame(updateParallax);
+    }
+
+    window.addEventListener('scroll', requestParallax, {
+      passive: true
+    });
+
+    window.addEventListener('resize', requestParallax);
+
+    requestParallax();
   });
 </script>
