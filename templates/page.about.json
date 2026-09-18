@@ -131,17 +131,17 @@
         "wash_pad_top": 148,
         "wash_pad_bottom": 120,
         "wash_pad_top_mobile": 80,
-        "wash_pad_bottom_mobile": 72,
+        "wash_pad_bottom_mobile": 80,
         "color_button_bg": "#fff9ef",
         "color_button_text": "#0d0d0d",
         "color_button_border": "#fff9ef",
-        "color_button_hover_bg": "#ffc069",
-        "color_button_hover_text": "#0d0d0d",
+        "color_button_hover_bg": "#000000",
+        "color_button_hover_text": "#FFF9EF",
         "min_height": 688,
         "padding_top": 96,
         "padding_bottom": 96,
         "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56
+        "padding_bottom_mobile": 60
       }
     }
   },
