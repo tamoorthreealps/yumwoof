@@ -94,6 +94,7 @@
     line-height: 88px;
     letter-spacing: -1.60px;
     transform: translateY(-6px);
+    max-width:100%;
   }
   .about-solution__body {
     font-size: 18px;
