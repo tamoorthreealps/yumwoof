@@ -27,9 +27,21 @@
       <h1 class="about-hero__headline">{{ s.headline }}</h1>
     {%- endif -%}
 
-    {%- if s.stroke_image != blank -%}
-      <span class="about-hero__stroke {% if s.stroke_image != blank %}about-hero__stroke_img{% endif %}" aria-hidden="true">
-        {{ s.stroke_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}
+    {%- if s.stroke_image != blank or s.stroke_image_mobile != blank -%}
+      <span class="about-hero__stroke {% if s.stroke_image != blank or s.stroke_image_mobile != blank %}about-hero__stroke_img{% endif %}" aria-hidden="true">
+        {%- if s.stroke_image_mobile != blank -%}
+          <picture>
+            <source
+              media="(max-width: 767px)"
+              srcset="{{ s.stroke_image_mobile | image_url: width: 800 }}"
+            >
+            {%- if s.stroke_image != blank -%}
+              {{ s.stroke_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}
+            {%- endif -%}
+          </picture>
+        {%- elsif s.stroke_image != blank -%}
+          {{ s.stroke_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}
+        {%- endif -%}
       </span>
     {%- else -%}
       <span class="about-hero__stroke" aria-hidden="true"></span>
@@ -110,6 +122,7 @@
     { "type": "header", "content": "Headline" },
     { "type": "text", "id": "headline", "label": "Headline", "default": "Dogs Deserve Real Food" },
     { "type": "image_picker", "id": "stroke_image", "label": "Underline image (optional)", "info": "A brush-stroke underline. Leave empty to use a solid colored line." },
+    { "type": "image_picker", "id": "stroke_image_mobile", "label": "Underline image mobile (optional)", "info": "Mobile-specific brush-stroke underline. Leave empty to use the desktop underline image." },
 
     { "type": "header", "content": "Intro" },
     { "type": "textarea", "id": "intro", "label": "Intro statement", "default": "Yumwoof was founded by my wife Ana and me after years spent researching nutrition, inflammation, and gut health." },
