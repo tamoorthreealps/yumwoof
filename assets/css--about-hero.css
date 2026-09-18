@@ -106,8 +106,7 @@ border-radius: 24px;
     position: absolute;
     max-width: 298px;
     height: 316px;
-    left: auto;
-    right: 83px;
+    left: -29px;
     top: 6px;
 }
 .about-hero__photo--2 {
@@ -241,7 +240,6 @@ border-radius: 32px;
         left: 40px;
         transform: rotate(-10.25deg);
         top: auto;
-        right:auto;
   }
   .about-hero__photo--2 {
     max-width: 382.5px;
