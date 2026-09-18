@@ -43,6 +43,9 @@
 }
 .about-hero__stroke.about-hero__stroke_img {
     background: transparent;
+    margin: 0;
+    position: relative;
+    top: -15px;
 }
 .about-hero__stroke img {
   display: block;
