@@ -86,6 +86,10 @@ margin: 16px 0 0;
     letter-spacing: 0;
 }
 
+.about-timeline__body p {
+  margin:0;
+}
+
 /* ----- Decorative photo pair ----- */
 .about-timeline__photos {
   display: flex;
@@ -131,7 +135,7 @@ margin: 16px 0 0;
             font-size: 240px;
         line-height: 240px;
         letter-spacing: -4.80px;
-        margin-bottom: 170px;
+        margin-bottom: 174px;
         transform: translateY(-26px);
   }
   .about-timeline__list {
@@ -140,7 +144,7 @@ margin: 16px 0 0;
   }
 
   .about-timeline__item {
-    padding: 209px 0;
+    padding: 209px 0 212px;
     min-height: 388px;
     display: flex;
     align-items: center;
@@ -152,7 +156,7 @@ margin: 16px 0 0;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: -95px;
+    bottom: -106px;
     width: 1px;
     height: 220px;
     background: var(--at-line);
@@ -171,10 +175,10 @@ margin: 16px 0 0;
         font-size: 72px;
         line-height: 80px;
         letter-spacing: -1.44px;
-        transform: translateY(-4px);
+        transform: translateY(-11px);
   }
   .about-timeline__body {
-        margin-top: 12px;
+        margin-top: 9px;
         font-size: 18px;
         line-height: 28px;
   }
