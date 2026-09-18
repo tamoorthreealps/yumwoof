@@ -263,7 +263,11 @@ margin: 12px auto 0;
     top: 44%;
     transform: translateY(-45%) rotate(6deg);
 }
-
+.about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2,
+.about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2,
+.about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 {
+    display: none;
+}
 .about-timeline__text.about-timeline__text_1 .about-timeline__body,
 .about-timeline__text.about-timeline__text_3 .about-timeline__body {
     padding: 0;
@@ -310,79 +314,76 @@ margin: 12px auto 0;
     translate 1.4s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, filter, translate;
 }
-
 .about-timeline--js .about-timeline__heading.is-revealed {
   opacity: 1;
   filter: blur(0);
   translate: 0 0;
 }
 
+/* ----- 2. Pinned slideshow (desktop only) ----- */
 @media (min-width: 991px) {
   .about-timeline--pinned {
+    /* Images travel off-screen sideways. `clip` (not `hidden`) prevents a
+       horizontal scrollbar WITHOUT breaking position: sticky. */
     overflow-x: clip;
+    --at-hold: 0.4; /* extra viewport-heights the last slide stays pinned */
   }
 
+  /* The list becomes the scroll track: one viewport per slide (+ hold).
+     Every item sits in the same grid cell and sticks to the top, so all
+     slides share one visual position while the page keeps scrolling. */
   .about-timeline--pinned .about-timeline__list {
-    position: relative;
-    display: block;
-    height: calc(100vh * 4);
-    margin-top: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    height: calc(100vh * (var(--at-slides, 4) + var(--at-hold)));
   }
-
   .about-timeline--pinned .about-timeline__item {
-    position: absolute;
-    inset: 0;
-    width: 100%;
+    grid-area: 1 / 1;
+    align-self: start;
+    position: sticky;
+    top: 0;
     height: 100vh;
     min-height: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    will-change: opacity;
   }
-
-  .about-timeline--pinned .about-timeline__item.is-active {
-    pointer-events: auto;
-  }
-
-  .about-timeline--pinned .about-timeline__text {
-    opacity: 0;
-    translate: 0 30px;
-    will-change: opacity, translate;
-  }
-
-  .about-timeline--pinned .about-timeline__photo {
-    opacity: 0;
-    will-change: opacity, translate, scale;
-    backface-visibility: hidden;
-  }
-
-  .about-timeline--pinned .about-timeline__photo img {
-    scale: 1.04;
-    will-change: scale;
-  }
-
+  /* Connector lines have nothing to connect once slides are stacked */
   .about-timeline--pinned .about-timeline__item::after {
     display: none;
   }
+
+  /* Text: JS sets opacity + --at-ty on the block; children get a slightly
+     different travel each for a soft stagger. */
+  .about-timeline--pinned .about-timeline__text {
+    will-change: opacity;
+  }
+  .about-timeline--pinned .about-timeline__date  { translate: 0 calc(var(--at-ty, 0px) * 0.7); }
+  .about-timeline--pinned .about-timeline__title { translate: 0 var(--at-ty, 0px); }
+  .about-timeline--pinned .about-timeline__body  { translate: 0 calc(var(--at-ty, 0px) * 1.35); }
+
+  .about-timeline--pinned .about-timeline__photo {
+    will-change: translate, scale, opacity;
+    backface-visibility: hidden;
+  }
+
+  /* Photo vertical anchors while pinned.
+     The original `top` values (128%, 89%…) were relative to a tall flowing
+     item and intentionally spilled into the NEXT entry. Inside a 100vh pinned
+     stage those would sit below the fold, so they are re-anchored here to the
+     same relative arrangement (left photo lower, right photo higher, etc.).
+     Rotations, widths, left/right offsets are untouched. Tweak freely. */
+  .about-timeline--pinned .about-timeline__photo--a { top: 64%; }
+  .about-timeline--pinned .about-timeline__photo--b { top: 46%; }
+  .about-timeline--pinned .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-3 { top: 62%; }
+  .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-3 { top: 34%; }
+  .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-4 { top: 44%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .about-timeline--js .about-timeline__heading {
+  .about-timeline__heading {
     opacity: 1 !important;
     filter: none !important;
     translate: none !important;
     transition: none !important;
-  }
-
-  .about-timeline--pinned .about-timeline__item,
-  .about-timeline--pinned .about-timeline__text,
-  .about-timeline--pinned .about-timeline__photo {
-    opacity: 1 !important;
-    translate: none !important;
-    scale: 1 !important;
   }
 }
