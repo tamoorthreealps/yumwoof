@@ -30,7 +30,7 @@
       <span
         class="about-hero__headline-word"
         style="--delay: {{ forloop.index0 | times: 0.15 }}s;"
-      >{{ word }}</span>{% unless forloop.last %}{% endunless %}
+      >{{ word }}</span>{% unless forloop.last %} {% endunless %}
     {%- endfor -%}
   </h1>
 {%- endif -%}
