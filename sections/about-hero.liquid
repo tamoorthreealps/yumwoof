@@ -28,7 +28,7 @@
     {%- endif -%}
 
     {%- if s.stroke_image != blank -%}
-      <span class="about-hero__stroke {%- if s.stroke_image != blank -%}about-hero__stroke_img{%- endif -%}" aria-hidden="true">
+      <span class="about-hero__stroke {% if s.stroke_image != blank %}about-hero__stroke_img{% endif %}" aria-hidden="true">
         {{ s.stroke_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: '' }}
       </span>
     {%- else -%}
