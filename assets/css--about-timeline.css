@@ -20,13 +20,13 @@
 .about-timeline__heading {
   margin: 0;
   text-align: center;
-  font-family: 'TAY Birdie', sans-serif;
+  font-family: 'TAYRosemary';
   font-weight: 400;
   text-transform: uppercase;
   color: var(--at-text);
-  font-size: 44px;
-  line-height: 1.0;
-  letter-spacing: 0;
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -1.92px;
 }
 
 .about-timeline__list {
@@ -47,33 +47,35 @@
 }
 
 .about-timeline__date {
-  margin: 0;
-  font-family: 'TAY Birdie', sans-serif;
-  text-transform: uppercase;
-  color: var(--at-eyebrow);
-  font-size: 14px;
-  line-height: 1.4;
-  letter-spacing: 1px;
+margin: 0;
+    font-family: TAY Birdie, sans-serif;
+    text-transform: uppercase;
+    color: var(--at-eyebrow);
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.40px;
 }
 
 .about-timeline__title {
-  margin: 12px 0 0;
-  font-family: 'TAY Birdie', sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--at-text);
-  font-size: 28px;
-  line-height: 1.0;
-  letter-spacing: 0;
+margin: 16px 0 0;
+    font-family: 'TAYRosemary';
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--at-text);
+    font-size: 48px;
+    line-height: 48px;
+    letter-spacing: -0.96px;
+    transform: translateY(-4px);
 }
 
 .about-timeline__body {
-  margin: 16px 0 0;
-  font-family: 'Matter', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--at-body);
+margin: 16px 0 0;
+    font-family: Matter, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--at-body);
+    letter-spacing: 0;
 }
 
 /* ----- Decorative photo pair ----- */
@@ -118,7 +120,11 @@
     );
   }
   .about-timeline__heading {
-    font-size: clamp(72px, 8vw, 112px);
+            font-size: 240px;
+        line-height: 240px;
+        letter-spacing: -4.80px;
+        margin-bottom: 170px;
+        transform: translateY(-22px);
   }
   .about-timeline__list {
     margin-top: 0;
@@ -126,8 +132,8 @@
   }
 
   .about-timeline__item {
-    padding: 90px 0;
-    min-height: 460px;
+    padding: 209px 0;
+    min-height: 388px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,12 +154,16 @@
     max-width: 620px;
   }
   .about-timeline__title {
-    margin-top: 16px;
-    font-size: clamp(40px, 4.4vw, 56px);
+margin-top: 24px;
+        font-size: 72px;
+        line-height: 80px;
+        letter-spacing: -1.44px;
+        transform: translateY(-4px);
   }
   .about-timeline__body {
-    margin-top: 24px;
-    font-size: 16px;
+        margin-top: 12px;
+        font-size: 18px;
+        line-height: 28px;
   }
 
   /* Photos scatter to the sides of the centered text column */
