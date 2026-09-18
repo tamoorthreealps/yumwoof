@@ -83,10 +83,12 @@
             }}
           </div>
         {%- endif -%}
-        {%- if s.badge_text != blank -%}
-          <div class="about-hero__badge_wrapper">
-            <span class="about-hero__badge">{{ s.badge_text }}</span>
-          </div>
+        {%- if s.badge_image != blank -%}
+          <span class="about-hero__badge">
+            {{ s.badge_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
+          </span>
+        {%- elsif s.badge_text != blank -%}
+          <span class="about-hero__badge">{{ s.badge_text }}</span>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -134,6 +136,7 @@
     { "type": "image_picker", "id": "image_1", "label": "Image 1 (front / left)" },
     { "type": "image_picker", "id": "image_2", "label": "Image 2 (back / right)" },
     { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Family Owned", "info": "Leave empty to hide the badge." },
+    { "type": "image_picker", "id": "badge_image", "label": "Badge image (optional)", "info": "If an image is selected, it will be shown instead of the badge text." },
 
     { "type": "header", "content": "Closing" },
     { "type": "textarea", "id": "closing", "label": "Closing text", "default": "Today, Yumwoof creates air-dried recipes built around premium proteins, healthy fats, and whole food nutrition. Rather than formulating around cost or convenience, we focus on creating food we would proudly feed our own dog, Sherlock." },
