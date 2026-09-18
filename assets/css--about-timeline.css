@@ -156,18 +156,7 @@ margin: 12px auto 0;
 /* ==========================================================================
    Desktop
    ========================================================================== */
-@media (min-width: 1249px) {
-  .about-timeline__photo {
-    width: 225px;
-  }
-  .about-timeline__photo--a {
-        left: 20px;
-  }
-  .about-timeline__photo--b {
-    right: 20px;
-  }
-  
-}
+
 @media (min-width: 991px) {
   .about-timeline {
     padding: var(--at-pad-top) 60px var(--at-pad-bottom);
@@ -283,4 +272,18 @@ margin: 12px auto 0;
 .about-timeline__text.about-timeline__text_3 .about-timeline__body {
     padding: 0;
 }
+}
+
+
+@media (min-width: 1249px) {
+  .about-timeline__photo {
+    width: 225px;
+  }
+  .about-timeline__photo--a {
+        left: 20px;
+  }
+  .about-timeline__photo--b {
+    right: 20px;
+  }
+  
 }
