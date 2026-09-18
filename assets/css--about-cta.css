@@ -41,6 +41,7 @@
   background: var(--ac-bg);
   opacity: var(--ac-scrim);
   z-index: 1;
+  display:inherit !important;
 }
 
 .about-cta__heading {

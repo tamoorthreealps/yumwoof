@@ -10,6 +10,7 @@
   {%- if s.bg_image != blank -%}
     #about-cta-{{ uid }} .about-cta__bg {
       background-image: url("{{ s.bg_image | image_url: width: 1600 }}");
+      display:inherit !important;
     }
   {%- endif -%}
 {%- endstyle -%}
