@@ -24,14 +24,14 @@
 
 /* ----- Headline + brush underline ----- */
 .about-hero__headline {
-  margin: 0;
-  font-family: 'TAY Birdie', sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--ah-text);
-  font-size: 40px;
-  line-height: 0.98;
-  letter-spacing: 0;
+    margin: 0;
+    font-family: 'TAYRosemary';
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--ah-text);
+    font-size: 64px;
+    line-height: 64px;
+    letter-spacing: -0.64px;
 }
 .about-hero__stroke {
   display: block;
@@ -52,22 +52,24 @@
 
 /* ----- Intro copy ----- */
 .about-hero__intro {
-  margin: 24px 0 0;
-  max-width: 336px;
-  font-family: 'Matter', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1.28;
-  color: var(--ah-text);
+margin: 20px 0 0;
+    max-width: 336px;
+    font-family: Matter, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0;
+    color: var(--ah-text);
 }
 .about-hero__lede {
-  margin: 16px 0 0;
-  max-width: 336px;
-  font-family: 'Matter', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--ah-muted);
+margin: 20px 0 0;
+    max-width: 336px;
+    font-family: Matter, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ah-muted);
+    letter-spacing: 0;
 }
 
 /* ----- Image collage ----- */
@@ -130,18 +132,20 @@
 
 /* ----- Closing copy + signature ----- */
 .about-hero__closing {
-  margin: 40px 0 0;
-  max-width: 336px;
-  font-family: 'Matter', sans-serif;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--ah-text);
+margin: 40px 0 0;
+    max-width: 336px;
+    font-family: Matter, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ah-text);
+    letter-spacing: 0;
 }
 .about-hero__signature {
-  margin: 24px auto 0;
-  width: 200px;
-  max-width: 60%;
+    margin: 28px auto 0;
+    width: 200px;
+    max-width: 200px;
+    width: 100%;
 }
 .about-hero__signature img {
   display: block;
@@ -149,12 +153,13 @@
   height: auto;
 }
 .about-hero__attribution {
-  margin: 8px 0 0;
-  font-family: 'Matter', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--ah-text);
+    margin: 4px 0 0;
+    font-family: Matter, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ah-text);
+    letter-spacing: 0;
 }
 
 /* ==========================================================================
@@ -165,7 +170,9 @@
     padding: var(--ah-pad-top) 40px var(--ah-pad-bottom);
   }
   .about-hero__headline {
-    font-size: clamp(72px, 8vw, 112px);
+        font-size: 128px;
+        line-height: 128px;
+        letter-spacing: 0;
   }
   .about-hero__stroke {
     width: min(1088px, 82%);
@@ -173,16 +180,16 @@
     margin-top: 8px;
   }
   .about-hero__intro {
-    margin-top: 40px;
-    max-width: 962px;
-    font-size: 32px;
-    line-height: 1.25;
+        margin-top: 40px;
+        max-width: 962px;
+        font-size: 36px;
+        line-height: 48px;
   }
   .about-hero__lede {
     margin-top: 20px;
-    max-width: 620px;
-    font-size: 16px;
-    line-height: 1.5;
+        max-width: 780px;
+        font-size: 18px;
+        line-height: 28px;
   }
   .about-hero__collage {
     max-width: 872px;
@@ -205,16 +212,18 @@
     border-radius: 14px;
   }
   .about-hero__closing {
-    margin-top: 64px;
-    max-width: 726px;
-    font-size: 16px;
-    line-height: 1.5;
+    margin-top: 40px;
+        max-width: 710px;
+        font-size: 18px;
+        line-height: 28px;
   }
   .about-hero__signature {
-    width: 286px;
-    margin-top: 40px;
+    max-width: 286px;
+        margin-top: 32px;
   }
   .about-hero__attribution {
-    font-size: 16px;
+            font-size: 18px;
+        line-height: 28px;
+        margin: 8px 0 0;
   }
 }
