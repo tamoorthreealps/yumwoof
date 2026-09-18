@@ -210,4 +210,13 @@ margin: 16px 0 0;
         top: 76%;
         left: auto;
   }
+  .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-3 {
+    top: 9%;
+}
+.about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-3 {
+    top: 89%;
+}
+.about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-4 {
+    top: 44%;
+}
 }
