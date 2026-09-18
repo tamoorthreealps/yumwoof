@@ -123,8 +123,9 @@ border-radius: 24px;
 /* Family Owned badge */
 .about-hero__badge {
   position: absolute;
-  left: 4%;
-  top: 22%;
+  right: 49px;
+  left: auto;
+  top:33px;
   z-index: 3;
   display: inline-flex;
   align-items: center;
@@ -149,7 +150,7 @@ border-radius: 24px;
     margin: 0;
     padding: 0;
     border-radius:0;
-    max-width: 136px;
+    max-width: 79.16px;
 }
 
 .about-hero__badge.about-hero__badge_img img {
@@ -250,6 +251,7 @@ border-radius: 32px;
         border-radius: 32px;
   }
   .about-hero__badge {
+    right:auto;
     left: -24px;
     top: 100px;
     padding: 12px 20px;
@@ -257,6 +259,9 @@ border-radius: 32px;
     border-radius: 14px;
     transform: rotate(-15deg);
   }
+  .about-hero__badge.about-hero__badge_img {
+    max-width: 136px;
+}
   .about-hero__closing {
     margin-top: 79px;
         max-width: 710px;
