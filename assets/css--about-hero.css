@@ -3,6 +3,19 @@
    Founder intro: headline + brush underline, intro copy, tilted image collage
    with a "Family Owned" badge, closing copy, signature + attribution.
    Mobile-first; desktop layer at min-width: 768px.
+
+   ANIMATION ARCHITECTURE (read before editing)
+   - `transform` is reserved for LAYOUT only (photo/badge rotations, headline
+     offset). No animation in this file writes to `transform` on those
+     elements.
+   - Entrances and idle motion use the individual `translate` / `scale`
+     properties, which compose with `transform` instead of overriding it.
+     That is what keeps the mobile/desktop rotations intact.
+   - Hidden states only exist under `.about-hero--animate`, a class added by
+     the section's JS. No JS / reduced motion = everything simply visible.
+   - Load animations use `animation-fill-mode: backwards`: the element's
+     normal CSS is the end state, so nothing (e.g. a blur filter layer)
+     lingers after the animation finishes.
    ========================================================================== */
 
 .about-hero {
@@ -10,8 +23,34 @@
   color: var(--ah-text);
   padding: var(--ah-pad-top-mobile) 20px var(--ah-pad-bottom-mobile);
   overflow: hidden;
+
+  /* Animation-only additions: host for the background veil + shared easings */
+  position: relative;
+  isolation: isolate;
+  --ah-ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ah-ease-in-out: cubic-bezier(0.45, 0.05, 0.25, 1);
 }
 .about-hero * { box-sizing: border-box; }
+
+/* ----- Background: soft light reveal -----
+   A veil in the gradient's bottom colour sits over the background and slowly
+   dissolves, so the top colour gently blooms in. It ends fully transparent,
+   so the final background is pixel-identical to the original. */
+.about-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1; /* above the section background, below all content */
+  background: var(--ah-grad-bottom, #fff9ef);
+  opacity: 0;
+  pointer-events: none;
+  animation: aboutHeroVeil 3.2s var(--ah-ease-out) backwards;
+}
+
+@keyframes aboutHeroVeil {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
 
 .about-hero__inner {
   max-width: 1156px;
@@ -34,20 +73,35 @@
     letter-spacing: -0.64px;
     transform: translateY(-6px);
 }
+
+/* Outer word span: one-time "coming into focus" reveal (blur/opacity/offset).
+   Left-to-right stagger comes from --ah-i (word index, set in Liquid). */
 .about-hero__headline-word {
   display: inline-block;
-  filter: blur(16px);
-  opacity: 0.25;
-  transform: translateY(6px);
-  animation: aboutHeroHeadlineReveal 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: var(--delay);
+  animation: aboutHeroHeadlineReveal 3.2s var(--ah-ease-in-out) backwards;
+  animation-delay: calc(var(--ah-i, 0) * 0.28s + 0.2s);
+}
+
+/* Inner word span: continuous, barely-there drift. It lives on its own
+   element so it never fights the reveal for `transform`. Starts only after
+   the reveal has finished; each word is phase-shifted for an organic wave. */
+.about-hero__headline-word-inner {
+  display: inline-block;
+  animation: aboutHeroHeadlineDrift 4.8s ease-in-out infinite alternate;
+  animation-delay: calc(var(--ah-i, 0) * 0.9s + 3.6s);
 }
 
 @keyframes aboutHeroHeadlineReveal {
   0% {
-    filter: blur(16px);
-    opacity: 0.25;
-    transform: translateY(6px);
+    filter: blur(18px);
+    opacity: 0;
+    transform: translateY(0.06em);
+  }
+
+  /* Opacity settles early; blur + offset keep easing to 100%,
+     which is what reads as "focusing" rather than "fading". */
+  60% {
+    opacity: 1;
   }
 
   100% {
@@ -56,6 +110,12 @@
     transform: translateY(0);
   }
 }
+
+@keyframes aboutHeroHeadlineDrift {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-0.024em); } /* ~3px desktop, ~1.5px mobile */
+}
+
 .about-hero__stroke {
   display: block;
   width: min(224px, 70%);
@@ -77,6 +137,30 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Underline reveal: drawn softly left-to-right while fading in, starting once
+   the first words are legible. The image variant animates the <img> because
+   its wrapper has height: 0 (clipping the wrapper would hide the image). */
+.about-hero__stroke:not(.about-hero__stroke_img),
+.about-hero__stroke.about-hero__stroke_img img {
+  animation: aboutHeroStrokeReveal 2.6s var(--ah-ease-in-out) 1.3s backwards;
+}
+
+@keyframes aboutHeroStrokeReveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(-20% 100% -20% 0);
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    clip-path: inset(-20% 0 -20% 0);
+  }
 }
 
 /* ----- Intro copy ----- */
@@ -143,7 +227,7 @@ border-radius: 24px;
     border-radius: 14px;
 }
 
-/* Family Owned badge */
+/* Family Owned badge — always visible, never hidden on load */
 .about-hero__badge {
   position: absolute;
   right: 49px;
@@ -165,6 +249,16 @@ border-radius: 24px;
   line-height: 1.05;
   text-align: center;
   letter-spacing: 0;
+
+  /* OPTIONAL: 2px idle float via `translate`, so rotation/position are
+     untouched. Delete these two lines for a completely static badge. */
+  animation: aboutHeroBadgeFloat 5.5s ease-in-out infinite alternate;
+  animation-delay: 1.5s;
+}
+
+@keyframes aboutHeroBadgeFloat {
+  0%   { translate: 0 0; }
+  100% { translate: 0 -2px; }
 }
 
 .about-hero__badge.about-hero__badge_img {
@@ -214,92 +308,69 @@ margin: 40px 0 0;
     letter-spacing: 0;
 }
 
+/* ==========================================================================
+   Scroll reveals (intro, lede, photos, closing, signature, attribution)
+   Hidden state applies only once JS has added `.about-hero--animate`.
+   Uses `translate` / `scale` — never `transform` — so rotations are safe.
+   The transition is declared on the revealed state only, so hiding is
+   instant and revealing is animated.
+   ========================================================================== */
 
-.about-hero__intro,
-.about-hero__lede,
-.about-hero__closing,
-.about-hero__signature,
-.about-hero__attribution {
+/* Text blocks */
+.about-hero--animate .about-hero__intro,
+.about-hero--animate .about-hero__lede,
+.about-hero--animate .about-hero__closing,
+.about-hero--animate .about-hero__signature,
+.about-hero--animate .about-hero__attribution {
   opacity: 0;
-  transform: translateY(30px);
+  translate: 0 14px;
+}
+
+.about-hero--animate .about-hero__intro.is-revealed,
+.about-hero--animate .about-hero__lede.is-revealed,
+.about-hero--animate .about-hero__closing.is-revealed,
+.about-hero--animate .about-hero__signature.is-revealed,
+.about-hero--animate .about-hero__attribution.is-revealed {
+  opacity: 1;
+  translate: 0 0;
   transition:
-    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.6s var(--ah-ease-out),
+    translate 1.9s var(--ah-ease-out);
+  /* --ah-load-delay is set by JS only for elements on screen at page load */
+  transition-delay: calc(var(--ah-load-delay, 0s) + var(--ah-stagger, 0s));
 }
 
-.about-hero__intro.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.05s;
-}
-
-.about-hero__lede.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.15s;
-}
-
-.about-hero__photo {
+/* Photos: gentle rise + near-imperceptible settle; rotation never animates */
+.about-hero--animate .about-hero__photo {
   opacity: 0;
-  transform: scale(0.96);
+  translate: 0 20px;
+  scale: 0.985;
+}
+
+.about-hero--animate .about-hero__photo.is-revealed {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
   transition:
-    opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.8s var(--ah-ease-out),
+    translate 2.2s var(--ah-ease-out),
+    scale 2.2s var(--ah-ease-out);
+  transition-delay: calc(var(--ah-load-delay, 0s) + var(--ah-stagger, 0s));
 }
 
-.about-hero__photo--1.is-revealed {
-  opacity: 1;
-  transform: rotate(-3.46deg) scale(1);
-}
+/* Stagger offsets */
+.about-hero__intro       { --ah-stagger: 0s; }
+.about-hero__lede        { --ah-stagger: 0.15s; }
+.about-hero__photo--1    { --ah-stagger: 0s; }
+.about-hero__photo--2    { --ah-stagger: 0.2s; }
+.about-hero__closing     { --ah-stagger: 0s; }
+.about-hero__signature   { --ah-stagger: 0.15s; }
+.about-hero__attribution { --ah-stagger: 0.3s; }
 
-.about-hero__photo--2.is-revealed {
-  opacity: 1;
-  transform: rotate(10deg) scale(1);
-}
-
-.about-hero__badge {
-  opacity: 0;
-  transform: rotate(8deg) scale(0.8);
-  transition:
-    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.about-hero__badge.is-revealed {
-  opacity: 1;
-  transform: rotate(8deg) scale(1);
-  transition-delay: 0.25s;
-}
-
-.about-hero__closing.is-revealed,
-.about-hero__signature.is-revealed,
-.about-hero__attribution.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.about-hero__closing.is-revealed {
-  transition-delay: 0.05s;
-}
-
-.about-hero__signature.is-revealed {
-  transition-delay: 0.15s;
-}
-
-.about-hero__attribution.is-revealed {
-  transition-delay: 0.25s;
-}
 /* ==========================================================================
    Desktop
    ========================================================================== */
 @media (min-width: 768px) {
-    .about-hero__photo--1.is-revealed {
-    transform: rotate(-10.25deg) scale(1);
-  }
-
-  .about-hero__photo--2.is-revealed {
-    transform: rotate(10deg) scale(1);
-  }
   .about-hero {
     padding: var(--ah-pad-top) 40px var(--ah-pad-bottom);
   }
@@ -363,10 +434,9 @@ border-radius: 32px;
     padding: 12px 20px;
     font-size: 20px;
     border-radius: 14px;
-    transform: rotate(15deg);
-  }
-  .about-hero__badge.is-revealed {
-    transform: rotate(-15deg) scale(1);
+    /* Was rotate(15deg) here + rotate(-15deg) on .is-revealed. -15deg is what
+       actually displayed after the old reveal, so it is now the base value. */
+    transform: rotate(-15deg);
   }
   .about-hero__badge.about-hero__badge_img {
     max-width: 136px;
@@ -385,5 +455,33 @@ border-radius: 32px;
             font-size: 18px;
         line-height: 28px;
         margin: 8px 0 0;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — no movement, everything visible immediately.
+   (JS also skips adding .about-hero--animate; this covers the CSS-driven
+   animations and a preference that changes mid-session.)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .about-hero::before,
+  .about-hero__headline-word,
+  .about-hero__headline-word-inner,
+  .about-hero__stroke,
+  .about-hero__stroke img,
+  .about-hero__badge {
+    animation: none !important;
+  }
+
+  .about-hero--animate .about-hero__intro,
+  .about-hero--animate .about-hero__lede,
+  .about-hero--animate .about-hero__photo,
+  .about-hero--animate .about-hero__closing,
+  .about-hero--animate .about-hero__signature,
+  .about-hero--animate .about-hero__attribution {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    transition: none !important;
   }
 }

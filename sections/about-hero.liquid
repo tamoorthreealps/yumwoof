@@ -29,8 +29,8 @@
     {%- for word in headline_words -%}
       <span
         class="about-hero__headline-word"
-        style="--delay: {{ forloop.index0 | times: 0.18 }}s;"
-      >{{ word }}</span>{% unless forloop.last %} {% endunless %}
+        style="--delay: {{ forloop.index0 | times: 0.18 }}s; --ah-i: {{ forloop.index0 }};"
+      ><span class="about-hero__headline-word-inner">{{ word }}</span></span>{% unless forloop.last %} {% endunless %}
     {%- endfor -%}
   </h1>
 {%- endif -%}
@@ -171,20 +171,57 @@
 {% endschema %}
 <script>
 (function () {
+  /* In the theme editor this script re-runs every time the section is
+     re-rendered. Reuse the first instance instead of stacking listeners. */
+  if (typeof window.__aboutHeroInitAnimations === 'function') {
+    window.__aboutHeroInitAnimations();
+    return;
+  }
+
+  var REVEAL_SELECTOR =
+    '.about-hero__intro, .about-hero__lede, .about-hero__photo, .about-hero__closing, .about-hero__signature, .about-hero__attribution';
+
+  /* Elements already on screen at page load wait for the headline to start
+     coming into focus. Elements revealed later by scrolling get no extra delay. */
+  var LOAD_DELAY = 0.9;  /* seconds */
+  var LOAD_STEP = 0.12;  /* seconds added per element in the first batch */
+
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
   function initAboutHeroAnimations() {
     document.querySelectorAll('.about-hero').forEach(function (section) {
       if (section.dataset.animationsInitialized) return;
       section.dataset.animationsInitialized = 'true';
 
-      var elements = section.querySelectorAll(
-        '.about-hero__intro, .about-hero__lede, .about-hero__photo, .about-hero__badge, .about-hero__closing, .about-hero__signature, .about-hero__attribution'
-      );
-
+      var elements = section.querySelectorAll(REVEAL_SELECTOR);
       if (!elements.length) return;
 
+      /* Without the --animate class nothing is ever hidden, so content stays
+         fully visible for reduced motion, old browsers, or if JS fails. */
+      if (prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+
+      section.classList.add('about-hero--animate');
+
+      var inEditor = !!(window.Shopify && window.Shopify.designMode);
+      var isFirstBatch = true;
+
       var observer = new IntersectionObserver(function (entries) {
+        var first = isFirstBatch;
+        isFirstBatch = false;
+        var order = 0;
+
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
+
+          if (first && !inEditor) {
+            entry.target.style.setProperty(
+              '--ah-load-delay',
+              (LOAD_DELAY + order * LOAD_STEP).toFixed(2) + 's'
+            );
+            order++;
+          }
 
           entry.target.classList.add('is-revealed');
           observer.unobserve(entry.target);
@@ -200,10 +237,14 @@
     });
   }
 
+  window.__aboutHeroInitAnimations = initAboutHeroAnimations;
+
+  /* This script sits after the section markup, so run immediately to set the
+     hidden state before first paint (no flash), then again once the DOM is
+     complete in case other instances exist further down the page. */
+  initAboutHeroAnimations();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAboutHeroAnimations);
-  } else {
-    initAboutHeroAnimations();
   }
 
   document.addEventListener('shopify:section:load', initAboutHeroAnimations);
