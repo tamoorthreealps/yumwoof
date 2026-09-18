@@ -13,7 +13,7 @@
 .about-solution__inner {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 0 32px 0 32px;
   background-color: var(--as-bg);
   color: var(--as-text);
   padding: var(--as-pad-top-mobile) 28px var(--as-pad-bottom-mobile);
@@ -44,22 +44,23 @@
 
 .about-solution__heading {
   margin: 0;
-  font-family: 'TAY Birdie', sans-serif;
+  font-family: 'TAYRosemary';
   font-weight: 400;
   text-transform: uppercase;
   color: var(--as-text);
-  font-size: 34px;
-  line-height: 1.0;
-  letter-spacing: 0;
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: -0.48px;
 }
 
 .about-solution__body {
-  margin: 16px 0 0;
-  font-family: 'Matter', sans-serif;
+  margin: 8px 0 0;
+  font-family: Matter, sans-serif;
   font-weight: 400;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 20px;
   color: var(--as-text);
+  letter-spacing: 0;
 }
 
 /* ==========================================================================
@@ -70,7 +71,7 @@
     padding: 0 36px;
   }
   .about-solution__inner {
-    border-radius: 40px;
+    border-radius: 0 64px 0 64px;
     padding: var(--as-pad-top) 122px var(--as-pad-bottom);
     min-height: var(--as-min-height);
   }
@@ -78,10 +79,13 @@
     max-width: 576px;
   }
   .about-solution__heading {
-    font-size: clamp(48px, 5vw, 64px);
+    font-size: 80px;
+    line-height: 88px;
+    letter-spacing: -1.60px;
+    transform: translateY(-6px);
   }
   .about-solution__body {
-    margin-top: 24px;
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 28px;
   }
 }
