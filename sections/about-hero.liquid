@@ -23,21 +23,20 @@
   "
 >
   <div class="about-hero__inner">
-    {%- if s.headline != blank -%}
-      <h1 class="about-hero__headline">
-        {%- assign headline_words = s.headline | split: ' ' -%}
-        {%- for word in headline_words -%}
-          <span class="about-hero__headline-word">{{ word }}</span>
-          {%- unless forloop.last %}&nbsp;{% endunless %}
-        {%- endfor -%}
-      </h1>
-    {%- endif -%}
+{%- if s.headline != blank -%}
+  <h1 class="about-hero__headline">
+    {%- assign headline_words = s.headline | split: ' ' -%}
+    {%- for word in headline_words -%}
+      <span
+        class="about-hero__headline-word"
+        style="--delay: {{ forloop.index0 | times: 0.15 }}s;"
+      >{{ word }}</span>{% unless forloop.last %}&nbsp;{% endunless %}
+    {%- endfor -%}
+  </h1>
+{%- endif -%}
 
     {%- if s.stroke_image != blank or s.stroke_image_mobile != blank -%}
-      <span
-        class="about-hero__stroke {% if s.stroke_image != blank or s.stroke_image_mobile != blank %}about-hero__stroke_img{% endif %}"
-        aria-hidden="true"
-      >
+      <span class="about-hero__stroke {% if s.stroke_image != blank or s.stroke_image_mobile != blank %}about-hero__stroke_img{% endif %}" aria-hidden="true">
         {%- if s.stroke_image_mobile != blank -%}
           <picture>
             <source
@@ -75,8 +74,7 @@
                 loading: 'lazy',
                 widths: '360, 544, 720, 1088',
                 sizes: '(min-width: 768px) 540px, 68vw',
-                alt: s.image_1.alt
-              | default: ''
+                alt: s.image_1.alt | default: ''
             }}
           </div>
         {%- endif -%}
@@ -89,8 +87,7 @@
                 loading: 'lazy',
                 widths: '300, 448, 600, 896',
                 sizes: '(min-width: 768px) 445px, 60vw',
-                alt: s.image_2.alt
-              | default: ''
+                alt: s.image_2.alt | default: ''
             }}
           </div>
         {%- endif -%}
@@ -117,8 +114,7 @@
             loading: 'lazy',
             widths: '200, 286, 430, 574',
             sizes: '(min-width: 768px) 286px, 200px',
-            alt: s.signature_image.alt
-          | default: 'Founders signature'
+            alt: s.signature_image.alt | default: 'Founders signature'
         }}
       </div>
     {%- endif -%}
@@ -137,57 +133,21 @@
   "settings": [
     { "type": "header", "content": "Headline" },
     { "type": "text", "id": "headline", "label": "Headline", "default": "Dogs Deserve Real Food" },
-    {
-      "type": "image_picker",
-      "id": "stroke_image",
-      "label": "Underline image (optional)",
-      "info": "A brush-stroke underline. Leave empty to use a solid colored line."
-    },
-    {
-      "type": "image_picker",
-      "id": "stroke_image_mobile",
-      "label": "Underline image mobile (optional)",
-      "info": "Mobile-specific brush-stroke underline. Leave empty to use the desktop underline image."
-    },
+    { "type": "image_picker", "id": "stroke_image", "label": "Underline image (optional)", "info": "A brush-stroke underline. Leave empty to use a solid colored line." },
+    { "type": "image_picker", "id": "stroke_image_mobile", "label": "Underline image mobile (optional)", "info": "Mobile-specific brush-stroke underline. Leave empty to use the desktop underline image." },
 
     { "type": "header", "content": "Intro" },
-    {
-      "type": "textarea",
-      "id": "intro",
-      "label": "Intro statement",
-      "default": "Yumwoof was founded by my wife Ana and me after years spent researching nutrition, inflammation, and gut health."
-    },
-    {
-      "type": "textarea",
-      "id": "lede",
-      "label": "Supporting text",
-      "default": "Along the way, we became increasingly frustrated by how much of the pet food industry relied on heavily processed ingredients, synthetic additives, and manufacturing shortcuts."
-    },
+    { "type": "textarea", "id": "intro", "label": "Intro statement", "default": "Yumwoof was founded by my wife Ana and me after years spent researching nutrition, inflammation, and gut health." },
+    { "type": "textarea", "id": "lede", "label": "Supporting text", "default": "Along the way, we became increasingly frustrated by how much of the pet food industry relied on heavily processed ingredients, synthetic additives, and manufacturing shortcuts." },
 
     { "type": "header", "content": "Image collage" },
     { "type": "image_picker", "id": "image_1", "label": "Image 1 (front / left)" },
     { "type": "image_picker", "id": "image_2", "label": "Image 2 (back / right)" },
-    {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Badge text",
-      "default": "Family Owned",
-      "info": "Leave empty to hide the badge."
-    },
-    {
-      "type": "image_picker",
-      "id": "badge_image",
-      "label": "Badge image (optional)",
-      "info": "If an image is selected, it will be shown instead of the badge text."
-    },
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "Family Owned", "info": "Leave empty to hide the badge." },
+    { "type": "image_picker", "id": "badge_image", "label": "Badge image (optional)", "info": "If an image is selected, it will be shown instead of the badge text." },
 
     { "type": "header", "content": "Closing" },
-    {
-      "type": "textarea",
-      "id": "closing",
-      "label": "Closing text",
-      "default": "Today, Yumwoof creates air-dried recipes built around premium proteins, healthy fats, and whole food nutrition. Rather than formulating around cost or convenience, we focus on creating food we would proudly feed our own dog, Sherlock."
-    },
+    { "type": "textarea", "id": "closing", "label": "Closing text", "default": "Today, Yumwoof creates air-dried recipes built around premium proteins, healthy fats, and whole food nutrition. Rather than formulating around cost or convenience, we focus on creating food we would proudly feed our own dog, Sherlock." },
     { "type": "image_picker", "id": "signature_image", "label": "Signature image" },
     { "type": "text", "id": "attribution", "label": "Attribution", "default": "Jaron & Ana, Founders" },
 
@@ -201,87 +161,11 @@
     { "type": "color", "id": "color_badge_text", "label": "Badge text", "default": "#0d0d0d" },
 
     { "type": "header", "content": "Spacing" },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Padding top (desktop)",
-      "min": 0,
-      "max": 320,
-      "step": 4,
-      "unit": "px",
-      "default": 228
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Padding bottom (desktop)",
-      "min": 0,
-      "max": 320,
-      "step": 4,
-      "unit": "px",
-      "default": 132
-    },
-    {
-      "type": "range",
-      "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "default": 112
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
-      "min": 0,
-      "max": 240,
-      "step": 4,
-      "unit": "px",
-      "default": 64
-    }
+    { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 320, "step": 4, "unit": "px", "default": 228 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 320, "step": 4, "unit": "px", "default": 132 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 112 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 64 }
   ],
   "presets": [{ "name": "About Hero" }]
 }
 {% endschema %}
-<script>
-(function () {
-  function initAboutHero() {
-    document.querySelectorAll('.about-hero').forEach(function (section) {
-      if (section.dataset.headlineAnimationInitialized) return;
-      section.dataset.headlineAnimationInitialized = 'true';
-
-      var words = section.querySelectorAll('.about-hero__headline-word');
-
-      if (!words.length) return;
-
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-
-          words.forEach(function (word, index) {
-            setTimeout(function () {
-              word.classList.add('is-visible');
-            }, index * 180);
-          });
-
-          observer.unobserve(entry.target);
-        });
-      }, {
-        threshold: 0.3
-      });
-
-      observer.observe(section.querySelector('.about-hero__headline'));
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAboutHero);
-  } else {
-    initAboutHero();
-  }
-
-  document.addEventListener('shopify:section:load', initAboutHero);
-})();
-</script>

@@ -39,16 +39,22 @@
   filter: blur(14px);
   opacity: 0.35;
   transform: translateY(8px);
-  transition:
-    filter 1s ease,
-    opacity 1s ease,
-    transform 1s ease;
+  animation: aboutHeroHeadlineReveal 1s ease forwards;
+  animation-delay: var(--delay);
 }
 
-.about-hero__headline-word.is-visible {
-  filter: blur(0);
-  opacity: 1;
-  transform: translateY(0);
+@keyframes aboutHeroHeadlineReveal {
+  0% {
+    filter: blur(14px);
+    opacity: 0.35;
+    transform: translateY(8px);
+  }
+
+  100% {
+    filter: blur(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .about-hero__stroke {
   display: block;
