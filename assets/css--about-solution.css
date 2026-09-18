@@ -13,6 +13,7 @@
 .about-solution__inner {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   display: flex;
   align-items: flex-end;
   min-height: var(--as-min-height-mobile);
@@ -32,7 +33,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   transform: translate3d(0, 0, 0);
   will-change: transform;
@@ -43,8 +44,8 @@
   inset: 0;
   background: var(--as-bg);
   opacity: var(--as-scrim);
-  z-index: 1;
-  display:inherit !important;
+  z-index: 0;
+  display: inherit !important;
 }
 
 .about-solution__content {
