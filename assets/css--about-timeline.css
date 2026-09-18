@@ -40,6 +40,10 @@
   position: relative;
 }
 
+.about-timeline__list .about-timeline__item:last-child {
+  padding-bottom:0;
+}
+
 .about-timeline__text {
   max-width: 620px;
   margin: 0 auto;
