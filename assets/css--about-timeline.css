@@ -84,6 +84,15 @@ margin: 12px 0 0;
     line-height: 20px;
     color: var(--at-body);
     letter-spacing: 0;
+    max-width: 336px;
+}
+
+.about-timeline__text.about-timeline__text_1 .about-timeline__body {
+    padding: 0 1px;
+}
+
+.about-timeline__text.about-timeline__text_3 .about-timeline__body {
+    padding: 0 2.6px;
 }
 
 .about-timeline__body p {
@@ -181,6 +190,7 @@ margin: 12px 0 0;
         margin-top: 9px;
         font-size: 18px;
         line-height: 28px;
+        max-width:100%;
   }
 
   /* Photos scatter to the sides of the centered text column */
@@ -223,5 +233,9 @@ margin: 12px 0 0;
 .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2,
 .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 {
     display: none;
+}
+.about-timeline__text.about-timeline__text_1 .about-timeline__body,
+.about-timeline__text.about-timeline__text_3 .about-timeline__body {
+    padding: 0;
 }
 }
