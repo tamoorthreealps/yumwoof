@@ -252,13 +252,27 @@ border-radius: 24px;
 
   /* OPTIONAL: 2px idle float via `translate`, so rotation/position are
      untouched. Delete these two lines for a completely static badge. */
+  transform: rotate(8deg);
   animation: aboutHeroBadgeFloat 5.5s ease-in-out infinite alternate;
   animation-delay: 1.5s;
+  will-change: translate, rotate;
 }
 
 @keyframes aboutHeroBadgeFloat {
-  0%   { translate: 0 0; }
-  100% { translate: 0 -2px; }
+  0% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  50% {
+    translate: 0 -4px;
+    rotate: -1deg;
+  }
+
+  100% {
+    translate: 0 0;
+    rotate: 1deg;
+  }
 }
 
 .about-hero__badge.about-hero__badge_img {
