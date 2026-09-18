@@ -132,6 +132,20 @@ border-radius: 32px;
   letter-spacing: 0;
 }
 
+.about-hero__badge.about-hero__badge_img {
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    max-width: 136px;
+}
+
+.about-hero__badge.about-hero__badge_img img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 /* ----- Closing copy + signature ----- */
 .about-hero__closing {
 margin: 40px 0 0;
