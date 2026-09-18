@@ -65,7 +65,7 @@
 
     # Initial desktop title: "<Recipe> Recipe", falling back to the product title.
     assign st_title = product.title
-    if recipe_index >= 0
+    if st_is_v2 and recipe_index >= 0
       assign st_recipe = st_variant.options[recipe_index] | strip
       if st_recipe != blank and st_recipe != 'Default Title'
         assign st_title = st_recipe | append: ' Recipe'
@@ -74,24 +74,24 @@
 
     # Variant-level custom.sticky_atc_image: initial thumb + id→url map for JS.
     assign st_v2_images = ''
-    assign st_v2_img = st_variant.metafields.custom.sticky_atc_image.value
-
-    if st_v2_img != blank
-      assign st_thumb = st_v2_img
-    endif
-
-    for v in product.variants
-      assign vimg = v.metafields.custom.sticky_atc_image.value
-      if vimg != blank
-        assign vurl = vimg | image_url: width: 300 | json
-        assign ventry = '"' | append: v.id | append: '":' | append: vurl
-        if st_v2_images == ''
-          assign st_v2_images = ventry
-        else
-          assign st_v2_images = st_v2_images | append: ',' | append: ventry
-        endif
+    if st_is_v2
+      assign st_v2_img = st_variant.metafields.custom.sticky_atc_image.value
+      if st_v2_img != blank
+        assign st_thumb = st_v2_img
       endif
-    endfor
+      for v in product.variants
+        assign vimg = v.metafields.custom.sticky_atc_image.value
+        if vimg != blank
+          assign vurl = vimg | image_url: width: 300 | json
+          assign ventry = '"' | append: v.id | append: '":' | append: vurl
+          if st_v2_images == ''
+            assign st_v2_images = ventry
+          else
+            assign st_v2_images = st_v2_images | append: ',' | append: ventry
+          endif
+        endif
+      endfor
+    endif
 
     assign st_size = ''
     if size_index >= 0
