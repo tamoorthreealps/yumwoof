@@ -263,11 +263,11 @@ margin: 12px auto 0;
     top: 44%;
     transform: translateY(-45%) rotate(6deg);
 }
-.about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2,
+/* .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2,
 .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2,
 .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 {
     display: none;
-}
+} */
 .about-timeline__text.about-timeline__text_1 .about-timeline__body,
 .about-timeline__text.about-timeline__text_3 .about-timeline__body {
     padding: 0;
@@ -374,8 +374,11 @@ margin: 12px auto 0;
      Rotations, widths, left/right offsets are untouched. Tweak freely. */
   .about-timeline--pinned .about-timeline__photo--a { top: 64%; }
   .about-timeline--pinned .about-timeline__photo--b { top: 46%; }
+  .about-timeline--pinned .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2 { top: 64%; }
+  .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2 { top: 46%; }
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-3 { top: 62%; }
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-3 { top: 34%; }
+  .about-timeline--pinned .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 { top: 64%; }
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-4 { top: 44%; }
 }
 
