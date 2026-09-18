@@ -123,7 +123,7 @@
         "scrim_opacity": 45,
         "color_wash_top": "#fff9ef",
         "color_wash_bottom": "#cfe0f4",
-        "wash_pad_top": 160,
+        "wash_pad_top": 0,
         "wash_pad_bottom": 120,
         "wash_pad_top_mobile": 80,
         "wash_pad_bottom_mobile": 72,
