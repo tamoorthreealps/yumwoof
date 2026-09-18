@@ -40,12 +40,12 @@
         "body": "<p>Like many pet parents, we wanted food we could trust. What began as a personal search for better nutrition eventually led us to develop some of the first air-dried recipes of their kind, publish a book on canine nutrition, build relationships with trusted farmers, ranchers, and fishermen, and serve millions of meals to dogs through better food.</p>",
         "color_bg": "#0d0d0d",
         "color_text": "#fff9ef",
-        "scrim_opacity": 55,
+        "scrim_opacity": 0,
         "min_height": 744,
         "padding_top": 124,
         "padding_bottom": 124,
-        "padding_top_mobile": 72,
-        "padding_bottom_mobile": 72
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
       }
     },
     "about_timeline": {
