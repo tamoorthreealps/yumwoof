@@ -80,7 +80,7 @@
   align-items: center;
   justify-content: center;
   margin: auto auto 0;
-  padding: 14px 28px;
+  padding: 13.2px 31.17px;
   border: 1px solid var(--ac-button-border);
   border-radius: 999px;
   background: linear-gradient(
@@ -93,9 +93,9 @@ background-size: 200% 100%;
 animation: aboutCtaGradient 3s ease-in-out infinite;
   color: var(--ac-button-text);
   font-family: 'FFBlurProMedium', sans-serif;
-  font-size: 15px;
-  line-height: 1.4;
-  letter-spacing: 0.06em;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1.12px;
   text-transform: uppercase;
   text-decoration: none;
   transition: background .2s ease, color .2s ease;
@@ -145,7 +145,7 @@ animation: aboutCtaGradient 3s ease-in-out infinite;
         line-height: 32px;
   }
   .about-cta__button {
-margin-top: 24px;
+        margin-top: 24px;
         padding: 16.2px 38.95px 14.2px;
         font-size: 16px;
         line-height: 24px;
