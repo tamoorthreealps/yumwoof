@@ -8,40 +8,59 @@
 .about-hero {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(180deg, var(--ah-grad-top) 0%, var(--ah-grad-bottom) 100%);
+  background: var(--ah-grad-bottom);
   color: var(--ah-text);
   padding: var(--ah-pad-top-mobile) 20px var(--ah-pad-bottom-mobile);
   overflow: hidden;
 }
+
 .about-hero::before {
   content: "";
   position: absolute;
-  inset: -10%;
+  inset: -20%;
   z-index: -1;
-  background: linear-gradient(
-    180deg,
-    var(--ah-grad-top) 0%,
-    var(--ah-grad-bottom) 100%
-  );
+  background:
+    radial-gradient(
+      ellipse at 20% 20%,
+      var(--ah-grad-top) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 80% 35%,
+      var(--ah-grad-top) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 45% 80%,
+      var(--ah-grad-top) 0%,
+      transparent 60%
+    );
+  filter: blur(45px);
   opacity: 0;
-  transform: scale(1.08);
-  filter: blur(12px);
-  animation: aboutHeroBackgroundReveal 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: scale(1.15);
+  animation: aboutHeroSmokeReveal 4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes aboutHeroBackgroundReveal {
+@keyframes aboutHeroSmokeReveal {
   0% {
     opacity: 0;
+    transform: scale(1.15);
+    filter: blur(70px);
+  }
+
+  40% {
+    opacity: 0.45;
     transform: scale(1.08);
-    filter: blur(12px);
+    filter: blur(55px);
   }
 
   100% {
     opacity: 1;
     transform: scale(1);
-    filter: blur(0);
+    filter: blur(45px);
   }
 }
+
 .about-hero * { box-sizing: border-box; }
 
 .about-hero__inner {
