@@ -156,7 +156,7 @@ margin: 12px auto 0;
 /* ==========================================================================
    Desktop
    ========================================================================== */
-@media (min-width: 768px) {
+@media (min-width: 991px) {
   .about-timeline {
     padding: var(--at-pad-top) 60px var(--at-pad-bottom);
     /* The page's cream fades to the CTA wash colour across the bottom band, so
