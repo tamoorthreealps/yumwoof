@@ -10,7 +10,8 @@
   - Not rendered at all when the product is unavailable in the current market
     (custom.unavailable_markets), matching snippets/buy-buttons.liquid.
 
-  ancestral-blend-v2 template only:
+  All product templates (originally built for ancestral-blend-v2 — the
+  `sticky-atc_v2` class and `st_is_v2` flag names are kept so nothing downstream breaks):
   - Desktop title shows "<Recipe> Recipe" (falls back to the product title).
   - Thumb prefers the variant-level custom.sticky_atc_image metafield.
   - CSS-only slide up/down on show/hide (including footer-visible).
@@ -20,6 +21,7 @@
   - product: {Object} product object
   - section_id: {String} id of the main-product section
   - label: {String} (optional) button label, defaults to "Add to Bag"
+  - mode: {String} (optional) 'default' | 'scrolled-past', defaults to 'default'
 
   Usage:
   {% render 'sticky-atc', product: product, section_id: section.id, label: section.settings.sticky_atc_button_label %}
@@ -60,7 +62,7 @@
 
     assign st_thumb = st_variant.featured_image | default: product.featured_image
 
-    # ----- ancestral-blend-v2 only -----
+    # ----- Global (formerly ancestral-blend-v2 only). Always true: do NOT gate on template.suffix. -----
     assign st_is_v2 = true
 
     # Initial desktop title: "<Recipe> Recipe", falling back to the product title.
@@ -664,7 +666,8 @@
           this.spinnerEl = this.querySelector('.loading__spinner');
           this.titleEl = this.querySelector('[data-sticky-title]');
 
-          // ancestral-blend-v2 only — class is set from template.suffix in Liquid.
+          // Global (formerly ancestral-blend-v2 only) — the `sticky-atc_v2` class is
+          // always rendered by the Liquid above, on every product template.
           this.isV2 = this.classList.contains('sticky-atc_v2');
           this.variantImages = null;
           if (this.isV2) {
@@ -877,7 +880,7 @@
           }
         }
 
-        // ----- Desktop title = "<Recipe> Recipe" (ancestral-blend-v2 only) -----
+        // ----- Desktop title = "<Recipe> Recipe" (all product templates) -----
         syncTitle() {
           if (!this.isV2 || !this.titleEl) return;
           var variant = this._variant;
@@ -894,7 +897,7 @@
           var variant = this._variant;
           if (!variant || !this.thumbEl) return;
           var src = '';
-          // 1. ancestral-blend-v2 only: variant-level custom.sticky_atc_image.
+          // 1. Variant-level custom.sticky_atc_image (all product templates).
           if (this.isV2 && this.variantImages && variant.id != null) {
             src = this.variantImages[String(variant.id)] || '';
           }
@@ -1015,7 +1018,7 @@
             this.setVisible(true);
           }
 
-          // ancestral-blend-v2 only: track whether the bar overlaps .product--main on
+          // All product templates: track whether the bar overlaps .product--main on
           // desktop. One observer at a time; (re)built only when the 749px breakpoint
           // is actually crossed, so resize never stacks observers.
             if (self.isV2) {
