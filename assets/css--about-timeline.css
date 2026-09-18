@@ -277,7 +277,7 @@ margin: 12px auto 0;
 
 @media (min-width: 1249px) {
   .about-timeline__photo {
-    width: 225px !important;
+    width: 225px;
   }
   .about-timeline__photo--a {
         left: 20px;
