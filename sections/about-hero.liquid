@@ -237,6 +237,58 @@
     });
   }
 
+  function initAboutHeroScrollZoom() {
+  document.querySelectorAll('.about-hero').forEach(function (section) {
+    if (section.dataset.scrollZoomInitialized) return;
+
+    section.dataset.scrollZoomInitialized = 'true';
+
+    var photos = section.querySelectorAll('.about-hero__photo img');
+
+    if (!photos.length) return;
+
+    function updateZoom() {
+      var viewportHeight = window.innerHeight;
+
+      photos.forEach(function (image) {
+        var rect = image.getBoundingClientRect();
+        var center = rect.top + rect.height / 2;
+        var distance = Math.abs(viewportHeight / 2 - center);
+
+        var progress = 1 - Math.min(
+          distance / (viewportHeight * 0.75),
+          1
+        );
+
+        var scale = 1 + (progress * 0.08);
+
+        image.style.transform = 'scale(' + scale.toFixed(4) + ')';
+      });
+    }
+
+    var ticking = false;
+
+    function onScroll() {
+      if (ticking) return;
+
+      ticking = true;
+
+      requestAnimationFrame(function () {
+        updateZoom();
+        ticking = false;
+      });
+    }
+
+    updateZoom();
+
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
+
+    window.addEventListener('resize', updateZoom);
+  });
+}
+
   window.__aboutHeroInitAnimations = initAboutHeroAnimations;
 
   /* This script sits after the section markup, so run immediately to set the
@@ -247,6 +299,9 @@
     document.addEventListener('DOMContentLoaded', initAboutHeroAnimations);
   }
 
-  document.addEventListener('shopify:section:load', initAboutHeroAnimations);
+  document.addEventListener('shopify:section:load', function () {
+  initAboutHeroAnimations();
+  initAboutHeroScrollZoom();
+});
 })();
 </script>
