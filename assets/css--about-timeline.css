@@ -157,15 +157,16 @@ margin: 12px auto 0;
    Desktop
    ========================================================================== */
 @media (min-width: 1249px) {
+  .about-timeline__photo {
+    width: 225px;
+  }
   .about-timeline__photo--a {
         left: 20px;
   }
   .about-timeline__photo--b {
     right: 20px;
   }
-  .about-timeline__photo {
-    width: 225px;
-  }
+  
 }
 @media (min-width: 991px) {
   .about-timeline {
