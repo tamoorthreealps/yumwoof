@@ -47,13 +47,13 @@
 }
 
 .about-timeline__date {
-margin: 0;
+    margin: 0;
     font-family: TAY Birdie, sans-serif;
     text-transform: uppercase;
     color: var(--at-eyebrow);
-    font-size: 20px;
+    font-size: 18px;
     line-height: 24px;
-    letter-spacing: -0.40px;
+    letter-spacing: -0.36px;
 }
 
 .about-timeline__list .about-timeline__item:first-child .about-timeline__title {
@@ -157,6 +157,10 @@ margin: 16px 0 0;
   .about-timeline__text {
     max-width: 620px;
   }
+  .about-timeline__date {
+    font-size: 20px;
+    letter-spacing: -0.40px;
+}
   .about-timeline__title {
         margin: 24px auto 0;
         max-width: 480px;
