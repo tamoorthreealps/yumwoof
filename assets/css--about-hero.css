@@ -6,10 +6,38 @@
    ========================================================================== */
 
 .about-hero {
+  position: relative;
+  isolation: isolate;
   background: linear-gradient(180deg, var(--ah-grad-top) 0%, var(--ah-grad-bottom) 100%);
   color: var(--ah-text);
   padding: var(--ah-pad-top-mobile) 20px var(--ah-pad-bottom-mobile);
   overflow: hidden;
+}
+.about-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    var(--ah-grad-top) 0%,
+    var(--ah-grad-bottom) 100%
+  );
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: aboutHeroBackgroundReveal 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes aboutHeroBackgroundReveal {
+  0% {
+    transform: scaleY(0);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 .about-hero * { box-sizing: border-box; }
 
