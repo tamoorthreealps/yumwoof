@@ -74,3 +74,57 @@
   "presets": [{ "name": "About Solution" }]
 }
 {% endschema %}
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sections = document.querySelectorAll('.about-solution__inner');
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    sections.forEach(section => observer.observe(section));
+
+    let ticking = false;
+
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+
+      window.requestAnimationFrame(() => {
+        sections.forEach(section => {
+          const bg = section.querySelector('.about-solution__bg');
+
+          if (!bg) return;
+
+          const rect = section.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+
+          if (rect.bottom < 0 || rect.top > viewportHeight) return;
+
+          const progress =
+            (viewportHeight - rect.top) /
+            (viewportHeight + rect.height);
+
+          const movement = (progress - 0.5) * 45;
+
+          bg.style.transform =
+            `scale(1.08) translate3d(0, ${movement}px, 0)`;
+        });
+
+        ticking = false;
+      });
+
+      ticking = true;
+    }, { passive: true });
+  });
+</script>
