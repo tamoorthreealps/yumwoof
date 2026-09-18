@@ -160,10 +160,7 @@
             h.classList.add('is-revealed');
             self.headingIO.disconnect();
           }
-        }, {
-          threshold: 0.1,
-          rootMargin: '0px 0px -40% 0px'
-        });
+        }, { threshold: 0.2 });
         this.headingIO.observe(h);
       };
 
