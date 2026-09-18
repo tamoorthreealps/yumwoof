@@ -214,21 +214,21 @@
     overflow: hidden;
   }
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile
-    .yw-butcher-quality__description:not(.bq-typing)
-    > * {
-    visibility: hidden;
-  }
+.yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-js-ready
+  .yw-butcher-quality__description:not(.bq-typing)
+  > * {
+  visibility: hidden;
+}
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile
-    .bq-char {
-    visibility: hidden;
-  }
+.yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-js-ready
+  .bq-char {
+  visibility: hidden;
+}
 
-  .yw-butcher-quality.has-background-image.butcher-quality-mobile
-    .bq-char.bq-char-visible {
-    visibility: visible;
-  }
+.yw-butcher-quality.has-background-image.butcher-quality-mobile.bq-js-ready
+  .bq-char.bq-char-visible {
+  visibility: visible;
+}
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .wy-bq-trademark {
@@ -239,8 +239,7 @@
 
 
 <script>
-(function () {
-  function initButcherQuality() {
+  document.addEventListener('DOMContentLoaded', function () {
     var sections = document.querySelectorAll(
       '.yw-butcher-quality.has-background-image.butcher-quality-mobile'
     );
@@ -248,10 +247,6 @@
     if (!sections.length) return;
 
     sections.forEach(function (section) {
-      if (section.dataset.bqInitialized === 'true') return;
-
-      section.dataset.bqInitialized = 'true';
-
       var description = section.querySelector('.yw-butcher-quality__description');
       var typingTimers = [];
       var chars = [];
@@ -294,7 +289,7 @@
         });
       }
 
-      function resetTyping() {
+      var resetTyping = function () {
         typingTimers.forEach(function (timer) {
           clearTimeout(timer);
         });
@@ -308,9 +303,9 @@
         chars.forEach(function (char) {
           char.classList.remove('bq-char-visible');
         });
-      }
+      };
 
-      function playTyping() {
+      var playTyping = function () {
         resetTyping();
 
         if (!description) return;
@@ -324,35 +319,38 @@
 
           typingTimers.push(timer);
         });
-      }
+      };
 
-      function playSection() {
+      var playSection = function () {
         if (hasAnimated) return;
 
         hasAnimated = true;
+
         section.classList.add('bq-animate');
-
         playTyping();
-      }
+      };
 
-      function updateSection() {
+      var updateSection = function () {
         if (hasAnimated) return;
 
         var rect = section.getBoundingClientRect();
         var viewportHeight = window.innerHeight;
 
+        var sectionTop = rect.top;
+        var sectionBottom = rect.bottom;
+
         var visible =
-          rect.bottom > 0 &&
-          rect.top < viewportHeight;
+          sectionBottom > 0 &&
+          sectionTop < viewportHeight;
 
         if (!visible) return;
 
         playSection();
-      }
+      };
 
       var ticking = false;
 
-      function update() {
+      var update = function () {
         if (ticking || hasAnimated) return;
 
         ticking = true;
@@ -361,7 +359,7 @@
           updateSection();
           ticking = false;
         });
-      }
+      };
 
       window.addEventListener('scroll', update, {
         passive: true
@@ -371,16 +369,5 @@
 
       updateSection();
     });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initButcherQuality);
-  } else {
-    initButcherQuality();
-  }
-
-  document.addEventListener('shopify:section:load', function () {
-    initButcherQuality();
   });
-})();
 </script>
