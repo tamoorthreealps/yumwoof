@@ -39,7 +39,7 @@
         {%- for block in section.blocks -%}
           {%- assign b = block.settings -%}
           <div class="about-timeline__item" {{ block.shopify_attributes }}>
-            <div class="about-timeline__text">
+            <div class="about-timeline__text about-timeline__text_{{ forloop.index }}">
               {%- if b.date != blank -%}
                 <p class="about-timeline__date">{{ b.date }}</p>
               {%- endif -%}
