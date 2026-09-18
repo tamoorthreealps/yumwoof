@@ -239,7 +239,8 @@
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+(function () {
+  function initButcherQuality() {
     var sections = document.querySelectorAll(
       '.yw-butcher-quality.has-background-image.butcher-quality-mobile'
     );
@@ -247,6 +248,10 @@
     if (!sections.length) return;
 
     sections.forEach(function (section) {
+      if (section.dataset.bqInitialized === 'true') return;
+
+      section.dataset.bqInitialized = 'true';
+
       var description = section.querySelector('.yw-butcher-quality__description');
       var typingTimers = [];
       var chars = [];
@@ -289,7 +294,7 @@
         });
       }
 
-      var resetTyping = function () {
+      function resetTyping() {
         typingTimers.forEach(function (timer) {
           clearTimeout(timer);
         });
@@ -303,9 +308,9 @@
         chars.forEach(function (char) {
           char.classList.remove('bq-char-visible');
         });
-      };
+      }
 
-      var playTyping = function () {
+      function playTyping() {
         resetTyping();
 
         if (!description) return;
@@ -319,38 +324,35 @@
 
           typingTimers.push(timer);
         });
-      };
+      }
 
-      var playSection = function () {
+      function playSection() {
         if (hasAnimated) return;
 
         hasAnimated = true;
-
         section.classList.add('bq-animate');
-        playTyping();
-      };
 
-      var updateSection = function () {
+        playTyping();
+      }
+
+      function updateSection() {
         if (hasAnimated) return;
 
         var rect = section.getBoundingClientRect();
         var viewportHeight = window.innerHeight;
 
-        var sectionTop = rect.top;
-        var sectionBottom = rect.bottom;
-
         var visible =
-          sectionBottom > 0 &&
-          sectionTop < viewportHeight;
+          rect.bottom > 0 &&
+          rect.top < viewportHeight;
 
         if (!visible) return;
 
         playSection();
-      };
+      }
 
       var ticking = false;
 
-      var update = function () {
+      function update() {
         if (ticking || hasAnimated) return;
 
         ticking = true;
@@ -359,7 +361,7 @@
           updateSection();
           ticking = false;
         });
-      };
+      }
 
       window.addEventListener('scroll', update, {
         passive: true
@@ -369,5 +371,16 @@
 
       updateSection();
     });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initButcherQuality);
+  } else {
+    initButcherQuality();
+  }
+
+  document.addEventListener('shopify:section:load', function () {
+    initButcherQuality();
   });
+})();
 </script>
