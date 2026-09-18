@@ -287,3 +287,123 @@ margin: 12px auto 0;
   }
   
 }
+
+
+/* ==========================================================================
+   About Timeline — ANIMATION LAYER
+   Everything above this line is the original stylesheet, unchanged.
+
+   Every rule here is gated behind a class that only js--about-timeline.js
+   adds (.about-timeline--anim / .is-pinned / .is-reveal). No JS, reduced
+   motion, or a JS error  =>  the section renders exactly as it does today.
+
+   Motion uses the individual `translate` / `scale` / `opacity` properties,
+   so the existing `transform` values (rotations, translateY offsets) are
+   never overridden.
+   ========================================================================== */
+
+.about-timeline {
+  --at-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --at-pin-top: 0px;        /* set to sticky-header height if you want the stage below it */
+  --at-pin-a-top: 62%;      /* desktop pinned: vertical anchor of LEFT photo in the stage  */
+  --at-pin-b-top: 38%;      /* desktop pinned: vertical anchor of RIGHT photo in the stage */
+}
+
+/* ----- 1. Heading entrance ------------------------------------------------ */
+.about-timeline--anim .about-timeline__heading {
+  opacity: 0;
+  translate: 0 48px;
+  transition: opacity 1.2s var(--at-ease), translate 1.4s var(--at-ease);
+  will-change: opacity, translate;
+}
+.about-timeline--anim .about-timeline__heading.is-inview {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ----- 2. Pinned storytelling mode ---------------------------------------- */
+/* Scroll runway: real content after the list so the sticky stage has room.  */
+.about-timeline.is-pinned .about-timeline__inner::after {
+  content: "";
+  display: block;
+  height: calc((var(--at-count, 4) - 1) * 90vh);
+  height: calc((var(--at-count, 4) - 1) * 90svh);
+  pointer-events: none;
+}
+
+/* The existing list becomes the sticky stage; entries stack in one cell.    */
+.about-timeline.is-pinned .about-timeline__list {
+  position: sticky;
+  top: var(--at-pin-top);
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  gap: 0;
+}
+.about-timeline.is-pinned .about-timeline__item {
+  grid-area: 1 / 1;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+}
+/* Connector lines join stacked entries; they have no meaning between slides. */
+.about-timeline.is-pinned .about-timeline__item::after {
+  display: none;
+}
+
+/* Scroll-scrubbed values written by JS per entry: --at-v (0..1), --at-y (px) */
+.about-timeline.is-pinned .about-timeline__text {
+  opacity: var(--at-v, 0);
+  translate: 0 var(--at-y, 0px);
+  will-change: opacity, translate;
+}
+.about-timeline.is-pinned .about-timeline__photo {
+  opacity: var(--at-v, 0);
+  scale: calc(0.92 + 0.08 * var(--at-v, 0));
+  will-change: opacity, scale;
+}
+
+/* Desktop: the original `top` values were measured against a long scrolling
+   entry (e.g. 128%) and would land off-screen inside a one-viewport stage.
+   Only `top` is re-anchored; left/right, width, radius, shadow, rotation and
+   the translateY(-55% / -45%) offsets are untouched.                        */
+@media (min-width: 991px) {
+  .about-timeline.is-pinned .about-timeline__photo.about-timeline__photo--a {
+    top: var(--at-pin-a-top);
+  }
+  .about-timeline.is-pinned .about-timeline__photo.about-timeline__photo--b {
+    top: var(--at-pin-b-top);
+  }
+}
+
+/* ----- 3. Reveal fallback (entry taller than viewport / sticky blocked) ---- */
+.about-timeline.is-reveal .about-timeline__text,
+.about-timeline.is-reveal .about-timeline__photo {
+  opacity: 0;
+  transition: opacity 1s var(--at-ease), translate 1.2s var(--at-ease), scale 1.2s var(--at-ease);
+}
+.about-timeline.is-reveal .about-timeline__text { translate: 0 32px; }
+.about-timeline.is-reveal .about-timeline__photo { scale: 0.94; transition-delay: 0.12s; }
+
+.about-timeline.is-reveal .about-timeline__item.is-inview .about-timeline__text,
+.about-timeline.is-reveal .about-timeline__item.is-inview .about-timeline__photo {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+/* ----- 4. Reduced motion: belt and braces (JS also never activates) -------- */
+@media (prefers-reduced-motion: reduce) {
+  .about-timeline .about-timeline__heading,
+  .about-timeline .about-timeline__text,
+  .about-timeline .about-timeline__photo {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    transition: none !important;
+  }
+}
