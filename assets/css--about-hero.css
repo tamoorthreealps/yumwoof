@@ -32,6 +32,7 @@
     font-size: 64px;
     line-height: 64px;
     letter-spacing: -0.64px;
+    transform: translateY(-4px);
 }
 .about-hero__stroke {
   display: block;
@@ -42,13 +43,13 @@
   background: var(--ah-stroke);
 }
 .about-hero__stroke.about-hero__stroke_img {
-background: transparent;
-    margin: 0;
-    position: relative;
-    top: -15px;
-    width: 100%;
-    max-width: 1088px;
-    height: 0px;
+  background: transparent;
+  margin: 0;
+  position: relative;
+  top: -6px;
+  width: 100%;
+  max-width: 224px;
+  height: 0px;
 }
 .about-hero__stroke img {
   display: block;
@@ -186,6 +187,10 @@ margin: 40px 0 0;
     height: 8px;
     margin-top: 8px;
   }
+  .about-hero__stroke.about-hero__stroke_img {
+  top: -15px;
+  max-width: 1088px;
+}
   .about-hero__intro {
         margin-top: 40px;
         max-width: 962px;
