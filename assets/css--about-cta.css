@@ -16,7 +16,7 @@
 .about-cta__inner {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 0 32px 0 32px;
   background-color: var(--ac-bg);
   color: var(--ac-text);
   padding: var(--ac-pad-top-mobile) 28px var(--ac-pad-bottom-mobile);
@@ -43,28 +43,33 @@
 }
 
 .about-cta__heading {
-  position: relative;
-  z-index: 2;
-  margin: 0;
-  font-family: 'TAY Birdie', sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--ac-text);
-  font-size: 32px;
-  line-height: 1.0;
-  letter-spacing: 0.04em;
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-family: 'TAY Birdie';
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--ac-text);
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: -0.32px;
 }
 
 .about-cta__body {
-  position: relative;
-  z-index: 2;
-  margin: 24px 0 0;
-  max-width: 336px;
-  font-family: 'Matter', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ac-text);
+    position: relative;
+    z-index: 2;
+    margin: 24px 0 0;
+    max-width: 336px;
+    font-family: Matter, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ac-text);
+    letter-spacing: 0;
+}
+
+.about-cta__body p {
+    margin: 0;
 }
 
 .about-cta__button {
@@ -103,23 +108,27 @@
     background: var(--ac-wash-bottom);
   }
   .about-cta__inner {
-    border-radius: 40px;
+    border-radius: 0 64px 0 64px;
     padding: var(--ac-pad-top) 40px var(--ac-pad-bottom);
     min-height: var(--ac-min-height);
     justify-content: space-between;
   }
   .about-cta__heading {
-    font-size: clamp(48px, 5.6vw, 72px);
-    letter-spacing: 0.08em;
+            font-size: 96px;
+        line-height: 96px;
+        letter-spacing: 0;
   }
   .about-cta__body {
     margin-top: auto;
-    max-width: 560px;
-    font-size: 16px;
+        max-width: 560px;
+        font-size: 20px;
+        line-height: 32px;
   }
   .about-cta__button {
-    margin-top: 24px;
-    padding: 16px 32px;
-    font-size: 16px;
+margin-top: 24px;
+        padding: 16.2px 38.95px 14.2px;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 1.28px;
   }
 }
