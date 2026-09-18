@@ -82,7 +82,14 @@
   padding: 14px 28px;
   border: 1px solid var(--ac-button-border);
   border-radius: 999px;
-  background: var(--ac-button-bg);
+  background: linear-gradient(
+  90deg,
+  #FFF9EF 0%,
+  #FFECD3 50%,
+  #FFF9EF 100%
+);
+background-size: 200% 100%;
+animation: aboutCtaGradient 3s ease-in-out infinite;
   color: var(--ac-button-text);
   font-family: 'FFBlurProMedium', sans-serif;
   font-size: 15px;
@@ -96,7 +103,19 @@
   background: var(--ac-button-hover-bg);
   color: var(--ac-button-hover-text);
 }
+@keyframes aboutCtaGradient {
+  0% {
+    background-position: 0% 0;
+  }
 
+  50% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
+}
 /* ==========================================================================
    Desktop
    ========================================================================== */
