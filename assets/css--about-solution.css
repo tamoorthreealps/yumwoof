@@ -13,6 +13,7 @@
 .about-solution__inner {
   position: relative;
   overflow: hidden;
+  min-height: var(--s.min_height_mobile);
   border-radius: 0 32px 0 32px;
   background-color: var(--as-bg);
   color: var(--as-text);
