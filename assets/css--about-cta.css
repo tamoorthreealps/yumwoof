@@ -18,6 +18,7 @@
   overflow: hidden;
   border-radius: 0 32px 0 32px;
   background-color: var(--ac-bg);
+  min-height: var(--ac-min-height-mobile);
   color: var(--ac-text);
   padding: var(--ac-pad-top-mobile) 28px var(--ac-pad-bottom-mobile);
   display: flex;
