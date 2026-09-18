@@ -34,6 +34,22 @@
     letter-spacing: -0.64px;
     transform: translateY(-6px);
 }
+.about-hero__headline-word {
+  display: inline-block;
+  filter: blur(14px);
+  opacity: 0.35;
+  transform: translateY(8px);
+  transition:
+    filter 1s ease,
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+.about-hero__headline-word.is-visible {
+  filter: blur(0);
+  opacity: 1;
+  transform: translateY(0);
+}
 .about-hero__stroke {
   display: block;
   width: min(224px, 70%);
