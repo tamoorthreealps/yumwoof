@@ -74,3 +74,263 @@
   "presets": [{ "name": "About Solution" }]
 }
 {% endschema %}
+
+
+
+<script>
+  /* ==========================================================================
+   About — Solution : motion
+   - Masked line-by-line heading reveal + delayed body (IntersectionObserver,
+     plays once per section)
+   - Lerped translate3d parallax on .about-solution__bg (rAF, runs only while
+     the section is near the viewport)
+   - prefers-reduced-motion: does nothing, section stays static
+   - Theme Editor safe: re-inits on shopify:section:load, tears down on unload
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  if (window.__aboutSolutionMotion) return;
+  window.__aboutSolutionMotion = true;
+
+  var SELECTOR = '.about-solution';
+  var OVERSCAN = 0.18;      // must match `inset: -18% 0` in the CSS
+  var LERP = 0.085;         // lower = heavier, more cinematic lag
+  var LINE_STAGGER = 0.15;  // seconds, mirrors --as-line-stagger
+  var LINE_DUR = 1.9;       // seconds, mirrors --as-line-dur
+  var BODY_DUR = 1.7;       // seconds, mirrors --as-body-dur
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var instances = new WeakMap();
+
+  function AboutSolution(section) {
+    this.section = section;
+    this.inner = section.querySelector('.about-solution__inner');
+    this.bg = section.querySelector('.about-solution__bg');
+    this.heading = section.querySelector('.about-solution__heading');
+    this.body = section.querySelector('.about-solution__body');
+
+    this.destroyed = false;
+    this.revealed = false;
+    this.originalHeading = this.heading ? this.heading.textContent : '';
+    this.timers = [];
+
+    // parallax state
+    this.current = 0;
+    this.target = 0;
+    this.primed = false;
+    this.rafId = 0;
+    this.near = false;
+    this.tick = this.tick.bind(this);
+
+    section.classList.add('as-anim');
+    this.observeReveal();
+    if (this.bg && this.inner) this.setupParallax();
+  }
+
+  /* ---------------------------------------------------------------- reveal */
+
+  AboutSolution.prototype.observeReveal = function () {
+    var self = this;
+    this.revealIO = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          self.revealIO.disconnect();
+          self.reveal();
+          break;
+        }
+      }
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+    this.revealIO.observe(this.inner || this.section);
+  };
+
+  AboutSolution.prototype.reveal = function () {
+    if (this.revealed || this.destroyed) return;
+    this.revealed = true;
+    var self = this;
+
+    // Line breaks depend on TAYRosemary being loaded — wait for it (max 1.2s)
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    var timeout = new Promise(function (resolve) { self.timers.push(setTimeout(resolve, 1200)); });
+
+    Promise.race([fontsReady, timeout]).then(function () {
+      if (self.destroyed) return;
+
+      var lines = self.heading ? self.splitHeading() : 0;
+      var bodyDelay = lines ? (lines - 1) * LINE_STAGGER + 0.45 : 0.1;
+      self.section.style.setProperty('--as-body-delay', bodyDelay.toFixed(2) + 's');
+
+      // Commit the hidden start state, then flip on the next frame
+      void self.section.offsetWidth;
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          if (self.destroyed) return;
+          self.section.classList.add('as-in');
+        });
+      });
+
+      var headingEnd = lines ? ((lines - 1) * LINE_STAGGER + LINE_DUR) : 0;
+      var total = Math.max(headingEnd, bodyDelay + BODY_DUR) * 1000 + 200;
+      self.timers.push(setTimeout(function () { self.finish(); }, total));
+    });
+  };
+
+  // Wrap each rendered line in a mask so lines can rise independently.
+  // Returns the number of lines.
+  AboutSolution.prototype.splitHeading = function () {
+    var h = this.heading;
+    var words = this.originalHeading.trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return 0;
+
+    // 1) measure: one inline-block span per word
+    var frag = document.createDocumentFragment();
+    var spans = words.map(function (w, i) {
+      var s = document.createElement('span');
+      s.style.display = 'inline-block';
+      s.textContent = w;
+      frag.appendChild(s);
+      if (i < words.length - 1) frag.appendChild(document.createTextNode(' '));
+      return s;
+    });
+    h.textContent = '';
+    h.appendChild(frag);
+
+    var lines = [];
+    var lastTop = null;
+    spans.forEach(function (s) {
+      var top = s.offsetTop;
+      if (lastTop === null || Math.abs(top - lastTop) > 2) { lines.push([]); lastTop = top; }
+      lines[lines.length - 1].push(s.textContent);
+    });
+
+    // 2) rebuild as masked lines
+    var out = document.createDocumentFragment();
+    lines.forEach(function (lineWords, i) {
+      var outer = document.createElement('span');
+      outer.className = 'as-line';
+      var innerEl = document.createElement('span');
+      innerEl.className = 'as-line__inner';
+      innerEl.style.setProperty('--as-i', i);
+      innerEl.textContent = lineWords.join(' ');
+      outer.appendChild(innerEl);
+      out.appendChild(outer);
+      out.appendChild(document.createTextNode(' '));
+    });
+    h.textContent = '';
+    h.appendChild(out);
+    h.classList.add('as-split');
+    return lines.length;
+  };
+
+  // Restore the untouched heading so it reflows naturally on resize
+  AboutSolution.prototype.finish = function () {
+    if (this.destroyed) return;
+    this.section.classList.add('as-done');
+    if (this.heading && this.heading.classList.contains('as-split')) {
+      this.heading.classList.remove('as-split');
+      this.heading.textContent = this.originalHeading;
+    }
+  };
+
+  /* -------------------------------------------------------------- parallax */
+
+  AboutSolution.prototype.setupParallax = function () {
+    var self = this;
+    this.section.classList.add('as-parallax');
+
+    this.nearIO = new IntersectionObserver(function (entries) {
+      self.near = entries[entries.length - 1].isIntersecting;
+      if (self.near) self.start();
+    }, { rootMargin: '25% 0px 25% 0px' });
+    this.nearIO.observe(this.inner);
+
+    this.onScroll = function () { if (self.near) self.start(); };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll, { passive: true });
+  };
+
+  AboutSolution.prototype.start = function () {
+    if (!this.rafId && !this.destroyed) this.rafId = requestAnimationFrame(this.tick);
+  };
+
+  AboutSolution.prototype.tick = function () {
+    this.rafId = 0;
+    if (this.destroyed) return;
+
+    // single layout read per frame, no writes before it
+    var rect = this.inner.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+
+    // progress: +1 section just below viewport, 0 centred, -1 just above
+    var progress = ((rect.top + rect.height / 2) - vh / 2) / ((vh + rect.height) / 2);
+    if (progress > 1) progress = 1; else if (progress < -1) progress = -1;
+
+    var maxShift = Math.max(0, rect.height * OVERSCAN - 2);
+    // image drifts against the section's travel => reads as being further away
+    this.target = -progress * maxShift;
+
+    if (!this.primed) { this.current = this.target; this.primed = true; }
+    else { this.current += (this.target - this.current) * LERP; }
+
+    var settled = Math.abs(this.target - this.current) < 0.05;
+    if (settled) this.current = this.target;
+
+    this.bg.style.transform = 'translate3d(0,' + this.current.toFixed(2) + 'px,0)';
+
+    if (!settled) this.rafId = requestAnimationFrame(this.tick);
+  };
+
+  /* --------------------------------------------------------------- teardown */
+
+  AboutSolution.prototype.destroy = function () {
+    this.destroyed = true;
+    if (this.revealIO) this.revealIO.disconnect();
+    if (this.nearIO) this.nearIO.disconnect();
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.timers.forEach(clearTimeout);
+    if (this.onScroll) {
+      window.removeEventListener('scroll', this.onScroll);
+      window.removeEventListener('resize', this.onScroll);
+    }
+    if (this.heading && this.heading.classList.contains('as-split')) {
+      this.heading.classList.remove('as-split');
+      this.heading.textContent = this.originalHeading;
+    }
+    if (this.bg) this.bg.style.transform = '';
+    this.section.classList.remove('as-anim', 'as-parallax', 'as-in', 'as-done');
+  };
+
+  /* ------------------------------------------------------------------ boot */
+
+  function init(root) {
+    if (reduceMotion.matches || !('IntersectionObserver' in window)) return;
+    var nodes = (root || document).querySelectorAll(SELECTOR);
+    for (var i = 0; i < nodes.length; i++) {
+      if (!instances.has(nodes[i])) instances.set(nodes[i], new AboutSolution(nodes[i]));
+    }
+  }
+
+  function destroy(root) {
+    var nodes = (root || document).querySelectorAll(SELECTOR);
+    for (var i = 0; i < nodes.length; i++) {
+      var inst = instances.get(nodes[i]);
+      if (inst) { inst.destroy(); instances.delete(nodes[i]); }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { init(); });
+  } else {
+    init();
+  }
+
+  // Shopify Theme Editor
+  document.addEventListener('shopify:section:load', function (e) { init(e.target); });
+  document.addEventListener('shopify:section:unload', function (e) { destroy(e.target); });
+
+  // Respect a live change of the OS motion setting
+  var onMotionChange = function () { if (reduceMotion.matches) destroy(); else init(); };
+  if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onMotionChange);
+  else if (reduceMotion.addListener) reduceMotion.addListener(onMotionChange);
+})();
+</script>
