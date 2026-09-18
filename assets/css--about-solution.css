@@ -13,6 +13,8 @@
 .about-solution__inner {
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: flex-end;
   min-height: var(--as-min-height-mobile);
   border-radius: 0 32px 0 32px;
   background-color: var(--as-bg);
@@ -52,6 +54,8 @@
   font-size: 48px;
   line-height: 48px;
   letter-spacing: -0.48px;
+  max-width: 245px;
+  transform: translateY(-4px);
 }
 
 .about-solution__body {
@@ -62,6 +66,7 @@
   line-height: 20px;
   color: var(--as-text);
   letter-spacing: 0;
+  padding-right: 10px;
 }
 
 .about-solution__body p {
@@ -76,6 +81,7 @@
     padding: 0 36px;
   }
   .about-solution__inner {
+    display:block;
     border-radius: 0 64px 0 64px;
     padding: var(--as-pad-top) 122px var(--as-pad-bottom);
     min-height: var(--as-min-height);
@@ -92,5 +98,6 @@
   .about-solution__body {
     font-size: 18px;
     line-height: 28px;
+    padding-right:0;
   }
 }
