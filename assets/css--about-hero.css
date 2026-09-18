@@ -39,10 +39,8 @@
   filter: blur(16px);
   opacity: 0.25;
   transform: translateY(6px);
-  animation:
-    aboutHeroHeadlineReveal 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards,
-    aboutHeroHeadlineWave 5s ease-in-out infinite;
-  animation-delay: var(--delay), 4.5s;
+  animation: aboutHeroHeadlineReveal 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation-delay: var(--delay);
 }
 
 @keyframes aboutHeroHeadlineReveal {
@@ -58,14 +56,30 @@
     transform: translateY(0);
   }
 }
+
+.about-hero__headline-word.is-waving {
+  animation: aboutHeroHeadlineWave 5s ease-in-out infinite;
+}
+
 @keyframes aboutHeroHeadlineWave {
-  0%,
-  100% {
+  0% {
     transform: translateY(0);
   }
 
+  25% {
+    transform: translateY(-1px);
+  }
+
   50% {
-    transform: translateY(-1.5px);
+    transform: translateY(0);
+  }
+
+  75% {
+    transform: translateY(1px);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }
 .about-hero__stroke {
