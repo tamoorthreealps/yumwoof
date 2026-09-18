@@ -7,11 +7,11 @@
 -%}
 
 {%- style -%}
-  #about-solution-{{ uid }} .about-solution__bg {
-    {%- if s.bg_image != blank -%}
-      background-image: url('{{ s.bg_image | image_url: width: 2000 }}');
-    {%- endif -%}
-  }
+  {%- if s.bg_image != blank -%}
+    #about-solution-{{ uid }} .about-solution__bg {
+      background-image: url("{{ s.bg_image | image_url: width: 1600 }}");
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section
