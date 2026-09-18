@@ -363,7 +363,10 @@ border-radius: 32px;
     padding: 12px 20px;
     font-size: 20px;
     border-radius: 14px;
-    transform: rotate(-15deg);
+    transform: rotate(15deg);
+  }
+  .about-hero__badge.is-revealed {
+    transform: rotate(-15deg) scale(1);
   }
   .about-hero__badge.about-hero__badge_img {
     max-width: 136px;
