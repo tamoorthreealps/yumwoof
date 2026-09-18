@@ -97,7 +97,7 @@ margin: 16px 0 0;
 }
 .about-timeline__photo {
   width: 46%;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 48px 0 rgba(123, 166, 221, 0.5);
 }
@@ -190,6 +190,7 @@ margin: 16px 0 0;
     top: 50%;
     width: 266px;
     margin: 0;
+    border-radius:24px;
   }
   .about-timeline__photo img {
     aspect-ratio: 225 / 400;
