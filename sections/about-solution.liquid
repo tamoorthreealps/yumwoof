@@ -22,6 +22,7 @@
     --as-text: {{ s.color_text }};
     --as-scrim: {{ scrim }};
     --as-min-height: {{ s.min_height }}px;
+    --as-min-height-mobile: {{ s.min_height_mobile }}px;
     --as-pad-top: {{ s.padding_top }}px;
     --as-pad-bottom: {{ s.padding_bottom }}px;
     --as-pad-top-mobile: {{ s.padding_top_mobile }}px;
@@ -63,6 +64,7 @@
 
     { "type": "header", "content": "Layout" },
     { "type": "range", "id": "min_height", "label": "Min height (desktop)", "min": 320, "max": 1000, "step": 8, "unit": "px", "default": 744 },
+    { "type": "range", "id": "min_height_mobile", "label": "Min height (mobile)", "min": 320, "max": 1000, "step": 8, "unit": "px", "default": 560 },
     { "type": "range", "id": "padding_top", "label": "Padding top (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 124 },
     { "type": "range", "id": "padding_bottom", "label": "Padding bottom (desktop)", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 124 },
     { "type": "range", "id": "padding_top_mobile", "label": "Padding top (mobile)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
