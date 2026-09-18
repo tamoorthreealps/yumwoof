@@ -37,6 +37,7 @@
   background: var(--as-bg);
   opacity: var(--as-scrim);
   z-index: 1;
+  display:inherit !important;
 }
 
 .about-solution__content {
