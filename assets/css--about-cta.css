@@ -120,7 +120,7 @@ animation: aboutCtaGradient 3s ease-in-out infinite;
 /* ==========================================================================
    Desktop
    ========================================================================== */
-@media (min-width: 768px) {
+@media (min-width: 991px) {
   .about-cta {
     padding: var(--ac-wash-pt) 36px var(--ac-wash-pb);
     /* Desktop: the cream→blue fade lives in the timeline above, so the CTA sits
