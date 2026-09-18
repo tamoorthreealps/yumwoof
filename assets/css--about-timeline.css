@@ -196,8 +196,8 @@ margin: 16px 0 0;
     aspect-ratio: 225 / 400;
   }
   .about-timeline__photo--a {
-    left: 0;
-    transform: translateY(-55%) rotate(-9deg);
+    left: 20px;
+    transform: translateY(-55%) rotate(-6deg);
   }
   .about-timeline__photo--b {
     right: 0;
