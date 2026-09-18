@@ -67,6 +67,7 @@
 
 .about-timeline__title {
 margin: 16px auto 0;
+max-width: 336px;
     font-family: 'TAYRosemary';
     font-weight: 400;
     text-transform: uppercase;
