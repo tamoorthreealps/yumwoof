@@ -29,7 +29,7 @@
     {%- for word in headline_words -%}
       <span
         class="about-hero__headline-word"
-        style="--delay: {{ forloop.index0 | times: 0.18 }}s;"
+        style="--delay: {{ forloop.index0 | times: 0.2 }}s;"
       >{{ word }}</span>{% unless forloop.last %} {% endunless %}
     {%- endfor -%}
   </h1>
