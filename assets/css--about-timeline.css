@@ -309,15 +309,39 @@ margin: 12px auto 0;
   filter: blur(14px);
   translate: 0 48px;
   transition:
-    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    translate 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    translate 1.5s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, filter, translate;
 }
+
 .about-timeline--js .about-timeline__heading.is-revealed {
   opacity: 1;
   filter: blur(0);
   translate: 0 0;
+  animation: aboutTimelineHeadingWave 6s ease-in-out 1.5s infinite;
+}
+
+@keyframes aboutTimelineHeadingWave {
+  0% {
+    transform: translateY(-26px) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-28px) rotate(-0.3deg);
+  }
+
+  50% {
+    transform: translateY(-24px) rotate(0.3deg);
+  }
+
+  75% {
+    transform: translateY(-27px) rotate(-0.2deg);
+  }
+
+  100% {
+    transform: translateY(-26px) rotate(0deg);
+  }
 }
 
 /* ----- 2. Pinned slideshow (desktop only) ----- */
