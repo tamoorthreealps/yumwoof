@@ -84,7 +84,7 @@
           </div>
         {%- endif -%}
         {%- if s.badge_image != blank -%}
-          <span class="about-hero__badge">
+          <span class="about-hero__badge about-hero__badge_img">
             {{ s.badge_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '' }}
           </span>
         {%- elsif s.badge_text != blank -%}
