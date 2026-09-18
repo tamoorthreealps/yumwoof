@@ -41,6 +41,9 @@
   border-radius: 4px;
   background: var(--ah-stroke);
 }
+.about-hero__stroke.about-hero__stroke_img {
+    background: transparent;
+}
 .about-hero__stroke img {
   display: block;
   width: 100%;
