@@ -71,7 +71,9 @@
           "settings": {
             "date": "2019–2020",
             "title": "We couldn't find it, so we made it",
-            "body": "<p>Unable to find a dog food that reflected our standards, we decided to create one ourselves. We set out to combine premium proteins, healthy fats, nutrient-dense organ meats, and minimal processing into a food inspired by nature and informed by science. In 2020, we launched one of the first cluster-style air-dried dog foods.</p>"
+            "body": "<p>Unable to find a dog food that reflected our standards, we decided to create one ourselves. We set out to combine premium proteins, healthy fats, nutrient-dense organ meats, and minimal processing into a food inspired by nature and informed by science. In 2020, we launched one of the first cluster-style air-dried dog foods.</p>",
+            "image_a": "shopify://shop_images/Timeline_Photo_2.png",
+            "image_b": "shopify://shop_images/Timeline_Photo_2.png"
           }
         },
         "entry_3": {
@@ -90,6 +92,7 @@
             "date": "2024–Today",
             "title": "One bowl became something bigger",
             "body": "<p>As more families joined us, our recipes expanded, our network of trusted farmers, ranchers, and fishermen deepened, and our standards continued to evolve. What never changed was our commitment to creating food we would proudly feed our own dog. What began with a single bowl has grown into multiple ways to help dogs eat better.</p>",
+            "image_a": "shopify://shop_images/Timeline_Photo_2.png",
             "image_b": "shopify://shop_images/Timeline_Photo_2.png"
           }
         }
@@ -136,8 +139,9 @@
         "color_button_text": "#0d0d0d",
         "color_button_border": "#fff9ef",
         "color_button_hover_bg": "#000000",
-        "color_button_hover_text": "#FFF9EF",
+        "color_button_hover_text": "#fff9ef",
         "min_height": 688,
+        "min_height_mobile": 532,
         "padding_top": 96,
         "padding_bottom": 96,
         "padding_top_mobile": 56,
