@@ -39,7 +39,7 @@
   filter: blur(16px);
   opacity: 0.25;
   transform: translateY(6px);
-  animation: aboutHeroHeadlineReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: aboutHeroHeadlineReveal 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: var(--delay);
 }
 
