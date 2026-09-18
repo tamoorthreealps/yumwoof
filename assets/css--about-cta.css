@@ -8,7 +8,7 @@
 .about-cta {
   /* Full-width gradient "wash" that continues the cream of the section above
      and fades to blue where the footer begins. The dark card floats on it. */
-  padding: var(--ac-wash-pt-m) 0 var(--ac-wash-pb-m);
+  padding: var(--ac-wash-pt-m) 8px var(--ac-wash-pb-m);
   background: linear-gradient(180deg, var(--ac-wash-top) 0%, var(--ac-wash-bottom) 100%);
 }
 .about-cta * { box-sizing: border-box; }
