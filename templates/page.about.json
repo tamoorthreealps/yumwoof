@@ -98,10 +98,10 @@
       "settings": {
         "heading": "The Origin",
         "color_bg": "#fff9ef",
-        "color_text": "#0d0d0d",
+        "color_text": "#000000",
         "color_eyebrow": "#661d1d",
-        "color_body": "#1a1a1a",
-        "color_line": "#bfbbb3",
+        "color_body": "#000000",
+        "color_line": "#000000",
         "enable_wash": true,
         "color_wash_bottom": "#cfe0f4",
         "wash_band": 400,
