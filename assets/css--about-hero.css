@@ -123,7 +123,7 @@ border-radius: 32px;
   color: var(--ah-badge-text);
   border: 1px solid #000;
   border-radius: 10px;
-  transform: rotate(-8deg);
+  transform: rotate(-15deg);
   font-family: 'TAY Birdie', sans-serif;
   text-transform: uppercase;
   font-size: 14px;
@@ -137,6 +137,7 @@ border-radius: 32px;
     border: 0;
     margin: 0;
     padding: 0;
+    border-radius:0;
     max-width: 136px;
 }
 
@@ -225,11 +226,12 @@ margin: 40px 0 0;
         height: 405.58px;
   }
   .about-hero__badge {
-    left: 18%;
+    left: -24px;
     top: 26%;
     padding: 12px 20px;
     font-size: 20px;
     border-radius: 14px;
+    transform: rotate(-15deg);
   }
   .about-hero__closing {
     margin-top: 40px;
