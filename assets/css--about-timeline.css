@@ -220,7 +220,8 @@ margin: 16px 0 0;
     top: 44%;
 }
 .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2,
-.about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2 {
+.about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-2,
+.about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 {
     display: none;
 }
 }
