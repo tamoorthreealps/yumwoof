@@ -59,8 +59,8 @@
 .about-cta__body {
     position: relative;
     z-index: 2;
-    margin: 24px 0 0;
-    max-width: 336px;
+    margin: 12px 0 0;
+    max-width: 280px;
     font-family: Matter, sans-serif;
     font-weight: 400;
     font-size: 14px;
@@ -79,7 +79,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 24px 0 0;
+  margin: auto auto 0;
   padding: 14px 28px;
   border: 1px solid var(--ac-button-border);
   border-radius: 999px;
