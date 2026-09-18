@@ -13,6 +13,14 @@
   padding: var(--ah-pad-top-mobile) 20px var(--ah-pad-bottom-mobile);
   overflow: hidden;
 }
+.about-hero {
+  position: relative;
+  isolation: isolate;
+  background: var(--ah-grad-bottom);
+  color: var(--ah-text);
+  padding: var(--ah-pad-top-mobile) 20px var(--ah-pad-bottom-mobile);
+  overflow: hidden;
+}
 
 .about-hero::before {
   content: "";
@@ -47,6 +55,36 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+.about-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 70%;
+  height: 45%;
+  left: 15%;
+  top: 5%;
+  background: radial-gradient(
+    ellipse,
+    var(--ah-grad-top) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  filter: blur(50px);
+  animation: aboutHeroAmbientLight 8s ease-in-out 3.5s infinite;
+}
+
+@keyframes aboutHeroAmbientLight {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    opacity: 0.28;
+    transform: translate(3%, 4%) scale(1.05);
   }
 }
 .about-hero * { box-sizing: border-box; }
