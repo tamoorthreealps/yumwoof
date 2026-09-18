@@ -88,7 +88,7 @@ margin: 20px 0 0;
   aspect-ratio: 336 / 360;
 }
 .about-hero__photo {
-  position: absolute;
+  position: static;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.16);
