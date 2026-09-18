@@ -36,18 +36,18 @@
 }
 .about-hero__headline-word {
   display: inline-block;
-  filter: blur(14px);
-  opacity: 0.35;
-  transform: translateY(8px);
-  animation: aboutHeroHeadlineReveal 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  filter: blur(16px);
+  opacity: 0.25;
+  transform: translateY(6px);
+  animation: aboutHeroHeadlineReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: var(--delay);
 }
 
 @keyframes aboutHeroHeadlineReveal {
   0% {
-    filter: blur(14px);
-    opacity: 0.35;
-    transform: translateY(8px);
+    filter: blur(16px);
+    opacity: 0.25;
+    transform: translateY(6px);
   }
 
   100% {
