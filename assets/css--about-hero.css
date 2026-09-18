@@ -42,10 +42,13 @@
   background: var(--ah-stroke);
 }
 .about-hero__stroke.about-hero__stroke_img {
-    background: transparent;
+background: transparent;
     margin: 0;
     position: relative;
     top: -15px;
+    width: 100%;
+    max-width: 1088px;
+    height: 0px;
 }
 .about-hero__stroke img {
   display: block;
