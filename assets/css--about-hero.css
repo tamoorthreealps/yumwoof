@@ -214,10 +214,92 @@ margin: 40px 0 0;
     letter-spacing: 0;
 }
 
+
+.about-hero__intro,
+.about-hero__lede,
+.about-hero__closing,
+.about-hero__signature,
+.about-hero__attribution {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-hero__intro.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.05s;
+}
+
+.about-hero__lede.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+.about-hero__photo {
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-hero__photo--1.is-revealed {
+  opacity: 1;
+  transform: rotate(-3.46deg) scale(1);
+}
+
+.about-hero__photo--2.is-revealed {
+  opacity: 1;
+  transform: rotate(10deg) scale(1);
+}
+
+.about-hero__badge {
+  opacity: 0;
+  transform: rotate(8deg) scale(0.8);
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-hero__badge.is-revealed {
+  opacity: 1;
+  transform: rotate(8deg) scale(1);
+  transition-delay: 0.25s;
+}
+
+.about-hero__closing.is-revealed,
+.about-hero__signature.is-revealed,
+.about-hero__attribution.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-hero__closing.is-revealed {
+  transition-delay: 0.05s;
+}
+
+.about-hero__signature.is-revealed {
+  transition-delay: 0.15s;
+}
+
+.about-hero__attribution.is-revealed {
+  transition-delay: 0.25s;
+}
 /* ==========================================================================
    Desktop
    ========================================================================== */
 @media (min-width: 768px) {
+    .about-hero__photo--1.is-revealed {
+    transform: rotate(-10.25deg) scale(1);
+  }
+
+  .about-hero__photo--2.is-revealed {
+    transform: rotate(10deg) scale(1);
+  }
   .about-hero {
     padding: var(--ah-pad-top) 40px var(--ah-pad-bottom);
   }
