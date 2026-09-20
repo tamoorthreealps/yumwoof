@@ -113,12 +113,21 @@
          its designed position when its slide is centred, and leaves through
          the top — scrubbed by scroll, so it reverses on scroll-up. */
       var IMG_RANGE = 1;        // photos live for |d| < 1, so neighbours overlap
-      var FLOAT_LINGER = 0.35;  // 0 = constant speed · higher = slower past the text, faster at the edges
-      var SPEED_A = 1;          // left photo travel multiplier
-      var SPEED_B = 1.2;        // right photo travels a little faster (parallax)
-      var ROT_A = 12;           // deg the left photo turns per slide of travel
-      var ROT_B = 9;            // deg the right photo turns (opposite direction)
-      var IMG_SCALE = 0.05;     // photos go 0.95 → 1 → 0.95. Set 0 to disable
+      /* Matched to the reference: photos move like one rigid strip, in
+         lockstep with scroll — constant speed, no easing, no scale, no fade.
+         At the text hand-over the outgoing photo is almost out of the top
+         while the incoming one is only peeking in at the bottom. */
+      var TRAVEL = 1.1;         // viewport-heights a photo moves per slide
+      var SPEED_A = 1;          // left / right multipliers. Equal = rigid strip
+      var SPEED_B = 1;          //   (the reference). e.g. 1.15 adds parallax
+      var FIRST_IN = 0.3;       // damps slide 1's photos while the section is
+                                //   still scrolling in (it isn't pinned yet)
+      /* Degrees each photo turns per slide of travel, by slide (list repeats).
+         Turn is linear and exactly 0 when the slide is centred, so the CSS
+         tilt is the mid-point. Negative = starts clockwise, ends counter-
+         clockwise. Mixed sizes on purpose: big swing, barely any, medium… */
+      var ROT_A = [-16, 4, -9, 5];    // left photos
+      var ROT_B = [9, -6, 12, -4];    // right photos
       var EDGE_PAD = 50;        // px past the edge, so the box-shadow clears too
 
       function Timeline(root) {
@@ -132,8 +141,8 @@
             text: el.querySelector('.about-timeline__text'),
             a: el.querySelector('.about-timeline__photo--a'),
             b: el.querySelector('.about-timeline__photo--b'),
-            distA: 0,
-            distB: 0
+            fa: null,
+            fb: null
           };
         });
         this.pinned = false;
@@ -216,8 +225,8 @@
          outside the pinned stage (top or bottom, whichever is further).
          Measured from the real rendered box, so the CSS `top` / `transform`
          values stay the single source of truth for where photos sit. */
-      function floatDistance(photo, stage) {
-        if (!photo) return 0;
+      function floatMetrics(photo, stage) {
+        if (!photo) return null;
         var st = photo.style;
         var keep = [st.translate, st.rotate, st.scale];
         st.translate = ''; st.rotate = ''; st.scale = '';
@@ -226,7 +235,15 @@
         st.translate = keep[0]; st.rotate = keep[1]; st.scale = keep[2];
         var up = r.bottom - box.top;       // to clear the top edge
         var down = box.bottom - r.top;     // to clear the bottom edge
-        return Math.max(up, down, 0) + EDGE_PAD;
+        return {
+          dist: Math.max(up, down, 0) + EDGE_PAD,
+          /* Where the photo is drawn vs. where its layout box is (the CSS
+             translateY(-55%) etc.). The `rotate` property pivots on the
+             layout box, so render() uses this to cancel the sideways swing
+             and make each photo turn around its own centre. */
+          ox: (r.left + r.width / 2) - (box.left + photo.offsetLeft + photo.offsetWidth / 2),
+          oy: (r.top + r.height / 2) - (box.top + photo.offsetTop + photo.offsetHeight / 2)
+        };
       }
 
       Timeline.prototype.measure = function () {
@@ -239,10 +256,10 @@
         var track = Math.max(this.list.offsetHeight - stage, 1);
         /* scroll distance that equals one slide */
         this.step = track / Math.max(n - 1 + hold, 0.0001);
-        /* vertical float distance, per photo */
+        /* per-photo float metrics */
         this.slides.forEach(function (s) {
-          s.distA = floatDistance(s.a, s.el);
-          s.distB = floatDistance(s.b, s.el);
+          s.fa = floatMetrics(s.a, s.el);
+          s.fb = floatMetrics(s.b, s.el);
         });
       };
 
@@ -279,11 +296,17 @@
         this.render(this.current);
       };
 
-      function floatPhoto(photo, m, dist, speed, deg) {
-        if (!photo) return;
-        photo.style.translate = '0px ' + (-m * dist * speed).toFixed(1) + 'px';
-        photo.style.rotate = (m * deg).toFixed(2) + 'deg';
-        photo.style.scale = (1 - IMG_SCALE * Math.abs(m)).toFixed(4);
+      function floatPhoto(photo, fm, m, vh, speed, deg) {
+        if (!photo || !fm) return;
+        /* never less than what it takes to be fully off-stage at |m| = 1 */
+        var travel = Math.max(TRAVEL * vh, fm.dist) * speed;
+        var rot = m * deg;
+        var rad = rot * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
+        var tx = fm.ox - (fm.ox * c - fm.oy * sn);
+        var ty = fm.oy - (fm.ox * sn + fm.oy * c) - m * travel;
+        photo.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
+        photo.style.rotate = rot.toFixed(2) + 'deg';
+        photo.style.scale = '';
         photo.style.opacity = '';
       }
 
@@ -308,14 +331,11 @@
           }
 
           /* -- side photos: float bottom → top, turning as they rise --
-             m runs -1 (below the stage) → 0 (designed position) → 1 (above).
-             Rotation is added on top of the CSS tilt and is exactly 0 at
-             m = 0, so the resting layout matches the design. Direction
-             alternates per slide so consecutive photos don't turn alike. */
-          var m = d * (1 - FLOAT_LINGER) + d * d * d * FLOAT_LINGER;
-          var dir = i % 2 ? -1 : 1;
-          floatPhoto(s.a, m, s.distA, SPEED_A, ROT_A * dir);
-          floatPhoto(s.b, m, s.distB, SPEED_B, -ROT_B * dir);
+             m runs -1 (below the stage) → 0 (designed position) → 1 (above),
+             linearly with scroll. */
+          var m = f < 0 ? d * FIRST_IN : d;
+          floatPhoto(s.a, s.fa, m, this.vh, SPEED_A, ROT_A[i % ROT_A.length]);
+          floatPhoto(s.b, s.fb, m, this.vh, SPEED_B, ROT_B[i % ROT_B.length]);
         }
       };
 
