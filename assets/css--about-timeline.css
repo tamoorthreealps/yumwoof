@@ -290,17 +290,17 @@ margin: 12px auto 0;
 
 
 /* ==========================================================================
-   SCROLL-DRIVEN ANIMATION LAYER  (added — nothing above this line changed)
+   SCROLL-DRIVEN ANIMATION LAYER  (nothing above this line changed)
    --------------------------------------------------------------------------
    All rules below are scoped to classes that JavaScript adds:
      .about-timeline--js      → motion allowed (no prefers-reduced-motion)
-     .about-timeline--pinned  → desktop pinned slideshow is active
-   Without JS, on mobile, or with reduced motion, the section renders exactly
-   as before.
+     .about-timeline--pinned  → pinned slideshow is active (desktop + mobile)
+   Without JS, or with reduced motion, the section renders exactly as before.
 
-   Animation uses the individual `translate` / `scale` properties, which
-   compose WITH the existing `transform` (rotations, translateY offsets)
-   instead of overwriting it.
+   The text is pinned in the viewport while the photos float from below the
+   screen to above it, turning as they rise. JS drives the individual
+   `translate` / `rotate` properties, which compose WITH the existing
+   `transform` (design tilts, translateY offsets) instead of overwriting it.
    ========================================================================== */
 
 /* ----- 1. Heading reveal (blur / fade / rise) ----- */
@@ -344,58 +344,67 @@ margin: 12px auto 0;
   }
 }
 
-/* ----- 2. Pinned slideshow (desktop only) ----- */
+/* ----- 2. Pinned slideshow — shared by every breakpoint ----- */
+.about-timeline--pinned {
+  /* Tilted / edge-bleeding photos poke past the sides. `clip` (not `hidden`)
+     prevents a horizontal scrollbar WITHOUT breaking position: sticky. */
+  overflow-x: clip;
+  --at-hold: 0.4;     /* extra stage-heights the last slide stays pinned */
+  --at-stage: 100vh;  /* height of the pinned stage */
+}
+
+/* The list becomes the scroll track: one stage per slide (+ hold).
+   Every item sits in the same grid cell and sticks to the top, so all
+   slides share one visual position while the page keeps scrolling. */
+.about-timeline--pinned .about-timeline__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+  height: calc(var(--at-stage) * (var(--at-slides, 4) + var(--at-hold)));
+}
+.about-timeline--pinned .about-timeline__item {
+  grid-area: 1 / 1;
+  align-self: start;
+  position: sticky;
+  top: 0;
+  height: var(--at-stage);
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Connector lines have nothing to connect once slides are stacked */
+.about-timeline--pinned .about-timeline__item::after {
+  display: none;
+}
+
+/* Text: JS sets opacity + --at-ty on the block; children get a slightly
+   different travel each for a soft stagger. It sits above the photos, so
+   anything floating past goes behind the copy, never over it. */
+.about-timeline--pinned .about-timeline__text {
+  position: relative;
+  z-index: 2;
+  will-change: opacity;
+}
+.about-timeline--pinned .about-timeline__date  { translate: 0 calc(var(--at-ty, 0px) * 0.7); }
+.about-timeline--pinned .about-timeline__title { translate: 0 var(--at-ty, 0px); }
+.about-timeline--pinned .about-timeline__body  { translate: 0 calc(var(--at-ty, 0px) * 1.35); }
+
+.about-timeline--pinned .about-timeline__photo {
+  will-change: translate, rotate;
+  backface-visibility: hidden;
+}
+
+/* ----- 2a. Desktop photo anchors while pinned ----- */
 @media (min-width: 991px) {
-  .about-timeline--pinned {
-    /* Images travel off-screen sideways. `clip` (not `hidden`) prevents a
-       horizontal scrollbar WITHOUT breaking position: sticky. */
-    overflow-x: clip;
-    --at-hold: 0.4; /* extra viewport-heights the last slide stays pinned */
-  }
-
-  /* The list becomes the scroll track: one viewport per slide (+ hold).
-     Every item sits in the same grid cell and sticks to the top, so all
-     slides share one visual position while the page keeps scrolling. */
-  .about-timeline--pinned .about-timeline__list {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
-    height: calc(100vh * (var(--at-slides, 4) + var(--at-hold)));
-  }
-  .about-timeline--pinned .about-timeline__item {
-    grid-area: 1 / 1;
-    align-self: start;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    min-height: 0;
-    padding: 0;
-  }
-  /* Connector lines have nothing to connect once slides are stacked */
-  .about-timeline--pinned .about-timeline__item::after {
-    display: none;
-  }
-
-  /* Text: JS sets opacity + --at-ty on the block; children get a slightly
-     different travel each for a soft stagger. */
-  .about-timeline--pinned .about-timeline__text {
-    will-change: opacity;
-  }
-  .about-timeline--pinned .about-timeline__date  { translate: 0 calc(var(--at-ty, 0px) * 0.7); }
-  .about-timeline--pinned .about-timeline__title { translate: 0 var(--at-ty, 0px); }
-  .about-timeline--pinned .about-timeline__body  { translate: 0 calc(var(--at-ty, 0px) * 1.35); }
-
-  .about-timeline--pinned .about-timeline__photo {
-    will-change: translate, scale, opacity;
-    backface-visibility: hidden;
-  }
-
-  /* Photo vertical anchors while pinned.
-     The original `top` values (128%, 89%…) were relative to a tall flowing
-     item and intentionally spilled into the NEXT entry. Inside a 100vh pinned
+  /* The original `top` values (128%, 89%…) were relative to a tall flowing
+     item and intentionally spilled into the NEXT entry. Inside a pinned
      stage those would sit below the fold, so they are re-anchored here to the
      same relative arrangement (left photo lower, right photo higher, etc.).
-     Rotations, widths, left/right offsets are untouched. Tweak freely. */
+     These are the positions the photos pass through when their slide is
+     centred. Rotations, widths, left/right offsets are untouched. */
   .about-timeline--pinned .about-timeline__photo--a { top: 64%; }
   .about-timeline--pinned .about-timeline__photo--b { top: 46%; }
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-2 { top: 50%; }
@@ -404,6 +413,56 @@ margin: 12px auto 0;
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-3 { top: 34%; }
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 { top: 64%; }
   .about-timeline--pinned .about-timeline__photo.about-timeline__photo--b.about-timeline__photo--b-4 { top: 44%; }
+}
+
+/* ----- 2b. Mobile / tablet pinned layout ----- */
+@media (max-width: 990.98px) {
+  /* Small-viewport units: the stage height does not change when the mobile
+     browser bar shows / hides, so nothing jumps mid-scroll. */
+  @supports (height: 100svh) {
+    .about-timeline--pinned { --at-stage: 100svh; }
+  }
+
+  /* Photos leave the flex row under the text and float freely at the screen
+     edges instead, bleeding off the sides like the reference. */
+  .about-timeline--pinned .about-timeline__photos {
+    display: block;
+    max-width: none;
+    margin: 0;
+  }
+  .about-timeline--pinned .about-timeline__item .about-timeline__photo {
+    position: absolute;
+    margin: 0;
+  }
+
+  /* Positions the photos pass through when their slide is centred: one in
+     the upper part of the screen, one in the lower part, half a travel apart,
+     so the stream of photos stays evenly spaced as you scroll. 114px = half
+     the photo height (128 × 228). -68px = 28px section padding + 40px bleed.
+     Odd slides: left photo high, right photo low. Even slides: swapped —
+     same zig-zag as the static mobile design. Design tilts are untouched. */
+  .about-timeline--pinned .about-timeline__item .about-timeline__photo.about-timeline__photo--a {
+    left: -68px;
+    right: auto;
+    top: calc(22.5% - 114px);
+  }
+  .about-timeline--pinned .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
+    right: -68px;
+    left: auto;
+    top: calc(77.5% - 114px);
+  }
+  .about-timeline--pinned .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
+    top: calc(77.5% - 114px);
+  }
+  .about-timeline--pinned .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
+    top: calc(22.5% - 114px);
+  }
+
+  /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
+     in the background colour keeps the text crisp while they do. */
+  .about-timeline--pinned .about-timeline__text {
+    text-shadow: 0 0 2px var(--at-bg), 0 0 12px var(--at-bg);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
