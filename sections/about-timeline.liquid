@@ -40,7 +40,7 @@
       <div class="about-timeline__list">
         {%- for block in section.blocks -%}
           {%- assign b = block.settings -%}
-          <div class="about-timeline__item" style="--at-i: {{ forloop.index }};" {{ block.shopify_attributes }}>
+          <div class="about-timeline__item" {{ block.shopify_attributes }}>
             <div class="about-timeline__text about-timeline__text_{{ forloop.index }}">
               {%- if b.date != blank -%}
                 <p class="about-timeline__date">{{ b.date }}</p>
@@ -95,14 +95,22 @@
     /* Defined once, even if the section is rendered several times or
        re-rendered by the theme editor. */
     if (!window.AboutTimeline) {
+      var mqDesktop = window.matchMedia('(min-width: 991px)');
       var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-      var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
 
-      /* ---- Same numbers as the reference story section ---------------- */
-      var SCRUB = 1500;   // ms the photos take to catch up with scroll (scrub: 1.5)
-      var FROM_Y = 400;   // px below their resting place the photos start from
-      var FROM_X = 20;    // px sideways  (left photo +, right photo −)
-      var FROM_ROT = 20;  // extra degrees of tilt (left photo +, right photo −)
+      var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+      var easeOut = function (t) { return 1 - Math.pow(1 - t, 3); };
+      var easeIn = function (t) { return t * t * t; };
+
+      /* ---- Tunables ------------------------------------------------ */
+      var SMOOTHING = 0.12;   // 0–1. Lower = silkier / more trailing
+      var TEXT_SHIFT = 36;    // px the text rises while entering / leaving
+      var IMG_SCALE = 0.08;   // images go 0.92 → 1 → 0.92
+      var DRIFT_A = 0.10;     // left image vertical parallax (× viewport h)
+      var DRIFT_B = 0.16;     // right image vertical parallax
+      /* Timing windows, in "slide units" (0 = slide centred, ±1 = neighbour) */
+      var IMG_START = 0.75, IMG_END = 0.15;   // images travel |d| 0.75 → 0.15
+      var TXT_START = 0.5,  TXT_END = 0.2;    // text fades   |d| 0.5  → 0.2
 
       function Timeline(root) {
         this.root = root;
@@ -111,182 +119,181 @@
         this.items = this.list ? [].slice.call(this.list.querySelectorAll('.about-timeline__item')) : [];
         this.slides = this.items.map(function (el) {
           return {
+            el: el,
             text: el.querySelector('.about-timeline__text'),
-            photos: [
-              { el: el.querySelector('.about-timeline__photo--a'), dir: 1, ox: 0, oy: 0 },
-              { el: el.querySelector('.about-timeline__photo--b'), dir: -1, ox: 0, oy: 0 }
-            ].filter(function (p) { return p.el; }),
-            cur: 0, from: 0, to: 0, t0: 0
+            a: el.querySelector('.about-timeline__photo--a'),
+            b: el.querySelector('.about-timeline__photo--b')
           };
         });
-        this.active = false;
-        this.index = -1;
+        this.pinned = false;
+        this.current = null;
         this.raf = 0;
-        this.lastW = window.innerWidth;
 
-        this.onScroll = this.update.bind(this, false);
+        this.onScroll = this.requestTick.bind(this);
         this.onResize = this.handleResize.bind(this);
         this.onMode = this.evaluate.bind(this);
         this.tick = this.tick.bind(this);
 
+        mqDesktop.addEventListener('change', this.onMode);
         mqReduce.addEventListener('change', this.onMode);
-        window.addEventListener('resize', this.onResize);
-        window.addEventListener('load', this.onMode);
         this.evaluate();
       }
 
-      /* Animated on every breakpoint. Opt-outs: prefers-reduced-motion, or a
-         text block taller than the screen (it could never be read while
-         sticky) → the section keeps its normal static layout. */
       Timeline.prototype.evaluate = function () {
-        var ok = !mqReduce.matches && this.items.length > 0;
-        if (ok) this.watchHeading(); else this.revealHeading();
-        if (ok) {
-          this.root.classList.remove('about-timeline--js');       // measure the static layout
-          ok = this.slides.every(function (s) { return !s.text || s.text.offsetHeight <= window.innerHeight; });
-        }
-        this.root.classList.toggle('about-timeline--js', ok);
-        if (ok) this.enable(); else this.disable();
+        var motionOk = !mqReduce.matches;
+        this.root.classList.toggle('about-timeline--js', motionOk);
+        if (motionOk) this.watchHeading();
+        var shouldPin = motionOk && mqDesktop.matches && this.items.length > 0;
+        if (shouldPin && !this.pinned) this.enable();
+        if (!shouldPin && this.pinned) this.disable();
       };
 
-      /* Heading: one-shot reveal when it enters the viewport (unchanged). */
-      Timeline.prototype.revealHeading = function () {
-        if (this.heading) this.heading.classList.add('is-revealed');
-      };
+      /* Heading: one-shot reveal when it enters the viewport. (The slides
+         themselves never use an observer — they are purely scroll-driven.) */
       Timeline.prototype.watchHeading = function () {
         var h = this.heading;
         if (!h || this.headingIO || h.classList.contains('is-revealed')) return;
-        if (!('IntersectionObserver' in window)) { this.revealHeading(); return; }
+        if (!('IntersectionObserver' in window)) { h.classList.add('is-revealed'); return; }
         var self = this;
         this.headingIO = new IntersectionObserver(function (entries) {
-          if (entries[0].isIntersecting) { self.revealHeading(); self.headingIO.disconnect(); }
+          if (entries[0].isIntersecting) {
+            h.classList.add('is-revealed');
+            self.headingIO.disconnect();
+          }
         }, { threshold: 0.2 });
         this.headingIO.observe(h);
       };
 
       Timeline.prototype.enable = function () {
-        if (!this.active) {
-          this.active = true;
-          window.addEventListener('scroll', this.onScroll, { passive: true });
-        }
+        this.pinned = true;
+        this.root.classList.add('about-timeline--pinned');
         this.measure();
-        this.update(true);
-        /* Text transitions switch on one frame later, so nothing fades on load */
-        var root = this.root;
-        requestAnimationFrame(function () { root.classList.add('about-timeline--ready'); });
+        window.addEventListener('scroll', this.onScroll, { passive: true });
+        window.addEventListener('resize', this.onResize);
+        window.addEventListener('load', this.onResize);
+        this.current = this.target();
+        this.render(this.current);
       };
 
       Timeline.prototype.disable = function () {
-        this.active = false;
-        this.index = -1;
+        this.pinned = false;
         cancelAnimationFrame(this.raf);
         this.raf = 0;
         window.removeEventListener('scroll', this.onScroll);
-        this.root.classList.remove('about-timeline--js', 'about-timeline--ready');
+        window.removeEventListener('resize', this.onResize);
+        window.removeEventListener('load', this.onResize);
+        this.root.classList.remove('about-timeline--pinned');
         this.slides.forEach(function (s) {
-          if (s.text) s.text.classList.remove('is-active');
-          s.photos.forEach(function (p) { p.el.style.translate = ''; p.el.style.rotate = ''; });
+          s.el.style.visibility = '';
+          s.el.style.zIndex = '';
+          s.el.style.pointerEvents = '';
+          if (s.text) { s.text.style.opacity = ''; s.text.style.removeProperty('--at-ty'); }
+          [s.a, s.b].forEach(function (p) {
+            if (p) { p.style.translate = ''; p.style.scale = ''; p.style.opacity = ''; }
+          });
         });
       };
 
       Timeline.prototype.destroy = function () {
-        this.disable();
+        if (this.pinned) this.disable();
         if (this.headingIO) this.headingIO.disconnect();
+        mqDesktop.removeEventListener('change', this.onMode);
         mqReduce.removeEventListener('change', this.onMode);
-        window.removeEventListener('resize', this.onResize);
-        window.removeEventListener('load', this.onMode);
       };
 
       Timeline.prototype.measure = function () {
+        var n = this.items.length;
+        var hold = parseFloat(getComputedStyle(this.root).getPropertyValue('--at-hold')) || 0;
         this.vh = window.innerHeight;
+        this.vw = window.innerWidth;
         this.listTop = this.list.getBoundingClientRect().top + window.pageYOffset;
-        this.step = this.list.offsetHeight / this.items.length;   // one step = one CSS grid row
-        /* Where the stylesheet's own `transform` (translateY(-55%) …) draws each
-           photo relative to its box. render() uses it so the extra tilt turns
-           the photo around its own centre instead of swinging it sideways. */
-        this.slides.forEach(function (s) {
-          s.photos.forEach(function (p) {
-            var t = getComputedStyle(p.el).transform;
-            var m = t && t !== 'none' ? new DOMMatrix(t) : null;
-            p.ox = m ? m.e : 0;
-            p.oy = m ? m.f : 0;
-          });
-        });
+        var stage = this.items[0].offsetHeight;
+        var track = Math.max(this.list.offsetHeight - stage, 1);
+        /* scroll distance that equals one slide */
+        this.step = track / Math.max(n - 1 + hold, 0.0001);
+        /* how far images travel in from / out to the sides */
+        this.travel = Math.max(this.vw * 0.34, 340);
       };
 
       Timeline.prototype.handleResize = function () {
-        var w = window.innerWidth;
-        /* Height-only changes are the mobile browser bar showing / hiding —
-           ignored so nothing jumps mid-scroll. */
-        if (w === this.lastW && Math.abs(window.innerHeight - (this.vh || 0)) < 120) return;
-        this.lastW = w;
-        this.evaluate();
-      };
-
-      /* Scroll → (1) which text is showing, (2) each step's photo progress.
-         Text i shows while step i crosses the middle of the screen; the first
-         one also shows before the section, the last one after it.
-         Photos run from "step enters the screen" to "step's bottom reaches
-         the middle" — identical windows to the reference. */
-      Timeline.prototype.update = function (jump) {
-        if (!this.active) return;
-        var n = this.slides.length, vh = this.vh, now = performance.now();
-        var y = window.pageYOffset - this.listTop;
-
-        var index = clamp(Math.floor((y + vh / 2) / this.step), 0, n - 1);
-        if (index !== this.index) {
-          this.index = index;
-          this.slides.forEach(function (s, i) {
-            if (s.text) s.text.classList.toggle('is-active', i === index);
-          });
-        }
-
-        for (var i = 0; i < n; i++) {
-          var s = this.slides[i];
-          var p = clamp((y + vh - i * this.step) / (this.step + vh / 2), 0, 1);
-          if (jump) { s.cur = s.from = s.to = p; }
-          else if (p !== s.to) { s.from = s.cur; s.to = p; s.t0 = now; }
-        }
-        if (jump) this.render();
-        else if (!this.raf) this.raf = requestAnimationFrame(this.tick);
-      };
-
-      /* Trailing catch-up: every scroll restarts a 1.5s expo-out glide from
-         wherever the photos currently are to where scroll says they belong. */
-      Timeline.prototype.tick = function (now) {
-        this.raf = 0;
-        var moving = false;
-        this.slides.forEach(function (s) {
-          if (s.cur === s.to) return;
-          var k = clamp((now - s.t0) / SCRUB, 0, 1);
-          s.cur = k === 1 ? s.to : s.from + (s.to - s.from) * (1 - Math.pow(2, -10 * k));
-          moving = true;
-        });
-        this.render();
-        if (moving) this.raf = requestAnimationFrame(this.tick);
-      };
-
-      Timeline.prototype.render = function () {
-        this.slides.forEach(function (s) {
-          var left = (1 - s.cur) * (1 - s.cur);     // power1.out, 1 → 0
-          s.photos.forEach(function (p) {
-            var rot = p.dir * FROM_ROT * left;
-            var rad = rot * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
-            var tx = p.dir * FROM_X * left + p.ox - (p.ox * c - p.oy * sn);
-            var ty = FROM_Y * left + p.oy - (p.ox * sn + p.oy * c);
-            /* Individual properties: they add to the stylesheet's `transform`
-               (design tilt / offsets) instead of replacing it. */
-            p.el.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
-            p.el.style.rotate = rot.toFixed(2) + 'deg';
-          });
-        });
-      };
-
-      /* Theme editor: jump to the step whose block was selected */
-      Timeline.prototype.goTo = function (index) {
-        if (!this.active || index < 0) return;
+        if (!this.pinned) return;
         this.measure();
-        window.scrollTo({ top: this.listTop + (index + 0.3) * this.step - this.vh / 2, behavior: 'smooth' });
+        this.requestTick();
+      };
+
+      /* Scroll position → fractional slide index.
+         < 0 : section is approaching, slide 1 is sliding in
+         0…n-1 : pinned, scroll drives the slideshow                  */
+      Timeline.prototype.target = function () {
+        var n = this.items.length;
+        var y = window.pageYOffset - this.listTop;
+        if (y <= 0) return -IMG_START * clamp(-y / this.vh, 0, 1);
+        return clamp(y / this.step, 0, n - 1);
+      };
+
+      Timeline.prototype.requestTick = function () {
+        if (!this.raf) this.raf = requestAnimationFrame(this.tick);
+      };
+
+      Timeline.prototype.tick = function () {
+        this.raf = 0;
+        var t = this.target();
+        var diff = t - this.current;
+        if (Math.abs(diff) < 0.0005) {
+          this.current = t;
+        } else {
+          this.current += diff * SMOOTHING;
+          this.requestTick();
+        }
+        this.render(this.current);
+      };
+
+      Timeline.prototype.render = function (f) {
+        var vh = this.vh, travel = this.travel;
+
+        for (var i = 0; i < this.slides.length; i++) {
+          var s = this.slides[i];
+          var d = f - i;            // <0 entering · 0 centred · >0 leaving
+          var ad = Math.abs(d);
+          var visible = ad < IMG_START;
+
+          s.el.style.visibility = visible ? 'visible' : 'hidden';
+          s.el.style.pointerEvents = ad < 0.5 ? '' : 'none';
+          s.el.style.zIndex = ad < 0.5 ? 2 : 1;
+          if (!visible) continue;
+
+          /* -- centre text: outgoing clears before incoming arrives -- */
+          if (s.text) {
+            var tt = 1 - clamp((ad - TXT_END) / (TXT_START - TXT_END), 0, 1);
+            var ty = d < 0 ? (1 - easeOut(tt)) * TEXT_SHIFT : -easeIn(1 - tt) * TEXT_SHIFT;
+            s.text.style.opacity = tt.toFixed(3);
+            s.text.style.setProperty('--at-ty', ty.toFixed(2) + 'px');
+          }
+
+          /* -- side images: continuous horizontal travel -- */
+          var it = 1 - clamp((ad - IMG_END) / (IMG_START - IMG_END), 0, 1);
+          var m = d < 0 ? 1 - easeOut(it) : easeIn(1 - it);   // 1 = off-screen, 0 = home
+          var op = clamp(it * 1.8, 0, 1).toFixed(3);
+          var sc = (1 - IMG_SCALE * m).toFixed(4);
+
+          if (s.a) {
+            s.a.style.translate = (-m * travel).toFixed(1) + 'px ' + (-d * DRIFT_A * vh).toFixed(1) + 'px';
+            s.a.style.scale = sc;
+            s.a.style.opacity = op;
+          }
+          if (s.b) {
+            s.b.style.translate = (m * travel).toFixed(1) + 'px ' + (-d * DRIFT_B * vh).toFixed(1) + 'px';
+            s.b.style.scale = sc;
+            s.b.style.opacity = op;
+          }
+        }
+      };
+
+      /* Theme editor: jump to the slide whose block was selected */
+      Timeline.prototype.goTo = function (index) {
+        if (!this.pinned) return;
+        this.measure();
+        window.scrollTo({ top: this.listTop + index * this.step + 1, behavior: 'smooth' });
       };
 
       var registry = new Map();
