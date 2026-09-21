@@ -411,6 +411,42 @@
                             </span>
                           </button>
                         </quantity-input>
+                        <script>
+                          /* Dim the minus button while the quantity is at its minimum. */
+                          (function () {
+                            if (window.__ywQtyMinInit) return;
+                            window.__ywQtyMinInit = true;
+                            function sync(root) {
+                              (root || document)
+                                .querySelectorAll('.product-form__quantity quantity-input')
+                                .forEach(function (qi) {
+                                  var inp = qi.querySelector('.quantity__input');
+                                  if (!inp) return;
+                                  var min = parseInt(inp.getAttribute('min'), 10);
+                                  if (isNaN(min)) min = 1;
+                                  var val = parseInt(inp.value, 10);
+                                  if (isNaN(val)) val = min;
+                                  qi.classList.toggle('is-qty-min', val <= min);
+                                });
+                            }
+                            document.addEventListener('input', function (e) {
+                              if (e.target && e.target.classList && e.target.classList.contains('quantity__input')) sync();
+                            });
+                            document.addEventListener('change', function (e) {
+                              if (e.target && e.target.classList && e.target.classList.contains('quantity__input')) sync();
+                            });
+                            document.addEventListener('click', function (e) {
+                              if (e.target && e.target.closest && e.target.closest('.product-form__quantity .quantity__button')) {
+                                requestAnimationFrame(function () { sync(); });
+                              }
+                            });
+                            document.addEventListener('shopify:section:load', function (e) { sync(e.target); });
+                            if (document.readyState === 'loading') {
+                              document.addEventListener('DOMContentLoaded', function () { sync(); });
+                            }
+                            sync();
+                          })();
+                        </script>
                         {%- liquid
                           assign volume_pricing_array = product.selected_or_first_available_variant.quantity_price_breaks | sort: 'quantity' | reverse
                           assign current_qty_for_volume_pricing = cart_qty | plus: product.selected_or_first_available_variant.quantity_rule.min

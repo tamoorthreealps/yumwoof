@@ -639,6 +639,14 @@ quantity-input.quantity::before {
   opacity: 1;
 }
 
+/* Dim the minus button while the quantity is at its minimum (usually 1). */
+.product-form__quantity .quantity__button[name="minus"] {
+  transition: opacity 0.2s ease;
+}
+.product-form__quantity quantity-input.is-qty-min .quantity__button[name="minus"] {
+  opacity: 0.25 !important;
+}
+
 .ingri--bar--main {
   margin: 0;
   background: #7aa5dd;
