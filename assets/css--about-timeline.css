@@ -453,9 +453,10 @@ margin: 12px auto 0;
 @media (max-width: 990.98px) {
   /* Reference mobile: a full screen per step, text box 60svh tall starting
      25svh down. svh = no jump when the browser bar shows / hides. */
- .about-timeline--js {
-    --at-from-x: -90;
-    --at-photo-overlap: 16px;
+   .about-timeline--js {
+    --at-step: 100vh;
+    --at-sticky-top: 25vh;
+    --at-sticky-height: 60vh;
   }
   @supports (height: 100svh) {
     .about-timeline--js {
@@ -470,17 +471,17 @@ margin: 12px auto 0;
      Odd entries: left photo high, right photo lower. Even entries: swapped —
      the same zig-zag as the static mobile design. Design tilts untouched. */
   .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a {
-    left: calc(50% - 128px + var(--at-photo-overlap));
+    left: -68px;
     right: auto;
     top: 2%;
   }
   .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
-    right: calc(50% - 128px + var(--at-photo-overlap));
+    right: -68px;
     left: auto;
-    top: 22%;
+    top: 34%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-    top: 22%;
+    top: 34%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
     top: 2%;
