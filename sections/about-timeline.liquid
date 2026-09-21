@@ -12,7 +12,6 @@
   endunless
 -%}
 
-
 <section
   class="about-timeline"
   id="about-timeline-{{ uid }}"
@@ -41,7 +40,7 @@
       <div class="about-timeline__list">
         {%- for block in section.blocks -%}
           {%- assign b = block.settings -%}
-          <div class="about-timeline__item" {{ block.shopify_attributes }}>
+          <div class="about-timeline__item" style="--at-i: {{ forloop.index }};" {{ block.shopify_attributes }}>
             <div class="about-timeline__text about-timeline__text_{{ forloop.index }}">
               {%- if b.date != blank -%}
                 <p class="about-timeline__date">{{ b.date }}</p>
@@ -92,267 +91,229 @@
 </section>
 
 <script>
-/* ==========================================================================
-   About Timeline — scroll-pinned storytelling
-   - Heading entrance (IntersectionObserver)
-   - Pinned mode: list becomes a sticky stage, entries cross-fade by scroll
-   - Reveal mode: automatic fallback when an entry can't fit the viewport or
-     an ancestor's overflow blocks position: sticky
-   - prefers-reduced-motion: does nothing at all (section stays as designed)
-   - Theme editor: section load/unload + block select supported
-   ========================================================================== */
-(function () {
-  if (window.__aboutTimelineReady) return;
-  window.__aboutTimelineReady = true;
+  (function () {
+    /* Defined once, even if the section is rendered several times or
+       re-rendered by the theme editor. */
+    if (!window.AboutTimeline) {
+      var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
 
-  var SELECTOR = '.about-timeline';
-  var HOLD = 0.2;        // portion of a step where an entry is fully visible
-  var FADE = 0.25;       // portion of a step used to fade in / out
-  var SHIFT = 36;        // px of vertical travel while fading
-  var LERP = 0.12;       // scroll smoothing (1 = none)
-  var FIT_MARGIN = 96;   // px of breathing room an entry needs inside the stage
+      /* ---- Same numbers as the reference story section ---------------- */
+      var SCRUB = 1500;   // ms the photos take to catch up with scroll (scrub: 1.5)
+      var FROM_Y = 400;   // px below their resting place the photos start from
+      var FROM_X = 20;    // px sideways  (left photo +, right photo −)
+      var FROM_ROT = 20;  // extra degrees of tilt (left photo +, right photo −)
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var instances = new Map();
-
-  function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
-  function smoothstep(t) { return t * t * (3 - 2 * t); }
-
-  // position: sticky dies if any ancestor (below <body>) clips overflow.
-  function findClippingAncestor(el) {
-    var node = el.parentElement;
-    while (node && node !== document.body && node !== document.documentElement) {
-      var cs = getComputedStyle(node);
-      if (/(auto|scroll|hidden)/.test(cs.overflowX + ' ' + cs.overflowY)) return node;
-      node = node.parentElement;
-    }
-    return null;
-  }
-
-  function Timeline(section) {
-    this.section = section;
-    this.heading = section.querySelector('.about-timeline__heading');
-    this.inner = section.querySelector('.about-timeline__inner');
-    this.list = section.querySelector('.about-timeline__list');
-    this.items = this.list ? Array.prototype.slice.call(this.list.querySelectorAll('.about-timeline__item')) : [];
-    this.observers = [];
-    this.mode = null;
-    this.current = null;
-    this.raf = 0;
-    this.near = true;
-    this.cache = [];
-    this.lastWidth = 0;
-    this.lastHeight = 0;
-
-    this.onScroll = this.requestTick.bind(this);
-    this.onResize = this.handleResize.bind(this);
-    this.tick = this.tick.bind(this);
-
-    this.setup();
-  }
-
-  Timeline.prototype.setup = function () {
-    if (reduceMotion.matches) return;
-    var self = this;
-    this.section.classList.add('about-timeline--anim');
-
-    if (this.heading) {
-      var ho = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-inview');
-          ho.disconnect();
+      function Timeline(root) {
+        this.root = root;
+        this.heading = root.querySelector('.about-timeline__heading');
+        this.list = root.querySelector('.about-timeline__list');
+        this.items = this.list ? [].slice.call(this.list.querySelectorAll('.about-timeline__item')) : [];
+        this.slides = this.items.map(function (el) {
+          return {
+            text: el.querySelector('.about-timeline__text'),
+            photos: [
+              { el: el.querySelector('.about-timeline__photo--a'), dir: 1, ox: 0, oy: 0 },
+              { el: el.querySelector('.about-timeline__photo--b'), dir: -1, ox: 0, oy: 0 }
+            ].filter(function (p) { return p.el; }),
+            cur: 0, from: 0, to: 0, t0: 0
+          };
         });
-      }, { threshold: 0.2 });
-      ho.observe(this.heading);
-      this.observers.push(ho);
-    }
+        this.active = false;
+        this.index = -1;
+        this.raf = 0;
+        this.lastW = window.innerWidth;
 
-    if (!this.list || !this.items.length) return;
+        this.onScroll = this.update.bind(this, false);
+        this.onResize = this.handleResize.bind(this);
+        this.onMode = this.evaluate.bind(this);
+        this.tick = this.tick.bind(this);
 
-    // Only do scroll work while the section is near the viewport.
-    var so = new IntersectionObserver(function (entries) {
-      self.near = entries[0].isIntersecting;
-      if (self.near) self.requestTick();
-    }, { rootMargin: '50% 0px 50% 0px' });
-    so.observe(this.section);
-    this.observers.push(so);
+        mqReduce.addEventListener('change', this.onMode);
+        window.addEventListener('resize', this.onResize);
+        window.addEventListener('load', this.onMode);
+        this.evaluate();
+      }
 
-    window.addEventListener('scroll', this.onScroll, { passive: true });
-    window.addEventListener('resize', this.onResize);
-    this.layout();
-  };
+      /* Animated on every breakpoint. Opt-outs: prefers-reduced-motion, or a
+         text block taller than the screen (it could never be read while
+         sticky) → the section keeps its normal static layout. */
+      Timeline.prototype.evaluate = function () {
+        var ok = !mqReduce.matches && this.items.length > 0;
+        if (ok) this.watchHeading(); else this.revealHeading();
+        if (ok) {
+          this.root.classList.remove('about-timeline--js');       // measure the static layout
+          ok = this.slides.every(function (s) { return !s.text || s.text.offsetHeight <= window.innerHeight; });
+        }
+        this.root.classList.toggle('about-timeline--js', ok);
+        if (ok) this.enable(); else this.disable();
+      };
 
-  Timeline.prototype.resetMode = function () {
-    this.section.classList.remove('is-pinned', 'is-reveal');
-    this.items.forEach(function (item) {
-      item.classList.remove('is-inview');
-      item.style.removeProperty('--at-v');
-      item.style.removeProperty('--at-y');
-    });
-    if (this.revealObserver) { this.revealObserver.disconnect(); this.revealObserver = null; }
-    this.cache = [];
-    this.current = null;
-    this.mode = null;
-  };
+      /* Heading: one-shot reveal when it enters the viewport (unchanged). */
+      Timeline.prototype.revealHeading = function () {
+        if (this.heading) this.heading.classList.add('is-revealed');
+      };
+      Timeline.prototype.watchHeading = function () {
+        var h = this.heading;
+        if (!h || this.headingIO || h.classList.contains('is-revealed')) return;
+        if (!('IntersectionObserver' in window)) { this.revealHeading(); return; }
+        var self = this;
+        this.headingIO = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { self.revealHeading(); self.headingIO.disconnect(); }
+        }, { threshold: 0.2 });
+        this.headingIO.observe(h);
+      };
 
-  Timeline.prototype.layout = function () {
-    this.resetMode();
-    this.lastWidth = window.innerWidth;
-    this.lastHeight = window.innerHeight;
+      Timeline.prototype.enable = function () {
+        if (!this.active) {
+          this.active = true;
+          window.addEventListener('scroll', this.onScroll, { passive: true });
+        }
+        this.measure();
+        this.update(true);
+        /* Text transitions switch on one frame later, so nothing fades on load */
+        var root = this.root;
+        requestAnimationFrame(function () { root.classList.add('about-timeline--ready'); });
+      };
 
-    // Measure natural entry height (design padding excluded) before pinning.
-    var tallest = 0;
-    this.items.forEach(function (item) {
-      var cs = getComputedStyle(item);
-      var h = item.offsetHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-      if (h > tallest) tallest = h;
-    });
-    var stage = document.documentElement.clientHeight;
-    var clipper = findClippingAncestor(this.list);
-    var canPin = this.items.length > 1 && !clipper && tallest + FIT_MARGIN <= stage;
-
-    if (clipper && window.Shopify && window.Shopify.designMode) {
-      console.info('[about-timeline] Pinning disabled: this ancestor clips overflow (use overflow: clip instead of hidden).', clipper);
-    }
-
-    if (canPin) {
-      this.mode = 'pinned';
-      this.section.style.setProperty('--at-count', this.items.length);
-      this.section.classList.add('is-pinned');
-      this.total = parseFloat(getComputedStyle(this.inner, '::after').height) || 0;
-      this.step = this.total / (this.items.length - 1);
-      this.pinTop = parseFloat(getComputedStyle(this.list).top) || 0;
-      this.requestTick();
-    } else {
-      this.mode = 'reveal';
-      this.section.classList.add('is-reveal');
-      var ro = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-inview');
-          ro.unobserve(entry.target);
+      Timeline.prototype.disable = function () {
+        this.active = false;
+        this.index = -1;
+        cancelAnimationFrame(this.raf);
+        this.raf = 0;
+        window.removeEventListener('scroll', this.onScroll);
+        this.root.classList.remove('about-timeline--js', 'about-timeline--ready');
+        this.slides.forEach(function (s) {
+          if (s.text) s.text.classList.remove('is-active');
+          s.photos.forEach(function (p) { p.el.style.translate = ''; p.el.style.rotate = ''; });
         });
-      }, { threshold: 0.25 });
-      this.items.forEach(function (item) { ro.observe(item); });
-      this.revealObserver = ro;
+      };
+
+      Timeline.prototype.destroy = function () {
+        this.disable();
+        if (this.headingIO) this.headingIO.disconnect();
+        mqReduce.removeEventListener('change', this.onMode);
+        window.removeEventListener('resize', this.onResize);
+        window.removeEventListener('load', this.onMode);
+      };
+
+      Timeline.prototype.measure = function () {
+        this.vh = window.innerHeight;
+        this.listTop = this.list.getBoundingClientRect().top + window.pageYOffset;
+        this.step = this.list.offsetHeight / this.items.length;   // one step = one CSS grid row
+        /* Where the stylesheet's own `transform` (translateY(-55%) …) draws each
+           photo relative to its box. render() uses it so the extra tilt turns
+           the photo around its own centre instead of swinging it sideways. */
+        this.slides.forEach(function (s) {
+          s.photos.forEach(function (p) {
+            var t = getComputedStyle(p.el).transform;
+            var m = t && t !== 'none' ? new DOMMatrix(t) : null;
+            p.ox = m ? m.e : 0;
+            p.oy = m ? m.f : 0;
+          });
+        });
+      };
+
+      Timeline.prototype.handleResize = function () {
+        var w = window.innerWidth;
+        /* Height-only changes are the mobile browser bar showing / hiding —
+           ignored so nothing jumps mid-scroll. */
+        if (w === this.lastW && Math.abs(window.innerHeight - (this.vh || 0)) < 120) return;
+        this.lastW = w;
+        this.evaluate();
+      };
+
+      /* Scroll → (1) which text is showing, (2) each step's photo progress.
+         Text i shows while step i crosses the middle of the screen; the first
+         one also shows before the section, the last one after it.
+         Photos run from "step enters the screen" to "step's bottom reaches
+         the middle" — identical windows to the reference. */
+      Timeline.prototype.update = function (jump) {
+        if (!this.active) return;
+        var n = this.slides.length, vh = this.vh, now = performance.now();
+        var y = window.pageYOffset - this.listTop;
+
+        var index = clamp(Math.floor((y + vh / 2) / this.step), 0, n - 1);
+        if (index !== this.index) {
+          this.index = index;
+          this.slides.forEach(function (s, i) {
+            if (s.text) s.text.classList.toggle('is-active', i === index);
+          });
+        }
+
+        for (var i = 0; i < n; i++) {
+          var s = this.slides[i];
+          var p = clamp((y + vh - i * this.step) / (this.step + vh / 2), 0, 1);
+          if (jump) { s.cur = s.from = s.to = p; }
+          else if (p !== s.to) { s.from = s.cur; s.to = p; s.t0 = now; }
+        }
+        if (jump) this.render();
+        else if (!this.raf) this.raf = requestAnimationFrame(this.tick);
+      };
+
+      /* Trailing catch-up: every scroll restarts a 1.5s expo-out glide from
+         wherever the photos currently are to where scroll says they belong. */
+      Timeline.prototype.tick = function (now) {
+        this.raf = 0;
+        var moving = false;
+        this.slides.forEach(function (s) {
+          if (s.cur === s.to) return;
+          var k = clamp((now - s.t0) / SCRUB, 0, 1);
+          s.cur = k === 1 ? s.to : s.from + (s.to - s.from) * (1 - Math.pow(2, -10 * k));
+          moving = true;
+        });
+        this.render();
+        if (moving) this.raf = requestAnimationFrame(this.tick);
+      };
+
+      Timeline.prototype.render = function () {
+        this.slides.forEach(function (s) {
+          var left = (1 - s.cur) * (1 - s.cur);     // power1.out, 1 → 0
+          s.photos.forEach(function (p) {
+            var rot = p.dir * FROM_ROT * left;
+            var rad = rot * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
+            var tx = p.dir * FROM_X * left + p.ox - (p.ox * c - p.oy * sn);
+            var ty = FROM_Y * left + p.oy - (p.ox * sn + p.oy * c);
+            /* Individual properties: they add to the stylesheet's `transform`
+               (design tilt / offsets) instead of replacing it. */
+            p.el.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
+            p.el.style.rotate = rot.toFixed(2) + 'deg';
+          });
+        });
+      };
+
+      /* Theme editor: jump to the step whose block was selected */
+      Timeline.prototype.goTo = function (index) {
+        if (!this.active || index < 0) return;
+        this.measure();
+        window.scrollTo({ top: this.listTop + (index + 0.3) * this.step - this.vh / 2, behavior: 'smooth' });
+      };
+
+      var registry = new Map();
+      var api = window.AboutTimeline = {
+        init: function (scope) {
+          [].forEach.call((scope || document).querySelectorAll('[data-about-timeline]'), function (el) {
+            if (!registry.has(el)) registry.set(el, new Timeline(el));
+          });
+        },
+        destroy: function (scope) {
+          registry.forEach(function (inst, el) {
+            if (!scope || scope.contains(el)) { inst.destroy(); registry.delete(el); }
+          });
+        }
+      };
+
+      document.addEventListener('shopify:section:load', function (e) { api.init(e.target); });
+      document.addEventListener('shopify:section:unload', function (e) { api.destroy(e.target); });
+      document.addEventListener('shopify:block:select', function (e) {
+        var root = e.target.closest && e.target.closest('[data-about-timeline]');
+        var inst = root && registry.get(root);
+        if (inst) inst.goTo(inst.items.indexOf(e.target));
+      });
     }
-  };
 
-  Timeline.prototype.handleResize = function () {
-    // Ignore mobile URL-bar height jitter; re-layout on real changes only.
-    var dw = Math.abs(window.innerWidth - this.lastWidth);
-    var dh = Math.abs(window.innerHeight - this.lastHeight);
-    if (dw < 2 && dh < 140) return;
-    clearTimeout(this.resizeTimer);
-    this.resizeTimer = setTimeout(this.layout.bind(this), 150);
-  };
-
-  Timeline.prototype.requestTick = function () {
-    if (this.mode !== 'pinned' || !this.near || this.raf) return;
-    this.raf = requestAnimationFrame(this.tick);
-  };
-
-  Timeline.prototype.readTarget = function () {
-    var lr = this.list.getBoundingClientRect();
-    var pre = lr.top - this.pinTop;
-    var p;
-    if (pre > 1) {
-      p = -pre / this.step;                       // approaching the pin
-    } else {
-      var ir = this.inner.getBoundingClientRect();
-      p = (this.total - (ir.bottom - lr.bottom)) / this.step;   // inside / after
-    }
-    return clamp(p, -1, this.items.length - 1);
-  };
-
-  Timeline.prototype.tick = function () {
-    this.raf = 0;
-    if (this.mode !== 'pinned') return;
-    var target = this.readTarget();                // reads
-    if (this.current === null) this.current = target;
-    this.current += (target - this.current) * LERP;
-    var settled = Math.abs(target - this.current) < 0.0005;
-    if (settled) this.current = target;
-    this.render(this.current);                     // writes
-    if (!settled) this.raf = requestAnimationFrame(this.tick);
-  };
-
-  Timeline.prototype.render = function (p) {
-    var last = this.items.length - 1;
-    for (var i = 0; i <= last; i++) {
-      var d = p - i;
-      if (i === last && d > 0) d = 0;              // last entry stays for the release
-      var v = smoothstep(clamp(1 - (Math.abs(d) - HOLD) / FADE, 0, 1));
-      var y = (1 - v) * SHIFT * (d < 0 ? 1 : -1);  // in from below, out upward
-      var key = v.toFixed(3) + '|' + y.toFixed(1);
-      if (this.cache[i] === key) continue;
-      this.cache[i] = key;
-      this.items[i].style.setProperty('--at-v', v.toFixed(3));
-      this.items[i].style.setProperty('--at-y', y.toFixed(1) + 'px');
-    }
-  };
-
-  // Theme editor: jump the pinned scroll to a given entry.
-  Timeline.prototype.goTo = function (index) {
-    if (this.mode !== 'pinned') return;
-    var ir = this.inner.getBoundingClientRect();
-    var pinStart = window.scrollY + ir.bottom - this.total - this.list.offsetHeight - this.pinTop;
-    window.scrollTo(0, Math.round(pinStart + index * this.step));
-  };
-
-  Timeline.prototype.destroy = function () {
-    cancelAnimationFrame(this.raf);
-    clearTimeout(this.resizeTimer);
-    window.removeEventListener('scroll', this.onScroll);
-    window.removeEventListener('resize', this.onResize);
-    this.observers.forEach(function (o) { o.disconnect(); });
-    this.observers = [];
-    this.resetMode();
-    this.section.classList.remove('about-timeline--anim');
-    if (this.heading) this.heading.classList.remove('is-inview');
-  };
-
-  function create(section) {
-    if (instances.has(section)) instances.get(section).destroy();
-    instances.set(section, new Timeline(section));
-  }
-  function initAll(root) {
-    (root || document).querySelectorAll(SELECTOR).forEach(create);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { initAll(); });
-  } else {
-    initAll();
-  }
-
-  // Re-measure once fonts/images have settled.
-  window.addEventListener('load', function () {
-    instances.forEach(function (inst) { if (inst.mode) inst.layout(); });
-  });
-
-  reduceMotion.addEventListener('change', function () {
-    instances.forEach(function (inst, section) { inst.destroy(); });
-    instances.clear();
-    initAll();
-  });
-
-  document.addEventListener('shopify:section:load', function (e) { initAll(e.target); });
-  document.addEventListener('shopify:section:unload', function (e) {
-    e.target.querySelectorAll(SELECTOR).forEach(function (section) {
-      if (!instances.has(section)) return;
-      instances.get(section).destroy();
-      instances.delete(section);
-    });
-  });
-  document.addEventListener('shopify:block:select', function (e) {
-    instances.forEach(function (inst) {
-      var index = inst.items.indexOf(e.target);
-      if (index > -1) inst.goTo(index);
-    });
-  });
-})();
+    window.AboutTimeline.init();
+  })();
 </script>
 
 {% schema %}
