@@ -233,7 +233,7 @@ border-radius: 24px;
   right: 49px;
   left: auto;
   top:33px;
-  z-index: auto;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
