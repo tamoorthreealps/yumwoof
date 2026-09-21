@@ -39,18 +39,37 @@
       }
       return 0;
     }
+    // Desktop stacks the images and shows only .is-active. On mobile Dawn renders
+    // a native horizontal scroll slider, so navigation there must also scroll the
+    // target into view.
+    function mediaList() {
+      return gallery.querySelector('.product__media-list');
+    }
+    function isScrollSlider() {
+      var l = mediaList();
+      return !!(l && l.scrollWidth > l.clientWidth + 4);
+    }
+    function scrollToActive(target) {
+      var l = mediaList();
+      if (!l || !isScrollSlider() || !target) return;
+      var lr = l.getBoundingClientRect();
+      var tr = target.getBoundingClientRect();
+      l.scrollTo({ left: l.scrollLeft + (tr.left - lr.left), behavior: 'smooth' });
+    }
     function go(i) {
       var its = items();
       i = Math.max(0, Math.min(its.length - 1, i));
       var target = its[i];
       if (!target) return;
-      // Toggle .is-active directly. NOT gallery.setActiveMedia() — that calls
-      // resetPages() which fires a debounced slideChanged that reverts the image
-      // back to the scroll position (always 0 in this stacked layout).
+      // Toggle .is-active directly (drives the stacked desktop view + the counter).
+      // NOT gallery.setActiveMedia() — that calls resetPages() which fires a
+      // debounced slideChanged that reverts the image. On the mobile scroll slider
+      // also bring the target into view.
       its.forEach(function (it) {
         it.classList.remove('is-active');
       });
       target.classList.add('is-active');
+      scrollToActive(target);
       update();
     }
     function buildPagination() {
@@ -112,6 +131,10 @@ gallery.addEventListener('pointerup', function (e) {
   isDragging = false;
   gallery.classList.remove('yw-gallery-dragging');
 
+  // On the mobile scroll slider, native scrolling already handles the swipe —
+  // don't double-navigate (the scroll listener keeps the counter in sync).
+  if (isScrollSlider()) return;
+
   if (Math.abs(diffX) < 50 || Math.abs(diffX) < Math.abs(diffY)) return;
 
   if (diffX < 0) {
@@ -133,6 +156,46 @@ gallery.addEventListener('pointercancel', function () {
         attributeFilter: ['class'],
       });
     }
+
+    // Keep the active image + counter in sync when the shopper scrolls the native
+    // mobile slider, so the arrows always step from the image that's on screen.
+    var syncRaf;
+    function syncActiveFromScroll() {
+      if (!isScrollSlider()) return;
+      var l = mediaList();
+      var its = items();
+      if (!l || !its.length) return;
+      var lr = l.getBoundingClientRect();
+      var center = lr.left + lr.width / 2;
+      var best = 0;
+      var bestDist = Infinity;
+      its.forEach(function (it, idx) {
+        var r = it.getBoundingClientRect();
+        var d = Math.abs(r.left + r.width / 2 - center);
+        if (d < bestDist) {
+          bestDist = d;
+          best = idx;
+        }
+      });
+      if (!its[best].classList.contains('is-active')) {
+        its.forEach(function (it, idx) {
+          it.classList.toggle('is-active', idx === best);
+        });
+        update();
+      }
+    }
+    var scrollHost = mediaList();
+    if (scrollHost) {
+      scrollHost.addEventListener(
+        'scroll',
+        function () {
+          if (syncRaf) cancelAnimationFrame(syncRaf);
+          syncRaf = requestAnimationFrame(syncActiveFromScroll);
+        },
+        { passive: true }
+      );
+    }
+
     buildPagination();
     update();
   }
