@@ -274,9 +274,6 @@ html.mac-os .recipe-swatch__badge {
 
 /* Design: gallery 824 / info 504, 64px gap, 60px page margins. */
 @media screen and (min-width: 990px) {
-  .a.pdp--promo--banner_link p strong{
-    text-decoration:none;
-  }
   .product.grid--2-col-tablet {
     display: grid;
     grid-template-columns: 824fr 504fr;
@@ -1085,6 +1082,7 @@ a.pdp--promo--banner_link p {
 
 .pdp--promo--banner.pdp--promo--banner_v2 a.pdp--promo--banner_link p strong {
   padding-left: 5px;
+  text-decoration:none;
 }
 
   .custom--page-width  {
