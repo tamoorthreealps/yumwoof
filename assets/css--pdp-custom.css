@@ -512,9 +512,6 @@ html.mac-os .recipe-swatch__badge {
 .recipe-swatch__img--mobile{
   display:block;
 }
-  .pdp-gallery .yw-gallery-nav {
-    display: none;
-  }
   button.yw-gallery-btn {
     width: 16px;
 }
