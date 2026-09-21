@@ -249,4 +249,43 @@
 
   document.addEventListener('shopify:section:load', initAboutHeroAnimations);
 })();
+
+(function () {
+  var ticking = false;
+
+  function updateParallax() {
+    document.querySelectorAll('.about-hero').forEach(function (section) {
+      var rect = section.getBoundingClientRect();
+      var viewportCenter = window.innerHeight / 2;
+      var sectionCenter = rect.top + rect.height / 2;
+      var progress = (viewportCenter - sectionCenter) / window.innerHeight;
+
+      var photo1 = section.querySelector('.about-hero__photo--1');
+      var photo2 = section.querySelector('.about-hero__photo--2');
+
+      if (photo1) {
+        photo1.style.setProperty('--ah-parallax-y', (progress * 55).toFixed(2) + 'px');
+        photo1.style.setProperty('--ah-scroll-rotation', (progress * 3.5).toFixed(2) + 'deg');
+      }
+
+      if (photo2) {
+        photo2.style.setProperty('--ah-parallax-y', (progress * -80).toFixed(2) + 'px');
+        photo2.style.setProperty('--ah-scroll-rotation', (progress * -4.5).toFixed(2) + 'deg');
+      }
+    });
+
+    ticking = false;
+  }
+
+  function requestUpdate() {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  updateParallax();
+})();
 </script>

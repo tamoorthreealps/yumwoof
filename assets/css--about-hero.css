@@ -207,7 +207,9 @@ border-radius: 24px;
 }
 .about-hero__photo--1 {
     width: 100%;
-    transform: rotate(-3.46deg);
+      --ah-base-rotation: -3.46deg;
+  transform: rotate(calc(var(--ah-base-rotation) + var(--ah-scroll-rotation, 0deg))) translateY(var(--ah-parallax-y, 0px));
+  will-change: transform;
     z-index: 1;
     position: absolute;
     max-width: 298px;
@@ -217,7 +219,9 @@ border-radius: 24px;
 }
 
 .about-hero__photo--2 {
-    transform: rotate(10deg);
+     --ah-base-rotation: 10deg;
+  transform: rotate(calc(var(--ah-base-rotation) + var(--ah-scroll-rotation, 0deg))) translateY(var(--ah-parallax-y, 0px));
+  will-change: transform;
     z-index: 2;
     position: absolute;
     max-width: 219.65px;
@@ -355,22 +359,7 @@ margin: 40px 0 0;
 }
 
 /* Photos: gentle rise + near-imperceptible settle; rotation never animates */
-.about-hero--animate .about-hero__photo {
-  opacity: 0;
-  translate: 0 20px;
-  scale: 0.985;
-}
 
-.about-hero--animate .about-hero__photo.is-revealed {
-  opacity: 1;
-  translate: 0 0;
-  scale: 1;
-  transition:
-    opacity 1.8s var(--ah-ease-out),
-    translate 2.2s var(--ah-ease-out),
-    scale 2.2s var(--ah-ease-out);
-  transition-delay: calc(var(--ah-load-delay, 0s) + var(--ah-stagger, 0s));
-}
 
 /* Stagger offsets */
 .about-hero__intro       { --ah-stagger: 0s; }
@@ -428,7 +417,8 @@ border-radius: 32px;
         max-width: 464px;
         height: 492px;
         left: 40px;
-        transform: rotate(-10.25deg);
+          --ah-base-rotation: -10.25deg;
+  transform: rotate(calc(var(--ah-base-rotation) + var(--ah-scroll-rotation, 0deg))) translateY(var(--ah-parallax-y, 0px));
         top: auto;
   }
   .about-hero__photo--2 {
@@ -439,6 +429,8 @@ border-radius: 32px;
         bottom:auto;
         position: relative;
         border-radius: 32px;
+          --ah-base-rotation: 10deg;
+  transform: rotate(calc(var(--ah-base-rotation) + var(--ah-scroll-rotation, 0deg))) translateY(var(--ah-parallax-y, 0px));
   }
   .about-hero__badge {
     right:auto;
