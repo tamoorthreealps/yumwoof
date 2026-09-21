@@ -123,7 +123,6 @@
         this.index = -1;
         this.raf = 0;
         this.lastW = window.innerWidth;
-        this.fromX = FROM_X;   /* MOBILE FIX: default until measure() runs */
 
         this.onScroll = this.update.bind(this, false);
         this.onResize = this.handleResize.bind(this);
@@ -200,14 +199,6 @@
 
       Timeline.prototype.measure = function () {
         this.vh = window.innerHeight;
-
-        /* MOBILE FIX: sideways start offset. The stylesheet sets --at-from-x
-           only inside the mobile media query (negative = photos start further
-           apart and drift together on scroll). On desktop the variable is not
-           defined, so this falls back to FROM_X and nothing changes. */
-        var fx = parseFloat(getComputedStyle(this.root).getPropertyValue('--at-from-x'));
-        this.fromX = isNaN(fx) ? FROM_X : fx;
-
         this.listTop = this.list.getBoundingClientRect().top + window.pageYOffset;
         this.step = this.list.offsetHeight / this.items.length;   // one step = one CSS grid row
         /* Where the stylesheet's own `transform` (translateY(-55%) …) draws each
@@ -276,13 +267,12 @@
       };
 
       Timeline.prototype.render = function () {
-        var fromX = this.fromX;   /* MOBILE FIX: FROM_X on desktop, CSS override on mobile */
         this.slides.forEach(function (s) {
           var left = (1 - s.cur) * (1 - s.cur);     // power1.out, 1 → 0
           s.photos.forEach(function (p) {
             var rot = p.dir * FROM_ROT * left;
             var rad = rot * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
-            var tx = p.dir * fromX * left + p.ox - (p.ox * c - p.oy * sn);
+            var tx = p.dir * FROM_X * left + p.ox - (p.ox * c - p.oy * sn);
             var ty = FROM_Y * left + p.oy - (p.ox * sn + p.oy * c);
             /* Individual properties: they add to the stylesheet's `transform`
                (design tilt / offsets) instead of replacing it. */
