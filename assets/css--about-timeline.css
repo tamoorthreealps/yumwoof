@@ -52,7 +52,7 @@
 }
 
 .about-timeline__text_1 {
-  max-width:100%;
+  max-width:100% !important;
 }
 
 .about-timeline__body h1 {
