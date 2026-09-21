@@ -87,7 +87,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.4rem;
-  background: rgba(122, 165, 221, 0.2);
+  background: #cb890033;
   color: #000;
   border: none;
   border-radius: 8px;
@@ -98,7 +98,7 @@
 }
 
 .qcalc__cta:hover {
-  background: rgba(122, 165, 221, 0.3);
+  background: #cb89004d;
 }
 .qcalc__cta-text {
   font-size: 14px;

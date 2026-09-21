@@ -361,7 +361,7 @@
                         </span>
                       </label>
                       <div class="price-per-item__container">
-                        <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
+                        <quantity-input class="quantity is-qty-min" data-url="{{ product.url }}" data-section="{{ section.id }}">
                           <button class="quantity__button" name="minus" type="button">
                             <span class="visually-hidden">
                               {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
