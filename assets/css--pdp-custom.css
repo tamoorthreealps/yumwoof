@@ -806,11 +806,11 @@ a.pdp--promo--banner_link {
     );
 
     background-size: 300% 100%;
-    /* Ambient gradient shimmer + a one-time page-load "glow & reach" entrance. */
+    /* Ambient gradient shimmer + a one-time page-load drop reveal (line swipe -> drop open). */
     animation:
       smoothBannerGradient 8s ease-in-out infinite,
-      promoBannerEnter 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-    will-change: background-position, transform, box-shadow;
+      ywPromoDrop 1.3s 0.4s backwards;
+    will-change: background-position, transform, box-shadow, clip-path;
     border-radius: 6px;
     display: flex;
     align-items: center;
@@ -818,6 +818,9 @@ a.pdp--promo--banner_link {
     gap: 8px;
     text-decoration: none;
     padding: 9px 15px;
+    /* glow & reach on hover */
+    box-shadow: 0 0 0 0 rgba(123, 166, 221, 0);
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes smoothBannerGradient {
@@ -834,36 +837,40 @@ a.pdp--promo--banner_link {
   }
 }
 
-/* Page-load entrance: fade + slide in, with a maroon glow pulse that settles. */
-@keyframes promoBannerEnter {
+/* Page-load reveal, three beats:
+   1) the top edge swipes across as a thin 3px line (left -> right)
+   2) the box drops open downward from that line
+   3) the contents land in behind it (see .pdp--promo--banner_link > *) */
+@keyframes ywPromoDrop {
   0% {
-    opacity: 0;
-    transform: translateY(-10px);
-    box-shadow: 0 0 0 0 rgba(102, 29, 29, 0);
+    clip-path: inset(0 100% calc(100% - 3px) 0 round 6px);
+    animation-timing-function: cubic-bezier(0.6, 0, 0.2, 1);
   }
-  45% {
-    opacity: 1;
-    transform: translateY(0);
-    box-shadow: 0 0 0 0 rgba(102, 29, 29, 0);
-  }
-  62% {
-    box-shadow: 0 0 20px 3px rgba(102, 29, 29, 0.5);
+  42% {
+    clip-path: inset(0 0 calc(100% - 3px) 0 round 6px);
+    animation-timing-function: cubic-bezier(0.5, 0, 0.15, 1);
   }
   100% {
-    opacity: 1;
-    transform: translateY(0);
-    box-shadow: 0 0 0 0 rgba(102, 29, 29, 0);
+    clip-path: inset(0 0 0 0 round 6px);
   }
 }
 
-/* Respect reduced-motion: skip the entrance (bar just appears in place). */
-@media (prefers-reduced-motion: reduce) {
-  a.pdp--promo--banner_link {
-    animation: none;
+/* the contents drop in after the box opens */
+a.pdp--promo--banner_link > * {
+  animation: ywPromoLand 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) calc(0.4s + 1.3s * 0.65) backwards;
+}
+@keyframes ywPromoLand {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
   }
-  a.pdp--promo--banner_link svg {
-    animation: none;
-  }
+}
+
+/* hover / focus: lift + soft blue glow */
+a.pdp--promo--banner_link:hover,
+a.pdp--promo--banner_link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px 2px rgba(123, 166, 221, 0.45);
 }
 
 a.pdp--promo--banner_link p {
@@ -886,38 +893,25 @@ a.pdp--promo--banner_link svg {
     display: inline-block;
     vertical-align: middle;
     transform: translateX(0);
-    /* One-time "reach" on page load, then the ambient attention nudge takes over. */
-    animation:
-      promoArrowLoadReach 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both,
-      promoArrowAttention 3s ease-in-out 1.6s infinite;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     will-change: transform;
 }
 
-@keyframes promoArrowLoadReach {
-  0% {
-    transform: translateX(0);
-  }
-  55% {
-    transform: translateX(9px);
-  }
-  100% {
-    transform: translateX(0);
-  }
+/* reach: the arrow slides forward on hover / focus */
+a.pdp--promo--banner_link:hover svg,
+a.pdp--promo--banner_link:focus-visible svg {
+    transform: translateX(6px);
 }
 
-@keyframes promoArrowAttention {
-  0%,
-  60%,
-  100% {
-    transform: translateX(0);
+/* Reduced motion: skip the reveal + reach, contents just appear. */
+@media (prefers-reduced-motion: reduce) {
+  a.pdp--promo--banner_link,
+  a.pdp--promo--banner_link > * {
+    animation: none;
   }
-
-  72% {
-    transform: translateX(7px);
-  }
-
-  82% {
-    transform: translateX(0);
+  a.pdp--promo--banner_link,
+  a.pdp--promo--banner_link svg {
+    transition-duration: 0.01ms;
   }
 }
 
