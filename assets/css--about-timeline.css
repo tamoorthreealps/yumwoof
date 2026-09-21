@@ -51,6 +51,14 @@
   text-align: center;
 }
 
+.about-timeline__text_1 {
+  max-width:100%;
+}
+
+.about-timeline__body h1 {
+  margin:0 auto !important;
+}
+
 .about-timeline__date {
     margin: 0;
     font-family: TAY Birdie, sans-serif;
