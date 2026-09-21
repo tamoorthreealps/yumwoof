@@ -97,11 +97,11 @@ margin: 12px auto 0;
     max-width: 336px;
 }
 
-.about-timeline__text.about-timeline__text_1 .about-timeline__body {
+.about-timeline__text.about-timeline__text_2 .about-timeline__body {
     padding: 0 1px;
 }
 
-.about-timeline__text.about-timeline__text_3 .about-timeline__body {
+.about-timeline__text.about-timeline__text_4 .about-timeline__body {
     padding: 0 2.6px;
 }
 
@@ -276,8 +276,8 @@ margin: 12px auto 0;
 .about-timeline__photo.about-timeline__photo--a.about-timeline__photo--a-4 {
     display: none;
 } */
-.about-timeline__text.about-timeline__text_1 .about-timeline__body,
-.about-timeline__text.about-timeline__text_3 .about-timeline__body {
+.about-timeline__text.about-timeline__text_2 .about-timeline__body,
+.about-timeline__text.about-timeline__text_4 .about-timeline__body {
     padding: 0;
 }
 }
