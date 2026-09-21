@@ -27,6 +27,7 @@
 >
   {%- comment -%} ---------------- Announcement topbar ---------------- {%- endcomment -%}
   {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+    {% unless template contains 'product' %}
     <div class="yw-topbar" role="region" aria-label="{{ 'sections.header.announcement' | t }}">
       <div class="yw-topbar__inner">
         {%- if section.settings.announcement_link != blank -%}
@@ -38,6 +39,7 @@
         {%- endif -%}
       </div>
     </div>
+  {% endunless %}
   {%- endif -%}
 
   {%- comment -%} ---------------- Navbar ---------------- {%- endcomment -%}
