@@ -888,19 +888,41 @@ a.pdp--promo--banner_link p strong {
   padding-left: 3px;
 }
 
-a.pdp--promo--banner_link svg {
-    width: 12px;
-    display: inline-block;
-    vertical-align: middle;
-    transform: translateX(0);
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: transform;
+/* Arrow: a shaft that stretches on hover + a fixed chevron head (matches yw-promo). */
+.promo-banner-arrow {
+    display: inline-flex;
+    align-items: center;
+    color: #661d1d;
+    transition: margin-right 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.promo-banner-arrow__shaft {
+    display: block;
+    width: 13px;
+    height: 1.5px;
+    margin-right: -6.5px;
+    background: currentColor;
+    transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.promo-banner-arrow__head {
+    display: block;
+    width: 7px;
+    height: 11px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
-/* reach: the arrow slides forward on hover / focus */
-a.pdp--promo--banner_link:hover svg,
-a.pdp--promo--banner_link:focus-visible svg {
-    transform: translateX(6px);
+/* reach on hover / focus: the shaft grows; the negative margin cancels the
+   layout growth so the preceding text never shifts */
+a.pdp--promo--banner_link:hover .promo-banner-arrow__shaft,
+a.pdp--promo--banner_link:focus-visible .promo-banner-arrow__shaft {
+    width: 36px;
+}
+a.pdp--promo--banner_link:hover .promo-banner-arrow,
+a.pdp--promo--banner_link:focus-visible .promo-banner-arrow {
+    margin-right: -23px;
 }
 
 /* Reduced motion: skip the reveal + reach, contents just appear. */
@@ -910,7 +932,8 @@ a.pdp--promo--banner_link:focus-visible svg {
     animation: none;
   }
   a.pdp--promo--banner_link,
-  a.pdp--promo--banner_link svg {
+  a.pdp--promo--banner_link .promo-banner-arrow,
+  a.pdp--promo--banner_link .promo-banner-arrow__shaft {
     transition-duration: 0.01ms;
   }
 }
@@ -1059,10 +1082,6 @@ a.pdp--promo--banner_link p {
 
 .pdp--promo--banner.pdp--promo--banner_v2 a.pdp--promo--banner_link p strong {
   padding-left: 5px;
-}
-
-a.pdp--promo--banner_link svg {
-    width: 13.17px;
 }
 
   .custom--page-width  {
