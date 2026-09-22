@@ -352,7 +352,39 @@
         { "type": "text", "id": "title", "label": "Title", "default": "Food was the problem" },
         { "type": "richtext", "id": "body", "label": "Body", "default": "<p>We were dealing with our own health challenges when our dog Sherlock started showing similar signs. The connection between food and long-term health became impossible to ignore.</p>" },
         { "type": "image_picker", "id": "image_a", "label": "Photo (left)" },
-        { "type": "image_picker", "id": "image_b", "label": "Photo (right)" }
+        {
+          "type": "select",
+          "id": "image_a_shape",
+          "label": "Image A Shape",
+          "options": [
+            {
+              "value": "portrait",
+              "label": "Portrait"
+            },
+            {
+              "value": "square",
+              "label": "Square"
+            }
+          ],
+          "default": "portrait"
+        },
+        { "type": "image_picker", "id": "image_b", "label": "Photo (right)" },
+        {
+          "type": "select",
+          "id": "image_b_shape",
+          "label": "Image B Shape",
+          "options": [
+            {
+              "value": "portrait",
+              "label": "Portrait"
+            },
+            {
+              "value": "square",
+              "label": "Square"
+            }
+          ],
+          "default": "portrait"
+        }
       ]
     }
   ],
