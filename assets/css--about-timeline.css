@@ -480,49 +480,55 @@ margin: 12px auto 0;
     left: auto;
     top: 34%;
   }
-.about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a-2 {
+  .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
+    top: 34%;
+  }
+  .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
+    top: 2%;
+  }
+.about-timeline--js .about-timeline__photo--a-2 {
     left: -68px;
     right: auto;
     top: 2%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b-2 {
+  .about-timeline--js .about-timeline__photo--b-2 {
     right: -68px;
     left: auto;
     top: 72%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a-3 {
+  .about-timeline--js .about-timeline__photo--a-3 {
     left: -68px;
     right: auto;
     top: 72%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b-3 {
+  .about-timeline--js .about-timeline__photo--b-3 {
     right: -68px;
     left: auto;
     top: 2%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a-4 {
+  .about-timeline--js .about-timeline__photo--a-4 {
     left: -68px;
     right: auto;
     top: 2%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b-4 {
+  .about-timeline--js .about-timeline__photo--b-4 {
     right: -68px;
     left: auto;
     top: 72%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a-5 {
+  .about-timeline--js .about-timeline__photo--a-5 {
     left: -68px;
     right: auto;
     top: 72%;
   }
 
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b-5 {
+  .about-timeline--js .about-timeline__photo--b-5 {
     right: -68px;
     left: auto;
     top: 2%;
