@@ -103,8 +103,8 @@
       var FROM_X = 20;
       var FROM_ROT = 20;
 
-      var MOBILE_AVOID_GAP = 18;
-      var MOBILE_AVOID_EASE = 0.16;
+      var MOBILE_AVOID_GAP = 16;
+      var MOBILE_AVOID_EASE = 0.14;
       var MOBILE_AVOID_THRESHOLD = 0.5;
 
       function Timeline(root) {
@@ -127,20 +127,16 @@
                 dir: 1,
                 ox: 0,
                 oy: 0,
-                avoidX: 0,
                 avoidY: 0,
-                targetX: 0,
-                targetY: 0
+                targetAvoidY: 0
               },
               {
                 el: el.querySelector('.about-timeline__photo--b'),
                 dir: -1,
                 ox: 0,
                 oy: 0,
-                avoidX: 0,
                 avoidY: 0,
-                targetX: 0,
-                targetY: 0
+                targetAvoidY: 0
               }
             ].filter(function (p) {
               return p.el;
@@ -183,15 +179,11 @@
           this.root.classList.remove('about-timeline--js');
 
           ok = this.slides.every(function (s) {
-            return !s.text ||
-              s.text.offsetHeight <= window.innerHeight;
+            return !s.text || s.text.offsetHeight <= window.innerHeight;
           });
         }
 
-        this.root.classList.toggle(
-          'about-timeline--js',
-          ok
-        );
+        this.root.classList.toggle('about-timeline--js', ok);
 
         if (ok) {
           this.enable();
@@ -231,9 +223,7 @@
               self.headingIO.disconnect();
             }
           },
-          {
-            threshold: 0.2
-          }
+          { threshold: 0.2 }
         );
 
         this.headingIO.observe(h);
@@ -256,9 +246,7 @@
         var root = this.root;
 
         requestAnimationFrame(function () {
-          root.classList.add(
-            'about-timeline--ready'
-          );
+          root.classList.add('about-timeline--ready');
         });
       };
 
@@ -281,19 +269,14 @@
 
         this.slides.forEach(function (s) {
           if (s.text) {
-            s.text.classList.remove(
-              'is-active'
-            );
+            s.text.classList.remove('is-active');
           }
 
           s.photos.forEach(function (p) {
             p.el.style.translate = '';
             p.el.style.rotate = '';
-
-            p.avoidX = 0;
             p.avoidY = 0;
-            p.targetX = 0;
-            p.targetY = 0;
+            p.targetAvoidY = 0;
           });
         });
       };
@@ -334,9 +317,7 @@
 
         this.slides.forEach(function (s) {
           s.photos.forEach(function (p) {
-            var t =
-              getComputedStyle(p.el).transform;
-
+            var t = getComputedStyle(p.el).transform;
             var m =
               t && t !== 'none'
                 ? new DOMMatrix(t)
@@ -390,16 +371,14 @@
         if (index !== this.index) {
           this.index = index;
 
-          this.slides.forEach(
-            function (s, i) {
-              if (s.text) {
-                s.text.classList.toggle(
-                  'is-active',
-                  i === index
-                );
-              }
+          this.slides.forEach(function (s, i) {
+            if (s.text) {
+              s.text.classList.toggle(
+                'is-active',
+                i === index
+              );
             }
-          );
+          });
         }
 
         for (var i = 0; i < n; i++) {
@@ -421,23 +400,10 @@
           }
         }
 
-        var needsMotion = this.render();
-
-        if (
-          !jump &&
-          (!this.raf || needsMotion)
-        ) {
-          this.raf =
-            requestAnimationFrame(
-              this.tick
-            );
-        }
-
-        if (jump && needsMotion) {
-          this.raf =
-            requestAnimationFrame(
-              this.tick
-            );
+        if (jump) {
+          this.render();
+        } else if (!this.raf) {
+          this.raf = requestAnimationFrame(this.tick);
         }
       };
 
@@ -447,281 +413,198 @@
         var moving = false;
 
         this.slides.forEach(function (s) {
-          if (s.cur !== s.to) {
-            var k = clamp(
-              (now - s.t0) /
-              SCRUB,
-              0,
-              1
-            );
-
-            s.cur =
-              k === 1
-                ? s.to
-                : s.from +
-                  (s.to - s.from) *
-                  (1 -
-                    Math.pow(
-                      2,
-                      -10 * k
-                    ));
-
-            moving = true;
+          if (s.cur === s.to) {
+            return;
           }
+
+          var k = clamp(
+            (now - s.t0) /
+            SCRUB,
+            0,
+            1
+          );
+
+          s.cur =
+            k === 1
+              ? s.to
+              : s.from +
+                (s.to - s.from) *
+                (1 - Math.pow(2, -10 * k));
+
+          moving = true;
         });
 
-        var avoidanceMoving =
-          this.render();
+        var avoidanceMoving = this.render();
 
-        if (
-          moving ||
-          avoidanceMoving
-        ) {
-          this.raf =
-            requestAnimationFrame(
-              this.tick
-            );
+        if (moving || avoidanceMoving) {
+          this.raf = requestAnimationFrame(this.tick);
         }
       };
 
-      Timeline.prototype.getCollisionOffset =
-        function (p, text) {
-          if (!text) {
-            return {
-              x: 0,
-              y: 0
-            };
-          }
+      Timeline.prototype.getAvoidY = function (p, text) {
+        if (!text) {
+          return 0;
+        }
 
-          var imageRect =
-            p.el.getBoundingClientRect();
+        var imageRect = p.el.getBoundingClientRect();
+        var textRect = text.getBoundingClientRect();
 
-          var textRect =
-            text.getBoundingClientRect();
-
-          var overlapX =
-            Math.min(
-              imageRect.right,
-              textRect.right
-            ) -
-            Math.max(
-              imageRect.left,
-              textRect.left
-            );
-
-          var overlapY =
-            Math.min(
-              imageRect.bottom,
-              textRect.bottom
-            ) -
-            Math.max(
-              imageRect.top,
-              textRect.top
-            );
-
-          if (
-            overlapX <= 0 ||
-            overlapY <= 0
-          ) {
-            return {
-              x: 0,
-              y: 0
-            };
-          }
-
-          var gap =
-            MOBILE_AVOID_GAP;
-
-          var candidates = [
-            {
-              x:
-                textRect.left -
-                imageRect.right -
-                gap,
-              y: 0
-            },
-            {
-              x:
-                textRect.right -
-                imageRect.left +
-                gap,
-              y: 0
-            },
-            {
-              x: 0,
-              y:
-                textRect.top -
-                imageRect.bottom -
-                gap
-            },
-            {
-              x: 0,
-              y:
-                textRect.bottom -
-                imageRect.top +
-                gap
-            }
-          ];
-
-          candidates.sort(
-            function (a, b) {
-              return (
-                Math.abs(a.x) +
-                Math.abs(a.y)
-              ) -
-              (
-                Math.abs(b.x) +
-                Math.abs(b.y)
-              );
-            }
+        var overlapX =
+          Math.min(
+            imageRect.right,
+            textRect.right
+          ) -
+          Math.max(
+            imageRect.left,
+            textRect.left
           );
 
-          return candidates[0];
-        };
+        var overlapY =
+          Math.min(
+            imageRect.bottom,
+            textRect.bottom
+          ) -
+          Math.max(
+            imageRect.top,
+            textRect.top
+          );
+
+        if (overlapX <= 0 || overlapY <= 0) {
+          return 0;
+        }
+
+        /*
+         * Only move upward.
+         * The image rises just enough to clear
+         * the top edge of the text plus a small gap.
+         */
+        return Math.min(
+          0,
+          textRect.top -
+            imageRect.bottom -
+            MOBILE_AVOID_GAP
+        );
+      };
 
       Timeline.prototype.render = function () {
         var isMobile =
           window.innerWidth <= 990.98;
 
         var self = this;
-        var needsMotion = false;
+        var avoidanceMoving = false;
 
-        this.slides.forEach(
-          function (s, slideIndex) {
-            var left =
-              (1 - s.cur) *
-              (1 - s.cur);
+        this.slides.forEach(function (s, slideIndex) {
+          var left =
+            (1 - s.cur) *
+            (1 - s.cur);
 
-            s.photos.forEach(function (p) {
-              var rot =
-                p.dir *
-                FROM_ROT *
-                left;
+          s.photos.forEach(function (p) {
+            var rot =
+              p.dir *
+              FROM_ROT *
+              left;
 
-              var rad =
-                rot *
-                Math.PI /
-                180;
+            var rad =
+              rot *
+              Math.PI /
+              180;
 
-              var c = Math.cos(rad);
-              var sn = Math.sin(rad);
+            var c = Math.cos(rad);
+            var sn = Math.sin(rad);
 
-              var baseTx =
-                p.dir *
+            /*
+             * Original animation position.
+             * This is intentionally unchanged.
+             */
+            var tx =
+              p.dir *
                 FROM_X *
                 left +
-                p.ox -
-                (
-                  p.ox * c -
-                  p.oy * sn
-                );
+              p.ox -
+              (p.ox * c -
+                p.oy * sn);
 
-              var baseTy =
-                FROM_Y *
+            var ty =
+              FROM_Y *
                 left +
-                p.oy -
-                (
-                  p.ox * sn +
-                  p.oy * c
+              p.oy -
+              (p.ox * sn +
+                p.oy * c);
+
+            /*
+             * Put image at its original position
+             * first so collision detection measures
+             * the natural animation position.
+             */
+            p.el.style.translate =
+              tx.toFixed(1) +
+              'px ' +
+              ty.toFixed(1) +
+              'px';
+
+            p.el.style.rotate =
+              rot.toFixed(2) +
+              'deg';
+
+            /*
+             * Mobile-only collision avoidance.
+             * Only the active slide participates.
+             */
+            if (
+              isMobile &&
+              slideIndex === self.index &&
+              s.text
+            ) {
+              p.targetAvoidY =
+                self.getAvoidY(
+                  p,
+                  s.text
                 );
+            } else {
+              p.targetAvoidY = 0;
+            }
 
-              if (
-                isMobile &&
-                slideIndex === self.index &&
-                s.text
-              ) {
-                /*
-                 * First place the image at its
-                 * natural/base animation position.
-                 */
-                p.el.style.translate =
-                  baseTx.toFixed(1) +
-                  'px ' +
-                  baseTy.toFixed(1) +
-                  'px';
+            /*
+             * Smoothly approach the required
+             * upward offset and smoothly return to 0.
+             */
+            var diff =
+              p.targetAvoidY -
+              p.avoidY;
 
-                p.el.style.rotate =
-                  rot.toFixed(2) +
-                  'deg';
+            p.avoidY +=
+              diff *
+              MOBILE_AVOID_EASE;
 
-                /*
-                 * Check the actual rendered
-                 * image against the active text.
-                 */
-                var target =
-                  self.getCollisionOffset(
-                    p,
-                    s.text
-                  );
+            if (Math.abs(diff) > MOBILE_AVOID_THRESHOLD) {
+              avoidanceMoving = true;
+            }
 
-                p.targetX = target.x;
-                p.targetY = target.y;
-              } else {
-                p.targetX = 0;
-                p.targetY = 0;
-              }
+            /*
+             * Apply only the temporary vertical
+             * avoidance offset.
+             */
+            var finalTy =
+              ty +
+              p.avoidY;
 
-              /*
-               * Smoothly move the avoidance
-               * offset toward its target.
-               */
-              p.avoidX +=
-                (p.targetX - p.avoidX) *
-                MOBILE_AVOID_EASE;
+            p.el.style.translate =
+              tx.toFixed(1) +
+              'px ' +
+              finalTy.toFixed(1) +
+              'px';
 
-              p.avoidY +=
-                (p.targetY - p.avoidY) *
-                MOBILE_AVOID_EASE;
+            p.el.style.rotate =
+              rot.toFixed(2) +
+              'deg';
+          });
+        });
 
-              if (
-                Math.abs(
-                  p.targetX -
-                  p.avoidX
-                ) >
-                MOBILE_AVOID_THRESHOLD ||
-                Math.abs(
-                  p.targetY -
-                  p.avoidY
-                ) >
-                MOBILE_AVOID_THRESHOLD
-              ) {
-                needsMotion = true;
-              }
-
-              /*
-               * Final position =
-               * normal animation +
-               * collision avoidance.
-               */
-              var finalTx =
-                baseTx +
-                p.avoidX;
-
-              var finalTy =
-                baseTy +
-                p.avoidY;
-
-              p.el.style.translate =
-                finalTx.toFixed(1) +
-                'px ' +
-                finalTy.toFixed(1) +
-                'px';
-
-              p.el.style.rotate =
-                rot.toFixed(2) +
-                'deg';
-            });
-          }
-        );
-
-        return needsMotion;
+        return avoidanceMoving;
       };
 
       Timeline.prototype.goTo = function (index) {
-        if (
-          !this.active ||
-          index < 0
-        ) {
+        if (!this.active || index < 0) {
           return;
         }
 
@@ -739,46 +622,32 @@
 
       var registry = new Map();
 
-      var api =
-        (window.AboutTimeline = {
-          init: function (scope) {
-            [].forEach.call(
-              (
-                scope ||
-                document
-              ).querySelectorAll(
-                '[data-about-timeline]'
-              ),
-              function (el) {
-                if (
-                  !registry.has(el)
-                ) {
-                  registry.set(
-                    el,
-                    new Timeline(el)
-                  );
-                }
+      var api = window.AboutTimeline = {
+        init: function (scope) {
+          [].forEach.call(
+            (scope || document).querySelectorAll(
+              '[data-about-timeline]'
+            ),
+            function (el) {
+              if (!registry.has(el)) {
+                registry.set(
+                  el,
+                  new Timeline(el)
+                );
               }
-            );
-          },
+            }
+          );
+        },
 
-          destroy: function (scope) {
-            registry.forEach(
-              function (
-                inst,
-                el
-              ) {
-                if (
-                  !scope ||
-                  scope.contains(el)
-                ) {
-                  inst.destroy();
-                  registry.delete(el);
-                }
-              }
-            );
-          }
-        });
+        destroy: function (scope) {
+          registry.forEach(function (inst, el) {
+            if (!scope || scope.contains(el)) {
+              inst.destroy();
+              registry.delete(el);
+            }
+          });
+        }
+      };
 
       document.addEventListener(
         'shopify:section:load',
@@ -809,9 +678,7 @@
 
           if (inst) {
             inst.goTo(
-              inst.items.indexOf(
-                e.target
-              )
+              inst.items.indexOf(e.target)
             );
           }
         }
