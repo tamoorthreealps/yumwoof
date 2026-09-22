@@ -470,25 +470,22 @@ margin: 12px auto 0;
      the reference. -68px = 28px section padding + 40px bleed.
      Odd entries: left photo high, right photo lower. Even entries: swapped —
      the same zig-zag as the static mobile design. Design tilts untouched. */
-.about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a {
-  left: -68px;
-  right: auto;
-  top: 2%;
-}
-
-.about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
-  right: -68px;
-  left: auto;
-  top: 72%;
-}
-
-.about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-  top: 72%;
-}
-
-.about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
-  top: 2%;
-}
+  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a {
+    left: -68px;
+    right: auto;
+    top: 2%;
+  }
+  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
+    right: -68px;
+    left: auto;
+    top: 34%;
+  }
+  .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
+    top: 34%;
+  }
+  .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
+    top: 2%;
+  }
 
   /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
      in the background colour keeps the text crisp while they do. */
