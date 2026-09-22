@@ -466,25 +466,13 @@ margin: 12px auto 0;
     }
   }
 
-  /* Photos leave the row under the text and hang off the screen edges, like
-     the reference. -68px = 28px section padding + 40px bleed.
-     Odd entries: left photo high, right photo lower. Even entries: swapped —
-     the same zig-zag as the static mobile design. Design tilts untouched. */
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a {
-    left: -68px;
+  /* Photos are positioned by JavaScript in screen space (renderMobile):
+     bottom-left / top-right at first, then across each other and off-screen.
+     left/top: 0 is the corner the JS offsets are measured from. */
+  .about-timeline--js .about-timeline__item .about-timeline__photo {
+    left: 0;
     right: auto;
-    top: 2%;
-  }
-  .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
-    right: -68px;
-    left: auto;
-    top: 34%;
-  }
-  .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-    top: 34%;
-  }
-  .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
-    top: 2%;
+    top: 0;
   }
 
   /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
