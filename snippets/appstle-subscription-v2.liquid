@@ -60,14 +60,14 @@
           .asw-option__titles { display: flex; flex-direction: column; gap: 0; min-width: 0; }
           .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
         .asw-option__subtitle {
-            font-size: 13px;
+            font-size: 15px;
             line-height: 24px;
             color: rgba(0, 0, 0, 0.5);
             letter-spacing: 0;
             font-family: Matter, sans-serif;
         }
         .asw-option--one .asw-option__subtitle {
-          font-size: 14px;
+          font-size: 15px;
         }
           .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
           .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
@@ -123,15 +123,7 @@
           .asw-freq__trigger {
             display: flex; align-items: center; text-align: left; gap: 8px;
             appearance: none; -webkit-appearance: none;
-            /* Stroke appears on hover only. Kept at 1px transparent (not 0) so
-               the box never shifts when it colours in. */
-            border: 1px solid transparent;
-            transition: border-color .2s ease;
-          }
-          .asw-freq__trigger:hover,
-          .asw-freq__trigger:focus-visible,
-          .asw-freq[data-open] .asw-freq__trigger {
-            border-color: #000;
+            border:0;
           }
           .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
           .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
