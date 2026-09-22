@@ -92,15 +92,17 @@
 
 <script>
   (function () {
+    /* Defined once, even if the section is rendered several times or
+       re-rendered by the theme editor. */
     if (!window.AboutTimeline) {
       var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
       var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
 
-      var SCRUB = 1500;
-      var FROM_Y = 400;
-      var FROM_X = 20;
-      var FROM_ROT = 20;
-      var MOBILE_EXIT_Y = 520;
+      /* ---- Same numbers as the reference story section ---------------- */
+      var SCRUB = 1500;   // ms the photos take to catch up with scroll (scrub: 1.5)
+      var FROM_Y = 400;   // px below their resting place the photos start from
+      var FROM_X = 20;    // px sideways  (left photo +, right photo −)
+      var FROM_ROT = 20;  // extra degrees of tilt (left photo +, right photo −)
 
       function Timeline(root) {
         this.root = root;
@@ -117,7 +119,6 @@
             cur: 0, from: 0, to: 0, t0: 0
           };
         });
-
         this.active = false;
         this.index = -1;
         this.raf = 0;
@@ -134,43 +135,32 @@
         this.evaluate();
       }
 
+      /* Animated on every breakpoint. Opt-outs: prefers-reduced-motion, or a
+         text block taller than the screen (it could never be read while
+         sticky) → the section keeps its normal static layout. */
       Timeline.prototype.evaluate = function () {
         var ok = !mqReduce.matches && this.items.length > 0;
         if (ok) this.watchHeading(); else this.revealHeading();
-
         if (ok) {
-          this.root.classList.remove('about-timeline--js');
-          ok = this.slides.every(function (s) {
-            return !s.text || s.text.offsetHeight <= window.innerHeight;
-          });
+          this.root.classList.remove('about-timeline--js');       // measure the static layout
+          ok = this.slides.every(function (s) { return !s.text || s.text.offsetHeight <= window.innerHeight; });
         }
-
         this.root.classList.toggle('about-timeline--js', ok);
         if (ok) this.enable(); else this.disable();
       };
 
+      /* Heading: one-shot reveal when it enters the viewport (unchanged). */
       Timeline.prototype.revealHeading = function () {
         if (this.heading) this.heading.classList.add('is-revealed');
       };
-
       Timeline.prototype.watchHeading = function () {
         var h = this.heading;
         if (!h || this.headingIO || h.classList.contains('is-revealed')) return;
-
-        if (!('IntersectionObserver' in window)) {
-          this.revealHeading();
-          return;
-        }
-
+        if (!('IntersectionObserver' in window)) { this.revealHeading(); return; }
         var self = this;
-
         this.headingIO = new IntersectionObserver(function (entries) {
-          if (entries[0].isIntersecting) {
-            self.revealHeading();
-            self.headingIO.disconnect();
-          }
+          if (entries[0].isIntersecting) { self.revealHeading(); self.headingIO.disconnect(); }
         }, { threshold: 0.2 });
-
         this.headingIO.observe(h);
       };
 
@@ -179,42 +169,29 @@
           this.active = true;
           window.addEventListener('scroll', this.onScroll, { passive: true });
         }
-
         this.measure();
         this.update(true);
-
+        /* Text transitions switch on one frame later, so nothing fades on load */
         var root = this.root;
-        requestAnimationFrame(function () {
-          root.classList.add('about-timeline--ready');
-        });
+        requestAnimationFrame(function () { root.classList.add('about-timeline--ready'); });
       };
 
       Timeline.prototype.disable = function () {
         this.active = false;
         this.index = -1;
-
         cancelAnimationFrame(this.raf);
         this.raf = 0;
-
         window.removeEventListener('scroll', this.onScroll);
-
         this.root.classList.remove('about-timeline--js', 'about-timeline--ready');
-
         this.slides.forEach(function (s) {
           if (s.text) s.text.classList.remove('is-active');
-
-          s.photos.forEach(function (p) {
-            p.el.style.translate = '';
-            p.el.style.rotate = '';
-          });
+          s.photos.forEach(function (p) { p.el.style.translate = ''; p.el.style.rotate = ''; });
         });
       };
 
       Timeline.prototype.destroy = function () {
         this.disable();
-
         if (this.headingIO) this.headingIO.disconnect();
-
         mqReduce.removeEventListener('change', this.onMode);
         window.removeEventListener('resize', this.onResize);
         window.removeEventListener('load', this.onMode);
@@ -223,13 +200,14 @@
       Timeline.prototype.measure = function () {
         this.vh = window.innerHeight;
         this.listTop = this.list.getBoundingClientRect().top + window.pageYOffset;
-        this.step = this.list.offsetHeight / this.items.length;
-
+        this.step = this.list.offsetHeight / this.items.length;   // one step = one CSS grid row
+        /* Where the stylesheet's own `transform` (translateY(-55%) …) draws each
+           photo relative to its box. render() uses it so the extra tilt turns
+           the photo around its own centre instead of swinging it sideways. */
         this.slides.forEach(function (s) {
           s.photos.forEach(function (p) {
             var t = getComputedStyle(p.el).transform;
             var m = t && t !== 'none' ? new DOMMatrix(t) : null;
-
             p.ox = m ? m.e : 0;
             p.oy = m ? m.f : 0;
           });
@@ -238,174 +216,99 @@
 
       Timeline.prototype.handleResize = function () {
         var w = window.innerWidth;
-
+        /* Height-only changes are the mobile browser bar showing / hiding —
+           ignored so nothing jumps mid-scroll. */
         if (w === this.lastW && Math.abs(window.innerHeight - (this.vh || 0)) < 120) return;
-
         this.lastW = w;
         this.evaluate();
       };
 
+      /* Scroll → (1) which text is showing, (2) each step's photo progress.
+         Text i shows while step i crosses the middle of the screen; the first
+         one also shows before the section, the last one after it.
+         Photos run from "step enters the screen" to "step's bottom reaches
+         the middle" — identical windows to the reference. */
       Timeline.prototype.update = function (jump) {
         if (!this.active) return;
-
-        var n = this.slides.length;
-        var vh = this.vh;
-        var now = performance.now();
+        var n = this.slides.length, vh = this.vh, now = performance.now();
         var y = window.pageYOffset - this.listTop;
 
-        var index = clamp(
-          Math.floor((y + vh / 2) / this.step),
-          0,
-          n - 1
-        );
-
+        var index = clamp(Math.floor((y + vh / 2) / this.step), 0, n - 1);
         if (index !== this.index) {
           this.index = index;
-
           this.slides.forEach(function (s, i) {
-            if (s.text) {
-              s.text.classList.toggle('is-active', i === index);
-            }
+            if (s.text) s.text.classList.toggle('is-active', i === index);
           });
         }
 
         for (var i = 0; i < n; i++) {
           var s = this.slides[i];
-
-          var p = clamp(
-            (y + vh - i * this.step) / (this.step + vh / 2),
-            0,
-            1
-          );
-
-          if (jump) {
-            s.cur = s.from = s.to = p;
-          } else if (p !== s.to) {
-            s.from = s.cur;
-            s.to = p;
-            s.t0 = now;
-          }
+          var p = clamp((y + vh - i * this.step) / (this.step + vh / 2), 0, 1);
+          if (jump) { s.cur = s.from = s.to = p; }
+          else if (p !== s.to) { s.from = s.cur; s.to = p; s.t0 = now; }
         }
-
-        if (jump) {
-          this.render();
-        } else if (!this.raf) {
-          this.raf = requestAnimationFrame(this.tick);
-        }
+        if (jump) this.render();
+        else if (!this.raf) this.raf = requestAnimationFrame(this.tick);
       };
 
+      /* Trailing catch-up: every scroll restarts a 1.5s expo-out glide from
+         wherever the photos currently are to where scroll says they belong. */
       Timeline.prototype.tick = function (now) {
         this.raf = 0;
-
         var moving = false;
-
         this.slides.forEach(function (s) {
           if (s.cur === s.to) return;
-
           var k = clamp((now - s.t0) / SCRUB, 0, 1);
-
-          s.cur = k === 1
-            ? s.to
-            : s.from + (s.to - s.from) * (1 - Math.pow(2, -10 * k));
-
+          s.cur = k === 1 ? s.to : s.from + (s.to - s.from) * (1 - Math.pow(2, -10 * k));
           moving = true;
         });
-
         this.render();
-
-        if (moving) {
-          this.raf = requestAnimationFrame(this.tick);
-        }
+        if (moving) this.raf = requestAnimationFrame(this.tick);
       };
 
       Timeline.prototype.render = function () {
-        var isMobile = window.innerWidth <= 990.98;
-
         this.slides.forEach(function (s) {
-          var left = (1 - s.cur) * (1 - s.cur);
-
+          var left = (1 - s.cur) * (1 - s.cur);     // power1.out, 1 → 0
           s.photos.forEach(function (p) {
             var rot = p.dir * FROM_ROT * left;
-            var rad = rot * Math.PI / 180;
-            var c = Math.cos(rad);
-            var sn = Math.sin(rad);
-
-            var tx = p.dir * FROM_X * left +
-              p.ox -
-              (p.ox * c - p.oy * sn);
-
-            var ty;
-
-            if (isMobile) {
-              ty = -p.dir * MOBILE_EXIT_Y * (1 - left) +
-                p.oy -
-                (p.ox * sn + p.oy * c);
-            } else {
-              ty = FROM_Y * left +
-                p.oy -
-                (p.ox * sn + p.oy * c);
-            }
-
-            p.el.style.translate =
-              tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
-
+            var rad = rot * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
+            var tx = p.dir * FROM_X * left + p.ox - (p.ox * c - p.oy * sn);
+            var ty = FROM_Y * left + p.oy - (p.ox * sn + p.oy * c);
+            /* Individual properties: they add to the stylesheet's `transform`
+               (design tilt / offsets) instead of replacing it. */
+            p.el.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
             p.el.style.rotate = rot.toFixed(2) + 'deg';
           });
         });
       };
 
+      /* Theme editor: jump to the step whose block was selected */
       Timeline.prototype.goTo = function (index) {
         if (!this.active || index < 0) return;
-
         this.measure();
-
-        window.scrollTo({
-          top: this.listTop + (index + 0.3) * this.step - this.vh / 2,
-          behavior: 'smooth'
-        });
+        window.scrollTo({ top: this.listTop + (index + 0.3) * this.step - this.vh / 2, behavior: 'smooth' });
       };
 
       var registry = new Map();
-
       var api = window.AboutTimeline = {
         init: function (scope) {
-          [].forEach.call(
-            (scope || document).querySelectorAll('[data-about-timeline]'),
-            function (el) {
-              if (!registry.has(el)) {
-                registry.set(el, new Timeline(el));
-              }
-            }
-          );
+          [].forEach.call((scope || document).querySelectorAll('[data-about-timeline]'), function (el) {
+            if (!registry.has(el)) registry.set(el, new Timeline(el));
+          });
         },
-
         destroy: function (scope) {
           registry.forEach(function (inst, el) {
-            if (!scope || scope.contains(el)) {
-              inst.destroy();
-              registry.delete(el);
-            }
+            if (!scope || scope.contains(el)) { inst.destroy(); registry.delete(el); }
           });
         }
       };
 
-      document.addEventListener('shopify:section:load', function (e) {
-        api.init(e.target);
-      });
-
-      document.addEventListener('shopify:section:unload', function (e) {
-        api.destroy(e.target);
-      });
-
+      document.addEventListener('shopify:section:load', function (e) { api.init(e.target); });
+      document.addEventListener('shopify:section:unload', function (e) { api.destroy(e.target); });
       document.addEventListener('shopify:block:select', function (e) {
-        var root = e.target.closest &&
-          e.target.closest('[data-about-timeline]');
-
+        var root = e.target.closest && e.target.closest('[data-about-timeline]');
         var inst = root && registry.get(root);
-
-        if (inst) {
-          inst.goTo(inst.items.indexOf(e.target));
-        }
+        if (inst) inst.goTo(inst.items.indexOf(e.target));
       });
     }
 
