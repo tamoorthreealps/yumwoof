@@ -220,7 +220,24 @@
     const popupClose = popup.querySelector('.yumw-video-popup__close');
     const video = popup.querySelector('video');
     const source = popup.querySelector('source');
+    const firstCard = document.querySelector('.yumw-video-card:first-child');
+const firstVideo = firstCard?.querySelector('video');
+const firstPlayButton = firstCard?.querySelector('.yumw-video-play');
 
+if (firstVideo && firstPlayButton) {
+  firstPlayButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (firstVideo.paused) {
+      firstVideo.play();
+      firstPlayButton.setAttribute('aria-label', 'Pause video');
+    } else {
+      firstVideo.pause();
+      firstPlayButton.setAttribute('aria-label', 'Play video');
+    }
+  });
+}
     document.addEventListener('click', function (e) {
       const card = e.target.closest('.yumw-video-card');
 
