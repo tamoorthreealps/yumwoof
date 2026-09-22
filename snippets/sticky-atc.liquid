@@ -365,6 +365,43 @@
       background: #e6e0d7;
       color: #1a1a1a;
     }
+
+    .sticky-atc__btn::before {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: #661d1d;
+      transform: translateY(102%);
+      transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      .sticky-atc__btn:not([disabled]):hover::before {
+        transform: none;
+      }
+      .sticky-atc__btn:not([disabled]):hover,
+      .sticky-atc__btn:not([disabled]):hover span {
+        color: #fff9ef;
+      }
+    }
+
+    /* keyboard parity */
+    .sticky-atc__btn:not([disabled]):focus-visible::before {
+      transform: none;
+    }
+    .sticky-atc__btn:not([disabled]):focus-visible,
+    .sticky-atc__btn:not([disabled]):focus-visible span {
+      color: #fff9ef;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sticky-atc__btn::before {
+        transition-duration: .01ms;
+      }
+    }
     /* In-button price is mobile-only; desktop shows the standalone price. */
     .sticky-atc__btn-price {
       display: none;
