@@ -1620,3 +1620,29 @@ a.pdp--promo--banner_link p strong {
 }
 
 }
+
+/* ==========================================================================
+   Delivery frequency dropdown — stroke on hover (all PDP templates)
+   Two separate rules remove this border, so these selectors are deliberately
+   specific and live at the end of the file to win on both breakpoints:
+     1. snippets/appstle-subscription-v2.liquid  .asw-freq__trigger        (0,1,0)
+     2. above, inside @media (max-width:990px)   .product__info-wrapper_v2
+                                                 .asw-select__field        (0,2,0)
+   Rest state keeps a 1px transparent border so the box never shifts.
+   ========================================================================== */
+.asw-freq__trigger.asw-select__field {
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.asw-freq__trigger.asw-select__field:hover,
+.asw-freq__trigger.asw-select__field:focus-visible,
+.asw-freq[data-open] .asw-freq__trigger.asw-select__field {
+  border-color: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asw-freq__trigger.asw-select__field {
+    transition-duration: 0.01ms;
+  }
+}
