@@ -104,6 +104,12 @@
       var FROM_X = 20;    // px sideways  (left photo +, right photo −)
       var FROM_ROT = 20;  // extra degrees of tilt (left photo +, right photo −)
 
+      /* ---- Mobile: keep photos off the copy when scrolling stops ------- */
+      var mqMobile   = window.matchMedia('(max-width: 990.98px)');
+      var AVOID_X    = 60;    // px a photo slides toward the screen edge while over the copy (≈28px stays visible)
+      var AVOID_PAD  = 12;    // px of breathing room around the copy
+      var AVOID_EASE = 0.1;   // per-frame approach — small = softer, slower float
+
       function Timeline(root) {
         this.root = root;
         this.heading = root.querySelector('.about-timeline__heading');
@@ -113,15 +119,17 @@
           return {
             text: el.querySelector('.about-timeline__text'),
             photos: [
-              { el: el.querySelector('.about-timeline__photo--a'), dir: 1, ox: 0, oy: 0 },
-              { el: el.querySelector('.about-timeline__photo--b'), dir: -1, ox: 0, oy: 0 }
+              { el: el.querySelector('.about-timeline__photo--a'), dir: 1, ox: 0, oy: 0, av: 0 },
+              { el: el.querySelector('.about-timeline__photo--b'), dir: -1, ox: 0, oy: 0, av: 0 }
             ].filter(function (p) { return p.el; }),
             cur: 0, from: 0, to: 0, t0: 0
           };
         });
         this.active = false;
         this.index = -1;
+        this.y = 0;
         this.raf = 0;
+        this.settling = false;
         this.lastW = window.innerWidth;
 
         this.onScroll = this.update.bind(this, false);
@@ -185,7 +193,7 @@
         this.root.classList.remove('about-timeline--js', 'about-timeline--ready');
         this.slides.forEach(function (s) {
           if (s.text) s.text.classList.remove('is-active');
-          s.photos.forEach(function (p) { p.el.style.translate = ''; p.el.style.rotate = ''; });
+          s.photos.forEach(function (p) { p.av = 0; p.el.style.translate = ''; p.el.style.rotate = ''; });
         });
       };
 
@@ -199,17 +207,22 @@
 
       Timeline.prototype.measure = function () {
         this.vh = window.innerHeight;
+        this.mobile = mqMobile.matches;
         this.listTop = this.list.getBoundingClientRect().top + window.pageYOffset;
         this.step = this.list.offsetHeight / this.items.length;   // one step = one CSS grid row
         /* Where the stylesheet's own `transform` (translateY(-55%) …) draws each
            photo relative to its box. render() uses it so the extra tilt turns
-           the photo around its own centre instead of swinging it sideways. */
+           the photo around its own centre instead of swinging it sideways.
+           `top` / `h` are the photo's layout box inside its step, used by the
+           mobile avoidance check. */
         this.slides.forEach(function (s) {
           s.photos.forEach(function (p) {
             var t = getComputedStyle(p.el).transform;
             var m = t && t !== 'none' ? new DOMMatrix(t) : null;
             p.ox = m ? m.e : 0;
             p.oy = m ? m.f : 0;
+            p.top = p.el.offsetTop;
+            p.h = p.el.offsetHeight;
           });
         });
       };
@@ -231,7 +244,7 @@
       Timeline.prototype.update = function (jump) {
         if (!this.active) return;
         var n = this.slides.length, vh = this.vh, now = performance.now();
-        var y = window.pageYOffset - this.listTop;
+        var y = this.y = window.pageYOffset - this.listTop;
 
         var index = clamp(Math.floor((y + vh / 2) / this.step), 0, n - 1);
         if (index !== this.index) {
@@ -252,7 +265,8 @@
       };
 
       /* Trailing catch-up: every scroll restarts a 1.5s expo-out glide from
-         wherever the photos currently are to where scroll says they belong. */
+         wherever the photos currently are to where scroll says they belong.
+         Keeps running while a mobile avoidance offset is still settling. */
       Timeline.prototype.tick = function (now) {
         this.raf = 0;
         var moving = false;
@@ -263,17 +277,40 @@
           moving = true;
         });
         this.render();
-        if (moving) this.raf = requestAnimationFrame(this.tick);
+        if (moving || this.settling) this.raf = requestAnimationFrame(this.tick);
       };
 
       Timeline.prototype.render = function () {
-        this.slides.forEach(function (s) {
+        var self = this;
+        var avoid = this.mobile && this.index >= 0 && this.slides[this.index].text;
+        var textTop = 0, textBot = 0;
+        if (avoid) {
+          /* Screen band the visible copy occupies (date → body), plus padding */
+          var t = this.slides[this.index].text;
+          textTop = t.firstElementChild.getBoundingClientRect().top - AVOID_PAD;
+          textBot = t.lastElementChild.getBoundingClientRect().bottom + AVOID_PAD;
+        }
+        this.settling = false;
+
+        this.slides.forEach(function (s, idx) {
           var left = (1 - s.cur) * (1 - s.cur);     // power1.out, 1 → 0
+          var rowTop = idx * self.step - self.y;    // step's top edge on screen
           s.photos.forEach(function (p) {
             var rot = p.dir * FROM_ROT * left;
             var rad = rot * Math.PI / 180, c = Math.cos(rad), sn = Math.sin(rad);
             var tx = p.dir * FROM_X * left + p.ox - (p.ox * c - p.oy * sn);
             var ty = FROM_Y * left + p.oy - (p.ox * sn + p.oy * c);
+
+            if (avoid) {
+              /* Mobile only: over the copy → ease toward the screen edge;
+                 clear of it → ease back to the normal scroll position. */
+              var top = rowTop + p.top + ty;
+              var want = top < textBot && top + p.h > textTop ? AVOID_X : 0;
+              p.av += (want - p.av) * AVOID_EASE;
+              if (Math.abs(want - p.av) < 0.5) p.av = want; else self.settling = true;
+              tx -= p.dir * p.av;                   // left photo → left, right photo → right
+            }
+
             /* Individual properties: they add to the stylesheet's `transform`
                (design tilt / offsets) instead of replacing it. */
             p.el.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
