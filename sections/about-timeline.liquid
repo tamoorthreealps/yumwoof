@@ -56,7 +56,7 @@
             {%- if b.image_a != blank or b.image_b != blank -%}
               <div class="about-timeline__photos" aria-hidden="true">
                 {%- if b.image_a != blank -%}
-                  <div class="about-timeline__photo about-timeline__photo--a about-timeline__photo--a-{{ forloop.index }}">
+                  <div class="about-timeline__photo about-timeline__photo--a about-timeline__photo--a-{{ forloop.index }} about-timeline__photo--{{ block.settings.image_a_shape }}">
                     {{
                       b.image_a
                       | image_url: width: 600
@@ -69,7 +69,7 @@
                   </div>
                 {%- endif -%}
                 {%- if b.image_b != blank -%}
-                  <div class="about-timeline__photo about-timeline__photo--b about-timeline__photo--b-{{ forloop.index }}">
+                  <div class="about-timeline__photo about-timeline__photo--b about-timeline__photo--b-{{ forloop.index }} about-timeline__photo--{{ block.settings.image_b_shape }}">
                     {{
                       b.image_b
                       | image_url: width: 600

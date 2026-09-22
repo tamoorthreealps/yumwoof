@@ -133,6 +133,10 @@ margin: 12px auto 0;
   object-fit: cover;
   aspect-ratio: 128 / 228;
 }
+
+.about-timeline__photo--square img {
+  aspect-ratio: 1 / 1 !important;
+}
 .about-timeline__photo--a {
     transform: rotate(6deg);
 }
