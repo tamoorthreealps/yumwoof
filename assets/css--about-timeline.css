@@ -473,18 +473,18 @@ margin: 12px auto 0;
   .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--a {
     left: -68px;
     right: auto;
-    top: -20%;
+    top: 2%;
   }
   .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
     right: -68px;
     left: auto;
-    top: 74%;
+    top: 34%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-    top: 74%;
+    top: 34%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
-    top: -20%;
+    top: 2%;
   }
 
   /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
