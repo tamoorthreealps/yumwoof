@@ -539,6 +539,7 @@ margin: 12px auto 0;
   }
 }
 
+
 @media (prefers-reduced-motion: reduce) {
   .about-timeline__heading {
     opacity: 1 !important;
