@@ -147,7 +147,7 @@
 /* ---- 2. Parallax: extend the layer vertically so travel never shows a gap.
         JS travel is capped just inside this 18% overscan. */
 .about-solution.as-parallax .about-solution__bg {
-  inset: -18% 0;
+  inset: -12% 0;
   transform: translate3d(0, 0, 0);
   will-change: transform;
   backface-visibility: hidden;
