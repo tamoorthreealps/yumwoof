@@ -478,13 +478,13 @@ margin: 12px auto 0;
   .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
     right: -68px;
     left: auto;
-    top: 50%;
+    top: 60%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-    top: 50%;
+    top: 60%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
-    top: 2%;
+    top: -10%;
   }
 
   /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
