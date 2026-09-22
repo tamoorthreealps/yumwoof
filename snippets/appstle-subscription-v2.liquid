@@ -177,6 +177,7 @@
   user-select: none;
   transition: background-color 0.2s ease, color 0.2s ease;
   border-radius: 6px;
+  border: 1px solid transparent;
 }
 
 .asw-freq__opt + .asw-freq__opt {
@@ -186,7 +187,7 @@
 .asw-freq__opt.is-selected {
   background: #000;
   color: #fff9ef;
-  border-top-color: transparent;
+  border-color: #000;
 }
 
 .asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt.is-selected {
@@ -197,7 +198,7 @@
 .asw-freq__opt:hover {
   background: #000 !important;
   color: #fff9ef !important;
-  border-top-color: transparent !important;
+  border: 1px solid #000 !important;
 }
         /* No divider line touching the selected (black) pill. */
         {% comment %} .asw-freq__opt.is-selected,
