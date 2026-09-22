@@ -536,6 +536,7 @@ margin: 12px auto 0;
      in the background colour keeps the text crisp while they do. */
   .about-timeline--js .about-timeline__text {
     text-shadow: 0 0 2px var(--at-bg), 0 0 12px var(--at-bg);
+    z-index:1;
   }
 }
 
