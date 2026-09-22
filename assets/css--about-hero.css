@@ -144,7 +144,7 @@
    its wrapper has height: 0 (clipping the wrapper would hide the image). */
 .about-hero__stroke:not(.about-hero__stroke_img),
 .about-hero__stroke.about-hero__stroke_img img {
-  animation: aboutHeroStrokeReveal 2.6s var(--ah-ease-in-out) 1.3s backwards;
+  animation: aboutHeroStrokeReveal 2.6s var(--ah-ease-in-out) var(--ah-stroke-delay, 1.3s) backwards;
 }
 
 @keyframes aboutHeroStrokeReveal {
