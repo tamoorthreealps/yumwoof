@@ -194,11 +194,17 @@ animation: aboutCtaGradient 3s ease-in-out infinite;
 }
 
 /* ---- Parallax: 18% overscan top + bottom so travel never shows a gap */
-.about-cta.as-parallax .about-cta__bg {
-  inset: -18% 0;
-  transform: translate3d(0, 0, 0);
+.about-cta.as-zoom .about-cta__bg {
+  inset: 0;
+  transform: scale(1);
+  transform-origin: center center;
   will-change: transform;
   backface-visibility: hidden;
+  transition: transform 2.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-cta.as-zoom.as-in .about-cta__bg {
+  transform: scale(1.08);
 }
 
 /* ---- Text entrance ------------------------------------------------------- */

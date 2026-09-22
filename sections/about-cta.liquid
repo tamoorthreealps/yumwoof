@@ -111,121 +111,128 @@
 
 <script>
   /* About page motion (shared by About Solution + About CTA):
-   masked heading reveal + lerped background parallax */
-(() => {
-  if (window.__aboutMotion) return;
-  window.__aboutMotion = true;
+     masked heading reveal + smooth background zoom */
+  (() => {
+    if (window.__aboutMotion) return;
+    window.__aboutMotion = true;
 
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
-  const BLOCKS = ['about-solution', 'about-cta'];
-  const OVERSCAN = 0.18; // matches `inset: -18% 0` in the CSS
-  const LERP = 0.085;    // lower = heavier, more cinematic lag
-  const STAGGER = 0.15, LINE_DUR = 1.9, BODY_DUR = 1.7; // mirror the CSS variables
+    const BLOCKS = ['about-solution', 'about-cta'];
+    const STAGGER = 0.15, LINE_DUR = 1.9, BODY_DUR = 1.7;
 
-  const el = (cls, children) => {
-    const s = document.createElement('span');
-    s.className = cls;
-    s.append(...children);
-    return s;
-  };
-
-  // Wrap each rendered line of the heading in a mask; returns the line count
-  const splitLines = (heading) => {
-    const words = heading.textContent.trim().split(/\s+/).map((w) => {
-      const s = el('', [w]);
-      s.style.display = 'inline-block';
+    const el = (cls, children) => {
+      const s = document.createElement('span');
+      s.className = cls;
+      s.append(...children);
       return s;
-    });
-    heading.replaceChildren(...words.flatMap((w) => [w, ' ']));
-
-    const lines = [];
-    let top = null;
-    for (const w of words) {
-      if (top === null || Math.abs(w.offsetTop - top) > 2) { lines.push([]); top = w.offsetTop; }
-      lines[lines.length - 1].push(w.textContent);
-    }
-
-    heading.replaceChildren(...lines.flatMap((line, i) => {
-      const inner = el('as-line__inner', [line.join(' ')]);
-      inner.style.setProperty('--as-i', i);
-      return [el('as-line', [inner]), ' '];
-    }));
-    heading.classList.add('as-split');
-    return lines.length;
-  };
-
-  const reveal = async (section, block) => {
-    const heading = section.querySelector(`.${block}__heading`);
-    const text = heading && heading.textContent;
-
-    // line breaks depend on the display font being loaded (wait max 1.2s)
-    await Promise.race([document.fonts ? document.fonts.ready : 0, new Promise((r) => setTimeout(r, 1200))]);
-    if (!section.isConnected) return;
-
-    const lines = heading ? splitLines(heading) : 0;
-    const bodyDelay = lines ? (lines - 1) * STAGGER + 0.45 : 0.1;
-    section.style.setProperty('--as-body-delay', `${bodyDelay.toFixed(2)}s`);
-    section.style.setProperty('--as-button-delay', `${(bodyDelay + 0.2).toFixed(2)}s`); // CTA only
-
-    requestAnimationFrame(() => requestAnimationFrame(() => section.classList.add('as-in')));
-
-    // when finished, restore the plain heading so it reflows naturally on resize
-    const total = Math.max(lines ? (lines - 1) * STAGGER + LINE_DUR : 0, bodyDelay + 0.2 + BODY_DUR);
-    setTimeout(() => {
-      section.classList.add('as-done');
-      if (heading) { heading.classList.remove('as-split'); heading.textContent = text; }
-    }, total * 1000 + 200);
-  };
-
-  const parallax = (section, inner, bg) => {
-    const listeners = new AbortController();
-    let current = null, raf = 0, near = false;
-
-    const tick = () => {
-      raf = 0;
-      const { top, height } = inner.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // +1 just below the viewport, 0 centred, -1 just above
-      const progress = Math.max(-1, Math.min(1, (top + height / 2 - vh / 2) / ((vh + height) / 2)));
-      const target = -progress * (height * OVERSCAN - 2);
-
-      current = current === null ? target : current + (target - current) * LERP;
-      const settled = Math.abs(target - current) < 0.05;
-      if (settled) current = target;
-
-      bg.style.transform = `translate3d(0,${current.toFixed(2)}px,0)`;
-      if (!settled) raf = requestAnimationFrame(tick);
     };
 
-    const request = () => {
-      if (!section.isConnected) return listeners.abort(); // section removed by the Theme Editor
-      if (near && !raf) raf = requestAnimationFrame(tick);
+    const splitLines = (heading) => {
+      const words = heading.textContent.trim().split(/\s+/).map((w) => {
+        const s = el('', [w]);
+        s.style.display = 'inline-block';
+        return s;
+      });
+
+      heading.replaceChildren(...words.flatMap((w) => [w, ' ']));
+
+      const lines = [];
+      let top = null;
+
+      for (const w of words) {
+        if (top === null || Math.abs(w.offsetTop - top) > 2) {
+          lines.push([]);
+          top = w.offsetTop;
+        }
+        lines[lines.length - 1].push(w.textContent);
+      }
+
+      heading.replaceChildren(...lines.flatMap((line, i) => {
+        const inner = el('as-line__inner', [line.join(' ')]);
+        inner.style.setProperty('--as-i', i);
+        return [el('as-line', [inner]), ' '];
+      }));
+
+      heading.classList.add('as-split');
+      return lines.length;
     };
 
-    section.classList.add('as-parallax');
-    new IntersectionObserver(([entry]) => { near = entry.isIntersecting; request(); }, { rootMargin: '25% 0px' }).observe(inner);
-    addEventListener('scroll', request, { passive: true, signal: listeners.signal });
-    addEventListener('resize', request, { passive: true, signal: listeners.signal });
-  };
+    const reveal = async (section, block) => {
+      const heading = section.querySelector(`.${block}__heading`);
+      const text = heading && heading.textContent;
 
-  const init = (root = document) => BLOCKS.forEach((block) => {
-    root.querySelectorAll(`.${block}:not(.as-anim)`).forEach((section) => {
-      const inner = section.querySelector(`.${block}__inner`);
-      const bg = section.querySelector(`.${block}__bg`);
-      section.classList.add('as-anim');
+      await Promise.race([
+        document.fonts ? document.fonts.ready : 0,
+        new Promise((r) => setTimeout(r, 1200))
+      ]);
 
-      new IntersectionObserver(([entry], io) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect(); // plays once
-        reveal(section, block);
-      }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' }).observe(inner);
+      if (!section.isConnected) return;
 
-      if (bg) parallax(section, inner, bg);
+      const lines = heading ? splitLines(heading) : 0;
+      const bodyDelay = lines ? (lines - 1) * STAGGER + 0.45 : 0.1;
+
+      section.style.setProperty(
+        '--as-body-delay',
+        `${bodyDelay.toFixed(2)}s`
+      );
+
+      section.style.setProperty(
+        '--as-button-delay',
+        `${(bodyDelay + 0.2).toFixed(2)}s`
+      );
+
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+          section.classList.add('as-in')
+        )
+      );
+
+      const total = Math.max(
+        lines ? (lines - 1) * STAGGER + LINE_DUR : 0,
+        bodyDelay + 0.2 + BODY_DUR
+      );
+
+      setTimeout(() => {
+        section.classList.add('as-done');
+
+        if (heading) {
+          heading.classList.remove('as-split');
+          heading.textContent = text;
+        }
+      }, total * 1000 + 200);
+    };
+
+    const zoom = (section, bg) => {
+      section.classList.add('as-zoom');
+    };
+
+    const init = (root = document) => BLOCKS.forEach((block) => {
+      root.querySelectorAll(`.${block}:not(.as-anim)`).forEach((section) => {
+        const inner = section.querySelector(`.${block}__inner`);
+        const bg = section.querySelector(`.${block}__bg`);
+
+        section.classList.add('as-anim');
+
+        new IntersectionObserver(([entry], io) => {
+          if (!entry.isIntersecting) return;
+
+          io.disconnect();
+          reveal(section, block);
+        }, {
+          threshold: 0.2,
+          rootMargin: '0px 0px -8% 0px'
+        }).observe(inner);
+
+        if (bg) zoom(section, bg);
+      });
     });
-  });
 
-  init();
-  document.addEventListener('shopify:section:load', (e) => init(e.target)); // Theme Editor re-render
-})();
+    init();
+
+    document.addEventListener(
+      'shopify:section:load',
+      (e) => init(e.target)
+    );
+  })();
 </script>
