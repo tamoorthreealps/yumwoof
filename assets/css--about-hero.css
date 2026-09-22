@@ -463,7 +463,12 @@ border-radius: 32px;
         margin: 8px 0 0;
   }
 }
-
+@media (max-width: 767px) {
+  .about-hero__stroke:not(.about-hero__stroke_img),
+  .about-hero__stroke.about-hero__stroke_img img {
+    animation-duration: 1.6s;
+  }
+}
 /* ==========================================================================
    Reduced motion — no movement, everything visible immediately.
    (JS also skips adding .about-hero--animate; this covers the CSS-driven
