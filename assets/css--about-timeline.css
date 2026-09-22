@@ -531,7 +531,7 @@ margin: 12px auto 0;
   .about-timeline--js .about-timeline__photo--b-5 {
     right: -68px;
     left: auto;
-    top: 2%;
+    top: 76% !important;
   }
   /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
      in the background colour keeps the text crisp while they do. */
