@@ -196,6 +196,15 @@
       section.dataset.animationsInitialized = 'true';
 
       var elements = section.querySelectorAll(REVEAL_SELECTOR);
+      var words = section.querySelectorAll('.about-hero__headline-word');
+var stroke = section.querySelector('.about-hero__stroke');
+
+if (words.length && stroke) {
+  var lastWordDelay = (words.length - 1) * 0.28 + 0.2;
+  var strokeDelay = lastWordDelay + 3.2;
+
+  stroke.style.setProperty('--ah-stroke-delay', strokeDelay.toFixed(2) + 's');
+}
       if (!elements.length) return;
 
       /* Without the --animate class nothing is ever hidden, so content stays
