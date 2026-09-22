@@ -1,163 +1,163 @@
 <style>
-      section.yumw-video-testimonials {
-          margin: 4rem 0 0;
-      }
-      p.yumw-video--title {
-          font-size: 16px;
-          line-height: 20px;
-          letter-spacing: -0.16px;
-          color: #000000;
-          font-family: 'TAY Birdie';
-          margin: 0 0 2.4rem;
-      }
-      .yumw-video-card {
-          position: relative;
-          height: 240px;
-          border-radius: 12px;
-          overflow: hidden;
-          cursor: pointer;
-          border:1px solid transparent;
-          transition: all .35s ease;
-      }
-
-      .yumw-video-card:hover {
-        border:1px solid #000;
-        box-shadow: 0 0 25px 0 rgba(123, 166, 221, 0.5);
-      }
-
-      .yumw-video-card img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-      }
-      .yumw-video-card.yumw-video-card_first img {
-          opacity:0;
-      }
-      .yumw-video-thumb,
-      .yumw-video-card video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          pointer-events: none;
-      }
-
-      .yumw-video-thumb {
-          position: absolute;
-          inset: 0;
-          display: block;
-      }
-
-      .yumw-video-play {
-        position: absolute;
-        left: 10px;
-        bottom: 10px;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: .25s;
-        padding: 0;
-        margin: 0;
-        background: transparent;
-        border: 0;
-      }
-
-      .yumw-video-play:hover {
-          transform: scale(1.08);
-      }
-
-      .yumw-video-popup {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, .7);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          opacity: 0;
-          visibility: hidden;
-          transition: .3s;
-          z-index: 9999;
-      }
-
-      .yumw-video-popup.active {
-          opacity: 1;
-          visibility: visible;
-      }
-
-      .yumw-video-popup__inner {
-    position: relative;
-    padding: 12px;
-    border-radius: 12px;
-    max-width: 360px;
-    width: calc(100% - 24px);
-    height: 640px;
-    background-image: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/videos_reviews.png?v=1786042232');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-      .yumw-video-popup__close {
-    position: absolute;
-    top: -16px;
-    right: -16px;
-    width: 32px;
-    height: 32px;
-    border: 0;
-    background: transparent;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    transition: ease-out .35s all;
-}
-
-      .yumw-video-popup video {
-            width: 100%;
-    aspect-ratio: 9 / 16;
-    border-radius: 12px;
-    background: #000;
-    display: block;
-    max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-      }
-
-      @media (max-width: 767px) {
         section.yumw-video-testimonials {
-        margin: 3.2rem 0 0;
-    }
-    section.yumw-video-testimonials .splide__track {
-      overflow: visible;
-  }
-        .yumw-video-play {
-            left: 8px;
-      bottom: 8px;
-      width: 28px;
-      height: 28px;
-      }
+            margin: 4rem 0 0;
+        }
         p.yumw-video--title {
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: -0.14px;
-        margin: 0 0 1.6rem;
-    }
-              .yumw-video-grid {
-          overflow: hidden;
-          margin: 0 -24px;
-          padding: 0 24px;
+            font-size: 16px;
+            line-height: 20px;
+            letter-spacing: -0.16px;
+            color: #000000;
+            font-family: 'TAY Birdie';
+            margin: 0 0 2.4rem;
+        }
+        .yumw-video-card {
+            position: relative;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border:1px solid transparent;
+            transition: all .35s ease;
+        }
+
+        .yumw-video-card:hover {
+          border:1px solid #000;
+          box-shadow: 0 0 25px 0 rgba(123, 166, 221, 0.5);
+        }
+
+        .yumw-video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .yumw-video-card.yumw-video-card_first img {
+            opacity:0;
+        }
+        .yumw-video-thumb,
+        .yumw-video-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        .yumw-video-thumb {
+            position: absolute;
+            inset: 0;
+            display: block;
+        }
+
+        .yumw-video-play {
+          position: absolute;
+          left: 10px;
+          bottom: 10px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: .25s;
+          padding: 0;
+          margin: 0;
+          background: transparent;
+          border: 0;
+        }
+
+        .yumw-video-play:hover {
+            transform: scale(1.08);
+        }
+
+        .yumw-video-popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s;
+            z-index: 9999;
+        }
+
+        .yumw-video-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .yumw-video-popup__inner {
+      position: relative;
+      padding: 12px;
+      border-radius: 12px;
+      max-width: 360px;
+      width: calc(100% - 24px);
+      height: 640px;
+      background-image: url('https://cdn.shopify.com/s/files/1/0317/2827/1419/files/videos_reviews.png?v=1786042232');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+  }
+
+        .yumw-video-popup__close {
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      background: transparent;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      transition: ease-out .35s all;
+  }
+
+        .yumw-video-popup video {
+              width: 100%;
+      aspect-ratio: 9 / 16;
+      border-radius: 12px;
+      background: #000;
+      display: block;
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+        }
+
+        @media (max-width: 767px) {
+          section.yumw-video-testimonials {
+          margin: 3.2rem 0 0;
       }
-    .yumw-video-popup__inner {
-        padding: 8px 9px;
-        max-width: 282px;
-        height: 500px;
+      section.yumw-video-testimonials .splide__track {
+        overflow: visible;
     }
+          .yumw-video-play {
+              left: 8px;
+        bottom: 8px;
+        width: 28px;
+        height: 28px;
+        }
+          p.yumw-video--title {
+          font-size: 14px;
+          line-height: 20px;
+          letter-spacing: -0.14px;
+          margin: 0 0 1.6rem;
       }
+                .yumw-video-grid {
+            overflow: hidden;
+            margin: 0 -24px;
+            padding: 0 24px;
+        }
+      .yumw-video-popup__inner {
+          padding: 8px 9px;
+          max-width: 282px;
+          height: 500px;
+      }
+        }
 </style>
 {% if product.metafields.custom.review_videos.value != blank %}
   <section class="yumw-video-testimonials">
@@ -175,16 +175,16 @@
               class="splide__slide yumw-video-card {% if forloop.first %}yumw-video-card_first{% endif %}"
               data-video="https:{{ media.sources.first.url }}"
             >
-            {% if forloop.first %}
-              {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
-            {% elsif thumbnails != blank %}
-              {% for thumb in thumbnails %}
-                {% if forloop.index == current_index %}
-                  {% assign has_thumbnail = true %}
-                  {{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
-                {% endif %}
-              {% endfor %}
-            {% endif %}
+              {% if forloop.first %}
+                {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+              {% elsif thumbnails != blank %}
+                {% for thumb in thumbnails %}
+                  {% if forloop.index == current_index %}
+                    {% assign has_thumbnail = true %}
+                    {{ thumb | image_url: width: 500 | image_tag: class: 'yumw-video-thumb' }}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
 
               {% unless has_thumbnail %}
                 {% if block.settings.show_video %}
@@ -200,10 +200,17 @@
                 {% endif %}
               {% endunless %}
               <button class="yumw-video-play" type="button" aria-label="Play video">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/>
-                  <path d="M12.4353 10.0011C11.6869 10.0308 11 10.6419 11 11.4652V21.535C11 22.6328 12.2219 23.353 13.1813 22.821L22.2597 17.7861C23.2468 17.2387 23.2468 15.7615 22.2597 15.2141L13.1813 10.1792C12.9414 10.0462 12.6847 9.99125 12.4353 10.0011Z" fill="black"/>
-                </svg>
+                {% if forloop.first %}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/>
+                    <path d="M12 10.5V21.5M20 10.5V21.5" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+                  </svg>
+                {% else %}
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="15.5" fill="#FFF9EF" stroke="black"/>
+                    <path d="M12.4353 10.0011C11.6869 10.0308 11 10.6419 11 11.4652V21.535C11 22.6328 12.2219 23.353 13.1813 22.821L22.2597 17.7861C23.2468 17.2387 23.2468 15.7615 22.2597 15.2141L13.1813 10.1792C12.9414 10.0462 12.6847 9.99125 12.4353 10.0011Z" fill="black"/>
+                  </svg>
+                {% endif %}
               </button>
             </div>
           {% endfor %}
