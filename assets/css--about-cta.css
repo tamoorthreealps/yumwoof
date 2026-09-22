@@ -141,7 +141,7 @@ animation: aboutCtaGradient 3s ease-in-out infinite;
   }
   .about-cta__body {
     margin-top: auto;
-        max-width: 560px;
+        max-width: 534px;
         font-size: 20px;
         line-height: 32px;
   }
