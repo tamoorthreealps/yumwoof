@@ -123,7 +123,15 @@
           .asw-freq__trigger {
             display: flex; align-items: center; text-align: left; gap: 8px;
             appearance: none; -webkit-appearance: none;
-            border:0;
+            /* Stroke appears on hover only. Kept at 1px transparent (not 0) so
+               the box never shifts when it colours in. */
+            border: 1px solid transparent;
+            transition: border-color .2s ease;
+          }
+          .asw-freq__trigger:hover,
+          .asw-freq__trigger:focus-visible,
+          .asw-freq[data-open] .asw-freq__trigger {
+            border-color: #000;
           }
           .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
           .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
