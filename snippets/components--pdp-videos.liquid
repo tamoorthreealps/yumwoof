@@ -168,7 +168,7 @@
             {% assign has_thumbnail = false %}
 
             <div
-              class="splide__slide yumw-video-card"
+              class="splide__slide yumw-video-card {% if forloop.first %}yumw-video-card_first{% endif %}"
               data-video="https:{{ media.sources.first.url }}"
             >
             {% if forloop.first %}
