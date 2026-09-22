@@ -481,7 +481,7 @@ margin: 12px auto 0;
     top: 60%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-    top: 60%;
+    top: 80%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
     top: -10%;
