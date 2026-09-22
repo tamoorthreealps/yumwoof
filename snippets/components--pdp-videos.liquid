@@ -171,7 +171,9 @@
               class="splide__slide yumw-video-card"
               data-video="https:{{ media.sources.first.url }}"
             >
-              {% if thumbnails != blank %}
+              {% if forloop.first %}
+                {{ media | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+              {% elsif thumbnails != blank %}
                 {% for thumb in thumbnails %}
                   {% if forloop.index == current_index %}
                     {% assign has_thumbnail = true %}
