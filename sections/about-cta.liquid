@@ -111,15 +111,22 @@
 
 <script>
   /* About page motion (shared by About Solution + About CTA):
-     masked heading reveal + smooth background zoom */
+     masked heading reveal + smooth scroll-driven background zoom */
   (() => {
     if (window.__aboutMotion) return;
     window.__aboutMotion = true;
 
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    if (
+      matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      !('IntersectionObserver' in window)
+    ) return;
 
     const BLOCKS = ['about-solution', 'about-cta'];
-    const STAGGER = 0.15, LINE_DUR = 1.9, BODY_DUR = 1.7;
+    const STAGGER = 0.15;
+    const LINE_DUR = 1.9;
+    const BODY_DUR = 1.7;
+    const ZOOM = 0.08;
+    const LERP = 0.08;
 
     const el = (cls, children) => {
       const s = document.createElement('span');
@@ -145,16 +152,20 @@
           lines.push([]);
           top = w.offsetTop;
         }
+
         lines[lines.length - 1].push(w.textContent);
       }
 
-      heading.replaceChildren(...lines.flatMap((line, i) => {
-        const inner = el('as-line__inner', [line.join(' ')]);
-        inner.style.setProperty('--as-i', i);
-        return [el('as-line', [inner]), ' '];
-      }));
+      heading.replaceChildren(
+        ...lines.flatMap((line, i) => {
+          const inner = el('as-line__inner', [line.join(' ')]);
+          inner.style.setProperty('--as-i', i);
+          return [el('as-line', [inner]), ' '];
+        })
+      );
 
       heading.classList.add('as-split');
+
       return lines.length;
     };
 
@@ -170,7 +181,10 @@
       if (!section.isConnected) return;
 
       const lines = heading ? splitLines(heading) : 0;
-      const bodyDelay = lines ? (lines - 1) * STAGGER + 0.45 : 0.1;
+
+      const bodyDelay = lines
+        ? (lines - 1) * STAGGER + 0.45
+        : 0.1;
 
       section.style.setProperty(
         '--as-body-delay',
@@ -203,30 +217,108 @@
       }, total * 1000 + 200);
     };
 
-    const zoom = (section, bg) => {
+    const zoom = (section, inner, bg) => {
+      const listeners = new AbortController();
+
+      let current = 1;
+      let raf = 0;
+      let near = false;
+
+      const tick = () => {
+        raf = 0;
+
+        const { top, height } = inner.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        const progress = Math.max(
+          0,
+          Math.min(1, (vh - top) / (vh + height))
+        );
+
+        const target = 1 + progress * ZOOM;
+
+        current += (target - current) * LERP;
+
+        if (Math.abs(target - current) < 0.0005) {
+          current = target;
+        }
+
+        bg.style.transform = `scale(${current.toFixed(4)})`;
+
+        if (Math.abs(target - current) > 0.0005) {
+          raf = requestAnimationFrame(tick);
+        }
+      };
+
+      const request = () => {
+        if (!section.isConnected) {
+          listeners.abort();
+          return;
+        }
+
+        if (near && !raf) {
+          raf = requestAnimationFrame(tick);
+        }
+      };
+
       section.classList.add('as-zoom');
+
+      new IntersectionObserver(
+        ([entry]) => {
+          near = entry.isIntersecting;
+          request();
+        },
+        { rootMargin: '25% 0px' }
+      ).observe(inner);
+
+      addEventListener(
+        'scroll',
+        request,
+        {
+          passive: true,
+          signal: listeners.signal
+        }
+      );
+
+      addEventListener(
+        'resize',
+        request,
+        {
+          passive: true,
+          signal: listeners.signal
+        }
+      );
     };
 
-    const init = (root = document) => BLOCKS.forEach((block) => {
-      root.querySelectorAll(`.${block}:not(.as-anim)`).forEach((section) => {
-        const inner = section.querySelector(`.${block}__inner`);
-        const bg = section.querySelector(`.${block}__bg`);
+    const init = (root = document) => {
+      BLOCKS.forEach((block) => {
+        root
+          .querySelectorAll(`.${block}:not(.as-anim)`)
+          .forEach((section) => {
+            const inner = section.querySelector(`.${block}__inner`);
+            const bg = section.querySelector(`.${block}__bg`);
 
-        section.classList.add('as-anim');
+            section.classList.add('as-anim');
 
-        new IntersectionObserver(([entry], io) => {
-          if (!entry.isIntersecting) return;
+            new IntersectionObserver(
+              ([entry], io) => {
+                if (!entry.isIntersecting) return;
 
-          io.disconnect();
-          reveal(section, block);
-        }, {
-          threshold: 0.2,
-          rootMargin: '0px 0px -8% 0px'
-        }).observe(inner);
+                io.disconnect();
+                reveal(section, block);
+              },
+              {
+                threshold: 0.2,
+                rootMargin: '0px 0px -8% 0px'
+              }
+            ).observe(inner);
 
-        if (bg) zoom(section, bg);
+            if (bg) {
+              zoom(section, inner, bg);
+            }
+          });
       });
-    });
+    };
 
     init();
 

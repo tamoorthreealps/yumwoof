@@ -200,11 +200,6 @@ animation: aboutCtaGradient 3s ease-in-out infinite;
   transform-origin: center center;
   will-change: transform;
   backface-visibility: hidden;
-  transition: transform 2.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.about-cta.as-zoom.as-in .about-cta__bg {
-  transform: scale(1.08);
 }
 
 /* ---- Text entrance ------------------------------------------------------- */
