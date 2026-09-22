@@ -104,17 +104,6 @@
       var FROM_X = 20;    // px sideways  (left photo +, right photo −)
       var FROM_ROT = 20;  // extra degrees of tilt (left photo +, right photo −)
 
-      /* ---- Mobile (< 991px): photos live above / below the copy --------- */
-      var mqMobile  = window.matchMedia('(max-width: 990.98px)');
-      var M_CENTER  = 0.55;  // copy's vertical centre on screen (CSS: 25svh top + 60svh box / 2)
-      var M_PAD     = 16;    // px gap between a photo and the copy
-      var M_BLEED   = 40;    // px a resting photo hangs past the screen edge (= static -68px)
-      var M_OFF     = 56;    // clearance when fully off-screen (covers the tilt)
-      var M_IN      = 0.3;   // progress by which a photo has slid in; it floats out from here to 1
-      function easeOut(k) { return 1 - (1 - k) * (1 - k); }
-      function easeIn(k)  { return k * k; }
-      function lerp(a, b, k) { return a + (b - a) * k; }
-
       function Timeline(root) {
         this.root = root;
         this.heading = root.querySelector('.about-timeline__heading');
@@ -123,7 +112,6 @@
         this.slides = this.items.map(function (el) {
           return {
             text: el.querySelector('.about-timeline__text'),
-            box: el.querySelector('.about-timeline__photos'),
             photos: [
               { el: el.querySelector('.about-timeline__photo--a'), dir: 1, ox: 0, oy: 0 },
               { el: el.querySelector('.about-timeline__photo--b'), dir: -1, ox: 0, oy: 0 }
@@ -133,7 +121,6 @@
         });
         this.active = false;
         this.index = -1;
-        this.y = 0;
         this.raf = 0;
         this.lastW = window.innerWidth;
 
@@ -212,35 +199,17 @@
 
       Timeline.prototype.measure = function () {
         this.vh = window.innerHeight;
-        this.mobile = mqMobile.matches;
         this.listTop = this.list.getBoundingClientRect().top + window.pageYOffset;
         this.step = this.list.offsetHeight / this.items.length;   // one step = one CSS grid row
-        var vw = window.innerWidth, vh = this.vh;
-        /* Desktop: where the stylesheet's own `transform` (translateY(-55%) …)
-           draws each photo relative to its box, so the extra tilt turns the
-           photo around its own centre. Mobile: the copy's screen band for
-           this entry (date → body, centred in the sticky box) and, from it,
-           each photo's keyframe path. */
+        /* Where the stylesheet's own `transform` (translateY(-55%) …) draws each
+           photo relative to its box. render() uses it so the extra tilt turns
+           the photo around its own centre instead of swinging it sideways. */
         this.slides.forEach(function (s) {
-          s.boxLeft = s.box ? s.box.getBoundingClientRect().left : 0;
-          var t = s.text, textH = 0;
-          if (t && t.firstElementChild) {
-            textH = t.lastElementChild.getBoundingClientRect().bottom - t.firstElementChild.getBoundingClientRect().top;
-          }
-          var textTop = vh * M_CENTER - textH / 2, textBot = vh * M_CENTER + textH / 2;
           s.photos.forEach(function (p) {
-            var m = getComputedStyle(p.el).transform;
-            m = m && m !== 'none' ? new DOMMatrix(m) : null;
+            var t = getComputedStyle(p.el).transform;
+            var m = t && t !== 'none' ? new DOMMatrix(t) : null;
             p.ox = m ? m.e : 0;
             p.oy = m ? m.f : 0;
-            /* [x, y] of the photo's top-left corner in screen px at progress
-               0 (off its edge) → M_IN (resting beside the copy) → 1 (out).
-               Left photo: above the copy, floats UP out. Right photo: below
-               the copy, floats DOWN out. */
-            var pw = p.el.offsetWidth, ph = p.el.offsetHeight;
-            p.keys = p.dir > 0
-              ? [[-pw - M_OFF, textTop - M_PAD - ph], [-M_BLEED, textTop - M_PAD - ph], [-M_BLEED, -ph - M_OFF]]
-              : [[vw + M_OFF, textBot + M_PAD], [vw - pw + M_BLEED, textBot + M_PAD], [vw - pw + M_BLEED, vh + M_OFF]];
           });
         });
       };
@@ -262,7 +231,7 @@
       Timeline.prototype.update = function (jump) {
         if (!this.active) return;
         var n = this.slides.length, vh = this.vh, now = performance.now();
-        var y = this.y = window.pageYOffset - this.listTop;
+        var y = window.pageYOffset - this.listTop;
 
         var index = clamp(Math.floor((y + vh / 2) / this.step), 0, n - 1);
         if (index !== this.index) {
@@ -297,9 +266,7 @@
         if (moving) this.raf = requestAnimationFrame(this.tick);
       };
 
-      /* Desktop: photos float up / straighten into their resting place. */
       Timeline.prototype.render = function () {
-        if (this.mobile) return this.renderMobile();
         this.slides.forEach(function (s) {
           var left = (1 - s.cur) * (1 - s.cur);     // power1.out, 1 → 0
           s.photos.forEach(function (p) {
@@ -311,29 +278,6 @@
                (design tilt / offsets) instead of replacing it. */
             p.el.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
             p.el.style.rotate = rot.toFixed(2) + 'deg';
-          });
-        });
-      };
-
-      /* Mobile: each photo follows its keyframe path in screen space, using
-         the same eased progress (so the 1.5s glide is kept) and the same
-         straightening tilt as desktop. The path is converted to a `translate`
-         from the photo's box (top-left of its step row); the row's real scroll
-         position is subtracted so the photo stays parked once it's out. */
-      Timeline.prototype.renderMobile = function () {
-        var step = this.step, y = this.y;
-        this.slides.forEach(function (s, idx) {
-          if (!s.photos.length) return;
-          var p = s.cur, rowTop = idx * step - y;
-          var left = (1 - p) * (1 - p);
-          var seg = p < M_IN ? 0 : 1;
-          var k = seg ? easeIn((p - M_IN) / (1 - M_IN)) : easeOut(p / M_IN);
-          s.photos.forEach(function (ph) {
-            var a = ph.keys[seg], b = ph.keys[seg + 1];
-            var tx = lerp(a[0], b[0], k) - s.boxLeft;
-            var ty = lerp(a[1], b[1], k) - rowTop;
-            ph.el.style.translate = tx.toFixed(1) + 'px ' + ty.toFixed(1) + 'px';
-            ph.el.style.rotate = (ph.dir * FROM_ROT * left).toFixed(2) + 'deg';
           });
         });
       };
