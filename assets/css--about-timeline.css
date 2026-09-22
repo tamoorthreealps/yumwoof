@@ -478,10 +478,10 @@ margin: 12px auto 0;
   .about-timeline--js .about-timeline__item .about-timeline__photo.about-timeline__photo--b {
     right: -68px;
     left: auto;
-    top: 34%;
+    top: 50%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--a {
-    top: 34%;
+    top: 50%;
   }
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
     top: 2%;
