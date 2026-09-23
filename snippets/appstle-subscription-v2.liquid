@@ -183,26 +183,39 @@
   border-bottom: 0;
 }
 
-/* Selected */
-.asw-freq__opt.is-selected {
+/* Hover */
+.asw-freq__opt:hover {
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
 }
 
-/* While hovering, selected becomes normal */
-.asw-freq__list:has(.asw-freq__opt.is-hovering)
-  .asw-freq__opt.is-selected:not(.is-hovering) {
-  background: transparent;
-  color: #000;
-  border-radius: 0;
+/* When first is hovered:
+   show only the border above last */
+.asw-freq__list:has(.asw-freq__opt:first-child:hover) .asw-freq__opt {
+  border-bottom: 0;
 }
 
-/* Hovered option */
-.asw-freq__opt.is-hovering {
-  background: #000;
-  color: #fff9ef;
-  border-radius: 6px;
+.asw-freq__list:has(.asw-freq__opt:first-child:hover)
+  .asw-freq__opt:nth-child(2) {
+  border-bottom: 1px solid #000;
+}
+
+/* When center is hovered:
+   no borders */
+.asw-freq__list:has(.asw-freq__opt:nth-child(2):hover) .asw-freq__opt {
+  border-bottom: 0;
+}
+
+/* When last is hovered:
+   show only the border above center */
+.asw-freq__list:has(.asw-freq__opt:last-child:hover) .asw-freq__opt {
+  border-bottom: 0;
+}
+
+.asw-freq__list:has(.asw-freq__opt:last-child:hover)
+  .asw-freq__opt:first-child {
+  border-bottom: 1px solid #000;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
