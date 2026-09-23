@@ -183,16 +183,56 @@
   border-bottom: 0;
 }
 
-/* Hover */
-.asw-freq__opt:hover {
+/* SELECTED */
+.asw-freq__opt.is-selected {
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
+  border-bottom: 0;
 }
 
-/* When first is hovered:
-   show only the border above last */
-.asw-freq__list:has(.asw-freq__opt:first-child:hover) .asw-freq__opt {
+/* First selected → border above last */
+.asw-freq__list:has(.asw-freq__opt:first-child.is-selected)
+  .asw-freq__opt {
+  border-bottom: 0;
+}
+
+.asw-freq__list:has(.asw-freq__opt:first-child.is-selected)
+  .asw-freq__opt:nth-child(2) {
+  border-bottom: 1px solid #000;
+}
+
+/* Center selected → no border */
+.asw-freq__list:has(.asw-freq__opt:nth-child(2).is-selected)
+  .asw-freq__opt {
+  border-bottom: 0;
+}
+
+/* Last selected → border above last / first item */
+.asw-freq__list:has(.asw-freq__opt:last-child.is-selected)
+  .asw-freq__opt {
+  border-bottom: 0;
+}
+
+.asw-freq__list:has(.asw-freq__opt:last-child.is-selected)
+  .asw-freq__opt:first-child {
+  border-bottom: 1px solid #000;
+}
+
+/* ================================= */
+/* HOVER ALWAYS OVERRIDES SELECTED  */
+/* ================================= */
+
+/* Hovered item */
+.asw-freq__opt:hover {
+  background: #000 !important;
+  color: #fff9ef !important;
+  border-radius: 6px;
+}
+
+/* First hovered → border above last */
+.asw-freq__list:has(.asw-freq__opt:first-child:hover)
+  .asw-freq__opt {
   border-bottom: 0;
 }
 
@@ -201,21 +241,29 @@
   border-bottom: 1px solid #000;
 }
 
-/* When center is hovered:
-   no borders */
-.asw-freq__list:has(.asw-freq__opt:nth-child(2):hover) .asw-freq__opt {
+/* Center hovered → no border */
+.asw-freq__list:has(.asw-freq__opt:nth-child(2):hover)
+  .asw-freq__opt {
   border-bottom: 0;
 }
 
-/* When last is hovered:
-   show only the border above center */
-.asw-freq__list:has(.asw-freq__opt:last-child:hover) .asw-freq__opt {
+/* Last hovered → border above last */
+.asw-freq__list:has(.asw-freq__opt:last-child:hover)
+  .asw-freq__opt {
   border-bottom: 0;
 }
 
 .asw-freq__list:has(.asw-freq__opt:last-child:hover)
   .asw-freq__opt:first-child {
   border-bottom: 1px solid #000;
+}
+
+/* Hover overrides selected appearance */
+.asw-freq__list:has(.asw-freq__opt:hover)
+  .asw-freq__opt.is-selected:not(:hover) {
+  background: transparent;
+  color: #000;
+  border-radius: 0;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
