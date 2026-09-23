@@ -827,6 +827,16 @@
           document.addEventListener('DOMContentLoaded', bindAswVariantSync, { once: true });
         }
       })();
+
+      document.querySelectorAll('.asw-freq__opt').forEach(function (option) {
+  option.addEventListener('mouseenter', function () {
+    this.classList.add('is-hovering');
+  });
+
+  option.addEventListener('mouseleave', function () {
+    this.classList.remove('is-hovering');
+  });
+});
     </script>
   {%- endif -%}
 {%- endif -%}
