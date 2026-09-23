@@ -171,8 +171,8 @@ cart-drawer {
   display:flex;
   gap:4px;
 }
-.rating-summary {transition: opacity 0.3s ease;}
-.rating-wrap:hover .rating-summary {opacity: .5;}
+.opinew-stars-plugin-link span {transition: opacity 0.3s ease;}
+.opinew-stars-plugin-link:hover span {opacity: .5;}
 .opw-noci-star-full::before,
 .opw-noci-star-half::before,
 .opw-noci-star-empty:before {
