@@ -165,8 +165,7 @@
             visibility 0s;
         }
 
-.asw-freq__opt {
-  position: relative;
+        .asw-freq__opt {
   font-family: 'Matter', sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -177,62 +176,41 @@
   text-transform: capitalize;
   user-select: none;
   transition: background-color 0.2s ease, color 0.2s ease;
+  border-bottom: 1px solid #000;
 }
 
-.asw-freq__opt::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: #000;
+.asw-freq__opt:last-child {
+  border: 0;
 }
 
-.asw-freq__opt:last-child::after {
-  display: none;
-}
-
-/* Selected */
 .asw-freq__opt.is-selected {
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
 }
 
-/* Hover */
-.asw-freq__opt.is-hovering {
-  background: #000;
-  color: #fff9ef;
-  border-radius: 6px;
-}
-
-/* No line below selected */
-.asw-freq__opt.is-selected::after {
-  display: none;
-}
-
-/* No line below hovered */
-.asw-freq__opt.is-hovering::after {
-  display: none;
-}
-
-/* No line above selected */
-.asw-freq__opt:has(+ .asw-freq__opt.is-selected)::after {
-  display: none;
-}
-
-/* No line above hovered */
-.asw-freq__opt:has(+ .asw-freq__opt.is-hovering)::after {
-  display: none;
-}
-
-/* When another option is hovered, selected returns to normal */
-.asw-freq__list:has(.asw-freq__opt.is-hovering)
-  .asw-freq__opt.is-selected:not(.is-hovering) {
+/* Reset selected when another option is hovered */
+.asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt.is-selected:not(:hover) {
   background: transparent;
   color: #000;
   border-radius: 0;
+}
+
+/* Hover = same visual treatment as selected */
+.asw-freq__opt:hover {
+  background: #000 !important;
+  color: #fff9ef !important;
+  border-radius: 6px;
+}
+
+/* Remove divider directly before selected */
+.asw-freq__opt:has(+ .asw-freq__opt.is-selected) {
+  border-bottom: 0;
+}
+
+/* Remove divider directly before hovered */
+.asw-freq__opt:has(+ .asw-freq__opt:hover) {
+  border-bottom: 0;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
