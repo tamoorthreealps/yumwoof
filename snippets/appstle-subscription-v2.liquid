@@ -189,29 +189,31 @@
   border-radius: 6px;
 }
 
-/* When hovering another option, selected goes back to normal */
-.asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt.is-selected:not(:hover) {
+.asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt.is-selected {
   background: transparent;
-  color: #000;
+  color: inherit;
   border-radius: 0;
+  border-color: #000;
 }
 
-/* Hover */
 .asw-freq__opt:hover {
-  background: #000;
-  color: #fff9ef;
+  background: #000 !important;
+  color: #fff9ef !important;
   border-radius: 6px;
-  border-bottom-color: transparent;
+  border-color: transparent;
 }
 
-/* Previous item of selected */
+.asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt:hover {
+  border-color: transparent;
+  border-radius: 6px;
+}
+
 .asw-freq__opt:has(+ .asw-freq__opt.is-selected) {
-  border-bottom-color: transparent;
+  border: 0;
 }
 
-/* Previous item of hovered option */
 .asw-freq__opt:has(+ .asw-freq__opt:hover) {
-  border-bottom-color: transparent;
+  border: 0;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
