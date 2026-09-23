@@ -764,6 +764,22 @@ quantity-input.quantity::before {
   display: none;
 }
 
+.product-form__submit .yw-atb__label{
+  opacity: 0;
+  transform: translateY(100%);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s linear, color .3s linear;
+}
+
+.sticky-atc__btn.is-loading .yw-atb__label{
+  opacity:1;
+  transform:none;
+}
 /* ----- Ink fill hover -----
    A burgundy sheet is parked just below the button and rises to cover it on
    hover. It sits at z-index:-1 inside the button's own stacking context, so it
