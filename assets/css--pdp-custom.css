@@ -760,7 +760,8 @@ quantity-input.quantity::before {
     isolation: isolate;
 }
 
-.product-form__submit::after {
+.product-form__submit::after,
+.product-form__submit .loading__spinner {
   display: none;
 }
 
