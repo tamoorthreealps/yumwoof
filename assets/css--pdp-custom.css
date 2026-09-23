@@ -956,6 +956,7 @@ a.pdp--promo--banner_link:focus-visible .promo-banner-arrow {
     letter-spacing: 0;
     font-family: 'Matter';
     text-decoration: underline;
+    font-weight: 300;
 }
 
 
