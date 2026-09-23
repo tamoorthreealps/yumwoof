@@ -1573,4 +1573,19 @@ a.pdp--promo--banner_link p strong {
   letter-spacing: -0.2px;
 }
 
+/*--- kibble--pdp--varaints--updates ----*/
+    .product__info-wrapper_v2 .recipe-swatches.recipe-swatches_kibble .recipe-swatch__label {
+        min-height: auto;
+    }
+    .product__info-wrapper_v2 .recipe-swatches.recipe-swatches_kibble .recipe-swatch__img {
+        height: 56px !important;
+        position: static;
+    }
+    .product__info-wrapper_v2 .recipe-swatches.recipe-swatches_kibble .recipe-swatch__title {
+        text-align: left;
+        padding: 0 12px 0 0;
+        line-height: 20px;
+        letter-spacing: 0;
+        max-width: none;
+    }
 }
