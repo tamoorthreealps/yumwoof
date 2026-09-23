@@ -949,7 +949,7 @@ a.pdp--promo--banner_link:focus-visible .promo-banner-arrow {
   gap: 4px;
 }
 
-.rating-summary {
+.rating-wrap span {
     font-size: 13px;
     line-height: 16px;
     color: #000000;
@@ -1261,7 +1261,7 @@ width: 140px;
     gap: 11px;
 }
 
-.rating-summary {
+.rating-wrap span {
   font-size: 14px;
     line-height: 20px;
 }
