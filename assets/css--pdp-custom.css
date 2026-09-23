@@ -760,9 +760,12 @@ quantity-input.quantity::before {
     isolation: isolate;
 }
 
-.product-form__submit::after,
-.product-form__submit .loading__spinner {
+.product-form__submit::after {
   display: none;
+}
+
+.product-form__submit .loading__spinner {
+  display: none !important;
 }
 
 .product-form__submit .yw-atb__label{
