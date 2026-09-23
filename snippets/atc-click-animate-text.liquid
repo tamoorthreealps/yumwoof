@@ -1,0 +1,42 @@
+<span class="yw-atb__label yw-atb__label--load hidden">
+    Adding
+<span class="yw-atb__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+</span>
+
+<style>
+    .yw-atb__dots {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.yw-atb__dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--yw-cream);
+  opacity: 0;
+  animation: yw-dot 1.2s infinite;
+}
+
+.yw-atb__dots i:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.yw-atb__dots i:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.yw-atb__dots i:nth-child(3) {
+  animation-delay: .4s;
+}
+
+@keyframes yw-dot {
+  0%, 60%, 100% {
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+}
+</style>
