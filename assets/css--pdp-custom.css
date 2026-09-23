@@ -1013,7 +1013,7 @@ a.pdp--promo--banner_link:focus-visible .promo-banner-arrow {
   }
 }
 
-.rating-wrap {
+.opinew-stars-plugin-link {
     display: flex;
     flex-wrap: wrap;
     margin: 0;
@@ -1027,13 +1027,14 @@ a.pdp--promo--banner_link:focus-visible .promo-banner-arrow {
   gap: 4px;
 }
 
-.rating-summary {
+.opinew-stars-plugin-link span {
     font-size: 13px;
     line-height: 16px;
     color: #000000;
     letter-spacing: 0;
     font-family: 'Matter';
     text-decoration: underline;
+    font-weight: 300;
 }
 
 
@@ -1335,11 +1336,11 @@ width: 140px;
         font-size: 16px;
 }
 
-.rating-wrap {
+.opinew-stars-plugin-link {
     gap: 11px;
 }
 
-.rating-summary {
+.opinew-stars-plugin-link span {
   font-size: 14px;
     line-height: 20px;
 }
@@ -1384,7 +1385,7 @@ width: 140px;
 .product__info-wrapper_v2
   .product__title
   + .product__text.caption-with-letter-spacing,
-.product__info-wrapper_v2 .rating-wrap {
+.product__info-wrapper_v2 .opinew-stars-plugin-link {
   display: inline-flex;
   align-items: center;
 }
@@ -1397,7 +1398,7 @@ width: 140px;
   top: -3px;
 }
 
-.product__info-wrapper_v2 .rating-wrap {
+.product__info-wrapper_v2 .opinew-stars-plugin-link {
     margin-left: 13px;
     padding-left: 16px;
     position: relative;
@@ -1410,7 +1411,7 @@ width: 140px;
   height: 16px;
 }
 
-.product__info-wrapper_v2 .rating-wrap::before {
+.product__info-wrapper_v2 .opinew-stars-plugin-link::before {
     content: "";
     position: absolute;
     left: -2px;
@@ -1556,7 +1557,7 @@ a.pdp--promo--banner_link p strong {
 .product__info-wrapper_v2
   .product__title
   + .product__text.caption-with-letter-spacing,
-.product__info-wrapper_v2 .rating-wrap {
+.product__info-wrapper_v2 .opinew-stars-plugin-link {
   display: inline-flex;
   align-items: center;
 }
@@ -1569,7 +1570,7 @@ a.pdp--promo--banner_link p strong {
   top: -1px;
 }
 
-.product__info-wrapper_v2 .rating-wrap {
+.product__info-wrapper_v2 .opinew-stars-plugin-link {
   margin-left: 12px;
   padding-left: 12px;
   position: relative;
@@ -1582,7 +1583,7 @@ a.pdp--promo--banner_link p strong {
   height: 11px;
 }
 
-.product__info-wrapper_v2 .rating-wrap::before {
+.product__info-wrapper_v2 .opinew-stars-plugin-link::before {
   content: "";
   position: absolute;
   left: -1px;
