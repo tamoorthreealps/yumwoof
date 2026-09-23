@@ -195,11 +195,25 @@
     margin: 40px 0 0;
     padding: 35px 26px;
     gap: 15px;
+    --bq-bg-scale: 1;
+    --bq-bg-radius: 0px;
+  }
+
+  .yw-butcher-quality.has-background-image.butcher-quality-mobile
+    .yw-butcher-quality__background {
+    inset: 0;
+    width: 100%;
+    transform: scaleX(var(--bq-bg-scale));
+    transform-origin: center center;
+    will-change: transform;
+    border-radius: var(--bq-bg-radius);
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
     .yw-butcher-quality__image {
     width: 166px;
+    transform: translateY(var(--bq-badge-y, 0px));
+    will-change: transform;
   }
 
   .yw-butcher-quality.has-background-image.butcher-quality-mobile
@@ -257,6 +271,7 @@
       var typingTimers = [];
       var chars = [];
       var hasAnimated = false;
+      var ticking = false;
 
       if (description) {
         var walker = document.createTreeWalker(
@@ -351,14 +366,39 @@
         playSection();
       }
 
-      var ticking = false;
+      function updateScrollAnimation() {
+        var rect = section.getBoundingClientRect();
+        var viewportHeight = window.innerHeight;
+
+        var progress = Math.max(
+          0,
+          Math.min(
+            1,
+            (viewportHeight - rect.top) / (viewportHeight + rect.height)
+          )
+        );
+
+        var bgScale = 1 - progress * 0.12;
+        var badgeY = progress * 35;
+
+        section.style.setProperty(
+          '--bq-bg-scale',
+          bgScale.toFixed(3)
+        );
+
+        section.style.setProperty(
+          '--bq-badge-y',
+          badgeY.toFixed(1) + 'px'
+        );
+      }
 
       function update() {
-        if (ticking || hasAnimated) return;
+        if (ticking) return;
 
         ticking = true;
 
         requestAnimationFrame(function () {
+          updateScrollAnimation();
           updateSection();
           ticking = false;
         });
@@ -370,6 +410,7 @@
 
       window.addEventListener('resize', update);
 
+      updateScrollAnimation();
       updateSection();
     });
   }
