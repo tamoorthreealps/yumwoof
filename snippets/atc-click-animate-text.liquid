@@ -13,30 +13,34 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #fff9ef;
+  background: var(--yw-cream);
   opacity: 0;
-  animation: yw-dot 1.2s infinite;
-}
-
-.yw-atb__dots i:nth-child(1) {
-  animation-delay: 0s;
+  animation: yw-dot-1 1.5s linear infinite;
 }
 
 .yw-atb__dots i:nth-child(2) {
-  animation-delay: .2s;
+  animation-name: yw-dot-2;
 }
 
 .yw-atb__dots i:nth-child(3) {
-  animation-delay: .4s;
+  animation-name: yw-dot-3;
 }
 
-@keyframes yw-dot {
-  0%, 60%, 100% {
-    opacity: 0;
-  }
+@keyframes yw-dot-1 {
+  0% { opacity: 0; }
+  4%, 88% { opacity: 1; }
+  94%, 100% { opacity: 0; }
+}
 
-  30% {
-    opacity: 1;
-  }
+@keyframes yw-dot-2 {
+  0%, 30% { opacity: 0; }
+  34%, 88% { opacity: 1; }
+  94%, 100% { opacity: 0; }
+}
+
+@keyframes yw-dot-3 {
+  0%, 60% { opacity: 0; }
+  64%, 88% { opacity: 1; }
+  94%, 100% { opacity: 0; }
 }
 </style>
