@@ -98,7 +98,7 @@
 }
 
 .qcalc__cta:hover {
-  background: #cb89004d;
+  background: #cb89004d !important;
 }
 .qcalc__cta-text {
   font-size: 14px;
