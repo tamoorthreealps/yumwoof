@@ -778,8 +778,13 @@ quantity-input.quantity::before {
 
 .product-form__submit.loading,
 .product-form__submit.loading:hover{
-  background: #661d1d;
-  color: #fff9ef;
+  background: #661d1d !important;
+    color: #fff9ef;
+    opacity: 1 !important;
+}
+
+.product-form__submit.loading .product-form__submit__text {
+  visibility:hidden;
 }
 
 .product-form__submit.loading .yw-atb__label{
