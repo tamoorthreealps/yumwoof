@@ -433,6 +433,7 @@ background: #FFF9EF;
     color: #000000;
     font-family: 'Matter';
     letter-spacing: 0;
+    font-weight: 300;
 }
 .opinew-stars-plugin-link {
     display: flex;
