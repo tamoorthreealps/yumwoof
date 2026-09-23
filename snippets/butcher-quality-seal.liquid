@@ -371,31 +371,27 @@
         playSection();
       }
 
-      function updateScrollAnimation() {
-        var rect = section.getBoundingClientRect();
-        var viewportHeight = window.innerHeight;
+function updateScrollAnimation() {
+  var rect = section.getBoundingClientRect();
 
-        var progress = Math.max(
-          0,
-          Math.min(
-            1,
-            (viewportHeight - rect.top) / (viewportHeight + rect.height)
-          )
-        );
+  var progress = Math.max(
+    0,
+    Math.min(1, -rect.top / rect.height)
+  );
 
-        var bgScale = 1 - progress * 0.12;
-        var badgeY = 20 - (progress * 40);
+  var bgScale = 1 - progress * 0.12;
+  var badgeY = 20 - (progress * 40);
 
-        section.style.setProperty(
-          '--bq-bg-scale',
-          bgScale.toFixed(3)
-        );
+  section.style.setProperty(
+    '--bq-bg-scale',
+    bgScale.toFixed(3)
+  );
 
-        section.style.setProperty(
-          '--bq-badge-y',
-          badgeY.toFixed(1) + 'px'
-        );
-      }
+  section.style.setProperty(
+    '--bq-badge-y',
+    badgeY.toFixed(1) + 'px'
+  );
+}
 
       function update() {
         if (ticking) return;
