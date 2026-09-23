@@ -216,7 +216,7 @@
               disabled
             {% endif %}
           >
-            <span>
+            <span class="product-form__submit__text">
               {%- if product.selected_or_first_available_variant == null -%}
                 {{ 'products.product.unavailable' | t }}
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout or variant_oos -%}
