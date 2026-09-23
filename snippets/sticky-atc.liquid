@@ -441,6 +441,17 @@
       visibility: hidden;
     }
 
+    .sticky-atc__btn .yw-atb__label--idle{
+      opacity:0;
+      transform:translateY(-100%);
+      color:var(--yw-cream);
+    }
+
+    .sticky-atc__btn.is-loading .yw-atb__label--load{
+      opacity:1;
+      transform:none;
+    }
+
     /*------- v2--css--code -------*/
     .sticky-atc.sticky-atc_v2 {
       padding: 0;
