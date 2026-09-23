@@ -189,7 +189,6 @@
   border-radius: 6px;
 }
 
-/* Selected returns to normal when another option is hovered */
 .asw-freq__list:has(.asw-freq__opt.is-hovering)
   .asw-freq__opt.is-selected:not(.is-hovering) {
   background: transparent;
@@ -197,22 +196,10 @@
   border-radius: 0;
 }
 
-/* Hover state */
 .asw-freq__opt.is-hovering {
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
-  border-bottom-color: transparent;
-}
-
-/* Remove border before selected */
-.asw-freq__opt:has(+ .asw-freq__opt.is-selected) {
-  border-bottom: 0;
-}
-
-/* Remove border before hovered */
-.asw-freq__opt:has(+ .asw-freq__opt.is-hovering) {
-  border-bottom: 0;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
