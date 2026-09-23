@@ -776,6 +776,12 @@ quantity-input.quantity::before {
   transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s linear, color .3s linear;
 }
 
+.product-form__submit.loading,
+.product-form__submit.loading:hover{
+  background: #661d1d;
+  color: #fff9ef;
+}
+
 .product-form__submit.loading .yw-atb__label{
   opacity:1;
   transform:none;
