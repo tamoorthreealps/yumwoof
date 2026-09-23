@@ -442,15 +442,20 @@
     }
 
     .sticky-atc__btn .yw-atb__label{
-      opacity:0;
-      transform:translateY(-100%);
-      color:var(--yw-cream);
+      opacity: 0;
+      transform: translateY(100%);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55em;
+      transition: transform .45s var(--yw-ease), opacity .25s linear, color .3s linear;
     }
 
     .sticky-atc__btn.is-loading .yw-atb__label{
       opacity:1;
       transform:none;
-      display:block !important;
     }
 
     /*------- v2--css--code -------*/
