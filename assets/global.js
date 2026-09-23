@@ -1493,16 +1493,13 @@ class CartPerformance {
 //   });
 // });
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.rating-wrap').forEach(function (wrap) {
-    wrap.style.cursor = 'pointer';
+  document.querySelectorAll('.product__info-container .opinew-stars-plugin-link').forEach(function (link) {
+    link.style.cursor = 'pointer';
 
-    wrap.addEventListener('click', function (e) {
+    link.addEventListener('click', function (e) {
       e.preventDefault();
 
-      const link = this.querySelector('.opinew-stars-plugin-link');
-      if (!link) return;
-
-      const target = document.querySelector(link.getAttribute('href'));
+      const target = document.querySelector(this.getAttribute('href'));
 
       if (target) {
         target.scrollIntoView({
@@ -1510,7 +1507,7 @@ document.addEventListener('DOMContentLoaded', function () {
           block: 'start'
         });
 
-        history.replaceState(null, null, link.getAttribute('href'));
+        history.replaceState(null, null, this.getAttribute('href'));
       }
     });
   });
