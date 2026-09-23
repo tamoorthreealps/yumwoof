@@ -383,7 +383,12 @@
           )
         );
 
-        var bgScale = 1 - progress * 0.12;
+        var progress = Math.max(
+  0,
+  Math.min(1, -rect.top / rect.height)
+);
+
+var bgScale = 1 - progress * 0.12;
         var badgeY = 20 - (progress * 40);
 
         section.style.setProperty(
