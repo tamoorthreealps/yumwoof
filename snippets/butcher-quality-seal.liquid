@@ -373,10 +373,14 @@
 
       function updateScrollAnimation() {
         var rect = section.getBoundingClientRect();
+        var viewportHeight = window.innerHeight;
 
         var progress = Math.max(
           0,
-          Math.min(1, -rect.top / rect.height)
+          Math.min(
+            1,
+            (viewportHeight - rect.top) / (viewportHeight + rect.height)
+          )
         );
 
         var bgScale = 1 - progress * 0.12;
