@@ -432,12 +432,9 @@ background: #FFF9EF;
     text-decoration: underline;
     color: #000000;
     font-family: 'Matter';
-    letter-spacing: 0;
     font-weight: 300;
 }
-.opinew-stars-plugin-link span b {
-    letter-spacing:inherit;
-}
+
 .opinew-stars-plugin-link {
     display: flex;
     align-items: center;
