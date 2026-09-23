@@ -188,25 +188,21 @@
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
-  border-bottom: 0;
 }
 
-/* Hover */
+/* While hovering, selected becomes normal */
+.asw-freq__list:has(.asw-freq__opt.is-hovering)
+  .asw-freq__opt.is-selected:not(.is-hovering) {
+  background: transparent;
+  color: #000;
+  border-radius: 0;
+}
+
+/* Hovered option */
 .asw-freq__opt.is-hovering {
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
-  border-bottom: 0;
-}
-
-/* Remove line ABOVE selected */
-.asw-freq__opt:has(+ .asw-freq__opt.is-selected) {
-  border-bottom: 0;
-}
-
-/* Remove line ABOVE hovered */
-.asw-freq__opt:has(+ .asw-freq__opt.is-hovering) {
-  border-bottom: 0;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
