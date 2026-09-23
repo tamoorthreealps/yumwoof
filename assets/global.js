@@ -1493,6 +1493,23 @@ class CartPerformance {
 //   });
 // });
 document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.product__info-container .opinew-stars-plugin-link').forEach(function (link) {
+    if (link.querySelector('.rating-wrap')) return;
+
+    var stars = link.querySelector('.opinew-star-plugin-inside');
+    var text = link.querySelector('.opinew-no-reviews-stars-plugin');
+
+    if (!stars || !text) return;
+
+    var wrapper = document.createElement('span');
+    wrapper.className = 'rating-wrap';
+
+    stars.parentNode.insertBefore(wrapper, stars);
+    wrapper.appendChild(stars);
+    wrapper.appendChild(text);
+  });
+});
+document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.rating-wrap').forEach(function (wrap) {
     wrap.style.cursor = 'pointer';
 
