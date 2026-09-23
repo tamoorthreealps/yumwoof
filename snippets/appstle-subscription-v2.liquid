@@ -180,26 +180,41 @@
 }
 
 .asw-freq__opt:last-child {
-  border: 0;
+  border-bottom: 0;
 }
 
+/* Selected */
 .asw-freq__opt.is-selected {
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
+  border-bottom: 0;
 }
 
+/* Hover */
+.asw-freq__opt.is-hovering {
+  background: #000;
+  color: #fff9ef;
+  border-radius: 6px;
+  border-bottom: 0;
+}
+
+/* Remove divider immediately before selected */
+.asw-freq__opt:has(+ .asw-freq__opt.is-selected) {
+  border-bottom: 0;
+}
+
+/* Remove divider immediately before hovered */
+.asw-freq__opt:has(+ .asw-freq__opt.is-hovering) {
+  border-bottom: 0;
+}
+
+/* When another option is hovered, selected returns to normal */
 .asw-freq__list:has(.asw-freq__opt.is-hovering)
   .asw-freq__opt.is-selected:not(.is-hovering) {
   background: transparent;
   color: #000;
   border-radius: 0;
-}
-
-.asw-freq__opt.is-hovering {
-  background: #000;
-  color: #fff9ef;
-  border-radius: 6px;
 }
         .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
         .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
