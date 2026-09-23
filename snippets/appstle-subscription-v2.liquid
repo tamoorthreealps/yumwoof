@@ -166,6 +166,7 @@
         }
 
 .asw-freq__opt {
+  position: relative;
   font-family: 'Matter', sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -176,11 +177,20 @@
   text-transform: capitalize;
   user-select: none;
   transition: background-color 0.2s ease, color 0.2s ease;
-  border-bottom: 1px solid #000;
 }
 
-.asw-freq__opt:last-child {
-  border-bottom: 0;
+.asw-freq__opt::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #000;
+}
+
+.asw-freq__opt:last-child::after {
+  display: none;
 }
 
 /* Selected */
@@ -188,7 +198,6 @@
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
-  border-bottom: 0;
 }
 
 /* Hover */
@@ -196,17 +205,26 @@
   background: #000;
   color: #fff9ef;
   border-radius: 6px;
-  border-bottom: 0;
 }
 
-/* Remove divider immediately before selected */
-.asw-freq__opt:has(+ .asw-freq__opt.is-selected) {
-  border-bottom: 0;
+/* No line below selected */
+.asw-freq__opt.is-selected::after {
+  display: none;
 }
 
-/* Remove divider immediately before hovered */
-.asw-freq__opt:has(+ .asw-freq__opt.is-hovering) {
-  border-bottom: 0;
+/* No line below hovered */
+.asw-freq__opt.is-hovering::after {
+  display: none;
+}
+
+/* No line above selected */
+.asw-freq__opt:has(+ .asw-freq__opt.is-selected)::after {
+  display: none;
+}
+
+/* No line above hovered */
+.asw-freq__opt:has(+ .asw-freq__opt.is-hovering)::after {
+  display: none;
 }
 
 /* When another option is hovered, selected returns to normal */
