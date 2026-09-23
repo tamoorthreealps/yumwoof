@@ -393,7 +393,8 @@
     }
 
     /* keyboard parity */
-    .sticky-atc__btn:not([disabled]):focus-visible::before {
+    .sticky-atc__btn:not([disabled]):focus-visible::before,
+    .sticky-atc__btn.is-loading::before {
       transform: none;
     }
     .sticky-atc__btn:not([disabled]):focus-visible,
@@ -425,11 +426,12 @@
     .sticky-atc__btn .loading__spinner .path {
       stroke: #1a1a1a;
     }
-    .sticky-atc__btn.is-loading {
+    /* .sticky-atc__btn.is-loading {
       color: transparent;
       cursor: default;
-    }
-    .sticky-atc__btn.is-loading:hover {
+    } */
+    .sticky-atc__btn.is-loading:hover,
+    .sticky-atc__btn.is-loading {
       background: #ffc069;
       color: transparent;
     }
