@@ -50,6 +50,43 @@
         "margin_bottom_mobile": 0
       }
     },
+    "good_dogs_ticker_bXkPTa": {
+      "type": "good-dogs-ticker",
+      "blocks": {
+        "ticker_item_XU8YTA": {
+          "type": "ticker_item",
+          "settings": {
+            "text": "GOOD DOGS HAVE CONNECTIONS"
+          }
+        },
+        "ticker_item_MeXpNh": {
+          "type": "ticker_item",
+          "settings": {
+            "text": "GOOD DOGS HAVE CONNECTIONS"
+          }
+        },
+        "ticker_item_c8cQh8": {
+          "type": "ticker_item",
+          "settings": {
+            "text": "GOOD DOGS HAVE CONNECTIONS"
+          }
+        }
+      },
+      "block_order": [
+        "ticker_item_XU8YTA",
+        "ticker_item_MeXpNh",
+        "ticker_item_c8cQh8"
+      ],
+      "name": "Good Dogs Ticker",
+      "settings": {
+        "speed": 45,
+        "font_size": 32,
+        "mobile_font_size": 20,
+        "spacing": 54,
+        "background_color": "rgba(0,0,0,0)",
+        "text_color": "#661D1D"
+      }
+    },
     "membership_perks_QDR4W8": {
       "type": "membership-perks",
       "name": "Membership Perks",
@@ -322,6 +359,7 @@
   "order": [
     "main",
     "yum_club_hero_P48rUL",
+    "good_dogs_ticker_bXkPTa",
     "membership_perks_QDR4W8",
     "good_life_quote_YqLCQ9",
     "good_life_adds_up_r8hBie",
