@@ -38,9 +38,9 @@
         "login_prefix": "Already a member?",
         "login_label": "Log in",
         "login_link": "",
-        "margin_top_desktop": 0,
+        "margin_top_desktop": 40,
         "margin_bottom_desktop": 0,
-        "margin_top_mobile": 0,
+        "margin_top_mobile": 32,
         "margin_bottom_mobile": 0
       }
     },
