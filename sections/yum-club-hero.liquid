@@ -39,7 +39,6 @@
     width: 100%;
     height: calc(860 * var(--ych-s));
     border-radius: 0 0 calc(64 * var(--ych-s)) calc(64 * var(--ych-s));
-    background-color: #000;
   }
 
   /* ---------- media ---------- */
@@ -117,10 +116,11 @@
     font-family: var(--ych-font-body);
     font-weight: 500;
     font-style: normal;
-    font-size: max(16px, calc(24 * var(--ych-s)));
-    line-height: 1.3333;
+    font-size: 24px;
+    line-height: 32px;
     color: var(--ych-text);
     word-break: break-word;
+    letter-spacing: 0;
   }
 
   .yum-club-hero__actions {
@@ -145,7 +145,7 @@
     background-color: #fff9ef;
     color: #000;
     text-decoration: none;
-    font-family: var(--ych-font-button);
+    font-family: 'FFBlurProMedium';
     font-weight: 500;
     font-style: normal;
     font-size: max(14px, calc(16 * var(--ych-s)));
@@ -237,8 +237,8 @@
     .yum-club-hero__text {
       width: calc(312 * var(--ych-m));
       max-width: 100%;
-      font-size: calc(18 * var(--ych-m));
-      line-height: calc(24 * var(--ych-m));
+      font-size: 18px;
+      line-height: 24px;
     }
     .yum-club-hero__br { display: none; }
 
