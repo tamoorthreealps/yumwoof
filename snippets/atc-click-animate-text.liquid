@@ -43,4 +43,174 @@
   64%, 88% { opacity: 1; }
   94%, 100% { opacity: 0; }
 }
+
+/* ---------------------------------------------------------------------------
+   Exit animation
+
+   "Adding" used to leave by transitioning back to its resting position, which
+   sits below the button — so it slid back down the way it came in and read as
+   an undo rather than a finished action.
+
+   Instead the button runs one continuous loop: "Adding" keeps travelling in the
+   same direction it entered, up and out of the top, while the resting label
+   rises in from below to take its place. The `yw-atb--out` class is stamped on
+   the button for the length of that exit by the script below; `yw-atb--reset`
+   then parks everything back at its start with transitions off for one frame,
+   so nothing sweeps back across the button.
+
+   Keyframe animations are used rather than transitions because they define
+   their own start value — a transition can only ever run back to the resting
+   state, which is what caused the downward slide in the first place.
+--------------------------------------------------------------------------- */
+
+@keyframes yw-atb-leave-up {
+  from { transform: translateY(0); opacity: 1; }
+  55% { opacity: 0; }
+  to { transform: translateY(-78%); opacity: 0; }
+}
+
+@keyframes yw-atb-arrive-up {
+  from { transform: translateY(100%); opacity: 0; }
+  45% { opacity: 1; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* The sticky button fills burgundy while loading via its ink sheet. Sweep that
+   away upwards too, so the whole button moves as one. */
+@keyframes yw-atb-wash-up {
+  from { transform: translateY(0); opacity: 1; }
+  55% { opacity: 1; }
+  to { transform: translateY(-102%); opacity: 0; }
+}
+
+/* Resting state: no transform transition, so when `yw-atb--out` is dropped the
+   label snaps back below the button instead of drifting there. The rise-in is
+   supplied by the loading rule underneath. */
+.product-form__submit .yw-atb__label.yw-atb__label--load,
+.sticky-atc__btn .yw-atb__label.yw-atb__label--load {
+  transition: opacity 0.25s linear, color 0.3s linear;
+}
+
+.product-form__submit.loading .yw-atb__label.yw-atb__label--load,
+.sticky-atc__btn.is-loading .yw-atb__label.yw-atb__label--load {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s linear, color 0.3s linear;
+}
+
+/* Exit */
+.product-form__submit.yw-atb--out .yw-atb__label.yw-atb__label--load,
+.sticky-atc__btn.yw-atb--out .yw-atb__label.yw-atb__label--load {
+  animation: yw-atb-leave-up 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.product-form__submit.yw-atb--out .product-form__submit__text,
+.sticky-atc__btn.yw-atb--out [data-sticky-btn-label],
+.sticky-atc__btn.yw-atb--out .sticky-atc__btn-was,
+.sticky-atc__btn.yw-atb--out .sticky-atc__btn-price {
+  visibility: visible;
+  animation: yw-atb-arrive-up 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) 0.04s both;
+}
+
+/* The main button's label is a plain inline span, and transforms don't apply to
+   inline boxes — it would fade in without moving. The sticky button's labels are
+   flex items, so they're already blockified. Only the box metrics change here,
+   not the baseline, so the glyphs don't shift when it reverts. */
+.product-form__submit.yw-atb--out .product-form__submit__text {
+  display: inline-block;
+}
+
+.sticky-atc__btn.yw-atb--out::before {
+  animation: yw-atb-wash-up 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* One frame with everything pinned and inert, so the reset is never visible. */
+.product-form__submit.yw-atb--reset,
+.product-form__submit.yw-atb--reset *,
+.product-form__submit.yw-atb--reset::before,
+.sticky-atc__btn.yw-atb--reset,
+.sticky-atc__btn.yw-atb--reset *,
+.sticky-atc__btn.yw-atb--reset::before {
+  transition: none !important;
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-form__submit.yw-atb--out .yw-atb__label.yw-atb__label--load,
+  .sticky-atc__btn.yw-atb--out .yw-atb__label.yw-atb__label--load,
+  .product-form__submit.yw-atb--out .product-form__submit__text,
+  .sticky-atc__btn.yw-atb--out [data-sticky-btn-label],
+  .sticky-atc__btn.yw-atb--out .sticky-atc__btn-was,
+  .sticky-atc__btn.yw-atb--out .sticky-atc__btn-price,
+  .sticky-atc__btn.yw-atb--out::before {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}
 </style>
+
+<script>
+  (function () {
+    if (window.__ywAtbExit) return;
+    window.__ywAtbExit = true;
+
+    // Matches the exit animation above (0.38s + the 0.04s stagger).
+    var EXIT_MS = 440;
+    var seen = new WeakMap();
+    var timers = new WeakMap();
+
+    function isSticky(el) {
+      return el.classList.contains('sticky-atc__btn');
+    }
+
+    function sync(el) {
+      // Other sections reuse .product-form__submit (quick add, featured
+      // product) without rendering this label — leave those alone.
+      if (!el.querySelector('.yw-atb__label--load')) return;
+
+      var loading = el.classList.contains(isSticky(el) ? 'is-loading' : 'loading');
+      var wasLoading = seen.get(el) === true;
+      seen.set(el, loading);
+
+      if (loading) {
+        clearTimeout(timers.get(el));
+        el.classList.remove('yw-atb--out', 'yw-atb--reset');
+        return;
+      }
+      // Only the loading -> idle edge plays the exit.
+      if (!wasLoading) return;
+
+      el.classList.remove('yw-atb--reset');
+      el.classList.add('yw-atb--out');
+      clearTimeout(timers.get(el));
+      timers.set(
+        el,
+        setTimeout(function () {
+          el.classList.remove('yw-atb--out');
+          el.classList.add('yw-atb--reset');
+          // Two frames guarantees the pinned state is painted before
+          // transitions come back, so nothing animates on the way home. The
+          // timeout is a fallback for a backgrounded tab, where frames stall.
+          var unpin = function () {
+            el.classList.remove('yw-atb--reset');
+          };
+          requestAnimationFrame(function () {
+            requestAnimationFrame(unpin);
+          });
+          setTimeout(unpin, 120);
+        }, EXIT_MS)
+      );
+    }
+
+    new MutationObserver(function (records) {
+      for (var i = 0; i < records.length; i++) {
+        var el = records[i].target;
+        if (el.nodeType !== 1 || !el.classList) continue;
+        if (!el.classList.contains('product-form__submit') && !isSticky(el)) continue;
+        sync(el);
+      }
+    }).observe(document.documentElement, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+  })();
+</script>
