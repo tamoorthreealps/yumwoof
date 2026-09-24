@@ -43,4 +43,53 @@
   64%, 88% { opacity: 1; }
   94%, 100% { opacity: 0; }
 }
+
+/* ---------------------------------------------------------------------------
+   Handing "Adding" back to "Add to Bag"
+
+   "Adding" rests parked below the button, so when the loading class came off
+   it transitioned all the way back down there — a visible slide-down that read
+   as an undo rather than a finished action.
+
+   The slide-up on the way in is unchanged. On the way out the label now fades
+   where it stands, and its transform is held until the fade has finished, so it
+   only jumps back to its parked position once it is already invisible. The
+   resting label waits the same beat before coming back, so the two never
+   overlap mid-swap.
+--------------------------------------------------------------------------- */
+
+.product-form__submit .yw-atb__label.yw-atb__label--load,
+.sticky-atc__btn .yw-atb__label.yw-atb__label--load {
+  transition: opacity 0.18s ease, transform 0s linear 0.18s, color 0.3s linear;
+}
+
+/* Entering still slides up — this is the state the click animates into. */
+.product-form__submit.loading .yw-atb__label.yw-atb__label--load,
+.sticky-atc__btn.is-loading .yw-atb__label.yw-atb__label--load {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s linear, color 0.3s linear;
+}
+
+/* visibility is a discrete property: a 0s duration with a delay just postpones
+   the switch, which holds the resting label back until "Adding" has faded. */
+.product-form__submit .product-form__submit__text,
+.sticky-atc__btn [data-sticky-btn-label],
+.sticky-atc__btn .sticky-atc__btn-was,
+.sticky-atc__btn .sticky-atc__btn-price {
+  transition: visibility 0s linear 0.15s;
+}
+
+/* ...but it hides immediately on the way in, so "Adding" has the button. */
+.product-form__submit.loading .product-form__submit__text,
+.sticky-atc__btn.is-loading [data-sticky-btn-label],
+.sticky-atc__btn.is-loading .sticky-atc__btn-was,
+.sticky-atc__btn.is-loading .sticky-atc__btn-price {
+  transition: visibility 0s linear 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-form__submit .yw-atb__label.yw-atb__label--load,
+  .sticky-atc__btn .yw-atb__label.yw-atb__label--load {
+    transition-duration: 0.01ms;
+  }
+}
 </style>
