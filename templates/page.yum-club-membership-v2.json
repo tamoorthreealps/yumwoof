@@ -50,6 +50,20 @@
         "margin_bottom_mobile": 0
       }
     },
+    "membership_perks_QDR4W8": {
+      "type": "membership-perks",
+      "name": "Membership Perks",
+      "settings": {
+        "heading": "MEMBERSHIP\nHAS ITS PERKS.",
+        "heading_tag": "h2",
+        "heading_color": "#000000",
+        "background_color": "#FFF9EF",
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_top_mobile": 160,
+        "padding_bottom_mobile": 160
+      }
+    },
     "good_life_quote_YqLCQ9": {
       "type": "good-life-quote",
       "name": "Good Life Quote",
@@ -305,6 +319,7 @@
   "order": [
     "main",
     "yum_club_hero_P48rUL",
+    "membership_perks_QDR4W8",
     "good_life_quote_YqLCQ9",
     "good_life_adds_up_r8hBie",
     "yw_membership_faq_Ew9Uz8",
