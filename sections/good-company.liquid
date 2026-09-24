@@ -28,9 +28,8 @@
     display: block;
     margin-top: {{ s.margin_top_desktop }}px;
     margin-bottom: {{ s.margin_bottom_desktop }}px;
-      position: relative;
-  z-index: 1;
-   margin-top: calc(-200px * (1 - var(--gc-reveal, 0)));
+    position: relative;
+    z-index: 3;
   }
   .good-company *,
   .good-company *::before,
@@ -44,6 +43,12 @@
     height: calc(800 * var(--gc-s));
     border-radius: calc(64 * var(--gc-s)) calc(64 * var(--gc-s)) 0 0;
     background-color: #000;
+      position: sticky;
+  top: 0;
+  z-index: 3;
+  will-change: transform;
+  transform: translate3d(0, var(--gc-reveal-y, 100%), 0);
+  transition: none;
   }
 
   /* ---------- media ---------- */
@@ -681,18 +686,43 @@
   })();
 
 
-
-  window.addEventListener('scroll', function () {
+  (function () {
   var faq = document.querySelector('.ywfaq');
   var good = document.querySelector('.good-company');
 
   if (!faq || !good) return;
 
-  var faqRect = faq.getBoundingClientRect();
-  var progress = Math.min(1, Math.max(0, (window.innerHeight - faqRect.bottom) / 400));
+  var ticking = false;
 
-  good.style.setProperty('--gc-reveal', progress);
-});
+  function update() {
+    var faqRect = faq.getBoundingClientRect();
+    var goodRect = good.getBoundingClientRect();
+    var viewport = window.innerHeight;
+
+    var start = viewport;
+    var end = Math.max(0, faqRect.bottom);
+
+    var progress = (start - end) / viewport;
+    progress = Math.max(0, Math.min(1, progress));
+
+    var eased = progress * progress * (3 - 2 * progress);
+
+    good.style.setProperty('--gc-reveal-y', ((1 - eased) * 100) + '%');
+
+    ticking = false;
+  }
+
+  function requestUpdate() {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  update();
+})();
 </script>
 
 {% schema %}
