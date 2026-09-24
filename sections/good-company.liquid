@@ -28,6 +28,10 @@
     display: block;
     margin-top: {{ s.margin_top_desktop }}px;
     margin-bottom: {{ s.margin_bottom_desktop }}px;
+      position: relative;
+  z-index: 3;
+  transform: translate3d(0, -197px, 0);
+  will-change: transform;
   }
   .good-company *,
   .good-company *::before,
