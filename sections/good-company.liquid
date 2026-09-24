@@ -30,7 +30,7 @@
     margin-bottom: {{ s.margin_bottom_desktop }}px;
       position: relative;
   z-index: 3;
-  transform: translate3d(0, -800px, 0);
+  transform: translate3d(0, -600px, 0);
   will-change: transform;
   }
   .good-company *,
@@ -701,7 +701,7 @@
 
     current += (target - current) * 0.08;
 
-    good.style.transform = 'translate3d(0,' + (-800 * (1 - current)) + 'px,0)';
+    good.style.transform = 'translate3d(0,' + (-600 * (1 - current)) + 'px,0)';
 
     if (Math.abs(target - current) > 0.001) {
       raf = requestAnimationFrame(update);
