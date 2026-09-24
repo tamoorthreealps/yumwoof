@@ -680,6 +680,44 @@
       init(e.target);
     });
   })();
+
+
+
+  (function () {
+  var good = document.querySelector('.good-company');
+  var faq = document.querySelector('.ywfaq');
+  if (!good || !faq) return;
+
+  var current = 0;
+  var target = 0;
+  var raf;
+
+  function update() {
+    var faqBottom = faq.getBoundingClientRect().bottom;
+    var start = window.innerHeight;
+    var distance = 300;
+
+    target = Math.max(0, Math.min(1, (start - faqBottom) / distance));
+
+    current += (target - current) * 0.08;
+
+    good.style.transform = 'translate3d(0,' + (-197 * (1 - current)) + 'px,0)';
+
+    if (Math.abs(target - current) > 0.001) {
+      raf = requestAnimationFrame(update);
+    } else {
+      raf = null;
+    }
+  }
+
+  function onScroll() {
+    if (!raf) raf = requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
 </script>
 
 {% schema %}
