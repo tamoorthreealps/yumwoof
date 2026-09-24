@@ -133,6 +133,10 @@ margin: 12px auto 0;
   object-fit: cover;
   aspect-ratio: 128 / 228;
 }
+
+.about-timeline__photo--square img {
+  aspect-ratio: 1 / 1 !important;
+}
 .about-timeline__photo--a {
     transform: rotate(6deg);
 }
@@ -486,13 +490,62 @@ margin: 12px auto 0;
   .about-timeline--js .about-timeline__item:nth-child(even) .about-timeline__photo.about-timeline__photo--b {
     top: 2%;
   }
+.about-timeline--js .about-timeline__photo--a-2 {
+    left: -68px;
+    right: auto;
+    top: 2%;
+  }
 
+  .about-timeline--js .about-timeline__photo--b-2 {
+    right: -68px;
+    left: auto;
+    top: 72%;
+  }
+
+  .about-timeline--js .about-timeline__photo--a-3 {
+    left: -68px;
+    right: auto;
+    top: 72%;
+  }
+
+  .about-timeline--js .about-timeline__photo--b-3 {
+    right: -68px;
+    left: auto;
+    top: 2%;
+  }
+
+  .about-timeline--js .about-timeline__photo--a-4 {
+    left: -68px;
+    right: auto;
+    top: 2%;
+  }
+
+  .about-timeline--js .about-timeline__photo--b-4 {
+    right: -68px;
+    left: auto;
+    top: 72%;
+  }
+
+  .about-timeline--js .about-timeline__photo--a-5 {
+    left: -68px;
+    right: auto;
+    top: 72%;
+  }
+  .about-timeline--js .about-timeline__photo--b-5 {
+    right: -68px;
+    left: auto;
+    top: 76% !important;
+  }
   /* Photos pass behind the edges of the copy on a narrow screen; a soft halo
      in the background colour keeps the text crisp while they do. */
   .about-timeline--js .about-timeline__text {
     text-shadow: 0 0 2px var(--at-bg), 0 0 12px var(--at-bg);
+    z-index:1;
   }
 }
+
+
+
 
 @media (prefers-reduced-motion: reduce) {
   .about-timeline__heading {

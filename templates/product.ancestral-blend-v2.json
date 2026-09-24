@@ -77,8 +77,8 @@
         "guarantee_ribbon_NUFwfW": {
           "type": "guarantee-ribbon",
           "settings": {
-            "heading": "21-Day First Bag Guarantee",
-            "text": "Money back if your dog doesn't love it",
+            "heading": "21-Day First Bag Guarantee!",
+            "text": "Money back if your dog doesn't love it.",
             "background_image": "shopify://shop_images/Guarantee_Background_03bae41e-48b5-487f-9db1-6d8c88a7c57f.png",
             "background_image_mobile": "shopify://shop_images/Guarantee_Background.png",
             "background_color": "#cb890040",
@@ -164,7 +164,8 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "enable_sticky_atc": true,
-        "sticky_atc_button_label": "Add to Bag"
+        "sticky_atc_button_label": "Add to Bag",
+        "sticky_atc_mode": "default"
       }
     },
     "disclosures": {

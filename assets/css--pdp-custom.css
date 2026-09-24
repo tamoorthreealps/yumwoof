@@ -680,6 +680,14 @@ quantity-input.quantity::before {
   opacity: 1;
 }
 
+/* Dim the minus button while the quantity is at its minimum (usually 1). */
+.product-form__quantity .quantity__button[name="minus"] {
+  transition: opacity 0.2s ease;
+}
+.product-form__quantity quantity-input.is-qty-min .quantity__button[name="minus"] {
+  opacity: 0.25 !important;
+}
+
 .ingri--bar--main {
   margin: 0;
   background: #7aa5dd;
@@ -746,16 +754,86 @@ quantity-input.quantity::before {
     box-shadow: inherit;
     color: #000;
     transition: all .35s ease 0s;
+    /* host for the ink-fill sheet below */
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
 }
 
-.product-form__submit:hover {
-  background: #000000 !important;
+.product-form__submit::after {
+  display: none;
+}
+
+.product-form__submit .loading__spinner {
+  display: none !important;
+}
+
+.product-form__submit .yw-atb__label{
+  opacity: 0;
+  transform: translateY(100%);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s linear, color .3s linear;
+}
+
+.product-form__submit.loading,
+.product-form__submit.loading:hover{
+  background: #661d1d !important;
+  color: #fff9ef;
+  opacity: 1 !important;
+}
+
+.product-form__submit.loading .product-form__submit__text {
+  visibility:hidden;
+}
+
+.product-form__submit.loading .yw-atb__label{
+  opacity:1;
+  transform:none;
+}
+/* ----- Ink fill hover -----
+   A burgundy sheet is parked just below the button and rises to cover it on
+   hover. It sits at z-index:-1 inside the button's own stacking context, so it
+   paints over the gold background but stays behind the label. */
+.product-form__submit::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #661d1d;
+  transform: translateY(102%);
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .product-form__submit:not([disabled]):hover::before {
+    transform: none;
+  }
+  .product-form__submit:not([disabled]):hover,
+  .product-form__submit:not([disabled]):hover span {
+    color: #fff9ef;
+  }
+}
+
+/* keyboard parity */
+.product-form__submit:not([disabled]):focus-visible::before {
+  transform: none;
+}
+.product-form__submit:not([disabled]):focus-visible,
+.product-form__submit:not([disabled]):focus-visible span {
   color: #fff9ef;
 }
 
-.product-form__submit::after,
-.product-form__submit::before {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  .product-form__submit::before {
+    transition-duration: .01ms;
+  }
 }
 
 .nutritional--info--wrapper {
@@ -1588,4 +1666,31 @@ a.pdp--promo--banner_link p strong {
         letter-spacing: 0;
         max-width: none;
     }
+
+}
+
+/* ==========================================================================
+   Delivery frequency dropdown — stroke on hover (all PDP templates)
+   Two separate rules remove this border, so these selectors are deliberately
+   specific and live at the end of the file to win on both breakpoints:
+     1. snippets/appstle-subscription-v2.liquid  .asw-freq__trigger        (0,1,0)
+     2. above, inside @media (max-width:990px)   .product__info-wrapper_v2
+                                                 .asw-select__field        (0,2,0)
+   Rest state keeps a 1px transparent border so the box never shifts.
+   ========================================================================== */
+.asw-freq__trigger.asw-select__field {
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.asw-freq__trigger.asw-select__field:hover,
+.asw-freq__trigger.asw-select__field:focus-visible,
+.asw-freq[data-open] .asw-freq__trigger.asw-select__field {
+  border-color: #000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asw-freq__trigger.asw-select__field {
+    transition-duration: 0.01ms;
+  }
 }

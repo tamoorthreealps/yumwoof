@@ -1,0 +1,376 @@
+{%- comment -%}
+  Good Life Quote — founders image with overlaid quote + signature.
+  Figma: Yumwoof (Final) — desktop 8638:1439 (1512w), mobile 8640:1762 (392w).
+  Namespace: .good-life-quote  (no JS required)
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign img_d = s.image_desktop
+  assign img_m = s.image_mobile
+  assign mobile_fallback = false
+  if img_m == blank and img_d != blank
+    assign img_m = img_d
+    assign mobile_fallback = true
+  endif
+
+  assign crop_d = s.desktop_crop
+  assign crop_m = s.mobile_crop
+  if mobile_fallback
+    assign crop_m = 'cover'
+  endif
+-%}
+
+<style>
+  .good-life-quote {
+    --glq-s: clamp(0.6px, calc(100vw / 1512), 1px);
+    --glq-m: clamp(0.816px, calc(100vw / 392), 1.3px);
+    --glq-text: {{ s.text_color }};
+    --glq-overlay-d: {{ s.overlay_desktop | divided_by: 100.0 }};
+    --glq-overlay-m: {{ s.overlay_mobile | divided_by: 100.0 }};
+    --glq-font-display: 'TAYRosemary', 'TAY Rosemary', 'TAYRosemary-Regular', serif;
+    --glq-font-body: 'Matter', 'Matter Medium', 'Matter-Medium', sans-serif;
+    display: block;
+    margin-top: {{ s.margin_top_desktop }}px;
+    margin-bottom: {{ s.margin_bottom_desktop }}px;
+  }
+
+  .good-life-quote__card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100%;
+    height: calc(852 * var(--glq-s));
+    border-radius: calc(64 * var(--glq-s)) 0 calc(64 * var(--glq-s)) 0;
+    background-color: #000;
+  }
+
+  /* ---------- media ---------- */
+  .good-life-quote__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .good-life-quote__media img,
+  .good-life-quote__media svg {
+    position: absolute;
+    display: block;
+    max-width: none;
+    object-fit: cover;
+  }
+  .good-life-quote__media--cover img,
+  .good-life-quote__media svg {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* Exact Figma crop (desktop frame 8640:1734) */
+  .good-life-quote__media--desktop.good-life-quote__media--figma img {
+    left: 0;
+    top: -36.78%;
+    width: 138.94%;
+    height: 165.24%;
+  }
+  /* Exact Figma crop (mobile frame 8650:3166) */
+  .good-life-quote__media--mobile.good-life-quote__media--figma img {
+    left: -27.01%;
+    top: -4.69%;
+    width: 187.99%;
+    height: 164.41%;
+  }
+  .good-life-quote__media--mobile { display: none; }
+  .good-life-quote__media svg { background: #3d3d3d; fill: rgba(255, 255, 255, 0.25); }
+
+  .good-life-quote__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: rgba(0, 0, 0, var(--glq-overlay-d));
+  }
+
+  /* ---------- content ---------- */
+  .good-life-quote__content {
+    position: absolute;
+    z-index: 2;
+    left: calc(60 * var(--glq-s));
+    top: calc(120 * var(--glq-s));
+    width: calc(720 * var(--glq-s));
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(24 * var(--glq-s));
+    color: var(--glq-text);
+  }
+
+  .good-life-quote__quote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    quotes: none;
+  }
+  .good-life-quote__quote-text {
+    margin: 0;
+    font-family: var(--glq-font-display);
+    font-weight: 400;
+    font-style: normal;
+    font-size: max(40px, calc(80 * var(--glq-s)));
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--glq-text);
+    word-break: break-word;
+    transform: translateY(-4px);
+  }
+
+  .good-life-quote__founders {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(8 * var(--glq-s));
+    width: calc(341 * var(--glq-s));
+    margin: 0;
+  }
+  .good-life-quote__signature {
+    display: block;
+    width: calc(344 * var(--glq-s));
+    max-width: none;
+    height: calc(96 * var(--glq-s));
+    object-fit: contain;
+    object-position: left center;
+  }
+  .good-life-quote__name {
+    margin: 0;
+    font-family: var(--glq-font-body);
+    font-weight: 500;
+    font-style: normal;
+    font-size: max(14px, calc(20 * var(--glq-s)));
+    line-height: 1.4;
+    color: var(--glq-text);
+    white-space: nowrap;
+    letter-spacing: 0;
+  }
+
+  /* ---------- mobile (separate Figma layout) ---------- */
+  @media screen and (max-width: 749px) {
+    .good-life-quote {
+      margin-top: {{ s.margin_top_mobile }}px;
+      margin-bottom: {{ s.margin_bottom_mobile }}px;
+    }
+    .good-life-quote__card {
+      height: calc(672 * var(--glq-m));
+      border-radius: calc(32 * var(--glq-m)) 0 calc(32 * var(--glq-m)) 0;
+    }
+    .good-life-quote__media--desktop { display: none; }
+    .good-life-quote__media--mobile { display: block; }
+
+    .good-life-quote__overlay {
+      background: linear-gradient(180deg, rgba(0, 0, 0, var(--glq-overlay-m)) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .good-life-quote__content {
+      top: calc(56 * var(--glq-m));
+      left: calc(24 * var(--glq-m));
+      right: calc(24 * var(--glq-m));
+      bottom: calc(60 * var(--glq-m));
+      width: auto;
+      gap: 0;
+      justify-content: space-between;
+    }
+    .good-life-quote__quote { width: calc(320 * var(--glq-m)); max-width: 100%; }
+    .good-life-quote__quote-text {
+      font-size: calc(48 * var(--glq-m));
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .good-life-quote__br { display: none; }
+
+    .good-life-quote__founders {
+      width: calc(201 * var(--glq-m));
+      gap: calc(8 * var(--glq-m));
+    }
+    .good-life-quote__signature {
+      width: calc(201 * var(--glq-m));
+      height: calc(56 * var(--glq-m));
+    }
+    .good-life-quote__name {
+      font-size: calc(14 * var(--glq-m));
+      line-height: calc(20 * var(--glq-m));
+    }
+  }
+</style>
+
+<section
+  class="good-life-quote"
+  id="good-life-quote-{{ section.id }}"
+  aria-label="{{ s.founders_text | default: 'Founders quote' | escape }}"
+>
+  <figure class="good-life-quote__card" style="margin:0;">
+    {%- comment -%} Desktop image {%- endcomment -%}
+    <div class="good-life-quote__media good-life-quote__media--desktop good-life-quote__media--{{ crop_d }}">
+      {%- if img_d != blank -%}
+        {%- capture pos_d -%}{%- if crop_d == 'cover' -%}object-position: {{ img_d.presentation.focal_point }};{%- endif -%}{%- endcapture -%}
+        {{
+          img_d
+          | image_url: width: 3200
+          | image_tag:
+            loading: 'lazy',
+            widths: '750, 1100, 1500, 1800, 2200, 2600, 3200',
+            sizes: '(min-width: 750px) 140vw, 100vw',
+            alt: img_d.alt,
+            style: pos_d
+        }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Mobile image (falls back to desktop, cover-cropped) {%- endcomment -%}
+    <div class="good-life-quote__media good-life-quote__media--mobile good-life-quote__media--{{ crop_m }}">
+      {%- if img_m != blank -%}
+        {%- capture pos_m -%}{%- if crop_m == 'cover' -%}object-position: {{ img_m.presentation.focal_point }};{%- endif -%}{%- endcapture -%}
+        {{
+          img_m
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'lazy',
+            widths: '400, 600, 800, 1000, 1200, 1600',
+            sizes: '(max-width: 749px) 190vw, 1px',
+            alt: img_m.alt,
+            style: pos_m
+        }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+
+    <div class="good-life-quote__overlay" aria-hidden="true"></div>
+
+    <div class="good-life-quote__content">
+      {%- if s.quote != blank -%}
+        <blockquote class="good-life-quote__quote">
+          <p class="good-life-quote__quote-text">
+            {{- s.quote | escape | newline_to_br | replace: '<br />', '<br class="good-life-quote__br">' -}}
+          </p>
+        </blockquote>
+      {%- endif -%}
+
+      {%- if s.signature_image != blank or s.founders_text != blank -%}
+        <figcaption class="good-life-quote__founders">
+          {%- if s.signature_image != blank -%}
+            {{
+              s.signature_image
+              | image_url: width: 1032
+              | image_tag:
+                loading: 'lazy',
+                class: 'good-life-quote__signature',
+                alt: s.signature_image.alt | default: 'Founders signature'
+            }}
+          {%- endif -%}
+          {%- if s.founders_text != blank -%}
+            <p class="good-life-quote__name">{{ s.founders_text | escape }}</p>
+          {%- endif -%}
+        </figcaption>
+      {%- endif -%}
+    </div>
+  </figure>
+</section>
+
+{% schema %}
+{
+  "name": "Good Life Quote",
+  "tag": "div",
+  "class": "section-good-life-quote",
+  "settings": [
+    { "type": "header", "content": "Images" },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop image",
+      "info": "Figma source is a 3:2 landscape photo (e.g. 3000 × 2000px)."
+    },
+    {
+      "type": "select",
+      "id": "desktop_crop",
+      "label": "Desktop crop",
+      "default": "figma",
+      "options": [
+        { "value": "figma", "label": "Match Figma crop (zoomed, left-aligned)" },
+        { "value": "cover", "label": "Fill with focal point" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image",
+      "info": "Figma source is a 2:3 portrait photo (e.g. 2000 × 3000px). Falls back to the desktop image when empty."
+    },
+    {
+      "type": "select",
+      "id": "mobile_crop",
+      "label": "Mobile crop",
+      "default": "figma",
+      "options": [
+        { "value": "figma", "label": "Match Figma crop" },
+        { "value": "cover", "label": "Fill with focal point" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "overlay_desktop",
+      "label": "Desktop image dimming",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "overlay_mobile",
+      "label": "Mobile top gradient strength",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "%",
+      "default": 15
+    },
+    { "type": "header", "content": "Quote" },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "info": "Line breaks apply on desktop only; mobile text flows naturally.",
+      "default": "“A HOUSE FULL OF DOGS IS OUR IDEA OF THE GOOD LIFE.\nYUM CLUB IS FOR PEOPLE WHO FEEL THE SAME WAY.”"
+    },
+    {
+      "type": "image_picker",
+      "id": "signature_image",
+      "label": "Founders signature",
+      "info": "Export Figma layer 8640:1738 as SVG or PNG @3x (344 × 96)."
+    },
+    {
+      "type": "text",
+      "id": "founders_text",
+      "label": "Founders text",
+      "default": "Jaron & Ana, Founders"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFF9EF"
+    },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "margin_top_desktop", "label": "Desktop top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_desktop", "label": "Desktop bottom margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_top_mobile", "label": "Mobile top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile bottom margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    { "name": "Good Life Quote" }
+  ]
+}
+{% endschema %}

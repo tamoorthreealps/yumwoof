@@ -1492,7 +1492,6 @@ class CartPerformance {
 //     });
 //   });
 // });
-
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.product__info-container .opinew-stars-plugin-link').forEach(function (link) {
     link.style.cursor = 'pointer';

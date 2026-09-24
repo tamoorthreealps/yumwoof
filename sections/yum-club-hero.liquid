@@ -1,0 +1,839 @@
+{%- comment -%}
+  Yum Club Hero — membership hero with wordmark, copy, CTA and login line.
+  Figma: Yumwoof (Final) — desktop 8638:1439 (1512w), mobile 8640:1762 (392w).
+  Namespace: .yum-club-hero  (no JS required)
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign img_d = s.image_desktop
+  assign img_m = s.image_mobile
+
+  assign login_url = s.login_link | default: routes.account_login_url
+  assign show_login = s.show_login
+  if s.hide_login_for_customers and customer
+    assign show_login = false
+  endif
+
+  assign heading_tag = s.heading_tag | default: 'h2'
+-%}
+
+<style>
+  .yum-club-hero {
+    --ych-s: clamp(0.6px, calc(100vw / 1512), 1px);
+    --ych-m: clamp(0.816px, calc(100vw / 392), 1.3px);
+    --ych-text: {{ s.text_color }};
+    --ych-scrim: {{ s.scrim_strength | divided_by: 100.0 }};
+    --ych-overlay-m: {{ s.overlay_mobile | divided_by: 100.0 }};
+    --ych-font-body: 'Matter', 'Matter Medium', 'Matter-Medium', sans-serif;
+    --ych-font-button: 'Blur', 'Blur Medium', 'Blur-Medium', sans-serif;
+    display: block;
+    margin-top: {{ s.margin_top_desktop }}px;
+    margin-bottom: {{ s.margin_bottom_desktop }}px;
+  }
+
+  .yum-club-hero__card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100%;
+    height: calc(860 * var(--ych-s));
+    border-radius: 0 0 calc(64 * var(--ych-s)) calc(64 * var(--ych-s));
+    background-color: #000;
+  }
+
+  /* ---------- media ---------- */
+  .yum-club-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .yum-club-hero__media img,
+  .yum-club-hero__media svg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+  .yum-club-hero__media svg { background: #3d3d3d; fill: rgba(255, 255, 255, 0.2); }
+  .yum-club-hero__media--mobile { display: none; }
+
+  /* Figma: 50% black → transparent at 53.142% */
+  .yum-club-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(0, 0, 0, var(--ych-scrim)) 0%, rgba(0, 0, 0, 0) 53.142%);
+  }
+
+  /* ---------- content ---------- */
+  .yum-club-hero__inner {
+    position: absolute;
+    z-index: 2;
+    left: calc(8.3333% + 50 * var(--ych-s));
+    top: calc(224 * var(--ych-s));
+    width: calc(552 * var(--ych-s));
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(32 * var(--ych-s));
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+    color: var(--ych-text);
+    text-align: center;
+  }
+
+  .yum-club-hero__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(30 * var(--ych-s));
+    width: 100%;
+  }
+
+  .yum-club-hero__title {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    color: var(--ych-text);
+  }
+  .yum-club-hero__wordmark {
+    display: block;
+    width: calc(278 * var(--ych-s));
+    height: calc(226 * var(--ych-s));
+    max-width: none;
+    object-fit: contain;
+    color: var(--ych-text);
+  }
+
+  .yum-club-hero__text {
+    margin: 0;
+    width: 100%;
+    font-family: var(--ych-font-body);
+    font-weight: 500;
+    font-style: normal;
+    font-size: max(16px, calc(24 * var(--ych-s)));
+    line-height: 1.3333;
+    color: var(--ych-text);
+    word-break: break-word;
+    letter-spacing: 0;
+  }
+
+  .yum-club-hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(12 * var(--ych-s));
+    width: max(300px, calc(380 * var(--ych-s)));
+  }
+
+.yum-club-hero__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  height: max(48px, calc(56 * var(--ych-s)));
+  padding: 0 calc(30 * var(--ych-s));
+  border: 0;
+  border-radius: 160px;
+  background-image: linear-gradient(90deg, #fff9ef 0%, #fff1d3 50%, #fff9ef 100%);
+  background-color: #fff9ef;
+  color: #000;
+  text-decoration: none;
+  font-family: 'FFBlurProMedium';
+  font-weight: 500;
+  font-style: normal;
+  font-size: max(14px, calc(16 * var(--ych-s)));
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  animation: buttonShine_yc_hero 4s linear infinite;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.yum-club-hero__button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #000;
+  transform: translateY(102%);
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
+  pointer-events: none;
+}
+
+.yum-club-hero__button:hover::before {
+  transform: translateY(0);
+}
+
+.yum-club-hero__button:hover {
+  color: #fff9ef;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.yum-club-hero__button:focus-visible {
+  outline: 2px solid var(--ych-text);
+  outline-offset: 3px;
+}
+
+@keyframes buttonShine_yc_hero {
+  0% {
+    background-position: 100% 0;
+  }
+
+  45% {
+    background-position: 0% 0;
+  }
+
+  100% {
+    background-position: 0% 0;
+  }
+}
+  /* Add-to-cart form — same box as the old link, so layout is untouched */
+  .yum-club-hero__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(8 * var(--ych-s));
+    width: 100%;
+    margin: 0;
+  }
+  button.yum-club-hero__button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    text-align: left;
+  }
+  .yum-club-hero__button[aria-busy='true'] { cursor: progress; }
+  .yum-club-hero__button:disabled:not([aria-busy='true']) {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+  }
+  .yum-club-hero__plan-name,
+  .yum-club-hero__form-error {
+    margin: 0;
+    width: 100%;
+    font-family: var(--ych-font-body);
+    font-weight: 500;
+    font-size: max(13px, calc(14 * var(--ych-s)));
+    line-height: 1.4;
+    color: var(--ych-text);
+    text-align: center;
+  }
+  .yum-club-hero__form-error:empty { display: none; }
+
+  .yum-club-hero__login {
+    margin: 0;
+    width: 100%;
+    font-family: var(--ych-font-body);
+    font-weight: 500;
+    font-size: max(14px, calc(16 * var(--ych-s)));
+    line-height: 1.5;
+    color: var(--ych-text);
+    letter-spacing: 0;
+  }
+  .yum-club-hero__login a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-position: from-font;
+  }
+  .yum-club-hero__login a:focus-visible {
+    outline: 2px solid var(--ych-text);
+    outline-offset: 2px;
+  }
+
+  .yum-club-hero__sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .yum-club-hero__button { transition: none; }
+  }
+
+  /* ---------- mobile (separate Figma layout) ---------- */
+  @media screen and (max-width: 749px) {
+    .yum-club-hero {
+      margin-top: {{ s.margin_top_mobile }}px;
+      margin-bottom: {{ s.margin_bottom_mobile }}px;
+    }
+    .yum-club-hero__card {
+      height: calc(736 * var(--ych-m));
+      border-radius: 0 0 calc(32 * var(--ych-m)) calc(32 * var(--ych-m));
+    }
+    .yum-club-hero__media--desktop,
+    .yum-club-hero__scrim { display: none; }
+    .yum-club-hero__media--mobile { display: block; }
+    .yum-club-hero__media--mobile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, var(--ych-overlay-m));
+    }
+
+    .yum-club-hero__inner {
+      top: calc(104 * var(--ych-m));
+      bottom: calc(51 * var(--ych-m));
+      left: calc(24 * var(--ych-m));
+      right: calc(24 * var(--ych-m));
+      width: auto;
+      min-width: 0;
+      gap: 0;
+      justify-content: space-between;
+      filter: none;
+    }
+    .yum-club-hero__intro { gap: calc(16 * var(--ych-m)); }
+    .yum-club-hero__wordmark {
+      width: calc(168 * var(--ych-m));
+      height: calc(136 * var(--ych-m));
+    }
+    .yum-club-hero__text {
+      width: calc(312 * var(--ych-m));
+      max-width: 100%;
+      font-size: calc(18 * var(--ych-m));
+      line-height: calc(24 * var(--ych-m));
+    }
+    .yum-club-hero__br { display: none; }
+
+    .yum-club-hero__actions {
+      width: 100%;
+      gap: calc(12 * var(--ych-m));
+    }
+    .yum-club-hero__button {
+      height: calc(48 * var(--ych-m));
+      padding: 0 calc(30.5 * var(--ych-m));
+      border-radius: 141.474px;
+      font-size: calc(14.147 * var(--ych-m));
+      line-height: calc(17.684 * var(--ych-m));
+      letter-spacing: 0.08em;
+    }
+    .yum-club-hero__login {
+      font-size: calc(14 * var(--ych-m));
+      line-height: calc(20 * var(--ych-m));
+    }
+  }
+</style>
+
+<section class="yum-club-hero" id="yum-club-hero-{{ section.id }}">
+  <div class="yum-club-hero__card">
+    <div class="yum-club-hero__media yum-club-hero__media--desktop">
+      {%- if img_d != blank -%}
+        {%- capture pos_d -%}object-position: {{ img_d.presentation.focal_point }};{%- endcapture -%}
+        {{
+          img_d
+          | image_url: width: 3200
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '750, 1100, 1500, 1800, 2200, 2600, 3200',
+            sizes: '100vw',
+            alt: img_d.alt,
+            style: pos_d
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Figma mobile hero is solid black; an optional mobile image can be layered in. {%- endcomment -%}
+    {%- if img_m != blank -%}
+      <div class="yum-club-hero__media yum-club-hero__media--mobile">
+        {%- capture pos_m -%}object-position: {{ img_m.presentation.focal_point }};{%- endcapture -%}
+        {{
+          img_m
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'lazy',
+            widths: '400, 600, 800, 1000, 1200, 1600',
+            sizes: '(max-width: 749px) 100vw, 1px',
+            alt: img_m.alt,
+            style: pos_m
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="yum-club-hero__scrim" aria-hidden="true"></div>
+
+    <div class="yum-club-hero__inner">
+      <div class="yum-club-hero__intro">
+        <{{ heading_tag }} class="yum-club-hero__title">
+          <span class="yum-club-hero__sr">{{ s.heading_text | escape }}</span>
+          {%- if s.wordmark_image != blank -%}
+            {{
+              s.wordmark_image
+              | image_url: width: 834
+              | image_tag: class: 'yum-club-hero__wordmark', alt: '', loading: 'eager'
+            }}
+          {%- else -%}
+            <svg class="yum-club-hero__wordmark" viewBox="0 0 278 226" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M227.763 48.5051C222.996 50.7473 218.073 54.3862 215.103 58.7921C214.048 58.4183 214.791 56.5694 214.713 55.822C214.478 53.6584 214.224 51.7505 212.896 50.0196C207.523 43.037 199.923 48.151 194.804 52.5766C193.925 53.324 189.822 57.9659 189.431 57.9856C188.689 58.0446 189.08 57.2579 189.158 56.9431C189.744 54.4845 192.733 50.5507 188.669 48.7608C187.654 48.328 182.789 47.9347 181.46 47.974C174.818 48.1707 173.489 52.1045 171.047 57.5136C168.116 63.9847 166.749 71.6951 163.291 77.7335C161.884 80.2118 152.408 94.4327 150.924 95.3374C149.439 96.2422 146.606 97.324 145.453 95.4555C145.258 95.1604 144.359 92.2297 144.301 91.8167C142.738 79.9561 154.499 64.6338 159.95 54.7599C161.532 51.8685 162.763 49.2525 158.309 48.5051C155.085 47.9543 148.716 47.9543 146.078 49.9999C142.425 52.8323 138.478 67.0531 136.505 72.0098C133.965 78.3629 130.077 87.5091 125.389 92.4461C124.451 93.4295 122.986 95.2194 121.481 94.7867C118.355 92.092 118.844 87.6665 119.801 84.0277C122.282 74.6061 126.053 68.0956 130.234 59.7165C131.25 57.6512 134.219 50.531 134.356 48.6034C134.493 46.6758 130.156 46.0464 128.573 46.0071C123.845 45.8694 118.922 48.1903 116.734 52.5569C111.302 63.3946 108.899 76.7697 104.66 88.0402C102.53 93.7246 95.6921 103.579 103.097 108.044C111.752 113.256 121.774 106.175 127.753 100.058C129.57 102.163 130.488 104.405 132.754 106.215C136.349 109.106 139.475 109.401 143.734 107.729C145.785 106.923 151.119 103.028 152.018 102.851C153.19 102.615 152.369 105.624 152.682 106.588C153.366 108.614 161.259 108.673 163.154 108.457C172.571 107.375 175.091 92.7214 178.334 85.2865C180.464 80.3495 187.868 65.4402 192.44 63.4537C196.426 61.7228 196.992 65.0469 196.113 68.3513L180.093 105.093C179.487 108.319 184.606 109.421 187.048 109.637C193.358 110.207 196.094 107.709 198.106 101.966C201.974 90.9315 203.068 77.0844 211.899 68.6267C213.189 67.3875 219.226 62.2145 220.496 62.0375C222.273 61.8014 224.012 62.7456 224.247 64.6731C224.481 66.6007 222.527 70.1609 221.609 71.9704C217.233 80.5659 200.235 101.75 214.283 108.673C216.256 109.657 218.561 109.657 220.71 109.46C225.868 108.949 231.612 106.313 234.934 103.618C237.669 101.376 240.56 97.8748 238.392 95.7308C237.298 94.649 235.188 92.6821 232.609 95.6522C231.964 96.3996 229.834 97.6781 228.037 96.4389C226.22 95.1801 226.044 92.2887 226.357 90.3218C227.431 83.4179 236.594 69.8658 239.583 62.4112C241.205 58.3593 242.26 53.1667 239.388 49.4098C236.184 45.2203 231.827 46.6168 227.763 48.5247V48.5051Z"/>
+              <path fill="currentColor" d="M128.085 3.81661C127.987 2.9315 127.186 2.55778 126.502 2.18407C123.943 0.846563 111.048 0.0401255 107.571 0.000787048C105.148 -0.0385514 100.967 1.3973 100.596 4.19033C100.186 7.23906 102.901 9.57969 101.592 13.5922C100.029 18.3718 92.2535 28.4621 89.3229 33.6745C81.2346 48.0723 66.8943 81.7263 48.9982 84.7751C40.4214 86.2503 37.6862 82.3754 39.4641 74.3897C41.2419 66.404 45.8136 56.4317 49.0177 48.7804C54.2928 36.2118 62.5179 24.725 57.0475 10.4451C50.9715 -5.40825 25.4559 1.69234 15.5115 9.87473C7.57939 16.4049 -3.57634 33.5761 1.11259 43.9418C4.41437 51.2391 14.6518 56.0187 21.8415 51.4358C28.406 47.2462 18.8328 42.0142 17.1721 38.5918C11.6822 27.3213 29.6564 8.65524 39.9916 15.6378C45.5792 19.434 42.7658 26.7509 40.988 31.8649C36.3967 45.0433 29.3829 58.143 24.3814 71.2033C20.8451 80.4282 17.3675 91.9543 28.152 97.5797C38.0769 102.753 46.6537 99.3303 55.6213 94.236C60.2125 91.62 64.0418 88.4729 68.2228 85.2865C68.887 85.2078 68.8675 85.2668 68.8284 85.8962C68.7112 87.5878 65.2336 95.7112 64.3154 97.7764C60.3884 106.549 54.2146 115.282 48.4902 122.992C44.5047 128.362 35.4199 140.734 29.7541 143.468C24.3228 146.084 17.3675 145.789 13.0889 141.108C10.9593 138.787 9.43542 127.733 4.16039 134.145C-0.274552 139.514 1.48379 150.785 6.62207 155.289C21.8806 168.664 41.6718 160.58 53.8825 147.559V147.52C70.5282 129.778 75.3929 107.729 85.0248 86.1716C87.1543 81.3723 89.8504 76.7894 91.9995 71.9901C100.029 54.0321 106.652 36.1331 117.632 19.7093C119.43 17.0147 128.3 6.07857 128.085 3.81661Z"/>
+              <path fill="currentColor" d="M134.298 179.64C130.898 181.292 129.198 186.524 126.834 195.532C124.92 202.771 119.664 211.307 104.816 213.923C99.3064 214.887 94.4221 211.346 90.9445 207.236C86.9785 202.554 86.705 199.781 86.0016 195.473C84.7708 187.861 85.2983 182.452 86.3924 175.647C87.3301 169.884 89.616 165.183 91.5306 159.833C94.9106 150.352 98.8766 142.622 103.39 137.489C111.302 128.48 117.828 125.372 121.872 125.372C125.271 125.372 127.596 125.884 128.651 129.641C130.371 135.935 129.394 140.891 126.639 145.75C123.298 151.631 115.346 152.595 113.608 152.929C109.681 153.676 109.544 157.728 110.814 161.564C112.416 166.481 115.386 167.523 120.485 167.523C124.529 167.523 129.179 165.104 132.148 162.331C139.377 155.801 142.347 149.624 143.206 139.751C143.89 131.706 141.214 124.035 134.61 119.885C132.207 118.37 129.413 117.662 126.6 117.406C125.291 117.288 123.982 117.229 122.712 117.229C112.728 117.229 103.585 121.084 95.7311 127.811C90.5342 132.198 86.4901 138.295 82.2309 143.861C76.8191 150.923 73.9472 159.38 70.2156 167.386C62.1272 184.813 63.8855 198.62 65.1164 204.285C67.5585 218.939 81.8011 226 95.399 226C100.635 226 114.545 224.721 127.753 212.507C131.523 209.006 134.63 203.813 137.463 197.539C139.631 192.13 142.679 175.588 134.298 179.64Z"/>
+              <path fill="currentColor" d="M277.603 166.206C277.173 162.882 274.106 159.577 270.804 158.928C269.319 158.613 267.834 158.495 266.349 158.495C261.133 158.495 256.463 160.305 251.892 163.845C253.591 160.206 255.194 157 256.678 153.676C259.98 145.868 262.735 137.744 266.662 130.152C268.147 127.379 269.417 124.586 270.706 121.812C271.663 119.668 271.019 118.606 268.791 118.39C266.779 118.173 264.747 117.957 262.735 117.957C259.98 117.957 257.636 118.803 255.506 120.947C251.149 125.648 248.18 131.214 246.05 137.213C245.21 139.79 244.35 142.465 243.393 145.12C242.436 147.795 241.478 150.352 240.638 153.027C238.841 157.945 236.926 162.98 235.227 167.897C234.484 169.923 233.839 171.969 233.214 173.995C231.729 179.03 230.342 184.046 228.643 188.963C228.349 189.848 225.536 194.726 224.501 196.24C221.844 200.096 219.284 203.951 216.744 207.904C215.787 209.517 212.915 211.012 211.118 211.012C210.258 211.012 209.633 210.579 209.32 209.616C209.008 208.337 208.578 207.039 208.461 205.878C208.031 198.07 211.215 191.225 214.615 184.695C217.702 178.696 221.414 173.149 224.911 167.464C226.513 164.691 225.556 163.078 222.254 162.98C219.909 162.98 217.682 162.882 215.357 162.763C212.055 162.547 209.613 163.944 208.031 166.835C207.073 168.763 206.233 170.69 205.471 172.716C202.502 181.174 199.63 189.612 195.586 197.539C194.531 199.781 188.787 209.419 186.032 209.419C185.29 209.419 184.547 208.671 183.902 207.177C182.632 204.069 182.945 200.863 184 197.873C185.602 192.956 187.4 188.038 189.197 183.121C189.627 181.843 190.154 180.544 190.994 179.384C194.394 174.683 196.406 169.431 198.106 164.081C198.751 162.272 198.321 161.623 196.621 161.092C195.019 160.659 193.319 160.226 191.737 160.226C187.595 160.226 182.496 163 181.011 166.54C178.569 172.637 176.127 178.735 173.899 184.931C173.255 186.681 172.883 188.491 172.454 190.281C171.946 191.245 171.457 192.287 170.93 193.29C169.015 196.929 161.689 211.582 157.332 211.582C156.062 211.582 154.987 210.52 154.89 208.907C154.792 205.485 154.987 202.063 156.277 198.738C158.406 193.605 160.321 188.353 162.646 183.219C165.088 177.771 167.96 172.421 170.617 167.071C172.415 163.55 174.232 160.128 176.029 156.686C177.299 154.227 178.784 151.985 179.741 149.526C181.656 144.392 183.453 139.141 185.153 134.007C185.465 133.26 185.583 132.394 185.583 131.548C185.68 129.188 184.41 128.126 182.085 128.441C180.698 128.539 179.428 129.09 178.041 129.09C172.082 129.306 169.015 132.827 167.745 138.295C167.745 138.511 167.647 138.61 167.647 138.826C166.045 144.176 163.193 148.877 160.946 153.794C159.559 156.568 158.191 159.361 157.019 162.134C152.448 172.834 148.208 183.633 144.066 194.431C143.011 197.637 142.054 200.843 140.882 203.951C139.924 206.724 138.967 209.399 139.084 212.409C139.182 213.156 139.182 214.021 139.299 214.867C139.827 219.47 143.441 222.892 147.798 222.892C151.295 222.892 156.296 221.083 159.383 219.371C160.614 218.703 162.138 217.444 163.799 215.811C163.701 219.549 165.635 222.361 169.464 223.443C171.066 223.876 172.649 224.092 174.251 224.092C177.748 224.092 181.167 223.03 184.235 220.768C186.892 218.958 189.236 216.696 192.088 214.238C193.886 218.84 198.458 223.227 203.674 223.227C207.816 223.227 216.1 217.444 219.089 214.769C219.577 214.336 220.027 213.864 220.496 213.412C220.437 214.356 220.417 215.3 220.476 216.264C220.691 219.686 223.778 225.036 227.705 225.036C228.877 225.036 229.502 224.289 229.932 222.578C230.245 220.965 230.362 219.253 230.674 217.542C230.772 216.696 230.987 215.733 231.319 214.336C232.374 215.949 232.921 217.11 233.761 218.073C235.891 221.063 238.216 222.774 242.045 222.774C250.329 222.774 256.288 218.29 261.055 211.858C261.973 210.619 266.896 202.889 270.784 194.706C274.262 187.409 276.763 179.659 277.31 176.984C278.169 173.346 278.169 169.825 277.622 166.186L277.603 166.206ZM260.605 188.019C257.421 193.27 255.194 199.25 251.149 204.069C246.578 209.517 244.487 210.383 243.393 210.383C237.962 210.383 238.958 205.269 239.056 202.456C239.232 197.263 240.248 192.11 243.276 187.704C246.48 183.023 250.602 177.004 254.529 173.7C258.026 170.749 260.703 170.375 262.754 171.182C264.884 172.008 265.079 180.643 260.586 188.038L260.605 188.019Z"/>
+            </svg>
+          {%- endif -%}
+        </{{ heading_tag }}>
+
+        {%- if s.description != blank -%}
+          <p class="yum-club-hero__text">
+            {{- s.description | escape | newline_to_br | replace: '<br />', '<br class="yum-club-hero__br">' -}}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="yum-club-hero__actions">
+        {%- comment -%} ---------- Add to cart (same logic as yw-membership-club) ---------- {%- endcomment -%}
+        {%- liquid
+          assign atc_product = s.product
+          assign atc_variant = null
+          assign atc_selling_plan = null
+          assign atc_plan_required = false
+
+          if atc_product != blank
+            assign atc_variant = atc_product.selected_or_first_available_variant
+          endif
+
+          if atc_variant != blank
+            assign atc_plan_required = atc_variant.requires_selling_plan
+
+            if atc_variant.selling_plan_allocations.size > 0
+              if s.selling_plan_id != blank
+                for allocation in atc_variant.selling_plan_allocations
+                  if allocation.selling_plan.id == s.selling_plan_id
+                    assign atc_selling_plan = allocation.selling_plan
+                    break
+                  endif
+                endfor
+              endif
+
+              if atc_selling_plan == null
+                assign atc_selling_plan = atc_variant.selling_plan_allocations.first.selling_plan
+              endif
+            endif
+          endif
+
+          assign atc_blocked = false
+          if atc_plan_required and atc_selling_plan == null
+            assign atc_blocked = true
+          endif
+
+          comment
+            Membership is a one-per-cart item. Match on product_id so switching
+            variants can't slip a second membership into the cart.
+          endcomment
+          assign ych_in_cart = false
+          if atc_product != blank
+            for line in cart.items
+              if line.product_id == atc_product.id
+                assign ych_in_cart = true
+                break
+              endif
+            endfor
+          endif
+        -%}
+
+        {%- if atc_product != blank and atc_variant != blank -%}
+          <form
+            method="post"
+            action="{{ routes.cart_add_url }}"
+            class="yum-club-hero__form"
+            data-yum-club-hero-form
+            data-cart-behavior="{{ s.cart_behavior }}"
+            data-product-id="{{ atc_product.id }}"
+          >
+            <input type="hidden" name="form_type" value="product">
+            <input type="hidden" name="utf8" value="✓">
+            <input type="hidden" name="id" value="{{ atc_variant.id }}">
+            <input type="hidden" name="quantity" value="{{ s.quantity }}">
+            {%- if atc_selling_plan != null -%}
+              <input type="hidden" name="selling_plan" value="{{ atc_selling_plan.id }}" data-yum-club-hero-selling-plan>
+            {%- endif -%}
+
+            {%- if atc_selling_plan != null and s.show_plan_name -%}
+              <p class="yum-club-hero__plan-name">{{ atc_selling_plan.name | escape }}</p>
+            {%- endif -%}
+
+            <button
+              type="submit"
+              class="yum-club-hero__button{% if ych_in_cart %} yum-club-hero__button--in-cart{% endif %}"
+              data-yum-club-hero-in-cart="{% if ych_in_cart %}true{% else %}false{% endif %}"
+              {% if atc_variant.available == false or atc_blocked %}
+                disabled
+              {% endif %}
+            >
+              {%- if atc_variant.available == false -%}
+                <span>{{ s.sold_out_text | default: 'SOLD OUT' | escape }}</span>
+              {%- else -%}
+                <span>{{ s.button_label | default: 'JOIN MEMBERSHIP' | escape }}</span>
+                {%- if s.button_price != blank -%}
+                  <span>{{ s.button_price | escape }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </button>
+
+            {%- if atc_blocked and request.design_mode -%}
+              <p class="yum-club-hero__form-error">
+                This variant can only be purchased with a selling plan, but no plan is attached to it. Check the
+                subscription app's plan group for this product.
+              </p>
+            {%- endif -%}
+
+            <p class="yum-club-hero__form-error" data-yum-club-hero-error role="alert" hidden></p>
+          </form>
+
+        {%- elsif s.button_label != blank -%}
+          {%- comment -%} No product selected — plain link, as before {%- endcomment -%}
+          <a class="yum-club-hero__button" href="{{ s.button_link | default: '#' }}">
+            <span>{{ s.button_label | escape }}</span>
+            {%- if s.button_price != blank -%}
+              <span>{{ s.button_price | escape }}</span>
+            {%- endif -%}
+          </a>
+        {%- endif -%}
+
+        {%- if show_login -%}
+          <p class="yum-club-hero__login">
+            {{- s.login_prefix | escape }} <a href="{{ login_url }}">{{ s.login_label | escape }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    // One shared instance, however many Yum Club Hero sections are on the page.
+    if (window.yumClubHero && window.yumClubHero.init) {
+      window.yumClubHero.init(document);
+      return;
+    }
+
+    function getDrawer() {
+      return document.querySelector('cart-drawer');
+    }
+
+    function getDrawerSectionId() {
+      var el = document.getElementById('CartDrawer-SectionId');
+      return el ? el.dataset.sectionId : 'cart-drawer';
+    }
+
+    function openDrawer() {
+      var drawer = getDrawer();
+      if (drawer && typeof drawer.open === 'function') {
+        drawer.open();
+        return true;
+      }
+      var toggle = document.querySelector('#cart-icon-bubble, a[href$="/cart"]');
+      if (toggle) {
+        toggle.click();
+        return true;
+      }
+      return false;
+    }
+
+    function setButtonState(form, inCart) {
+      var button = form.querySelector('.yum-club-hero__button');
+      if (!button) return;
+      // State only — the label text never changes.
+      button.dataset.yumClubHeroInCart = inCart ? 'true' : 'false';
+      button.classList.toggle('yum-club-hero__button--in-cart', inCart);
+    }
+
+    // Check the live cart rather than trusting the server-rendered flag —
+    // the customer may have removed the item from the drawer since page load.
+    function isAlreadyInCart(productId) {
+      return fetch(window.Shopify.routes.root + 'cart.js', {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (cart) {
+          return (cart.items || []).some(function (line) {
+            return String(line.product_id) === String(productId);
+          });
+        })
+        .catch(function () {
+          return false;
+        });
+    }
+
+    function init(root) {
+      (root || document).querySelectorAll('[data-yum-club-hero-form]').forEach(function (form) {
+        if (form.dataset.yumClubHeroBound) return;
+        form.dataset.yumClubHeroBound = 'true';
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          var behavior = form.dataset.cartBehavior || 'drawer';
+          var button = form.querySelector('.yum-club-hero__button');
+          var errorEl = form.querySelector('[data-yum-club-hero-error]');
+          if (errorEl) {
+            errorEl.hidden = true;
+            errorEl.textContent = '';
+          }
+          if (button) {
+            button.setAttribute('aria-busy', 'true');
+            button.disabled = true;
+          }
+
+          function release() {
+            if (button) {
+              button.removeAttribute('aria-busy');
+              button.disabled = false;
+            }
+          }
+
+          isAlreadyInCart(form.dataset.productId).then(function (inCart) {
+            if (inCart) {
+              setButtonState(form, true);
+              release();
+              if (!openDrawer()) {
+                window.location.href = window.Shopify.routes.root + 'cart';
+              }
+              return;
+            }
+
+            setButtonState(form, false);
+
+            if (behavior === 'cart') {
+              form.submit();
+              return;
+            }
+
+            var drawer = getDrawer();
+            var planInput = form.querySelector('[data-yum-club-hero-selling-plan]');
+
+            var item = {
+              id: Number(form.querySelector('input[name="id"]').value),
+              quantity: Number(form.querySelector('input[name="quantity"]').value || 1),
+            };
+            if (planInput && planInput.value) {
+              item.selling_plan = Number(planInput.value);
+            }
+
+            var payload = { items: [item] };
+
+            // Ask Shopify to re-render the drawer sections in the same request,
+            // otherwise the drawer keeps its stale markup until a reload.
+            var sectionIds = [];
+            if (drawer && drawer.getSectionsToRender) {
+              sectionIds = drawer.getSectionsToRender().map(function (sec) {
+                return sec.id;
+              });
+            }
+            if (!sectionIds.length) {
+              sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
+            }
+
+            payload.sections = sectionIds.join(',');
+            payload.sections_url = window.location.pathname;
+
+            fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
+              body: JSON.stringify(payload),
+            })
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (data) {
+                if (data.status) throw new Error(data.description || data.message);
+
+                setButtonState(form, true);
+
+                if (drawer && typeof drawer.renderContents === 'function') {
+                  // Dawn's renderContents both repaints and opens the drawer.
+                  drawer.renderContents(data);
+                } else {
+                  document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+                  if (behavior === 'drawer') openDrawer();
+                  return;
+                }
+
+                if (behavior === 'stay' && drawer.classList.contains('active')) {
+                  if (typeof drawer.close === 'function') drawer.close();
+                }
+              })
+              .catch(function (err) {
+                if (errorEl) {
+                  errorEl.textContent = err.message || 'Could not add to cart.';
+                  errorEl.hidden = false;
+                }
+              })
+              .finally(release);
+          });
+        });
+      });
+    }
+
+    window.yumClubHero = { init: init };
+
+    init(document);
+    document.addEventListener('shopify:section:load', function (e) {
+      init(e.target);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Yum Club Hero",
+  "tag": "div",
+  "class": "section-yum-club-hero",
+  "settings": [
+    { "type": "header", "content": "Background" },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop image",
+      "info": "Recommended 3024 × 1720px. Use the focal point to control the crop."
+    },
+    {
+      "type": "range",
+      "id": "scrim_strength",
+      "label": "Desktop left scrim",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image (optional)",
+      "info": "The Figma mobile hero is solid black. Leave empty to match it."
+    },
+    {
+      "type": "range",
+      "id": "overlay_mobile",
+      "label": "Mobile image dimming",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    { "type": "header", "content": "Heading" },
+    {
+      "type": "image_picker",
+      "id": "wordmark_image",
+      "label": "Wordmark override",
+      "info": "Leave empty to use the built-in Yum Club wordmark from Figma."
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text (for screen readers / SEO)",
+      "default": "Yum Club"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "default": "h1",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ]
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "info": "Line breaks apply on desktop only.",
+      "default": "The Yum Club is for big dog families who\nlove the good stuff. Members get 25% off everything and much more."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFF9EF"
+    },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "JOIN MEMBERSHIP" },
+    { "type": "text", "id": "button_price", "label": "Button price text", "default": "$29/QTR" },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product to add to cart",
+      "info": "Membership product. Leave empty to use the button as a normal link instead."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Only used when no product is selected above."
+    },
+    {
+      "type": "number",
+      "id": "selling_plan_id",
+      "label": "Selling plan ID (optional)",
+      "info": "For subscription products. Leave empty to use the first available plan on the variant."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_plan_name",
+      "label": "Show selling plan name above the button",
+      "default": false
+    },
+    { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+    {
+      "type": "select",
+      "id": "cart_behavior",
+      "label": "After adding to cart",
+      "options": [
+        { "value": "stay", "label": "Stay on page" },
+        { "value": "drawer", "label": "Open cart drawer" },
+        { "value": "cart", "label": "Go to cart page" }
+      ],
+      "default": "drawer"
+    },
+    { "type": "header", "content": "Login line" },
+    { "type": "checkbox", "id": "show_login", "label": "Show login line", "default": true },
+    { "type": "checkbox", "id": "hide_login_for_customers", "label": "Hide for logged-in customers", "default": true },
+    { "type": "text", "id": "login_prefix", "label": "Text", "default": "Already a member?" },
+    { "type": "text", "id": "login_label", "label": "Link label", "default": "Log in" },
+    {
+      "type": "url",
+      "id": "login_link",
+      "label": "Link",
+      "info": "Defaults to the store login page."
+    },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "margin_top_desktop", "label": "Desktop top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_desktop", "label": "Desktop bottom margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_top_mobile", "label": "Mobile top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile bottom margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    { "name": "Yum Club Hero" }
+  ]
+}
+{% endschema %}

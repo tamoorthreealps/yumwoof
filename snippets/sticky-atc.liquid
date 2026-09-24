@@ -188,7 +188,7 @@
           <span data-sticky-btn-label>{{ label | default: 'Add to Bag' }}</span>
           <s class="sticky-atc__btn-was" data-sticky-btn-was></s>
           <span class="sticky-atc__btn-price" data-sticky-btn-price></span>
-          {%- render 'loading-spinner' -%}
+          {%- render 'atc-click-animate-text' -%}
         </button>
       </div>
     </div>
@@ -251,7 +251,7 @@
     .sticky-atc__info {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       min-width: 0;
       flex: 1 1 auto;
     }
@@ -272,14 +272,14 @@
       font-family: "TAY Birdie";
       text-transform: uppercase;
       color: #000000;
-      font-size: 20px;
+      font-size: 24px;
       line-height: 32px;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.48px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 46ch;
-      transform: translateY(3px);
+      transform: translateY(0px);
     }
     .sticky-atc__meta {
       margin: 0;
@@ -310,8 +310,8 @@
     }
     .sticky-atc__was, s.sticky-atc__btn-was {
       font-family: "Matter";
-      font-size: 18px;
-      line-height: 24px;
+      font-size: 24px;
+      line-height: 32px;
       letter-spacing: 0;
       color: rgba(0, 0, 0, 0.5);
       text-decoration: line-through;
@@ -321,8 +321,8 @@
     }
     .sticky-atc__now {
       font-family: "Matter";
-      font-size: 18px;
-      line-height: 24px;
+      font-size: 24px;
+      line-height: 32px;
       letter-spacing: 0;
       color: #000000;
     }
@@ -331,7 +331,7 @@
       -webkit-appearance: none;
       cursor: pointer;
       border: 1px solid #000000;
-      border-radius: 8px;
+      border-radius: 10px;
       background: #ffc069;
       color: #000000;
       font-family: "FFBlurProMedium";
@@ -343,11 +343,15 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       position: relative;
       transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+          /* host for the ink-fill sheet below */
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
     }
-    .sticky-atc__btn:hover {
+    /* .sticky-atc__btn:hover {
       background: #000000 !important;
       color: #fff9ef;
     }
@@ -364,6 +368,44 @@
     .sticky-atc__btn[disabled]:hover {
       background: #e6e0d7;
       color: #1a1a1a;
+    } */
+
+    .sticky-atc__btn::before {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: #661d1d;
+      transform: translateY(102%);
+      transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      .sticky-atc__btn:not([disabled]):hover::before {
+        transform: none;
+      }
+      .sticky-atc__btn:not([disabled]):hover,
+      .sticky-atc__btn:not([disabled]):hover span {
+        color: #fff9ef;
+      }
+    }
+
+    /* keyboard parity */
+    .sticky-atc__btn:not([disabled]):focus-visible::before,
+    .sticky-atc__btn.is-loading::before {
+      transform: none;
+    }
+    .sticky-atc__btn:not([disabled]):focus-visible,
+    .sticky-atc__btn:not([disabled]):focus-visible span {
+      color: #fff9ef;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sticky-atc__btn::before {
+        transition-duration: .01ms;
+      }
     }
     /* In-button price is mobile-only; desktop shows the standalone price. */
     .sticky-atc__btn-price {
@@ -377,24 +419,42 @@
       left: 50%;
       transform: translate(-50%, -50%);
       width: 2rem;
-      height: auto;
+      height: 2rem;
       align-items: center;
       justify-content: center;
     }
     .sticky-atc__btn .loading__spinner .path {
       stroke: #1a1a1a;
     }
-    .sticky-atc__btn.is-loading {
+    /* .sticky-atc__btn.is-loading {
       color: transparent;
       cursor: default;
-    }
-    .sticky-atc__btn.is-loading:hover {
-      background: #ffc069;
-      color: transparent;
+    } */
+    .sticky-atc__btn.is-loading:hover,
+    .sticky-atc__btn.is-loading {
+      color: #fff9ef;
     }
     .sticky-atc__btn.is-loading [data-sticky-btn-label],
-    .sticky-atc__btn.is-loading .sticky-atc__btn-price {
+    .sticky-atc__btn.is-loading .sticky-atc__btn-price,
+    .sticky-atc__btn.is-loading .sticky-atc__btn-was {
       visibility: hidden;
+    }
+
+    .sticky-atc__btn .yw-atb__label{
+      opacity: 0;
+      transform: translateY(100%);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55em;
+      transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s linear, color .3s linear;
+    }
+
+    .sticky-atc__btn.is-loading .yw-atb__label{
+      opacity:1;
+      transform:none;
     }
 
     /*------- v2--css--code -------*/
@@ -425,7 +485,7 @@
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
       padding: 16px;
-      max-width: 1006px;
+      max-width: 1228px;
     }
     .sticky-atc.sticky-atc_v2 .sticky-atc__thumb {
       width: 64px;
@@ -439,7 +499,7 @@
       font-size: 20px;
       line-height: 24px;
       letter-spacing: 1.2px;
-      padding: 11.2px 46.29px;
+      padding: 16.2px 33.07px 14.2px;
       background: linear-gradient(
         90deg,
         #ffc069 0%,
@@ -503,8 +563,19 @@
     .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
       width: 100%;
     }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__title {
+      font-size: 20px;
+      letter-spacing: -0.40px;
+      transform: translateY(3px);
+    }
     .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__meta {
       font-size: 14px;
+    }
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__was,
+    .sticky-atc.sticky-atc_v2.in-product-main s.sticky-atc__btn-was,
+    .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__now {
+      font-size: 18px;
+    line-height: 24px;
     }
     .sticky-atc.sticky-atc_v2.in-product-main .sticky-atc__btn {
       font-size: 22px;
@@ -561,6 +632,7 @@
         line-height: 24px;
         letter-spacing: 0.96px;
         padding: 7.2px;
+        border-radius:8px;
       }
 
       .sticky-atc__btn:hover {
@@ -597,6 +669,7 @@
         font-size: 16px;
         letter-spacing: 0.96px;
         justify-content: space-between;
+        gap: 8px;
       }
       .sticky-atc.sticky-atc_v2 .sticky-atc__btn-price {
         font-size: 16px;

@@ -85,7 +85,7 @@
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
-  const OVERSCAN = 0.18; // matches `inset: -18% 0` in the CSS
+  const OVERSCAN = 0.12; // matches `inset: -18% 0` in the CSS
   const LERP = 0.085;    // lower = heavier, more cinematic lag
   const STAGGER = 0.15, LINE_DUR = 1.9, BODY_DUR = 1.7; // mirror the CSS variables
 

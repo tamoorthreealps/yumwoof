@@ -125,8 +125,10 @@ if (!customElements.get('product-info')) {
             this.pendingRequestUrl = null;
             const html = new DOMParser().parseFromString(responseText, 'text/html');
             callback(html);
-            // set focus to last clicked option value
-            document.querySelector(`#${targetId}`)?.focus();
+            // set focus to last clicked option value — without scrolling, the
+            // swatch the shopper just tapped is already in view and focusing a
+            // freshly rendered node would otherwise jump the page
+            document.querySelector(`#${targetId}`)?.focus({ preventScroll: true });
           })
           .catch((error) => {
             if (error.name === 'AbortError') {

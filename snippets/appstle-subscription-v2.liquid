@@ -12,307 +12,401 @@
   - product: {Object} product object
 {% endcomment %}
 <style>
-          .asw { display: block; width: 100%; color: #000; }
-          .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
+        .asw { display: block; width: 100%; color: #000; }
+        .asw *, .asw *::before, .asw *::after { box-sizing: border-box; }
 
-          .asw-option { background: #fff9ef; border: 1px solid #000; }
-          .asw-option--sub { border-radius: 12px 12px 0 0; }
-          .qty.freq.qrt_freq_membership .asw-option--sub {border-radius: 12px;}
-          .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
-          .asw-option.is-selected { background: #E6E0D7; }
+        .asw-option { background: #fff9ef; border: 1px solid #000; }
+        .asw-option--sub { border-radius: 12px 12px 0 0; }
+        .qty.freq.qrt_freq_membership .asw-option--sub {border-radius: 12px;}
+        .asw-option--one { border-top: 0; border-radius: 0 0 12px 12px; }
+        .asw-option.is-selected { background: #E6E0D7; }
 
-          .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .asw__save-pill {
-      display: inline-flex;
-          align-items: center;
-          background: #FFC069;
-          color: #000000;
-          font-size: 16px;
-          line-height: 16px;
-          letter-spacing: -1.28px;
-          text-transform: uppercase;
-          padding: 3px 7.38px 0;
-          border-radius: 999px;
-          white-space: nowrap;
-          border: 1px solid #000000;
-          font-family: 'TAY Birdie';
-          min-height: 20px;
-        }
-    /* =========================
-       MACBOOK / macOS ONLY
-       ========================= */
+        .asw-option__title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .asw__save-pill {
+    display: inline-flex;
+        align-items: center;
+        background: #FFC069;
+        color: #000000;
+        font-size: 16px;
+        line-height: 16px;
+        letter-spacing: -1.28px;
+        text-transform: uppercase;
+        padding: 3px 7.38px 0;
+        border-radius: 999px;
+        white-space: nowrap;
+        border: 1px solid #000000;
+        font-family: 'TAY Birdie';
+        min-height: 20px;
+      }
+  /* =========================
+     MACBOOK / macOS ONLY
+     ========================= */
 
-    html.mac-os .asw__save-pill {
-        padding-top: 0 !important;
-        padding-bottom: 2px !important;
+  html.mac-os .asw__save-pill {
+      padding-top: 0 !important;
+      padding-bottom: 2px !important;
+  }
+        .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px 16px 20px; margin: 0; cursor: pointer; }
+        .asw-option--one .asw-option__label {padding-bottom:20px;}
+        .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+        .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
+        .asw-diamond { display: block;max-width: 100%;height: auto; }
+        .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
+        .asw-option .asw-fill {fill: #FFF9EF;}
+        .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
+
+        .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+        .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+        .asw-option__titles { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+        .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
+      .asw-option__subtitle {
+          font-size: 13px;
+          line-height: 24px;
+          color: rgba(0, 0, 0, 0.5);
+          letter-spacing: 0;
+          font-family: Matter, sans-serif;
+      }
+      .asw-option--one .asw-option__subtitle {
+        font-size: 14px;
+      }
+        .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
+        .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
+        .asw-option__price-now { color: #000; }
+
+        /* Per-cup unit price (feeding table). Autoship = green, one-time = muted. */
+        .asw-option__price-col { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+        .asw-option__unit { font-family: 'Matter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0; white-space: nowrap; display:none; }
+        .asw-option__unit--sub { color: #3f7c2f; }
+        .asw-option__unit--one { color: rgba(0, 0, 0, 0.50); }
+
+        .asw-option__delivery { display: block;
+        position: relative; }
+        .asw-option__delivery:after {
+        content: "";
+        position: absolute;
+        left: 106px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 16px;
+        background: #000;
+        z-index: 2;
+        pointer-events: none;
+        border-radius:2px;
     }
-          .asw-option__label { display: flex; gap: 12px; align-items: flex-start; padding: 16px 16px 20px; margin: 0; cursor: pointer; }
-          .asw-option--one .asw-option__label {padding-bottom:20px;}
-          .asw-option__radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-          .asw-option__radio-icon { flex: 0 0 24px; width: 24px; height: 24px; }
-          .asw-diamond { display: block;max-width: 100%;height: auto; }
-          .asw-option.is-selected .asw-diamond{background: #000000;border-radius: 100%;}
-          .asw-option .asw-fill {fill: #FFF9EF;}
-          .asw-option:not(.is-selected) .asw-fill { opacity: 0; }
-
-          .asw-option__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
-          .asw-option__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-          .asw-option__titles { display: flex; flex-direction: column; gap: 0; min-width: 0; }
-          .asw-option__title { font-size: 18px; line-height: 24px; font-weight: 500;    letter-spacing: 0; }
-        .asw-option__subtitle {
-            font-size: 13px;
-            line-height: 24px;
-            color: rgba(0, 0, 0, 0.5);
-            letter-spacing: 0;
-            font-family: Matter, sans-serif;
-        }
-        .asw-option--one .asw-option__subtitle {
-          font-size: 14px;
-        }
-          .asw-option__price { display: flex; gap: 8px; align-items: baseline; font-size: 18px; line-height: 24px; font-weight: 500; white-space: nowrap;letter-spacing: 0; }
-          .asw-option__price-was { color: rgba(0, 0, 0, 0.5); text-decoration: line-through; }
-          .asw-option__price-now { color: #000; }
-
-          /* Per-cup unit price (feeding table). Autoship = green, one-time = muted. */
-          .asw-option__price-col { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-          .asw-option__unit { font-family: 'Matter', sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0; white-space: nowrap; display:none; }
-          .asw-option__unit--sub { color: #3f7c2f; }
-          .asw-option__unit--one { color: rgba(0, 0, 0, 0.50); }
-
-          .asw-option__delivery { display: block;
-          position: relative; }
-          .asw-option__delivery:after {
-          content: "";
+        .asw-option__delivery-label {
           position: absolute;
-          left: 106px;
-          top: 50%;
+          left: 18px;
+          top: 53%;
           transform: translateY(-50%);
-          width: 1px;
-          height: 16px;
-          background: #000;
           z-index: 2;
           pointer-events: none;
-          border-radius:2px;
-      }
-          .asw-option__delivery-label {
-            position: absolute;
-            left: 18px;
-            top: 55%;
-            transform: translateY(-50%);
-            z-index: 2;
-            pointer-events: none;
-            font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
-            font-size: 14px;
-            line-height: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0;
-          }
-          .asw-select { position: relative; display: block; }
-          .asw-select__field {
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            width: 100%; height: 44px; padding: 0 40px 0 126px;
-            background: #fff; border: 1px solid #000; border-radius: 8px;
-            font-family: inherit; font-size: 16px; line-height: 20px;     letter-spacing: 0; font-weight: 500;
-            color: #000; cursor: pointer; text-transform: capitalize; outline: none;
-            box-shadow: inherit;
-          }
-          .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; transition: transform .2s ease; }
+          font-family: 'TAY Birdie', var(--font-body-family, sans-serif);
+          font-size: 14px;
+          line-height: 20px;
+          text-transform: uppercase;
+          letter-spacing: 0;
+        }
+        .asw-select { position: relative; display: block; }
+        .asw-select__field {
+          -webkit-appearance: none; -moz-appearance: none; appearance: none;
+          width: 100%; height: 44px; padding: 0 40px 0 126px;
+          background: #fff; border: 1px solid #000; border-radius: 8px;
+          font-family: inherit; font-size: 16px; line-height: 20px;     letter-spacing: 0; font-weight: 500;
+          color: #000; cursor: pointer; text-transform: capitalize; outline: none;
+          box-shadow: inherit;
+        }
+        .asw-select__chevron { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); display: flex; pointer-events: none; transition: transform .2s ease; }
 
-          /* ----- Custom frequency dropdown (ul/li) replacing the native <select> ----- */
-          .asw-freq { position: relative; display: block; }
-          .asw-freq__trigger {
-            display: flex; align-items: center; text-align: left; gap: 8px;
-            appearance: none; -webkit-appearance: none;
-            border:0;
-          }
-          .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-          .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
-          .asw-freq__list {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            right: 0;
-            z-index: 30;
-            margin: 0;
-            padding: 4px;
-            list-style: none;
-            background: rgba(255, 255, 255, 0.95);
-            border: 0;
-            border-radius: 4px;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
-            max-height: 212px;
-            overflow: auto;
-            margin-left: auto;
-            width: calc(100% - 96px);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px);
-            pointer-events: none;
-            transition:
+        /* ----- Custom frequency dropdown (ul/li) replacing the native <select> ----- */
+        .asw-freq { position: relative; display: block; }
+        .asw-freq__trigger {
+          display: flex; align-items: center; text-align: left; gap: 8px;
+          appearance: none; -webkit-appearance: none;
+          border:0;
+        }
+        .asw-freq__current { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .asw-freq[data-open] .asw-select__chevron { transform: translateY(-50%) rotate(180deg); }
+        .asw-freq__list {
+          position: absolute;
+          top: calc(100% + 8px);
+          left: 0;
+          right: 0;
+          z-index: 30;
+          margin: 0;
+          padding: 4px;
+          list-style: none;
+          background: rgba(255, 255, 255, 0.94);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 0;
+          border-radius: 8px;
+          box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+          max-height: 212px;
+          overflow: auto;
+          margin-left: auto;
+          width: calc(100% - 96px);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(-8px);
+          pointer-events: none;
+          transition:
+          opacity 0.35s ease,
+          transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0s linear 0.35s;
+        }
+
+        .asw-freq[data-open] .asw-freq__list {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+          pointer-events: auto;
+          transition:
             opacity 0.35s ease,
             transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-            visibility 0s linear 0.35s;
-          }
+            visibility 0s;
+        }
 
-          .asw-freq[data-open] .asw-freq__list {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            pointer-events: auto;
-            transition:
-              opacity 0.35s ease,
-              transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0s;
-          }
-          
-          .asw-freq__opt {
-            font-family: 'Matter', sans-serif; font-size: 16px; line-height: 24px; font-weight: 500;
-            color: #000; padding: 10px 12px; border-radius: 4px; cursor: pointer;
-            text-transform: capitalize; user-select: none;
-            transition: background-color 0.2s ease, color 0.2s ease;
-          }
-          .asw-freq__opt + .asw-freq__opt { border-top: 1px solid #000;border-radius: 0; }
-          .asw-freq__opt.is-selected {
-            background: #000;
-            color: #fff9ef;
-            border-radius: 4px;
-          }
+.asw-freq__opt {
+  font-family: 'Matter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: #000;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-transform: capitalize;
+  user-select: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-bottom: 1px solid #000;
+}
 
-          .asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt.is-selected {
-            background: transparent;
-            color: inherit;
-          }
+.asw-freq__opt:last-child {
+  border-bottom-color: transparent;
+}
 
-          .asw-freq__opt:hover {
-            background: #000 !important;
-            color: #fff9ef !important;
-            border-radius: 4px;
-          }
-          /* No divider line touching the selected (black) pill. */
-          {% comment %} .asw-freq__opt.is-selected,
-          .asw-freq__opt.is-selected + .asw-freq__opt { border-top-color: transparent; } {% endcomment %}
-          .asw-freq__opt.is-selected {
-            border-top-color: transparent;
-          }
 
-          .asw-freq__list:has(.asw-freq__opt:hover) .asw-freq__opt:hover {
-            border-top-color: transparent;
-          }
-          .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
-          .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
-          .asw-benefit__check { flex: 0 0 auto; margin-top: 7px; display: flex; }
+/* =========================
+   SELECTED
+   ========================= */
 
-          /* Collapse the subscription details when the shopper picks one-time */
-          .asw-option--sub:not(.is-selected) .asw-option__delivery,
-          .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+.asw-freq__opt.is-selected {
+  background: #000;
+  color: #fff9ef;
+  border-radius: 6px;
+}
 
-          @media (max-width: 990px) {
-            .asw-option__label {
-          gap: 12px;
-          padding: 12px 12px 15px;
-      }
-      .asw-option--one .asw-option__label {
-          padding: 12px;
-      }
-          .asw-option__radio-icon {
-              flex: 0 0 20px;
-              width: 20px;
-              height: 20px;
-              position: absolute;
-          }
-              .asw-option__body {
-              gap: 12px;
-          }
-          .asw-option__head {
-          padding-left: 28px;
-      }
-          .asw-option__titles {
-          gap: 4px;
-      }
-      .asw-option__title-row {
-          gap: 6px;
-      }
-      .asw-option__title {
-          font-size: 16px;
-          line-height: 20px;
-      }
-      .asw__save-pill {
-          font-size: 13px;
-          line-height: 13px;
-          letter-spacing: -1.04px;
-          padding: 4px 6.72px 1px;
-      }
-      @supports (-webkit-touch-callout: none) {
-      		.asw__save-pill {
-      			padding-top: 0;
-      			padding-bottom: 2px;
-      		}
-      	}
-        html.mac-os .asw__save-pill {
-        padding-top: 0 !important;
-        padding-bottom: 1px !important;
+
+/* First selected
+   → border above last */
+.asw-freq__list:has(.asw-freq__opt:first-child.is-selected)
+  .asw-freq__opt {
+  border-bottom-color: transparent;
+}
+
+.asw-freq__list:has(.asw-freq__opt:first-child.is-selected)
+  .asw-freq__opt:nth-child(2) {
+  border-bottom: 1px solid #000;
+}
+
+
+/* Center selected
+   → no border */
+.asw-freq__list:has(.asw-freq__opt:nth-child(2).is-selected)
+  .asw-freq__opt {
+  border-bottom-color: transparent;
+}
+
+
+/* Last selected
+   → border above last */
+.asw-freq__list:has(.asw-freq__opt:last-child.is-selected)
+  .asw-freq__opt {
+  border-bottom-color: transparent;
+}
+
+.asw-freq__list:has(.asw-freq__opt:last-child.is-selected)
+  .asw-freq__opt:first-child {
+  border-bottom: 1px solid #000;
+}
+
+
+/* =========================
+   HOVER OVERRIDES SELECTED
+   ========================= */
+
+/* Any hover:
+   completely reset selected border logic */
+.asw-freq__list:has(.asw-freq__opt:hover)
+  .asw-freq__opt {
+  border-bottom-color: transparent;
+}
+
+
+/* Hovered option */
+.asw-freq__opt:hover {
+  background: #000 !important;
+  color: #fff9ef !important;
+  border-radius: 6px;
+}
+
+
+/* Selected option becomes normal
+   while another option is hovered */
+.asw-freq__list:has(.asw-freq__opt:hover)
+  .asw-freq__opt.is-selected:not(:hover) {
+  background: transparent;
+  color: #000;
+  border-radius: 0;
+}
+
+
+/* First hovered
+   → border above last */
+.asw-freq__list:has(.asw-freq__opt:first-child:hover)
+  .asw-freq__opt:nth-child(2) {
+  border-bottom: 1px solid #000;
+}
+
+
+/* Center hovered
+   → no border */
+.asw-freq__list:has(.asw-freq__opt:nth-child(2):hover)
+  .asw-freq__opt {
+  border-bottom-color: transparent;
+}
+
+
+/* Last hovered
+   → border above center */
+.asw-freq__list:has(.asw-freq__opt:last-child:hover)
+  .asw-freq__opt:first-child {
+  border-bottom: 1px solid #000;
+}
+
+.asw-freq__list:has(.asw-freq__opt:last-child:hover)
+  .asw-freq__opt:nth-child(2) {
+  border-bottom-color: transparent;
+}
+.asw-freq__list:has(.asw-freq__opt:last-child.is-selected):has(.asw-freq__opt:nth-child(2):hover)
+  .asw-freq__opt:first-child {
+  border-bottom-color: transparent;
+}
+        .asw-option__benefits { display: none; grid-template-columns: 1fr 1fr; gap: 8px 16px;margin: 0 0 8px; }
+        .asw-benefit { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 24px;  letter-spacing: 0; }
+        .asw-benefit__check { flex: 0 0 auto; margin-top: 7px; display: flex; }
+
+        /* Collapse the subscription details when the shopper picks one-time */
+        .asw-option--sub:not(.is-selected) .asw-option__delivery,
+        .asw-option--sub:not(.is-selected) .asw-option__benefits { display: none; }
+
+        @media (max-width: 990px) {
+          .asw-option__label {
+        gap: 12px;
+        padding: 12px 12px 15px;
     }
-      .asw-option__subtitle {
-          font-size: 12px;
-          line-height: 16px;
-          letter-spacing: 0;
-      }
-      .asw-option__price {
-          gap: 6px;
-          font-size: 14px;
-          line-height: 20px;
-      }
-      .asw-option__unit {
-          font-size: 12px;
-          line-height: 16px;
-      }
-      .asw-option__delivery-label {
-          left: 16px;
-          font-size: 12px;
-          line-height: 12px;
-          letter-spacing: 0;
-          top: 52%;
-      }
-      .asw-select__field {
-          height: 36px;
-          padding: 0 24px 0 107px;
-          border-radius: 6px;
-          font-size: 12px;
-          line-height: 20px;
-          letter-spacing: 0.24px;
-      }
-      .asw-select__chevron {
-          width: 8px;
-          height: 4px;
-      }
-      .asw-freq__opt {
-                  font-family: 'Matter';
-          font-size: 14px;
-          line-height: 20px;
-          letter-spacing: 0;
-          padding: 8px 12px;
-      }
-      .asw-option__delivery:after {
-          left: 91px;
-          height: 12px;
-      }
-          .asw-option__benefits {
-              grid-template-columns: 1fr 1fr;
-              gap: 8px;
-              margin: 4px 8px 8px;
-          }
-          .asw-benefit {
-          gap: 6px;
-          font-size: 11px;
-          line-height: 16px;
-          letter-spacing: 0;
-      }
-      .asw-benefit__check {
-          margin-top: 4px;
-          width: 12px;
-          height: 12px;
-      }
-          }
+    .asw-option--one .asw-option__label {
+        padding: 12px;
+    }
+        .asw-option__radio-icon {
+            flex: 0 0 20px;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+        }
+            .asw-option__body {
+            gap: 12px;
+        }
+        .asw-option__head {
+        padding-left: 28px;
+    }
+        .asw-option__titles {
+        gap: 4px;
+    }
+    .asw-option__title-row {
+        gap: 6px;
+    }
+    .asw-option__title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .asw__save-pill {
+        font-size: 13px;
+        line-height: 13px;
+        letter-spacing: -1.04px;
+        padding: 4px 6.72px 1px;
+    }
+    @supports (-webkit-touch-callout: none) {
+    		.asw__save-pill {
+    			padding-top: 0;
+    			padding-bottom: 2px;
+    		}
+    	}
+      html.mac-os .asw__save-pill {
+      padding-top: 0 !important;
+      padding-bottom: 1px !important;
+  }
+    .asw-option__subtitle, .asw-option--one .asw-option__subtitle {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0;
+    }
+    .asw-option__price {
+        gap: 6px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .asw-option__unit {
+        font-size: 12px;
+        line-height: 16px;
+    }
+    .asw-option__delivery-label {
+        left: 16px;
+        font-size: 12px;
+        line-height: 12px;
+        letter-spacing: 0;
+        top: 52%;
+    }
+    .asw-select__field {
+        height: 36px;
+        padding: 0 24px 0 107px;
+        border-radius: 6px;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.24px;
+    }
+    .asw-select__chevron {
+        width: 8px;
+        height: 4px;
+    }
+    .asw-freq__opt {
+                font-family: 'Matter';
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0;
+        padding: 8px 12px;
+    }
+    .asw-option__delivery:after {
+        left: 91px;
+        height: 12px;
+    }
+        .asw-option__benefits {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 4px 8px 8px;
+        }
+        .asw-benefit {
+        gap: 6px;
+        font-size: 11px;
+        line-height: 16px;
+        letter-spacing: 0;
+    }
+    .asw-benefit__check {
+        margin-top: 4px;
+        width: 12px;
+        height: 12px;
+    }
+        }
 </style>
 {%- liquid
   assign appstle_app_id = 'appstle'
@@ -451,16 +545,16 @@
                   {%- endif -%}
                 </span>
                 {%- if sub_subtitle != blank -%}
-                  {% comment %} <span class="asw-option__subtitle">
-                    {% if template.suffix == 'ancestral-blend-v2' %}
-                      Modify or Cancel Anytime
-                    {% else %}
-                      {{ sub_subtitle }}
-                    {% endif %}
-                  </span> {% endcomment %}
-                  <span class="asw-option__subtitle">
-                      Modify or Cancel Anytime
-                  </span>
+                  {% comment %}
+                    <span class="asw-option__subtitle">
+                      {% if template.suffix == 'ancestral-blend-v2' %}
+                        Modify or Cancel Anytime
+                      {% else %}
+                        {{ sub_subtitle }}
+                      {% endif %}
+                    </span>
+                  {% endcomment %}
+                  <span class="asw-option__subtitle"> Modify or Cancel Anytime. </span>
                 {%- endif -%}
               </span>
               <span class="asw-option__price-col">
@@ -669,9 +763,11 @@
             if (!this.freqList) return;
             this.freqList.hidden = false;
 
-            requestAnimationFrame(function () {
-              if (this.freqEl) this.freqEl.setAttribute('data-open', '');
-            }.bind(this));
+            requestAnimationFrame(
+              function () {
+                if (this.freqEl) this.freqEl.setAttribute('data-open', '');
+              }.bind(this)
+            );
 
             if (this.freqTrigger) this.freqTrigger.setAttribute('aria-expanded', 'true');
           }
@@ -682,11 +778,14 @@
             if (this.freqEl) this.freqEl.removeAttribute('data-open');
             if (this.freqTrigger) this.freqTrigger.setAttribute('aria-expanded', 'false');
 
-            setTimeout(function () {
-              if (!this.freqEl || !this.freqEl.hasAttribute('data-open')) {
-                this.freqList.hidden = true;
-              }
-            }.bind(this), 250);
+            setTimeout(
+              function () {
+                if (!this.freqEl || !this.freqEl.hasAttribute('data-open')) {
+                  this.freqList.hidden = true;
+                }
+              }.bind(this),
+              250
+            );
           }
 
           selectFreq(li) {
@@ -808,6 +907,16 @@
           document.addEventListener('DOMContentLoaded', bindAswVariantSync, { once: true });
         }
       })();
+
+      document.querySelectorAll('.asw-freq__opt').forEach(function (option) {
+  option.addEventListener('mouseenter', function () {
+    this.classList.add('is-hovering');
+  });
+
+  option.addEventListener('mouseleave', function () {
+    this.classList.remove('is-hovering');
+  });
+});
     </script>
   {%- endif -%}
 {%- endif -%}
