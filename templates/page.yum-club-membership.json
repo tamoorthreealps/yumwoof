@@ -13,8 +13,10 @@
       "type": "main-page",
       "disabled": true,
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "mobile_padding_top": 100,
+        "mobile_padding_bottom": 100,
+        "desktop_padding_top": 100,
+        "desktop_padding_bottom": 100
       }
     },
     "yw_membership_banner_hepMCN": {
@@ -31,6 +33,95 @@
         "height_desktop": "812px",
         "height_mobile": "560px",
         "scrim_opacity": 0
+      }
+    },
+    "good_life_adds_up_r8hBie": {
+      "type": "good-life-adds-up",
+      "blocks": {
+        "size_card_UyBgyD": {
+          "type": "size_card",
+          "settings": {
+            "title": "SMALL",
+            "range_text": "Up to 25 lbs",
+            "image_alt": "",
+            "mirror_image": false,
+            "image_height": 80,
+            "image_height_mobile": 80,
+            "amount": 532,
+            "label": "YEARLY SAVINGS"
+          }
+        },
+        "size_card_xVAFwr": {
+          "type": "size_card",
+          "settings": {
+            "title": "Medium",
+            "range_text": "26-50 lbs",
+            "image_alt": "",
+            "mirror_image": false,
+            "image_height": 96,
+            "image_height_mobile": 80,
+            "amount": 964,
+            "label": "YEARLY SAVINGS"
+          }
+        },
+        "size_card_KAGyhW": {
+          "type": "size_card",
+          "settings": {
+            "title": "Large",
+            "range_text": "51-75 lbs",
+            "image_alt": "",
+            "mirror_image": false,
+            "image_height": 120,
+            "image_height_mobile": 80,
+            "amount": 1137,
+            "label": "YEARLY SAVINGS"
+          }
+        },
+        "size_card_GxCnNn": {
+          "type": "size_card",
+          "settings": {
+            "title": "X-Large",
+            "range_text": "76-100 lbs",
+            "image_alt": "",
+            "mirror_image": false,
+            "image_height": 159,
+            "image_height_mobile": 80,
+            "amount": 1397,
+            "label": "YEARLY SAVINGS"
+          }
+        }
+      },
+      "block_order": [
+        "size_card_UyBgyD",
+        "size_card_xVAFwr",
+        "size_card_KAGyhW",
+        "size_card_GxCnNn"
+      ],
+      "name": "Good life adds up",
+      "settings": {
+        "heading": "THE GOOD LIFE ADDS UP.",
+        "subheading": "Membership starts to make sense with your first bag.\nThe more dogs around the house, the better it gets.",
+        "footnote": "*Estimated savings based on typical annual feeding amounts. Actual savings depend on your dog and what you order.",
+        "prefix": "$",
+        "suffix": "+",
+        "count_duration": 1600,
+        "background_color": "#FFF9EF",
+        "gradient_color": "#8BBEFF",
+        "gradient_opacity": 38,
+        "heading_color": "#000000",
+        "text_color": "#000000",
+        "savings_color": "#4A9560",
+        "divider_color": "#000000",
+        "footnote_color": "#807D78",
+        "footnote_color_mobile": "#000000",
+        "gradient_height": 690,
+        "image_area_height": 159,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "gradient_height_mobile": 600,
+        "image_area_height_mobile": 80,
+        "padding_top_mobile": 88,
+        "padding_bottom_mobile": 88
       }
     },
     "yw_membership_club_nYLiBH": {
@@ -294,6 +385,7 @@
   "order": [
     "main",
     "yw_membership_banner_hepMCN",
+    "good_life_adds_up_r8hBie",
     "yw_membership_club_nYLiBH",
     "yw_membership_family_dWgri4",
     "yw_membership_faq_Ew9Uz8",
