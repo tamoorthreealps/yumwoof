@@ -1,0 +1,152 @@
+<section class="good-dogs-ticker" id="good-dogs-ticker-{{ section.id }}">
+  <div class="good-dogs-ticker__viewport">
+    <div class="good-dogs-ticker__track">
+      <div class="good-dogs-ticker__group">
+        {% for i in (1..6) %}
+          <span class="good-dogs-ticker__item">{{ section.settings.text }}</span>
+        {% endfor %}
+      </div>
+      <div class="good-dogs-ticker__group" aria-hidden="true">
+        {% for i in (1..6) %}
+          <span class="good-dogs-ticker__item">{{ section.settings.text }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+#good-dogs-ticker-{{ section.id }} {
+  --gdt-bg: {{ section.settings.background_color }};
+  --gdt-text: {{ section.settings.text_color }};
+  --gdt-speed: {{ section.settings.speed }}s;
+  --gdt-font-size: {{ section.settings.font_size }}px;
+  --gdt-mobile-font-size: {{ section.settings.mobile_font_size }}px;
+  --gdt-spacing: {{ section.settings.spacing }}px;
+  width: 100%;
+  background: var(--gdt-bg);
+  color: var(--gdt-text);
+  overflow: hidden;
+}
+#good-dogs-ticker-{{ section.id }} .good-dogs-ticker__viewport {
+  width: 100%;
+  overflow: hidden;
+}
+#good-dogs-ticker-{{ section.id }} .good-dogs-ticker__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: goodDogsTicker-{{ section.id }} var(--gdt-speed) linear infinite;
+}
+#good-dogs-ticker-{{ section.id }} .good-dogs-ticker__group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+#good-dogs-ticker-{{ section.id }} .good-dogs-ticker__item {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  font-family: 'FFBlurProMedium', sans-serif;
+  font-size: var(--gdt-font-size);
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+#good-dogs-ticker-{{ section.id }} .good-dogs-ticker__item::after {
+  content: "·";
+  display: inline-block;
+  margin: 0 var(--gdt-spacing);
+}
+@keyframes goodDogsTicker-{{ section.id }} {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@media screen and (max-width: 749px) {
+  #good-dogs-ticker-{{ section.id }} .good-dogs-ticker__item {
+    font-size: var(--gdt-mobile-font-size);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #good-dogs-ticker-{{ section.id }} .good-dogs-ticker__track {
+    animation: none;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Good Dogs Ticker",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Ticker text",
+      "default": "GOOD DOGS HAVE CONNECTIONS"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Animation speed",
+      "min": 15,
+      "max": 80,
+      "step": 1,
+      "unit": "s",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Desktop font size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_font_size",
+      "label": "Mobile font size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "label": "Separator spacing",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#661D1D"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Good Dogs Ticker"
+    }
+  ]
+}
+{% endschema %}
