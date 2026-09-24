@@ -89,16 +89,66 @@
     },
     "membership_perks_QDR4W8": {
       "type": "membership-perks",
+      "blocks": {
+        "perk_AKmWHr": {
+          "type": "perk",
+          "settings": {
+            "title": "25% OFF EVERY ORDER",
+            "description": "Get 25% off everything we make, every day. No waiting for a sale.",
+            "description_mobile": ""
+          }
+        },
+        "perk_J6wVAb": {
+          "type": "perk",
+          "settings": {
+            "title": "PRIORITY CONCIERGE",
+            "description": "Member requests go straight to the top of our support queue.",
+            "description_mobile": ""
+          }
+        },
+        "perk_6Re6QJ": {
+          "type": "perk",
+          "settings": {
+            "title": "PRICES LOCKED\nFOR A YEAR",
+            "description": "Today's prices stay yours for twelve months from the day you first join.",
+            "description_mobile": ""
+          }
+        },
+        "perk_HBmHi3": {
+          "type": "perk",
+          "settings": {
+            "title": "THE COCOMEGA BOOK",
+            "description": "The Canine Cocomega Effect, digital edition. Included with membership.",
+            "description_mobile": ""
+          }
+        },
+        "perk_PidAt6": {
+          "type": "perk",
+          "settings": {
+            "title": "MEMBERS-ONLY EXTRAS",
+            "description": "Members get early access and member-only surprises.",
+            "description_mobile": ""
+          }
+        }
+      },
+      "block_order": [
+        "perk_AKmWHr",
+        "perk_J6wVAb",
+        "perk_6Re6QJ",
+        "perk_HBmHi3",
+        "perk_PidAt6"
+      ],
       "name": "Membership Perks",
       "settings": {
         "heading": "MEMBERSHIP\nHAS ITS PERKS.",
         "heading_tag": "h2",
-        "heading_color": "#000000",
         "background_color": "#fff9ef",
-        "padding_top": 120,
-        "padding_bottom": 120,
-        "padding_top_mobile": 160,
-        "padding_bottom_mobile": 160
+        "text_color": "#000000",
+        "card_color": "#661d1d",
+        "padding_top": 140,
+        "padding_bottom": 160,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 64
       }
     },
     "good_life_quote_YqLCQ9": {
