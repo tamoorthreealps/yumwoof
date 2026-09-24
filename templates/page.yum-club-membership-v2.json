@@ -23,9 +23,9 @@
       "type": "yum-club-hero",
       "name": "Yum Club Hero",
       "settings": {
-        "image_desktop": "shopify://shop_images/Recreate-this-Great-Hall-of-a-private-En_1_a311e714-a6e6-46a4-b0bd-39824921c376.jpg",
+        "image_desktop": "shopify://shop_images/YumClub-Hero-Desktop.jpg",
         "scrim_strength": 0,
-        "image_mobile": "shopify://shop_images/Hero_Image.webp",
+        "image_mobile": "shopify://shop_images/YumClub-Hero-Mobile.jpg",
         "overlay_mobile": 0,
         "heading_text": "Yum Club",
         "heading_tag": "h1",
