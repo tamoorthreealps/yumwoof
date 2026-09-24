@@ -783,8 +783,8 @@ quantity-input.quantity::before {
 .product-form__submit.loading,
 .product-form__submit.loading:hover{
   background: #661d1d !important;
-    color: #fff9ef;
-    opacity: 1 !important;
+  color: #fff9ef;
+  opacity: 1 !important;
 }
 
 .product-form__submit.loading .product-form__submit__text {
