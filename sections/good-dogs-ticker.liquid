@@ -2,13 +2,21 @@
   <div class="good-dogs-ticker__viewport">
     <div class="good-dogs-ticker__track">
       <div class="good-dogs-ticker__group">
-        {% for i in (1..6) %}
-          <span class="good-dogs-ticker__item">{{ section.settings.text }}</span>
+        {% for block in section.blocks %}
+          {% if block.settings.text != blank %}
+            <span class="good-dogs-ticker__item" {{ block.shopify_attributes }}>
+              {{ block.settings.text | escape }}
+            </span>
+          {% endif %}
         {% endfor %}
       </div>
       <div class="good-dogs-ticker__group" aria-hidden="true">
-        {% for i in (1..6) %}
-          <span class="good-dogs-ticker__item">{{ section.settings.text }}</span>
+        {% for block in section.blocks %}
+          {% if block.settings.text != blank %}
+            <span class="good-dogs-ticker__item">
+              {{ block.settings.text | escape }}
+            </span>
+          {% endif %}
         {% endfor %}
       </div>
     </div>
@@ -24,9 +32,9 @@
   --gdt-mobile-font-size: {{ section.settings.mobile_font_size }}px;
   --gdt-spacing: {{ section.settings.spacing }}px;
   width: 100%;
+  overflow: hidden;
   background: var(--gdt-bg);
   color: var(--gdt-text);
-  overflow: hidden;
 }
 #good-dogs-ticker-{{ section.id }} .good-dogs-ticker__viewport {
   width: 100%;
@@ -45,8 +53,8 @@
 }
 #good-dogs-ticker-{{ section.id }} .good-dogs-ticker__item {
   display: inline-flex;
-  flex: 0 0 auto;
   align-items: center;
+  flex: 0 0 auto;
   font-family: 'FFBlurProMedium', sans-serif;
   font-size: var(--gdt-font-size);
   line-height: 1;
@@ -59,6 +67,9 @@
   content: "·";
   display: inline-block;
   margin: 0 var(--gdt-spacing);
+}
+#good-dogs-ticker-{{ section.id }} .good-dogs-ticker__group .good-dogs-ticker__item:last-child::after {
+  margin-right: var(--gdt-spacing);
 }
 @keyframes goodDogsTicker-{{ section.id }} {
   from {
@@ -85,20 +96,14 @@
   "name": "Good Dogs Ticker",
   "settings": [
     {
-      "type": "text",
-      "id": "text",
-      "label": "Ticker text",
-      "default": "GOOD DOGS HAVE CONNECTIONS"
-    },
-    {
       "type": "range",
       "id": "speed",
       "label": "Animation speed",
       "min": 15,
-      "max": 80,
+      "max": 90,
       "step": 1,
       "unit": "s",
-      "default": 40
+      "default": 45
     },
     {
       "type": "range",
@@ -133,19 +138,53 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Background",
+      "label": "Background color",
       "default": "#FFF9EF"
     },
     {
       "type": "color",
       "id": "text_color",
-      "label": "Text",
+      "label": "Text color",
       "default": "#661D1D"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ticker_item",
+      "name": "Ticker item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "GOOD DOGS HAVE CONNECTIONS"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Good Dogs Ticker"
+      "name": "Good Dogs Ticker",
+      "blocks": [
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text": "GOOD DOGS HAVE CONNECTIONS"
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text": "GOOD DOGS HAVE GOOD HOMES"
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text": "YUM CLUB MEMBERS GET MORE"
+          }
+        }
+      ]
     }
   ]
 }
