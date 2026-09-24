@@ -93,6 +93,7 @@
         "perk_AKmWHr": {
           "type": "perk",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_134.svg",
             "title": "25% OFF EVERY ORDER",
             "description": "Get 25% off everything we make, every day. No waiting for a sale.",
             "description_mobile": ""
@@ -101,6 +102,7 @@
         "perk_J6wVAb": {
           "type": "perk",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_136.svg",
             "title": "PRIORITY CONCIERGE",
             "description": "Member requests go straight to the top of our support queue.",
             "description_mobile": ""
@@ -109,6 +111,7 @@
         "perk_6Re6QJ": {
           "type": "perk",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_136_1.svg",
             "title": "PRICES LOCKED\nFOR A YEAR",
             "description": "Today's prices stay yours for twelve months from the day you first join.",
             "description_mobile": ""
@@ -117,6 +120,7 @@
         "perk_HBmHi3": {
           "type": "perk",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_137.svg",
             "title": "THE COCOMEGA BOOK",
             "description": "The Canine Cocomega Effect, digital edition. Included with membership.",
             "description_mobile": ""
@@ -125,6 +129,7 @@
         "perk_PidAt6": {
           "type": "perk",
           "settings": {
+            "image": "shopify://shop_images/Rectangle_138.svg",
             "title": "MEMBERS-ONLY EXTRAS",
             "description": "Members get early access and member-only surprises.",
             "description_mobile": ""
