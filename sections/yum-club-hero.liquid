@@ -39,6 +39,7 @@
     width: 100%;
     height: calc(860 * var(--ych-s));
     border-radius: 0 0 calc(64 * var(--ych-s)) calc(64 * var(--ych-s));
+    background-color: #000;
   }
 
   /* ---------- media ---------- */
@@ -116,11 +117,10 @@
     font-family: var(--ych-font-body);
     font-weight: 500;
     font-style: normal;
-    font-size: 24px;
-    line-height: 32px;
+    font-size: max(16px, calc(24 * var(--ych-s)));
+    line-height: 1.3333;
     color: var(--ych-text);
     word-break: break-word;
-    letter-spacing: 0;
   }
 
   .yum-club-hero__actions {
@@ -145,7 +145,7 @@
     background-color: #fff9ef;
     color: #000;
     text-decoration: none;
-    font-family: 'FFBlurProMedium';
+    font-family: var(--ych-font-button);
     font-weight: 500;
     font-style: normal;
     font-size: max(14px, calc(16 * var(--ych-s)));
@@ -161,6 +161,40 @@
     outline: 2px solid var(--ych-text);
     outline-offset: 3px;
   }
+
+  /* Add-to-cart form — same box as the old link, so layout is untouched */
+  .yum-club-hero__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(8 * var(--ych-s));
+    width: 100%;
+    margin: 0;
+  }
+  button.yum-club-hero__button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    text-align: left;
+  }
+  .yum-club-hero__button[aria-busy='true'] { cursor: progress; }
+  .yum-club-hero__button:disabled:not([aria-busy='true']) {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+  }
+  .yum-club-hero__plan-name,
+  .yum-club-hero__form-error {
+    margin: 0;
+    width: 100%;
+    font-family: var(--ych-font-body);
+    font-weight: 500;
+    font-size: max(13px, calc(14 * var(--ych-s)));
+    line-height: 1.4;
+    color: var(--ych-text);
+    text-align: center;
+  }
+  .yum-club-hero__form-error:empty { display: none; }
 
   .yum-club-hero__login {
     margin: 0;
@@ -237,8 +271,8 @@
     .yum-club-hero__text {
       width: calc(312 * var(--ych-m));
       max-width: 100%;
-      font-size: 18px;
-      line-height: 24px;
+      font-size: calc(18 * var(--ych-m));
+      line-height: calc(24 * var(--ych-m));
     }
     .yum-club-hero__br { display: none; }
 
@@ -329,12 +363,108 @@
       </div>
 
       <div class="yum-club-hero__actions">
-        {%- if s.button_label != blank -%}
-          <a
-            class="yum-club-hero__button"
-            href="{{ s.button_link | default: '#' }}"
-            {% if s.button_price != blank %}aria-label="{{ s.button_label | escape }}, {{ s.button_price | escape }}"{% endif %}
+        {%- comment -%} ---------- Add to cart (same logic as yw-membership-club) ---------- {%- endcomment -%}
+        {%- liquid
+          assign atc_product = s.product
+          assign atc_variant = null
+          assign atc_selling_plan = null
+          assign atc_plan_required = false
+
+          if atc_product != blank
+            assign atc_variant = atc_product.selected_or_first_available_variant
+          endif
+
+          if atc_variant != blank
+            assign atc_plan_required = atc_variant.requires_selling_plan
+
+            if atc_variant.selling_plan_allocations.size > 0
+              if s.selling_plan_id != blank
+                for allocation in atc_variant.selling_plan_allocations
+                  if allocation.selling_plan.id == s.selling_plan_id
+                    assign atc_selling_plan = allocation.selling_plan
+                    break
+                  endif
+                endfor
+              endif
+
+              if atc_selling_plan == null
+                assign atc_selling_plan = atc_variant.selling_plan_allocations.first.selling_plan
+              endif
+            endif
+          endif
+
+          assign atc_blocked = false
+          if atc_plan_required and atc_selling_plan == null
+            assign atc_blocked = true
+          endif
+
+          comment
+            Membership is a one-per-cart item. Match on product_id so switching
+            variants can't slip a second membership into the cart.
+          endcomment
+          assign ych_in_cart = false
+          if atc_product != blank
+            for line in cart.items
+              if line.product_id == atc_product.id
+                assign ych_in_cart = true
+                break
+              endif
+            endfor
+          endif
+        -%}
+
+        {%- if atc_product != blank and atc_variant != blank -%}
+          <form
+            method="post"
+            action="{{ routes.cart_add_url }}"
+            class="yum-club-hero__form"
+            data-yum-club-hero-form
+            data-cart-behavior="{{ s.cart_behavior }}"
+            data-product-id="{{ atc_product.id }}"
           >
+            <input type="hidden" name="form_type" value="product">
+            <input type="hidden" name="utf8" value="✓">
+            <input type="hidden" name="id" value="{{ atc_variant.id }}">
+            <input type="hidden" name="quantity" value="{{ s.quantity }}">
+            {%- if atc_selling_plan != null -%}
+              <input type="hidden" name="selling_plan" value="{{ atc_selling_plan.id }}" data-yum-club-hero-selling-plan>
+            {%- endif -%}
+
+            {%- if atc_selling_plan != null and s.show_plan_name -%}
+              <p class="yum-club-hero__plan-name">{{ atc_selling_plan.name | escape }}</p>
+            {%- endif -%}
+
+            <button
+              type="submit"
+              class="yum-club-hero__button{% if ych_in_cart %} yum-club-hero__button--in-cart{% endif %}"
+              data-yum-club-hero-in-cart="{% if ych_in_cart %}true{% else %}false{% endif %}"
+              {% if atc_variant.available == false or atc_blocked %}
+                disabled
+              {% endif %}
+            >
+              {%- if atc_variant.available == false -%}
+                <span>{{ s.sold_out_text | default: 'SOLD OUT' | escape }}</span>
+              {%- else -%}
+                <span>{{ s.button_label | default: 'JOIN MEMBERSHIP' | escape }}</span>
+                {%- if s.button_price != blank -%}
+                  <span>{{ s.button_price | escape }}</span>
+                {%- endif -%}
+              {%- endif -%}
+            </button>
+
+            {%- if atc_blocked and request.design_mode -%}
+              <p class="yum-club-hero__form-error">
+                This variant can only be purchased with a selling plan, but no plan is attached to it. Check the
+                subscription app's plan group for this product.
+              </p>
+            {%- endif -%}
+
+            <p class="yum-club-hero__form-error" data-yum-club-hero-error role="alert" hidden></p>
+          </form>
+
+        {%- elsif s.button_label != blank -%}
+          {%- comment -%} No product selected — plain link, as before {%- endcomment -%}
+          <a class="yum-club-hero__button" href="{{ s.button_link | default: '#' }}">
             <span>{{ s.button_label | escape }}</span>
             {%- if s.button_price != blank -%}
               <span>{{ s.button_price | escape }}</span>
@@ -351,6 +481,184 @@
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    // One shared instance, however many Yum Club Hero sections are on the page.
+    if (window.yumClubHero && window.yumClubHero.init) {
+      window.yumClubHero.init(document);
+      return;
+    }
+
+    function getDrawer() {
+      return document.querySelector('cart-drawer');
+    }
+
+    function getDrawerSectionId() {
+      var el = document.getElementById('CartDrawer-SectionId');
+      return el ? el.dataset.sectionId : 'cart-drawer';
+    }
+
+    function openDrawer() {
+      var drawer = getDrawer();
+      if (drawer && typeof drawer.open === 'function') {
+        drawer.open();
+        return true;
+      }
+      var toggle = document.querySelector('#cart-icon-bubble, a[href$="/cart"]');
+      if (toggle) {
+        toggle.click();
+        return true;
+      }
+      return false;
+    }
+
+    function setButtonState(form, inCart) {
+      var button = form.querySelector('.yum-club-hero__button');
+      if (!button) return;
+      // State only — the label text never changes.
+      button.dataset.yumClubHeroInCart = inCart ? 'true' : 'false';
+      button.classList.toggle('yum-club-hero__button--in-cart', inCart);
+    }
+
+    // Check the live cart rather than trusting the server-rendered flag —
+    // the customer may have removed the item from the drawer since page load.
+    function isAlreadyInCart(productId) {
+      return fetch(window.Shopify.routes.root + 'cart.js', {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      })
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (cart) {
+          return (cart.items || []).some(function (line) {
+            return String(line.product_id) === String(productId);
+          });
+        })
+        .catch(function () {
+          return false;
+        });
+    }
+
+    function init(root) {
+      (root || document).querySelectorAll('[data-yum-club-hero-form]').forEach(function (form) {
+        if (form.dataset.yumClubHeroBound) return;
+        form.dataset.yumClubHeroBound = 'true';
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          var behavior = form.dataset.cartBehavior || 'drawer';
+          var button = form.querySelector('.yum-club-hero__button');
+          var errorEl = form.querySelector('[data-yum-club-hero-error]');
+          if (errorEl) {
+            errorEl.hidden = true;
+            errorEl.textContent = '';
+          }
+          if (button) {
+            button.setAttribute('aria-busy', 'true');
+            button.disabled = true;
+          }
+
+          function release() {
+            if (button) {
+              button.removeAttribute('aria-busy');
+              button.disabled = false;
+            }
+          }
+
+          isAlreadyInCart(form.dataset.productId).then(function (inCart) {
+            if (inCart) {
+              setButtonState(form, true);
+              release();
+              if (!openDrawer()) {
+                window.location.href = window.Shopify.routes.root + 'cart';
+              }
+              return;
+            }
+
+            setButtonState(form, false);
+
+            if (behavior === 'cart') {
+              form.submit();
+              return;
+            }
+
+            var drawer = getDrawer();
+            var planInput = form.querySelector('[data-yum-club-hero-selling-plan]');
+
+            var item = {
+              id: Number(form.querySelector('input[name="id"]').value),
+              quantity: Number(form.querySelector('input[name="quantity"]').value || 1),
+            };
+            if (planInput && planInput.value) {
+              item.selling_plan = Number(planInput.value);
+            }
+
+            var payload = { items: [item] };
+
+            // Ask Shopify to re-render the drawer sections in the same request,
+            // otherwise the drawer keeps its stale markup until a reload.
+            var sectionIds = [];
+            if (drawer && drawer.getSectionsToRender) {
+              sectionIds = drawer.getSectionsToRender().map(function (sec) {
+                return sec.id;
+              });
+            }
+            if (!sectionIds.length) {
+              sectionIds = [getDrawerSectionId(), 'cart-icon-bubble'];
+            }
+
+            payload.sections = sectionIds.join(',');
+            payload.sections_url = window.location.pathname;
+
+            fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
+              body: JSON.stringify(payload),
+            })
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (data) {
+                if (data.status) throw new Error(data.description || data.message);
+
+                setButtonState(form, true);
+
+                if (drawer && typeof drawer.renderContents === 'function') {
+                  // Dawn's renderContents both repaints and opens the drawer.
+                  drawer.renderContents(data);
+                } else {
+                  document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+                  if (behavior === 'drawer') openDrawer();
+                  return;
+                }
+
+                if (behavior === 'stay' && drawer.classList.contains('active')) {
+                  if (typeof drawer.close === 'function') drawer.close();
+                }
+              })
+              .catch(function (err) {
+                if (errorEl) {
+                  errorEl.textContent = err.message || 'Could not add to cart.';
+                  errorEl.hidden = false;
+                }
+              })
+              .finally(release);
+          });
+        });
+      });
+    }
+
+    window.yumClubHero = { init: init };
+
+    init(document);
+    document.addEventListener('shopify:section:load', function (e) {
+      init(e.target);
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -430,7 +738,43 @@
     { "type": "header", "content": "Button" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "JOIN MEMBERSHIP" },
     { "type": "text", "id": "button_price", "label": "Button price text", "default": "$29/QTR" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product to add to cart",
+      "info": "Membership product. Leave empty to use the button as a normal link instead."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Only used when no product is selected above."
+    },
+    {
+      "type": "number",
+      "id": "selling_plan_id",
+      "label": "Selling plan ID (optional)",
+      "info": "For subscription products. Leave empty to use the first available plan on the variant."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_plan_name",
+      "label": "Show selling plan name above the button",
+      "default": false
+    },
+    { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
+    {
+      "type": "select",
+      "id": "cart_behavior",
+      "label": "After adding to cart",
+      "options": [
+        { "value": "stay", "label": "Stay on page" },
+        { "value": "drawer", "label": "Open cart drawer" },
+        { "value": "cart", "label": "Go to cart page" }
+      ],
+      "default": "drawer"
+    },
     { "type": "header", "content": "Login line" },
     { "type": "checkbox", "id": "show_login", "label": "Show login line", "default": true },
     { "type": "checkbox", "id": "hide_login_for_customers", "label": "Hide for logged-in customers", "default": true },
