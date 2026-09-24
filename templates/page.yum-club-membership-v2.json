@@ -79,12 +79,12 @@
       ],
       "name": "Good Dogs Ticker",
       "settings": {
-        "speed": 45,
+        "speed": 80,
         "font_size": 32,
         "mobile_font_size": 20,
         "spacing": 54,
         "background_color": "rgba(0,0,0,0)",
-        "text_color": "#661D1D"
+        "text_color": "#661d1d"
       }
     },
     "membership_perks_QDR4W8": {
