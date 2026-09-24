@@ -768,7 +768,7 @@ quantity-input.quantity::before {
   display: none !important;
 }
 
-.product-form__submit .yw-atb__label{
+.product-form__submit .yw-atb__label {
   opacity: 0;
   transform: translateY(100%);
   position: absolute;
@@ -777,7 +777,7 @@ quantity-input.quantity::before {
   align-items: center;
   justify-content: center;
   gap: .55em;
-  transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s linear, color .3s linear;
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
 }
 
 .product-form__submit.loading,
@@ -788,12 +788,28 @@ quantity-input.quantity::before {
 }
 
 .product-form__submit.loading .product-form__submit__text {
-  visibility:hidden;
+  transform: translateY(-100%);
+  opacity: 0;
 }
 
-.product-form__submit.loading .yw-atb__label{
-  opacity:1;
-  transform:none;
+.product-form__submit.loading .yw-atb__label {
+  opacity: 1;
+  transform: translateY(0);
+}
+.product-form__submit:not(.loading) .product-form__submit__text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.product-form__submit:not(.loading) .yw-atb__label {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.product-form__submit__text {
+  transition:
+    transform .5s cubic-bezier(.2,.8,.2,1),
+    opacity .25s ease;
 }
 /* ----- Ink fill hover -----
    A burgundy sheet is parked just below the button and rises to cover it on
