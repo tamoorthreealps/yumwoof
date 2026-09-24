@@ -28,6 +28,9 @@
     display: block;
     margin-top: {{ s.margin_top_desktop }}px;
     margin-bottom: {{ s.margin_bottom_desktop }}px;
+      position: relative;
+  z-index: 1;
+   margin-top: calc(-200px * (1 - var(--gc-reveal, 0)));
   }
   .good-company *,
   .good-company *::before,
@@ -676,6 +679,20 @@
       init(e.target);
     });
   })();
+
+
+
+  window.addEventListener('scroll', function () {
+  var faq = document.querySelector('.ywfaq');
+  var good = document.querySelector('.good-company');
+
+  if (!faq || !good) return;
+
+  var faqRect = faq.getBoundingClientRect();
+  var progress = Math.min(1, Math.max(0, (window.innerHeight - faqRect.bottom) / 400));
+
+  good.style.setProperty('--gc-reveal', progress);
+});
 </script>
 
 {% schema %}
