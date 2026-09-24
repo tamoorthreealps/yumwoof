@@ -19,148 +19,135 @@
         "desktop_padding_bottom": 100
       }
     },
-    "yum_club_hero_P48rUL": {
-      "type": "yum-club-hero",
-      "name": "Yum Club Hero",
+    "yw_membership_banner_hepMCN": {
+      "type": "yw-membership-banner",
+      "name": "YW-Membership banner",
       "settings": {
-        "image_desktop": "shopify://shop_images/Recreate-this-Great-Hall-of-a-private-En_1_a311e714-a6e6-46a4-b0bd-39824921c376.jpg",
-        "scrim_strength": 0,
-        "image_mobile": "shopify://shop_images/Hero_Image.webp",
-        "overlay_mobile": 0,
-        "heading_text": "Yum Club",
-        "heading_tag": "h1",
-        "description": "The Yum Club is for big dog families who\nlove the good stuff. Members get 25% off everything and much more.",
-        "text_color": "#fff9ef",
-        "button_label": "JOIN MEMBERSHIP",
-        "button_price": "$29/QTR",
-        "product": "membership",
-        "button_link": "",
-        "show_plan_name": false,
-        "sold_out_text": "SOLD OUT",
-        "quantity": 1,
-        "cart_behavior": "drawer",
-        "show_login": true,
-        "hide_login_for_customers": true,
-        "login_prefix": "Already a member?",
-        "login_label": "Log in",
-        "login_link": "/account/login",
-        "margin_top_desktop": 40,
-        "margin_bottom_desktop": 0,
-        "margin_top_mobile": 32,
-        "margin_bottom_mobile": 0
+        "image": "shopify://shop_images/dog-eating-dog-food.webp",
+        "image_mobile": "shopify://shop_images/dog-enjoying-fresh-food.webp",
+        "focal_desktop": "center center",
+        "focal_mobile": "center 60%",
+        "heading_line_1": "WELL-FED DOGS",
+        "heading_line_2": "pay less for it.",
+        "badge": "shopify://shop_images/Group_160.svg",
+        "height_desktop": "812px",
+        "height_mobile": "560px",
+        "scrim_opacity": 0
       }
     },
-    "good_life_quote_YqLCQ9": {
-      "type": "good-life-quote",
-      "name": "Good Life Quote",
-      "settings": {
-        "image_desktop": "shopify://shop_images/Hero_Image_Retail_Shelf.webp",
-        "desktop_crop": "cover",
-        "image_mobile": "shopify://shop_images/Founder_Image.webp",
-        "mobile_crop": "cover",
-        "overlay_desktop": 0,
-        "overlay_mobile": 0,
-        "quote": "“A HOUSE FULL OF DOGS IS OUR IDEA OF THE GOOD LIFE.\nYUM CLUB IS FOR PEOPLE WHO FEEL THE SAME WAY.”",
-        "signature_image": "shopify://shop_images/Vector_28f1afee-deaa-4039-93eb-4a15ba6a52d4.svg",
-        "founders_text": "Jaron & Ana, Founders",
-        "text_color": "#FFF9EF",
-        "margin_top_desktop": 0,
-        "margin_bottom_desktop": 0,
-        "margin_top_mobile": 0,
-        "margin_bottom_mobile": 0
-      }
-    },
-    "good_life_adds_up_r8hBie": {
-      "type": "good-life-adds-up",
+    "yw_membership_club_nYLiBH": {
+      "type": "yw-membership-club",
       "blocks": {
-        "size_card_UyBgyD": {
-          "type": "size_card",
+        "benefit_Ai74UP": {
+          "type": "benefit",
           "settings": {
-            "title": "SMALL",
-            "range_text": "Up to 25 lbs",
-            "image": "shopify://shop_images/image_68.png",
-            "image_alt": "",
-            "mirror_image": false,
-            "image_height": 80,
-            "image_height_mobile": 80,
-            "amount": 532,
-            "label": "YEARLY SAVINGS"
+            "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
+            "icon_style": "filled",
+            "title": "25% off every order",
+            "description": "Applied at checkout, on everything we make. No codes, no minimum, no waiting for a sale."
           }
         },
-        "size_card_xVAFwr": {
-          "type": "size_card",
+        "benefit_NTDbza": {
+          "type": "benefit",
           "settings": {
-            "title": "Medium",
-            "range_text": "26-50 lbs",
-            "image": "shopify://shop_images/image_67.png",
-            "image_alt": "",
-            "mirror_image": false,
-            "image_height": 96,
-            "image_height_mobile": 80,
-            "amount": 964,
-            "label": "YEARLY SAVINGS"
+            "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
+            "icon_style": "filled",
+            "title": "Prices locked for a year",
+            "description": "Today's prices stay yours for the next 12 months, whatever the shelf does."
           }
         },
-        "size_card_KAGyhW": {
-          "type": "size_card",
+        "benefit_YhgqEC": {
+          "type": "benefit",
           "settings": {
-            "title": "Large",
-            "range_text": "51-75 lbs",
-            "image": "shopify://shop_images/image_65.png",
-            "image_alt": "",
-            "mirror_image": false,
-            "image_height": 120,
-            "image_height_mobile": 80,
-            "amount": 1137,
-            "label": "YEARLY SAVINGS"
+            "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
+            "icon_style": "filled",
+            "title": "The Cocomega book",
+            "description": "The Canine Cocomega Effect, digital edition. $24 on its own, included when you join."
           }
         },
-        "size_card_GxCnNn": {
-          "type": "size_card",
+        "benefit_HfwWww": {
+          "type": "benefit",
           "settings": {
-            "title": "X-Large",
-            "range_text": "76-100 lbs",
-            "image": "shopify://shop_images/image_66.png",
-            "image_alt": "",
-            "mirror_image": false,
-            "image_height": 159,
-            "image_height_mobile": 80,
-            "amount": 1397,
-            "label": "YEARLY SAVINGS"
+            "icon": "shopify://shop_images/Group_156_58d0b7d8-5651-4345-801c-46f316c5d629.svg",
+            "icon_style": "filled",
+            "title": "Priority support",
+            "description": "Member messages get answered first. Feeding plans, swaps, deliveries, anything."
           }
         }
       },
       "block_order": [
-        "size_card_UyBgyD",
-        "size_card_xVAFwr",
-        "size_card_KAGyhW",
-        "size_card_GxCnNn"
+        "benefit_Ai74UP",
+        "benefit_NTDbza",
+        "benefit_YhgqEC",
+        "benefit_HfwWww"
       ],
-      "name": "Good life adds up",
+      "name": "Yum Club Membership",
       "settings": {
-        "heading": "THE GOOD LIFE ADDS UP.",
-        "subheading": "Membership starts to make sense with your first bag.\nThe more dogs around the house, the better it gets.",
-        "footnote": "*Estimated savings based on typical annual feeding amounts. Actual savings depend on your dog and what you order.",
-        "prefix": "$",
-        "suffix": "+",
-        "count_duration": 1600,
-        "background_color": "#fff9ef",
-        "gradient_color": "#8bbeff",
-        "gradient_opacity": 38,
-        "heading_color": "#000000",
-        "text_color": "#000000",
-        "savings_color": "#4a9560",
-        "divider_color": "#000000",
-        "footnote_color": "#807d78",
-        "footnote_color_mobile": "#000000",
-        "gradient_height": 690,
-        "image_area_height": 159,
+        "logo": "shopify://shop_images/YumClub_Logo.svg",
+        "eyebrow": "MEMBERSHIP",
+        "description": "<p>We built Yumwoof because good dog food cost too much and did too little. Yum Club is the rest of that answer. Pay in once a quarter and the whole counter drops by 25%, so feeding a dog properly stops being the expensive option.</p>",
+        "benefits_title": "Here's what you get:",
+        "show_rule": true,
+        "button_text": "Join Yum Club · $29/QTR",
+        "button_url": "",
+        "product": "membership",
+        "show_plan_name": false,
+        "sold_out_text": "SOLD OUT",
+        "quantity": 1,
+        "cart_behavior": "drawer",
+        "button_radius": 160,
+        "fine_print": "<p>$9.66/mo, billed quarterly. Cancel anytime.  ·  Already a member? <a href=\"/account/login\" title=\"/account/login\">Log in</a></p>",
+        "color_bg": "#fff9ef",
+        "bg_image": "shopify://shop_images/Club_Intro_Band_Background.png",
+        "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf.png",
+        "color_heading": "#661d1d",
+        "color_text": "#000000",
+        "color_accent": "#000000",
+        "color_icon": "#000000",
+        "color_border": "#000000",
+        "color_button_bg": "#7ba6dd",
+        "color_button_text": "#000000",
+        "color_button_border": "#000000",
+        "color_button_hover_bg": "#000000",
+        "color_button_hover_text": "#fff9ef",
+        "padding_top": 96,
+        "padding_bottom": 132,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 64
+      }
+    },
+    "yw_membership_family_dWgri4": {
+      "type": "yw-membership-family",
+      "name": "Yum Club Family",
+      "settings": {
+        "heading": "<p>“Good food shouldn't be a luxury. The club is how we make ours cost less.”</p>",
+        "description": "",
+        "signature": "shopify://shop_images/Vector_28f1afee-deaa-4039-93eb-4a15ba6a52d4.svg",
+        "attribution": "Jaron & Ana, Founders",
+        "text_position": "left",
+        "button_text": "",
+        "button_url": "",
+        "button_radius": 160,
+        "color_bg": "#3a2b21",
+        "bg_image": "shopify://shop_images/family-and-dog-lifestyle.webp",
+        "bg_image_mobile": "shopify://shop_images/family-with-dog-lifestyle-mobile.webp",
+        "focal_desktop": "center center",
+        "focal_mobile": "62% center",
+        "scrim_opacity": 0,
+        "color_heading": "#ffffff",
+        "color_text": "#fff9ef",
+        "color_accent": "#fff9ef",
+        "color_border": "#000000",
+        "color_button_bg": "#7ba6dd",
+        "color_button_text": "#000000",
+        "color_button_hover_bg": "#fff9ef",
+        "color_button_hover_text": "#000000",
+        "height_desktop": "804",
+        "height_mobile": "614",
         "padding_top": 120,
-        "padding_bottom": 120,
-        "gradient_height_mobile": 600,
-        "image_area_height_mobile": 80,
-        "padding_top_mobile": 88,
-        "padding_bottom_mobile": 88
+        "padding_bottom": 132,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64
       }
     },
     "yw_membership_faq_Ew9Uz8": {
@@ -270,13 +257,48 @@
         "padding_top_mobile": 80,
         "padding_bottom_mobile": 80
       }
+    },
+    "yw_membership_cta_FLYwPC": {
+      "type": "yw-membership-cta",
+      "name": "Yum Club Final CTA",
+      "settings": {
+        "heading": "<p>Feed your dog better for less,<br/>starting with the next order you place.</p>",
+        "description": "",
+        "button_text": "Join Yum Club · $29/QTR",
+        "button_url": "",
+        "product": "membership",
+        "show_plan_name": false,
+        "sold_out_text": "SOLD OUT",
+        "quantity": 1,
+        "cart_behavior": "drawer",
+        "content_align": "center",
+        "bg_image": "shopify://shop_images/dog-eating-dry-dog-food.webp",
+        "bg_image_mobile": "shopify://shop_images/Hero_Image_Retail_Shelf_c969ffe7-ae88-420d-a4cc-6662edd19ac8.jpg",
+        "bg_position": "center center",
+        "bg_position_mobile": "center center",
+        "color_overlay": "#000000",
+        "overlay_opacity": 0,
+        "color_bg": "#e35b45",
+        "color_heading": "#000000",
+        "color_text": "#000000",
+        "color_button_bg": "#7ba6dd",
+        "color_button_text": "#000000",
+        "color_button_border": "#000000",
+        "color_button_hover_bg": "#000000",
+        "color_button_hover_text": "#fff9ef",
+        "button_radius": "160px",
+        "height_desktop": "800px",
+        "height_mobile": "560px",
+        "content_width": "792px"
+      }
     }
   },
   "order": [
     "main",
-    "yum_club_hero_P48rUL",
-    "good_life_quote_YqLCQ9",
-    "good_life_adds_up_r8hBie",
-    "yw_membership_faq_Ew9Uz8"
+    "yw_membership_banner_hepMCN",
+    "yw_membership_club_nYLiBH",
+    "yw_membership_family_dWgri4",
+    "yw_membership_faq_Ew9Uz8",
+    "yw_membership_cta_FLYwPC"
   ]
 }
