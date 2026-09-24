@@ -268,9 +268,9 @@
         "border_width": 2,
         "border_width_mobile": 1,
         "padding_top": 80,
-        "padding_bottom": 120,
+        "padding_bottom": 160,
         "padding_top_mobile": 60,
-        "padding_bottom_mobile": 80
+        "padding_bottom_mobile": 120
       }
     }
   },
