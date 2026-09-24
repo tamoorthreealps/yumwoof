@@ -287,7 +287,7 @@
         "button_label": "JOIN MEMBERSHIP",
         "button_label_mobile": "JOIN YUM CLUB",
         "button_price": "$29/QTR",
-        "product": "",
+        "product": "membership",
         "button_link": "",
         "show_plan_name": false,
         "sold_out_text": "SOLD OUT",
