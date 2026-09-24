@@ -701,7 +701,7 @@
 
     current += (target - current) * 0.08;
 
-    good.style.transform = 'translate3d(0,' + (-197 * (1 - current)) + 'px,0)';
+    good.style.transform = 'translate3d(0,' + (-1000 * (1 - current)) + 'px,0)';
 
     if (Math.abs(target - current) > 0.001) {
       raf = requestAnimationFrame(update);
