@@ -739,206 +739,86 @@ quantity-input.quantity::before {
 }
 
 .product-form__submit {
-
-  margin-bottom: 1rem;
-
-  border: 1px solid #000000;
-
-  border-radius: 8px;
-
-  background: #ffc069;
-
-  font-size: 18px;
-
-  line-height: 24px;
-
-  letter-spacing: 1.08px;
-
-  text-transform: uppercase;
-
-  font-family: FFBlurProMedium;
-
-  padding: 15.2px;
-
-  min-height: auto;
-
-  min-width: auto;
-
-  box-shadow: inherit;
-
-  color: #000;
-
-  transition: all .35s ease 0s;
-
-  position: relative;
-
-  overflow: hidden;
-
-  isolation: isolate;
-
+    margin-bottom: 1rem;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background: #ffc069;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 1.08px;
+    text-transform: uppercase;
+    font-family: FFBlurProMedium;
+    padding: 15.2px;
+    min-height: auto;
+    min-width: auto;
+    box-shadow: inherit;
+    color: #000;
+    transition: all .35s ease 0s;
+    /* host for the ink-fill sheet below */
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
 }
 
 .product-form__submit::after {
-
   display: none;
-
 }
 
 .product-form__submit .loading__spinner {
-
   display: none !important;
-
 }
 
-/* ----- Button labels ----- */
-
-.product-form__submit__text,
-
-.product-form__submit .yw-atb__label {
-
-  position: absolute;
-
-  inset: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  transition:
-    transform .45s cubic-bezier(.2,.8,.2,1),
-    opacity .25s linear,
-    color .3s linear;
-
-}
-
-.product-form__submit__text {
-
-  opacity: 1;
-
-  transform: translateY(0);
-
-}
-
-.product-form__submit .yw-atb__label {
-
+.product-form__submit .yw-atb__label{
   opacity: 0;
-
   transform: translateY(100%);
-
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: .55em;
-
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s linear, color .3s linear;
 }
-
-/* ----- Loading state ----- */
 
 .product-form__submit.loading,
-
-.product-form__submit.loading:hover {
-
+.product-form__submit.loading:hover{
   background: #661d1d !important;
-
-  color: #fff9ef;
-
-  opacity: 1 !important;
-
+    color: #fff9ef;
+    opacity: 1 !important;
 }
 
 .product-form__submit.loading .product-form__submit__text {
-
-  opacity: 0;
-
-  transform: translateY(-100%);
-
+  visibility:hidden;
 }
 
-.product-form__submit.loading .yw-atb__label {
-
-  opacity: 1;
-
-  transform: translateY(0);
-
+.product-form__submit.loading .yw-atb__label{
+  opacity:1;
+  transform:none;
 }
-
-/* ----- Return to normal state ----- */
-
-.product-form__submit:not(.loading) .product-form__submit__text {
-
-  opacity: 1;
-
-  transform: translateY(0);
-
-}
-
-.product-form__submit:not(.loading) .yw-atb__label {
-
-  opacity: 0;
-
-  transform: translateY(100%);
-
-}
-
 /* ----- Ink fill hover -----
-
    A burgundy sheet is parked just below the button and rises to cover it on
-
-   hover. It sits at z-index:-1 inside the button's own stacking context, so
-
-   it paints over the gold background but stays behind the label. */
-
+   hover. It sits at z-index:-1 inside the button's own stacking context, so it
+   paints over the gold background but stays behind the label. */
 .product-form__submit::before {
-
   content: "";
-
   display: block;
-
   position: absolute;
-
   inset: 0;
-
   z-index: -1;
-
   background: #661d1d;
-
   transform: translateY(102%);
-
   transition: transform .5s cubic-bezier(.2, .8, .2, 1);
-
   pointer-events: none;
-
 }
 
 @media (hover: hover) {
-
   .product-form__submit:not([disabled]):hover::before {
-
     transform: none;
-
   }
-
   .product-form__submit:not([disabled]):hover,
-
   .product-form__submit:not([disabled]):hover span {
-
     color: #fff9ef;
-
   }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .product-form__submit::before,
-
-  .product-form__submit__text,
-
-  .product-form__submit .yw-atb__label {
-
-    transition-duration: .01ms;
-
-  }
-
 }
 
 /* keyboard parity */
