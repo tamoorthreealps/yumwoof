@@ -19,6 +19,30 @@
         "desktop_padding_bottom": 100
       }
     },
+    "yum_club_hero_P48rUL": {
+      "type": "yum-club-hero",
+      "name": "Yum Club Hero",
+      "settings": {
+        "scrim_strength": 50,
+        "overlay_mobile": 40,
+        "heading_text": "Yum Club",
+        "heading_tag": "h1",
+        "description": "The Yum Club is for big dog families who\nlove the good stuff. Members get 25% off everything and much more.",
+        "text_color": "#FFF9EF",
+        "button_label": "JOIN MEMBERSHIP",
+        "button_price": "$29/QTR",
+        "button_link": "",
+        "show_login": true,
+        "hide_login_for_customers": true,
+        "login_prefix": "Already a member?",
+        "login_label": "Log in",
+        "login_link": "",
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
     "good_life_adds_up_r8hBie": {
       "type": "good-life-adds-up",
       "blocks": {
@@ -223,6 +247,7 @@
   },
   "order": [
     "main",
+    "yum_club_hero_P48rUL",
     "good_life_adds_up_r8hBie",
     "yw_membership_faq_Ew9Uz8"
   ]
