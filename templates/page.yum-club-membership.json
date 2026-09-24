@@ -43,6 +43,7 @@
           "settings": {
             "title": "SMALL",
             "range_text": "Up to 25 lbs",
+            "image": "shopify://shop_images/image_68.png",
             "image_alt": "",
             "mirror_image": false,
             "image_height": 80,
@@ -56,6 +57,7 @@
           "settings": {
             "title": "Medium",
             "range_text": "26-50 lbs",
+            "image": "shopify://shop_images/image_67.png",
             "image_alt": "",
             "mirror_image": false,
             "image_height": 96,
@@ -69,6 +71,7 @@
           "settings": {
             "title": "Large",
             "range_text": "51-75 lbs",
+            "image": "shopify://shop_images/image_65.png",
             "image_alt": "",
             "mirror_image": false,
             "image_height": 120,
@@ -82,6 +85,7 @@
           "settings": {
             "title": "X-Large",
             "range_text": "76-100 lbs",
+            "image": "shopify://shop_images/image_66.png",
             "image_alt": "",
             "mirror_image": false,
             "image_height": 159,
