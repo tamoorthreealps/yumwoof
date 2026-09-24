@@ -1,6 +1,7 @@
 {%- comment -%}
   Section: The Good Life Adds Up (good-life-adds-up.liquid)
   Figma: Yumwoof--Final-  |  Desktop 8436:10841  |  Mobile 8485:331
+  Updated to latest Figma: Desktop 8638:1439 (group 8640:1667)  |  Mobile 8640:1762 (group 8650:3253)
   Scope: every class is prefixed "glau__", every CSS rule is under ".glau",
          per-instance values live on #glau-{{ section.id }}, JS lives in window.YWGoodLifeAddsUp.
 {%- endcomment -%}
@@ -9,19 +10,25 @@
   assign s = section.settings
   assign grad = s.gradient_color
   assign grad_alpha = s.gradient_opacity | divided_by: 100.0
+  assign grad_alpha_m = s.gradient_opacity_mobile | divided_by: 100.0
+
+  assign heading_split = false
+  if s.heading_mobile_line_1 != blank or s.heading_mobile_line_2 != blank
+    assign heading_split = true
+  endif
 -%}
 
 {% style %}
   #glau-{{ section.id }} {
     --glau-bg: {{ s.background_color }};
     --glau-grad: rgba({{ grad.red }}, {{ grad.green }}, {{ grad.blue }}, {{ grad_alpha }});
+    --glau-grad-m: rgba({{ grad.red }}, {{ grad.green }}, {{ grad.blue }}, {{ grad_alpha_m }});
     --glau-grad-0: rgba({{ grad.red }}, {{ grad.green }}, {{ grad.blue }}, 0);
     --glau-grad-h: {{ s.gradient_height }}px;
     --glau-grad-h-m: {{ s.gradient_height_mobile }}px;
     --glau-heading: {{ s.heading_color }};
     --glau-text: {{ s.text_color }};
     --glau-savings: {{ s.savings_color }};
-    --glau-divider: {{ s.divider_color }};
     --glau-note: {{ s.footnote_color }};
     --glau-note-m: {{ s.footnote_color_mobile }};
     --glau-media-h: {{ s.image_area_height }}px;
@@ -89,6 +96,7 @@
     text-transform: uppercase;
     color: var(--glau-heading);
   }
+  .glau .glau__heading-mobile { display: none; }
 
   .glau .glau__sub {
     margin: 0;
@@ -230,12 +238,55 @@
 
   /* ---------- Mobile (Figma 392 frame) ---------- */
   @media screen and (max-width: 749px) {
-    .glau { padding: var(--glau-pt-m) 28px var(--glau-pb-m); }
-    .glau::before { height: var(--glau-grad-h-m); }
+    .glau { padding: var(--glau-pt-m) 24px var(--glau-pb-m); }
+    .glau::before {
+      height: var(--glau-grad-h-m);
+      background: linear-gradient(to bottom, var(--glau-grad-m), var(--glau-grad-0));
+    }
 
-    .glau .glau__head { max-width: 336px; gap: 16px; }
+    .glau .glau__head { max-width: 344px; gap: 15px; }
     .glau .glau__heading { font-size: 48px; line-height: 52px; letter-spacing:-0.96px; max-width: 290px;}
+
+    /* Split two-font heading: "THE GOOD LIFE" / "ADDS UP." */
+    .glau .glau__heading--split { max-width: none; }
+    .glau .glau__heading--split .glau__heading-desktop {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .glau .glau__heading--split .glau__heading-mobile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .glau .glau__heading-m1 {
+      display: block;
+      font-family: var(--glau-f-display);
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 64px;
+      letter-spacing: -1.28px;
+      text-transform: uppercase;
+    }
+    .glau .glau__heading-m2 {
+      display: block;
+      margin-top: -8px;
+      font-family: var(--glau-f-label);
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 40px;
+      letter-spacing: -0.8px;
+      text-transform: uppercase;
+    }
+
     .glau .glau__sub {
+      max-width: 344px;
       font-size: 16px;
       line-height: 24px;
       text-shadow: none;
@@ -243,24 +294,19 @@
     .glau .glau__sub br { display: none; }
 
     .glau .glau__grid {
-      max-width: 336px;
-      margin: 40px auto 0;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: 0;
+      max-width: 344px;
+      margin: 37px auto 0;
+      grid-template-columns: repeat(2, minmax(0, 160px));
+      justify-content: space-between;
+      column-gap: 24px;
+      row-gap: 60px;
     }
-    .glau .glau__card { padding-left: 8px; padding-right: 8px; }
-    .glau .glau__card:nth-child(odd) { border-right: 1px solid var(--glau-divider); }
-    .glau .glau__card:nth-child(-n+2) {
-      padding-bottom: 48px;
-      border-bottom: 1px solid var(--glau-divider);
-    }
-    .glau .glau__card:nth-child(n+3) { padding-top: 16px; }
 
     .glau .glau__title {
       font-size: 24px;
-      line-height: 28px;
+      line-height: 24px;
       letter-spacing: -0.48px;
-      text-transform: none;
+      text-transform: uppercase;
     }
     .glau .glau__range {
       margin-top: 4px;
@@ -273,15 +319,16 @@
     .glau .glau__placeholder { height: var(--glau-img-h-m); }
 
     .glau .glau__amount {
-      margin-top: 20px;
-      font-size: 44px;
-      line-height: 44px;
-      letter-spacing: -0.88px;
+      margin-top: 16px;
+      font-size: 48px;
+      line-height: 48px;
+      letter-spacing: -0.96px;
     }
     .glau .glau__label {
-      margin-top: 4px;
-      font-size: 12px;
+      margin-top: 0;
+      font-size: 14px;
       line-height: 16px;
+      letter-spacing: -0.28px;
     }
     .glau .glau__note {
       max-width: 336px;
@@ -304,7 +351,19 @@
     {%- if s.heading != blank or s.subheading != blank -%}
       <div class="glau__head">
         {%- if s.heading != blank -%}
-          <h2 class="glau__heading">{{ s.heading | escape }}</h2>
+          <h2 class="glau__heading{% if heading_split %} glau__heading--split{% endif %}">
+            <span class="glau__heading-desktop">{{ s.heading | escape }}</span>
+            {%- if heading_split -%}
+              <span class="glau__heading-mobile" aria-hidden="true">
+                {%- if s.heading_mobile_line_1 != blank -%}
+                  <span class="glau__heading-m1">{{ s.heading_mobile_line_1 | escape }}</span>
+                {%- endif -%}
+                {%- if s.heading_mobile_line_2 != blank -%}
+                  <span class="glau__heading-m2">{{ s.heading_mobile_line_2 | escape }}</span>
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+          </h2>
         {%- endif -%}
         {%- if s.subheading != blank -%}
           <p class="glau__sub">{{ s.subheading | escape | newline_to_br }}</p>
@@ -486,6 +545,20 @@
       "default": "THE GOOD LIFE ADDS UP."
     },
     {
+      "type": "text",
+      "id": "heading_mobile_line_1",
+      "label": "Mobile heading — line 1",
+      "info": "Large display font. Leave both mobile lines empty to show the main heading on mobile instead.",
+      "default": "THE GOOD LIFE"
+    },
+    {
+      "type": "text",
+      "id": "heading_mobile_line_2",
+      "label": "Mobile heading — line 2",
+      "info": "Smaller label font.",
+      "default": "ADDS UP."
+    },
+    {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
@@ -537,12 +610,22 @@
     {
       "type": "range",
       "id": "gradient_opacity",
-      "label": "Top gradient opacity",
+      "label": "Top gradient opacity (desktop)",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "%",
-      "default": 38
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gradient_opacity_mobile",
+      "label": "Top gradient opacity (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 22
     },
     {
       "type": "color",
@@ -564,12 +647,6 @@
     },
     {
       "type": "color",
-      "id": "divider_color",
-      "label": "Mobile dividers",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
       "id": "footnote_color",
       "label": "Footnote (desktop)",
       "default": "#807D78"
@@ -578,7 +655,7 @@
       "type": "color",
       "id": "footnote_color_mobile",
       "label": "Footnote (mobile)",
-      "default": "#000000"
+      "default": "#807D78"
     },
     { "type": "header", "content": "Layout — desktop" },
     {
@@ -589,7 +666,7 @@
       "max": 1000,
       "step": 10,
       "unit": "px",
-      "default": 690
+      "default": 450
     },
     {
       "type": "range",
@@ -631,7 +708,7 @@
       "max": 1000,
       "step": 10,
       "unit": "px",
-      "default": 600
+      "default": 480
     },
     {
       "type": "range",
@@ -651,7 +728,7 @@
       "max": 200,
       "step": 4,
       "unit": "px",
-      "default": 88
+      "default": 80
     },
     {
       "type": "range",
@@ -673,7 +750,7 @@
           "type": "text",
           "id": "title",
           "label": "Size name",
-          "info": "Shown uppercase on desktop, as typed on mobile.",
+          "info": "Always shown uppercase.",
           "default": "Small"
         },
         {
