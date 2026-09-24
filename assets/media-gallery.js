@@ -56,6 +56,12 @@ if (!customElements.get('media-gallery')) {
           if (!this.mql.matches || this.elements.thumbnails) {
             activeMedia.parentElement.scrollTo({ left: activeMedia.offsetLeft });
           }
+          // `prepend` is only true when a variant change swapped the featured
+          // image. The shopper is down at the swatches then, and on mobile the
+          // gallery sits above them — scrolling it into view would throw them
+          // back to the top. Keep the viewport where it is; the horizontal
+          // slider scroll above still syncs the gallery.
+          if (prepend) return;
           const activeMediaRect = activeMedia.getBoundingClientRect();
           // Don't scroll if the image is already in view
           if (activeMediaRect.top > -0.5) return;
