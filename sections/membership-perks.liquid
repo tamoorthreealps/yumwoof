@@ -1,0 +1,502 @@
+{%- comment -%}
+  Membership Has Its Perks — heading + five staggered perk cards.
+  Figma: Yumwoof (Final) — desktop 8708:4886 (1512 frame, perks y1120–3556),
+                           mobile 8696:4667 (392 frame, perks y896–2856).
+  Layout: each breakpoint uses its own Figma coordinates on a canvas that scales
+  with the viewport (desktop ≥ 990px, mobile below). Perks are placed by block
+  position: 1 = 25% off, 2 = Priority concierge, 3 = Prices locked, 4 = Book,
+  5 = Members-only extras. On mobile 2 and 3 swap places, as in Figma.
+  Namespace: .membership-perks (.membership-perks--grid)  |  no JS
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign heading_tag = s.heading_tag | default: 'h2'
+-%}
+
+<style>
+  #membership-perks-{{ section.id }} {
+    --mpg-bg: {{ s.background_color }};
+    --mpg-text: {{ s.text_color }};
+    --mpg-card: {{ s.card_color }};
+    --mpg-pt: {{ s.padding_top }}px;
+    --mpg-pb: {{ s.padding_bottom }}px;
+    --mpg-pt-m: {{ s.padding_top_mobile }}px;
+    --mpg-pb-m: {{ s.padding_bottom_mobile }}px;
+  }
+
+  /* ================= Desktop (Figma 1512 frame) ================= */
+  .membership-perks.membership-perks--grid {
+    --s: clamp(0.655px, calc(100vw / 1512), 1px);
+    --mpg-f-display: 'TAYRosemary', 'TAY Rosemary', 'TAYRosemary-Regular', sans-serif;
+    --mpg-f-label: 'TAY Birdie', 'TAYBirdie', 'TAY-Birdie', sans-serif;
+    --mpg-f-body: 'Matter', 'Matter Medium', 'Matter-Medium', sans-serif;
+    display: block;
+    margin: 0;
+    padding: var(--mpg-pt) 0 var(--mpg-pb);
+    background-color: var(--mpg-bg);
+    color: var(--mpg-text);
+    overflow: hidden;
+  }
+  .membership-perks--grid *,
+  .membership-perks--grid *::before,
+  .membership-perks--grid *::after { box-sizing: border-box; }
+
+  .membership-perks--grid .membership-perks__canvas {
+    position: relative;
+    width: calc(1512 * var(--s));
+    height: calc(2436 * var(--s));
+    margin: 0 auto;
+  }
+
+  .membership-perks--grid .membership-perks__title {
+    position: absolute;
+    left: calc(158 * var(--s));
+    top: 0;
+    width: calc(608 * var(--s));
+    margin: 0;
+    font-family: var(--mpg-f-display);
+    font-weight: 400;
+    font-style: normal;
+    font-size: calc(128 * var(--s));
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--mpg-text);
+  }
+
+  .membership-perks--grid .membership-perks__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .membership-perks--grid .membership-perks__item { margin: 0; padding: 0; }
+
+  .membership-perks--grid .membership-perks__media {
+    position: absolute;
+    overflow: hidden;
+    background-color: var(--mpg-card);
+  }
+  .membership-perks--grid .membership-perks__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .membership-perks--grid .membership-perks__media--mobile { display: none; }
+
+  .membership-perks--grid .membership-perks__text {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(16 * var(--s));
+    text-align: left;
+  }
+
+  .membership-perks--grid .membership-perks__name {
+    margin: 0;
+    font-family: var(--mpg-f-label);
+    font-weight: 400;
+    font-style: normal;
+    font-size: calc(32 * var(--s));
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--mpg-text);
+  }
+
+  .membership-perks--grid .membership-perks__desc {
+    margin: 0;
+    font-family: var(--mpg-f-body);
+    font-weight: 500;
+    font-style: normal;
+    font-size: max(14px, calc(20 * var(--s)));
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--mpg-text);
+  }
+  .membership-perks--grid .membership-perks__desc--mobile { display: none; }
+
+  /* Corner shapes from Figma: A = top-left + bottom-right, B = top-right + bottom-left */
+  .membership-perks--grid .membership-perks__item--1 .membership-perks__media,
+  .membership-perks--grid .membership-perks__item--4 .membership-perks__media {
+    border-radius: calc(32 * var(--s)) 0 calc(32 * var(--s)) 0;
+  }
+  .membership-perks--grid .membership-perks__item--2 .membership-perks__media,
+  .membership-perks--grid .membership-perks__item--3 .membership-perks__media,
+  .membership-perks--grid .membership-perks__item--5 .membership-perks__media {
+    border-radius: 0 calc(32 * var(--s)) 0 calc(32 * var(--s));
+  }
+
+  /* 1 — 25% OFF EVERY ORDER: text left (right-aligned), card right */
+  .membership-perks--grid .membership-perks__item--1 .membership-perks__media {
+    left: calc(726 * var(--s)); top: calc(320 * var(--s));
+    width: calc(628 * var(--s)); height: calc(488 * var(--s));
+  }
+  .membership-perks--grid .membership-perks__item--1 .membership-perks__text {
+    left: calc(295 * var(--s)); top: calc(480 * var(--s));
+    width: calc(333 * var(--s));
+    align-items: flex-end;
+    text-align: right;
+  }
+  .membership-perks--grid .membership-perks__item--1 .membership-perks__name {
+    font-size: calc(48 * var(--s));
+  }
+
+  /* 2 — PRIORITY CONCIERGE */
+  .membership-perks--grid .membership-perks__item--2 .membership-perks__media {
+    left: calc(158 * var(--s)); top: calc(776 * var(--s));
+    width: calc(333 * var(--s)); height: calc(416 * var(--s));
+  }
+  .membership-perks--grid .membership-perks__item--2 .membership-perks__text {
+    left: calc(158 * var(--s)); top: calc(1224 * var(--s));
+    width: calc(318 * var(--s));
+  }
+
+  /* 3 — PRICES LOCKED FOR A YEAR */
+  .membership-perks--grid .membership-perks__item--3 .membership-perks__media {
+    left: calc(648 * var(--s)); top: calc(992 * var(--s));
+    width: calc(333 * var(--s)); height: calc(416 * var(--s));
+  }
+  .membership-perks--grid .membership-perks__item--3 .membership-perks__text {
+    left: calc(648 * var(--s)); top: calc(1440 * var(--s));
+    width: calc(318 * var(--s));
+  }
+
+  /* 4 — THE COCOMEGA BOOK */
+  .membership-perks--grid .membership-perks__item--4 .membership-perks__media {
+    left: calc(158 * var(--s)); top: calc(1672 * var(--s));
+    width: calc(452 * var(--s)); height: calc(360 * var(--s));
+  }
+  .membership-perks--grid .membership-perks__item--4 .membership-perks__text {
+    left: calc(158 * var(--s)); top: calc(2064 * var(--s));
+    width: calc(398 * var(--s));
+  }
+
+  /* 5 — MEMBERS-ONLY EXTRAS */
+  .membership-perks--grid .membership-perks__item--5 .membership-perks__media {
+    left: calc(877 * var(--s)); top: calc(1820 * var(--s));
+    width: calc(480 * var(--s)); height: calc(480 * var(--s));
+  }
+  .membership-perks--grid .membership-perks__item--5 .membership-perks__text {
+    left: calc(877 * var(--s)); top: calc(2332 * var(--s));
+    width: calc(385 * var(--s));
+  }
+
+  /* ================= Mobile (Figma 392 frame) ================= */
+  @media screen and (max-width: 989px) {
+    .membership-perks.membership-perks--grid {
+      --m: clamp(0.816px, calc(100vw / 392), 1.5px);
+      padding: var(--mpg-pt-m) 0 var(--mpg-pb-m);
+    }
+
+    .membership-perks--grid .membership-perks__canvas {
+      width: calc(392 * var(--m));
+      height: calc(1960 * var(--m));
+    }
+
+    .membership-perks--grid .membership-perks__title {
+      left: calc(24 * var(--m));
+      width: calc(344 * var(--m));
+      font-size: calc(64 * var(--m));
+    }
+
+    .membership-perks--grid .membership-perks__text {
+      gap: calc(8 * var(--m));
+      align-items: flex-start;
+      text-align: left;
+    }
+    .membership-perks--grid .membership-perks__name { font-size: calc(24 * var(--m)); }
+    .membership-perks--grid .membership-perks__desc {
+      font-size: calc(14 * var(--m));
+      line-height: calc(20 * var(--m));
+    }
+
+    .membership-perks--grid .membership-perks__item--has-mobile-image .membership-perks__media--desktop { display: none; }
+    .membership-perks--grid .membership-perks__media--mobile { display: block; }
+    .membership-perks--grid .membership-perks__item--has-mobile-desc .membership-perks__desc--desktop { display: none; }
+    .membership-perks--grid .membership-perks__desc--mobile { display: block; }
+
+    /* Mobile corners: all cards A except "Prices locked" (B) */
+    .membership-perks--grid .membership-perks__item .membership-perks__media {
+      border-radius: calc(32 * var(--m)) 0 calc(32 * var(--m)) 0;
+    }
+    .membership-perks--grid .membership-perks__item--3 .membership-perks__media {
+      border-radius: 0 calc(32 * var(--m)) 0 calc(32 * var(--m));
+    }
+
+    /* 1 — 25% OFF: title above the card, description below it, right-aligned */
+    .membership-perks--grid .membership-perks__item--1 .membership-perks__text { display: contents; }
+    .membership-perks--grid .membership-perks__item--1 .membership-perks__name {
+      position: absolute;
+      left: calc(82 * var(--m)); top: calc(152 * var(--m));
+      width: calc(149 * var(--m));
+      font-size: calc(22 * var(--m));
+      line-height: calc(24 * var(--m));
+      text-align: left;
+    }
+    .membership-perks--grid .membership-perks__item--1 .membership-perks__desc {
+      position: absolute;
+      left: calc(148 * var(--m)); top: calc(448 * var(--m));
+      width: calc(220 * var(--m));
+      text-align: right;
+    }
+    .membership-perks--grid .membership-perks__item--1 .membership-perks__media {
+      left: calc(82 * var(--m)); top: calc(220 * var(--m));
+      width: calc(286 * var(--m)); height: calc(212 * var(--m));
+    }
+
+    /* 3 — PRICES LOCKED (second on mobile) */
+    .membership-perks--grid .membership-perks__item--3 .membership-perks__media {
+      left: calc(48 * var(--m)); top: calc(524 * var(--m));
+      width: calc(192 * var(--m)); height: calc(240 * var(--m));
+    }
+    .membership-perks--grid .membership-perks__item--3 .membership-perks__text {
+      left: calc(48 * var(--m)); top: calc(780 * var(--m));
+      width: calc(228 * var(--m));
+    }
+    .membership-perks--grid .membership-perks__item--3 .membership-perks__name {
+      font-size: calc(22 * var(--m));
+      line-height: calc(24 * var(--m));
+    }
+
+    /* 2 — PRIORITY CONCIERGE (third on mobile, right-aligned) */
+    .membership-perks--grid .membership-perks__item--2 .membership-perks__media {
+      left: calc(184 * var(--m)); top: calc(912 * var(--m));
+      width: calc(152 * var(--m)); height: calc(212 * var(--m));
+    }
+    .membership-perks--grid .membership-perks__item--2 .membership-perks__text {
+      left: calc(84 * var(--m)); top: calc(1140 * var(--m));
+      width: calc(244 * var(--m));
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    /* 4 — THE COCOMEGA BOOK */
+    .membership-perks--grid .membership-perks__item--4 .membership-perks__media {
+      left: calc(40 * var(--m)); top: calc(1272 * var(--m));
+      width: calc(176 * var(--m)); height: calc(240 * var(--m));
+    }
+    .membership-perks--grid .membership-perks__item--4 .membership-perks__text {
+      left: calc(40 * var(--m)); top: calc(1528 * var(--m));
+      width: calc(285 * var(--m));
+    }
+
+    /* 5 — MEMBERS-ONLY EXTRAS */
+    .membership-perks--grid .membership-perks__item--5 .membership-perks__media {
+      left: calc(24 * var(--m)); top: calc(1636 * var(--m));
+      width: calc(344 * var(--m)); height: calc(236 * var(--m));
+    }
+    .membership-perks--grid .membership-perks__item--5 .membership-perks__text {
+      left: calc(24 * var(--m)); top: calc(1888 * var(--m));
+      width: calc(289 * var(--m));
+    }
+  }
+</style>
+
+<div
+  class="membership-perks membership-perks--grid"
+  id="membership-perks-{{ section.id }}"
+>
+  <div class="membership-perks__canvas">
+    {%- if s.heading != blank -%}
+      <{{ heading_tag }} class="membership-perks__title">
+        {{- s.heading | escape | newline_to_br -}}
+      </{{ heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="membership-perks__list" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            assign item_class = 'membership-perks__item membership-perks__item--' | append: forloop.index
+            if b.image_mobile != blank
+              assign item_class = item_class | append: ' membership-perks__item--has-mobile-image'
+            endif
+            if b.description_mobile != blank
+              assign item_class = item_class | append: ' membership-perks__item--has-mobile-desc'
+            endif
+          -%}
+          <li class="{{ item_class }}" {{ block.shopify_attributes }}>
+            <div class="membership-perks__media membership-perks__media--desktop">
+              {%- if b.image != blank -%}
+                {%- capture focal -%}object-position: {{ b.image.presentation.focal_point }};{%- endcapture -%}
+                {{
+                  b.image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 600, 800, 1000, 1400',
+                    sizes: '(min-width: 990px) 42vw, 90vw',
+                    alt: b.image.alt,
+                    style: focal
+                }}
+              {%- endif -%}
+            </div>
+
+            {%- if b.image_mobile != blank -%}
+              <div class="membership-perks__media membership-perks__media--mobile">
+                {{
+                  b.image_mobile
+                  | image_url: width: 1000
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '300, 500, 700, 1000',
+                    sizes: '(max-width: 989px) 90vw, 1px',
+                    alt: b.image_mobile.alt
+                }}
+              </div>
+            {%- endif -%}
+
+            <div class="membership-perks__text">
+              {%- if b.title != blank -%}
+                <h3 class="membership-perks__name">{{ b.title | escape | newline_to_br }}</h3>
+              {%- endif -%}
+              {%- if b.description != blank -%}
+                <p class="membership-perks__desc membership-perks__desc--desktop">{{ b.description | escape }}</p>
+              {%- endif -%}
+              {%- if b.description_mobile != blank -%}
+                <p class="membership-perks__desc membership-perks__desc--mobile">{{ b.description_mobile | escape }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Membership Has Its Perks",
+  "tag": "section",
+  "class": "section-membership-has-its-perks",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "MEMBERSHIP\nHAS ITS PERKS."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" }
+      ]
+    },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFF9EF" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#000000" },
+    {
+      "type": "color",
+      "id": "card_color",
+      "label": "Card color",
+      "info": "Shown when a perk has no image.",
+      "default": "#661D1D"
+    },
+    { "type": "header", "content": "Spacing" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop top padding",
+      "info": "220 sits the heading where Figma has it directly under the hero. Use 160 if a marquee strip is placed between them.",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 220
+    },
+    { "type": "range", "id": "padding_bottom", "label": "Desktop bottom padding", "min": 0, "max": 300, "step": 4, "unit": "px", "default": 160 },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding",
+      "info": "128 without a marquee strip above, 80 with one.",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile bottom padding", "min": 0, "max": 300, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Layout is fixed to Figma by position: 1st = large card top right, 2nd and 3rd = the two tall cards, 4th = wide card, 5th = square card. On mobile the 2nd and 3rd swap."
+        },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Optional. Leave empty for the solid card color." },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. Falls back to the image above." },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Title",
+          "info": "Use a line break where the title should wrap.",
+          "default": "PERK TITLE"
+        },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        {
+          "type": "textarea",
+          "id": "description_mobile",
+          "label": "Mobile description",
+          "info": "Optional. Replaces the description on mobile."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Membership Has Its Perks",
+      "blocks": [
+        {
+          "type": "perk",
+          "settings": {
+            "title": "25% OFF\nEVERY ORDER",
+            "description": "Get 25% off everything we make, every day. No waiting for a sale."
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "title": "PRIORITY\nCONCIERGE",
+            "description": "Member requests go straight to the top of our support queue."
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "title": "PRICES LOCKED\nFOR A YEAR",
+            "description": "Today's prices stay yours for twelve months from the day you first join.",
+            "description_mobile": "Today's prices stay yours for 12 months from the day you first join."
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "title": "THE COCOMEGA BOOK",
+            "description": "The Canine Cocomega Effect, digital edition. Included with membership."
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "title": "MEMBERS-ONLY EXTRAS",
+            "description": "Members get early access and member-only surprises."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
