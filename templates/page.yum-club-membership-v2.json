@@ -23,8 +23,9 @@
       "type": "yum-club-hero",
       "name": "Yum Club Hero",
       "settings": {
-        "scrim_strength": 50,
-        "overlay_mobile": 40,
+        "image_desktop": "shopify://shop_images/Recreate-this-Great-Hall-of-a-private-En_1.jpg",
+        "scrim_strength": 0,
+        "overlay_mobile": 0,
         "heading_text": "Yum Club",
         "heading_tag": "h1",
         "description": "The Yum Club is for big dog families who\nlove the good stuff. Members get 25% off everything and much more.",
