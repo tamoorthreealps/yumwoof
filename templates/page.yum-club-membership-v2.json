@@ -25,6 +25,7 @@
       "settings": {
         "image_desktop": "shopify://shop_images/Recreate-this-Great-Hall-of-a-private-En_1_a311e714-a6e6-46a4-b0bd-39824921c376.jpg",
         "scrim_strength": 0,
+        "image_mobile": "shopify://shop_images/Hero_Image.webp",
         "overlay_mobile": 0,
         "heading_text": "Yum Club",
         "heading_tag": "h1",
