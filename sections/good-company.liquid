@@ -2,7 +2,7 @@
   Good Company — closing membership CTA over a full-bleed image.
   Figma: Yumwoof (Final) — desktop 8638:1439 → group 8640:1649 (1512 × 800),
                            mobile 8640:1762 → 8650:3421 + texts (392 × 720).
-  Namespace: .good-company  |  JS: window.goodCompany
+  Namespace: .good-company  |  JS: window.goodCompany, window.goodCompanyEmerge
 {%- endcomment -%}
 
 {%- liquid
@@ -32,6 +32,14 @@
   .good-company *,
   .good-company *::before,
   .good-company *::after { box-sizing: border-box; }
+
+  /* Emerge-from-FAQ scroll effect: sit one layer below the FAQ (.ywfaq is z-index 2) */
+  .good-company.good-company--emerge {
+    position: relative;
+    z-index: 1;
+    backface-visibility: hidden;
+  }
+  .good-company.good-company--emerge.is-emerging { will-change: transform; }
 
   .good-company__card {
     position: relative;
@@ -321,7 +329,15 @@
   }
 </style>
 
-<section class="good-company" id="good-company-{{ section.id }}">
+<section
+  class="good-company"
+  id="good-company-{{ section.id }}"
+  {% if s.emerge_enabled %}
+    data-good-company-emerge
+    data-emerge-distance="{{ s.emerge_distance }}"
+    data-emerge-distance-mobile="{{ s.emerge_distance_mobile }}"
+  {% endif %}
+>
   <div class="good-company__card">
     <div class="good-company__media good-company__media--desktop good-company__media--cover">
       {%- if img_d != blank -%}
@@ -678,6 +694,192 @@
   })();
 </script>
 
+<script>
+  /* Emerge-from-FAQ scroll effect.
+     Good Company keeps its normal document position; only a transform moves it.
+     Progress is driven by the preceding .ywfaq's position in the viewport:
+       p = 0  when the FAQ's top edge enters the bottom of the viewport  -> translate3d(0, -D, 0)
+       p = 1  by the time the FAQ has scrolled up and out                -> translate3d(0, 0, 0)
+     (It finishes a little early if Good Company is shorter than the viewport,
+      so the gap its offset leaves underneath is never visible.)
+     D is the chosen distance, capped to the FAQ's height so the section can never
+     peek out above the FAQ. Reads (FAQ rect) and writes (GC transform) happen once
+     per frame; transforms don't trigger layout, so there's no thrashing. */
+  (function () {
+    if (window.goodCompanyEmerge) {
+      window.goodCompanyEmerge.initAll(document);
+      return;
+    }
+
+    var instances = [];
+    var ticking = false;
+    var reduceMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var mobileMq = window.matchMedia ? window.matchMedia('(max-width: 749px)') : null;
+
+    // Ease-in-out so the section eases in and settles softly at both ends.
+    function ease(t) {
+      return 0.5 - 0.5 * Math.cos(Math.PI * t);
+    }
+
+    // The FAQ is the last .ywfaq that comes before this section in the document.
+    function findFaq(gc) {
+      var faqs = document.querySelectorAll('.ywfaq');
+      var found = null;
+      for (var i = 0; i < faqs.length; i++) {
+        if (faqs[i].compareDocumentPosition(gc) & Node.DOCUMENT_POSITION_FOLLOWING) found = faqs[i];
+      }
+      return found;
+    }
+
+    function wrapperOf(el) {
+      return el.closest('.shopify-section') || el.parentElement;
+    }
+
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var isMobile = mobileMq && mobileMq.matches;
+
+      for (var i = 0; i < instances.length; i++) {
+        var inst = instances[i];
+        var r = inst.faq.getBoundingClientRect();
+        var gcH = inst.gc.offsetHeight;
+        var wanted = isMobile ? inst.distanceMobile : inst.distance;
+        var dist = Math.min(wanted, r.height);
+
+        // FAQ bottom position (viewport px) at which the effect completes.
+        var endBottom = Math.max(0, vh - gcH);
+        var span = vh + r.height - endBottom;
+        var p = span > 0 ? (vh - r.top) / span : 1;
+        p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+        var y = p >= 1 ? 0 : -dist * (1 - ease(p));
+        y = Math.round(y * 100) / 100;
+
+        if (y !== inst.lastY) {
+          inst.gc.style.transform = 'translate3d(0, ' + y + 'px, 0)';
+          inst.lastY = y;
+        }
+
+        var active = y !== 0;
+        if (active !== inst.active) {
+          inst.gc.classList.toggle('is-emerging', active);
+          inst.active = active;
+        }
+      }
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    function destroy(gc) {
+      for (var i = instances.length - 1; i >= 0; i--) {
+        var inst = instances[i];
+        if (gc && inst.gc !== gc) continue;
+        if (inst.ro) inst.ro.disconnect();
+        inst.gc.style.transform = '';
+        inst.gc.classList.remove('good-company--emerge', 'is-emerging');
+        inst.restore.forEach(function (fn) { fn(); });
+        delete inst.gc.dataset.goodCompanyEmergeReady;
+        instances.splice(i, 1);
+      }
+    }
+
+    function setup(gc) {
+      if (gc.dataset.goodCompanyEmergeReady === 'true') return;
+      if (reduceMotion && reduceMotion.matches) return;
+
+      var faq = findFaq(gc);
+      if (!faq) return;
+
+      gc.dataset.goodCompanyEmergeReady = 'true';
+      gc.classList.add('good-company--emerge');
+
+      // Keep the FAQ's section wrapper above Good Company's wrapper, in case the
+      // theme gives section wrappers their own stacking context. Stacking only —
+      // no visual change to either section. Undone on destroy.
+      var restore = [];
+      function layer(el, z) {
+        if (!el) return;
+        var prevPos = el.style.position;
+        var prevZ = el.style.zIndex;
+        if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+        el.style.zIndex = z;
+        restore.push(function () {
+          el.style.position = prevPos;
+          el.style.zIndex = prevZ;
+        });
+      }
+      var faqWrap = wrapperOf(faq);
+      var gcWrap = wrapperOf(gc);
+      if (faqWrap && gcWrap && faqWrap !== gcWrap) {
+        layer(faqWrap, '2');
+        layer(gcWrap, '1');
+      }
+
+      var inst = {
+        gc: gc,
+        faq: faq,
+        distance: parseFloat(gc.getAttribute('data-emerge-distance')) || 600,
+        distanceMobile: parseFloat(gc.getAttribute('data-emerge-distance-mobile')) || 600,
+        lastY: null,
+        active: null,
+        restore: restore,
+        ro: null,
+      };
+
+      // FAQ answers opening/closing change its height without a scroll event.
+      if ('ResizeObserver' in window) {
+        inst.ro = new ResizeObserver(requestUpdate);
+        inst.ro.observe(faq);
+        inst.ro.observe(gc);
+      }
+
+      instances.push(inst);
+      update(); // set the starting transform before first paint
+    }
+
+    function initAll(root) {
+      (root || document).querySelectorAll('[data-good-company-emerge]').forEach(setup);
+    }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+    window.addEventListener('orientationchange', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+
+    if (reduceMotion) {
+      var onMotionChange = function () {
+        if (reduceMotion.matches) destroy();
+        else initAll(document);
+      };
+      if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onMotionChange);
+      else if (reduceMotion.addListener) reduceMotion.addListener(onMotionChange);
+    }
+
+    // Theme Editor: rebuild when either section is reloaded, reordered or removed.
+    document.addEventListener('shopify:section:load', function () {
+      destroy();
+      initAll(document);
+    });
+    document.addEventListener('shopify:section:unload', function (e) {
+      var gc = e.target.querySelector('[data-good-company-emerge]');
+      if (gc) destroy(gc);
+      else if (e.target.querySelector('.ywfaq')) destroy();
+    });
+    document.addEventListener('shopify:section:reorder', function () {
+      destroy();
+      initAll(document);
+    });
+
+    window.goodCompanyEmerge = { initAll: initAll, destroy: destroy, update: requestUpdate };
+    initAll(document);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Good Company",
@@ -795,6 +997,35 @@
         { "value": "cart", "label": "Go to cart page" }
       ],
       "default": "drawer"
+    },
+    { "type": "header", "content": "Scroll effect" },
+    {
+      "type": "checkbox",
+      "id": "emerge_enabled",
+      "label": "Emerge from behind the FAQ on scroll",
+      "info": "Needs the Yum Club FAQ section above. Turned off automatically for reduced-motion users.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "emerge_distance",
+      "label": "Start offset (desktop)",
+      "min": 200,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "emerge_distance_mobile",
+      "label": "Start offset (mobile)",
+      "info": "Capped to the FAQ's height so the section never shows above it.",
+      "min": 200,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 600
     },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "margin_top_desktop", "label": "Desktop top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
