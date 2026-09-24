@@ -32,6 +32,8 @@
 
   background-color: var(--ywfaq-bg);
   padding-block: var(--ywfaq-pad-top) var(--ywfaq-pad-bottom);
+  position: relative;
+  z-index: 2;
 }
 
 .ywfaq *,
