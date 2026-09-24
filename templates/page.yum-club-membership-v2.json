@@ -63,7 +63,7 @@
         "quote": "“A HOUSE FULL OF DOGS IS OUR IDEA OF THE GOOD LIFE.\nYUM CLUB IS FOR PEOPLE WHO FEEL THE SAME WAY.”",
         "signature_image": "shopify://shop_images/Vector_28f1afee-deaa-4039-93eb-4a15ba6a52d4.svg",
         "founders_text": "Jaron & Ana, Founders",
-        "text_color": "#FFF9EF",
+        "text_color": "#fff9ef",
         "margin_top_desktop": 0,
         "margin_bottom_desktop": 0,
         "margin_top_mobile": 0,
@@ -139,6 +139,8 @@
       "name": "Good life adds up",
       "settings": {
         "heading": "THE GOOD LIFE ADDS UP.",
+        "heading_mobile_line_1": "THE GOOD LIFE",
+        "heading_mobile_line_2": "ADDS UP.",
         "subheading": "Membership starts to make sense with your first bag.\nThe more dogs around the house, the better it gets.",
         "footnote": "*Estimated savings based on typical annual feeding amounts. Actual savings depend on your dog and what you order.",
         "prefix": "$",
@@ -147,20 +149,20 @@
         "background_color": "#fff9ef",
         "gradient_color": "#8bbeff",
         "gradient_opacity": 38,
+        "gradient_opacity_mobile": 22,
         "heading_color": "#000000",
         "text_color": "#000000",
         "savings_color": "#4a9560",
-        "divider_color": "#000000",
         "footnote_color": "#807d78",
         "footnote_color_mobile": "#000000",
-        "gradient_height": 690,
+        "gradient_height": 840,
         "image_area_height": 159,
         "padding_top": 120,
-        "padding_bottom": 120,
-        "gradient_height_mobile": 600,
+        "padding_bottom": 80,
+        "gradient_height_mobile": 840,
         "image_area_height_mobile": 80,
-        "padding_top_mobile": 88,
-        "padding_bottom_mobile": 88
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 60
       }
     },
     "yw_membership_faq_Ew9Uz8": {
@@ -265,9 +267,9 @@
         "content_width": 1196,
         "border_width": 2,
         "border_width_mobile": 1,
-        "padding_top": 120,
+        "padding_top": 80,
         "padding_bottom": 120,
-        "padding_top_mobile": 80,
+        "padding_top_mobile": 60,
         "padding_bottom_mobile": 80
       }
     }
