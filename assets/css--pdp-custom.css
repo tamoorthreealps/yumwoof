@@ -799,7 +799,8 @@ quantity-input.quantity::before {
    A burgundy sheet is parked just below the button and rises to cover it on
    hover. It sits at z-index:-1 inside the button's own stacking context, so it
    paints over the gold background but stays behind the label. */
-.product-form__submit::before {
+.product-form__submit::before,
+.product-form__submit.loading::before {
   content: "";
   display: block;
   position: absolute;
@@ -812,11 +813,14 @@ quantity-input.quantity::before {
 }
 
 @media (hover: hover) {
-  .product-form__submit:not([disabled]):hover::before {
+  .product-form__submit:not([disabled]):hover::before,
+  .product-form__submit.loading:not([disabled]):hover::before {
     transform: none;
   }
   .product-form__submit:not([disabled]):hover,
-  .product-form__submit:not([disabled]):hover span {
+  .product-form__submit:not([disabled]):hover span,
+  .product-form__submit.loading:not([disabled]):hover,
+  .product-form__submit.loading:not([disabled]):hover span {
     color: #fff9ef;
   }
 }
@@ -831,7 +835,8 @@ quantity-input.quantity::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .product-form__submit::before {
+  .product-form__submit::before,
+  .product-form__submit.loading::before {
     transition-duration: .01ms;
   }
 }
