@@ -50,6 +50,26 @@
         "margin_bottom_mobile": 0
       }
     },
+    "good_life_quote_YqLCQ9": {
+      "type": "good-life-quote",
+      "name": "Good Life Quote",
+      "settings": {
+        "image_desktop": "shopify://shop_images/Hero_Image_Retail_Shelf.webp",
+        "desktop_crop": "figma",
+        "image_mobile": "shopify://shop_images/Founder_Image.webp",
+        "mobile_crop": "figma",
+        "overlay_desktop": 10,
+        "overlay_mobile": 15,
+        "quote": "“A HOUSE FULL OF DOGS IS OUR IDEA OF THE GOOD LIFE.\nYUM CLUB IS FOR PEOPLE WHO FEEL THE SAME WAY.”",
+        "signature_image": "shopify://shop_images/Vector_28f1afee-deaa-4039-93eb-4a15ba6a52d4.svg",
+        "founders_text": "Jaron & Ana, Founders",
+        "text_color": "#FFF9EF",
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
     "good_life_adds_up_r8hBie": {
       "type": "good-life-adds-up",
       "blocks": {
@@ -255,6 +275,7 @@
   "order": [
     "main",
     "yum_club_hero_P48rUL",
+    "good_life_quote_YqLCQ9",
     "good_life_adds_up_r8hBie",
     "yw_membership_faq_Ew9Uz8"
   ]
