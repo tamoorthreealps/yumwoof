@@ -1,0 +1,793 @@
+{%- comment -%}
+  Section: The Good Life Adds Up (good-life-adds-up.liquid)
+  Figma: Yumwoof--Final-  |  Desktop 8436:10841  |  Mobile 8485:331
+  Scope: every class is prefixed "glau__", every CSS rule is under ".glau",
+         per-instance values live on #glau-{{ section.id }}, JS lives in window.YWGoodLifeAddsUp.
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign grad = s.gradient_color
+  assign grad_alpha = s.gradient_opacity | divided_by: 100.0
+-%}
+
+{% style %}
+  #glau-{{ section.id }} {
+    --glau-bg: {{ s.background_color }};
+    --glau-grad: rgba({{ grad.red }}, {{ grad.green }}, {{ grad.blue }}, {{ grad_alpha }});
+    --glau-grad-0: rgba({{ grad.red }}, {{ grad.green }}, {{ grad.blue }}, 0);
+    --glau-grad-h: {{ s.gradient_height }}px;
+    --glau-grad-h-m: {{ s.gradient_height_mobile }}px;
+    --glau-heading: {{ s.heading_color }};
+    --glau-text: {{ s.text_color }};
+    --glau-savings: {{ s.savings_color }};
+    --glau-divider: {{ s.divider_color }};
+    --glau-note: {{ s.footnote_color }};
+    --glau-note-m: {{ s.footnote_color_mobile }};
+    --glau-media-h: {{ s.image_area_height }}px;
+    --glau-media-h-m: {{ s.image_area_height_mobile }}px;
+    --glau-pt: {{ s.padding_top }}px;
+    --glau-pb: {{ s.padding_bottom }}px;
+    --glau-pt-m: {{ s.padding_top_mobile }}px;
+    --glau-pb-m: {{ s.padding_bottom_mobile }}px;
+  }
+
+  /* ---------- Base / desktop (Figma 1512 frame) ---------- */
+  .glau {
+    /* Match these to the @font-face names already loaded by the theme */
+    --glau-f-display: "TAYRosemary", "TAY Rosemary", sans-serif;
+    --glau-f-label: "TAY Birdie", "TAYBirdie", sans-serif;
+    --glau-f-body: "Matter", sans-serif;
+    --glau-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: var(--glau-bg);
+    padding: var(--glau-pt) 40px var(--glau-pb);
+    color: var(--glau-text);
+    text-align: center;
+  }
+  .glau *,
+  .glau *::before,
+  .glau *::after { box-sizing: border-box; }
+
+  .glau::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--glau-grad-h);
+    background: linear-gradient(to bottom, var(--glau-grad), var(--glau-grad-0));
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .glau .glau__inner {
+    max-width: 1198px;
+    margin: 0 auto;
+  }
+
+  .glau .glau__head {
+    max-width: 686px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .glau .glau__heading {
+    margin: 0;
+    font-family: var(--glau-f-display);
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(56px, 5.2913vw, 80px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--glau-heading);
+  }
+
+  .glau .glau__sub {
+    margin: 0;
+    max-width: 502px;
+    font-family: var(--glau-f-body);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0;
+    text-shadow: var(--glau-shadow);
+    color: var(--glau-text);
+  }
+
+  .glau .glau__grid {
+    list-style: none;
+    margin: 56px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 220px));
+    justify-content: space-between;
+    column-gap: 24px;
+  }
+
+  .glau .glau__card {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .glau .glau__title {
+    margin: 0;
+    font-family: var(--glau-f-label);
+    font-weight: 400;
+    font-size: clamp(24px, 2.1164vw, 32px);
+    line-height: 1.125;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--glau-text);
+  }
+
+  .glau .glau__range {
+    margin: 8px 0 0;
+    font-family: var(--glau-f-body);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    text-shadow: var(--glau-shadow);
+  }
+
+  .glau .glau__media {
+    margin-top: 16px;
+    width: 100%;
+    height: var(--glau-media-h);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .glau .glau__media picture {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    max-width: 100%;
+    height: 100%;
+  }
+  .glau .glau__img,
+  .glau .glau__placeholder {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: var(--glau-img-h);
+    object-fit: contain;
+    object-position: center bottom;
+  }
+  .glau .glau__placeholder {
+    aspect-ratio: 6 / 5;
+    background: rgba(0, 0, 0, 0.04);
+    fill: rgba(0, 0, 0, 0.25);
+  }
+  .glau .glau__img--mirror { transform: scaleX(-1); }
+
+  .glau .glau__amount {
+    margin: 25px 0 0;
+    font-family: var(--glau-f-display);
+    font-weight: 400;
+    font-size: clamp(44px, 4.2328vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--glau-savings);
+    white-space: nowrap;
+  }
+  /* Ghost + live value share one grid cell so the width never jumps while counting */
+  .glau .glau__amount-stack { display: inline-grid; }
+  .glau .glau__amount-stack > span { grid-area: 1 / 1; }
+  .glau .glau__amount-ghost { visibility: hidden; }
+
+  .glau .glau__label {
+    margin: 0;
+    font-family: var(--glau-f-label);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: var(--glau-text);
+  }
+
+  .glau .glau__note {
+    margin: 56px auto 0;
+    font-family: var(--glau-f-body);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--glau-note);
+    text-shadow: var(--glau-shadow);
+  }
+
+  .glau .glau__sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ---------- Tablet ---------- */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .glau { padding-left: 24px; padding-right: 24px; }
+    .glau .glau__grid { column-gap: 12px; }
+    .glau .glau__range { font-size: 16px; line-height: 24px; }
+  }
+
+  /* ---------- Mobile (Figma 392 frame) ---------- */
+  @media screen and (max-width: 749px) {
+    .glau { padding: var(--glau-pt-m) 28px var(--glau-pb-m); }
+    .glau::before { height: var(--glau-grad-h-m); }
+
+    .glau .glau__head { max-width: 336px; gap: 16px; }
+    .glau .glau__heading { font-size: 48px; line-height: 52px; }
+    .glau .glau__sub {
+      font-size: 16px;
+      line-height: 24px;
+      text-shadow: none;
+    }
+    .glau .glau__sub br { display: none; }
+
+    .glau .glau__grid {
+      max-width: 336px;
+      margin: 40px auto 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 0;
+    }
+    .glau .glau__card { padding-left: 8px; padding-right: 8px; }
+    .glau .glau__card:nth-child(odd) { border-right: 1px solid var(--glau-divider); }
+    .glau .glau__card:nth-child(-n+2) {
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--glau-divider);
+    }
+    .glau .glau__card:nth-child(n+3) { padding-top: 16px; }
+
+    .glau .glau__title {
+      font-size: 24px;
+      line-height: 28px;
+      text-transform: none;
+    }
+    .glau .glau__range {
+      margin-top: 4px;
+      font-size: 14px;
+      line-height: 20px;
+      text-shadow: none;
+    }
+    .glau .glau__media { margin-top: 12px; height: var(--glau-media-h-m); }
+    .glau .glau__img,
+    .glau .glau__placeholder { height: var(--glau-img-h-m); }
+
+    .glau .glau__amount {
+      margin-top: 20px;
+      font-size: min(44px, 11.2vw);
+      line-height: 1;
+    }
+    .glau .glau__label {
+      margin-top: 4px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .glau .glau__note {
+      max-width: 336px;
+      margin-top: 40px;
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--glau-note-m);
+      text-shadow: none;
+    }
+  }
+{% endstyle %}
+
+<div
+  id="glau-{{ section.id }}"
+  class="glau"
+  data-glau
+  data-glau-duration="{{ s.count_duration }}"
+>
+  <div class="glau__inner">
+    {%- if s.heading != blank or s.subheading != blank -%}
+      <div class="glau__head">
+        {%- if s.heading != blank -%}
+          <h2 class="glau__heading">{{ s.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if s.subheading != blank -%}
+          <p class="glau__sub">{{ s.subheading | escape | newline_to_br }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="glau__grid" data-glau-grid role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            assign image = b.image
+            assign image_m = b.image_mobile | default: b.image
+            assign alt = b.image_alt | default: image.alt | default: b.title
+
+            assign amount = b.amount | default: 0 | round
+            assign digits = amount | append: '' | split: ''
+            assign len = digits.size
+          -%}
+          {%- capture amount_fmt -%}
+            {%- for d in digits -%}
+              {{- d -}}
+              {%- assign rem = len | minus: forloop.index -%}
+              {%- assign m = rem | modulo: 3 -%}
+              {%- if rem > 0 and m == 0 and d != '-' -%},{%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+
+          <li
+            class="glau__card"
+            style="--glau-img-h: {{ b.image_height }}px; --glau-img-h-m: {{ b.image_height_mobile }}px;"
+            {{ block.shopify_attributes }}
+          >
+            {%- if b.title != blank -%}
+              <h3 class="glau__title">{{ b.title | escape }}</h3>
+            {%- endif -%}
+            {%- if b.range_text != blank -%}
+              <p class="glau__range">{{ b.range_text | escape }}</p>
+            {%- endif -%}
+
+            <div class="glau__media">
+              {%- if image != blank -%}
+                <picture>
+                  {%- if b.image_mobile != blank -%}
+                    <source
+                      media="(max-width: 749px)"
+                      srcset="{{ image_m | image_url: width: 200 }} 1x, {{ image_m | image_url: width: 400 }} 2x"
+                    >
+                  {%- endif -%}
+                  {%- capture img_class -%}glau__img{% if b.mirror_image %} glau__img--mirror{% endif %}{%- endcapture -%}
+                  {{
+                    image
+                    | image_url: width: 600
+                    | image_tag:
+                      widths: '200, 300, 400, 600',
+                      sizes: '(max-width: 749px) 130px, 220px',
+                      loading: 'lazy',
+                      alt: alt,
+                      class: img_class
+                  }}
+                </picture>
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'glau__placeholder' }}
+              {%- endif -%}
+            </div>
+
+            <p class="glau__amount">
+              <span class="glau__sr">{{ s.prefix }}{{ amount_fmt }}{{ s.suffix }}</span>
+              <span class="glau__amount-stack" aria-hidden="true">
+                <span class="glau__amount-ghost">{{ s.prefix }}{{ amount_fmt }}{{ s.suffix }}</span>
+                <span class="glau__amount-live">
+                  {{- s.prefix -}}
+                  <span data-glau-count data-glau-target="{{ amount }}">{{ amount_fmt }}</span>
+                  {{- s.suffix -}}
+                </span>
+              </span>
+            </p>
+
+            {%- if b.label != blank -%}
+              <p class="glau__label">{{ b.label | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if s.footnote != blank -%}
+      <p class="glau__note">{{ s.footnote | escape | newline_to_br }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function () {
+    if (!window.YWGoodLifeAddsUp) {
+      var easeOutCubic = function (t) { return 1 - Math.pow(1 - t, 3); };
+      var format = function (n) { return Math.round(n).toLocaleString('en-US'); };
+
+      window.YWGoodLifeAddsUp = {
+        init: function (root) {
+          if (!root || root.hasAttribute('data-glau-ready')) return;
+          root.setAttribute('data-glau-ready', '');
+
+          var nums = Array.prototype.slice.call(root.querySelectorAll('[data-glau-count]'));
+          if (!nums.length) return;
+
+          // Reduced motion or no IntersectionObserver: leave the server-rendered final values.
+          var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (reduce || !('IntersectionObserver' in window)) return;
+
+          var duration = parseInt(root.getAttribute('data-glau-duration'), 10) || 1600;
+          var targets = nums.map(function (el) {
+            return parseFloat(el.getAttribute('data-glau-target')) || 0;
+          });
+
+          nums.forEach(function (el) { el.textContent = '0'; });
+
+          var run = function () {
+            var start = null;
+            var step = function (now) {
+              if (start === null) start = now;
+              var p = Math.min((now - start) / duration, 1);
+              var e = easeOutCubic(p);
+              for (var i = 0; i < nums.length; i++) {
+                nums[i].textContent = format(p === 1 ? targets[i] : targets[i] * e);
+              }
+              if (p < 1) root._glauRaf = window.requestAnimationFrame(step);
+            };
+            root._glauRaf = window.requestAnimationFrame(step);
+          };
+
+          var io = new IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+              if (entries[i].isIntersecting) {
+                io.disconnect(); // run only once
+                root._glauIO = null;
+                run();
+                break;
+              }
+            }
+          }, { threshold: 0.3 });
+
+          io.observe(root.querySelector('[data-glau-grid]') || root);
+          root._glauIO = io;
+        },
+
+        destroy: function (root) {
+          if (!root) return;
+          if (root._glauIO) root._glauIO.disconnect();
+          if (root._glauRaf) window.cancelAnimationFrame(root._glauRaf);
+        }
+      };
+
+      document.addEventListener('shopify:section:load', function (e) {
+        window.YWGoodLifeAddsUp.init(e.target.querySelector('[data-glau]'));
+      });
+      document.addEventListener('shopify:section:unload', function (e) {
+        window.YWGoodLifeAddsUp.destroy(e.target.querySelector('[data-glau]'));
+      });
+    }
+
+    window.YWGoodLifeAddsUp.init(document.getElementById('glau-{{ section.id }}'));
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Good life adds up",
+  "tag": "section",
+  "class": "glau-section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "header", "content": "Content" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "THE GOOD LIFE ADDS UP."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "info": "Line breaks show on desktop only; mobile text flows naturally.",
+      "default": "Membership starts to make sense with your first bag.\nThe more dogs around the house, the better it gets."
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "*Estimated savings based on typical annual feeding amounts. Actual savings depend on your dog and what you order."
+    },
+    { "type": "header", "content": "Savings numbers" },
+    {
+      "type": "text",
+      "id": "prefix",
+      "label": "Prefix",
+      "default": "$"
+    },
+    {
+      "type": "text",
+      "id": "suffix",
+      "label": "Suffix",
+      "default": "+"
+    },
+    {
+      "type": "range",
+      "id": "count_duration",
+      "label": "Count-up duration",
+      "min": 600,
+      "max": 3000,
+      "step": 100,
+      "unit": "ms",
+      "default": 1600
+    },
+    { "type": "header", "content": "Colors" },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FFF9EF"
+    },
+    {
+      "type": "color",
+      "id": "gradient_color",
+      "label": "Top gradient color",
+      "default": "#8BBEFF"
+    },
+    {
+      "type": "range",
+      "id": "gradient_opacity",
+      "label": "Top gradient opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 38
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "savings_color",
+      "label": "Savings amount",
+      "default": "#4A9560"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Mobile dividers",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "footnote_color",
+      "label": "Footnote (desktop)",
+      "default": "#807D78"
+    },
+    {
+      "type": "color",
+      "id": "footnote_color_mobile",
+      "label": "Footnote (mobile)",
+      "default": "#000000"
+    },
+    { "type": "header", "content": "Layout — desktop" },
+    {
+      "type": "range",
+      "id": "gradient_height",
+      "label": "Top gradient height",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 690
+    },
+    {
+      "type": "range",
+      "id": "image_area_height",
+      "label": "Dog image area height",
+      "info": "Dogs sit on a shared baseline at the bottom of this area.",
+      "min": 100,
+      "max": 200,
+      "step": 1,
+      "unit": "px",
+      "default": 159
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    { "type": "header", "content": "Layout — mobile" },
+    {
+      "type": "range",
+      "id": "gradient_height_mobile",
+      "label": "Top gradient height",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "image_area_height_mobile",
+      "label": "Dog image area height",
+      "min": 60,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    }
+  ],
+  "blocks": [
+    {
+      "type": "size_card",
+      "name": "Size card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Size name",
+          "info": "Shown uppercase on desktop, as typed on mobile.",
+          "default": "Small"
+        },
+        {
+          "type": "text",
+          "id": "range_text",
+          "label": "Weight range",
+          "default": "Up to 25 lbs"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Dog image",
+          "info": "Transparent PNG, trimmed tight to the dog."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Dog image (mobile)",
+          "info": "Optional. Falls back to the dog image."
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "info": "Optional. Falls back to the image's alt text, then the size name."
+        },
+        {
+          "type": "checkbox",
+          "id": "mirror_image",
+          "label": "Flip image horizontally",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "image_height",
+          "label": "Image height (desktop)",
+          "min": 60,
+          "max": 160,
+          "step": 1,
+          "unit": "px",
+          "default": 80
+        },
+        {
+          "type": "range",
+          "id": "image_height_mobile",
+          "label": "Image height (mobile)",
+          "min": 40,
+          "max": 120,
+          "step": 1,
+          "unit": "px",
+          "default": 80
+        },
+        {
+          "type": "number",
+          "id": "amount",
+          "label": "Yearly savings amount",
+          "info": "Whole number without $ or commas, e.g. 1137.",
+          "default": 532
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Savings label",
+          "default": "YEARLY SAVINGS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Good life adds up",
+      "blocks": [
+        {
+          "type": "size_card",
+          "settings": {
+            "title": "SMALL",
+            "range_text": "Up to 25 lbs",
+            "image_height": 80,
+            "image_height_mobile": 80,
+            "amount": 532,
+            "label": "YEARLY SAVINGS"
+          }
+        },
+        {
+          "type": "size_card",
+          "settings": {
+            "title": "Medium",
+            "range_text": "26-50 lbs",
+            "image_height": 96,
+            "image_height_mobile": 80,
+            "amount": 964,
+            "label": "YEARLY SAVINGS"
+          }
+        },
+        {
+          "type": "size_card",
+          "settings": {
+            "title": "Large",
+            "range_text": "51-75 lbs",
+            "image_height": 120,
+            "image_height_mobile": 80,
+            "amount": 1137,
+            "label": "YEARLY SAVINGS"
+          }
+        },
+        {
+          "type": "size_card",
+          "settings": {
+            "title": "X-Large",
+            "range_text": "76-100 lbs",
+            "image_height": 159,
+            "image_height_mobile": 80,
+            "amount": 1397,
+            "label": "YEARLY SAVINGS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
