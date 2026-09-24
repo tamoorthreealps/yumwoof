@@ -37,7 +37,7 @@
         "hide_login_for_customers": true,
         "login_prefix": "Already a member?",
         "login_label": "Log in",
-        "login_link": "",
+        "login_link": "/account/login",
         "margin_top_desktop": 40,
         "margin_bottom_desktop": 0,
         "margin_top_mobile": 32,
