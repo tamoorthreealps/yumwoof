@@ -167,6 +167,7 @@
   overflow: hidden;
   isolation: isolate;
 }
+
 .yum-club-hero__button::before {
   content: "";
   position: absolute;
@@ -177,16 +178,20 @@
   transition: transform .5s cubic-bezier(.2,.8,.2,1);
   pointer-events: none;
 }
+
 .yum-club-hero__button:hover::before {
   transform: translateY(0);
 }
+
 .yum-club-hero__button:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
+
 .yum-club-hero__button:focus-visible {
   outline: 2px solid var(--ych-text);
   outline-offset: 3px;
 }
+
 @keyframes buttonShine_yc_hero {
   0%, 35% {
     background-position: 100% 0;
@@ -323,6 +328,43 @@
     transform: none;
   }
 
+  /* ---------- Video play / pause (Figma: 24px cream icon, 32px from right, 28px from bottom) ---------- */
+  .yum-club-hero__video-toggle {
+    position: absolute;
+    z-index: 3;
+    /* 44px tap area, centred on the Figma icon position */
+    right: calc(32 * var(--ych-s) - 10px);
+    bottom: calc(28 * var(--ych-s) - 10px);
+    width: calc(24 * var(--ych-s) + 20px);
+    height: calc(24 * var(--ych-s) + 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff9ef;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .yum-club-hero__video-toggle:hover { opacity: 1; }
+  .yum-club-hero__video-toggle:focus-visible { outline: 2px solid #fff9ef; outline-offset: -6px; border-radius: 8px; }
+  .yum-club-hero__video-toggle svg {
+    display: block;
+    width: calc(24 * var(--ych-s));
+    height: calc(24 * var(--ych-s));
+    min-width: 20px;
+    min-height: 20px;
+  }
+  .yum-club-hero__video-toggle .ych-icon-play { display: none; }
+  .yum-club-hero__video-toggle.is-paused .ych-icon-play { display: block; }
+  .yum-club-hero__video-toggle.is-paused .ych-icon-pause { display: none; }
+  .yum-club-hero__video-toggle--mobile-only { display: none; }
+
   @media (prefers-reduced-motion: reduce) {
     .yum-club-hero__button { transition: none; }
     .yum-club-hero__joining i { animation: none; opacity: 1; }
@@ -391,6 +433,17 @@
       font-size: calc(14 * var(--ych-m));
       line-height: calc(20 * var(--ych-m));
     }
+
+    /* Video toggle: same bottom-right spot, scaled to the mobile frame */
+    .yum-club-hero__video-toggle {
+      right: calc(24 * var(--ych-m) - 10px);
+      bottom: calc(24 * var(--ych-m) - 10px);
+      width: calc(24 * var(--ych-m) + 20px);
+      height: calc(24 * var(--ych-m) + 20px);
+    }
+    .yum-club-hero__video-toggle svg { width: calc(24 * var(--ych-m)); height: calc(24 * var(--ych-m)); }
+    .yum-club-hero__video-toggle--desktop-only { display: none; }
+    .yum-club-hero__video-toggle--mobile-only { display: flex; }
 
     /* Shorter reveal travel on mobile */
     .yum-club-hero--reveal .ych-reveal--logo  { --ych-r-y: 8px; --ych-r-blur: 6px; }
@@ -475,6 +528,25 @@
     {%- endif -%}
 
     <div class="yum-club-hero__scrim" aria-hidden="true"></div>
+
+    {%- if s.video_desktop != blank or s.video_mobile != blank -%}
+      {%- liquid
+        assign toggle_class = 'yum-club-hero__video-toggle'
+        if s.video_mobile == blank
+          assign toggle_class = toggle_class | append: ' yum-club-hero__video-toggle--desktop-only'
+        elsif s.video_desktop == blank
+          assign toggle_class = toggle_class | append: ' yum-club-hero__video-toggle--mobile-only'
+        endif
+      -%}
+      <button type="button" class="{{ toggle_class }}" data-ych-video-toggle aria-label="Pause background video">
+        <svg class="ych-icon-pause" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M8.5 3H5.5C4.673 3 4 3.70842 4 4.57895V21.4211C4 22.2916 4.673 23 5.5 23H8.5C9.327 23 10 22.2916 10 21.4211V4.57895C10 3.70842 9.327 3 8.5 3ZM19.5 3H16.5C15.673 3 15 3.70842 15 4.57895V21.4211C15 22.2916 15.673 23 16.5 23H19.5C20.327 23 21 22.2916 21 21.4211V4.57895C21 3.70842 20.327 3 19.5 3Z"/>
+        </svg>
+        <svg class="ych-icon-play" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M6 4.83C6 3.66 7.28 2.94 8.28 3.55L20.18 10.72C21.14 11.3 21.14 12.7 20.18 13.28L8.28 20.45C7.28 21.06 6 20.34 6 19.17V4.83Z"/>
+        </svg>
+      </button>
+    {%- endif -%}
 
     <div class="yum-club-hero__inner">
       <div class="yum-club-hero__intro">
@@ -873,6 +945,41 @@
     };
     window.yumClubHeroMotion(document);
     document.addEventListener('shopify:section:load', function (e) { window.yumClubHeroMotion(e.target); });
+  })();
+</script>
+
+<script>
+  /* Hero video play / pause. Independent of the cart and motion scripts. */
+  (function () {
+    function init(scope) {
+      scope.querySelectorAll('[data-ych-video-toggle]:not([data-ready])').forEach(function (btn) {
+        btn.setAttribute('data-ready', '');
+        var videos = btn.closest('.yum-club-hero').querySelectorAll('.yum-club-hero__media video');
+        var current = function () {
+          return Array.prototype.find.call(videos, function (v) { return v.offsetParent; }) || videos[0];
+        };
+        var sync = function () {
+          var v = current(), paused = !v || v.paused;
+          btn.classList.toggle('is-paused', paused);
+          btn.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
+        };
+        btn.addEventListener('click', function () {
+          var v = current();
+          if (!v) return;
+          if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
+        });
+        Array.prototype.forEach.call(videos, function (v) {
+          v.addEventListener('play', sync);
+          v.addEventListener('pause', sync);
+          // Reduced motion: don't autoplay; the visitor can start it with the button
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) v.pause();
+        });
+        window.addEventListener('resize', sync, { passive: true });
+        sync();
+      });
+    }
+    init(document);
+    document.addEventListener('shopify:section:load', function (e) { init(e.target); });
   })();
 </script>
 
