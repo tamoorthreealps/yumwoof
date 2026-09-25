@@ -161,7 +161,8 @@
   cursor: pointer;
   background-size: 250% 100%;
   background-position: 100% 0;
-  animation: buttonShine_yc_hero 6s ease-in-out infinite;
+      transform: skewX(-20deg) translateX(0);
+    animation: promoShine 7s linear infinite;
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -186,16 +187,30 @@
   outline: 2px solid var(--ych-text);
   outline-offset: 3px;
 }
-@keyframes buttonShine_yc_hero {
-  0%, 35% {
-    background-position: 100% 0;
-  }
-  55% {
-    background-position: 0% 0;
-  }
-  60%, 100% {
-    background-position: 100% 0;
-  }
+@keyframes promoShine {
+    0% {
+        transform: skewX(-20deg) translateX(0);
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    45% {
+        transform: skewX(-20deg) translateX(750%);
+        opacity: 1;
+    }
+
+    55% {
+        transform: skewX(-20deg) translateX(750%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: skewX(-20deg) translateX(750%);
+        opacity: 0;
+    }
 }
   /* Add-to-cart form — same box as the old link, so layout is untouched */
   .yum-club-hero__form {
