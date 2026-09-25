@@ -402,7 +402,7 @@
         "sold_out_text": "SOLD OUT",
         "quantity": 1,
         "cart_behavior": "drawer",
-        "emerge_enabled": true,
+        "emerge_enabled": false,
         "emerge_distance": 800,
         "emerge_distance_mobile": 600,
         "margin_top_desktop": 0,
