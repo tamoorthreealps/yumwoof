@@ -145,7 +145,8 @@
   padding: 0 calc(30 * var(--ych-s));
   border: 0;
   border-radius: 160px;
-  background: linear-gradient(90deg, #7BA6DD 0%, #AED2FF 50%, #7BA6DD 100%);
+  background-image: linear-gradient(90deg, #7BA6DD 0%, #AED2FF 50%, #7BA6DD 100%);
+  background-color: #7BA6DD;
   color: #000;
   text-decoration: none;
   font-family: 'FFBlurProMedium';
@@ -159,7 +160,7 @@
   cursor: pointer;
   background-size: 250% 100%;
   background-position: 100% 0;
-  animation: buttonShine_yc_hero 4s linear infinite;
+  animation: buttonShine_yc_hero 6s ease-in-out infinite;
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -185,7 +186,17 @@
   outline: 2px solid var(--ych-text);
   outline-offset: 3px;
 }
-
+@keyframes buttonShine_yc_hero {
+  0%, 35% {
+    background-position: 100% 0;
+  }
+  50% {
+    background-position: 0% 0;
+  }
+  65%, 100% {
+    background-position: 100% 0;
+  }
+}
   /* Add-to-cart form — same box as the old link, so layout is untouched */
   .yum-club-hero__form {
     display: flex;
