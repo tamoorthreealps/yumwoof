@@ -1,7 +1,12 @@
 {%- comment -%}
   Good Life Quote — founders image with overlaid quote + signature.
   Figma: Yumwoof (Final) — desktop 8638:1439 (1512w), mobile 8640:1762 (392w).
-  Namespace: .good-life-quote  (no JS required)
+  Namespace: .good-life-quote  |  JS: window.__goodLifeQuote
+  Motion (same language as About Solution):
+    - Parallax: the photo glides with a lerped, scroll-linked offset inside its own Figma crop
+      (never past the spare image above/below, so no edge shows). Weaker on mobile.
+    - Reveal: the quote "types" in line by line behind a soft mask, then the signature and
+      the founders line rise from a soft blur. Plays once. Reduced motion: all static.
 {%- endcomment -%}
 
 {%- liquid
@@ -154,6 +159,61 @@
     letter-spacing: 0;
   }
 
+  /* ---------- Motion (classes added by JS only; reduced motion never gets them) ---------- */
+  .good-life-quote { --glq-ease: cubic-bezier(0.22, 1, 0.36, 1); }
+
+  /* Parallax: the image glides; the card, overlay and content never move */
+  .good-life-quote.glq-parallax .good-life-quote__media img { will-change: transform; backface-visibility: hidden; }
+  /* "Fill with focal point" crops have no spare image, so give them a little to travel in */
+  .good-life-quote.glq-parallax .good-life-quote__media--cover img { top: -8%; bottom: auto; height: 116%; }
+
+  /* Quote: hidden until it has been split into its rendered lines */
+  .good-life-quote.glq-anim:not(.glq-done) .good-life-quote__quote-text:not(.glq-split) { opacity: 0; }
+  .good-life-quote .glq-line {
+    display: block;
+    white-space: nowrap;
+    /* soft-edged mask sweeps left → right, like smooth typing */
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 46%, transparent 54%, transparent 100%);
+            mask-image: linear-gradient(90deg, #000 0%, #000 46%, transparent 54%, transparent 100%);
+    -webkit-mask-size: 230% 100%;
+            mask-size: 230% 100%;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: 100% 0;
+            mask-position: 100% 0;
+    transition:
+      -webkit-mask-position var(--glq-line-dur, 0.9s) cubic-bezier(0.4, 0, 0.2, 1) var(--glq-line-delay, 0s),
+      mask-position var(--glq-line-dur, 0.9s) cubic-bezier(0.4, 0, 0.2, 1) var(--glq-line-delay, 0s);
+  }
+  .good-life-quote.glq-in .glq-line {
+    -webkit-mask-position: 0 0;
+            mask-position: 0 0;
+  }
+
+  /* Signature, then founders line: rise from a soft blur */
+  .good-life-quote.glq-anim .good-life-quote__signature,
+  .good-life-quote.glq-anim .good-life-quote__name {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 0.9s var(--glq-ease) var(--glq-sig-delay, 0s),
+      filter 0.9s var(--glq-ease) var(--glq-sig-delay, 0s),
+      transform 0.9s var(--glq-ease) var(--glq-sig-delay, 0s);
+  }
+  .good-life-quote.glq-anim .good-life-quote__name {
+    filter: blur(4px);
+    transform: translate3d(0, 14px, 0);
+    transition-duration: 0.8s;
+    transition-delay: var(--glq-name-delay, 0s);
+  }
+  .good-life-quote.glq-in .good-life-quote__signature,
+  .good-life-quote.glq-in .good-life-quote__name {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
   /* ---------- mobile (separate Figma layout) ---------- */
   @media screen and (max-width: 749px) {
     .good-life-quote {
@@ -200,6 +260,12 @@
       font-size: calc(14 * var(--glq-m));
       line-height: calc(20 * var(--glq-m));
     }
+
+    /* shorter travel on mobile */
+    .good-life-quote.glq-anim .good-life-quote__signature { transform: translate3d(0, 12px, 0); }
+    .good-life-quote.glq-anim .good-life-quote__name { transform: translate3d(0, 10px, 0); }
+    .good-life-quote.glq-in .good-life-quote__signature,
+    .good-life-quote.glq-in .good-life-quote__name { transform: none; }
   }
 </style>
 
@@ -207,6 +273,8 @@
   class="good-life-quote"
   id="good-life-quote-{{ section.id }}"
   aria-label="{{ s.founders_text | default: 'Founders quote' | escape }}"
+  {% if s.enable_parallax %}data-glq-parallax{% endif %}
+  {% if s.enable_reveal %}data-glq-reveal{% endif %}
 >
   <figure class="good-life-quote__card" style="margin:0;">
     {%- comment -%} Desktop image {%- endcomment -%}
@@ -278,6 +346,148 @@
     </div>
   </figure>
 </section>
+
+<script>
+  /* Good Life Quote: lerped image parallax (same feel as About Solution) + quote → signature → name reveal */
+  (() => {
+    if (window.__goodLifeQuote) return;
+    window.__goodLifeQuote = true;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+
+    const LERP = 0.085;                         // same heavy, cinematic lag as About Solution
+    const AMP = { desktop: 0.12, mobile: 0.07 }; // travel as a share of the card height
+    const mobileMq = matchMedia('(max-width: 749px)');
+
+    // ---------- Quote: split into rendered lines (keeps the <br>), then reveal each line ----------
+    const splitLines = (p) => {
+      const words = [];
+      [...p.childNodes].forEach((node) => {
+        if (node.nodeType !== 3) return; // keep <br> exactly where it is
+        const frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.append(' '); return; }
+          const w = document.createElement('span');
+          w.style.display = 'inline-block';
+          w.textContent = part;
+          words.push(w);
+          frag.append(w);
+        });
+        node.replaceWith(frag);
+      });
+
+      const lines = [];
+      let top = null;
+      words.forEach((w) => {
+        if (top === null || Math.abs(w.offsetTop - top) > 2) { lines.push([]); top = w.offsetTop; }
+        lines[lines.length - 1].push(w.textContent);
+      });
+
+      p.replaceChildren(...lines.map((line) => {
+        const s = document.createElement('span');
+        s.className = 'glq-line';
+        s.textContent = line.join(' ');
+        return s;
+      }));
+      p.classList.add('glq-split');
+      return lines;
+    };
+
+    const reveal = async (section) => {
+      const p = section.querySelector('.good-life-quote__quote-text');
+      const original = p && p.innerHTML;
+
+      // line breaks depend on the display font (wait max 1.2s, like About Solution)
+      await Promise.race([document.fonts ? document.fonts.ready : 0, new Promise((r) => setTimeout(r, 1200))]);
+      if (!section.isConnected) return;
+
+      // Each line takes longer the more characters it has; the next starts as it nears the end
+      let t = 0;
+      if (p) {
+        splitLines(p).forEach((line, i, all) => {
+          const el = p.children[i];
+          const dur = 0.45 + line.join(' ').length * 0.028;
+          el.style.setProperty('--glq-line-delay', `${t.toFixed(2)}s`);
+          el.style.setProperty('--glq-line-dur', `${dur.toFixed(2)}s`);
+          t += i < all.length - 1 ? dur - 0.18 : dur;
+        });
+      }
+      const sig = Math.max(0, t - 0.35);
+      section.style.setProperty('--glq-sig-delay', `${sig.toFixed(2)}s`);
+      section.style.setProperty('--glq-name-delay', `${(sig + 0.25).toFixed(2)}s`);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => section.classList.add('glq-in')));
+
+      // afterwards restore the original quote markup so it reflows naturally on resize
+      setTimeout(() => {
+        if (p) { p.innerHTML = original; p.classList.remove('glq-split'); }
+        section.classList.add('glq-done');
+      }, (t + 0.3) * 1000);
+    };
+
+    // ---------- Parallax: lerped glide within the image's own spare crop ----------
+    const parallax = (section) => {
+      const card = section.querySelector('.good-life-quote__card');
+      const listeners = new AbortController();
+      let current = null, raf = 0, near = false, lastImg = null;
+
+      const tick = () => {
+        raf = 0;
+        const media = [...section.querySelectorAll('.good-life-quote__media')].find((m) => m.offsetParent);
+        const img = media && media.querySelector('img');
+        if (!img) return;
+        if (img !== lastImg) { if (lastImg) lastImg.style.transform = ''; lastImg = img; current = null; }
+
+        const { top, height } = card.getBoundingClientRect(); // the card never moves
+        const vh = window.innerHeight;
+        // +1 just below the viewport, 0 centred, -1 just above
+        const progress = Math.max(-1, Math.min(1, (top + height / 2 - vh / 2) / ((vh + height) / 2)));
+        // spare image above/below the card (layout values, unaffected by the transform)
+        const spareTop = -img.offsetTop;
+        const spareBottom = img.offsetTop + img.offsetHeight - media.offsetHeight;
+        const amp = height * (mobileMq.matches ? AMP.mobile : AMP.desktop);
+        const room = Math.max(0, (progress > 0 ? spareBottom : spareTop) - 2);
+        const target = -progress * Math.min(amp, room);
+
+        current = current === null ? target : current + (target - current) * LERP;
+        const settled = Math.abs(target - current) < 0.05;
+        if (settled) current = target;
+
+        img.style.transform = `translate3d(0,${current.toFixed(2)}px,0)`;
+        if (!settled) raf = requestAnimationFrame(tick);
+      };
+
+      const request = () => {
+        if (!section.isConnected) return listeners.abort(); // section removed by the Theme Editor
+        if (near && !raf) raf = requestAnimationFrame(tick);
+      };
+
+      section.classList.add('glq-parallax');
+      new IntersectionObserver(([entry]) => { near = entry.isIntersecting; request(); }, { rootMargin: '25% 0px' }).observe(card);
+      addEventListener('scroll', request, { passive: true, signal: listeners.signal });
+      addEventListener('resize', request, { passive: true, signal: listeners.signal });
+    };
+
+    const init = (root = document) => {
+      root.querySelectorAll('.good-life-quote:not(.glq-ready)').forEach((section) => {
+        section.classList.add('glq-ready');
+        if (section.hasAttribute('data-glq-parallax')) parallax(section);
+        if (!section.hasAttribute('data-glq-reveal')) return;
+        if (window.Shopify && Shopify.designMode) return; // no waiting on animations while editing
+
+        section.classList.add('glq-anim');
+        new IntersectionObserver(([entry], io) => {
+          if (!entry.isIntersecting) return;
+          io.disconnect(); // plays once
+          reveal(section);
+        }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' }).observe(section.querySelector('.good-life-quote__card'));
+      });
+    };
+
+    init();
+    document.addEventListener('shopify:section:load', (e) => init(e.target)); // Theme Editor re-render
+  })();
+</script>
 
 {% schema %}
 {
@@ -363,6 +573,21 @@
       "id": "text_color",
       "label": "Text color",
       "default": "#FFF9EF"
+    },
+    { "type": "header", "content": "Motion" },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Background image parallax",
+      "info": "The photo glides slowly as the page scrolls (weaker on mobile).",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_reveal",
+      "label": "Quote and signature reveal",
+      "info": "The quote reveals line by line, then the signature and founders line rise in. Plays once.",
+      "default": true
     },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "margin_top_desktop", "label": "Desktop top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
