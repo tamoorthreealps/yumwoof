@@ -93,7 +93,7 @@
         "perk_AKmWHr": {
           "type": "perk",
           "settings": {
-            "image": "shopify://shop_images/Rectangle_134.svg",
+            "image": "shopify://shop_images/YumClub-Hero-Desktop.jpg",
             "title": "25% OFF EVERY ORDER",
             "description": "Get 25% off everything we make, every day. No waiting for a sale.",
             "description_mobile": ""
@@ -150,6 +150,7 @@
         "background_color": "#fff9ef",
         "text_color": "#000000",
         "card_color": "#661d1d",
+        "animate_cards": true,
         "padding_top": 140,
         "padding_bottom": 160,
         "padding_top_mobile": 60,
