@@ -24,7 +24,7 @@
       "name": "Yum Club Hero",
       "settings": {
         "image_desktop": "shopify://shop_images/YumClub-Hero-Desktop.jpg",
-        "video_desktop": "shopify://files/videos/yumclub-hero-desktop-compress.mp4",
+        "video_desktop": "shopify://files/videos/yumclub-hero-desktop-compress_1.mp4",
         "scrim_strength": 0,
         "image_mobile": "shopify://shop_images/YumClub-Hero-Mobile.jpg",
         "video_mobile": "shopify://files/videos/yumclub-hero-mobile-compress.mp4",
