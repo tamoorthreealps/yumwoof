@@ -22,7 +22,7 @@ html.yw-membership-loading,body.yw-membership-loading{overflow:hidden!important}
    exactly as before. Sequence, driven by JS: .is-seam (content fades, centre seam draws)
    -> .is-open (doors slide apart, page revealed). Transform/opacity only. */
 #yw-membership-loader{--ywl-door-ms:1400ms;--ywl-seam-ms:700ms;--ywl-ease-door:cubic-bezier(.77,0,.18,1);--ywl-ease-seam:cubic-bezier(.65,0,.35,1);--ywl-seam-color:rgba(255,249,239,.45)}
-.yw-membership-loader__door{position:absolute;top:0;bottom:0;width:50%;background:#661d1d;transition:transform var(--ywl-door-ms) var(--ywl-ease-door);z-index:0;pointer-events:none}
+.yw-membership-loader__door{position:absolute;top:0;display:block !important;bottom:0;width:50%;background:#661d1d;transition:transform var(--ywl-door-ms) var(--ywl-ease-door);z-index:0;pointer-events:none}
 /* Promote the doors to their own layer only once the exit begins (a step before they move),
    so the resting loader renders exactly as before. */
 #yw-membership-loader.is-seam .yw-membership-loader__door{will-change:transform}
