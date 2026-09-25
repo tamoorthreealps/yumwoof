@@ -161,12 +161,11 @@
   cursor: pointer;
   background-size: 250% 100%;
   background-position: 100% 0;
-  animation: buttonShine_yc_hero 4s linear infinite;
+  animation: buttonShine_yc_hero 6s ease-in-out infinite;
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
-
 .yum-club-hero__button::before {
   content: "";
   position: absolute;
@@ -177,31 +176,25 @@
   transition: transform .5s cubic-bezier(.2,.8,.2,1);
   pointer-events: none;
 }
-
 .yum-club-hero__button:hover::before {
   transform: translateY(0);
 }
-
 .yum-club-hero__button:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
-
 .yum-club-hero__button:focus-visible {
   outline: 2px solid var(--ych-text);
   outline-offset: 3px;
 }
-
 @keyframes buttonShine_yc_hero {
-  0% {
+  0%, 35% {
     background-position: 100% 0;
   }
-
-  45% {
+  55% {
     background-position: 0% 0;
   }
-
-  100% {
-    background-position: 0% 0;
+  60%, 100% {
+    background-position: 100% 0;
   }
 }
   /* Add-to-cart form — same box as the old link, so layout is untouched */
