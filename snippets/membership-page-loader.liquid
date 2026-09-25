@@ -16,6 +16,29 @@ html.yw-membership-loading,body.yw-membership-loading{overflow:hidden!important}
 #yw-membership-loader__inner{display:flex;flex-direction:column;align-items:center;justify-content:center;width:min(340px,calc(100% - 48px));text-align:center;transform:translateY(0);transition:transform .8s cubic-bezier(.22,1,.36,1)}
 #yw-membership-loader.is-complete #yw-membership-loader__inner{transform:translateY(-30px)}
 
+/* ---------- Door-reveal exit (timing/easing from the client reference) ----------
+   At rest the two doors sit edge to edge over the same #661d1d, so the loader looks
+   exactly as before. Sequence, driven by JS: .is-seam (content fades, centre seam draws)
+   -> .is-open (doors slide apart, page revealed). Transform/opacity only. */
+#yw-membership-loader{--ywl-door-ms:1400ms;--ywl-seam-ms:700ms;--ywl-ease-door:cubic-bezier(.77,0,.18,1);--ywl-ease-seam:cubic-bezier(.65,0,.35,1);--ywl-seam-color:rgba(255,249,239,.45)}
+.yw-membership-loader__door{position:absolute;top:0;bottom:0;width:50%;background:#661d1d;transition:transform var(--ywl-door-ms) var(--ywl-ease-door);z-index:0;pointer-events:none}
+/* Promote the doors to their own layer only once the exit begins (a step before they move),
+   so the resting loader renders exactly as before. */
+#yw-membership-loader.is-seam .yw-membership-loader__door{will-change:transform}
+.yw-membership-loader__door--left{left:0}
+.yw-membership-loader__door--right{left:50%}
+.yw-membership-loader__door::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--ywl-seam-color);transform:scaleY(0);transform-origin:top;transition:transform var(--ywl-seam-ms) var(--ywl-ease-seam)}
+.yw-membership-loader__door--left::after{right:0}
+.yw-membership-loader__door--right::after{left:0}
+#yw-membership-loader__inner{position:relative;z-index:1}
+#yw-membership-loader.is-seam #yw-membership-loader__inner{opacity:0;transition:opacity .5s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+#yw-membership-loader.is-seam .yw-membership-loader__door::after{transform:scaleY(1)}
+/* The root keeps its own background until the doors move, so no hairline can ever
+   show between the halves at rest; from here on the doors alone carry the colour. */
+#yw-membership-loader.is-open{background:transparent;pointer-events:none}
+#yw-membership-loader.is-open .yw-membership-loader__door--left{transform:translate3d(-100%,0,0)}
+#yw-membership-loader.is-open .yw-membership-loader__door--right{transform:translate3d(100%,0,0)}
+
 #yw-membership-loader__logo{display:block;width:198px;max-width:60vw;height:auto;color:currentColor;margin:0 0 32px}
 
 #yw-membership-loader__copy{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;margin:0 0 32px}
@@ -41,6 +64,7 @@ html.yw-membership-loading,body.yw-membership-loading{overflow:hidden!important}
 
 @media(prefers-reduced-motion:reduce){
 #yw-membership-loader,#yw-membership-loader__inner,#yw-membership-loader__progress-fill{transition:none}
+.yw-membership-loader__door,.yw-membership-loader__door::after{transition:none}
 }
 </style>
 
@@ -50,6 +74,8 @@ html.yw-membership-loading,body.yw-membership-loading{overflow:hidden!important}
   data-subtext-loading="Membership has its privileges."
   data-subtext-complete="Please, come in."
 >
+  <div class="yw-membership-loader__door yw-membership-loader__door--left"></div>
+  <div class="yw-membership-loader__door yw-membership-loader__door--right"></div>
   <div id="yw-membership-loader__inner">
     <svg id="yw-membership-loader__logo" viewBox="0 0 278 226" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
       <path fill="currentColor" d="M227.763 48.5051C222.996 50.7473 218.073 54.3862 215.103 58.7921C214.048 58.4183 214.791 56.5694 214.713 55.822C214.478 53.6584 214.224 51.7505 212.896 50.0196C207.523 43.037 199.923 48.151 194.804 52.5766C193.925 53.324 189.822 57.9659 189.431 57.9856C188.689 58.0446 189.08 57.2579 189.158 56.9431C189.744 54.4845 192.733 50.5507 188.669 48.7608C187.654 48.328 182.789 47.9347 181.46 47.974C174.818 48.1707 173.489 52.1045 171.047 57.5136C168.116 63.9847 166.749 71.6951 163.291 77.7335C161.884 80.2118 152.408 94.4327 150.924 95.3374C149.439 96.2422 146.606 97.324 145.453 95.4555C145.258 95.1604 144.359 92.2297 144.301 91.8167C142.738 79.9561 154.499 64.6338 159.95 54.7599C161.532 51.8685 162.763 49.2525 158.309 48.5051C155.085 47.9543 148.716 47.9543 146.078 49.9999C142.425 52.8323 138.478 67.0531 136.505 72.0098C133.965 78.3629 130.077 87.5091 125.389 92.4461C124.451 93.4295 122.986 95.2194 121.481 94.7867C118.355 92.092 118.844 87.6665 119.801 84.0277C122.282 74.6061 126.053 68.0956 130.234 59.7165C131.25 57.6512 134.219 50.531 134.356 48.6034C134.493 46.6758 130.156 46.0464 128.573 46.0071C123.845 45.8694 118.922 48.1903 116.734 52.5569C111.302 63.3946 108.899 76.7697 104.66 88.0402C102.53 93.7246 95.6921 103.579 103.097 108.044C111.752 113.256 121.774 106.175 127.753 100.058C129.57 102.163 130.488 104.405 132.754 106.215C136.349 109.106 139.475 109.401 143.734 107.729C145.785 106.923 151.119 103.028 152.018 102.851C153.19 102.615 152.369 105.624 152.682 106.588C153.366 108.614 161.259 108.673 163.154 108.457C172.571 107.375 175.091 92.7214 178.334 85.2865C180.464 80.3495 187.868 65.4402 192.44 63.4537C196.426 61.7228 196.992 65.0469 196.113 68.3513L180.093 105.093C179.487 108.319 184.606 109.421 187.048 109.637C193.358 110.207 196.094 107.709 198.106 101.966C201.974 90.9315 203.068 77.0844 211.899 68.6267C213.189 67.3875 219.226 62.2145 220.496 62.0375C222.273 61.8014 224.012 62.7456 224.247 64.6731C224.481 66.6007 222.527 70.1609 221.609 71.9704C217.233 80.5659 200.235 101.75 214.283 108.673C216.256 109.657 218.561 109.657 220.71 109.46C225.868 108.949 231.612 106.313 234.934 103.618C237.669 101.376 240.56 97.8748 238.392 95.7308C237.298 94.649 235.188 92.6821 232.609 95.6522C231.964 96.3996 229.834 97.6781 228.037 96.4389C226.22 95.1801 226.044 92.2887 226.357 90.3218C227.431 83.4179 236.594 69.8658 239.583 62.4112C241.205 58.3593 242.26 53.1667 239.388 49.4098C236.184 45.2203 231.827 46.6168 227.763 48.5247V48.5051Z"/>
@@ -100,20 +126,35 @@ html.yw-membership-loading,body.yw-membership-loading{overflow:hidden!important}
     }
   }
 
+  // Door-reveal timings (keep in sync with the CSS vars above).
+  var HOLD_MS=900;  // 100% + "Please, come in." stays readable before the exit
+  var SEAM_MS=800;  // content fades + seam draws (700ms) + a beat
+  var DOOR_MS=1400; // --ywl-door-ms
+
+  function unlockPage(){
+    document.documentElement.classList.remove('yw-membership-loading');
+    document.body.classList.remove('yw-membership-loading');
+  }
+
   function finish(){
     if(finished)return;
     finished=true;
     setProgress(100);
 
-    setTimeout(function(){
+    // Reduced motion: the original simple fade, no doors.
+    if(reduced){
       loader.classList.add('is-complete');
-      document.documentElement.classList.remove('yw-membership-loading');
-      document.body.classList.remove('yw-membership-loading');
+      unlockPage();
+      setTimeout(function(){ loader.remove(); },900);
+      return;
+    }
 
-      setTimeout(function(){
-        loader.remove();
-      },900);
-    },reduced?0:180);
+    setTimeout(function(){ loader.classList.add('is-seam'); },HOLD_MS);
+    setTimeout(function(){
+      loader.classList.add('is-open');
+      unlockPage(); // page scrolls/clicks as soon as the doors start to part
+    },HOLD_MS+SEAM_MS);
+    setTimeout(function(){ loader.remove(); },HOLD_MS+SEAM_MS+DOOR_MS+100);
   }
 
   function animate(now){
