@@ -792,7 +792,7 @@
 
         var r = h.card.getBoundingClientRect(); // the card itself is never transformed
         // 0 while the hero sits at its resting position, 1 once it has fully scrolled away
-        var p = r.height > 0 ? -r.top / r.height : 0;
+        var p = r.height > 0 ? -r.top / (r.height * 0.6) : 0;
         p = p < 0 ? 0 : p > 1 ? 1 : p;
 
         var zoom = cfg.zoomStart + (cfg.zoomEnd - cfg.zoomStart) * p;
