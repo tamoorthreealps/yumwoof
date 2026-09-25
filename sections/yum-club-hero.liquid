@@ -297,7 +297,6 @@
   .yum-club-hero--reveal .ych-reveal--text  { --ych-r-dur: 0.8s; --ych-r-delay: 0.15s; --ych-r-blur: 6px; --ych-r-y: 12px; }
   .yum-club-hero--reveal .ych-reveal--cta   { --ych-r-dur: 0.7s; --ych-r-delay: 0.3s;  --ych-r-blur: 4px; --ych-r-y: 10px; }
   .yum-club-hero--reveal .ych-reveal--login { --ych-r-dur: 0.7s; --ych-r-delay: 0.4s;  --ych-r-blur: 4px; --ych-r-y: 8px; }
-  .yum-club-hero--reveal.is-revealing .ych-reveal { will-change: opacity, filter, transform; }
   .yum-club-hero--reveal.is-revealed .ych-reveal {
     opacity: 1;
     filter: none;
@@ -755,187 +754,73 @@
 
 <script>
   (function () {
-    /* Hero motion — separate from the cart script above and never touches it.
-       1) Parallax: the background image drifts down (slower than the page) and pushes in
-          slightly as the hero scrolls away. Movement never exceeds the zoom margin, so no
-          edge can show. Weaker on mobile.
-       2) Reveal: wordmark → description → CTA → login fade up from a soft blur, once.
-          Waits for the membership loader's doors to open if the loader is on the page. */
-    if (window.yumClubHeroMotion) {
-      window.yumClubHeroMotion.initAll(document);
-      return;
-    }
+    /* Hero motion (separate from the cart script): image parallax + one-time staggered reveal. */
+    if (window.yumClubHeroMotion) return window.yumClubHeroMotion(document);
 
-    var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-    var mobileMq = window.matchMedia ? window.matchMedia('(max-width: 749px)') : null;
-
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mobileMq = window.matchMedia('(max-width: 749px)');
     var CFG = {
-      desktop: { zoomStart: 1.06, zoomEnd: 1.16, use: 1 },
-      mobile:  { zoomStart: 1.03, zoomEnd: 1.08, use: 1 },
-      revealTotalMs: 1200 // longest delay + duration, then will-change is dropped
+      desktop: { zoomStart: 1.06, zoomEnd: 1.16 },
+      mobile:  { zoomStart: 1.03, zoomEnd: 1.08 },
+      span: 0.6 // share of the hero height scrolled to reach the full effect
     };
 
-    var heroes = [];
-    var ticking = false;
-
-    /* ---------- Parallax ---------- */
-    function frame() {
-      ticking = false;
-      var isMobile = !!(mobileMq && mobileMq.matches);
-      var cfg = isMobile ? CFG.mobile : CFG.desktop;
-
-      for (var i = 0; i < heroes.length; i++) {
-        var h = heroes[i];
-        if (!h.parallax || !h.near) continue;
-        var img = isMobile ? h.imgM : h.imgD;
-        if (!img) continue;
-
-        var r = h.card.getBoundingClientRect(); // the card itself is never transformed
-        // 0 while the hero sits at its resting position, 1 once it has fully scrolled away
-        var p = r.height > 0 ? -r.top / (r.height * 0.6) : 0;
-        p = p < 0 ? 0 : p > 1 ? 1 : p;
-
-        var zoom = cfg.zoomStart + (cfg.zoomEnd - cfg.zoomStart) * p;
-        // Largest safe downward shift for this zoom (half the extra height), partly used
-        var y = p * ((zoom - 1) * r.height / 2) * cfg.use;
-
-        var tf = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + zoom.toFixed(4) + ')';
-        if (tf !== h.last) { img.style.transform = tf; h.last = tf; }
-      }
-    }
-
-    function request() {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(frame);
-    }
-
-    /* ---------- Reveal ---------- */
-    function loaderGate(done) {
-      // The loader may be rendered later in the page than this section, so only decide
-      // "no loader" once the whole document has been parsed.
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { loaderGate(done); }, { once: true });
-        return;
-      }
+    // Run cb once the membership loader has gone (right away if there's no loader).
+    function afterLoader(cb) {
       var loader = document.getElementById('yw-membership-loader');
-      if (!loader) { done(); return; }
-      var fired = false;
-      function go() {
-        if (fired) return;
-        fired = true;
-        if (mo) mo.disconnect();
-        clearTimeout(safety);
-        done();
-      }
-      function check() {
-        if (!document.body.contains(loader) ||
-            loader.classList.contains('is-open') ||
-            loader.classList.contains('is-complete')) go();
-      }
-      var mo = new MutationObserver(check);
-      mo.observe(loader, { attributes: true, attributeFilter: ['class'] });
-      if (loader.parentNode) mo.observe(loader.parentNode, { childList: true });
-      var safety = setTimeout(go, 15000); // never leave the hero hidden
-      check();
-    }
-
-    function reveal(h) {
-      if (h.revealed) return;
-      h.revealed = true;
-      h.root.classList.add('is-revealing');
-      // Next frame, so the hidden state is painted before the transition starts
-      window.requestAnimationFrame(function () {
-        window.requestAnimationFrame(function () {
-          h.root.classList.add('is-revealed');
-          setTimeout(function () { h.root.classList.remove('is-revealing'); }, CFG.revealTotalMs + 100);
-        });
+      var done = false;
+      var go = function () { if (!done) { done = true; cb(); } };
+      if (!loader || !loader.isConnected) return go();
+      var mo = new MutationObserver(function () {
+        if (!loader.isConnected) { mo.disconnect(); go(); }
       });
+      mo.observe(loader.parentNode, { childList: true });
+      setTimeout(go, 15000); // safety: never leave the hero hidden
     }
 
-    /* ---------- Setup ---------- */
     function setup(root) {
-      if (root.dataset.ychMotionReady === 'true') return;
-      root.dataset.ychMotionReady = 'true';
+      if (root.dataset.ychMotionReady) return;
+      root.dataset.ychMotionReady = '1';
+      if (reduced) return root.classList.add('is-revealed');
 
-      var h = {
-        root: root,
-        card: root.querySelector('.yum-club-hero__card'),
-        imgD: root.querySelector('.yum-club-hero__media--desktop img'),
-        imgM: root.querySelector('.yum-club-hero__media--mobile img'),
-        parallax: root.classList.contains('yum-club-hero--parallax'),
-        near: true,
-        last: '',
-        revealed: false
-      };
-
-      var reduced = !!(reduce && reduce.matches);
-
-      // Reduced motion: CSS already shows the content and removes the zoom; nothing to run.
-      if (reduced) { h.parallax = false; root.classList.add('is-revealed'); heroes.push(h); return; }
-
-      if (h.parallax && 'IntersectionObserver' in window) {
-        h.io = new IntersectionObserver(function (entries) {
-          h.near = entries[0].isIntersecting;
-          if (h.near) request();
-        }, { rootMargin: '10% 0px 10% 0px' });
-        h.io.observe(root);
-      }
-
+      // Reveal: wordmark → description → CTA → login (timing lives in the CSS)
       if (root.classList.contains('yum-club-hero--reveal')) {
-        // Theme Editor: show immediately so merchants aren't waiting on an animation while editing
-        if (window.Shopify && window.Shopify.designMode) { root.classList.add('is-revealed'); h.revealed = true; }
-        else {
-          loaderGate(function () {
-            if (!('IntersectionObserver' in window)) { reveal(h); return; }
-            var seen = new IntersectionObserver(function (entries) {
-              if (entries[0].isIntersecting) { seen.disconnect(); reveal(h); }
-            }, { threshold: 0.15 });
-            seen.observe(root);
-          });
-        }
+        var show = function () { requestAnimationFrame(function () { root.classList.add('is-revealed'); }); };
+        if (window.Shopify && Shopify.designMode) root.classList.add('is-revealed');
+        else if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { afterLoader(show); });
+        else afterLoader(show);
       }
 
-      heroes.push(h);
-      request();
-    }
+      // Parallax: image pushes in and drifts down, never past its zoom margin (no edge shows)
+      if (!root.classList.contains('yum-club-hero--parallax')) return;
+      var card = root.querySelector('.yum-club-hero__card');
+      var imgD = root.querySelector('.yum-club-hero__media--desktop img');
+      var imgM = root.querySelector('.yum-club-hero__media--mobile img');
+      var ticking = false;
 
-    function destroy(root) {
-      for (var i = heroes.length - 1; i >= 0; i--) {
-        var h = heroes[i];
-        if (root && h.root !== root) continue;
-        if (h.io) h.io.disconnect();
-        [h.imgD, h.imgM].forEach(function (img) { if (img) img.style.transform = ''; });
-        delete h.root.dataset.ychMotionReady;
-        heroes.splice(i, 1);
+      function frame() {
+        ticking = false;
+        var mob = mobileMq.matches, cfg = mob ? CFG.mobile : CFG.desktop, img = mob ? imgM : imgD;
+        if (!img || !card.isConnected) return;
+        var r = card.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        var p = Math.min(Math.max(-r.top / (r.height * CFG.span), 0), 1);
+        var zoom = cfg.zoomStart + (cfg.zoomEnd - cfg.zoomStart) * p;
+        var y = p * (zoom - 1) * r.height / 2;
+        img.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + zoom.toFixed(4) + ')';
       }
+      function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      frame();
     }
 
-    function initAll(scope) {
-      (scope || document).querySelectorAll('[data-yum-club-hero-motion]').forEach(setup);
-    }
-
-    window.addEventListener('scroll', request, { passive: true });
-    window.addEventListener('resize', request, { passive: true });
-
-    if (reduce) {
-      var onChange = function () {
-        var roots = heroes.map(function (h) { return h.root; });
-        destroy();
-        roots.forEach(setup);
-      };
-      if (reduce.addEventListener) reduce.addEventListener('change', onChange);
-      else if (reduce.addListener) reduce.addListener(onChange);
-    }
-
-    document.addEventListener('shopify:section:load', function (e) { initAll(e.target); });
-    document.addEventListener('shopify:section:unload', function (e) {
-      var root = e.target.querySelector('[data-yum-club-hero-motion]');
-      if (root) destroy(root);
-    });
-
-    window.yumClubHeroMotion = { initAll: initAll, destroy: destroy };
-    initAll(document);
+    window.yumClubHeroMotion = function (scope) {
+      scope.querySelectorAll('[data-yum-club-hero-motion]').forEach(setup);
+    };
+    window.yumClubHeroMotion(document);
+    document.addEventListener('shopify:section:load', function (e) { window.yumClubHeroMotion(e.target); });
   })();
 </script>
 
