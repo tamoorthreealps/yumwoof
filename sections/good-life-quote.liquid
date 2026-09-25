@@ -352,7 +352,7 @@
     window.__goodLifeQuote = true;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
-    const ZOOM = { desktop: 0.08, mobile: 0.05 }; // extra scale reached as the section passes through
+    const ZOOM = { desktop: 0.15, mobile: 0.09 }; // extra scale reached as the section passes through
     const mobileMq = matchMedia('(max-width: 749px)');
 
     // ---------- Quote: typed character by character ----------
