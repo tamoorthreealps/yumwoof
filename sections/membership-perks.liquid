@@ -9,8 +9,9 @@
   Card motion: the card boxes never move. Only the IMAGE inside each card animates: it fades
   in and grows 0.94 → 1 as the card enters the viewport, then drifts with a subtle parallax
   (weaker on mobile), clipped by the card's rounded corners. Cards without an image have no
-  motion. Text is not animated. JS adds .membership-perks--animate, so without JS / with
-  reduced motion everything is static.
+  image motion. Text (heading, perk titles, descriptions) softly fades, rises and comes into
+  focus as it enters, staggered in reading order. JS adds .membership-perks--animate, so
+  without JS / with reduced motion everything is static and visible.
   Namespace: .membership-perks (.membership-perks--grid)  |  JS: window.membershipPerksMotion
 {%- endcomment -%}
 
@@ -193,7 +194,7 @@
      The card (.membership-perks__media) stays exactly as laid out: position, size, radius and
      overflow: hidden are untouched. Only the <img> inside moves. It gets a little extra height
      above and below (--mpg-over) so the parallax drift never opens a gap at the card edge. */
-  .membership-perks--grid { --mpg-over: 24px; }
+  .membership-perks--grid { --mpg-over: 44px; }
   .membership-perks--grid.membership-perks--animate .membership-perks__media img {
     position: absolute;
     left: 0;
@@ -201,20 +202,55 @@
     width: 100%;
     height: calc(100% + 2 * var(--mpg-over));
     opacity: 0;
-    transform: translate3d(0, 0, 0) scale(0.94);
+    transform: translate3d(0, 0, 0) scale(0.89);
     transform-origin: 50% 50%;
     will-change: transform;
     backface-visibility: hidden;
-    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .membership-perks--grid.membership-perks--animate .membership-perks__media img.is-revealed { opacity: 1; }
+
+  /* ---------- Text reveal (only when JS has added --animate) ----------
+     Each piece fades up from a soft blur into focus when it scrolls into view. JS sets
+     --mp-delay so pieces arriving together stagger in reading order. */
+  .membership-perks--grid.membership-perks--animate .membership-perks__title,
+  .membership-perks--grid.membership-perks--animate .membership-perks__name,
+  .membership-perks--grid.membership-perks--animate .membership-perks__desc {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translate3d(0, 24px, 0);
+    transition:
+      opacity var(--mp-dur, 0.7s) cubic-bezier(0.22, 1, 0.36, 1) var(--mp-delay, 0s),
+      filter var(--mp-dur, 0.7s) cubic-bezier(0.22, 1, 0.36, 1) var(--mp-delay, 0s),
+      transform var(--mp-dur, 0.7s) cubic-bezier(0.22, 1, 0.36, 1) var(--mp-delay, 0s);
+  }
+  .membership-perks--grid.membership-perks--animate .membership-perks__title {
+    --mp-dur: 0.9s;
+    filter: blur(10px);
+    transform: translate3d(0, 30px, 0);
+  }
+  .membership-perks--grid.membership-perks--animate .is-in {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
 
   /* ================= Mobile (Figma 392 frame) ================= */
   @media screen and (max-width: 989px) {
     .membership-perks.membership-perks--grid {
       --m: clamp(0.816px, calc(100vw / 392), 1.5px);
-      --mpg-over: 12px;
+      --mpg-over: 22px;
       padding: var(--mpg-pt-m) 0 var(--mpg-pb-m);
+    }
+
+    .membership-perks--grid.membership-perks--animate .membership-perks__name:not(.is-in),
+    .membership-perks--grid.membership-perks--animate .membership-perks__desc:not(.is-in) {
+      transform: translate3d(0, 16px, 0);
+      filter: blur(6px);
+    }
+    .membership-perks--grid.membership-perks--animate .membership-perks__title:not(.is-in) {
+      transform: translate3d(0, 20px, 0);
+      filter: blur(8px);
     }
 
     .membership-perks--grid .membership-perks__canvas {
@@ -403,8 +439,9 @@
 
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var mobileMq = window.matchMedia('(max-width: 989px)');
-    // shift × depth stays within the image overscan (--mpg-over: 24px desktop, 12px mobile)
-    var CFG = { desktop: { shift: 20, rise: 24 }, mobile: { shift: 10, rise: 14 }, startScale: 0.94, revealMs: 1300 };
+    // shift × depth (max 1.15) stays within the image overscan (--mpg-over: 44px desktop, 22px mobile)
+    var CFG = { desktop: { shift: 36, rise: 40 }, mobile: { shift: 18, rise: 20 }, startScale: 0.89, revealMs: 1400 };
+    var STAGGER = 0.14; // s between text pieces that come into view together
     var DEPTH = [1, 0.75, 1.15, 0.85, 1.05]; // per card (block 1–5) so they don't move in lockstep
     var cards = [], ticking = false;
 
@@ -444,6 +481,20 @@
           tick();
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+      // Text: heading, titles and descriptions reveal as they enter, staggered in reading order
+      var textIO = new IntersectionObserver(function (entries) {
+        entries.filter(function (en) { return en.isIntersecting; })
+          .sort(function (a, b) { return a.target.compareDocumentPosition(b.target) & 4 ? -1 : 1; })
+          .forEach(function (en, i) {
+            en.target.style.setProperty('--mp-delay', (i * STAGGER).toFixed(2) + 's');
+            en.target.classList.add('is-in');
+            textIO.unobserve(en.target);
+          });
+      }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+      root.querySelectorAll('.membership-perks__title, .membership-perks__name, .membership-perks__desc').forEach(function (el) {
+        textIO.observe(el);
+      });
 
       // Only cards that actually have an image get motion; solid-colour cards stay as they are
       root.querySelectorAll('.membership-perks__media img').forEach(function (img) {
@@ -504,8 +555,8 @@
     {
       "type": "checkbox",
       "id": "animate_cards",
-      "label": "Animate cards on scroll",
-      "info": "Card images grow in and drift with a subtle parallax inside their card. The cards themselves stay still. Turned off automatically for reduced-motion users.",
+      "label": "Animate on scroll",
+      "info": "Card images grow in and drift with a parallax inside their card, and the text fades into focus as it scrolls into view. The cards themselves stay still. Turned off automatically for reduced-motion users.",
       "default": true
     },
     { "type": "header", "content": "Spacing" },
