@@ -53,6 +53,7 @@
     overflow: hidden;
   }
   .yum-club-hero__media img,
+  .yum-club-hero__media video,
   .yum-club-hero__media svg {
     position: absolute;
     inset: 0;
@@ -145,8 +146,8 @@
   padding: 0 calc(30 * var(--ych-s));
   border: 0;
   border-radius: 160px;
-  background-image: linear-gradient(90deg, #fff9ef 0%, #fff1d3 50%, #fff9ef 100%);
-  background-color: #fff9ef;
+  background-image: linear-gradient(90deg, #7ba6dd 0%, #aed2ff 50%, #7ba6dd 100%);
+  background-color: #7ba6dd;
   color: #000;
   text-decoration: none;
   font-family: 'FFBlurProMedium';
@@ -417,7 +418,20 @@
 >
   <div class="yum-club-hero__card">
     <div class="yum-club-hero__media yum-club-hero__media--desktop">
-      {%- if img_d != blank -%}
+      {%- if s.video_desktop != blank -%}
+        {{
+          s.video_desktop
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            playsinline: true,
+            controls: false,
+            preload: 'auto',
+            image_size: '1920x',
+            aria-hidden: 'true'
+        }}
+      {%- elsif img_d != blank -%}
         {%- capture pos_d -%}object-position: {{ img_d.presentation.focal_point }};{%- endcapture -%}
         {{
           img_d
@@ -436,7 +450,22 @@
     </div>
 
     {%- comment -%} Figma mobile hero is solid black; an optional mobile image can be layered in. {%- endcomment -%}
-    {%- if img_m != blank -%}
+    {%- if s.video_mobile != blank -%}
+      <div class="yum-club-hero__media yum-club-hero__media--mobile">
+        {{
+          s.video_mobile
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            playsinline: true,
+            controls: false,
+            preload: 'metadata',
+            image_size: '1000x',
+            aria-hidden: 'true'
+        }}
+      </div>
+    {%- elsif img_m != blank -%}
       <div class="yum-club-hero__media yum-club-hero__media--mobile">
         {%- capture pos_m -%}object-position: {{ img_m.presentation.focal_point }};{%- endcapture -%}
         {{
@@ -868,6 +897,12 @@
       "info": "Recommended 3024 × 1720px. Use the focal point to control the crop."
     },
     {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video (optional)",
+      "info": "Plays muted on a loop in place of the desktop image. Leave empty to use the image."
+    },
+    {
       "type": "range",
       "id": "scrim_strength",
       "label": "Desktop left scrim",
@@ -882,6 +917,12 @@
       "id": "image_mobile",
       "label": "Mobile image (optional)",
       "info": "The Figma mobile hero is solid black. Leave empty to match it."
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video (optional)",
+      "info": "Plays muted on a loop in place of the mobile image. Leave empty to use the mobile image (or the Figma black background)."
     },
     {
       "type": "range",
