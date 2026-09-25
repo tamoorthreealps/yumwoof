@@ -43,7 +43,8 @@
       {%- endif -%}
 
       {%- if s.subheading != blank -%}
-        <div class="ywfaq__subheading">{{ s.subheading }}</div>
+        {% capture live_chat_link %}<a href="#" onclick="if(window.GorgiasChat){GorgiasChat.open();} return false;">live chat</a>{% endcapture %}
+<div class="ywfaq__subheading">{{ s.subheading | replace: 'live chat', live_chat_link | replace: 'email', '<a href="mailto:woof@yumwoof.com">email</a>' }}</div>
       {%- endif -%}
     </div>
 
