@@ -234,8 +234,8 @@
     filter: none;
     transform: none;
   }
-  /* ---------- Green badge (Figma "Group 294": FREE / ($24.95 Value)) ----------
-     Sits on the card's top-right, overhanging the edge (outside the image clip). */
+
+  /* ---------- Badge (Figma "Group 294") ---------- */
   .membership-perks--grid .membership-perks__badge {
     position: absolute;
     z-index: 2;
@@ -278,7 +278,23 @@
     letter-spacing: 0;
     white-space: nowrap;
   }
-  /* position per card: 36px down, overhanging the right edge by 62px (Figma, card 4) */
+
+  /* NEW — badge image (SVG) override: same spot, sized by "Badge image width" */
+  .membership-perks--grid .membership-perks__badge--image {
+    width: calc(var(--mp-badge-w, 120) * var(--s));
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+  }
+  .membership-perks--grid .membership-perks__badge--image::after { display: none; }
+  .membership-perks--grid .membership-perks__badge--image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* position per card: 36px down, overhanging the right edge (Figma, card 4) */
   .membership-perks--grid .membership-perks__item--1 .membership-perks__badge { left: calc(1296 * var(--s)); top: calc(356 * var(--s)); }
   .membership-perks--grid .membership-perks__item--2 .membership-perks__badge { left: calc(433 * var(--s));  top: calc(812 * var(--s)); }
   .membership-perks--grid .membership-perks__item--3 .membership-perks__badge { left: calc(923 * var(--s));  top: calc(1028 * var(--s)); }
@@ -337,6 +353,7 @@
       border-radius: 0 calc(32 * var(--m)) 0 calc(32 * var(--m));
     }
         /* Green badge — mobile (Figma: 96×56, 16px down, overhanging by 48px) */
+    /* Badge — mobile (Figma: 96×56, 16px down) */
     .membership-perks--grid .membership-perks__badge {
       width: calc(96 * var(--m));
       height: calc(56 * var(--m));
@@ -349,6 +366,15 @@
     }
     .membership-perks--grid .membership-perks__badge-title { font-size: calc(20 * var(--m)); line-height: calc(20 * var(--m)); }
     .membership-perks--grid .membership-perks__badge-sub { margin-top: calc(1 * var(--m)); font-size: calc(11 * var(--m)); line-height: calc(16 * var(--m)); }
+
+    /* NEW — badge image on mobile: 80% of the desktop width, like the Figma badge */
+    .membership-perks--grid .membership-perks__badge--image {
+      width: calc(var(--mp-badge-w, 120) * 0.8 * var(--m));
+      height: auto;
+      padding: 0;
+      border-radius: 0;
+    }
+
     /* cards 1 and 5 reach the screen edge on mobile, so their badge tucks inside the card */
     .membership-perks--grid .membership-perks__item--1 .membership-perks__badge { left: calc(272 * var(--m)); top: calc(236 * var(--m)); }
     .membership-perks--grid .membership-perks__item--3 .membership-perks__badge { left: calc(192 * var(--m)); top: calc(540 * var(--m)); }
@@ -481,7 +507,19 @@
                 }}
               </div>
             {%- endif -%}
-            {%- if b.badge_title != blank or b.badge_subtitle != blank -%}
+            {%- if b.badge_image != blank -%}
+              <div
+                class="membership-perks__badge membership-perks__badge--image"
+                style="--mp-badge-w: {{ b.badge_width }};"
+              >
+                {{
+                  b.badge_image
+                  | image_url: width: 480
+                  | image_tag: loading: 'lazy', alt: b.badge_image.alt
+                  | default: b.badge_title
+                }}
+              </div>
+            {%- elsif b.badge_title != blank or b.badge_subtitle != blank -%}
               <div class="membership-perks__badge" style="--mp-badge-bg: {{ b.badge_color }};">
                 {%- if b.badge_title != blank -%}
                   <span class="membership-perks__badge-title">{{ b.badge_title | escape }}</span>
@@ -753,7 +791,12 @@
           "label": "Badge SVG / image (optional)",
           "info": "Upload an SVG badge (PNG also works). Replaces the text badge above."
         },
-        { "type": "text", "id": "badge_title", "label": "Badge title", "info": "e.g. FREE. Leave both badge fields empty for no badge." },
+        {
+          "type": "text",
+          "id": "badge_title",
+          "label": "Badge title",
+          "info": "e.g. FREE. Leave both badge fields empty for no badge."
+        },
         { "type": "text", "id": "badge_subtitle", "label": "Badge subtext", "info": "e.g. ($24.95 Value)" },
         { "type": "color", "id": "badge_color", "label": "Badge color", "default": "#4A9560" }
       ]
