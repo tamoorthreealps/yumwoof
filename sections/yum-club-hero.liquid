@@ -145,8 +145,8 @@
   padding: 0 calc(30 * var(--ych-s));
   border: 0;
   border-radius: 160px;
-  background-image: linear-gradient(90deg, #7BA6DD 0%, #AED2FF 50%, #7BA6DD 100%);
-  background-color: #7BA6DD;
+  background-image: linear-gradient(90deg, #fff9ef 0%, #fff1d3 50%, #fff9ef 100%);
+  background-color: #fff9ef;
   color: #000;
   text-decoration: none;
   font-family: 'FFBlurProMedium';
@@ -160,41 +160,48 @@
   cursor: pointer;
   background-size: 250% 100%;
   background-position: 100% 0;
-  animation: buttonShine_yc_hero 6s ease-in-out infinite;
+  animation: buttonShine_yc_hero 4s linear infinite;
   position: relative;
   overflow: hidden;
   isolation: isolate;
 }
+
 .yum-club-hero__button::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, #fff9ef 0%, #fff1d3 50%, #fff9ef 100%);
+  background: #000;
   transform: translateY(102%);
   transition: transform .5s cubic-bezier(.2,.8,.2,1);
   pointer-events: none;
 }
+
 .yum-club-hero__button:hover::before {
   transform: translateY(0);
 }
+
 .yum-club-hero__button:hover {
-  color: #000;
-  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  color: #fff9ef;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
+
 .yum-club-hero__button:focus-visible {
   outline: 2px solid var(--ych-text);
   outline-offset: 3px;
 }
+
 @keyframes buttonShine_yc_hero {
-  0%, 35% {
+  0% {
     background-position: 100% 0;
   }
-  55% {
+
+  45% {
     background-position: 0% 0;
   }
-  70%, 100% {
-    background-position: 100% 0;
+
+  100% {
+    background-position: 0% 0;
   }
 }
   /* Add-to-cart form — same box as the old link, so layout is untouched */
