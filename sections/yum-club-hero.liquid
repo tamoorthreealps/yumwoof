@@ -220,6 +220,32 @@
     text-align: left;
   }
   .yum-club-hero__button[aria-busy='true'] { cursor: progress; }
+
+  /* "JOINING…" loading label: shown only while the cart script marks the button aria-busy
+     (set on click, cleared when the request finishes), so it never outlives the request. */
+  .yum-club-hero__button > span { transition: opacity 0.2s ease; }
+  .yum-club-hero__button .yum-club-hero__joining {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .yum-club-hero__button[aria-busy='true'] > span:not(.yum-club-hero__joining) { opacity: 0; }
+  .yum-club-hero__button[aria-busy='true'] .yum-club-hero__joining { opacity: 1; }
+  .yum-club-hero__joining i {
+    font-style: normal;
+    opacity: 0.2;
+    animation: ychJoiningDot 1.2s ease-in-out infinite;
+  }
+  .yum-club-hero__joining i:nth-child(2) { animation-delay: 0.15s; }
+  .yum-club-hero__joining i:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes ychJoiningDot {
+    0%, 80%, 100% { opacity: 0.2; }
+    40% { opacity: 1; }
+  }
   .yum-club-hero__button:disabled:not([aria-busy='true']) {
     cursor: not-allowed;
     opacity: 0.6;
@@ -305,6 +331,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .yum-club-hero__button { transition: none; }
+    .yum-club-hero__joining i { animation: none; opacity: 1; }
     .yum-club-hero--reveal .ych-reveal { opacity: 1; filter: none; transform: none; transition: none; }
     .yum-club-hero--parallax .yum-club-hero__media img { transform: none; will-change: auto; }
   }
@@ -541,6 +568,9 @@
                 {%- if s.button_price != blank -%}
                   <span>{{ s.button_price | escape }}</span>
                 {%- endif -%}
+                <span class="yum-club-hero__joining" aria-hidden="true">
+                  {{- s.joining_text | default: 'JOINING' | escape -}}<i>.</i><i>.</i><i>.</i>
+                </span>
               {%- endif -%}
             </button>
 
@@ -927,6 +957,13 @@
       "default": false
     },
     { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    {
+      "type": "text",
+      "id": "joining_text",
+      "label": "Loading text",
+      "info": "Shown with animated dots while the membership is being added to the cart.",
+      "default": "JOINING"
+    },
     { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
     {
       "type": "select",
