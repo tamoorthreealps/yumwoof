@@ -950,12 +950,16 @@
 </script>
 
 <script>
-  /* Hero video play / pause. Independent of the cart and motion scripts. */
+  /* Hero video play / pause. Independent of the cart and motion scripts.
+     Also keeps the video running on Safari: resumes unexpected pauses and stalls, and
+     un-freezes a video that reports "playing" but has stopped advancing. A pause chosen
+     by the visitor (or reduced motion) is always respected. */
   (function () {
     function init(scope) {
       scope.querySelectorAll('[data-ych-video-toggle]:not([data-ready])').forEach(function (btn) {
         btn.setAttribute('data-ready', '');
         var videos = btn.closest('.yum-club-hero').querySelectorAll('.yum-club-hero__media video');
+        var userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var current = function () {
           return Array.prototype.find.call(videos, function (v) { return v.offsetParent; }) || videos[0];
         };
@@ -964,16 +968,56 @@
           btn.classList.toggle('is-paused', paused);
           btn.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
         };
+        var play = function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+        // Resume the visible video unless the visitor paused it or the tab is hidden
+        var resume = function (v) {
+          if (userPaused || document.hidden || !v.isConnected || !v.offsetParent) return;
+          if (v.paused || v.ended) play(v);
+        };
+
         btn.addEventListener('click', function () {
           var v = current();
           if (!v) return;
-          if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause();
+          if (v.paused) { userPaused = false; play(v); } else { userPaused = true; v.pause(); }
         });
+
         Array.prototype.forEach.call(videos, function (v) {
+          // Safari needs these as properties (not just attributes) for reliable muted autoplay
+          v.muted = true;
+          v.defaultMuted = true;
+          v.playsInline = true;
+          v.setAttribute('playsinline', '');
+          v.setAttribute('webkit-playsinline', '');
+
           v.addEventListener('play', sync);
-          v.addEventListener('pause', sync);
-          // Reduced motion: don't autoplay; the visitor can start it with the button
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) v.pause();
+          v.addEventListener('pause', function () {
+            sync();
+            setTimeout(function () { resume(v); }, 300); // unexpected pause → play again
+          });
+          ['stalled', 'waiting', 'ended', 'suspend'].forEach(function (type) {
+            v.addEventListener(type, function () { setTimeout(function () { resume(v); }, 500); });
+          });
+          if (userPaused) v.pause(); // reduced motion: don't autoplay
+        });
+
+        // Watchdog: a "playing" video whose time stops moving is frozen — nudge it
+        var lastTime = -1, stuck = 0;
+        setInterval(function () {
+          var v = current();
+          if (!v || userPaused || document.hidden || !v.offsetParent) { stuck = 0; return; }
+          if (v.paused) { resume(v); stuck = 0; return; }
+          if (v.currentTime === lastTime) {
+            stuck++;
+            if (stuck >= 3) { v.load(); play(v); stuck = 0; }            // still frozen: reload
+            else { try { v.currentTime = v.currentTime + 0.001; } catch (e) {} play(v); }
+          } else {
+            stuck = 0;
+          }
+          lastTime = v.currentTime;
+        }, 2000);
+
+        document.addEventListener('visibilitychange', function () {
+          if (!document.hidden) Array.prototype.forEach.call(videos, resume);
         });
         window.addEventListener('resize', sync, { passive: true });
         sync();
