@@ -63,6 +63,7 @@
   font-size: 80px;
   line-height: 80px;
   letter-spacing: -1.60px;
+      transform: translateY(-8px);
 }
 
 .ywfaq__subheading {
@@ -342,6 +343,7 @@
    font-size: 48px;
         line-height: 48px;
         letter-spacing: -.48px;
+        transform: translateY(-3px);
   }
 
   .ywfaq__subheading {
