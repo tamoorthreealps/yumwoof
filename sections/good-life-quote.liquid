@@ -2,11 +2,11 @@
   Good Life Quote — founders image with overlaid quote + signature.
   Figma: Yumwoof (Final) — desktop 8638:1439 (1512w), mobile 8640:1762 (392w).
   Namespace: .good-life-quote  |  JS: window.__goodLifeQuote
-  Motion (same language as About Solution):
-    - Parallax: the photo glides with a lerped, scroll-linked offset inside its own Figma crop
-      (never past the spare image above/below, so no edge shows). Weaker on mobile.
-    - Reveal: the quote "types" in line by line behind a soft mask, then the signature and
-      the founders line rise from a soft blur. Plays once. Reduced motion: all static.
+  Motion:
+    - Zoom: the photo scales up slowly as the section scrolls through the screen (1 → 1.08,
+      1 → 1.05 on mobile), around the card's visible centre. The card never moves.
+    - Reveal: the quote types out character by character, then the signature and the
+      founders line rise from a soft blur. Plays once. Reduced motion: all static.
 {%- endcomment -%}
 
 {%- liquid
@@ -162,10 +162,8 @@
   /* ---------- Motion (classes added by JS only; reduced motion never gets them) ---------- */
   .good-life-quote { --glq-ease: cubic-bezier(0.22, 1, 0.36, 1); }
 
-  /* Parallax: the image glides; the card, overlay and content never move */
-  .good-life-quote.glq-parallax .good-life-quote__media img { will-change: transform; backface-visibility: hidden; }
-  /* "Fill with focal point" crops have no spare image, so give them a little to travel in */
-  .good-life-quote.glq-parallax .good-life-quote__media--cover img { top: -8%; bottom: auto; height: 116%; }
+  /* Scroll zoom: only the image scales; the card, overlay and content never move */
+  .good-life-quote.glq-zoom .good-life-quote__media img { will-change: transform; backface-visibility: hidden; }
 
   /* Quote: hidden until it has been split into its rendered lines */
   .good-life-quote.glq-anim:not(.glq-done) .good-life-quote__quote-text:not(.glq-split) { opacity: 0; }
@@ -273,7 +271,7 @@
   class="good-life-quote"
   id="good-life-quote-{{ section.id }}"
   aria-label="{{ s.founders_text | default: 'Founders quote' | escape }}"
-  {% if s.enable_parallax %}data-glq-parallax{% endif %}
+  {% if s.enable_parallax %}data-glq-zoom{% endif %}
   {% if s.enable_reveal %}data-glq-reveal{% endif %}
 >
   <figure class="good-life-quote__card" style="margin:0;">
@@ -348,14 +346,13 @@
 </section>
 
 <script>
-  /* Good Life Quote: lerped image parallax (same feel as About Solution) + quote → signature → name reveal */
+  /* Good Life Quote: scroll zoom on the image + quote → signature → name reveal */
   (() => {
     if (window.__goodLifeQuote) return;
     window.__goodLifeQuote = true;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
-    const LERP = 0.085;                         // same heavy, cinematic lag as About Solution
-    const AMP = { desktop: 0.12, mobile: 0.07 }; // travel as a share of the card height
+    const ZOOM = { desktop: 0.08, mobile: 0.05 }; // extra scale reached as the section passes through
     const mobileMq = matchMedia('(max-width: 749px)');
 
     // ---------- Quote: typed character by character ----------
@@ -424,53 +421,41 @@
       else section.classList.add('glq-done');
     };
 
-    // ---------- Parallax: lerped glide within the image's own spare crop ----------
-    const parallax = (section) => {
+    // ---------- Scroll zoom: the image scales up as the section scrolls through ----------
+    const zoom = (section) => {
       const card = section.querySelector('.good-life-quote__card');
-      const listeners = new AbortController();
-      let current = null, raf = 0, near = false, lastImg = null;
+      let ticking = false, lastImg = null;
 
-      const tick = () => {
-        raf = 0;
+      const frame = () => {
+        ticking = false;
+        if (!card.isConnected) return;
         const media = [...section.querySelectorAll('.good-life-quote__media')].find((m) => m.offsetParent);
         const img = media && media.querySelector('img');
         if (!img) return;
-        if (img !== lastImg) { if (lastImg) lastImg.style.transform = ''; lastImg = img; current = null; }
+        if (img !== lastImg) { if (lastImg) lastImg.style.transform = ''; lastImg = img; }
 
         const { top, height } = card.getBoundingClientRect(); // the card never moves
         const vh = window.innerHeight;
-        // +1 just below the viewport, 0 centred, -1 just above
-        const progress = Math.max(-1, Math.min(1, (top + height / 2 - vh / 2) / ((vh + height) / 2)));
-        // spare image above/below the card (layout values, unaffected by the transform)
-        const spareTop = -img.offsetTop;
-        const spareBottom = img.offsetTop + img.offsetHeight - media.offsetHeight;
-        const amp = height * (mobileMq.matches ? AMP.mobile : AMP.desktop);
-        const room = Math.max(0, (progress > 0 ? spareBottom : spareTop) - 2);
-        const target = -progress * Math.min(amp, room);
-
-        current = current === null ? target : current + (target - current) * LERP;
-        const settled = Math.abs(target - current) < 0.05;
-        if (settled) current = target;
-
-        img.style.transform = `translate3d(0,${current.toFixed(2)}px,0)`;
-        if (!settled) raf = requestAnimationFrame(tick);
+        if (top > vh || top + height < 0) return;
+        // 0 as the section enters at the bottom → 1 as it leaves at the top
+        const p = Math.min(1, Math.max(0, (vh - top) / (vh + height)));
+        const scale = 1 + p * (mobileMq.matches ? ZOOM.mobile : ZOOM.desktop);
+        // zoom around the card's visible centre (the image is larger than the card)
+        img.style.transformOrigin = `${media.offsetWidth / 2 - img.offsetLeft}px ${media.offsetHeight / 2 - img.offsetTop}px`;
+        img.style.transform = `scale(${scale.toFixed(4)})`;
       };
+      const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
 
-      const request = () => {
-        if (!section.isConnected) return listeners.abort(); // section removed by the Theme Editor
-        if (near && !raf) raf = requestAnimationFrame(tick);
-      };
-
-      section.classList.add('glq-parallax');
-      new IntersectionObserver(([entry]) => { near = entry.isIntersecting; request(); }, { rootMargin: '25% 0px' }).observe(card);
-      addEventListener('scroll', request, { passive: true, signal: listeners.signal });
-      addEventListener('resize', request, { passive: true, signal: listeners.signal });
+      section.classList.add('glq-zoom');
+      addEventListener('scroll', request, { passive: true });
+      addEventListener('resize', request, { passive: true });
+      frame();
     };
 
     const init = (root = document) => {
       root.querySelectorAll('.good-life-quote:not(.glq-ready)').forEach((section) => {
         section.classList.add('glq-ready');
-        if (section.hasAttribute('data-glq-parallax')) parallax(section);
+        if (section.hasAttribute('data-glq-zoom')) zoom(section);
         if (!section.hasAttribute('data-glq-reveal')) return;
         if (window.Shopify && Shopify.designMode) return; // no waiting on animations while editing
 
@@ -577,15 +562,15 @@
     {
       "type": "checkbox",
       "id": "enable_parallax",
-      "label": "Background image parallax",
-      "info": "The photo glides slowly as the page scrolls (weaker on mobile).",
+      "label": "Background image zoom on scroll",
+      "info": "The photo zooms in slowly as the section scrolls through the screen (subtler on mobile).",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "enable_reveal",
       "label": "Quote and signature reveal",
-      "info": "The quote reveals line by line, then the signature and founders line rise in. Plays once.",
+      "info": "The quote types out, then the signature and founders line rise in. Plays once.",
       "default": true
     },
     { "type": "header", "content": "Spacing" },
