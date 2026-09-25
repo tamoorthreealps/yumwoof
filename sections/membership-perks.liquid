@@ -6,7 +6,10 @@
   with the viewport (desktop ≥ 990px, mobile below). Perks are placed by block
   position: 1 = 25% off, 2 = Priority concierge, 3 = Prices locked, 4 = Book,
   5 = Members-only extras. On mobile 2 and 3 swap places, as in Figma.
-  Namespace: .membership-perks (.membership-perks--grid)  |  no JS
+  Card motion: each card box scales 0.94 → 1 and rises in as it enters the viewport, then
+  drifts with a slow parallax (weaker on mobile). Text is not animated. JS adds
+  .membership-perks--animate, so without JS / with reduced motion the cards are static.
+  Namespace: .membership-perks (.membership-perks--grid)  |  JS: window.membershipPerksMotion
 {%- endcomment -%}
 
 {%- liquid
@@ -184,6 +187,17 @@
     width: calc(385 * var(--s));
   }
 
+  /* ---------- Card motion (only when JS has added --animate) ---------- */
+  .membership-perks--grid.membership-perks--animate .membership-perks__media {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.94);
+    transform-origin: 50% 60%;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .membership-perks--grid.membership-perks--animate .membership-perks__media.is-revealed { opacity: 1; }
+
   /* ================= Mobile (Figma 392 frame) ================= */
   @media screen and (max-width: 989px) {
     .membership-perks.membership-perks--grid {
@@ -298,6 +312,7 @@
 <div
   class="membership-perks membership-perks--grid"
   id="membership-perks-{{ section.id }}"
+  {% if s.animate_cards %}data-membership-perks-motion{% endif %}
 >
   <div class="membership-perks__canvas">
     {%- if s.heading != blank -%}
@@ -368,6 +383,183 @@
   </div>
 </div>
 
+<script>
+  (function () {
+    /* Scroll motion for the perk cards. One shared rAF loop for all instances;
+       it only runs while a section is near the viewport or a reveal is still playing. */
+    if (window.membershipPerksMotion) {
+      window.membershipPerksMotion.initAll(document);
+      return;
+    }
+
+    var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var mobileMq = window.matchMedia ? window.matchMedia('(max-width: 989px)') : null;
+
+    // Tuning (px are at the Figma scale; mobile is deliberately weaker)
+    // maxShift stays under the card-to-caption gaps (32px desktop, 16px mobile),
+    // so a drifting card never crowds its text.
+    var CFG = {
+      desktop: { parallax: 0.04, maxShift: 20, rise: 24 },
+      mobile:  { parallax: 0.022, maxShift: 9, rise: 14 },
+      startScale: 0.94,
+      revealMs: 1300
+    };
+    // Per-card depth so the cards don't move in lockstep (by block position 1–5)
+    var DEPTH = [1, 0.75, 1.15, 0.85, 1.05];
+
+    var sections = [];
+    var running = false;
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+
+    function measure(sec) {
+      // Layout offsets inside the canvas (unaffected by our transforms)
+      sec.cards.forEach(function (c) {
+        c.visible = c.el.offsetParent !== null;
+        c.top = c.el.offsetTop;
+        c.h = c.el.offsetHeight;
+      });
+      sec.mobile = !!(mobileMq && mobileMq.matches);
+    }
+
+    function frame(now) {
+      running = false;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var keepGoing = false;
+
+      for (var i = 0; i < sections.length; i++) {
+        var sec = sections[i];
+        if (!sec.near && !sec.revealing) continue;
+        var cfg = sec.mobile ? CFG.mobile : CFG.desktop;
+        var canvasTop = sec.canvas.getBoundingClientRect().top;
+        sec.revealing = false;
+
+        for (var j = 0; j < sec.cards.length; j++) {
+          var c = sec.cards[j];
+          if (!c.visible) continue;
+
+          // Parallax: offset from the viewport centre, scaled down and capped
+          var centre = canvasTop + c.top + c.h / 2;
+          var shift = (vh / 2 - centre) * cfg.parallax * c.depth;
+          if (shift > cfg.maxShift) shift = cfg.maxShift;
+          if (shift < -cfg.maxShift) shift = -cfg.maxShift;
+
+          // Reveal: 0.94 → 1 with a small rise, eased once the card enters
+          var p = 0;
+          if (c.revealAt !== null) {
+            p = Math.min((now - c.revealAt) / CFG.revealMs, 1);
+            if (p < 1) sec.revealing = true;
+          }
+          var e = easeOut(p);
+          var scale = CFG.startScale + (1 - CFG.startScale) * e;
+          var y = shift + cfg.rise * (1 - e);
+
+          var tf = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + scale.toFixed(4) + ')';
+          if (tf !== c.last) { c.el.style.transform = tf; c.last = tf; }
+        }
+        if (sec.near || sec.revealing) keepGoing = keepGoing || sec.revealing;
+      }
+      if (keepGoing) request();
+    }
+
+    function request() {
+      if (running) return;
+      running = true;
+      window.requestAnimationFrame(frame);
+    }
+
+    function setup(root) {
+      if (root.dataset.mpMotionReady === 'true') return;
+      if (reduce && reduce.matches) return;
+      if (!('IntersectionObserver' in window)) return;
+
+      var canvas = root.querySelector('.membership-perks__canvas');
+      var els = root.querySelectorAll('.membership-perks__media');
+      if (!canvas || !els.length) return;
+
+      root.dataset.mpMotionReady = 'true';
+      root.classList.add('membership-perks--animate');
+
+      var sec = { root: root, canvas: canvas, cards: [], near: false, revealing: false, mobile: false };
+
+      Array.prototype.forEach.call(els, function (el) {
+        var item = el.closest('.membership-perks__item');
+        var idx = item ? Array.prototype.indexOf.call(item.parentNode.children, item) : 0;
+        sec.cards.push({ el: el, depth: DEPTH[idx] || 1, revealAt: null, last: '', top: 0, h: 0, visible: true });
+      });
+      measure(sec);
+
+      // Each card reveals on its own as it enters the viewport
+      sec.revealIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var card = null;
+          for (var k = 0; k < sec.cards.length; k++) if (sec.cards[k].el === entry.target) card = sec.cards[k];
+          if (card && card.revealAt === null) {
+            card.revealAt = performance.now();
+            card.el.classList.add('is-revealed');
+            sec.revealing = true;
+            request();
+          }
+          sec.revealIO.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      sec.cards.forEach(function (c) { sec.revealIO.observe(c.el); });
+
+      // Only do parallax work while the section is on (or near) screen
+      sec.nearIO = new IntersectionObserver(function (entries) {
+        sec.near = entries[0].isIntersecting;
+        if (sec.near) request();
+      }, { rootMargin: '20% 0px 20% 0px' });
+      sec.nearIO.observe(root);
+
+      if ('ResizeObserver' in window) {
+        sec.ro = new ResizeObserver(function () { measure(sec); request(); });
+        sec.ro.observe(canvas);
+      }
+
+      sections.push(sec);
+      request();
+    }
+
+    function destroy(root) {
+      for (var i = sections.length - 1; i >= 0; i--) {
+        var sec = sections[i];
+        if (root && sec.root !== root) continue;
+        sec.revealIO.disconnect();
+        sec.nearIO.disconnect();
+        if (sec.ro) sec.ro.disconnect();
+        sec.cards.forEach(function (c) { c.el.style.transform = ''; c.el.classList.remove('is-revealed'); });
+        sec.root.classList.remove('membership-perks--animate');
+        delete sec.root.dataset.mpMotionReady;
+        sections.splice(i, 1);
+      }
+    }
+
+    function initAll(scope) {
+      (scope || document).querySelectorAll('[data-membership-perks-motion]').forEach(setup);
+    }
+
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', function () { sections.forEach(measure); request(); }, { passive: true });
+
+    if (reduce) {
+      var onChange = function () { if (reduce.matches) destroy(); else initAll(document); };
+      if (reduce.addEventListener) reduce.addEventListener('change', onChange);
+      else if (reduce.addListener) reduce.addListener(onChange);
+    }
+
+    document.addEventListener('shopify:section:load', function (e) { initAll(e.target); });
+    document.addEventListener('shopify:section:unload', function (e) {
+      var root = e.target.querySelector('[data-membership-perks-motion]');
+      if (root) destroy(root);
+    });
+
+    window.membershipPerksMotion = { initAll: initAll, destroy: destroy };
+    initAll(document);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Membership Has Its Perks",
@@ -400,6 +592,14 @@
       "label": "Card color",
       "info": "Shown when a perk has no image.",
       "default": "#661D1D"
+    },
+    { "type": "header", "content": "Motion" },
+    {
+      "type": "checkbox",
+      "id": "animate_cards",
+      "label": "Animate cards on scroll",
+      "info": "Cards grow in and drift with a subtle parallax. Turned off automatically for reduced-motion users.",
+      "default": true
     },
     { "type": "header", "content": "Spacing" },
     {
