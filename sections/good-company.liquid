@@ -251,6 +251,31 @@
   cursor: progress;
 }
 
+/* "JOINING…" loading label: shown only while the cart script marks the button aria-busy */
+.good-company__button > span { transition: opacity 0.2s ease; }
+.good-company__button .good-company__joining {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.good-company__button[aria-busy='true'] > span:not(.good-company__joining) { opacity: 0; }
+.good-company__button[aria-busy='true'] .good-company__joining { opacity: 1; }
+.good-company__joining i {
+  font-style: normal;
+  opacity: 0.2;
+  animation: gcJoiningDot 1.2s ease-in-out infinite;
+}
+.good-company__joining i:nth-child(2) { animation-delay: 0.15s; }
+.good-company__joining i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes gcJoiningDot {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+
 .good-company__button:disabled:not([aria-busy='true']) {
   cursor: not-allowed;
   opacity: 0.6;
@@ -289,6 +314,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .good-company__button { transition: none; }
+    .good-company__joining i { animation: none; opacity: 1; }
   }
 
   /* ---------- mobile (separate Figma layout, 392 × 720) ---------- */
@@ -515,6 +541,9 @@
                 <span>{{ s.sold_out_text | default: 'SOLD OUT' | escape }}</span>
               {%- else -%}
                 {{ gc_button_inner }}
+                <span class="good-company__joining" aria-hidden="true">
+                  {{- s.joining_text | default: 'JOINING' | escape -}}<i>.</i><i>.</i><i>.</i>
+                </span>
               {%- endif -%}
             </button>
 
@@ -862,6 +891,13 @@
       "default": false
     },
     { "type": "text", "id": "sold_out_text", "label": "Sold out text", "default": "SOLD OUT" },
+    {
+      "type": "text",
+      "id": "joining_text",
+      "label": "Loading text",
+      "info": "Shown with animated dots while the membership is being added to the cart.",
+      "default": "JOINING"
+    },
     { "type": "range", "id": "quantity", "label": "Quantity", "min": 1, "max": 10, "step": 1, "default": 1 },
     {
       "type": "select",
