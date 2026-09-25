@@ -60,9 +60,9 @@
   color: var(--ywfaq-heading);
   font-family: var(--ywfaq-font-display);
   font-weight: 400;
-  font-size: 56px;
-  line-height: 64px;
-  letter-spacing: -0.56px;
+  font-size: 80px;
+  line-height: 80px;
+  letter-spacing: -1.60px;
 }
 
 .ywfaq__subheading {
@@ -339,15 +339,15 @@
   }
 
   .ywfaq__heading {
-   font-size: 40px;
-        line-height: 40px;
-        letter-spacing: -.40px;
+   font-size: 48px;
+        line-height: 48px;
+        letter-spacing: -.48px;
   }
 
   .ywfaq__subheading {
-    font-size: 14px;
-        line-height: 20px;
-        max-width: 340px;
+font-size: 16px;
+        line-height: 24px;
+        max-width: 338px;
   }
 
   .ywfaq__list {
