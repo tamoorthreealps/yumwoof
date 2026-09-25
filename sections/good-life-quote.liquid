@@ -358,71 +358,70 @@
     const AMP = { desktop: 0.12, mobile: 0.07 }; // travel as a share of the card height
     const mobileMq = matchMedia('(max-width: 749px)');
 
-    // ---------- Quote: split into rendered lines (keeps the <br>), then reveal each line ----------
-    const splitLines = (p) => {
-      const words = [];
+    // ---------- Quote: typed character by character ----------
+    // Every character stays in the layout (only visibility changes), so line breaks,
+    // wrapping and typography are exactly the final ones from the first frame.
+    const TYPE_TOTAL = 3.6; // seconds for the whole quote, whatever its length
+
+    const splitChars = (p) => {
+      const chars = [];
       [...p.childNodes].forEach((node) => {
         if (node.nodeType !== 3) return; // keep <br> exactly where it is
         const frag = document.createDocumentFragment();
-        node.textContent.split(/(\s+)/).forEach((part) => {
-          if (!part) return;
-          if (/^\s+$/.test(part)) { frag.append(' '); return; }
-          const w = document.createElement('span');
-          w.style.display = 'inline-block';
-          w.textContent = part;
-          words.push(w);
-          frag.append(w);
+        [...node.textContent].forEach((ch) => {
+          const s = document.createElement('span');
+          s.textContent = ch;
+          s.style.visibility = 'hidden';
+          chars.push(s);
+          frag.append(s);
         });
         node.replaceWith(frag);
       });
-
-      const lines = [];
-      let top = null;
-      words.forEach((w) => {
-        if (top === null || Math.abs(w.offsetTop - top) > 2) { lines.push([]); top = w.offsetTop; }
-        lines[lines.length - 1].push(w.textContent);
-      });
-
-      p.replaceChildren(...lines.map((line) => {
-        const s = document.createElement('span');
-        s.className = 'glq-line';
-        s.textContent = line.join(' ');
-        return s;
-      }));
       p.classList.add('glq-split');
-      return lines;
+      return chars;
     };
 
-    const reveal = async (section) => {
+    // Natural cadence: slight variation per key, a touch longer on spaces,
+    // short pauses after commas and longer ones after full stops.
+    const schedule = (chars) => {
+      let t = 0;
+      const times = chars.map((s, i) => {
+        const prev = i ? chars[i - 1].textContent : '';
+        let w = 0.85 + Math.random() * 0.3;
+        if (s.textContent === ' ') w *= 1.35;
+        if (/[,;:]/.test(prev)) w += 2.2;
+        if (/[.!?]/.test(prev)) w += 3.5;
+        t += w;
+        return t;
+      });
+      return times.map((x) => (x / t) * TYPE_TOTAL); // normalise to TYPE_TOTAL
+    };
+
+    const reveal = (section) => {
       const p = section.querySelector('.good-life-quote__quote-text');
       const original = p && p.innerHTML;
+      const chars = p ? splitChars(p) : [];
+      const times = schedule(chars);
 
-      // line breaks depend on the display font (wait max 1.2s, like About Solution)
-      await Promise.race([document.fonts ? document.fonts.ready : 0, new Promise((r) => setTimeout(r, 1200))]);
-      if (!section.isConnected) return;
-
-      // Each line takes longer the more characters it has; the next starts as it nears the end
-      let t = 0;
-      if (p) {
-        splitLines(p).forEach((line, i, all) => {
-          const el = p.children[i];
-          const dur = 0.45 + line.join(' ').length * 0.028;
-          el.style.setProperty('--glq-line-delay', `${t.toFixed(2)}s`);
-          el.style.setProperty('--glq-line-dur', `${dur.toFixed(2)}s`);
-          t += i < all.length - 1 ? dur - 0.18 : dur;
-        });
-      }
-      const sig = Math.max(0, t - 0.35);
+      const sig = Math.max(0, (chars.length ? TYPE_TOTAL : 0) - 0.35);
       section.style.setProperty('--glq-sig-delay', `${sig.toFixed(2)}s`);
       section.style.setProperty('--glq-name-delay', `${(sig + 0.25).toFixed(2)}s`);
+      section.classList.add('glq-in'); // starts the signature / founders timers
 
-      requestAnimationFrame(() => requestAnimationFrame(() => section.classList.add('glq-in')));
-
-      // afterwards restore the original quote markup so it reflows naturally on resize
-      setTimeout(() => {
-        if (p) { p.innerHTML = original; p.classList.remove('glq-split'); }
+      let shown = 0, t0 = null;
+      const type = (now) => {
+        if (!section.isConnected) return;
+        if (t0 === null) t0 = now;
+        const elapsed = (now - t0) / 1000;
+        while (shown < chars.length && times[shown] <= elapsed) chars[shown++].style.visibility = '';
+        if (shown < chars.length) return requestAnimationFrame(type);
+        // done: put the original markup back so it reflows naturally on resize
+        p.innerHTML = original;
+        p.classList.remove('glq-split');
         section.classList.add('glq-done');
-      }, (t + 0.3) * 1000);
+      };
+      if (chars.length) requestAnimationFrame(type);
+      else section.classList.add('glq-done');
     };
 
     // ---------- Parallax: lerped glide within the image's own spare crop ----------
