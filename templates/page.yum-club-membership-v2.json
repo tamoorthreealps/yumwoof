@@ -101,7 +101,10 @@
             "image": "shopify://shop_images/YumClub-Hero-Desktop.jpg",
             "title": "25% OFF EVERY ORDER",
             "description": "Get 25% off everything we make, every day. No waiting for a sale.",
-            "description_mobile": ""
+            "description_mobile": "",
+            "badge_title": "",
+            "badge_subtitle": "",
+            "badge_color": "#4a9560"
           }
         },
         "perk_J6wVAb": {
@@ -110,7 +113,10 @@
             "image": "shopify://shop_images/Rectangle_136.svg",
             "title": "PRIORITY CONCIERGE",
             "description": "Member requests go straight to the top of our support queue.",
-            "description_mobile": ""
+            "description_mobile": "",
+            "badge_title": "",
+            "badge_subtitle": "",
+            "badge_color": "#4a9560"
           }
         },
         "perk_6Re6QJ": {
@@ -119,7 +125,10 @@
             "image": "shopify://shop_images/Rectangle_136_1.svg",
             "title": "PRICES LOCKED\nFOR A YEAR",
             "description": "Today's prices stay yours for twelve months from the day you first join.",
-            "description_mobile": "Today's prices stay yours for 12 months from the day you first join."
+            "description_mobile": "Today's prices stay yours for 12 months from the day you first join.",
+            "badge_title": "",
+            "badge_subtitle": "",
+            "badge_color": "#4a9560"
           }
         },
         "perk_HBmHi3": {
@@ -128,7 +137,10 @@
             "image": "shopify://shop_images/YumClub-Img02-Desktop.jpg",
             "title": "THE COCOMEGA BOOK",
             "description": "The Canine Cocomega Effect, digital edition. Included with membership.",
-            "description_mobile": ""
+            "description_mobile": "",
+            "badge_title": "FREE",
+            "badge_subtitle": "($24.95 Value)",
+            "badge_color": "#4a9560"
           }
         },
         "perk_PidAt6": {
@@ -137,7 +149,10 @@
             "image": "shopify://shop_images/Rectangle_138.svg",
             "title": "MEMBERS-ONLY EXTRAS",
             "description": "Members get early access and member-only surprises.",
-            "description_mobile": ""
+            "description_mobile": "",
+            "badge_title": "",
+            "badge_subtitle": "",
+            "badge_color": "#4a9560"
           }
         }
       },
