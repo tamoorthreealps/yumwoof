@@ -1,7 +1,10 @@
 {%- comment -%}
   Yum Club Hero — membership hero with wordmark, copy, CTA and login line.
   Figma: Yumwoof (Final) — desktop 8638:1439 (1512w), mobile 8640:1762 (392w).
-  Namespace: .yum-club-hero  (no JS required)
+  Namespace: .yum-club-hero  |  JS: window.yumClubHero (cart), window.yumClubHeroMotion (motion)
+  Motion: background image parallax (scroll-linked, weaker on mobile) and a one-time,
+  staggered soft reveal of wordmark → description → CTA → login. The reveal waits for
+  the membership loader's doors to open when the loader is on the page.
 {%- endcomment -%}
 
 {%- liquid
@@ -268,8 +271,43 @@
     border: 0;
   }
 
+  /* ---------- Motion: image parallax ----------
+     JS writes translate3d() scale() on the image each frame. The starting zoom is set here
+     too, so the crop doesn't jump when the script takes over. */
+  .yum-club-hero--parallax .yum-club-hero__media img {
+    transform: scale(var(--ych-zoom, 1.06));
+    transform-origin: 50% 50%;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* ---------- Motion: staggered soft reveal ----------
+     Hidden state is rendered by Liquid (no flash before JS runs); JS adds .is-revealed once.
+     Each piece fades up from a light blur. <noscript> and reduced motion show it straight away. */
+  .yum-club-hero--reveal .ych-reveal {
+    opacity: 0;
+    filter: blur(var(--ych-r-blur, 6px));
+    transform: translate3d(0, var(--ych-r-y, 12px), 0);
+    transition:
+      opacity var(--ych-r-dur, 0.8s) cubic-bezier(0.22, 1, 0.36, 1) var(--ych-r-delay, 0s),
+      filter var(--ych-r-dur, 0.8s) cubic-bezier(0.22, 1, 0.36, 1) var(--ych-r-delay, 0s),
+      transform var(--ych-r-dur, 0.8s) cubic-bezier(0.22, 1, 0.36, 1) var(--ych-r-delay, 0s);
+  }
+  .yum-club-hero--reveal .ych-reveal--logo  { --ych-r-dur: 0.8s; --ych-r-delay: 0s;    --ych-r-blur: 8px; --ych-r-y: 14px; }
+  .yum-club-hero--reveal .ych-reveal--text  { --ych-r-dur: 0.8s; --ych-r-delay: 0.15s; --ych-r-blur: 6px; --ych-r-y: 12px; }
+  .yum-club-hero--reveal .ych-reveal--cta   { --ych-r-dur: 0.7s; --ych-r-delay: 0.3s;  --ych-r-blur: 4px; --ych-r-y: 10px; }
+  .yum-club-hero--reveal .ych-reveal--login { --ych-r-dur: 0.7s; --ych-r-delay: 0.4s;  --ych-r-blur: 4px; --ych-r-y: 8px; }
+  .yum-club-hero--reveal.is-revealing .ych-reveal { will-change: opacity, filter, transform; }
+  .yum-club-hero--reveal.is-revealed .ych-reveal {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .yum-club-hero__button { transition: none; }
+    .yum-club-hero--reveal .ych-reveal { opacity: 1; filter: none; transform: none; transition: none; }
+    .yum-club-hero--parallax .yum-club-hero__media img { transform: none; will-change: auto; }
   }
 
   /* ---------- mobile (separate Figma layout) ---------- */
@@ -277,6 +315,7 @@
     .yum-club-hero {
       margin-top: {{ s.margin_top_mobile }}px;
       margin-bottom: {{ s.margin_bottom_mobile }}px;
+      --ych-zoom: 1.03;
     }
     .yum-club-hero__card {
       height: calc(736 * var(--ych-m));
@@ -332,10 +371,24 @@
       font-size: calc(14 * var(--ych-m));
       line-height: calc(20 * var(--ych-m));
     }
+
+    /* Shorter reveal travel on mobile */
+    .yum-club-hero--reveal .ych-reveal--logo  { --ych-r-y: 8px; --ych-r-blur: 6px; }
+    .yum-club-hero--reveal .ych-reveal--text  { --ych-r-y: 7px; --ych-r-blur: 5px; }
+    .yum-club-hero--reveal .ych-reveal--cta   { --ych-r-y: 6px; --ych-r-blur: 3px; }
+    .yum-club-hero--reveal .ych-reveal--login { --ych-r-y: 5px; --ych-r-blur: 3px; }
   }
 </style>
 
-<section class="yum-club-hero" id="yum-club-hero-{{ section.id }}">
+{%- if s.enable_reveal -%}
+  <noscript><style>#yum-club-hero-{{ section.id }} .ych-reveal{opacity:1!important;filter:none!important;transform:none!important}</style></noscript>
+{%- endif -%}
+
+<section
+  class="yum-club-hero{% if s.enable_parallax %} yum-club-hero--parallax{% endif %}{% if s.enable_reveal %} yum-club-hero--reveal{% endif %}"
+  id="yum-club-hero-{{ section.id }}"
+  {% if s.enable_parallax or s.enable_reveal %}data-yum-club-hero-motion{% endif %}
+>
   <div class="yum-club-hero__card">
     <div class="yum-club-hero__media yum-club-hero__media--desktop">
       {%- if img_d != blank -%}
@@ -377,7 +430,7 @@
 
     <div class="yum-club-hero__inner">
       <div class="yum-club-hero__intro">
-        <{{ heading_tag }} class="yum-club-hero__title">
+        <{{ heading_tag }} class="yum-club-hero__title ych-reveal ych-reveal--logo">
           <span class="yum-club-hero__sr">{{ s.heading_text | escape }}</span>
           {%- if s.wordmark_image != blank -%}
             {{
@@ -396,7 +449,7 @@
         </{{ heading_tag }}>
 
         {%- if s.description != blank -%}
-          <p class="yum-club-hero__text">
+          <p class="yum-club-hero__text ych-reveal ych-reveal--text">
             {{- s.description | escape | newline_to_br | replace: '<br />', '<br class="yum-club-hero__br">' -}}
           </p>
         {%- endif -%}
@@ -457,7 +510,7 @@
           <form
             method="post"
             action="{{ routes.cart_add_url }}"
-            class="yum-club-hero__form"
+            class="yum-club-hero__form ych-reveal ych-reveal--cta"
             data-yum-club-hero-form
             data-cart-behavior="{{ s.cart_behavior }}"
             data-product-id="{{ atc_product.id }}"
@@ -504,7 +557,7 @@
 
         {%- elsif s.button_label != blank -%}
           {%- comment -%} No product selected — plain link, as before {%- endcomment -%}
-          <a class="yum-club-hero__button" href="{{ s.button_link | default: '#' }}">
+          <a class="yum-club-hero__button ych-reveal ych-reveal--cta" href="{{ s.button_link | default: '#' }}">
             <span>{{ s.button_label | escape }}</span>
             {%- if s.button_price != blank -%}
               <span>{{ s.button_price | escape }}</span>
@@ -513,7 +566,7 @@
         {%- endif -%}
 
         {%- if show_login -%}
-          <p class="yum-club-hero__login">
+          <p class="yum-club-hero__login ych-reveal ych-reveal--login">
             {{- s.login_prefix | escape }} <a href="{{ login_url }}">{{ s.login_label | escape }}</a>
           </p>
         {%- endif -%}
@@ -700,6 +753,192 @@
   })();
 </script>
 
+<script>
+  (function () {
+    /* Hero motion — separate from the cart script above and never touches it.
+       1) Parallax: the background image drifts down (slower than the page) and pushes in
+          slightly as the hero scrolls away. Movement never exceeds the zoom margin, so no
+          edge can show. Weaker on mobile.
+       2) Reveal: wordmark → description → CTA → login fade up from a soft blur, once.
+          Waits for the membership loader's doors to open if the loader is on the page. */
+    if (window.yumClubHeroMotion) {
+      window.yumClubHeroMotion.initAll(document);
+      return;
+    }
+
+    var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var mobileMq = window.matchMedia ? window.matchMedia('(max-width: 749px)') : null;
+
+    var CFG = {
+      desktop: { zoomStart: 1.06, zoomEnd: 1.1, use: 0.9 },
+      mobile:  { zoomStart: 1.03, zoomEnd: 1.05, use: 0.8 },
+      revealTotalMs: 1200 // longest delay + duration, then will-change is dropped
+    };
+
+    var heroes = [];
+    var ticking = false;
+
+    /* ---------- Parallax ---------- */
+    function frame() {
+      ticking = false;
+      var isMobile = !!(mobileMq && mobileMq.matches);
+      var cfg = isMobile ? CFG.mobile : CFG.desktop;
+
+      for (var i = 0; i < heroes.length; i++) {
+        var h = heroes[i];
+        if (!h.parallax || !h.near) continue;
+        var img = isMobile ? h.imgM : h.imgD;
+        if (!img) continue;
+
+        var r = h.card.getBoundingClientRect(); // the card itself is never transformed
+        // 0 while the hero sits at its resting position, 1 once it has fully scrolled away
+        var p = r.height > 0 ? -r.top / r.height : 0;
+        p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+        var zoom = cfg.zoomStart + (cfg.zoomEnd - cfg.zoomStart) * p;
+        // Largest safe downward shift for this zoom (half the extra height), partly used
+        var y = p * ((zoom - 1) * r.height / 2) * cfg.use;
+
+        var tf = 'translate3d(0,' + y.toFixed(2) + 'px,0) scale(' + zoom.toFixed(4) + ')';
+        if (tf !== h.last) { img.style.transform = tf; h.last = tf; }
+      }
+    }
+
+    function request() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(frame);
+    }
+
+    /* ---------- Reveal ---------- */
+    function loaderGate(done) {
+      // The loader may be rendered later in the page than this section, so only decide
+      // "no loader" once the whole document has been parsed.
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { loaderGate(done); }, { once: true });
+        return;
+      }
+      var loader = document.getElementById('yw-membership-loader');
+      if (!loader) { done(); return; }
+      var fired = false;
+      function go() {
+        if (fired) return;
+        fired = true;
+        if (mo) mo.disconnect();
+        clearTimeout(safety);
+        done();
+      }
+      function check() {
+        if (!document.body.contains(loader) ||
+            loader.classList.contains('is-open') ||
+            loader.classList.contains('is-complete')) go();
+      }
+      var mo = new MutationObserver(check);
+      mo.observe(loader, { attributes: true, attributeFilter: ['class'] });
+      if (loader.parentNode) mo.observe(loader.parentNode, { childList: true });
+      var safety = setTimeout(go, 15000); // never leave the hero hidden
+      check();
+    }
+
+    function reveal(h) {
+      if (h.revealed) return;
+      h.revealed = true;
+      h.root.classList.add('is-revealing');
+      // Next frame, so the hidden state is painted before the transition starts
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          h.root.classList.add('is-revealed');
+          setTimeout(function () { h.root.classList.remove('is-revealing'); }, CFG.revealTotalMs + 100);
+        });
+      });
+    }
+
+    /* ---------- Setup ---------- */
+    function setup(root) {
+      if (root.dataset.ychMotionReady === 'true') return;
+      root.dataset.ychMotionReady = 'true';
+
+      var h = {
+        root: root,
+        card: root.querySelector('.yum-club-hero__card'),
+        imgD: root.querySelector('.yum-club-hero__media--desktop img'),
+        imgM: root.querySelector('.yum-club-hero__media--mobile img'),
+        parallax: root.classList.contains('yum-club-hero--parallax'),
+        near: true,
+        last: '',
+        revealed: false
+      };
+
+      var reduced = !!(reduce && reduce.matches);
+
+      // Reduced motion: CSS already shows the content and removes the zoom; nothing to run.
+      if (reduced) { h.parallax = false; root.classList.add('is-revealed'); heroes.push(h); return; }
+
+      if (h.parallax && 'IntersectionObserver' in window) {
+        h.io = new IntersectionObserver(function (entries) {
+          h.near = entries[0].isIntersecting;
+          if (h.near) request();
+        }, { rootMargin: '10% 0px 10% 0px' });
+        h.io.observe(root);
+      }
+
+      if (root.classList.contains('yum-club-hero--reveal')) {
+        // Theme Editor: show immediately so merchants aren't waiting on an animation while editing
+        if (window.Shopify && window.Shopify.designMode) { root.classList.add('is-revealed'); h.revealed = true; }
+        else {
+          loaderGate(function () {
+            if (!('IntersectionObserver' in window)) { reveal(h); return; }
+            var seen = new IntersectionObserver(function (entries) {
+              if (entries[0].isIntersecting) { seen.disconnect(); reveal(h); }
+            }, { threshold: 0.15 });
+            seen.observe(root);
+          });
+        }
+      }
+
+      heroes.push(h);
+      request();
+    }
+
+    function destroy(root) {
+      for (var i = heroes.length - 1; i >= 0; i--) {
+        var h = heroes[i];
+        if (root && h.root !== root) continue;
+        if (h.io) h.io.disconnect();
+        [h.imgD, h.imgM].forEach(function (img) { if (img) img.style.transform = ''; });
+        delete h.root.dataset.ychMotionReady;
+        heroes.splice(i, 1);
+      }
+    }
+
+    function initAll(scope) {
+      (scope || document).querySelectorAll('[data-yum-club-hero-motion]').forEach(setup);
+    }
+
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
+
+    if (reduce) {
+      var onChange = function () {
+        var roots = heroes.map(function (h) { return h.root; });
+        destroy();
+        roots.forEach(setup);
+      };
+      if (reduce.addEventListener) reduce.addEventListener('change', onChange);
+      else if (reduce.addListener) reduce.addListener(onChange);
+    }
+
+    document.addEventListener('shopify:section:load', function (e) { initAll(e.target); });
+    document.addEventListener('shopify:section:unload', function (e) {
+      var root = e.target.querySelector('[data-yum-club-hero-motion]');
+      if (root) destroy(root);
+    });
+
+    window.yumClubHeroMotion = { initAll: initAll, destroy: destroy };
+    initAll(document);
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Yum Club Hero",
@@ -825,6 +1064,21 @@
       "id": "login_link",
       "label": "Link",
       "info": "Defaults to the store login page."
+    },
+    { "type": "header", "content": "Motion" },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Background image parallax",
+      "info": "Slow scroll-linked depth on the hero image (weaker on mobile).",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_reveal",
+      "label": "Staggered content reveal",
+      "info": "Wordmark, description, button and login fade in one after another. Waits for the membership loader to open.",
+      "default": true
     },
     { "type": "header", "content": "Spacing" },
     { "type": "range", "id": "margin_top_desktop", "label": "Desktop top margin", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 0 },
